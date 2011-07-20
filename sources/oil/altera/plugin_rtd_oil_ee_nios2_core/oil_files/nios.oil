@@ -1,0 +1,50 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        // NB used only by NIOS 2 !!! -->>
+        STRING NIOS2_MUTEX_BASE;
+        STRING IPIC_GLOBAL_NAME;
+        STRING NIOS2_SYS_CONFIG;
+        STRING NIOS2_APP_CONFIG;
+        BOOLEAN NIOS2_DO_MAKE_OBJDUMP = FALSE;
+        STRING NIOS2_JAM_FILE;
+        STRING NIOS2_PTF_FILE;
+        
+        ENUM [
+            NIOSII {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                STRING STACK_TOP;
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                
+                STRING SYSTEM_LIBRARY_NAME;
+                STRING SYSTEM_LIBRARY_PATH;
+                
+		        STRING IPIC_LOCAL_NAME;
+                
+            }
+        ] CPU_DATA[];
+
+    };
+};

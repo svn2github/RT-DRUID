@@ -1,0 +1,205 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+            PIC30 { // PIC30 and DSPIC are the same!!!
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                    TRUE {
+                        BOOLEAN [
+                            TRUE {
+                                UINT32 SYS_SIZE;
+                            },
+                            FALSE
+                        ] IRQ_STACK;
+                        //ENUM [
+                        //    SHARED,
+                        //    PRIVATE {
+                        //        UINT32 SYS_SIZE;
+                        //    }
+                        //] DUMMY_STACK;
+                    },
+                    FALSE
+                ] MULTI_STACK = FALSE;
+                
+                //UINT32 STACK_BOTTOM;
+
+                //UINT32 SYS_SIZE;    // available space for all user stacks
+                //UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+
+                BOOLEAN ICD2 = FALSE;
+                BOOLEAN ENABLE_SPLIM = TRUE;
+				
+            }
+        ] CPU_DATA[];
+
+        ENUM [
+			PIC30 {
+				ENUM [
+					CUSTOM {
+						STRING MODEL;
+						STRING LINKERSCRIPT;
+						STRING DEV_LIB;
+						STRING INCLUDE_C;
+						STRING INCLUDE_S;
+					},
+					PIC24FJ128GA006,
+					PIC24FJ128GA008,
+					PIC24FJ128GA010,
+					PIC24FJ32GA002	,
+					PIC24FJ32GA004	,
+					PIC24FJ64GA002	,
+					PIC24FJ64GA004	,
+					PIC24FJ64GA006	,
+					PIC24FJ64GA008	,
+					PIC24FJ64GA010	,
+					PIC24FJ96GA006	,
+					PIC24FJ96GA008	,
+					PIC24FJ96GA010	,
+					PIC24HJ128GP206	,
+					PIC24HJ128GP210	,
+					PIC24HJ128GP306	,
+					PIC24HJ128GP310	,
+					PIC24HJ128GP506	,
+					PIC24HJ128GP510	,
+					PIC24HJ256GP206	,
+					PIC24HJ256GP210	,
+					PIC24HJ256GP610	,
+					PIC24HJ64GP206	,
+					PIC24HJ64GP210	,
+					PIC24HJ64GP506	,
+					PIC24HJ64GP510	,
+					PIC30F1010	,
+					PIC30F2010	,
+					PIC30F2011	,
+					PIC30F2012	,
+					PIC30F2020	,
+					PIC30F2021	,
+					PIC30F2022	,
+					PIC30F2023	,
+					PIC30F3010	,
+					PIC30F3011	,
+					PIC30F3012	,
+					PIC30F3013	,
+					PIC30F3014	,
+					PIC30F4011	,
+					PIC30F4012	,
+					PIC30F4013	,
+					PIC30F5011	,
+					PIC30F5013	,
+					PIC30F5015	,
+					PIC30F5016	,
+					PIC30F6010	,
+					PIC30F6010A	,
+					PIC30F6011	,
+					PIC30F6011A	,
+					PIC30F6012	,
+					PIC30F6012A	,
+					PIC30F6013	,
+					PIC30F6013A	,
+					PIC30F6014	,
+					PIC30F6014A,
+					PIC30F6015,
+					PIC33FJ128GP206,
+					PIC33FJ128GP306,
+					PIC33FJ128GP310,
+					PIC33FJ128GP706,
+					PIC33FJ128GP708,
+					PIC33FJ128GP710,
+					PIC33FJ128MC506,
+					PIC33FJ128MC510,
+					PIC33FJ128MC706,
+					PIC33FJ128MC708,
+					PIC33FJ128MC710,
+					PIC33FJ256GP506,
+					PIC33FJ256GP510,
+					PIC33FJ256GP710,
+					PIC33FJ256MC510,
+					PIC33FJ256MC710,
+					PIC33FJ64GP206,
+					PIC33FJ64GP306,
+					PIC33FJ64GP310,
+					PIC33FJ64GP706,
+					PIC33FJ64GP708,
+					PIC33FJ64GP710,
+					PIC33FJ64MC506,
+					PIC33FJ64MC508,
+					PIC33FJ64MC510,
+					PIC33FJ64MC706,
+					PIC33FJ64MC710
+
+				] MODEL;
+			}
+		] MCU_DATA;
+
+		ENUM [
+			EE_FLEX { // our board with dspic cpu :-)
+			
+				BOOLEAN USELEDS = FALSE;	// old
+				BOOLEAN USELCD = FALSE;		// old
+						
+				ENUM [ DEMO { 
+						ENUM [
+								ACCELEROMETER,
+								ADC_IN,
+								BUTTONS,
+								BUZZER,
+								DAC,
+								ENCODER,
+								IR,
+								LCD,
+								LEDS,
+								PWM_OUT,
+								PWM_MOTOR,
+								SENSORS,
+								TRIMMER,
+								USB,
+								ZIGBEE,
+								
+								ALL
+						] OPTIONS[];
+				    }, MULTI { 
+						ENUM [
+								ETHERNET,
+								EIB,
+								ALL
+						] OPTIONS[];
+					}, STANDARD {
+						ENUM [
+							LEDS, LCD, ALL
+						] OPTIONS[];
+				    }
+				] TYPE = STANDARD;
+			},
+			MICROCHIP_EXPLORER16 {
+				BOOLEAN USELEDS;
+				BOOLEAN USEBUTTONS;
+				BOOLEAN USELCD;
+				BOOLEAN USEANALOG;
+		    },
+		    MICROCHIP_DSPICDEM11PLUS {
+				BOOLEAN USELEDS;
+				BOOLEAN USELCD;
+				BOOLEAN USEBUTTONS;
+				BOOLEAN USEAUDIO;
+				BOOLEAN USEANALOG;
+			},
+			
+			// ----- AVR 5 -----
+			ATMEGA_STK50X,
+			XBOW_MIB5X0
+
+		] BOARD_DATA = NO_BOARD;
+
+// maybe pic-only, please verify!
+		ENUM [
+			ENABLE {
+				STRING NAME[];
+			}
+		] LIB[];
+
+    };
+};

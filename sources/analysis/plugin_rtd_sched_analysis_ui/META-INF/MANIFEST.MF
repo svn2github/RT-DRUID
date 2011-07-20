@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RT-Druid Schedulability Analysis Plug-in (ui)
+Bundle-SymbolicName: com.eu.evidence.rtdruid.jscan.ui;singleton:=true
+Bundle-Version: 1.6.0.qualifier
+Bundle-Activator: com.eu.evidence.rtdruid.modules.jscan.ui.rtd_jscan_ui.Rtd_jscan_uiPlugin
+Require-Bundle: com.eu.evidence.rtdruid.core,
+ com.eu.evidence.rtdruid.core.ui,
+ com.eu.evidence.rtdruid.jscan.core,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide,
+ org.eclipse.emf.edit.ui,
+ org.eclipse.gef
+Bundle-Vendor: Evidence S.r.l.
+Bundle-Localization: plugin
+Bundle-ActivationPolicy: lazy
+Export-Package: com.eu.evidence.rtdruid.vartree.data.presentation

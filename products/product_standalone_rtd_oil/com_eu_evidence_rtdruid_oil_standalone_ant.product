@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="RT-Druid" uid="com.eu.evidence.rtdruid.standalone" id="com.eu.evidence.rtdruid.oil.core.com_eu_evidence_rtdruid_oil_standalone" application="com.eu.evidence.rtdruid.oil.standalone.writer" version="1.6.0.qualifier" useFeatures="false" includeLaunchers="true">
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages/>
+
+   <launcher name="eclipse">
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+      <plugin id="com.eu.evidence.rtdruid.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.arm.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.avr.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.dspic.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.ee.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.fp_edf.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.frsh.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.mico32.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.nios2.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.osek.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.ppc.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.s12.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.tricore.core"/>
+      <plugin id="com.eu.evidence.templates.core"/>
+      <plugin id="org.eclipse.ant.launching"/>
+      <plugin id="org.eclipse.core.contenttype"/>
+      <plugin id="org.eclipse.core.expressions"/>
+      <plugin id="org.eclipse.core.filesystem"/>
+      <plugin id="org.eclipse.core.jobs"/>
+      <plugin id="org.eclipse.core.resources"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
+      <plugin id="org.eclipse.core.variables"/>
+      <plugin id="org.eclipse.emf.common"/>
+      <plugin id="org.eclipse.emf.ecore"/>
+      <plugin id="org.eclipse.emf.ecore.xmi"/>
+      <plugin id="org.eclipse.emf.edit"/>
+      <plugin id="org.eclipse.equinox.app"/>
+      <plugin id="org.eclipse.equinox.common"/>
+      <plugin id="org.eclipse.equinox.preferences"/>
+      <plugin id="org.eclipse.equinox.registry"/>
+      <plugin id="org.eclipse.osgi"/>
+   </plugins>
+
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+   </configurations>
+
+</product>

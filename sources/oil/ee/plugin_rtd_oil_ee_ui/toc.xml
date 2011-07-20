@@ -1,0 +1,14 @@
+<toc label="RT-Druid code generator" topic="html/book.html">
+   <topic label="Views">
+      <topic href="html/code_generator_view.html" label="Code Generation View">
+      </topic>
+      <topic href="html/oil_implementation_view.html" label="Oil Implementation">
+      </topic>
+   </topic>
+   <topic href="html/home.html" label="Code generation using xslt">
+      <topic href="html/xslt_step.html" label="Steps">
+      </topic>
+      <topic href="html/writer.html" label="Writers">
+      </topic>
+   </topic>
+</toc>

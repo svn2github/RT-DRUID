@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" output="bin_ant" path="src_ant"/>
+	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" path="src/internal"/>
+	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" path="src/public"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="ANT_HOME/lib/ant.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

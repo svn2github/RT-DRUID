@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+          <objectContribution
+            id="com.eu.evidence.rtdruid.modules.oil.convert.oiltoxml_menu"
+            objectClass="org.eclipse.core.resources.IFile">
+            <action
+                  class="com.eu.evidence.rtdruid.modules.oil.ui.actions.Oil2XmlAction"
+                  enablesFor="1"
+                  id="com.eu.evidence.rtdruid.modules.oil.convert.oiltoxml_id"
+                  label="Convert into a xml file"
+                  menubarPath="additions"
+                  tooltip="Convert into a xml file">
+               <enablement>
+                  <objectState
+                        name="extension"
+                        value="oil">
+                  </objectState>
+               </enablement>
+            </action>
+               <visibility>
+                  <objectState
+                        name="extension"
+                        value="oil">
+                  </objectState>
+               </visibility>
+      </objectContribution>
+   </extension>
+
+
+
+<!--
+	Actions (MenuBar)
+- - >
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="RT-Druid oil actions"
+            visible="true"
+            id="com.eu.evidence.rtdruid.vartree.data.oil.actionSet">
+         <menu
+               label="RTDruid"
+               id="com.eu.evidence.rtdruid.vartree.dataMenuID">
+            <separator name="settings"/>
+            <separator name="views"/>
+            <separator name="actions"/>
+            <separator name="additions"/>
+         </menu>
+        <menu
+               label="Oil"
+               id="com.eu.evidence.rtdruid.vartree.dataMenuID.oilID"
+               path="com.eu.evidence.rtdruid.vartree.dataMenuID/views">
+            <separator name="actions"/>
+            <separator name="additions"/>
+         </menu>
+         <action
+               label="Oil Configurator"
+               class="com.eu.evidence.rtdruid.modules.oil.ui.actions.OilWriteAction"
+               tooltip="Convert an Oil file into configuration&apos;s files"
+               menubarPath="com.eu.evidence.rtdruid.vartree.dataMenuID/com.eu.evidence.rtdruid.vartree.dataMenuID.oilID/actions"
+               id="com.eu.evidence.rtdruid.vartree.data.oil.actions.ImportID"/>
+               
+         <action
+               label="Trace Analysis"
+               class="com.eu.evidence.rtdruid.modules.oil.ui.actions.TraceWizardAction"
+               tooltip="Import a trace"
+               menubarPath="com.eu.evidence.rtdruid.vartree.dataMenuID/com.eu.evidence.rtdruid.vartree.dataMenuID.oilID/actions"
+               id="com.eu.evidence.rtdruid.vartree.data.oil.actions.TraceActionID"/>
+      </actionSet>
+   </extension> 
+-->
+   
+   <!-- Oil Editor -->
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Oil Editor"
+            extensions="oil"
+            icon="icons/oil_icon.gif"
+            contributorClass="com.eu.evidence.rtdruid.modules.oil.ui.editor.text.OilActionContributor"
+            class="com.eu.evidence.rtdruid.modules.oil.ui.editor.text.OilTextEditor"
+            id="com.eu.evidence.rtdruid.modules.oil.ui.editor.text.OilTextEditor">
+      </editor>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.eu.evidence.rtdruid.vartree.data.presentation.DataEditor"
+            contributorClass="com.eu.evidence.rtdruid.vartree.data.presentation.DataActionBarContributor"
+            default="false"
+            extensions="oil"
+            id="com.eu.evidence.rtdruid.oil.editor"
+            name="RT-Druid editor">
+      </editor>
+   </extension>
+
+<!--
+	The view
+-->
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="RT-Druid"
+            id="com.eu.evidence.rtdruid.viewersID">
+      </category>
+<!--      <view
+            name="RT-Druid Output"
+            icon="icons/wizban/NewData.gif"
+            category="com.eu.evidence.rtdruid.viewersID"
+            class="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidView"
+            id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidViewID">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">-->
+      <view
+            name="Active Oil Implementation"
+            icon="icons/oil_icon.gif"
+            category="com.eu.evidence.rtdruid.viewersID"
+            class="com.eu.evidence.rtdruid.modules.oil.ui.views.OilImplementationView"
+            id="com.eu.evidence.rtdruid.modules.oil.views.ActiveOilImplementationID">
+      </view>
+      <view
+            name="Available xslt code generation steps"
+            icon="icons/oil_icon.gif"
+            category="com.eu.evidence.rtdruid.viewersID"
+            class="com.eu.evidence.rtdruid.modules.oil.ui.views.RegistredXsltStepsView"
+            id="com.eu.evidence.rtdruid.modules.oil.views.XsltCodeGenStepsID">
+      </view>
+   </extension>
+  
+</plugin>

@@ -1,0 +1,5 @@
+#OIL/MOEL	File H		File INC	File GLD	File LIB	
+PIC32MX360F512L	p32xxxx.h	_	_	libmchp_peripheral_32MX360F512L.a
+PIC32MX795F512L	p32xxxx.h	_	_	libmchp_peripheral_32MX795F512L.a
+
+

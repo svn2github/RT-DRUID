@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin>
+   <!-- Preference Page -->
+   <extension
+      point = "org.eclipse.ui.preferencePages">
+       <page id="com.eu.evidence.rtdruid.preferencePagesID"
+            class="com.eu.evidence.rtdruid.ui.preferencepages.EmptyPage"
+            name="Rt-Druid">
+       </page>
+   </extension>
+
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="RT-Druid"
+            id="com.eu.evidence.rtdruid.viewersID">
+      </category>
+       <view
+            name="Proc 2 Task Mapping"
+            icon="icons/rtd_icon_16.png"
+            category="com.eu.evidence.rtdruid.viewersID"
+            class="com.eu.evidence.rtdruid.ui.mapping.Proc2TaskMapView"
+            id="com.eu.evidence.rtdruid.ui.mapping.Proc2TaskMappingViewID">
+      </view>
+      <view
+            name="Task 2 RT-OS Mapping"
+            icon="icons/rtd_icon_16.png"
+            category="com.eu.evidence.rtdruid.viewersID"
+            class="com.eu.evidence.rtdruid.ui.mapping.Task2RtosMapView"
+            id="com.eu.evidence.rtdruid.ui.mapping.Task2RtOsMappingViewID">
+      </view>
+   </extension>
+  
+   
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Evidence"
+            id="com.eu.evidence.rtdruid.ui.wizards.categoryID">
+      </category>
+   </extension>
+
+</plugin>

@@ -1,0 +1,40 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+            TRICORE1 { // TriCore Cpu
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                    TRUE {
+                        BOOLEAN [
+                            TRUE {
+                                UINT32 SYS_SIZE; // expressed in byte
+                            },
+                            FALSE
+                        ] IRQ_STACK;
+                        //ENUM [
+                        //    SHARED,
+                        //    PRIVATE {
+                        //        UINT32 SYS_SIZE;
+                        //    }
+                        //] DUMMY_STACK;
+                    },
+                    FALSE
+                ] MULTI_STACK = FALSE;
+                
+                STRING MODEL; 
+            }
+        ] CPU_DATA[];
+
+    };
+    
+    ISR {
+    	UINT32 CATEGORY; // category 1 & 2 -> ISR. category 3 -> trap 
+		STRING LEVEL;
+		STRING HANDLER;
+	};
+    
+};

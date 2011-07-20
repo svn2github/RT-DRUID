@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/rtdruid_vartree_data/src"
+    editDirectory="/rtdruid_vartree_data_edit/src" editorDirectory="/rtdruid_vartree_data_editor/src"
+    modelPluginID="rtdruid.vartree.data" modelName="Data" editPluginClass="rtdruid.vartree.data.provider.DataEditPlugin"
+    editorPluginClass="rtdruid.vartree.data.presentation.DataEditorPlugin">
+  <foreignModel>data.ecore</foreignModel>
+  <genPackages prefix="Data" basePackage="rtdruid.vartree" ecorePackage="data.ecore#/">
+    <genDataTypes ecoreDataType="data.ecore#//BooleanVar"/>
+    <genDataTypes ecoreDataType="data.ecore#//DoubleVar"/>
+    <genDataTypes ecoreDataType="data.ecore#//FloatVar"/>
+    <genDataTypes ecoreDataType="data.ecore#//IntegerVar"/>
+    <genDataTypes ecoreDataType="data.ecore#//LongVar"/>
+    <genDataTypes ecoreDataType="data.ecore#//OilVar"/>
+    <genDataTypes ecoreDataType="data.ecore#//StringVar"/>
+    <genDataTypes ecoreDataType="data.ecore#//TimeVar"/>
+    <genClasses ecoreClass="data.ecore#//System">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Annotation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Architectural"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Functional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Mapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Modes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//System/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Schedulability"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//ObjectWithID">
+      <genOperations ecoreOperation="data.ecore#//ObjectWithID/checkNewID">
+        <genParameters ecoreParameter="data.ecore#//ObjectWithID/checkNewID/newID"/>
+      </genOperations>
+      <genOperations ecoreOperation="data.ecore#//ObjectWithID/getObjectID"/>
+      <genOperations ecoreOperation="data.ecore#//ObjectWithID/setObjectID">
+        <genParameters ecoreParameter="data.ecore#//ObjectWithID/setObjectID/newID"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Modes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Modes/ModeList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Mode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Mode/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Functional">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/EventList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/PartialOrderList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/Implementation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/TimeConstList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Implementation"/>
+    <genClasses ecoreClass="data.ecore#//Proc">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Proc/MethodRefList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Proc/Methods"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Architectural">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/BusList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/EcuList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/FrameList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/MutexList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/ResourceList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/SignalList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/TaskList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Mapping">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Mapping/ProcMapList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Mapping/TaskMapList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Mapping/VarMapList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Annotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Annotation/ExecTimeLists"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Schedulability">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Schedulability/SchedulingScenarioList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Var">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Var/Methods"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Var/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Trigger">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Trigger/MethodRefList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Event">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Event/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Event/MethodRefName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Event/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//PartialOrder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//PartialOrder/ModeRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//PartialOrder/OrderList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//SystemImplementation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//SystemImplementation/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//SubSystem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SubSystem/Implementation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SubSystem/ProvidedInterfaceList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SubSystem/RequiredInterfaceList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//TimeConst">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConst/ModeRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//TimeConst/TimeConstElementList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//MethodRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//MethodRef/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//MethodRef/MethodName"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//ProvidedInterface">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProvidedInterface/LocalMethodRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProvidedInterface/LocalObjectRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProvidedInterface/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//RequiredInterface">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//RequiredInterface/ExternalMethodRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//RequiredInterface/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Order">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Order/FirstEvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Order/SecondEvent"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//TimeConstElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConstElement/BoundType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConstElement/BoundValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConstElement/FirstEvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConstElement/SecondEvent"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Ecu">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Ecu/CpuList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Ecu/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Task">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Task/ActivationList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Task/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Task/OilVar"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Task/ResourceRefList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Task/SchedulingList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Task/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Resource">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Resource/Methods"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Resource/MutexRefList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Resource/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Bus">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Bus/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Bus/Speed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Bus/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Frame">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/ActivationClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/ActivationRate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/ActivationType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/Id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/Length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Signal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Signal/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Signal/OilVar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Signal/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Mutex">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Mutex/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Mutex/OilVar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Mutex/Policy"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Cpu">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Model"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Cpu/Rtos"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Rtos">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/OilVar"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Scheduling">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/PreemptionGroupName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Priority"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Stack"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Threshold"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Activation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/ActNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/ActivationClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/Deadline"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/Offset"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/Period"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//ResourceRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ResourceRef/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ResourceRef/ResourceMethodRef"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//MutexRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//MutexRef/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//MutexRef/MutexName"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//ExecTime">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTime/Best"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//ExecTime/Distribution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTime/Ref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTime/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTime/Worst"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//ExecTimeList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//ExecTimeList/ExecTimeItemsList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTimeList/ModeRef"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Distribution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Distribution/Avg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Distribution/SampleList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Distribution/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Distribution/Variance"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Sample">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Sample/Probability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Sample/Value"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//ProcMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/Order"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/ProcRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/TaskRef"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//TaskMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskMap/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskMap/RtosRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskMap/TaskRef"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//VarMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/BusRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/FrameRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/MutexRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/VarRef"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//SchedulingScenario">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SchedulingScenario/CpuSchedList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//SchedulingScenario/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//SchedulingScenario/Reports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SchedulingScenario/TaskSchedList"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//CpuSched">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/Boundary"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/CpuRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/MaxStackSize"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/Schedulable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/SpeedFactor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/Utilization"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//TaskSched">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/CDelta"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/ResponseTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/Schedulable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/TaskRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/TDelta"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/Utilization"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

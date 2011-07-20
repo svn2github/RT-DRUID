@@ -1,0 +1,60 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+
+        ENUM [
+            MC9S12XS {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                        },
+                        FALSE
+                ] MULTI_STACK = FALSE;
+                
+                BOOLEAN ICD = FALSE;	
+            }
+        ] CPU_DATA[];
+
+        ENUM [
+			S12XS {
+				BOOLEAN SERIAL = FALSE;
+				BOOLEAN TIMER = FALSE;			
+			
+				ENUM [
+					CUSTOM {
+						STRING MODEL;
+						STRING LINKERSCRIPT;
+						STRING INCLUDE_H;
+						STRING INCLUDE_C;
+						STRING INCLUDE_S;
+					},
+					MC9S12XS128
+				] MODEL;
+			}
+		] MCU_DATA;
+
+		ENUM [
+			// ----- FREESCALE S12XS -----
+			DEMO9S12XSFAME {	
+						
+				ENUM [
+						POTENTIOMETEER,
+						ADC,
+						BUTTONS,
+						LEDS,
+						LIGHT_SENSOR,
+						ALL
+				] OPTIONS[];
+			}
+		] BOARD_DATA = NO_BOARD;
+    };
+};

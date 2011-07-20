@@ -1,0 +1,34 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+            IRIS {
+            	// contains every contract
+				ENUM [
+					CONTRACT {
+						STRING NAME;
+						UINT32 BUDGET;
+						UINT32 PERIOD;
+					}
+				] CONTRACTS[];
+            },
+            CBS {
+            	// contains every contract
+				ENUM [
+					CONTRACT {
+						STRING NAME;
+						UINT32 BUDGET;
+						UINT32 PERIOD;
+					}
+				] CONTRACTS[];
+            }
+
+        ] KERNEL_TYPE;
+    };
+
+    TASK {
+        // can contain the name of a contract (see KERNEL SECTIONs, like IRIS and CBS)
+        STRING CONTRACT;
+    };
+};

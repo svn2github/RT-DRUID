@@ -1,0 +1,37 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+            FP {
+                BOOLEAN NESTED_IRQ;
+            },
+            EDF {
+            	// contains the time length of a tick
+            	// default unit of time is ms. valid times are:
+            	// s, ms, us, ps
+            	STRING TICK_TIME;
+            	
+                BOOLEAN NESTED_IRQ;
+				
+				BOOLEAN REL_DEADLINES_IN_RAM = FALSE;
+            }
+        ] KERNEL_TYPE;
+    };
+
+    TASK {
+        BOOLEAN [
+            TRUE {
+                APPMODE_TYPE APPMODE[];
+            },
+            FALSE
+        ] AUTOSTART;
+
+        UINT32 PRIORITY;
+
+        // it can be a number (it means numer of ticks, es "1234")
+        // it can also be a time (like "0.2h" "0.1m" "1s" "2ms" "3us" "4ns")
+        STRING REL_DEADLINE;
+    };
+
+};

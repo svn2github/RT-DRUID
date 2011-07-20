@@ -1,0 +1,838 @@
+
+options {
+	STATIC = false;
+	IGNORE_CASE = false;
+	CACHE_TOKENS = true;
+	OUTPUT_DIRECTORY = ".";
+//	LOOKAHEAD = 2;
+//	FORCE_LA_CHECK = true;
+	
+	DEBUG_PARSER = false;
+	OPTIMIZE_TOKEN_MANAGER = false;
+	
+}
+
+PARSER_BEGIN (IncludeParser)
+package rtdruid.modules.oil.reader;
+
+import java.util.LinkedList;
+
+/** Parse a file and search all "include".
+
+Partendo dal file/stream specificato nel costruttore, ricorsivamente 
+sostituisce le righe 
+	#include <nomefile>
+ed
+	#include "path/nomefile"
+con i file da esse identificate.
+
+Per eliminare il problema di ricorsioni cicliche conviene usare 
+uno stack che contiene l'attuale successione di file e controllare di
+volta in volta che non ci sia un ciclo. O qualcosa di simile.
+Magari normalizzare il nome del file in modo da evitare cicli in cui
+uno stesso file e' incluso usando nomi diversi con nomi 
+
+Per gestire correttamente i numeri di riga, conviene realizzare una
+tabella di corrispondenza, magari mantenendo anche la storia delle inclusioni.
+
+
+* @author Nicola Serreli
+*/
+public class IncludeParser {
+
+	protected final static String LOCATION = "Location_inside_the_oil";
+
+	protected String currentFileName;
+	
+
+}
+
+PARSER_END (IncludeParser)
+
+
+// ----------- START ----------------
+
+StringBuffer start(HashMap<String> absFiles, String currentFile, Srting basePath, String[] libPaths) :
+{
+	
+}
+{
+	// Drops the information about version
+	OIL_version()
+	// nome identified this Builder and will be the first "cpu" type
+	nome = implementation_definition(root1)
+	application_definition(appl, root2)
+	<EOF>
+
+	{
+		OilInfo oi = new OilInfo( nome, impl, appl);
+		return oi;
+	}
+}
+
+
+
+// ----------- SPECIAL TOKEN ----------------
+
+//SPECIAL_TOKEN : /* WHITE SPACE */
+SKIP :
+{
+  " "
+  | "\t"
+  | "\n"
+  | "\r"
+  | "\f"
+  | "\u00a0"  
+}
+
+SPECIAL_TOKEN : /* COMMENTS */
+{
+  <SINGLE_LINE_COMMENT: "//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+  | <MULTI_LINE_COMMENT: "/*" (~["*"])* "*" ("*" | (~["*","/"] (~["*"])* "*"))* "/">
+}
+
+// ----------- TOKEN ----------------
+
+// Reserved Word
+TOKEN:
+{
+	<INCLUDE : "#INCLUDE">
+|
+	<DEF_PATH : "<" (~["\"","<",">"])* ">" >
+|
+	<String : "\"" (~["\""])* "\"" >
+}
+
+//< implementation_definition, enumerator, default_name,
+//  application_definition, object_definition, attribute_value
+//>
+TOKEN :
+{
+	<name :	// like standard C
+		(["a"-"z", "A"-"Z", "_"])
+		(["a"-"z", "A"-"Z", "_", "0"-"9"])*
+	>
+}
+
+
+// Type
+//<
+//	number_range(), default_number(),
+//	float_range(), default_float(),
+//	attribute_value()
+//>
+TOKEN :
+{
+	<number : <dec_number> | <hex_number>>
+|
+	<float_ : <sign> <dec_digits> "." <dec_digits> <exponent> >
+|
+	<#dec_number : <sign> <int_digits>>
+|
+	<#sign : ( ["+","-"] )?> 
+|
+	<#int_digits : <zero_digit> | <pos_digit> | <pos_digit> <dec_digits>>
+|
+	<#dec_digits : (<dec_digit>)+ >
+|
+	<#exponent : ( ["e", "E"] <sign> <dec_digits> )? >
+|	
+	<#zero_digit : "0">
+|
+	<#pos_digit : ["1" - "9"]>
+|
+	<#dec_digit : <zero_digit> | <pos_digit> >
+|
+	<#hex_number : "0x" ( ["0"-"9", "A"-"F", "a"-"f"])+ >
+
+//	<boolean_ : <TRUE> | <FALSE>>
+}
+
+String 	getDescription() :
+{
+	String s;
+}
+{ ":" s= getString()
+	{
+		// drop \"
+		return s;
+	}
+}
+
+String 	getString() :
+{
+	Token t;
+}
+{ 	t=<String>
+	{
+		// drop \"
+		return t.image.substring(1,t.image.length()-1);
+	}
+}
+
+// ----------- Syntax of OIL ----------------
+
+
+void OIL_version() :
+{
+}
+{
+	<OIL_VERSION> "="
+	getString() // version
+	(getDescription())? // description
+	";"
+}
+
+
+// ----------- Implementation Definition ----------------
+
+String implementation_definition(Node elem) :
+{
+	Token t1;
+	String nome;
+	
+}
+{
+	<IMPLEMENTATION>
+	// get name of this structure
+	t1=<name>
+	{
+		//System.err.println("nome = " + t1.image );
+		nome = t1.image;
+		((Element) elem).setAttribute(OilXMLLabels.ATTR_NAME, nome);
+	}
+	"{" 
+		(implementation_spec(elem))+	// ONE or MORE implementation_spec
+	"}"
+	(addDescription((Element) elem))? // description
+	";"
+	{
+		return nome;
+	}
+}
+
+void implementation_spec(Node elem) :
+{
+	Token t1;
+	Element nContainer = null;
+}
+{
+	// get name of this container
+	t1=<object> {
+		nContainer = makeElement(elem, OilXMLLabels.ELEM_FIRST_LEVEL_OBJ, OilXMLLabels.ATTR_OBJ_TYPE, t1.image);
+	}
+	"{" 
+		(implementation_def(nContainer, false) )*	// ZERO o MORE implemenation_def
+	"}"
+	(addDescription(nContainer))? // description
+	";"
+	
+}
+
+void implementation_def(Node elem, boolean nested) :
+{
+}
+{
+	impl_attr_def(elem, nested) | impl_ref_def(elem, nested)
+}
+
+void impl_attr_def(Node elem, boolean nested) :
+{
+	Token nameToken;
+	boolean wAuto = false;
+	boolean multiValues = false;
+	// range or list of values -> string[0] = "range" or "list"
+	String[] values = null;
+	// "default value" = (0), "AUTO" = (1) -> only one != null 
+	// dValue = null means "no_default"
+	String[] dValue = null;
+	// list of enumerator
+	Element[] enumList = null;
+
+	// used after to make the xml Document
+	Element nodo;
+	int tipo;	// tells the type of this node
+	String tipoTxt;
+	String descr = null;
+			
+}
+{
+(	
+	<UINT32> { tipo = UINT32; tipoTxt ="uint32"; }
+		(<auto_specifier> { wAuto = true; })?
+		values = number_range() 
+		( nameToken = <name> | nameToken = <object>)
+		("[" "]"  { multiValues = true; })?
+		dValue = default_number()
+		(descr = getDescription())? ";"
+
+|
+	<INT32> { tipo = INT32; tipoTxt ="int32"; }
+		(<auto_specifier> { wAuto = true; })?
+		values = number_range() 
+		( nameToken = <name> | nameToken = <object>)
+		("[" "]"  { multiValues = true; })?
+		dValue = default_number()
+		(descr = getDescription())? ";"
+
+|
+	<UINT64> { tipo = UINT64; tipoTxt ="uint64"; }
+		(<auto_specifier> { wAuto = true; })?
+		values = number_range()
+		( nameToken = <name> | nameToken = <object>)
+		("[" "]"  { multiValues = true; })?
+		dValue = default_number()
+		(descr = getDescription())? ";"
+|
+	<INT64> { tipo = INT64; tipoTxt ="int64"; }
+	 	(<auto_specifier>  { wAuto = true; })?
+		values = number_range() 
+		( nameToken = <name> | nameToken = <object>)
+		("[" "]" { multiValues = true; })?
+		dValue = default_number()
+		(descr = getDescription())? ";"
+|		
+	<FLOAT> { tipo = FLOAT; tipoTxt ="float"; }
+	 	(<auto_specifier> { wAuto = true; })?
+		values = float_range() 
+		( nameToken = <name> | nameToken = <object>)
+		("[" "]" { multiValues = true; })?
+		dValue = default_float()
+		(descr = getDescription())? ";"
+|		
+	<ENUM> { tipo = ENUM; tipoTxt = "enum"; }
+	 	(<auto_specifier> { wAuto = true; })?
+		enumList = enumeration(elem.getOwnerDocument())
+		( nameToken = <name> | nameToken = <object>)
+		("[" "]" { multiValues = true; })?
+		dValue = default_name()
+		(descr = getDescription())? ";"
+|		 
+	<STRING> { tipo = STRING; tipoTxt = "String"; }
+		(<auto_specifier> { wAuto = true; })?
+		( nameToken = <name> | nameToken = <object>)
+		("[" "]" { multiValues = true; })?
+		dValue = default_string()
+		(descr = getDescription())? ";"
+|		 
+	<BOOLEAN> { tipo = BOOLEAN; tipoTxt = "boolean"; }
+		(<auto_specifier> { wAuto = true; })?
+		enumList = bool_values(elem.getOwnerDocument())
+		( nameToken = <name> | nameToken = <object>)
+		("[" "]" { multiValues = true; })?
+		dValue = default_bool()
+		(descr = getDescription())? ";"
+)
+
+
+	{// Look over data
+
+		if (searchElement(elem, OilXMLLabels.ELEM_REFERENCE, OilXMLLabels.ATTR_NAME, nameToken.image)) {
+			throw new ParseException("Found an element declared more than one time with differents proterties.\n"
+			+ nameToken.image + " declared as REFERENCE and as " + tipoTxt + "\n"
+			+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
+		}
+
+		//System.err.println( tipo + " " + tipoTxt);
+		// leaf
+		if ( tipo == UINT32 ||
+		     tipo ==  INT32 ||
+		     tipo == UINT64 ||
+		     tipo ==  INT64 ||
+		     tipo ==  FLOAT ||
+		     tipo == STRING ) {
+			if (searchElement(elem, OilXMLLabels.ELEM_VARIANT, OilXMLLabels.ATTR_NAME, nameToken.image)) {
+				throw new ParseException("Found an element declared more than one time with differents proterties.\n"
+				+ nameToken.image + " declared as VARIANT and as " + tipoTxt + "\n"
+				+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
+			}
+			nodo = makeElement(elem, OilXMLLabels.ELEM_ATTRIBUTE, OilXMLLabels.ATTR_NAME, nameToken.image);
+		}
+		else {	// ENUM , BOOLEAN
+			
+			if (searchElement(elem, OilXMLLabels.ELEM_ATTRIBUTE, OilXMLLabels.ATTR_NAME, nameToken.image)) {
+				throw new ParseException("Found an element declared more than one time with differents proterties.\n"
+				+ nameToken.image + " declared as ATTRIBUTE and as " + tipoTxt + "\n"
+				+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
+			}
+			nodo = makeElement(elem, OilXMLLabels.ELEM_VARIANT, OilXMLLabels.ATTR_NAME, nameToken.image);
+		}
+		
+		tipoTxt = tipoTxt.toUpperCase();
+		setAttribute(nodo, OilXMLLabels.ATTR_TYPE, tipoTxt, nameToken);
+
+		if (nested) {
+			setAttribute(nodo, LOCATION, "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")", nameToken);
+		}
+
+
+		// with auto option
+		if (wAuto) {
+			setAttribute(nodo, OilXMLLabels.ATTR_WITH_AUTO, "true", nameToken);
+		}
+
+		// default Value / auto Value
+		if (dValue != null) {
+			if (dValue[0] != null) {
+				setAttribute(nodo, OilXMLLabels.ATTR_DEFAULT_VALUE, dValue[0], nameToken);
+			} else if (dValue[1] != null) {
+				setAttribute(nodo, OilXMLLabels.ATTR_AUTO, "true", nameToken);
+			}
+		}
+		
+		// multiple Values option
+		if (multiValues) {
+			setAttribute(nodo, OilXMLLabels.ATTR_MULTIPLE_VALUES, "true", nameToken);
+		}
+
+		// range or list of values
+		if (values != null) {
+			// range
+			if (values[0].equals("range") ) {
+				if (searchElement(nodo, OilXMLLabels.ELEM_VALUE, null, null)) {
+					throw new ParseException("Found an element declared more than one time with differents proterties.\n"
+					+ "RANGE-VALUE of " + nameToken.image + "\n"
+					+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
+				}
+				
+                                Element el = makeElement(elem, OilXMLLabels.ELEM_RANGE, (String) null, (String) null);
+				
+				setAttribute(el, OilXMLLabels.ATTR_MIN, values[1], nameToken);
+				setAttribute(el, OilXMLLabels.ATTR_MIN, values[2], nameToken);
+			}
+
+			// list of values
+			else if (values[0].equals("value") ) {
+				if (searchElement(nodo, OilXMLLabels.ELEM_RANGE, null, null)) {
+					throw new ParseException("Found an element declared more than one time with differents proterties.\n"
+					+ "RANGE-VALUE of " + nameToken.image + "\n"
+					+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
+				}
+				
+				for (int i=1; i< values.length; i++) {
+					makeElement(elem, OilXMLLabels.ELEM_VALUE, OilXMLLabels.ATTR_VALUE, values[1]);
+				}
+			}
+		}
+
+		// enum list
+		if ( enumList != null) {
+			for (int i=0; i< enumList.length; i++) {
+
+				if (nested) {
+					nodo.appendChild( enumList[i] );
+				} else {
+					mergeElement(nodo, enumList[i]);
+				}
+			}
+		}
+
+		// description
+		if (descr != null) {
+			Element nDescr = nodo.getOwnerDocument().createElement(OilXMLLabels.ELEM_DESCRIPTION);
+			nDescr.appendChild( nodo.getOwnerDocument().createTextNode( descr ) );
+			nodo.appendChild(nDescr);
+		}
+		
+	}	// end of impl_attr_def
+		
+}
+
+
+String[] number_range() :
+{
+	LinkedList valori = null;
+	Token t;
+}
+{
+	(
+	LOOKAHEAD(4)
+		// range
+		"[" t=<number> { 
+			valori = new LinkedList();
+			valori.addLast("range");
+			valori.addLast(t.image);
+		} ".." t=<number> {
+			valori.addLast(t.image);
+		} "]"	
+	|
+		// list
+		"[" t=<number> {
+			valori = new LinkedList();
+			valori.addLast("list");
+			valori.addLast(t.image);
+		} ( "," t=<number> {
+			valori.addLast(t.image);
+		} )* "]"
+	)?
+
+	{
+		if (valori == null) return null;	// no range / values
+		
+		// return range or values
+		return (String[]) valori.toArray( new String[0] );
+	}
+}
+
+String[] default_number() :
+{	
+	String[] risp = null;
+	Token t;
+}
+{
+	("=" (
+		t=<number> {
+			risp = new String[2];
+			risp[0] = t.image;
+			risp[1] = null;
+		} | <NO_DEFAULT> {
+			// nothing to do
+		} | <AUTO> {
+			risp = new String[2];
+			risp[0] = null;
+			risp[1] = new String("auto");
+		}
+	))?
+	{	return risp;	}
+}
+
+String[] float_range() :
+{
+	String[] risp = null;
+	Token t;
+}
+{
+	(
+		"["  t=<float_> {
+			risp = new String[3];
+			risp[0] = new String("range");
+			risp[1] = t.image;
+		}".." t=<float_> {
+			risp[2] = t.image;
+		}"]"
+	)?
+
+	{	return risp;	}
+}
+
+String[] default_float() :
+{
+	String[] risp = null;
+	Token t;
+}
+{
+	("=" (
+		t=<float_> {
+			risp = new String[2];
+			risp[0] = t.image;
+			risp[1] = null;
+		} | <NO_DEFAULT> {
+			// nothing to do
+		} | <AUTO> {
+			risp = new String[2];
+			risp[0] = null;
+			risp[1] = new String("auto");
+		}
+	))?
+	
+	{	return risp;	}
+}
+
+Element[] enumeration(Document doc) :
+{
+	LinkedList risp = null;
+	Element tmp;
+}
+{
+	"[" ( tmp = enumerator(doc) {	// the first
+		risp = new LinkedList();
+		risp.addLast( tmp );
+		
+	} ("," tmp = enumerator(doc) {	// others
+		risp.addLast( tmp );
+	} )* )? "]"
+
+	{
+		if ( risp == null)
+			return null;
+		
+		return (Element[]) risp.toArray( new Element[0] );
+		
+	}
+}
+
+Element enumerator(Document doc) :
+{
+	Element elem = doc.createElement(OilXMLLabels.ELEM_ENUMERATOR);
+	Token t;
+}
+{
+	t = <name> {
+		elem.setAttribute(OilXMLLabels.ATTR_NAME, t.image);
+	}
+	impl_parameter_list(elem)
+	(addDescription(elem))? // description
+
+	{	return elem;	}
+}
+
+void impl_parameter_list(Node elem) :
+{
+}
+{
+	( "{" (implementation_def(elem, true))* "}" )?
+}
+
+String[] default_name() :
+{
+	String[] risp = null;
+	Token t;
+}
+{
+	("=" (
+		t=<name> {
+			risp = new String[2];
+			risp[0] = t.image;
+			risp[1] = null;
+		} | <NO_DEFAULT> {
+			// nothing to do
+		} | <AUTO> {
+			risp = new String[2];
+			risp[0] = null;
+			risp[1] = new String("auto");
+		}
+	))?
+
+	{	return risp;	}
+}
+
+
+
+String[] default_string() :
+{
+	String[] risp = null;
+	String s;
+}
+{
+	("=" (
+		s=getString() {
+			risp = new String[2];
+			risp[0] = s;
+			risp[1] = null;
+		} | <NO_DEFAULT> {
+			// nothing to do
+		} | <AUTO> {
+			risp = new String[2];
+			risp[0] = null;
+			risp[1] = new String("auto");
+		}
+	))?
+
+	{       return risp;    }
+}
+
+Element[] bool_values(Document doc) :
+{
+	Element[] risp = null;
+
+	// create two Element (True and ...
+	risp = new Element[2];
+	risp[0] = doc.createElement(OilXMLLabels.ELEM_ENUMERATOR);
+	risp[0].setAttribute(OilXMLLabels.ATTR_NAME, "TRUE");
+	// .. and false)
+	risp[1] = doc.createElement(OilXMLLabels.ELEM_ENUMERATOR);
+	risp[1].setAttribute(OilXMLLabels.ATTR_NAME, "FALSE");
+
+}
+{
+	(
+		"[" <TRUE> 
+		impl_parameter_list(risp[0])
+		(addDescription(risp[0]))? // description
+		","
+
+		// ---
+		
+		<FALSE>
+		impl_parameter_list(risp[1])
+		(addDescription(risp[1]))? // description
+		"]"
+	)?
+	{	return risp;	}
+}
+
+String[] default_bool() :
+{
+	String[] risp = null;
+}
+{
+	("=" (
+		<TRUE> {
+			risp = new String[2];
+			risp[0] = "TRUE";
+			risp[1] = null;
+		} | <FALSE> {
+			risp = new String[2];
+			risp[0] = "FALSE";
+			risp[1] = null;
+		} | <NO_DEFAULT> {
+			// nothing to do
+		} | <AUTO> {
+			risp = new String[2];
+			risp[0] = null;
+			risp[1] = new String("auto");
+		}
+	))?
+
+	{       return risp;    }
+}
+
+
+void impl_ref_def(Node elem, boolean nested) :
+{
+	Element nodo = null;
+	Token t1,t2;
+}
+{
+	t1=<object_ref_type> {
+	}
+	(t2=<name> | t2=<object>) {
+		if (searchElement(elem, OilXMLLabels.ELEM_VARIANT, OilXMLLabels.ATTR_NAME, t2.image)
+			|| searchElement(elem, OilXMLLabels.ELEM_ATTRIBUTE, OilXMLLabels.ATTR_NAME, t2.image)) {
+			throw new ParseException("Found an element declared more than one time with differents proterties.\n"
+			+ t2.image + " declared as VARIANT/ATTRIBUTE and as " + t1.image + "\n"
+			+ "(row =" +t2.beginLine + ", col = "+t2.beginColumn+")");
+		}
+		nodo = makeElement(elem, OilXMLLabels.ELEM_REFERENCE, OilXMLLabels.ATTR_NAME, t2.image);
+
+		
+		if (nested) {
+			setAttribute(nodo, LOCATION, "(row =" +t2.beginLine + ", col = "+t2.beginColumn+")", t2);
+		}
+		setAttribute(nodo, OilXMLLabels.ATTR_OBJ_REF_TYPE, t1.image, t2);
+
+	}
+	("[" "]" {
+		setAttribute(nodo, OilXMLLabels.ATTR_MULTIPLE_VALUES, "true", t2);
+	})? 
+	(addDescription(nodo))? // description
+	";"
+}
+
+// ----------- Application Definition ----------------
+
+void application_definition(Document doc, Element elem) :
+{
+	Token t;
+}
+{	
+	<CPU> 
+	t=<name> {
+		elem.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+	}
+	"{" object_definition_list(doc, elem) "}"
+	(addDescription(elem))? // description
+	";"
+}
+
+void object_definition_list(Document doc, Element elem) :
+{
+}
+{
+	( 
+		object_definition(doc, elem)
+	)*
+}
+
+void object_definition(Document doc, Node elem) :
+{
+	Token t;
+	Element nodo = doc.createElement(OilXMLLabels.ELEM_OBJECT);
+	elem.appendChild(nodo);
+}
+{
+	t = <object> {
+		nodo.setAttribute(OilXMLLabels.ATTR_TYPE, t.image );
+	}
+	t = <name> {
+		nodo.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+	}
+	( "{" parameter_list(doc, nodo) "}" )?
+	(addDescription(nodo))? // description
+	 ";"
+}
+
+void parameter_list(Document doc, Node elem) :
+{
+}
+{
+	(
+		parameter(doc, elem)
+	)*
+}
+
+void parameter(Document doc, Node elem) :
+{
+	Token t;
+	Element nodo = doc.createElement(OilXMLLabels.ELEM_PARAMETER);
+	elem.appendChild(nodo);
+}
+{
+	(t=<name> | t=<object>) {
+		nodo.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+	} "=" attribute_value(doc, nodo)
+	(addDescription(nodo))? // description
+	";"
+}
+
+void attribute_value(Document doc, Element elem) :
+{
+	Token t;
+	String s;
+	Element nodo;
+}
+{
+	t = <name> {
+		 nodo = doc.createElement(OilXMLLabels.ELEM_ENUM_VALUE);
+		 elem.appendChild(nodo);
+	
+		nodo.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+
+	} ( "{" parameter_list(doc, nodo) "}")?
+|
+	( t = <TRUE> | t = <FALSE> ) {
+		nodo = doc.createElement(OilXMLLabels.ELEM_ENUM_VALUE);
+		elem.appendChild(nodo);
+	
+		nodo.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+
+	}( "{" parameter_list(doc, nodo) "}" )?
+|
+	t = <number> {
+		elem.setAttribute(OilXMLLabels.ATTR_CURR_VALUE, t.image );
+	}
+|
+	t = <float_> {
+		elem.setAttribute(OilXMLLabels.ATTR_CURR_VALUE, t.image );
+	}
+|
+	s = getString() {
+		elem.setAttribute(OilXMLLabels.ATTR_CURR_VALUE, s );
+	}
+|
+	t = "AUTO" {
+		elem.setAttribute(OilXMLLabels.ATTR_AUTO, "true" );
+	}
+}
+
+void addDescription(Element elem) :
+{
+	String descr;
+}
+{
+	descr = getDescription() {
+                Element nDescr = elem.getOwnerDocument().createElement(OilXMLLabels.ELEM_DESCRIPTION);
+                nDescr.appendChild( elem.getOwnerDocument().createTextNode( descr ) );
+                elem.appendChild(nDescr);
+        }
+}

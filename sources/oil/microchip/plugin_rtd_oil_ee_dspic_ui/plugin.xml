@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.builderOptions">
+      <options
+            class="com.eu.evidence.rtdruid.modules.oil.dspic.ui.preferencepages.Options">
+      </options>
+   </extension>
+
+   <extension
+      point = "org.eclipse.ui.preferencePages">
+       <page id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID.Pic30Configurator"
+            class="com.eu.evidence.rtdruid.modules.oil.dspic.ui.preferencepages.PIC30Configurator"
+            category="com.eu.evidence.rtdruid.oil.preferencePagesID"
+            name="dsPic">
+       </page>
+       <page id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID.Pic32Configurator"
+            class="com.eu.evidence.rtdruid.modules.oil.dspic.ui.preferencepages.PIC32Configurator"
+            category="com.eu.evidence.rtdruid.oil.preferencePagesID"
+            name="Pic32">
+       </page>
+   </extension>
+
+</plugin>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/rtdruid_module_oil/src"
+    editDirectory="/rtdruid_module_oil/src" editorDirectory="/rtdruid_module_oil/src"
+    modelPluginID="rtdruid.vartree.data.oil" modelName="oil" editPluginClass="rtdruid.vartree.data.oil.provider.OilEditPlugin"
+    editorPluginClass="rtdruid.vartree.data.oil.presentation.OilEditorPlugin">
+  <genPackages prefix="OilAppl" basePackage="rtdruid.vartree.data" ecorePackage="oilData.ecore#/">
+    <genDataTypes ecoreDataType="oilData.ecore#//StringVar"/>
+    <genDataTypes ecoreDataType="oilData.ecore#//VarWithDescrVar"/>
+    <genDataTypes ecoreDataType="oilData.ecore#//IntegerVar"/>
+    <genDataTypes ecoreDataType="oilData.ecore#//BooleanVar"/>
+    <genClasses ecoreClass="oilData.ecore#//Root">
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference oilData.ecore#//Root/HwList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//Root/ObjectType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//Root/Description"/>
+    </genClasses>
+    <genClasses ecoreClass="oilData.ecore#//HW">
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference oilData.ecore#//HW/RtosList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//HW/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//HW/Description"/>
+    </genClasses>
+    <genClasses ecoreClass="oilData.ecore#//RTOS">
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference oilData.ecore#//RTOS/ParameterList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//RTOS/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//RTOS/Description"/>
+    </genClasses>
+    <genClasses ecoreClass="oilData.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//Parameter/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//Parameter/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//Parameter/MultiValues"/>
+    </genClasses>
+    <genClasses ecoreClass="oilData.ecore#//OilObjectWithID"/>
+    <genClasses ecoreClass="oilData.ecore#//Variant">
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference oilData.ecore#//Variant/EnumeratorList"/>
+    </genClasses>
+    <genClasses ecoreClass="oilData.ecore#//Value">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//Value/Values"/>
+    </genClasses>
+    <genClasses ecoreClass="oilData.ecore#//Enumerator">
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference oilData.ecore#//Enumerator/ParameterList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//Enumerator/Value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oilData.ecore#//Enumerator/Index"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

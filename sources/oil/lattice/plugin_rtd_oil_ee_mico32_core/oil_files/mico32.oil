@@ -1,0 +1,148 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+            LM32 { // 
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                    TRUE {
+                        BOOLEAN [
+                            TRUE {
+                                UINT32 SYS_SIZE;
+                            },
+                            FALSE
+                        ] IRQ_STACK;
+                        //ENUM [
+                        //    SHARED,
+                        //    PRIVATE {
+                        //        UINT32 SYS_SIZE;
+                        //    }
+                        //] DUMMY_STACK;
+                    },
+                    FALSE
+                ] MULTI_STACK = FALSE;
+                
+                //UINT32 STACK_BOTTOM;
+
+                //UINT32 SYS_SIZE;    // available space for all user stacks
+                //UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+
+                BOOLEAN USESTANDALONEPRINTF; // Optional, default is FALSE
+                BOOLEAN USESMALLC; // Optional, defautl is FALSE	
+            }
+        ] CPU_DATA[];
+
+        ENUM [
+		LATTICE_PLATFORM {
+			ENUM [
+   				LIBRARY {
+					STRING PLATFORM_LIB_PATH;
+					STRING PLATFORM_NAME;
+					STRING PLATFORM_BLD_CFG; // Optional, default is ""
+				}
+			] MODEL;
+			
+			ENUM [
+				UART { // UART max 2						
+					STRING NAME;
+					ENUM [
+						UART_IRQ_SUPPORT,
+						ALL
+					] OPTIONS[];
+				}, 
+				SPI { // SPI max 2
+					STRING NAME;
+					ENUM [
+						SPI_IRQ_SUPPORT,
+						ALL
+					] OPTIONS[];
+				},
+				TIMER{ // TIMER max 4								
+					STRING NAME;
+					ENUM [
+						TIMER_IRQ_SUPPORT,
+						ALL
+					] OPTIONS[];
+				}, 
+				I2C{ // I2C max 2
+					STRING NAME;
+					ENUM [
+						I2C_IRQ_SUPPORT,
+						ALL
+					] OPTIONS[];
+				}, 
+				GPIO{ // GPIO no max
+					STRING NAME;
+					ENUM [
+						GPIO_IRQ_SUPPORT,
+						ALL
+					] OPTIONS[];
+				}
+			] DEVICE[];
+			
+  		}
+		] MCU_DATA;
+		
+		ENUM [
+			XP2_CAMERA_BOARD {
+				ENUM [
+					LEDS,
+					TRANSISTORS,
+					SWITCHES,
+					LIGHTSENSOR,
+					RS232,
+					RS232_IRQ_SUPPORT,
+					CAMERA,
+					CAMERA_IRQ_SUPPORT,
+					RTCLOCK,
+					RTCLOCK_IRQ_SUPPORT,
+					EXTSPI,
+					EXTSPI_IRQ_SUPPORT,
+					ZIGBEE,
+					ZIGBEE_IRQ_SUPPORT,
+					ETHERNET,
+					ETHERNET_IRQ_SUPPORT,
+					ALL_ZIGBEE,
+					ALL_ETHERNET
+				] OPTIONS[];				
+			},
+			FPG_EYE {
+				ENUM [
+					LEDS,
+					TRANSISTORS,
+					SWITCHES,
+					LIGHTSENSOR,
+					RS232,
+					RS232_IRQ_SUPPORT,
+					CAMERA,
+					CAMERA_IRQ_SUPPORT,
+					RTCLOCK,
+					RTCLOCK_IRQ_SUPPORT,
+					EXTSPI,
+					EXTSPI_IRQ_SUPPORT,
+					ZIGBEE,
+					ZIGBEE_IRQ_SUPPORT,
+					ETHERNET,
+					ETHERNET_IRQ_SUPPORT,
+					ALL_ZIGBEE,
+					ALL_ETHERNET
+				] OPTIONS[];				
+			},
+			LATTICE_XP2_EV_BOARD {
+				ENUM [
+					LEDS,
+					RS232,
+					RS232_IRQ_SUPPORT,
+					CAMERA,
+					CAMERA_IRQ_SUPPORT
+				] OPTIONS[];				
+			}
+			
+		] BOARD_DATA;
+
+    };
+    
+};

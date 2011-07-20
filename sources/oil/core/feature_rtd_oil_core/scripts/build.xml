@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="rtdruid" default="all_examples" basedir=".">
+	
+	<!-- List all available templates -->
+	<target name="all_examples">
+		<!-- default values -->
+		<property name="also_configure" value="false"/>
+		<property name="examples_output_dir" value="output"/>
+		
+		<!-- exec -->
+		<rtdruid.Oil.Examples OutputDirectory="${examples_output_dir}" AlsoConfigure="${also_configure}"/>
+	</target>
+
+	<!-- Instantiates a single template -->
+	<target name="an_example">
+		<!-- default values -->
+		<property name="example_output_dir" value="output"/>
+		
+		<!-- exec -->
+		<rtdruid.Oil.Example ExampleID="${example_id}" OutputDirectory="${examples_output_dir}" />
+	</target>
+
+	
+	<!-- Produce configuration files from specified input file -->
+	<target name="compile">
+		<!-- default values -->
+		<property name="in_conf_file" value="conf.oil"/>
+		<property name="pref_file" value=""/>
+		<property name="conf_output_dir" value="debug"/>
+	
+	
+		<rtdruid.Oil.Configurator Inputfile="${in_conf_file}" Preferencefile="${pref_file}" Outputdir="${conf_output_dir}"/>
+	</target>
+</project>

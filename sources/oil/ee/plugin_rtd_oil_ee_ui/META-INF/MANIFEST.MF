@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RT-Druid Erika Enterprise UI Plug-in
+Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.ee.ui;singleton:=true
+Bundle-Version: 1.6.0.qualifier
+Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.ee.ui.Activator
+Bundle-Vendor: Evidence S.r.l.
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.eu.evidence.rtdruid.core,
+ com.eu.evidence.rtdruid.core.ui,
+ com.eu.evidence.rtdruid.oil.core,
+ com.eu.evidence.rtdruid.oil.ee.core,
+ org.eclipse.core.resources,
+ org.eclipse.ui.forms,
+ org.eclipse.ui.ide,
+ com.eu.evidence.rtdruid.oil.ui,
+ org.eclipse.help;resolution:=optional
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: com.eu.evidence.rtdruid.modules.oil.ee.ui.preferencepages

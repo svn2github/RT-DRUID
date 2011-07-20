@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin >
+
+   <extension
+        id="com.eu.evidence.rtdruid.oil.cdt.ui.oil_builder"
+        name="An Oil Configurator for Erika Enterprise on C/C++ systems"
+        point="org.eclipse.core.resources.builders">
+      <builder>
+         <run 
+            class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.builder.OilBuilder">
+            <parameter name="ConfigFileName" value="config.oil" />
+         </run>
+      </builder>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            objectClass="org.eclipse.core.resources.IProject"
+            adaptable="true"
+            name="Oil properties"
+            class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.OilProjectProperties"
+            id="com.eu.evidence.rtdruid.modules.oil.OilProjectPropertiesID">
+         <filter
+               name="nature"
+               value="com.eu.evidence.rtdruid.oil.niossupport.natureID">
+         </filter>
+      </page>
+   </extension>
+   <extension
+         id="com.eu.evidence.rtdruid.oil.niossupport.natureID"
+         name="oilCdtNature"
+         point="org.eclipse.core.resources.natures">
+      <builder id="com.eu.evidence.rtdruid.oil.cdt.ui.oil_builder"/>
+      <runtime>
+         <run class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.RTDOilProjectNature"/>
+      </runtime>
+   </extension>
+   
+   
+      <extension
+         point="org.eclipse.ui.newWizards">  
+<!--
+      <wizard
+            icon="icons/project_wizard_16.gif"
+            class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.RTDOilProjectWizard"
+            category="com.eu.evidence.rtdruid.ui.wizards.categoryID"
+            project="true"
+            name="RT-Druid Oil and C/C++ Project (eclipse 3.4-)"
+            id="com.eu.evidence.rtdruid.oil.niossupport.niosProjectWizardID">
+
+        <description>
+           Evidence RT-Druid will create and manage this C/C++ project using an Oil configuration file. The project will use the ERIKA Enterprise RTOS.
+           Works with eclipse 3.4-
+        </description>
+      </wizard>
+      
+      <wizard
+            icon="icons/project_wizard_16.gif"
+            class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.RTDOilProjectWizardNew"
+            category="com.eu.evidence.rtdruid.ui.wizards.categoryID"
+            project="true"
+            name="RT-Druid Oil and C/C++ Project (eclipse 3.5+)"
+            id="com.eu.evidence.rtdruid.oil.niossupport.niosProjectWizardNewID">
+
+        <description>
+           Evidence RT-Druid will create and manage this C/C++ project using an Oil configuration file. The project will use the ERIKA Enterprise RTOS.
+           Works with eclipse 3.5+
+        </description>
+      </wizard>
+-->      
+      <wizard
+            icon="icons/project_wizard_16.gif"
+            class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.RTDOilProjectWizardProxy"
+            category="com.eu.evidence.rtdruid.ui.wizards.categoryID"
+            project="true"
+            name="RT-Druid Oil and C/C++ Project"
+            id="com.eu.evidence.rtdruid.oil.cdtsupport.oilProjectWizardGenericID">
+
+        <description>
+           Evidence RT-Druid will create and manage this C/C++ project using an Oil configuration file. The project will use the ERIKA Enterprise RTOS.
+        </description>
+      </wizard>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <newWizardShortcut
+               id="com.eu.evidence.rtdruid.oil.cdtsupport.oilProjectWizardGenericID"/>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+         <perspectiveExtension
+            targetID="org.eclipse.cdt.ui.CPerspective">
+         <newWizardShortcut
+               id="com.eu.evidence.rtdruid.oil.cdtsupport.oilProjectWizardGenericID"/>
+      </perspectiveExtension>
+   </extension>
+
+	<extension
+		point="org.eclipse.core.runtime.preferences">
+		<initializer
+        	class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.cygwin.PreferenceInitializer">
+		</initializer>
+	</extension>
+	<extension
+		point="org.eclipse.ui.preferencePages">
+		<page
+        category="com.eu.evidence.rtdruid.preferencePagesID"
+        class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.cygwin.CygPathPreference"
+        id="com.eu.evidence.rtdruid.oil.cdt.cygwin.preferences"
+        name="Cygwin paths">
+		</page>
+	</extension>
+ <extension
+       point="org.eclipse.cdt.ui.CDTWizard">
+    <wizard
+          class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.RTD_CDTProjectWizar"
+          name="RTD_test">
+    </wizard>
+ </extension>
+
+
+</plugin>

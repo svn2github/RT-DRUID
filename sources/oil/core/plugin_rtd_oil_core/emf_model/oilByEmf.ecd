@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" size="1135,811" id="platform:/resource/oil/oilData.ecore#/" metadata="emf-1.0" initialized="true" showWireOptions="1">
+  <children xsi:type="editmodel:ClassEditModel" location="291,19" size="151,76" targetConnections="//@children.1/@sourceConnections.0" id="platform:/resource/asd/src.ecore#//Root" runTimeClassModel="ObjectType;Description">
+    <children xsi:type="editmodel:CompartmentEditModel" size="128,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//Root/Description">
+        <model href="../src.ecore#//Root/Description"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//Root/ObjectType">
+        <model href="../src.ecore#//Root/ObjectType"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="../src.ecore#//Root"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="294,139" size="149,76" id="platform:/resource/asd/src.ecore#//HW" runTimeClassModel="Description;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="126,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//HW/Description">
+        <model href="../src.ecore#//HW/Description"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//HW/Name">
+        <model href="../src.ecore#//HW/Name"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manual" source="//@children.1" target="//@children.0" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="55,0" id="platform:/resource/asd/src.ecore#//Root/hwList" attachSource="true" navigable="true" multiplicityLabel="//@children.1/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.1/@sourceConnections.0/@children.0/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="32,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <model href="../src.ecore#//Root/hwList"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manual" source="//@children.1" target="//@children.2" targetEnd="//@children.1/@sourceConnections.1/@children.1" sourceEnd="//@children.1/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="30,76" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/asd/src.ecore#//HW/rtosList" navigable="true" multiplicityLabel="//@children.1/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.1/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="37,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="../src.ecore#//HW/rtosList"/>
+      </children>
+    </sourceConnections>
+    <model href="../src.ecore#//HW"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="292,242" size="149,76" targetConnections="//@children.1/@sourceConnections.1" id="platform:/resource/asd/src.ecore#//RTOS" runTimeClassModel="Description;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="126,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//RTOS/Description">
+        <model href="../src.ecore#//RTOS/Description"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//RTOS/Name">
+        <model href="../src.ecore#//RTOS/Name"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manual" source="//@children.2" target="//@children.4" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1,76" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/asd/src.ecore#//RTOS/parameterList" navigable="true" multiplicityLabel="//@children.2/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.2/@sourceConnections.0/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="68,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="../src.ecore#//RTOS/parameterList"/>
+      </children>
+    </sourceConnections>
+    <model href="../src.ecore#//RTOS"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="92,55" size="102,44" stereotype="datatype" id="platform:/resource/asd/src.ecore#//StringVar">
+    <model href="../src.ecore#//StringVar"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="293,370" size="150,94" targetConnections="//@children.2/@sourceConnections.0 //@children.9/@sourceConnections.0" id="platform:/resource/asd/src.ecore#//Parameter" runTimeClassModel="Type;MultiValues;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="127,54">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//Parameter/MultiValues">
+        <model href="../src.ecore#//Parameter/MultiValues"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//Parameter/Name">
+        <model href="../src.ecore#//Parameter/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//Parameter/Type">
+        <model href="../src.ecore#//Parameter/Type"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.4" target="//@children.7" targetEnd="//@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.4/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-2,74" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="84,-1"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.4" target="//@children.8" targetEnd="//@children.4/@sourceConnections.1/@children.1" sourceEnd="//@children.4/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="130,94" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="73,-2"/>
+    </sourceConnections>
+    <model href="../src.ecore#//Parameter"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="68,237" size="124,30" id="platform:/resource/asd/src.ecore#//OilObjectWithID" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="../src.ecore#//OilObjectWithID"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="53,141" size="148,44" stereotype="datatype" id="platform:/resource/asd/src.ecore#//VarWithDescrVar">
+    <model href="../src.ecore#//VarWithDescrVar"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="230,542" size="87,30" targetConnections="//@children.4/@sourceConnections.0" id="platform:/resource/asd/src.ecore#//Variant" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manual" source="//@children.7" target="//@children.9" targetEnd="//@children.7/@sourceConnections.0/@children.1" sourceEnd="//@children.7/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,10" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/asd/src.ecore#//Variant/enumeratorList" navigable="true" multiplicityLabel="//@children.7/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.7/@sourceConnections.0/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="74,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="../src.ecore#//Variant/enumeratorList"/>
+      </children>
+    </sourceConnections>
+    <model href="../src.ecore#//Variant"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="364,530" size="180,58" targetConnections="//@children.4/@sourceConnections.1" id="platform:/resource/asd/src.ecore#//Value" runTimeClassModel="Values">
+    <children xsi:type="editmodel:CompartmentEditModel" size="157,18">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//Value/Values">
+        <model href="../src.ecore#//Value/Values"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="../src.ecore#//Value"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="27,528" size="121,58" targetConnections="//@children.7/@sourceConnections.0" id="platform:/resource/asd/src.ecore#//Enumerator" runTimeClassModel="Value">
+    <children xsi:type="editmodel:CompartmentEditModel" size="98,18">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/asd/src.ecore#//Enumerator/Value">
+        <model href="../src.ecore#//Enumerator/Value"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manual" source="//@children.9" target="//@children.4" targetEnd="//@children.9/@sourceConnections.0/@children.1" sourceEnd="//@children.9/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="92,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/asd/src.ecore#//Enumerator/parameterList" navigable="true" multiplicityLabel="//@children.9/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.0/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="68,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="../src.ecore#//Enumerator/parameterList"/>
+      </children>
+      <bendpoints secondRelativeDimension="-281,-1" firstRelativeDimension="0,-141"/>
+    </sourceConnections>
+    <model href="../src.ecore#//Enumerator"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <model href="../src.ecore#/"/>
+  <classDiagramPreferences xsi:type="editmodel:EMFClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural"/>
+</editmodel:ClassDiagramEditModel>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.builderOptions">
+      <options
+            class="com.eu.evidence.rtdruid.modules.oil.avr5.preferencepages.Options">
+      </options>
+   </extension>
+
+
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="RT-Druid Avr5 Programmer Action Set"
+            visible="true"
+            id="com.eu.evidence.rtdruid.modules.avr5.actionSet">
+         <menu
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.avr5ProgrMenu"
+               label="Avr5 Programmer"
+               path="project/build.ext">
+            <separator name="settings"/>
+            <separator name="views"/>
+            <separator name="actions"/>
+            <separator name="additions"/>
+         </menu>
+         <action
+               label="Verify Memory"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.VerifyMemory"
+               tooltip="Verify the Flash Memory"
+               menubarPath="project/com.eu.evidence.rtdruid.modules.avr5.actionSet.avr5ProgrMenu/actions"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.VerifyMemory"/>
+         <action
+               label="Program Memory"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.ProgramMemory"
+               tooltip="Program the flash memory"
+               menubarPath="project/com.eu.evidence.rtdruid.modules.avr5.actionSet.avr5ProgrMenu/actions"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.ProgramMemory"/>
+         <action
+               label="Erase Memory"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.EraseMemory"
+               tooltip="Erase the Flash Memory"
+               menubarPath="project/com.eu.evidence.rtdruid.modules.avr5.actionSet.avr5ProgrMenu/actions"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.EraseMemory"/>
+         <action
+               label="Read Fuse"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.ReadFuse"
+               tooltip="Read the fuse"
+               menubarPath="project/com.eu.evidence.rtdruid.modules.avr5.actionSet.avr5ProgrMenu/actions"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.ReadFuse"/>
+         <action
+               label="Disable JTag"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.JTagDisable"
+               tooltip="DIsable the JTag"
+               menubarPath="project/com.eu.evidence.rtdruid.modules.avr5.actionSet.avr5ProgrMenu/actions"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.JTagDisable"/>
+         <action
+               label="Enable JTag"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.JTagEnable"
+               tooltip="Enable the JTag"
+               menubarPath="project/com.eu.evidence.rtdruid.modules.avr5.actionSet.avr5ProgrMenu/actions"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.JTagEnable"/>
+      </actionSet>
+   </extension> 
+
+   <extension
+      point = "org.eclipse.ui.preferencePages">
+       <page id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID.Avr5Configurator"
+            class="com.eu.evidence.rtdruid.modules.oil.avr5.preferencepages.Avr5Configurator"
+            category="com.eu.evidence.rtdruid.oil.preferencePagesID"
+            name="Avr5">
+       </page>
+   </extension>
+
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IProject"
+            id="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu">
+         <menu
+               label="Avr5 programmer"
+               path="additions"
+               id="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu1">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+
+         <action
+               label="Verify Memory"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.VerifyMemory_pm"
+               tooltip="Verify the flash memory"
+               menubarPath="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu1/actions"
+               enablesFor="1"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.menu1.VerifyMemory"/>
+         <action
+               label="Program Memory"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.ProgramMemory_pm"
+               tooltip="Program the flash memory"
+               menubarPath="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu1/actions"
+               enablesFor="1"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.menu1.ProgramMemory"/>
+         <action
+               label="Erase Memory"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.EraseMemory_pm"
+               tooltip="Erase the Flash Memory"
+               menubarPath="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu1/actions"
+               enablesFor="1"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.menu1.EraseMemory"/>
+         <action
+               label="Read Fuse"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.ReadFuse_pm"
+               tooltip="Read the fuse"
+               menubarPath="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu1/actions"
+               enablesFor="1"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.menu1.ReadFuse"/>
+         <action
+               label="Disable JTag"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.JTagDisable_pm"
+               tooltip="Disable the JTag"
+               menubarPath="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu1/actions"
+               enablesFor="1"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.menu1.JTagDisable"/>
+         <action
+               label="Enable JTag"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.JTagEnable_pm"
+               tooltip="Enable the JTag"
+               menubarPath="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu1/actions"
+               enablesFor="1"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.menu1.JTagEnable"/>
+      </objectContribution>
+      <objectContribution
+            id="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu"
+            nameFilter="*.srec"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               label="Avr5 programmer"
+               path="additions"
+               id="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu2">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               label="Verify Memory"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.VerifyMemory_pm"
+               tooltip="Verify the flash memory"
+               menubarPath="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu2/actions"
+               enablesFor="1"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.menu2.VerifyMemory"/>
+         <action
+               label="Program Memory"
+               class="com.eu.evidence.rtdruid.modules.oil.avr5.actions.ProgramMemory_pm"
+               tooltip="Program the flash memory"
+               menubarPath="com.eu.evidence.rtdruid.oil.configurator.avr5.programmer_menu.menu2/actions"
+               enablesFor="1"
+               id="com.eu.evidence.rtdruid.modules.avr5.actionSet.menu2.ProgramMemory"/>
+      </objectContribution>
+   </extension>
+
+
+</plugin>

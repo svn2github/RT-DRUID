@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Erika Enterprise sources
+Bundle-SymbolicName: com.eu.evidence.ee;singleton:=true
+Bundle-Version: 1.6.0.qualifier
+Bundle-Vendor: Evidence S.r.l.
+Require-Bundle: org.eclipse.core.runtime,
+ com.eu.evidence.templates.core,
+ com.eu.evidence.rtdruid.oil.ee.core,
+ com.eu.evidence.rtdruid.oil.core
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+

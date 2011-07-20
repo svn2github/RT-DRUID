@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin>
+
+<!--
+	The wizard
+-->
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            name="%_UI_DataModelWizard_label"
+            icon="icons/rtd_icon.png"
+            category="com.eu.evidence.rtdruid.ui.wizards.categoryID"
+            class="com.eu.evidence.rtdruid.vartree.data.presentation.DataModelWizard"
+            id="com.eu.evidence.rtdruid.vartree.data.presentation.DataModelWizardID">
+         <description>
+            %_UI_DataModelWizard_description
+         </description>
+         <selection
+               class="org.eclipse.core.resources.IResource">
+         </selection>
+      </wizard>
+   </extension>
+<!--
+	Project
+-->
+   <extension
+         point="org.eclipse.ui.newWizards">  
+     <wizard
+           id = "com.eu.evidence.rtdruid.vartree.data.presentation.ProjectWizardID"
+           name = "%_UI_ProjectWizard_label"
+           project="true"
+           class ="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
+           category="com.eu.evidence.rtdruid.ui.wizards.categoryID" >
+
+        <description>
+           %_UI_ProjectWizard_description
+        </description>
+        <selection
+           class = "org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+<!--
+	The editor
+-->
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.eu.evidence.rtdruid.vartree.data.presentation.DataEditor"
+            contributorClass="com.eu.evidence.rtdruid.vartree.data.presentation.DataActionBarContributor"
+            default="true"
+            icon="icons/rtd_icon_16.png"
+            id="com.eu.evidence.rtdruid.vartree.data.presentation.DataEditorID"
+			extensions="rtd, rtD, rTd, Rtd, rTD, RtD, RTD, ertd, ertD, erTd, eRtd, erTD, eRtD, eRTD, ErtD, ErTd, ERtd, ErTD, ERtD, ERTD"
+            name="%_UI_DataEditor_label">
+      </editor>
+   </extension>
+<!--   <extension
+
+
+         point="org.eclipse.ui.editors">
+      <editor
+            name="%_UI_DataEditor_label"
+            icon="icons/full/obj16/DataModelFile.gif"
+            extensions="ertd"
+            contributorClass="com.eu.evidence.rtdruid.vartree.data.presentation.DataActionBarContributor"
+            class="com.eu.evidence.rtdruid.vartree.data.presentation.DataEditor"
+            id="com.eu.evidence.rtdruid.vartree.data.presentation.DataEditorID">
+      </editor>
+   </extension>-->
+
+<!--   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Functional Flow"
+            extensions="rtd"
+            icon="view.gif"
+            class="com.eu.evidence.rtdruid.module.mapping.functionalviewer.ui.FunctionalFlowViewer"
+            id="com.eu.evidence.rtdruid.module.mapping.functionalviewer.ui.FlowEditorId">
+      </editor>
+   </extension>-->
+
+
+<!--
+	The view
+-->
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%category.name.0"
+            id="com.eu.evidence.rtdruid.viewersID">
+      </category>
+<!--      <view
+            name="RT-Druid Output"
+            icon="icons/wizban/NewData.gif"
+            category="com.eu.evidence.rtdruid.viewersID"
+            class="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidView"
+            id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidViewID">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">-->
+      <view
+            name="%view.name.0"
+            icon="icons/rtd_icon_16.png"
+            category="com.eu.evidence.rtdruid.viewersID"
+            class="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableView"
+            id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewID">
+      </view>
+   </extension>
+  
+<!-- 
+   <extension
+    point = "org.eclipse.ui.viewActions">
+      <viewContribution 
+         id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewContributionID" 
+         targetID="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewID">        
+	   <action id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewActionID" 
+              label="Add Task" 
+	      menubarPath="additions"
+              toolbarPath="additions" 
+              icon="icons/full/obj16/AddTask.gif" 
+              tooltip="Add Task" 
+              class="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewActionDelegate" 
+              > 
+	   </action>
+      </viewContribution>
+ </extension>
+-->
+ <!--
+ <extension
+    point = "org.eclipse.ui.viewActions">
+      <viewContribution 
+         id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewCPUContributionID" 
+         targetID="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewID">        
+	   <action id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewCPUActionID" 
+              label="Add CPU" 
+	          menubarPath="additions"
+              toolbarPath="additions" 
+              icon="icons/full/obj16/AddCPU.gif" 
+              tooltip="Add CPU" 
+              class="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewCPUActionDelegate" 
+              > 
+	   </action>
+      </viewContribution>
+ </extension>
+ -->
+ 
+ <!--
+ <extension point = "org.eclipse.ui.popupMenus">
+ 	 <viewerContribution
+        id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewerContributionID"
+        targetID="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewID">
+	    <action id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewerActionDelegateID"
+	       label="Add Task"
+	       menubarPath="additions"
+           definitionId="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewPopupViewAction"
+	       class="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewerActionDelegateID">	
+	    </action>
+       </viewerContribution>
+ </extension>
+ -->
+   
+<!--
+	Perspective (changes on resourcePerspective)
+-->
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <viewShortcut
+               id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidViewID"/>
+         <viewShortcut
+               id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewID"/>
+         <newWizardShortcut
+               id="com.eu.evidence.rtdruid.vartree.data.presentation.DataModelWizardID"/>
+         <newWizardShortcut
+               id="com.eu.evidence.rtdruid.vartree.data.presentation.ProjectWizardID"/>
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidViewID"/>
+      </perspectiveExtension>
+   </extension>
+<!--
+	Actions (MenuBar)
+-->
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="%actionSet.label.0"
+            visible="true"
+            id="com.eu.evidence.rtdruid.vartree.data.editor.actionSet">
+         <menu
+               label="%_UI_DataEditor_menu"
+               id="com.eu.evidence.rtdruid.vartree.dataMenuID">
+            <separator name="settings"/>
+            <separator name="views"/>
+            <separator name="actions"/>
+            <separator name="additions"/>
+         </menu>
+         <menu
+               label="%menu.label.0"
+               id="com.eu.evidence.rtdruid.vartree.dataMenuID.showID"
+               path="com.eu.evidence.rtdruid.vartree.dataMenuID/views">
+            <separator name="actions"/>
+            <separator name="additions"/>
+         </menu>
+         <action
+               label="%action.label.0"
+               class="com.eu.evidence.rtdruid.vartree.data.actions.OutputAction"
+               tooltip="%action.tooltip.0"
+               menubarPath="com.eu.evidence.rtdruid.vartree.dataMenuID/com.eu.evidence.rtdruid.vartree.dataMenuID.showID/actions"
+               id="com.eu.evidence.rtdruid.vartree.data.actions.OutputActionID"/>
+         <action
+               label="%action.label.1"
+               class="com.eu.evidence.rtdruid.vartree.data.actions.TableEditorAction"
+               tooltip="%action.tooltip.1"
+               menubarPath="com.eu.evidence.rtdruid.vartree.dataMenuID/com.eu.evidence.rtdruid.vartree.dataMenuID.showID/actions"
+               id="com.eu.evidence.rtdruid.vartree.data.actions.TableEditorActionID"/>
+<!--         <action
+               label="Merge files ..."
+               class="com.eu.evidence.rtdruid.vartree.data.actions.MergeFilesAction"
+               tooltip="Merge files ..."
+               id="com.eu.evidence.rtdruid.vartree.data.actions.MergeFilesActionID"
+               menubarPath="com.eu.evidence.rtdruid.vartree.dataMenuID/actions"/>-->
+         <action
+               toolbarPath="actions"
+               label="%action.label.2"
+               class="com.eu.evidence.rtdruid.vartree.data.actions.SchedAnalysisWAction"
+               tooltip="%action.tooltip.2"
+               icon="icons/full/wizban/analysis3_16.png"
+               id="com.eu.evidence.rtdruid.vartree.data.actions.SchedAnalysisWizardActionID"
+               menubarPath="com.eu.evidence.rtdruid.vartree.dataMenuID/actions"/>
+         <action
+               toolbarPath="actions"
+               label="%action.label.3"
+               class="com.eu.evidence.rtdruid.vartree.data.actions.PartialOrderAction"
+               tooltip="%action.tooltip.3"
+               icon="icons/full/wizban/analysis3_16.png"
+               id="com.eu.evidence.rtdruid.vartree.data.actions.PartialOrderActionID"
+               menubarPath="com.eu.evidence.rtdruid.vartree.dataMenuID/actions"/>
+      </actionSet>
+   </extension>
+</plugin>

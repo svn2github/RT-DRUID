@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Templates for Erika Enterprise for Power Pc
+Bundle-SymbolicName: com.eu.evidence.ee.templates.ppc;singleton:=true
+Bundle-Version: 1.6.0.qualifier
+Require-Bundle: org.eclipse.core.runtime,
+ com.eu.evidence.templates.core
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Evidence S.r.l.

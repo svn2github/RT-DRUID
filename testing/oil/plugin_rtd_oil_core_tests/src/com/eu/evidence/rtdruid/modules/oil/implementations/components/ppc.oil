@@ -1,0 +1,54 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+    	ENUM [
+    		MPC5 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                UINT32 STACK_BOTTOM;
+
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                
+                // Irq Handlers
+                STRING HANDLER_IRQ0;
+                STRING HANDLER_LVL0;
+                STRING HANDLER_IRQ1;
+                STRING HANDLER_LVL1;
+                STRING HANDLER_IRQ2;
+                STRING HANDLER_LVL2;
+                STRING HANDLER_IRQ3;
+                STRING HANDLER_LVL3;
+                STRING HANDLER_IRQ4;
+                STRING HANDLER_LVL4;
+                STRING HANDLER_IRQ5;
+                STRING HANDLER_LVL5;
+                STRING HANDLER_IRQ6;
+                STRING HANDLER_LVL6;
+                STRING HANDLER_IRQ7;
+                STRING HANDLER_LVL7;
+
+            }
+        ] CPU_DATA;
+    };
+};

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="com.eu.evidence.rtdruid.oil.ee" default="build.update.jar" basedir=".">
+
+
+
+<!--
+******************************************
+                 COMMON
+******************************************
+-->
+	<target name="import" unless="ANT_PARAMETERS">	
+		<import file="../ant_parameters.xml" optional="false"/>
+	</target>
+
+	<property name="bundleId" value="com.eu.evidence.rtdruid.oil.ee"/>
+	<property name="bundleVersion" value="${frtd_oil_ee_v}.${build_numer}"/>
+	
+	<import file="../compileTools/manual_build_features.xml" optional="false"/>
+	
+	
+	
+<!--
+******************************************
+                 SPECIFIC
+******************************************
+-->	
+	<target name="all.plugins">
+		<ant antfile="manual_build.xml" dir="../open_rtd_oil_ee_core" target="${target}">
+			<property name="bundleId" value="com.eu.evidence.rtdruid.oil.ee.core"/>
+			<property name="bundleVersion" value="${rtd_oil_ee_core_v}.${build_numer}"/>
+		</ant>
+		<ant antfile="manual_build.xml" dir="../open_rtd_oil_ee_ui" target="${target}">
+			<property name="bundleId" value="com.eu.evidence.rtdruid.oil.ee.ui"/>
+			<property name="bundleVersion" value="${rtd_oil_ee_ui_v}.${build_numer}"/>
+		</ant>
+	</target>
+
+	<target name="all.features">
+	</target>
+	<target name="update.feature">
+	</target>
+	
+	<target name="rootFileswin32_win32_x86">
+	</target>
+
+
+	<target name="build.update.jar" description="Build the feature jar of: com.eu.evidence.rtdruid.core for an update site.">
+		<antcall target="common_build.update.jar">
+			<param name="feature_id" value="${bundleId}"/>
+			<param name="feature_version" value="${bundleVersion}"/>
+		</antcall>
+	</target>
+
+	<target name="publish.bin.parts">
+		<antcall target="common_publish.bin.parts">
+			<param name="feature_id" value="${bundleId}"/>
+			<param name="feature_version" value="${bundleVersion}"/>
+			<param name="feature_featureIds" value=""/>
+			<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.ee.core:0.0.0,${rtd_oil_ee_core_v}.${build_numer},com.eu.evidence.rtdruid.oil.ee.ui:0.0.0,${rtd_oil_ee_ui_v}.${build_numer},"/>
+		</antcall>
+	</target>
+	
+	<target name="gather.bin.parts" if="feature.base">
+		<antcall target="common_gather.bin.parts">
+			<param name="feature_id" value="${bundleId}"/>
+			<param name="feature_version" value="${bundleVersion}"/>
+			<param name="feature_featureIds" value=""/>
+			<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.ee.core:0.0.0,${rtd_oil_ee_core_v}.${build_numer},com.eu.evidence.rtdruid.oil.ee.ui:0.0.0,${rtd_oil_ee_ui_v}.${build_numer},"/>
+		</antcall>
+	</target>
+</project>

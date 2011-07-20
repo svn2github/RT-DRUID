@@ -1,0 +1,9 @@
+				
+<project default="main">
+
+	<target name="main">
+		<ant antfile="build_ant.xml"/>
+		<ant antfile="build_full.xml"/>
+		<ant antfile="build_mini.xml"/>
+	</target>
+</project>

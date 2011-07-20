@@ -1,0 +1,200 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+            AVR_5 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                    TRUE {
+						BOOLEAN [
+							TRUE {
+								UINT32 SYS_SIZE;
+							},
+							FALSE
+						] IRQ_STACK;
+						ENUM [
+							SHARED,
+							PRIVATE {
+								UINT32 SYS_SIZE;
+							}
+						] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                UINT32 STACK_BOTTOM;
+
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                
+                ENUM [STOP, DIV1, DIV8, DIV32, DIV64, DIV256, DIV1024] TIMER0 = STOP;
+                ENUM [STOP, DIV1, DIV8,        DIV64, DIV256, DIV1024] TIMER1 = STOP;
+                ENUM [STOP, DIV1, DIV8,        DIV64, DIV256, DIV1024] TIMER2 = STOP;
+                ENUM [STOP, DIV1, DIV8,        DIV64, DIV256, DIV1024] TIMER3 = STOP;
+
+                // Interrupt Handlers
+                STRING HANDLER_IRQ0;	// external interrupt request 0
+                STRING HANDLER_IRQ1;	// external interrupt request 1
+                STRING HANDLER_IRQ2;	// external interrupt request 2
+                STRING HANDLER_IRQ3;	// external interrupt request 3
+                STRING HANDLER_IRQ4;	// external interrupt request 4
+                STRING HANDLER_IRQ5;	// external interrupt request 5
+                STRING HANDLER_IRQ6;	// external interrupt request 6
+                STRING HANDLER_IRQ7;	// external interrupt request 7
+                
+                STRING HANDLER_T0_MATCH;	// Timer/Counter 0 Compare Match
+                STRING HANDLER_T0_OVERFLW;	// Timer/Counter 0 Overflow
+                STRING HANDLER_T1_EVENT;	// Timer/Counter 1 Capture Event
+                STRING HANDLER_T1_MATCH_A;	// Timer/Counter 1 Compare Match A
+                STRING HANDLER_T1_MATCH_B;	// Timer/Counter 1 Compare Match B
+                STRING HANDLER_T1_MATCH_C;	// Timer/Counter 1 Compare Match C
+                STRING HANDLER_T1_OVERFLW;	// Timer/Counter 1 Overflow
+                STRING HANDLER_T2_MATCH;	// Timer/Counter 2 Compare Match
+                STRING HANDLER_T2_OVERFLW;	// Timer/Counter 2 Overflow
+                STRING HANDLER_T3_EVENT;	// Timer/Counter 3 Capture Event
+                STRING HANDLER_T3_MATCH_A;	// Timer/Counter 3 Compare Match A
+                STRING HANDLER_T3_MATCH_B;	// Timer/Counter 3 Compare Match B
+                STRING HANDLER_T3_MATCH_C;	// Timer/Counter 3 Compare Match C
+                STRING HANDLER_T3_OVERFLW;	// Timer/Counter 3 Overflow
+
+                STRING HANDLER_SPI; 	// SPI Serial Transfer Complete
+                
+                STRING HANDLER_US0_RX;  	// USART0 Rx complete
+                STRING HANDLER_US0_EMPTY;	// USART0 Data Register Empty
+                STRING HANDLER_US0_TX;  	// Usart0 Tx complete
+                
+                STRING HANDLER_US1_RX;  	// USART1 Rx complete
+                STRING HANDLER_US1_EMPTY;	// USART1 Data Register Empty
+                STRING HANDLER_US1_TX;  	// Usart1 Tx complete
+                
+                STRING HANDLER_ADC; 	// ADC Conversion Complete
+                STRING HANDLER_EEPROM;	// EEPROM Ready
+                STRING HANDLER_ANALOG_COMP;	// Analog Comparator
+                STRING HANDLER_2WSI;	// Two-wire serial Interface
+                STRING HANDLER_SPM_READY;	// Store program Memory Ready
+                
+                
+                ENUM [
+                    HANDLER_IRQ0 {	// external interrupt request 0
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ1 {	// external interrupt request 1
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ2 {	// external interrupt request 2
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ3 {	// external interrupt request 3
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ4 {	// external interrupt request 4
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ5 {	// external interrupt request 5
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ6 {	// external interrupt request 6
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ7 {	// external interrupt request 7
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                
+	                }, HANDLER_T0_MATCH {	// Timer/Counter 0 Compare Match
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T0_OVERFLW {	// Timer/Counter 0 Overflow
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_EVENT {	// Timer/Counter 1 Capture Event
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_MATCH_A {	// Timer/Counter 1 Compare Match A
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_MATCH_B {	// Timer/Counter 1 Compare Match B
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_MATCH_C {	// Timer/Counter 1 Compare Match C
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_OVERFLW {	// Timer/Counter 1 Overflow
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T2_MATCH {	// Timer/Counter 2 Compare Match
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T2_OVERFLW {	// Timer/Counter 2 Overflow
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_EVENT {	// Timer/Counter 3 Capture Event
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_MATCH_A {	// Timer/Counter 3 Compare Match A
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_MATCH_B {	// Timer/Counter 3 Compare Match B
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_MATCH_C {	// Timer/Counter 3 Compare Match C
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_OVERFLW {	// Timer/Counter 3 Overflow
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	
+	                }, HANDLER_SPI { 	// SPI Serial Transfer Complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                
+	                }, HANDLER_US0_RX {  	// USART0 Rx complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_US0_EMPTY {	// USART0 Data Register Empty
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_US0_TX {  	// Usart0 Tx complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                
+	                }, HANDLER_US1_RX {  	// USART1 Rx complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_US1_EMPTY {	// USART1 Data Register Empty
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_US1_TX {  	// Usart1 Tx complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                
+	                }, HANDLER_ADC { 	// ADC Conversion Complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_EEPROM {	// EEPROM Ready
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_ANALOG_COMP {	// Analog Comparator
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_2WSI {	// Two-wire serial Interface
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_SPM_READY {	// Store program Memory Ready
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }
+	                
+                ] HANDLER[];
+            }
+
+        ] CPU_DATA[];
+
+		ENUM [
+			ATMEGA_STK50X,
+			XBOW_MIB5X0
+		] BOARD_DATA = NO_BOARD;
+    };
+};

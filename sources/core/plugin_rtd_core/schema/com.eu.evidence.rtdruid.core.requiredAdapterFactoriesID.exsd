@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="rtdruid" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="rtdruid" id="requiredAdapterFactoriesID" name="com.eu.evidence.rtdruid.requiredAdapterFactories"/>
+      </appinfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+         <documentation>
+            This extention is uset to add one or more EMF Adapter Factories to Required Factories List.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <choice>
+               <element ref="adapterFactory"/>
+               <element ref="loader"/>
+            </choice>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="adapterFactory">
+      <annotation>
+         <documentation>
+            Contains the name of a new EMF Adapter Factory.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.common.notify.AdapterFactory"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="loader">
+      <annotation>
+         <documentation>
+            Contains the name of a class that extends rtdruid.vartree.AdapterFactoryLoader.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="com.eu.evidence.rtdruid.vartree.AdapterFactoryLoader:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         RT-Druid 1.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+
+
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         &lt;h1&gt;About RT-Druid&lt;/h1&gt;
+&lt;br&gt;
+30th June, 2004&lt;br&gt;
+&lt;h3&gt;More informations about RT-Druid&lt;/h3&gt;
+The latest informations about RT-Druid can be found on the &lt;a
+ href=&quot;http://www.evidence.eu.com&quot;&gt;Evidence Srl website&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+&lt;h3&gt;License&lt;/h3&gt;
+IMPORTANT-READ CAREFULLY: This License is a legal agreement between you
+(either an individual or a single entity) and Evidence Srl for the
+RT-Druid software that accompanies this license, which includes
+computer software and may include associated media, printed materials,
+&quot;online&quot; or electronic documentation (&quot;Software&quot;). &lt;span lang=&quot;EN-GB&quot;
+ style=&quot;&quot;&gt;Unless you
+have a different License Agreement signed by Evidence Srl, &lt;/span&gt;you&amp;nbsp;
+agree to be bound by the terms of this License by installing, copying,
+or otherwise using using the software. IF YOU DO NOT AGREE, DO NOT
+INSTALL, COPY, OR USE
+THE SOFTWARE.
+&lt;p&gt;1. Grant of License. Evidence
+Srl grants you the following rights provided that you comply with all
+terms and conditions of this License.&lt;/p&gt;
+&lt;p&gt;2. You may install, use, access, display and run one copy of the
+Software on a single computer.&lt;/p&gt;
+&lt;p&gt;3. Evidence Srl reserves all rights not expressly granted to you in
+this license. The Software is protected by copyright and other
+intellectual property laws and treaties. Evidence Srl own the title,
+copyright, and other intellectual property rights in the Software. The
+Software is licensed, not sold.&lt;/p&gt;
+&lt;p&gt;4. Limitations on reverse engineering, decompilation and
+disassembly. You may not reverse engineer, decompile, or disassemble
+the Software, except and only to the extent that such activity is
+expressly permitted by applicable law notwithstanding this limitation.&lt;/p&gt;
+&lt;p&gt;5. You may not sell, rent, lease, lend or provide commercial hosting
+services with the Software.&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+</schema>

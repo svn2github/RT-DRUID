@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.builderOptions">
+      <options
+            class="com.eu.evidence.rtdruid.internal.modules.oil.ee.ui.preferencepages.Options">
+      </options>
+   </extension>
+
+
+<!-- Preference Page -->
+   <extension
+      point = "org.eclipse.ui.preferencePages">
+       <page id="com.eu.evidence.rtdruid.oil.preferencePagesID"
+            category="com.eu.evidence.rtdruid.preferencePagesID"
+            class="com.eu.evidence.rtdruid.ui.preferencepages.EmptyPage"
+            name="Oil">
+       </page>
+       <page
+             category="com.eu.evidence.rtdruid.oil.preferencePagesID"
+             class="com.eu.evidence.rtdruid.internal.modules.oil.ee.ui.preferencepages.OSConfigurator"
+             id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID"
+             name="Erika Enterprise">
+       </page>
+   </extension>
+
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="RT-Druid"
+            id="com.eu.evidence.rtdruid.viewersID">
+      </category>
+      <view
+            name="Oil Generators"
+            icon="icons/oil_icon.gif"
+            category="com.eu.evidence.rtdruid.viewersID"
+            class="com.eu.evidence.rtdruid.modules.oil.ui.oilimplementation.OilGeneratorsView"
+            id="com.eu.evidence.rtdruid.modules.oil.views.OilGeneratorsID">
+      </view>
+      <view
+            name="Xslt writers configurator"
+            icon="icons/oil_icon.gif"
+            category="com.eu.evidence.rtdruid.viewersID"
+            class="com.eu.evidence.rtdruid.modules.oil.ee.ui.views.RegistredXsltWritersView"
+            id="com.eu.evidence.rtdruid.modules.oil.views.XsltWriterConfiguratorViewID">
+      </view>
+      
+   </extension>
+
+
+   <extension point="org.eclipse.help.toc">
+       <toc file="toc.xml" primary="true" />
+   </extension>
+
+</plugin>

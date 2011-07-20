@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RT-Druid Oil Plug-in for c/c++ support (UI)
+Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.cdt.ui;singleton:=true
+Bundle-Version: 1.6.0.qualifier
+Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.cdt.ui.Rtd_oil_cdt_Plugin
+Require-Bundle: com.eu.evidence.rtdruid.core,
+ com.eu.evidence.rtdruid.core.ui,
+ com.eu.evidence.rtdruid.oil.core,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.cdt.ui,
+ org.eclipse.cdt.make.ui,
+ com.eu.evidence.templates.core,
+ org.eclipse.ui.forms,
+ org.eclipse.cdt.managedbuilder.core,
+ org.eclipse.cdt.managedbuilder.ui,
+ org.eclipse.cdt.core,
+ org.eclipse.emf.ecore.xmi
+Eclipse-LazyStart: true
+Bundle-Vendor: Evidence S.r.l.
+

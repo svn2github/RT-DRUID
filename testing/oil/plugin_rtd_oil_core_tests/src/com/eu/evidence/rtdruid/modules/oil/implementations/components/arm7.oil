@@ -1,0 +1,73 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+    
+        ENUM [
+            ARM7 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                STRING THUMB_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                    //UINT32 IRQ_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                    //UINT32 IRQ_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                UINT32 STACK_TOP;
+                UINT32 STACK_BOTTOM;
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 IRQ_SIZE;    // available space for all irq stacks
+                UINT32 SVC_SIZE;
+                UINT32 FIQ_SIZE;
+                UINT32 ABT_SIZE;
+                UINT32 UND_SIZE;
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                //UINT32 SHARED_MIN_IRQ_SIZE;    // size of shared stack
+
+            }
+        ] CPU_DATA[];
+		ENUM [
+                        SAMSUNG_KS32C50100 {
+                                STRING IRQ_EXT0;                   // Ext 0 
+                                STRING IRQ_EXT1;                   // Ext 1 
+                                STRING IRQ_EXT2;                   // Ext 2 
+                                STRING IRQ_EXT3;                   // Ext 3 
+                                STRING IRQ_UART0TX;                // UART0 Tx 
+                                STRING IRQ_UART0RX;                // UART0 Rx & error
+                                STRING IRQ_UART1TX;                // UART1 Tx 
+                                STRING IRQ_UART1RX;                // UART1 Rx & error
+                                STRING IRQ_GDMA0;                  // GDMA ch. 0 
+                                STRING IRQ_GDMA1;                  // GDMA ch. 1 
+                                STRING IRQ_TIMER0;                 // Timer 0 
+                                STRING IRQ_TIMER1;                 // Timer 1 
+                                STRING IRQ_HDLCATX;                // HDLC A Tx 
+                                STRING IRQ_HDLCARX;                // HDLC A Rx 
+                                STRING IRQ_HDLCBTX;                // HDLC B Tx 
+                                STRING IRQ_HDLCBRX;                // HDLC B Rx 
+                                STRING IRQ_ETHBDMATX;              // Ethernet BDMA Tx 
+                                STRING IRQ_ETHBDMARX;              // Ethernet BDMA Rx 
+                                STRING IRQ_ETHMACTX;               // Ethernet MAC Tx 
+                                STRING IRQ_ETHMACRX;               // Ethernet MAC Rx 
+                                STRING IRQ_I2C;                    // I2C-bus 
+                                STRING IRQ_NO_PENDING;             // No Pending Interrupt
+			}
+		] MCU_DATA;
+    };
+};

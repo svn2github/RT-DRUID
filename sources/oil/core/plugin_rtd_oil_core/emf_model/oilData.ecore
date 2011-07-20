@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="oil"
+    nsURI="http://rtdruid.vartree.data.oil" nsPrefix="rtdruid.vartree.data.oil">
+  <eClassifiers xsi:type="ecore:EClass" name="Root" eSuperTypes="#//OilObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="HwList" upperBound="-1"
+        eType="#//HW"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ObjectType" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Description" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HW" eSuperTypes="#//OilObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="RtosList" upperBound="-1"
+        eType="#//RTOS"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Description" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RTOS" eSuperTypes="#//OilObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ParameterList" upperBound="-1"
+        eType="#//Parameter"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Description" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="StringVar" instanceClassName="rtdruid.vartree.variables.StringVar"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Parameter" abstract="true" eSuperTypes="#//OilObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MultiValues" eType="#//BooleanVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OilObjectWithID" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="VarWithDescrVar" instanceClassName="rtdruid.vartree.variables.StringDescrVar"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Variant" eSuperTypes="#//Parameter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EnumeratorList" upperBound="-1"
+        eType="#//Enumerator"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Value" eSuperTypes="#//Parameter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Values" upperBound="-1"
+        eType="#//VarWithDescrVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Enumerator" eSuperTypes="#//OilObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ParameterList" upperBound="-1"
+        eType="#//Parameter"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Value" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Index" eType="#//IntegerVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="IntegerVar" instanceClassName="rtdruid.vartree.variables.IntegerVar"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="BooleanVar" instanceClassName="rtdruid.vartree.variables.BooleanVar"/>
+</ecore:EPackage>

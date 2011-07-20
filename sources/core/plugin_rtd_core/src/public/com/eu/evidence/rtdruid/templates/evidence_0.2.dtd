@@ -1,0 +1,768 @@
+<!-- <!DOCTYPE evidence>
+<!- -
+ ******************************************************************
+ Formato XML di input per RT-DRUID
+
+ Copyright Evidence s.r.l. 2004
+
+ Giuseppe Lipari, Marco Di Natale, Alberto Ferrari,
+ Nicola Serreli
+
+ $Id: evidence_0.2.dtd,v 1.5 2008/05/14 17:10:22 durin Exp $
+
+ $Log: evidence_0.2.dtd,v $
+ Revision 1.5  2008/05/14 17:10:22  durin
+ *** empty log message ***
+
+ Revision 1.4  2008/01/09 17:38:14  durin
+ *** empty log message ***
+
+ Revision 1.3  2007/11/26 13:35:45  durin
+ *** empty log message ***
+
+ Revision 1.2  2007/03/09 09:12:41  durin
+ update to eclipse 3.2 and to new changes
+
+ Revision 1.1.2.1  2006/10/23 07:34:51  mangesh
+ Stack Property Included
+
+ Revision 1.1  2005/09/28 15:22:29  durin
+ moved into "public", "internal" and "hidden" classes. add factories for hidden classes
+
+ Revision 1.3  2004/06/22 14:23:23  durin
+ *** empty log message ***
+
+ Revision 1.2  2004/06/22 09:55:54  durin
+ inseriti i subsystem innestati
+
+ Revision 1.1  2004/05/10 12:37:44  durin
+ move files
+
+ Revision 1.5  2004/04/19 15:54:39  durin
+ Fatte le modifiche in modo da consentire la validazione
+
+ Revision 1.4  2004/04/06 07:19:32  pj
+ TASKMAP instead of TASK
+
+ Revision 1.3  2004/04/02 14:45:31  durin
+ Remove ObjName from MethodRef
+
+ Revision 1.2  2004/03/31 10:14:23  durin
+ Aggiunto resource_method come valore valido per l'attributo type dell'exectime,
+ da utilizzare per riferirsi ai metodi delle risorse (architetturali)
+
+ Revision 1.1.1.1  2004/03/26 10:42:37  durin
+ Primo Import
+
+ Revision 1.7  2004/03/25 11:56:29  durin
+ Set cpuRef to rtosRef in TaskMap
+ correct some bugs about test with more than one mode
+
+ Revision 1.6  2004/03/15 13:20:47  durin
+ Varie modifiche di assestamento, in particolare:
+  * precisazioni sparse nei commenti
+  * aggiunte di dipendenze  dal modo
+  * leggere modifiche / precisazioni su TRIGGER, PROC, METHODREF,
+       EVENT, REQUIRED_INTERFACE
+  * divisione in due fasi del mapping
+  * revisione RESOURCE, MUTEX e TASK.METHODREF
+  * domanda sull'annotation
+    " Volendo avere le informazioni per un task, nel caso in cui e'
+      presente sia  un elemento che si riferisca direttamente al task
+      sia tutta la sua  descrizione attraverso i proc, il mapping e
+      l'annotation dei proc, allora :
+      * ignorare l'elemento diretto e calcolare il tutto ?
+      * controllata le consistenze ed eventualmente corregere gli errori?
+      * eliminare l'annotation riferito al task ?
+      * considerare l'annotation riferito al task, senza esaminare
+        il resto ?
+     "
+     (domanda simile per i method_ref relativi alle RESOURCE presenti nella
+      sezione architetturale. Il consiglio e' quello di ignorarli)
+
+  In assenza di mapping (task -> RTOS) ed in presenza di + CPU,
+  la sezione Architetturale non e' sufficente per descrivere il sistema
+  (ad es. per la generazione del codice). Non e' un problema, ma va tenuto
+  in considerazione.
+
+ Revision 1.5  2004/02/17 15:05:44  lipari
+ Modificati i concetti di EVENT, PROC, PARTIALORDER.
+ Introdotto il SUBSYSTEM.
+
+ Revision 1.4  2004/02/16 17:08:16  durin
+ Mancavano TRIGGER e PARTIALORDER in FUNCTIONAL.
+
+ Revision 1.3  2004/02/16 16:33:42  lipari
+ *** empty log message ***
+
+ Revision 1.2  2004/02/16 16:30:41  lipari
+ Aggiustati i commenti
+
+ Revision 1.1  2004/02/16 16:28:00  lipari
+ Primo commit
+
+
+ ******************************************************************
+-->
+
+<!--
+ Un po' ovunque, il tempo viene indicato come "valore"
+ seguito dall'unita' di misura (h, m, s, ms, us)
+-->
+
+<!ELEMENT SYSTEM (MODES | FUNCTIONAL | ARCHITECTURAL | MAPPING | ANNOTATION | SCHEDULABILITY)*>
+<!ATTLIST SYSTEM
+ Name CDATA #REQUIRED
+ xmlns:rtdruid.vartree.data CDATA "http://rtdruid.vartree.data"
+>
+
+<!--
+ ********************************************************
+ MODES
+ ********************************************************
+-->
+
+<!-- NI (5/3/04)
+ Un po' ovunque, e' necessario riferisi al modo di funzionamento;
+ Penso si possano distinguere due casi:
+ * riferimenti ad un particolare modo => indicare il nome
+ * indipendenza dal modo => non specificare valori
+
+ Si potrebbe scegliere di avere sempre a disposizione un modo
+ di default, anche se questo non e' esplicitamente dichiarato.
+ In tal caso basta scegliere il nome "speciale" utilizzare.
+-->
+
+<!--
+ Modes e' semplicemente una lista di modi di funzionamento
+-->
+<!ELEMENT MODES (MODE*)>
+
+<!ELEMENT MODE EMPTY>
+<!ATTLIST MODE
+ Name CDATA #REQUIRED
+>
+
+
+<!--
+ ********************************************************
+ FUNCTIONAL
+ ********************************************************
+-->
+
+<!ELEMENT FUNCTIONAL (PROC | TRIGGER | VAR | EVENT | PARTIALORDER | TIMECONST | SUBSYSTEM)* >
+
+<!--
+ I processi sono oggetti veri e propri. Forniscono dei metodi
+ di interfaccia e usano dei metodi di altri oggetti (le variabili).
+ Nell'applicazione MM, i processi non invocano mai direttamente
+ metodi di altri processi, ma nel nostro formato ci manteniamo
+ piu' generali e permettiamo questa cosa.
+
+ I processi sono caratterizzati da una lista di metodi offerti,
+ (cioe' le funzioni corrispondenti all'esecuzione del processo),
+ e da una lista di messaggi generati, ovvero invocazioni di metodi
+ su variabili (la required interface).
+
+ Per quanto riguarda il modello MM: le operazioni vengono
+ viste come funzioni, ma in realta' sono oggetti in quanto
+ hanno uno stato (una macchina a stati interna). Se non ho
+ capito male, la "funzione" viene invocata con un parametro
+ che rappresenta l'identificativo dell'evento. Nel nostro caso,
+ conviene modellare il tutto come una serie di metodi offerti
+ dal processo, uno per ogni possibile "trigger", che in realta'
+ si traducono tutti nell'invocazione dell'unica funzione
+ che implementa il processo con parametri diversi.
+-->
+<!-- NI (4/3/04)
+ Rimosso External
+-->
+<!ELEMENT PROC (METHOD*,METHODREF*)>
+<!ATTLIST PROC
+ Name CDATA #REQUIRED
+>
+
+<!-- NI (4/3/04)
+ Tipo dedicato ai Trigger (penso sia leggermento + pulito)
+
+ Contiene l'elenco completo dei metodi utilizzati (= attivati)
+
+ Per raggiungere gli elementi interni ad un subsystem utilizza le "provided interface"
+ del subsystem che li contiene.
+
+ Possibile "trucchetto" per abbinare un evento direttamente al trigger:
+ inserire nel trigger un method_ref che fa riferimento ad un method fittizzio
+ appartenente allo stesso trigger.
+
+-->
+<!ELEMENT TRIGGER (METHODREF+)>
+<!ATTLIST TRIGGER
+ Name CDATA #REQUIRED
+>
+
+<!--
+ A questo punto, VAR puo' essere una semplice variabile
+ con metodi stupidi di read() e write(), oppure un oggetto
+ strutturato con metodi complicati di accesso
+-->
+
+<!-- NI (4/3/04)
+ Metodi read() e write() sono presenti, anche se non indicati
+-->
+<!ELEMENT VAR (METHOD*)>
+<!ATTLIST VAR
+ Name CDATA #REQUIRED
+ Type CDATA #REQUIRED
+>
+
+<!--
+ Un metodo non e' altro che il suo nome simbolico.
+ A un metodo vengono associati implicitamente 2 eventi: begin, quando
+ il metodo viene invocato, end quando il metodo ritorna.
+-->
+<!ELEMENT METHOD EMPTY>
+<!ATTLIST METHOD
+ Name CDATA #REQUIRED
+>
+
+<!--
+ $Id: evidence_0.2.dtd,v 1.5 2008/05/14 17:10:22 durin Exp $
+ Methodref e' un riferimento a un metodo di una variabile o di
+ un processo. Corrisponde alla call action di UML.
+ objname puo' essere:
+ - il nome di una var
+ - il nome di un proc
+ - il nome di un subsystem. In questo caso si riferisce un
+   oggetto nella required interface.
+-->
+
+<!-- NI (4/3/04)
+
+  Normalmente l'indicazione del nome di un subsystem individua uno dei
+  metodi messi a disposizione dal subsystem attraverso le Provided_Interface
+
+  Se il methodref e' relativo ad un proc interno ad un subsystem, allora
+  questo puo' far rifferimento soltanto ai metodi interni al subsystem:
+  * proc
+  * var
+  * required interface (sara' questa a "mascherare l'invocazione del metodo", stile NAT)
+  Quindi l'unico nome di subsystem lecito e' quello del proprio subsystem
+  (oppure si puo' decidere che in presenza di nome non "locale" al subsystem, ci si riferisce
+   ad una "required interface")
+-->
+<!-- Basta il solo nome del metodo (in seguito da interpretare come path)
+per identificarlo in modo univoco
+-->
+<!ELEMENT METHODREF EMPTY>
+<!ATTLIST METHODREF
+ Name CDATA #REQUIRED
+ MethodName CDATA #REQUIRED
+>
+
+<!--
+  Ordinamento parziale fra processi. E' indispensabile se
+  vogliamo fare un mapping "controllato".
+-->
+
+<!-- NI (4/3/04)
+  L'ordine puo' essere legato alla modalita' di escuzione ?
+-->
+<!ELEMENT PARTIALORDER (ORDER*)>
+<!ATTLIST PARTIALORDER
+  ModeRef CDATA #IMPLIED
+>
+
+<!--
+ $Id: evidence_0.2.dtd,v 1.5 2008/05/14 17:10:22 durin Exp $
+ coppia (predecessore,successore)
+-->
+
+<!ELEMENT ORDER (EVENTREF, EVENTREF)>
+
+<!-- NI (4/3/04)
+ Mutuiamo da UML.
+ Event contiene anche la specifica del message, identificato mediante
+ la coppia (objref,methodref).
+
+ - type puo' essere begin o end o activation
+// - objref (source) puo' essere il nome di un proc o di una var
+//   o un subsystem
+// - methodref (destination) e' la coppia (objname,methodname)
+//   dove objectname e' un proc, una var o un subsystem.
+ - methodrefname individua il methodref in esame
+
+// Nel caso di invocazione del metodo di un processo, objref puo'
+// valere "trigger". Questo vuol dire che e' arrivato un segnale
+// esterno che invoca il metodo del processo.
+
+Notare che methodref va cercato nei
+* Trigger
+* Proc globali
+* Proc interni ad un subsystem
+* Required_interface dei subsystem
+-->
+
+<!ELEMENT EVENT EMPTY>
+<!ATTLIST EVENT
+  Name CDATA #REQUIRED
+  Type CDATA #REQUIRED
+  MethodRefName CDATA #REQUIRED
+>
+
+<!ELEMENT EVENTREF EMPTY>
+<!ATTLIST EVENTREF
+ Name CDATA #REQUIRED
+>
+
+<!--
+ Un vincolo temporale e' una relazione tra due occorrenze successive di
+ eventi nel sistema, oppure tra un evento e la sua prossima occorrenza.
+-->
+
+<!-- NI (4/3/04)
+  I vincoli sono legati alla modalita' di escuzione
+-->
+<!ELEMENT TIMECONST (EVENTREF, EVENTREF?, BOUND)>
+<!ATTLIST TIMECONST
+  ModeRef CDATA #IMPLIED
+>
+
+<!--
+ Un bound e' tante cose, specificate dal campo type, che puo' valere:
+ "deadline", "period", "mit", "jitter", "offset", etc.
+-->
+<!ELEMENT BOUND EMPTY>
+<!ATTLIST BOUND
+ Type CDATA #REQUIRED
+ Value CDATA #REQUIRED
+>
+
+<!--
+ Un subsystem e' un insieme di una implementazione, di una
+ provided interface e di una required interface.
+-->
+<!ELEMENT SUBSYSTEM (IMPLEMENTATION, PROVIDED_INTERFACE, REQUIRED_INTERFACE)>
+<!ATTLIST SUBSYSTEM
+ Name CDATA #REQUIRED
+>
+
+<!--
+ L'implementazione e' una lista di variabili e processi,
+ variamente connessi.
+-->
+<!--
+	L'implementazione puo' contenere subsystem innestati,
+	ciascuno con il proprio namespace 
+ -->
+<!ELEMENT IMPLEMENTATION (VAR | PROC | SUBSYSTEM)*>
+
+<!--
+ La provided interface e' l'insieme di metodi visibili del
+ subsystem, il cui binding puo' essere eventualmente differito.
+ E' una lista di coppie (method, exported_method), dove
+ il primo e' il nome visibile dall'esterno, il secondo e' il
+ "mapping" fra nome simbolico dell'interfaccia e metodo interno
+ (di un processo o di una variabile).
+-->
+<!ELEMENT PROVIDED_INTERFACE (METHOD, EXPORTED_METHOD?)*>
+
+<!ELEMENT EXPORTED_METHOD EMPTY>
+<!ATTLIST EXPORTED_METHOD
+   ObjRef CDATA #REQUIRED
+   MethodRef CDATA #REQUIRED
+>
+
+<!--
+ La required interface e' un elenco di metodi virtuali, il
+ cui binding puo' essere eventualmente differito e comunque
+ riferito a metodi offerti da altri subsystem.
+ Quindi, si tratta di coppie
+ (method, riferimenti a exported method di altri
+ subsystem).
+-->
+<!-- NI (4/3/04)
+ E' consigliabile un piu' generale MethodRef
+
+ Ovviamente non ha senso che il methodref punti ad un oggetto locale
+ al subsystem
+-->
+<!ELEMENT REQUIRED_INTERFACE (METHOD, METHODREF?)*>
+
+<!--
+// NI
+//<! - -
+// - subsystemname: e' il nome del subsystem che implementa
+//   la required interface richiesta
+// - methodname: e' il nome della funzione presente nella provided
+//   interface del subsystemname.
+//- - >
+//<!ELEMENT SUBSYSTEM_METHODREF EMPTY>
+//<!ATTLIST SUBSYSTEM_METHODREF
+//  subsystemname CDATA #IMPLIED
+//  methodname CDATA #IMPLIED
+//>
+-->
+<!--
+ ********************************************************
+ fine parte FUNCTIONAL
+ ********************************************************
+-->
+
+<!--
+ ********************************************************
+ ARCHITECTURAL
+ ********************************************************
+-->
+
+
+<!ELEMENT ARCHITECTURAL (ECU+, TASK+, RESOURCE*, (BUS, FRAME*)*, (SIGNAL | MUTEX)*)>
+
+<!ELEMENT ECU (CPU+)>
+<!ATTLIST ECU
+ Name CDATA #REQUIRED
+>
+
+<!ELEMENT CPU (RTOS)>
+<!ATTLIST CPU
+ Name CDATA #REQUIRED
+ Model CDATA #IMPLIED
+>
+
+<!ELEMENT RTOS (OSMODEL?,OILVAR?)>
+<!ATTLIST RTOS
+ Name CDATA #REQUIRED
+ Type CDATA #IMPLIED
+>
+
+<!ELEMENT OSMODEL ANY>
+
+<!--
+ Oilvar e' semplicemente un contenitore per tutte quelle
+ informazioni che riguardano la configurazione con OIL e che
+ a noi non interessa trattare, quindi lasciamo non specificate.
+-->
+<!ELEMENT OILVAR ANY>
+
+<!--
+ Type puo' valere "internal" per significare OSEK COM, nel qual
+ caso speed e' ignorato
+-->
+<!ELEMENT BUS EMPTY>
+<!ATTLIST BUS
+ Name CDATA #REQUIRED
+ Type CDATA #REQUIRED
+ Speed CDATA #REQUIRED
+>
+
+<!ELEMENT FRAME EMPTY>
+<!ATTLIST FRAME
+ Name CDATA #IMPLIED
+ ID CDATA #IMPLIED
+ ActivationType CDATA #REQUIRED
+ ActivationClass CDATA #IMPLIED
+ ActivationRate CDATA #REQUIRED
+ Length CDATA #REQUIRED
+>
+
+<!-- NI (5/3/04)
+  Visto che la composizione del task cambia in funzione del modo,
+  immagino che i suoi parametri di SCHEDULING, ACTIVATION e
+  METHODREF siano dipendeti dal modo. (-> aggiunto RESOURCEREF)
+  PS. nell'oil solo alcuni parametri sono dipendenti dal modo
+-->
+<!--
+ Type puo' essere task o isr
+ methodref si riferisce solo ai metodi di resource (shortcut per evitare la definizione della parte funzionale)
+-->
+
+<!ELEMENT TASK (SCHEDULING*, ACTIVATION*, RESOURCEREF*, OILVAR?)>
+<!ATTLIST TASK
+ Name CDATA #REQUIRED
+ Type CDATA #IMPLIED
+>
+
+<!ELEMENT SCHEDULING EMPTY>
+<!ATTLIST SCHEDULING
+ Priority CDATA #IMPLIED
+ Threshold CDATA #IMPLIED
+ PreemptionGroupName CDATA #IMPLIED
+ ModeRef CDATA #IMPLIED
+ Stack CDATA #IMPLIED
+>
+
+<!-- NI (5/3/04)
+  Tutti questi dati non sono dipendenti dal modo di funzionamento?
+-->
+<!--
+ Aggiunto il campo ActNumber che esprime il numero di istanze del task
+ che sono presenti nel sistema allo stesso istante (richiesto da OIL
+ per certe classi di compliance OSEK.
+ Il campo Rate e' stato modificato in Period ed e' stato portato da
+ REQUIRED a IMPLIED. Infatti se il task non e' periodico, non si specifica
+ alcun periodo.
+
+ Type puo' essere "periodic", "sporadic", "aperiodic".
+
+ Cosa era il campo Class??? Alberto, tu te lo ricordi ???
+-->
+<!ELEMENT ACTIVATION EMPTY>
+<!ATTLIST ACTIVATION
+ Type NMTOKEN #IMPLIED
+ ActNumber CDATA #IMPLIED
+ Class CDATA #IMPLIED
+ Period CDATA #IMPLIED
+ Offset CDATA #IMPLIED
+ Deadline CDATA #IMPLIED
+ ModeRef CDATA #IMPLIED
+>
+
+<!-- NI (5/3/04)
+  Reggruppa il methodi delle risorse utilizzate, in funzione del modo
+
+  METHODREF va preso in considerazione soltanto se manca il
+  mapping tra il task ed i proc che lo compongono. Infatti
+  solo in tal caso riesco a capire quali sono le risorse utilizzate.
+  Se dovesse mancare il mapping tra una o piu' risorse ed i mutex
+  si puo' (deve) supporre che queste siano risorse private.
+-->
+<!ELEMENT RESOURCEREF (METHODREF*)>
+<!ATTLIST RESOURCEREF
+ ModeRef CDATA #IMPLIED
+>
+
+
+<!ELEMENT SIGNAL (OILVAR?)>
+<!ATTLIST SIGNAL
+ Name CDATA #REQUIRED
+ Type CDATA #REQUIRED
+>
+
+<!ELEMENT MUTEX (OILVAR?)>
+<!ATTLIST MUTEX
+ Name CDATA #REQUIRED
+ Policy CDATA #IMPLIED
+>
+
+
+<!-- NI (5/3/04)
+  Manca il legame con la controparte rappresentata, quindi non
+	e' possibile capire se questa e' stata definita o meno nella
+	parte funzionale.
+
+  Questo non e' un problema in quanto un task utilizza queste
+	rappresentazioni se non e' legato ad uno o + proc, i quali
+	sanno esattamente quante e quali risorse utilizzare,
+	ignorando cosi queste rappresentazioni (VEDI TASK)
+
+  Sebene si puo' supporre che un elemento rappresenti piu' var
+	da gestire in mutua esclusione, non e' presente il legame
+	tra Mutex e Resource. Questo puo' essere necessario in presenza
+	di mapping parziali. (-> aggiunto MUTEXREF)
+-->
+
+<!--
+ Questo elemento e' stato aggiunto per permettere l'analisi di
+ schedulabilita' a prescindere dalla parte funzionale.
+ Rappresenta la controparte delle variabili della parte
+ funzionale.
+-->
+
+<!ELEMENT RESOURCE (METHOD*, MUTEXREF+)>
+<!ATTLIST RESOURCE
+ Name CDATA #REQUIRED
+>
+
+<!-- NI (5/3/04)
+  Legame tra resorce e mutex, in funzione del modo
+-->
+<!ELEMENT MUTEXREF EMPTY>
+<!ATTLIST MUTEXREF
+ MutexName CDATA #REQUIRED
+ ModeRef CDATA #IMPLIED
+>
+
+<!--
+ ********************************************************
+ fine parte ARCHITECTURAL
+ ********************************************************
+-->
+
+<!--
+ ********************************************************
+ ANNOTATION
+ ********************************************************
+-->
+
+<!ELEMENT ANNOTATION (EXECTIME*)>
+
+<!-- NI (5/3/04)
+  Volendo avere le informazioni per un task, nel caso in cui e'
+  presente sia  un elemento che si riferisca direttamente al task
+  sia tutta la sua  descrizione attraverso i proc, il mapping e
+  l'annotation dei proc, allora :
+  * ignorare l'elemento diretto e calcolare il tutto ?
+  * controllata le consistenze ed eventualmente corregere gli errori?
+  * eliminare l'annotation riferito al task ?
+  * considerare l'annotation riferito al task, senza esaminare
+    il resto ?
+
+  E' lecito supporre che sia dipendente dal modo
+-->
+
+<!-- Type puo' essere task o proc o method o resource_method -->
+<!ELEMENT EXECTIME (WORST, BEST?, DISTRIBUTION?)>
+<!ATTLIST EXECTIME
+ Ref CDATA #REQUIRED
+ Type CDATA #REQUIRED
+ ModeRef CDATA #IMPLIED
+>
+
+
+<!ELEMENT WORST EMPTY>
+<!ATTLIST WORST
+ Value CDATA #REQUIRED
+>
+<!ELEMENT BEST EMPTY>
+<!ATTLIST BEST
+ Value CDATA #REQUIRED
+>
+
+<!ELEMENT DISTRIBUTION (AVG?, VARIANCE?, SAMPLE*)>
+<!ATTLIST DISTRIBUTION
+ Type CDATA #REQUIRED
+>
+<!ELEMENT AVG EMPTY>
+<!ATTLIST AVG
+ Value CDATA #REQUIRED
+>
+<!ELEMENT VARIANCE EMPTY>
+<!ATTLIST VARIANCE
+ Value CDATA #REQUIRED
+>
+<!ELEMENT SAMPLE EMPTY>
+<!ATTLIST SAMPLE
+ Value CDATA #REQUIRED
+ Probability CDATA #REQUIRED
+>
+
+<!--
+ ********************************************************
+ fine ANNOTATION
+ ********************************************************
+-->
+
+<!--
+ ********************************************************
+ MAPPING
+ ********************************************************
+-->
+
+
+<!-- NI (5/3/04)
+
+  E' consigliabile di spezzare la terna taskref, procref e rtosref,
+  in modo da poter fare il mapping in due fasi
+    proc sui task
+    allocazione dei task sui RTOS (CPU)
+
+  Inoltre avere direttamente la terna non permette di conoscere
+  la collocazione di un task in assenza della parte funzionale
+  (utilizzo di trucchi come nomi di proc fittizzi o cose simili
+   renderebbe + complessa l'individuazione di possibili errori)
+
+  E' consigliabile raccogliere le informazioni (PROCMAP, TASKMAP,
+  VARMAP) in funzione del modo? Potrebbe facilitare alcuni test di
+  consistenza, rendendo il tutto + intuitivo
+-->
+
+<!ELEMENT MAPPING (PROCMAP | TASKMAP | VARMAP)*>
+
+<!-- NI (5/3/04)
+  Permette di conoscere l'insieme dei proc che compongono un
+  task.
+
+  Queste informazioni possono essere in funzione del modo
+
+-->
+<!ELEMENT PROCMAP EMPTY>
+<!ATTLIST PROCMAP
+ TaskRef CDATA #REQUIRED
+ ProcRef CDATA #REQUIRED
+ ModeRef CDATA #IMPLIED
+ Order CDATA #IMPLIED
+>
+
+<!-- NI (5/3/04)
+  Individua la cpu su cui viene allocato un task,
+  in funzione del modo
+-->
+<!ELEMENT TASKMAP EMPTY>
+<!ATTLIST TASKMAP
+ TaskRef CDATA #REQUIRED
+ rtosRef CDATA #REQUIRED
+ ModeRef CDATA #IMPLIED
+>
+
+
+<!-- NI (5/3/04)
+ Vedi sopra
+//<!ELEMENT MAPPING (PROCMAP | VARMAP)*>
+//<!ELEMENT PROCMAP EMPTY>
+//<!ATTLIST PROCMAP
+// taskref CDATA #REQUIRED
+// procref CDATA #REQUIRED
+// rtosref CDATA #REQUIRED
+// moderef CDATA #IMPLIED
+// order CDATA #IMPLIED
+//>
+-->
+
+<!--
+ Rimosso il campo order (ereditato da procmap)
+-->
+<!ELEMENT VARMAP EMPTY>
+<!ATTLIST VARMAP
+ VarRef CDATA #REQUIRED
+ FrameRef CDATA #IMPLIED
+ BusRef CDATA #IMPLIED
+ MutexRef CDATA #IMPLIED
+ ModeRef CDATA #IMPLIED
+>
+
+
+<!--
+ ********************************************************
+ SCHEDULABILITY
+ ********************************************************
+-->
+
+<!ELEMENT SCHEDULABILITY (SCHEDULINGSCENARIO*)>
+
+<!ELEMENT SCHEDULINGSCENARIO (REPORT | CPUSCHED | TASKSCHED)*>
+<!ATTLIST SCHEDULINGSCENARIO
+  ModeRef CDATA #IMPLIED
+>
+
+<!ELEMENT REPORT ANY>
+
+<!-- utilization = utilizzazione, boundary = ulub, speedfactor = "di enrico", schedulable = "yes" | "no" -->
+<!ELEMENT CPUSCHED EMPTY>
+<!ATTLIST CPUSCHED
+ CpuRef CDATA #REQUIRED
+ Utilization CDATA #IMPLIED
+ SpeedFactor CDATA #IMPLIED
+ Boundary CDATA #IMPLIED
+ Schedulable CDATA #IMPLIED
+ MaxStackSize CDATA #IMPLIED
+>
+
+<!-- cdelta e tdelta = correzioni sul tempo di calcolo e sul periodo -->
+<!ELEMENT TASKSCHED EMPTY>
+<!ATTLIST TASKSCHED
+ TaskRef CDATA #REQUIRED
+ Utilization CDATA #IMPLIED
+ CDelta CDATA #IMPLIED
+ TDelta CDATA #IMPLIED
+ Schedulable CDATA #REQUIRED
+ ResponseTime CDATA #IMPLIED
+>

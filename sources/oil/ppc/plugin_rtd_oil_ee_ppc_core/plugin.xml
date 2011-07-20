@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeSectionWriter">
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterHalMpc5">
+      </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterHalMpc567">
+      </writer>
+       <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterKernelSystemCalls">
+      </writer>
+       <writer
+             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterComMpc567">
+       </writer>
+   </extension>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeCpuDescription">
+      <cpu
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrMpc5">
+      </cpu>
+      <cpu
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrPpcE200Z0">
+      </cpu>
+      <cpu
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrPpcE200Z6">
+      </cpu>
+      <cpu
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrPpcE200Z7">
+      </cpu>
+   </extension>
+	<extension
+		point="com.eu.evidence.rtdruid.oil.core.oil_implementation">
+		<implementation_file
+			path="oil_files/ppc.oil">
+		</implementation_file>
+  <implementation_file
+        path="oil_files/memory_protection.oil">
+  </implementation_file>
+	</extension>
+
+</plugin>

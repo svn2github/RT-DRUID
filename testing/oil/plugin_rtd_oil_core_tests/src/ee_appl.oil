@@ -1,0 +1,766 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        STRING EE_OPT[];
+        STRING CFLAGS[];
+        STRING ASFLAGS[];
+        STRING LDFLAGS[];
+        STRING LDDEPS[];
+        STRING LIBS[];
+        
+                
+        // -------------------------------------
+
+        ENUM [STANDARD, EXTENDED] STATUS = STANDARD;
+
+        BOOLEAN STARTUPHOOK = FALSE;
+        BOOLEAN ERRORHOOK = FALSE;
+        BOOLEAN SHUTDOWNHOOK = FALSE;
+        BOOLEAN PRETASKHOOK = FALSE;
+        BOOLEAN POSTTASKHOOK = FALSE;
+        BOOLEAN USEGETSERVICEID = FALSE;
+        BOOLEAN USEPARAMETERACCESS = FALSE;
+        BOOLEAN USERESSCHEDULER = TRUE;
+        
+        BOOLEAN PROTECTIONHOOK = FALSE;
+        
+        // multi-cpu parameters
+        BOOLEAN STARTUPSYNC = FALSE;
+        ENUM [ALWAYS, IFREQUIRED] USEREMOTETASK = IFREQUIRED;
+        STRING MP_SHARED_RAM = "";
+        STRING MP_SHARED_ROM = "";
+        
+        
+        // NB temp & used only by NIOS 2 !!! -->>
+        STRING NIOS2_MUTEX_BASE;
+        STRING IPIC_GLOBAL_NAME;
+        STRING NIOS2_SYS_CONFIG;
+        STRING NIOS2_APP_CONFIG;
+        BOOLEAN NIOS2_DO_MAKE_OBJDUMP = FALSE;
+        STRING NIOS2_JAM_FILE;
+        // <<--
+        
+        
+        // -------------------------------------
+
+		STRING MASTER_CPU = "default_cpu";
+        
+        ENUM [
+            ARM7 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                STRING THUMB_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                    //UINT32 IRQ_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                    //UINT32 IRQ_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                UINT32 STACK_TOP;
+                UINT32 STACK_BOTTOM;
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 IRQ_SIZE;    // available space for all irq stacks
+                UINT32 SVC_SIZE;
+                UINT32 FIQ_SIZE;
+                UINT32 ABT_SIZE;
+                UINT32 UND_SIZE;
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                //UINT32 SHARED_MIN_IRQ_SIZE;    // size of shared stack
+
+            },
+            JANUS {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                STRING THUMB_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                    UINT32 IRQ_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                    UINT32 IRQ_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                UINT32 STACK_TOP;
+                UINT32 STACK_BOTTOM;
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 IRQ_SIZE;    // available space for all irq stacks
+                UINT32 SVC_SIZE;
+                UINT32 FIQ_SIZE;
+                UINT32 ABT_SIZE;
+                UINT32 UND_SIZE;
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                UINT32 SHARED_MIN_IRQ_SIZE;    // size of shared stack
+
+            },
+            NIOSII {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                STRING STACK_TOP;
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                
+                STRING SYSTEM_LIBRARY_NAME;
+                STRING SYSTEM_LIBRARY_PATH;
+                
+		        STRING IPIC_LOCAL_NAME;
+                
+            },
+            MPC5 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                UINT32 STACK_BOTTOM;
+
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                
+                /* Irq Handlers */
+                STRING HANDLER_IRQ0;
+                STRING HANDLER_LVL0;
+                STRING HANDLER_IRQ1;
+                STRING HANDLER_LVL1;
+                STRING HANDLER_IRQ2;
+                STRING HANDLER_LVL2;
+                STRING HANDLER_IRQ3;
+                STRING HANDLER_LVL3;
+                STRING HANDLER_IRQ4;
+                STRING HANDLER_LVL4;
+                STRING HANDLER_IRQ5;
+                STRING HANDLER_LVL5;
+                STRING HANDLER_IRQ6;
+                STRING HANDLER_LVL6;
+                STRING HANDLER_IRQ7;
+                STRING HANDLER_LVL7;
+
+            },
+            PIC30 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            //ENUM [
+                            //    SHARED,
+                            //    PRIVATE {
+                            //        UINT32 SYS_SIZE;
+                            //    }
+                            //] DUMMY_STACK;
+                        },
+                        FALSE
+                ] MULTI_STACK = FALSE;
+                
+                //UINT32 STACK_BOTTOM;
+
+                //UINT32 SYS_SIZE;    // available space for all user stacks
+                //UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+
+                BOOLEAN ICD2 = FALSE;
+                BOOLEAN ENABLE_SPLIM = TRUE;
+				
+            },
+            AVR_5 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                UINT32 STACK_BOTTOM;
+
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                
+                ENUM [STOP, DIV1, DIV8, DIV32, DIV64, DIV256, DIV1024] TIMER0 = STOP;
+                ENUM [STOP, DIV1, DIV8,        DIV64, DIV256, DIV1024] TIMER1 = STOP;
+                ENUM [STOP, DIV1, DIV8,        DIV64, DIV256, DIV1024] TIMER2 = STOP;
+                ENUM [STOP, DIV1, DIV8,        DIV64, DIV256, DIV1024] TIMER3 = STOP;
+      
+      
+
+                /* Interrupt Handlers * /
+                STRING HANDLER_IRQ0;	// external interrupt request 0
+                STRING HANDLER_IRQ1;	// external interrupt request 1
+                STRING HANDLER_IRQ2;	// external interrupt request 2
+                STRING HANDLER_IRQ3;	// external interrupt request 3
+                STRING HANDLER_IRQ4;	// external interrupt request 4
+                STRING HANDLER_IRQ5;	// external interrupt request 5
+                STRING HANDLER_IRQ6;	// external interrupt request 6
+                STRING HANDLER_IRQ7;	// external interrupt request 7
+                
+                STRING HANDLER_T0_MATCH;	// Timer/Counter 0 Compare Match
+                STRING HANDLER_T0_OVERFLW;	// Timer/Counter 0 Overflow
+                STRING HANDLER_T1_EVENT;	// Timer/Counter 1 Capture Event
+                STRING HANDLER_T1_MATCH_A;	// Timer/Counter 1 Compare Match A
+                STRING HANDLER_T1_MATCH_B;	// Timer/Counter 1 Compare Match B
+                STRING HANDLER_T1_MATCH_C;	// Timer/Counter 1 Compare Match C
+                STRING HANDLER_T1_OVERFLW;	// Timer/Counter 1 Overflow
+                STRING HANDLER_T2_MATCH;	// Timer/Counter 2 Compare Match
+                STRING HANDLER_T2_OVERFLW;	// Timer/Counter 2 Overflow
+                STRING HANDLER_T3_EVENT;	// Timer/Counter 3 Capture Event
+                STRING HANDLER_T3_MATCH_A;	// Timer/Counter 3 Compare Match A
+                STRING HANDLER_T3_MATCH_B;	// Timer/Counter 3 Compare Match B
+                STRING HANDLER_T3_MATCH_C;	// Timer/Counter 3 Compare Match C
+                STRING HANDLER_T3_OVERFLW;	// Timer/Counter 3 Overflow
+
+                STRING HANDLER_SPI; 	// SPI Serial Transfer Complete
+                
+                STRING HANDLER_US0_RX;  	// USART0 Rx complete
+                STRING HANDLER_US0_EMPTY;	// USART0 Data Register Empty
+                STRING HANDLER_US0_TX;  	// Usart0 Tx complete
+                
+                STRING HANDLER_US1_RX;  	// USART1 Rx complete
+                STRING HANDLER_US1_EMPTY;	// USART1 Data Register Empty
+                STRING HANDLER_US1_TX;  	// Usart1 Tx complete
+                
+                STRING HANDLER_ADC; 	// ADC Conversion Complete
+                STRING HANDLER_EEPROM;	// EEPROM Ready
+                STRING HANDLER_ANALOG_COMP;	// Analog Comparator
+                STRING HANDLER_2WSI;	// Two-wire serial Interface
+                STRING HANDLER_SPM_READY;	// Store program Memory Ready
+                */
+                
+                ENUM [
+                    HANDLER_IRQ0 {	// external interrupt request 0
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ1 {	// external interrupt request 1
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ2 {	// external interrupt request 2
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ3 {	// external interrupt request 3
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ4 {	// external interrupt request 4
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ5 {	// external interrupt request 5
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ6 {	// external interrupt request 6
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_IRQ7 {	// external interrupt request 7
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                
+	                }, HANDLER_T0_MATCH {	// Timer/Counter 0 Compare Match
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T0_OVERFLW {	// Timer/Counter 0 Overflow
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_EVENT {	// Timer/Counter 1 Capture Event
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_MATCH_A {	// Timer/Counter 1 Compare Match A
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_MATCH_B {	// Timer/Counter 1 Compare Match B
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_MATCH_C {	// Timer/Counter 1 Compare Match C
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T1_OVERFLW {	// Timer/Counter 1 Overflow
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T2_MATCH {	// Timer/Counter 2 Compare Match
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T2_OVERFLW {	// Timer/Counter 2 Overflow
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_EVENT {	// Timer/Counter 3 Capture Event
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_MATCH_A {	// Timer/Counter 3 Compare Match A
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_MATCH_B {	// Timer/Counter 3 Compare Match B
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_MATCH_C {	// Timer/Counter 3 Compare Match C
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_T3_OVERFLW {	// Timer/Counter 3 Overflow
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	
+	                }, HANDLER_SPI { 	// SPI Serial Transfer Complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                
+	                }, HANDLER_US0_RX {  	// USART0 Rx complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_US0_EMPTY {	// USART0 Data Register Empty
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_US0_TX {  	// Usart0 Tx complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                
+	                }, HANDLER_US1_RX {  	// USART1 Rx complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_US1_EMPTY {	// USART1 Data Register Empty
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_US1_TX {  	// Usart1 Tx complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                
+	                }, HANDLER_ADC { 	// ADC Conversion Complete
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_EEPROM {	// EEPROM Ready
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_ANALOG_COMP {	// Analog Comparator
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_2WSI {	// Two-wire serial Interface
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }, HANDLER_SPM_READY {	// Store program Memory Ready
+                    	STRING FUNCTION;
+                    	INT32[1,2] TYPE = 1;
+	                }
+	                
+                ] HANDLER[];
+            }
+            
+        ] CPU_DATA[];
+
+        ENUM [
+		
+                        SAMSUNG_KS32C50100 {
+                                STRING IRQ_EXT0;                   /* Ext 0 */
+                                STRING IRQ_EXT1;                   /* Ext 1 */
+                                STRING IRQ_EXT2;                   /* Ext 2 */
+                                STRING IRQ_EXT3;                   /* Ext 3 */
+                                STRING IRQ_UART0TX;                /* UART0 Tx */
+                                STRING IRQ_UART0RX;                /* UART0 Rx & error*/
+                                STRING IRQ_UART1TX;                /* UART1 Tx */
+                                STRING IRQ_UART1RX;                /* UART1 Rx & error*/
+                                STRING IRQ_GDMA0;                  /* GDMA ch. 0 */
+                                STRING IRQ_GDMA1;                  /* GDMA ch. 1 */
+                                STRING IRQ_TIMER0;                 /* Timer 0 */
+                                STRING IRQ_TIMER1;                 /* Timer 1 */
+                                STRING IRQ_HDLCATX;                /* HDLC A Tx */
+                                STRING IRQ_HDLCARX;                /* HDLC A Rx */
+                                STRING IRQ_HDLCBTX;                /* HDLC B Tx */
+                                STRING IRQ_HDLCBRX;                /* HDLC B Rx */
+                                STRING IRQ_ETHBDMATX;              /* Ethernet BDMA Tx */
+                                STRING IRQ_ETHBDMARX;              /* Ethernet BDMA Rx */
+                                STRING IRQ_ETHMACTX;               /* Ethernet MAC Tx */
+                                STRING IRQ_ETHMACRX;               /* Ethernet MAC Rx */
+                                STRING IRQ_I2C;                    /* I2C-bus */
+                                STRING IRQ_NO_PENDING;             /* No Pending Interrupt */
+			},
+			PIC30 {
+				ENUM [
+					CUSTOM {
+						STRING MODEL;
+						STRING LINKERSCRIPT;
+						STRING DEV_LIB;
+						STRING INCLUDE_C;
+						STRING INCLUDE_S;
+					},
+					PIC24FJ128GA006,
+					PIC24FJ128GA008,
+					PIC24FJ128GA010,
+					PIC24FJ32GA002	,
+					PIC24FJ32GA004	,
+					PIC24FJ64GA002	,
+					PIC24FJ64GA004	,
+					PIC24FJ64GA006	,
+					PIC24FJ64GA008	,
+					PIC24FJ64GA010	,
+					PIC24FJ96GA006	,
+					PIC24FJ96GA008	,
+					PIC24FJ96GA010	,
+					PIC24HJ128GP206	,
+					PIC24HJ128GP210	,
+					PIC24HJ128GP306	,
+					PIC24HJ128GP310	,
+					PIC24HJ128GP506	,
+					PIC24HJ128GP510	,
+					PIC24HJ256GP206	,
+					PIC24HJ256GP210	,
+					PIC24HJ256GP610	,
+					PIC24HJ64GP206	,
+					PIC24HJ64GP210	,
+					PIC24HJ64GP506	,
+					PIC24HJ64GP510	,
+					PIC30F1010	,
+					PIC30F2010	,
+					PIC30F2011	,
+					PIC30F2012	,
+					PIC30F2020	,
+					PIC30F2021	,
+					PIC30F2022	,
+					PIC30F2023	,
+					PIC30F3010	,
+					PIC30F3011	,
+					PIC30F3012	,
+					PIC30F3013	,
+					PIC30F3014	,
+					PIC30F4011	,
+					PIC30F4012	,
+					PIC30F4013	,
+					PIC30F5011	,
+					PIC30F5013	,
+					PIC30F5015	,
+					PIC30F5016	,
+					PIC30F6010	,
+					PIC30F6010A	,
+					PIC30F6011	,
+					PIC30F6011A	,
+					PIC30F6012	,
+					PIC30F6012A	,
+					PIC30F6013	,
+					PIC30F6013A	,
+					PIC30F6014	,
+					PIC30F6014A,
+					PIC30F6015,
+					PIC33FJ128GP206,
+					PIC33FJ128GP306,
+					PIC33FJ128GP310,
+					PIC33FJ128GP706,
+					PIC33FJ128GP708,
+					PIC33FJ128GP710,
+					PIC33FJ128MC506,
+					PIC33FJ128MC510,
+					PIC33FJ128MC706,
+					PIC33FJ128MC708,
+					PIC33FJ128MC710,
+					PIC33FJ256GP506,
+					PIC33FJ256GP510,
+					PIC33FJ256GP710,
+					PIC33FJ256MC510,
+					PIC33FJ256MC710,
+					PIC33FJ64GP206,
+					PIC33FJ64GP306,
+					PIC33FJ64GP310,
+					PIC33FJ64GP706,
+					PIC33FJ64GP708,
+					PIC33FJ64GP710,
+					PIC33FJ64MC506,
+					PIC33FJ64MC508,
+					PIC33FJ64MC510,
+					PIC33FJ64MC706,
+					PIC33FJ64MC710
+
+				] MODEL;
+			}
+		] MCU_DATA;
+
+		ENUM [
+			NO_BOARD,
+			
+			// ----- DS_PIC30 -----
+			EE_FLEX {
+			
+				BOOLEAN USELEDS = FALSE;	// old
+				BOOLEAN USELCD = FALSE;		// old
+						
+				ENUM [ DEMO { 
+						ENUM [
+								ACCELEROMETER,
+								ADC_IN,
+								BUTTONS,
+								BUZZER,
+								DAC,
+								ENCODER,
+								IR,
+								LCD,
+								LEDS,
+								PWM_OUT,
+								PWM_MOTOR,
+								SENSORS,
+								TRIMMER,
+								USB,
+								ZIGBEE,
+								
+								ALL
+						] OPTIONS[];
+				    }, MULTI { 
+						ENUM [
+								ETHERNET,
+								EIB,
+								ALL
+						] OPTIONS[];
+					}, STANDARD {
+						ENUM [
+							LEDS, LCD, ALL
+						] OPTIONS[];
+				    }
+				] TYPE = STANDARD;
+			},
+			MICROCHIP_EXPLORER16 {
+				BOOLEAN USELEDS;
+				BOOLEAN USEBUTTONS;
+				BOOLEAN USELCD;
+				BOOLEAN USEANALOG;
+		    },
+		    MICROCHIP_DSPICDEM11PLUS {
+				BOOLEAN USELEDS;
+				BOOLEAN USELCD;
+				BOOLEAN USEBUTTONS;
+				BOOLEAN USEAUDIO;
+				BOOLEAN USEANALOG;
+			},
+			
+			// ----- AVR 5 -----
+			ATMEGA_STK50X,
+			XBOW_MIB5X0
+			
+		] BOARD_DATA = NO_BOARD;
+        // -------------------------------------
+
+		ENUM [
+			ENABLE {
+				STRING NAME[];
+			}
+		] LIB[];
+
+        // -------------------------------------
+
+        ENUM [
+            FP {
+                BOOLEAN NESTED_IRQ;
+            },
+            EDF {
+            	// contains the time length of a tick
+            	// default unit of time is ms. valid times are:
+            	// s, ms, us, ps
+            	STRING TICK_TIME;
+            	
+                BOOLEAN NESTED_IRQ;
+				
+				BOOLEAN REL_DEADLINES_IN_RAM = FALSE;
+            },
+            BCC1,
+            BCC2,
+            ECC1,
+            ECC2,
+            IRIS {
+            	// contains every contract
+				ENUM [
+					CONTRACT {
+						STRING NAME;
+						UINT32 BUDGET;
+						UINT32 PERIOD;
+					}
+				] CONTRACTS[];
+            },
+            CBS {
+            	// contains every contract
+				ENUM [
+					CONTRACT {
+						STRING NAME;
+						UINT32 BUDGET;
+						UINT32 PERIOD;
+					}
+				] CONTRACTS[];
+            }
+
+        ] KERNEL_TYPE;
+
+		ENUM [
+			NONE,
+			ALL,
+			OS_SECTION,
+			TASK_SECTION,
+			RESOURCE_SECTION,
+			STACK_SECTION,
+			ALARM_SECTION
+		] ORTI_SECTIONS[];
+
+    };
+
+    APPMODE {
+    };
+
+    TASK {
+        BOOLEAN [
+            TRUE {
+                APPMODE_TYPE APPMODE[];
+            },
+            FALSE
+        ] AUTOSTART;
+        
+        UINT32 PRIORITY;
+        UINT32 ACTIVATION = 1;
+        // it can be a number (it means numer of ticks, es "1234")
+        // it can also be a time (like "0.2h" "0.1m" "1s" "2ms" "3us" "4ns")
+        STRING REL_DEADLINE;
+        
+        ENUM [NON, FULL] SCHEDULE;
+        EVENT_TYPE EVENT[];
+        RESOURCE_TYPE RESOURCE[];
+        
+        /* EE specific values */
+        ENUM [
+            SHARED,
+            PRIVATE {
+                UINT32 SYS_SIZE;
+            }            
+        ] STACK = SHARED;
+        STRING CPU_ID = "default_cpu";
+        STRING APP_SRC[];
+        
+        // current task could send a notification to this list of task:
+        TASK_TYPE LINKED[];
+        
+        // can contain the name of a contract (see KERNEL SECTIONs, like IRIS and CBS)
+        STRING CONTRACT;
+    };
+
+    RESOURCE {
+        ENUM [
+            STANDARD  {
+		        STRING APP_SRC[];        
+            },
+            LINKED {
+                RESOURCE_TYPE LINKEDRESOURCE;
+            },
+            INTERNAL
+        ] RESOURCEPROPERTY;
+    };
+
+    EVENT {
+        UINT32 WITH_AUTO MASK = AUTO;
+    };
+
+    COUNTER {
+        UINT32 MINCYCLE;
+        UINT32 MAXALLOWEDVALUE;
+        UINT32 TICKSPERBASE;
+        
+        STRING CPU_ID = "default_cpu";
+    };
+
+    ALARM {
+        COUNTER_TYPE COUNTER;
+        ENUM [
+            ACTIVATETASK {
+                TASK_TYPE TASK;
+            },
+            SETEVENT {
+                TASK_TYPE TASK;
+                EVENT_TYPE EVENT;
+            },
+            ALARMCALLBACK {
+                STRING ALARMCALLBACKNAME;
+            }
+        ] ACTION;
+
+        BOOLEAN [
+            TRUE {
+                UINT32 ALARMTIME;
+                UINT32 CYCLETIME;
+                APPMODE_TYPE APPMODE[];
+            },
+            FALSE
+        ] AUTOSTART;
+    };
+    
+    ISR {
+		STRING LEVEL;
+		STRING HANDLER;
+	};
+    
+};

@@ -1,0 +1,1245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" size="5626,1270" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#/" metadata="emf-1.0" initialized="true" showWireOptions="1" scrolledX="218">
+  <children xsi:type="editmodel:ClassEditModel" location="627,1173" size="177,76" targetConnections="//@children.8/@sourceConnections.2" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//RequiredInterface" runTimeClassModel="ExternalMethodRef;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="154,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//RequiredInterface/Name">
+        <model href="data.ecore#//RequiredInterface/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//RequiredInterface/ExternalMethodRef">
+        <model href="data.ecore#//RequiredInterface/ExternalMethodRef"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.0" target="//@children.9/@sourceConnections.0" targetEnd="//@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="88,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="188,-103" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//RequiredInterface"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="82,838" size="140,76" targetConnections="//@children.11/@sourceConnections.1 //@children.4/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//MethodRef" runTimeClassModel="MethodName;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//MethodRef/Name">
+        <model href="data.ecore#//MethodRef/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//MethodRef/MethodName">
+        <model href="data.ecore#//MethodRef/MethodName"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.1" target="//@children.9/@sourceConnections.0" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-25,-81"/>
+    </sourceConnections>
+    <model href="data.ecore#//MethodRef"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="403,1174" size="163,76" targetConnections="//@children.8/@sourceConnections.3" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ProvidedInterface" runTimeClassModel="LocalMethodRef;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="140,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ProvidedInterface/Name">
+        <model href="data.ecore#//ProvidedInterface/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ProvidedInterface/LocalMethodRef">
+        <model href="data.ecore#//ProvidedInterface/LocalMethodRef"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.2" target="//@children.9/@sourceConnections.0" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="81,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="88,112" anchorKind="FixedAtEdge" attachSource="true"/>
+    </sourceConnections>
+    <model href="data.ecore#//ProvidedInterface"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="945,153" size="124,114" targetConnections="//@children.9/@sourceConnections.0" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ObjectWithID" runTimeClassModel=" getObjectID(); checkNewID(newID: EString): EBoolean">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="75,48">
+      <children xsi:type="editmodel:MethodEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ObjectWithID/getObjectID">
+        <model href="data.ecore#//ObjectWithID/getObjectID"/>
+      </children>
+      <children xsi:type="editmodel:MethodEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ObjectWithID/setObjectID">
+        <model href="data.ecore#//ObjectWithID/setObjectID"/>
+      </children>
+      <children xsi:type="editmodel:MethodEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ObjectWithID/checkNewID">
+        <model href="data.ecore#//ObjectWithID/checkNewID"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="data.ecore#//ObjectWithID"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="257,1013" size="139,58" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Proc" runTimeClassModel="Methods">
+    <children xsi:type="editmodel:CompartmentEditModel" size="116,18">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Proc/Methods">
+        <model href="data.ecore#//Proc/Methods"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.14/@sourceConnections.0 //@children.8/@sourceConnections.0" connectionRouterKind="GeneralizationManhattan" source="//@children.4" target="//@children.15" targetEnd="//@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.4/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,30" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.4" target="//@children.1" targetEnd="//@children.4/@sourceConnections.1/@children.1" sourceEnd="//@children.4/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,20" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Proc/methodRefList" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.4/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.4/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="71,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Proc/methodRefList"/>
+      </children>
+    </sourceConnections>
+    <model href="data.ecore#//Proc"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="1024,943" size="166,94" targetConnections="//@children.16/@sourceConnections.2 //@children.10/@sourceConnections.1 //@children.13/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Event" runTimeClassModel="Type;MethodRefName;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="143,54">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Event/Name">
+        <model href="data.ecore#//Event/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Event/Type">
+        <model href="data.ecore#//Event/Type"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Event/MethodRefName">
+        <model href="data.ecore#//Event/MethodRefName"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.5" target="//@children.9/@sourceConnections.0" targetEnd="//@children.5/@sourceConnections.0/@children.1" sourceEnd="//@children.5/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="83,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,68"/>
+    </sourceConnections>
+    <model href="data.ecore#//Event"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="873,833" size="155,58" targetConnections="//@children.16/@sourceConnections.3" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//PartialOrder" runTimeClassModel="ModeRef">
+    <children xsi:type="editmodel:CompartmentEditModel" size="132,18">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//PartialOrder/ModeRef">
+        <model href="data.ecore#//PartialOrder/ModeRef"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.6" target="//@children.9/@sourceConnections.0" targetEnd="//@children.6/@sourceConnections.0/@children.1" sourceEnd="//@children.6/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="77,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="62,68" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.6" target="//@children.10" targetEnd="//@children.6/@sourceConnections.1/@children.1" sourceEnd="//@children.6/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="155,19" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//PartialOrder/order" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.6/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.6/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" location="-595,1447" size="27,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" location="-556,1447" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//PartialOrder/order"/>
+      </children>
+    </sourceConnections>
+    <model href="data.ecore#//PartialOrder"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="1119,707" size="155,58" targetConnections="//@children.16/@sourceConnections.4" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TimeConst" runTimeClassModel="ModeRef">
+    <children xsi:type="editmodel:CompartmentEditModel" size="132,18">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TimeConst/ModeRef">
+        <model href="data.ecore#//TimeConst/ModeRef"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.7" target="//@children.13" targetEnd="//@children.7/@sourceConnections.0/@children.1" sourceEnd="//@children.7/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="155,14" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TimeConst/timeConstElement" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.7/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.7/@sourceConnections.0/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="89,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//TimeConst/timeConstElement"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.7" target="//@children.9/@sourceConnections.0" targetEnd="//@children.7/@sourceConnections.1/@children.1" sourceEnd="//@children.7/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="77,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-137,-520"/>
+    </sourceConnections>
+    <model href="data.ecore#//TimeConst"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="595,1013" size="114,30" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SubSystem" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.8" target="//@children.4/@sourceConnections.0" targetEnd="//@children.8/@sourceConnections.0/@children.1" sourceEnd="//@children.8/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="57,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="88,-555" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manual" source="//@children.8" target="//@children.15" targetEnd="//@children.8/@sourceConnections.1/@children.1" sourceEnd="//@children.8/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="22,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SubSystem/implementation" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.8/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.8/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="73,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//SubSystem/implementation"/>
+      </children>
+      <bendpoints secondRelativeDimension="255,82" firstRelativeDimension="94,2"/>
+      <bendpoints secondRelativeDimension="254,-1" firstRelativeDimension="93,-81"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.8" target="//@children.0" targetEnd="//@children.8/@sourceConnections.2/@children.1" sourceEnd="//@children.8/@sourceConnections.2/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="16,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SubSystem/requiredInterface" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.8/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.8/@sourceConnections.2/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="84,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" location="677,1167" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//SubSystem/requiredInterface"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.8" target="//@children.2" targetEnd="//@children.8/@sourceConnections.3/@children.1" sourceEnd="//@children.8/@sourceConnections.3/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SubSystem/providedInterface" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.8/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.8/@sourceConnections.3/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="86,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//SubSystem/providedInterface"/>
+      </children>
+    </sourceConnections>
+    <model href="data.ecore#//SubSystem"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="398,352" size="131,56" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//System" runTimeClassModel="Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="108,16">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//System/Name">
+        <model href="data.ecore#//System/Name"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.16/@sourceConnections.0 //@children.19/@children.1/@sourceConnections.0 //@children.19/@children.0/@sourceConnections.0 //@children.12/@sourceConnections.0 //@children.6/@sourceConnections.0 //@children.5/@sourceConnections.0 //@children.13/@sourceConnections.0 //@children.10/@sourceConnections.0 //@children.7/@sourceConnections.1 //@children.1/@sourceConnections.0 //@children.2/@sourceConnections.0 //@children.0/@sourceConnections.0 //@children.33/@sourceConnections.0 //@children.32/@sourceConnections.0 //@children.20/@sourceConnections.1 //@children.25/@sourceConnections.0 //@children.29/@sourceConnections.0 //@children.28/@sourceConnections.0 //@children.22/@sourceConnections.0 //@children.24/@sourceConnections.0 //@children.23/@sourceConnections.0 //@children.31/@sourceConnections.3 //@children.27/@sourceConnections.0 //@children.26/@sourceConnections.0 //@children.21/@sourceConnections.0 //@children.30/@sourceConnections.1 //@children.18/@children.4/@sourceConnections.0 //@children.18/@children.2/@sourceConnections.0 //@children.18/@children.1/@sourceConnections.0 //@children.18/@children.3/@sourceConnections.1 //@children.18/@children.0/@sourceConnections.0 //@children.37/@sourceConnections.0 //@children.36/@sourceConnections.0 //@children.34/@sourceConnections.0 //@children.35/@sourceConnections.0 //@children.17/@children.3/@sourceConnections.0 //@children.17/@children.2/@sourceConnections.0 //@children.17/@children.0/@sourceConnections.0 //@children.17/@children.1/@sourceConnections.0" connectionRouterKind="GeneralizationManhattan" source="//@children.9" target="//@children.3" targetEnd="//@children.9/@sourceConnections.0/@children.1" sourceEnd="//@children.9/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="64,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="62,97" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.9" target="//@children.19/@children.1" targetEnd="//@children.9/@sourceConnections.1/@children.1" sourceEnd="//@children.9/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="82,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//System/modes" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.9/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="34,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//System/modes"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.9" target="//@children.16" targetEnd="//@children.9/@sourceConnections.2/@children.1" sourceEnd="//@children.9/@sourceConnections.2/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="131,18" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//System/functional" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.9/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.2/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="47,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//System/functional"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.9" target="//@children.33" targetEnd="//@children.9/@sourceConnections.3/@children.1" sourceEnd="//@children.9/@sourceConnections.3/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,56" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//System/architectural" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.9/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.3/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="61,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//System/architectural"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.9" target="//@children.37" targetEnd="//@children.9/@sourceConnections.4/@children.1" sourceEnd="//@children.9/@sourceConnections.4/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,56" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//System/mapping" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.9/@sourceConnections.4/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.4/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="42,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//System/mapping"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.9" target="//@children.18/@children.4" targetEnd="//@children.9/@sourceConnections.5/@children.1" sourceEnd="//@children.9/@sourceConnections.5/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="131,46" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//System/annotation" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.9/@sourceConnections.5/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.5/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="51,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//System/annotation"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.9" target="//@children.17/@children.3" targetEnd="//@children.9/@sourceConnections.6/@children.1" sourceEnd="//@children.9/@sourceConnections.6/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="83,56" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//System/schedulability" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.9/@sourceConnections.6/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.6/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="66,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//System/schedulability"/>
+      </children>
+    </sourceConnections>
+    <model href="data.ecore#//System"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="774,959" size="177,76" targetConnections="//@children.6/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Order" runTimeClassModel="FirstEvent;SecondEvent">
+    <children xsi:type="editmodel:CompartmentEditModel" size="144,32">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Order/FirstEvent">
+        <model href="data.ecore#//Order/FirstEvent"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Order/SecondEvent">
+        <model href="data.ecore#//Order/SecondEvent"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.10" target="//@children.9/@sourceConnections.0" targetEnd="//@children.10/@sourceConnections.0/@children.1" sourceEnd="//@children.10/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="86,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-170,-192"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.10" target="//@children.5" targetEnd="//@children.10/@sourceConnections.1/@children.1" sourceEnd="//@children.10/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="174,23" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-2,92"/>
+    </sourceConnections>
+    <model href="data.ecore#//Order"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="303,933" size="88,30" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Trigger" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.15/@sourceConnections.0" connectionRouterKind="GeneralizationManhattan" source="//@children.11" target="//@children.12" targetEnd="//@children.11/@sourceConnections.0/@children.1" sourceEnd="//@children.11/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="44,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="93,58" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.11" target="//@children.1" targetEnd="//@children.11/@sourceConnections.1/@children.1" sourceEnd="//@children.11/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="17,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Trigger/methodRefList" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.11/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="71,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Trigger/methodRefList"/>
+      </children>
+    </sourceConnections>
+    <model href="data.ecore#//Trigger"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="524,803" size="186,58" targetConnections="//@children.16/@sourceConnections.1 //@children.11/@sourceConnections.0" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SystemImplementation" runTimeClassModel="Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,18">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SystemImplementation/Name">
+        <model href="data.ecore#//SystemImplementation/Name"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.12" target="//@children.9/@sourceConnections.0" targetEnd="//@children.12/@sourceConnections.0/@children.1" sourceEnd="//@children.12/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="93,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="76,68"/>
+    </sourceConnections>
+    <model href="data.ecore#//SystemImplementation"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="1266,885" size="161,112" targetConnections="//@children.7/@sourceConnections.0" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TimeConstElement" runTimeClassModel="BoundType;FirstEvent;SecondEvent;BoundValue">
+    <children xsi:type="editmodel:CompartmentEditModel" size="129,64">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TimeConstElement/FirstEvent">
+        <model href="data.ecore#//TimeConstElement/FirstEvent"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TimeConstElement/SecondEvent">
+        <model href="data.ecore#//TimeConstElement/SecondEvent"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TimeConstElement/BoundType">
+        <model href="data.ecore#//TimeConstElement/BoundType"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TimeConstElement/BoundValue">
+        <model href="data.ecore#//TimeConstElement/BoundValue"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.13" target="//@children.9/@sourceConnections.0" targetEnd="//@children.13/@sourceConnections.0/@children.1" sourceEnd="//@children.13/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="80,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="62,68" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.13" target="//@children.5" targetEnd="//@children.13/@sourceConnections.1/@children.1" sourceEnd="//@children.13/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-2,75" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="165,1"/>
+    </sourceConnections>
+    <model href="data.ecore#//TimeConstElement"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="426,1013" size="139,76" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Var" runTimeClassModel="Type;Methods">
+    <children xsi:type="editmodel:CompartmentEditModel" size="116,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Var/Type">
+        <model href="data.ecore#//Var/Type"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Var/Methods">
+        <model href="data.ecore#//Var/Methods"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.14" target="//@children.4/@sourceConnections.0" targetEnd="//@children.14/@sourceConnections.0/@children.1" sourceEnd="//@children.14/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="32,-502" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Var"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="421,933" size="140,30" targetConnections="//@children.4/@sourceConnections.0 //@children.8/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Implementation" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.15" target="//@children.11/@sourceConnections.0" targetEnd="//@children.15/@sourceConnections.0/@children.1" sourceEnd="//@children.15/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-300,-606"/>
+    </sourceConnections>
+    <model href="data.ecore#//Implementation"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="726,607" size="109,30" targetConnections="//@children.9/@sourceConnections.2" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Functional" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.16" target="//@children.9/@sourceConnections.0" targetEnd="//@children.16/@sourceConnections.0/@children.1" sourceEnd="//@children.16/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="54,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="62,34"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.16" target="//@children.12" targetEnd="//@children.16/@sourceConnections.1/@children.1" sourceEnd="//@children.16/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="86,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Functional/systemImplementation" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.16/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.16/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="110,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Functional/systemImplementation"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.16" target="//@children.5" targetEnd="//@children.16/@sourceConnections.2/@children.1" sourceEnd="//@children.16/@sourceConnections.2/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="99,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Functional/eventList" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.16/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.16/@sourceConnections.2/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="45,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Functional/eventList"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.16" target="//@children.6" targetEnd="//@children.16/@sourceConnections.3/@children.1" sourceEnd="//@children.16/@sourceConnections.3/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="100,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Functional/partialOrderList" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.16/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.16/@sourceConnections.3/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" location="-419,1268" size="76,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Functional/partialOrderList"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.16" target="//@children.7" targetEnd="//@children.16/@sourceConnections.4/@children.1" sourceEnd="//@children.16/@sourceConnections.4/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Functional/timeConstList" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.16/@sourceConnections.4/@children.1/@children.1" roleLabel="//@children.16/@sourceConnections.4/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" location="1707,1498" size="67,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Functional/timeConstList"/>
+      </children>
+    </sourceConnections>
+    <model href="data.ecore#//Functional"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:GroupEditModel" location="2445,372" size="505,431">
+    <children xsi:type="editmodel:ClassEditModel" location="80,283" size="153,130" targetConnections="//@children.17/@children.2/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//CpuSched" runTimeClassModel="Schedulable;SpeedFactory;Utilization;CpuRef;Boundary">
+      <children xsi:type="editmodel:CompartmentEditModel" size="130,90">
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//CpuSched/CpuRef">
+          <model href="data.ecore#//CpuSched/CpuRef"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//CpuSched/Utilization">
+          <model href="data.ecore#//CpuSched/Utilization"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//CpuSched/SpeedFactory">
+          <model href="data.ecore#//CpuSched/SpeedFactory"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//CpuSched/Boundary">
+          <model href="data.ecore#//CpuSched/Boundary"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//CpuSched/Schedulable">
+          <model href="data.ecore#//CpuSched/Schedulable"/>
+        </children>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.17/@children.0" target="//@children.9/@sourceConnections.0" targetEnd="//@children.17/@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.17/@children.0/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="76,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-2525,-352" anchorKind="FixedAtEdge"/>
+      </sourceConnections>
+      <model href="data.ecore#//CpuSched"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" location="347,283" size="158,148" targetConnections="//@children.17/@children.2/@sourceConnections.2" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskSched" runTimeClassModel="Schedulable;TaskRef;CDelta;Utilization;TDelta;ResponseTime">
+      <children xsi:type="editmodel:CompartmentEditModel" size="135,108">
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskSched/TaskRef">
+          <model href="data.ecore#//TaskSched/TaskRef"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskSched/Utilization">
+          <model href="data.ecore#//TaskSched/Utilization"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskSched/CDelta">
+          <model href="data.ecore#//TaskSched/CDelta"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskSched/TDelta">
+          <model href="data.ecore#//TaskSched/TDelta"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskSched/ResponseTime">
+          <model href="data.ecore#//TaskSched/ResponseTime"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskSched/Schedulable">
+          <model href="data.ecore#//TaskSched/Schedulable"/>
+        </children>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.17/@children.1" target="//@children.9/@sourceConnections.0" targetEnd="//@children.17/@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.17/@children.1/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="79,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-2530,-352" anchorKind="FixedAtEdge"/>
+      </sourceConnections>
+      <model href="data.ecore#//TaskSched"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" location="208,100" size="169,76" targetConnections="//@children.17/@children.3/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SchedulingScenario" runTimeClassModel="ModeRef;Reports">
+      <children xsi:type="editmodel:CompartmentEditModel" size="132,36">
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SchedulingScenario/ModeRef">
+          <model href="data.ecore#//SchedulingScenario/ModeRef"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SchedulingScenario/Reports">
+          <model href="data.ecore#//SchedulingScenario/Reports"/>
+        </children>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.17/@children.2" target="//@children.9/@sourceConnections.0" targetEnd="//@children.17/@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.17/@children.2/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="84,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-1873,-838" anchorKind="FixedAtEdge"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.17/@children.2" target="//@children.17/@children.0" targetEnd="//@children.17/@children.2/@sourceConnections.1/@children.1" sourceEnd="//@children.17/@children.2/@sourceConnections.1/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="53,75" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SchedulingScenario/cpuSched" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.17/@children.2/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.17/@children.2/@sourceConnections.1/@children.1/@children.0">
+          <children xsi:type="editmodel:LabelEditModel" size="50,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <model href="data.ecore#//SchedulingScenario/cpuSched"/>
+        </children>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.17/@children.2" target="//@children.17/@children.1" targetEnd="//@children.17/@children.2/@sourceConnections.2/@children.1" sourceEnd="//@children.17/@children.2/@sourceConnections.2/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="107,75" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//SchedulingScenario/taskSched" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.17/@children.2/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.17/@children.2/@sourceConnections.2/@children.1/@children.0">
+          <children xsi:type="editmodel:LabelEditModel" size="53,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <model href="data.ecore#//SchedulingScenario/taskSched"/>
+        </children>
+      </sourceConnections>
+      <model href="data.ecore#//SchedulingScenario"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" size="132,30" targetConnections="//@children.9/@sourceConnections.6" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Schedulability" runTimeClassModel="">
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.17/@children.3" target="//@children.9/@sourceConnections.0" targetEnd="//@children.17/@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.17/@children.3/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="66,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-1865,-838" anchorKind="FixedAtEdge"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.17/@children.3" target="//@children.17/@children.2" targetEnd="//@children.17/@children.3/@sourceConnections.1/@children.1" sourceEnd="//@children.17/@children.3/@sourceConnections.1/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="75,30" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Schedulability/schedulingScenario" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.17/@children.3/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.17/@children.3/@sourceConnections.1/@children.1/@children.0">
+          <children xsi:type="editmodel:LabelEditModel" size="96,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <model href="data.ecore#//Schedulability/schedulingScenario"/>
+        </children>
+      </sourceConnections>
+      <model href="data.ecore#//Schedulability"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+  </children>
+  <children xsi:type="editmodel:GroupEditModel" location="1814,456" size="507,553">
+    <children xsi:type="editmodel:ClassEditModel" location="170,477" size="138,76" targetConnections="//@children.18/@children.1/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Sample" runTimeClassModel="Value;Probability">
+      <children xsi:type="editmodel:CompartmentEditModel" size="115,36">
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Sample/Value">
+          <model href="data.ecore#//Sample/Value"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Sample/Probability">
+          <model href="data.ecore#//Sample/Probability"/>
+        </children>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.18/@children.0" target="//@children.9/@sourceConnections.0" targetEnd="//@children.18/@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.18/@children.0/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-72,-260" anchorKind="FixedAtEdge" attachSource="true"/>
+      </sourceConnections>
+      <model href="data.ecore#//Sample"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" location="380,337" size="127,88" targetConnections="//@children.18/@children.2/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Distribution" runTimeClassModel="Type;Variance;Avg">
+      <children xsi:type="editmodel:CompartmentEditModel" size="104,48">
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Distribution/Avg">
+          <model href="data.ecore#//Distribution/Avg"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Distribution/Variance">
+          <model href="data.ecore#//Distribution/Variance"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Distribution/Type">
+          <model href="data.ecore#//Distribution/Type"/>
+        </children>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.18/@children.1" target="//@children.9/@sourceConnections.0" targetEnd="//@children.18/@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.18/@children.1/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="63,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-74,-260" anchorKind="FixedAtEdge" attachSource="true"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.18/@children.1" target="//@children.18/@children.0" targetEnd="//@children.18/@children.1/@sourceConnections.1/@children.1" sourceEnd="//@children.18/@children.1/@sourceConnections.1/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="0,71" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Distribution/sample" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.18/@children.1/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.18/@children.1/@sourceConnections.1/@children.1/@children.0">
+          <children xsi:type="editmodel:LabelEditModel" size="36,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <model href="data.ecore#//Distribution/sample"/>
+        </children>
+      </sourceConnections>
+      <model href="data.ecore#//Distribution"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" location="65,237" size="136,112" targetConnections="//@children.18/@children.3/@sourceConnections.0" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ExecTime" runTimeClassModel="Ref;Type;Best;worst">
+      <children xsi:type="editmodel:CompartmentEditModel" size="113,72">
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ExecTime/Ref">
+          <model href="data.ecore#//ExecTime/Ref"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ExecTime/Type">
+          <model href="data.ecore#//ExecTime/Type"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ExecTime/worst">
+          <model href="data.ecore#//ExecTime/worst"/>
+        </children>
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ExecTime/Best">
+          <model href="data.ecore#//ExecTime/Best"/>
+        </children>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.18/@children.2" target="//@children.9/@sourceConnections.0" targetEnd="//@children.18/@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.18/@children.2/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="68,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-1277,-576" anchorKind="FixedAtEdge"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.18/@children.2" target="//@children.18/@children.1" targetEnd="//@children.18/@children.2/@sourceConnections.1/@children.1" sourceEnd="//@children.18/@children.2/@sourceConnections.1/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="136,100" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ExecTime/distribution" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.18/@children.2/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.18/@children.2/@sourceConnections.1/@children.1/@children.0">
+          <children xsi:type="editmodel:LabelEditModel" size="53,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <model href="data.ecore#//ExecTime/distribution"/>
+        </children>
+      </sourceConnections>
+      <model href="data.ecore#//ExecTime"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" location="275,59" size="155,58" targetConnections="//@children.18/@children.4/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ExecTimeList" runTimeClassModel="ModeRef">
+      <children xsi:type="editmodel:CompartmentEditModel" size="132,18">
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ExecTimeList/ModeRef">
+          <model href="data.ecore#//ExecTimeList/ModeRef"/>
+        </children>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.18/@children.3" target="//@children.18/@children.2" targetEnd="//@children.18/@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.18/@children.3/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="43,58" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ExecTimeList/execTime" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.18/@children.3/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.18/@children.3/@sourceConnections.0/@children.1/@children.0">
+          <children xsi:type="editmodel:LabelEditModel" size="49,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <model href="data.ecore#//ExecTimeList/execTime"/>
+        </children>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.18/@children.3" target="//@children.9/@sourceConnections.0" targetEnd="//@children.18/@children.3/@sourceConnections.1/@children.1" sourceEnd="//@children.18/@children.3/@sourceConnections.1/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="77,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-1663,-912" anchorKind="FixedAtEdge"/>
+      </sourceConnections>
+      <model href="data.ecore#//ExecTimeList"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" size="111,30" targetConnections="//@children.9/@sourceConnections.5" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Annotation" runTimeClassModel="">
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.18/@children.4" target="//@children.9/@sourceConnections.0" targetEnd="//@children.18/@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.18/@children.4/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="55,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-78,-260" anchorKind="FixedAtEdge" attachSource="true"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.18/@children.4" target="//@children.18/@children.3" targetEnd="//@children.18/@children.4/@sourceConnections.1/@children.1" sourceEnd="//@children.18/@children.4/@sourceConnections.1/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="111,28" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Annotation/execTimeList" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.18/@children.4/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.18/@children.4/@sourceConnections.1/@children.1/@children.0">
+          <children xsi:type="editmodel:LabelEditModel" size="66,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <model href="data.ecore#//Annotation/execTimeList"/>
+        </children>
+      </sourceConnections>
+      <model href="data.ecore#//Annotation"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+  </children>
+  <children xsi:type="editmodel:GroupEditModel" location="1418,534" size="218,153">
+    <children xsi:type="editmodel:ClassEditModel" location="78,95" size="140,58" targetConnections="//@children.19/@children.1/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mode" runTimeClassModel="Name">
+      <children xsi:type="editmodel:CompartmentEditModel" size="117,18">
+        <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mode/Name">
+          <model href="data.ecore#//Mode/Name"/>
+        </children>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.19/@children.0" target="//@children.9/@sourceConnections.0" targetEnd="//@children.19/@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.19/@children.0/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="62,34"/>
+      </sourceConnections>
+      <model href="data.ecore#//Mode"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" size="84,30" targetConnections="//@children.9/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Modes" runTimeClassModel="">
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.19/@children.1" target="//@children.9/@sourceConnections.0" targetEnd="//@children.19/@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.19/@children.1/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="42,0" anchorKind="FixedAtEdge" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="62,34"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.19/@children.1" target="//@children.19/@children.0" targetEnd="//@children.19/@children.1/@sourceConnections.1/@children.1" sourceEnd="//@children.19/@children.1/@sourceConnections.1/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="84,1" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Modes/mode" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.19/@children.1/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.19/@children.1/@sourceConnections.1/@children.1/@children.0">
+          <children xsi:type="editmodel:LabelEditModel" size="28,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+          <model href="data.ecore#//Modes/mode"/>
+        </children>
+      </sourceConnections>
+      <model href="data.ecore#//Modes"/>
+      <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+    </children>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-2571,689" size="140,76" targetConnections="//@children.32/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Cpu" runTimeClassModel="Model;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Cpu/Name">
+        <model href="data.ecore#//Cpu/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Cpu/Model">
+        <model href="data.ecore#//Cpu/Model"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.20" target="//@children.25" targetEnd="//@children.20/@sourceConnections.0/@children.1" sourceEnd="//@children.20/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="106,76" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Cpu/rtos" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.20/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.20/@sourceConnections.0/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="20,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Cpu/rtos"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.20" target="//@children.9/@sourceConnections.0" targetEnd="//@children.20/@sourceConnections.1/@children.1" sourceEnd="//@children.20/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1925,-697" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Cpu"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-1597,1112" size="155,76" targetConnections="//@children.30/@sourceConnections.0" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//MutexRef" runTimeClassModel="MutexName;ModeRef">
+    <children xsi:type="editmodel:CompartmentEditModel" size="132,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//MutexRef/ModeRef">
+        <model href="data.ecore#//MutexRef/ModeRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//MutexRef/MutexName">
+        <model href="data.ecore#//MutexRef/MutexName"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.21" target="//@children.9/@sourceConnections.0" targetEnd="//@children.21/@sourceConnections.0/@children.1" sourceEnd="//@children.21/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="77,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="2624,-433" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//MutexRef"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-1511,688" size="198,76" targetConnections="//@children.31/@sourceConnections.2" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ResourceRef" runTimeClassModel="ResourceMethodRef;ModeRef">
+    <children xsi:type="editmodel:CompartmentEditModel" size="175,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ResourceRef/ModeRef">
+        <model href="data.ecore#//ResourceRef/ModeRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ResourceRef/ResourceMethodRef">
+        <model href="data.ecore#//ResourceRef/ResourceMethodRef"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.22" target="//@children.9/@sourceConnections.0" targetEnd="//@children.22/@sourceConnections.0/@children.1" sourceEnd="//@children.22/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="99,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1685,-1054" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//ResourceRef"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-1137,820" size="155,168" targetConnections="//@children.31/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Activation" runTimeClassModel="Type;Deadline;Offset;ModeRef;ActNumber;ActivationClass;Period">
+    <children xsi:type="editmodel:CompartmentEditModel" size="132,128">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Activation/ModeRef">
+        <model href="data.ecore#//Activation/ModeRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Activation/Type">
+        <model href="data.ecore#//Activation/Type"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Activation/ActNumber">
+        <model href="data.ecore#//Activation/ActNumber"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Activation/ActivationClass">
+        <model href="data.ecore#//Activation/ActivationClass"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Activation/Period">
+        <model href="data.ecore#//Activation/Period"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Activation/Offset">
+        <model href="data.ecore#//Activation/Offset"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Activation/Deadline">
+        <model href="data.ecore#//Activation/Deadline"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Activation/ActivationClass">
+        <model href="data.ecore#//Activation/ActivationClass"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.23" target="//@children.9/@sourceConnections.0" targetEnd="//@children.23/@sourceConnections.0/@children.1" sourceEnd="//@children.23/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="76,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-288,-68" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Activation"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-1385,825" size="199,112" targetConnections="//@children.31/@sourceConnections.0" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Scheduling" runTimeClassModel="PreemptionGroupName;Priority;ModeRef;Threshold">
+    <children xsi:type="editmodel:CompartmentEditModel" size="176,72">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Scheduling/ModeRef">
+        <model href="data.ecore#//Scheduling/ModeRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Scheduling/Priority">
+        <model href="data.ecore#//Scheduling/Priority"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Scheduling/Threshold">
+        <model href="data.ecore#//Scheduling/Threshold"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Scheduling/PreemptionGroupName">
+        <model href="data.ecore#//Scheduling/PreemptionGroupName"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.24" target="//@children.9/@sourceConnections.0" targetEnd="//@children.24/@sourceConnections.0/@children.1" sourceEnd="//@children.24/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="99,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1665,-1222" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Scheduling"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-2378,758" size="140,76" targetConnections="//@children.20/@sourceConnections.0" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Rtos" runTimeClassModel="OilVar;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Rtos/Name">
+        <model href="data.ecore#//Rtos/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Rtos/OilVar">
+        <model href="data.ecore#//Rtos/OilVar"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.25" target="//@children.9/@sourceConnections.0" targetEnd="//@children.25/@sourceConnections.0/@children.1" sourceEnd="//@children.25/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1924,-697" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Rtos"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-1007,512" size="140,94" targetConnections="//@children.33/@sourceConnections.3" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mutex" runTimeClassModel="Policy;OilVar;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,54">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mutex/Name">
+        <model href="data.ecore#//Mutex/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mutex/Policy">
+        <model href="data.ecore#//Mutex/Policy"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mutex/OilVar">
+        <model href="data.ecore#//Mutex/OilVar"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.26" target="//@children.9/@sourceConnections.0" targetEnd="//@children.26/@sourceConnections.0/@children.1" sourceEnd="//@children.26/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="3195,-993" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Mutex"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-2248,610" size="140,94" targetConnections="//@children.33/@sourceConnections.5" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Signal" runTimeClassModel="Type;OilVar;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,54">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Signal/Name">
+        <model href="data.ecore#//Signal/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Signal/Type">
+        <model href="data.ecore#//Signal/Type"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Signal/OilVar">
+        <model href="data.ecore#//Signal/OilVar"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.27" target="//@children.9/@sourceConnections.0" targetEnd="//@children.27/@sourceConnections.0/@children.1" sourceEnd="//@children.27/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="2639,-394" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Signal"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-1987,967" size="159,148" targetConnections="//@children.33/@sourceConnections.7" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Frame" runTimeClassModel="ActivationRate;ActivationType;Length;Name;ActivationClass;ID">
+    <children xsi:type="editmodel:CompartmentEditModel" size="136,108">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Frame/Name">
+        <model href="data.ecore#//Frame/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Frame/ID">
+        <model href="data.ecore#//Frame/ID"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Frame/ActivationType">
+        <model href="data.ecore#//Frame/ActivationType"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Frame/ActivationClass">
+        <model href="data.ecore#//Frame/ActivationClass"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Frame/ActivationRate">
+        <model href="data.ecore#//Frame/ActivationRate"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Frame/Length">
+        <model href="data.ecore#//Frame/Length"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.28" target="//@children.9/@sourceConnections.0" targetEnd="//@children.28/@sourceConnections.0/@children.1" sourceEnd="//@children.28/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="79,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1882,-788" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Frame"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-2114,814" size="140,94" targetConnections="//@children.33/@sourceConnections.6 //@children.46/@sourceConnections.0" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Bus" runTimeClassModel="Type;Speed;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,54">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Bus/Name">
+        <model href="data.ecore#//Bus/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Bus/Type">
+        <model href="data.ecore#//Bus/Type"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Bus/Speed">
+        <model href="data.ecore#//Bus/Speed"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.29" target="//@children.9/@sourceConnections.0" targetEnd="//@children.29/@sourceConnections.0/@children.1" sourceEnd="//@children.29/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="2023,-904" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Bus"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-1722,894" size="140,76" targetConnections="//@children.33/@sourceConnections.4" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Resource" runTimeClassModel="Name;Methods">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,36">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Resource/Name">
+        <model href="data.ecore#//Resource/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Resource/Methods">
+        <model href="data.ecore#//Resource/Methods"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.30" target="//@children.21" targetEnd="//@children.30/@sourceConnections.0/@children.1" sourceEnd="//@children.30/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="140,46" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Resource/mutexRef" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.30/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.30/@sourceConnections.0/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="48,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Resource/mutexRef"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.30" target="//@children.9/@sourceConnections.0" targetEnd="//@children.30/@sourceConnections.1/@children.1" sourceEnd="//@children.30/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="2599,-1376" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Resource"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-1242,580" size="140,94" targetConnections="//@children.33/@sourceConnections.2" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Task" runTimeClassModel="Type;OilVar;Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,54">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Task/Name">
+        <model href="data.ecore#//Task/Name"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Task/Type">
+        <model href="data.ecore#//Task/Type"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Task/OilVar">
+        <model href="data.ecore#//Task/OilVar"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.31" target="//@children.24" targetEnd="//@children.31/@sourceConnections.0/@children.1" sourceEnd="//@children.31/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="23,94" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Task/scheduling" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.31/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.31/@sourceConnections.0/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="53,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Task/scheduling"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.31" target="//@children.23" targetEnd="//@children.31/@sourceConnections.1/@children.1" sourceEnd="//@children.31/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="96,94" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Task/activation" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.31/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.31/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="47,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Task/activation"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.31" target="//@children.22" targetEnd="//@children.31/@sourceConnections.2/@children.1" sourceEnd="//@children.31/@sourceConnections.2/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="141,74" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Task/resourceRef" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.31/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.31/@sourceConnections.2/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="62,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Task/resourceRef"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.31" target="//@children.9/@sourceConnections.0" targetEnd="//@children.31/@sourceConnections.3/@children.1" sourceEnd="//@children.31/@sourceConnections.3/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="62,68" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//Task"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-2479,551" size="140,58" targetConnections="//@children.33/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Ecu" runTimeClassModel="Name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,18">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Ecu/Name">
+        <model href="data.ecore#//Ecu/Name"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.32" target="//@children.9/@sourceConnections.0" targetEnd="//@children.32/@sourceConnections.0/@children.1" sourceEnd="//@children.32/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1812,-679" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.32" target="//@children.20" targetEnd="//@children.32/@sourceConnections.1/@children.1" sourceEnd="//@children.32/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="21,58" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Ecu/cpu" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.32/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.32/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Ecu/cpu"/>
+      </children>
+    </sourceConnections>
+    <model href="data.ecore#//Ecu"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-1801,443" size="122,30" targetConnections="//@children.9/@sourceConnections.3" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Architectural" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.33" target="//@children.9/@sourceConnections.0" targetEnd="//@children.33/@sourceConnections.0/@children.1" sourceEnd="//@children.33/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="61,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="125,-126" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.33" target="//@children.32" targetEnd="//@children.33/@sourceConnections.1/@children.1" sourceEnd="//@children.33/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="68,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Architectural/ecu" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.33/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.33/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Architectural/ecu"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.33" target="//@children.31" targetEnd="//@children.33/@sourceConnections.2/@children.1" sourceEnd="//@children.33/@sourceConnections.2/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="72,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Architectural/task" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.33/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.33/@sourceConnections.2/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="22,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Architectural/task"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.33" target="//@children.26" targetEnd="//@children.33/@sourceConnections.3/@children.1" sourceEnd="//@children.33/@sourceConnections.3/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="87,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Architectural/mutex" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.33/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.33/@sourceConnections.3/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="31,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Architectural/mutex"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.33" target="//@children.30" targetEnd="//@children.33/@sourceConnections.4/@children.1" sourceEnd="//@children.33/@sourceConnections.4/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="52,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Architectural/resource" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.33/@sourceConnections.4/@children.1/@children.1" roleLabel="//@children.33/@sourceConnections.4/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="45,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Architectural/resource"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.33" target="//@children.27" targetEnd="//@children.33/@sourceConnections.5/@children.1" sourceEnd="//@children.33/@sourceConnections.5/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="19,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Architectural/signal" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.33/@sourceConnections.5/@children.1/@children.1" roleLabel="//@children.33/@sourceConnections.5/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="29,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Architectural/signal"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.33" target="//@children.29" targetEnd="//@children.33/@sourceConnections.6/@children.1" sourceEnd="//@children.33/@sourceConnections.6/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="41,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Architectural/bus" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.33/@sourceConnections.6/@children.1/@children.1" roleLabel="//@children.33/@sourceConnections.6/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="19,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Architectural/bus"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.33" target="//@children.28" targetEnd="//@children.33/@sourceConnections.7/@children.1" sourceEnd="//@children.33/@sourceConnections.7/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="44,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Architectural/frame" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.33/@sourceConnections.7/@children.1/@children.1" roleLabel="//@children.33/@sourceConnections.7/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="29,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Architectural/frame"/>
+      </children>
+    </sourceConnections>
+    <model href="data.ecore#//Architectural"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-632,593" size="155,130" targetConnections="//@children.37/@sourceConnections.1" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//VarMap" runTimeClassModel="MutexRef;VarRef;ModeRef;BusRef;FrameRef">
+    <children xsi:type="editmodel:CompartmentEditModel" size="132,90">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//VarMap/VarRef">
+        <model href="data.ecore#//VarMap/VarRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//VarMap/ModeRef">
+        <model href="data.ecore#//VarMap/ModeRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//VarMap/FrameRef">
+        <model href="data.ecore#//VarMap/FrameRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//VarMap/BusRef">
+        <model href="data.ecore#//VarMap/BusRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//VarMap/MutexRef">
+        <model href="data.ecore#//VarMap/MutexRef"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.34" target="//@children.9/@sourceConnections.0" targetEnd="//@children.34/@sourceConnections.0/@children.1" sourceEnd="//@children.34/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="77,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1534,-326" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//VarMap"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-395,697" size="155,94" targetConnections="//@children.37/@sourceConnections.2" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskMap" runTimeClassModel="TaskRef;RtosRef;ModeRef">
+    <children xsi:type="editmodel:CompartmentEditModel" size="132,54">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskMap/TaskRef">
+        <model href="data.ecore#//TaskMap/TaskRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskMap/ModeRef">
+        <model href="data.ecore#//TaskMap/ModeRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TaskMap/RtosRef">
+        <model href="data.ecore#//TaskMap/RtosRef"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.35" target="//@children.9/@sourceConnections.0" targetEnd="//@children.35/@sourceConnections.0/@children.1" sourceEnd="//@children.35/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="77,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1534,-326" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//TaskMap"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-193,525" size="155,112" targetConnections="//@children.37/@sourceConnections.3" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ProcMap" runTimeClassModel="TaskRef;ProcRef;Order;ModeRef">
+    <children xsi:type="editmodel:CompartmentEditModel" size="132,72">
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ProcMap/ProcRef">
+        <model href="data.ecore#//ProcMap/ProcRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ProcMap/ModeRef">
+        <model href="data.ecore#//ProcMap/ModeRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ProcMap/TaskRef">
+        <model href="data.ecore#//ProcMap/TaskRef"/>
+      </children>
+      <children xsi:type="editmodel:AttributeEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//ProcMap/Order">
+        <model href="data.ecore#//ProcMap/Order"/>
+      </children>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.36" target="//@children.9/@sourceConnections.0" targetEnd="//@children.36/@sourceConnections.0/@children.1" sourceEnd="//@children.36/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="77,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1534,-326" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <model href="data.ecore#//ProcMap"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" location="-404,431" size="97,30" targetConnections="//@children.9/@sourceConnections.4" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mapping" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" connectionRouterKind="Manual" source="//@children.37" target="//@children.9/@sourceConnections.0" targetEnd="//@children.37/@sourceConnections.0/@children.1" sourceEnd="//@children.37/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="48,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="1232,-746" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.37" target="//@children.34" targetEnd="//@children.37/@sourceConnections.1/@children.1" sourceEnd="//@children.37/@sourceConnections.1/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="25,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mapping/varMap" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.37/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.37/@sourceConnections.1/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="38,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Mapping/varMap"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.37" target="//@children.35" targetEnd="//@children.37/@sourceConnections.2/@children.1" sourceEnd="//@children.37/@sourceConnections.2/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="53,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mapping/taskMap" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.37/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.37/@sourceConnections.2/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="43,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Mapping/taskMap"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" connectionRouterKind="Manhattan" source="//@children.37" target="//@children.36" targetEnd="//@children.37/@sourceConnections.3/@children.1" sourceEnd="//@children.37/@sourceConnections.3/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,30" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//Mapping/procMap" aggregationKind="Composition" navigable="true" multiplicityLabel="//@children.37/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.37/@sourceConnections.3/@children.1/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" size="44,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" size="17,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <model href="data.ecore#//Mapping/procMap"/>
+      </children>
+    </sourceConnections>
+    <model href="data.ecore#//Mapping"/>
+    <classifierPreferences xsi:type="editmodel:EMFClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="-57,171" size="96,44" stereotype="datatype" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//BooleanVar">
+    <model href="data.ecore#//BooleanVar"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="55,171" size="89,44" stereotype="datatype" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//DoubleVar">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="data.ecore#//DoubleVar"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="157,171" size="78,44" stereotype="datatype" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//FloatVar">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="data.ecore#//FloatVar"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="246,171" size="88,44" stereotype="datatype" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//IntegerVar">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="data.ecore#//IntegerVar"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="525,171" size="78,44" stereotype="datatype" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//LongVar">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="data.ecore#//LongVar"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="438,171" size="78,44" stereotype="datatype" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//OilVar">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="data.ecore#//OilVar"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="613,171" size="83,44" stereotype="datatype" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//StringVar">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="data.ecore#//StringVar"/>
+  </children>
+  <children xsi:type="editmodel:PrimitiveTypeEditModel" location="353,171" size="78,44" stereotype="datatype" id="platform:/resource/dati_rtdruid/src/rtdruid/vartree/data/init/data.ecore#//TimeVar">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <model href="data.ecore#//TimeVar"/>
+  </children>
+  <children xsi:type="editmodel:NotepadEditModel" location="-2363,874" size="213,24" note="Speed va inteso come bit al secondo ?">
+    <sourceConnections xsi:type="editmodel:IndicationEditModel" connectionRouterKind="Manual" source="//@children.46" target="//@children.29" targetEnd="//@children.46/@sourceConnections.0/@children.1" sourceEnd="//@children.46/@sourceConnections.0/@children.0">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="214,-1" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-1,72"/>
+    </sourceConnections>
+  </children>
+  <model href="data.ecore#/"/>
+  <classDiagramPreferences xsi:type="editmodel:EMFClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural"/>
+</editmodel:ClassDiagramEditModel>
