@@ -6,11 +6,9 @@
 	                 COMMON
 	******************************************
 	-->
-		<target name="import" unless="ANT_PARAMETERS">	
-			<import file="../ant_parameters.xml" optional="false"/>
-		</target>
+		<import file="../../../../products/tool_build_scripts/ant_parameters.xml" optional="false"/>
 
-		<import file="../compileTools/manual_build_plugins.xml" optional="false"/>
+		<import file="../../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
 		
 		<property name="bundleId" value="com.eu.evidence.rtdruid.oil.ppc.core"/>
 		<property name="bundleVersion" value="${rtd_oil_ee_ppc_core_v}.${build_numer}"/>

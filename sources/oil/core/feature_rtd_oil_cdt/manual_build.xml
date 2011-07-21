@@ -9,14 +9,12 @@
 	                 COMMON
 	******************************************
 	-->
-		<target name="import" unless="ANT_PARAMETERS">	
-			<import file="../ant_parameters.xml" optional="false"/>
-		</target>
+		<import file="../../../../products/tool_build_scripts/ant_parameters.xml" optional="false"/>
 
 		<property name="bundleId" value="com.eu.evidence.rtdruid.oil.cdt"/>
 		<property name="bundleVersion" value="${frtd_oil_cdt_v}.${build_numer}"/>
 		
-		<import file="../compileTools/manual_build_features.xml" optional="false"/>
+		<import file="../../../../products/tool_build_scripts/manual_build_features.xml" optional="false"/>
 		
 		
 		
@@ -26,7 +24,7 @@
 	******************************************
 	-->	
 		<target name="all.plugins">
-			<ant antfile="manual_build.xml" dir="../open_rtd_oil_ui_cdt" target="${target}">
+			<ant antfile="manual_build.xml" dir="../plugin_rtd_oil_cdt_ui" target="${target}">
 				<property name="bundleId" value="com.eu.evidence.rtdruid.oil.cdt.ui"/>
 				<property name="bundleVersion" value="${rtd_oil_cdt_v}.${build_numer}"/>
 			</ant>

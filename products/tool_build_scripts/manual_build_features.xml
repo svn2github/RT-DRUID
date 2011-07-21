@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="common file to build features">
+
+<!--
+******************************************
+                 COMMON
+******************************************
+-->
+	
+	<target name="all.children" depends="all.features,all.plugins,update.feature">
+	</target>
+
+<!-- Build -->
+	<target name="build.jars" description="Build all the jars for the feature: com.eu.evidence.rtdruid.core.">
+		<antcall target="all.children">
+			<param name="target" value="build.jars"/>
+		</antcall>
+	</target>
+
+	<target name="build.sources">
+		<antcall target="all.children">
+			<param name="target" value="build.sources"/>
+		</antcall>
+	</target>
+
+	
+	<target name="children" if="include.children">
+		<antcall target="all.children"/>
+	</target> 
+
+
+
+	<target name="common_build.update.jar" description="Build the feature jar for an update site.">
+		<antcall target="all.children">
+			<param name="target" value="build.update.jar"/>
+		</antcall>
+		<property name="feature.base" value="${feature.temp.folder}"/>
+		<mkdir dir="${feature.temp.folder}"/>
+		<mkdir dir="${feature.temp.folder}/features/${feature_id}_${feature_version}"/>
+		<antcall target="gather.bin.parts" ><!-- inheritAll="false">-->
+			<param name="os" value="*"/>
+			<param name="feature.base" value="${feature.temp.folder}"/>
+			<param name="updateJar.omitRootfiles" value="true"/>
+			<param name="ws" value="*"/>
+			<param name="arch" value="*"/>
+			<param name="nl" value="*"/>
+		</antcall>
+		<mkdir dir="${feature.destination}"/>
+		<jar destfile="${feature.destination}/${feature_id}_${feature_version}.jar" basedir="${feature.temp.folder}/features/${feature_id}_${feature_version}"/>
+	</target>
+
+	
+	
+	
+	<target name="common_publish.bin.parts" if="p2.publish.parts">
+		<mkdir dir="${feature.temp.folder}"/>
+		<copy todir="${feature.temp.folder}" failonerror="true" overwrite="true">
+			<fileset dir="${basedir}">
+				<include name="feature.xml"/>
+				<include name="epl-v10.html/"/>
+			</fileset>
+		</copy>
+		<eclipse.idReplacer featureFilePath="${feature.temp.folder}/feature.xml"
+		                    selfVersion="${feature_version}" 
+				    featureIds="${feature_featureIds}" 
+				    pluginIds="${feature_pluginIds}"/>
+		<eclipse.gatherFeature 
+		   metadataRepository="${p2.build.repo}"
+		   artifactRepository="${p2.build.repo}"
+		   buildResultFolder="${feature.temp.folder}"
+		   baseDirectory="${basedir}"
+		/>
+	</target>
+
+	<target name="common_gather.bin.parts" if="feature.base">
+		<mkdir dir="${feature.base}/features/${feature_id}_${feature_version}"/>
+		<antcall target="children">
+			<param name="target" value="gather.bin.parts"/>
+			<param name="destination.temp.folder" value="${feature.base}/plugins"/>
+		</antcall>
+		<copy todir="${feature.base}/features/${feature_id}_${feature_version}" failonerror="true" overwrite="false">
+			<fileset dir="${basedir}">
+				<include name="feature.xml"/>
+			</fileset>
+		</copy>
+		<eclipse.idReplacer 
+				featureFilePath="${feature.base}/features/${feature_id}_${feature_version}/feature.xml"
+				selfVersion="${feature_version}" 
+				featureIds="${feature_featureIds}" 
+				pluginIds="${feature_pluginIds}"/>
+		<antcall target="rootFiles">
+			<param name="rootTarget" value="rootFiles${os}_${ws}_${arch}"/>
+		</antcall>
+	</target>
+
+<!--
+     Gather root files
+-->
+
+	<target name="rootFiles" unless="updateJar.omitRootfiles">
+		<antcall target="${rootTarget}"/>
+	</target>
+
+	<target name="rootFilesgroup_group_group">
+		<antcall target="rootFileswin32_win32_x86"/>
+	</target>
+
+
+<!--
+     Gather sources files
+-->
+
+	<target name="gather.sources">
+		<antcall target="children">
+			<param name="target" value="gather.sources"/>
+			<param name="destination.temp.folder" value="${feature.temp.folder}/plugins/${feature_id}.sources_${feature_version}/src"/>
+		</antcall>
+	</target>
+
+	
+<!--
+     Gather sources files
+-->
+
+	<target name="gather.logs">
+		<mkdir dir="${feature.temp.folder}/plugins"/>
+		<property name="destination.temp.folder" value="${feature.temp.folder}/plugins"/>
+		<antcall target="all.children" inheritAll="false">
+			<param name="target" value="gather.logs"/>
+			<param name="destination.temp.folder" value="${feature.temp.folder}/plugins"/>
+		</antcall>
+	</target>
+
+</project>

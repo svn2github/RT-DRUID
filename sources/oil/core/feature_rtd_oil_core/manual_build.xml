@@ -8,14 +8,12 @@
                  COMMON
 ******************************************
 -->
-	<target name="import" unless="ANT_PARAMETERS">	
-		<import file="../ant_parameters.xml" optional="false"/>
-	</target>
+	<import file="../../../../products/tool_build_scripts/ant_parameters.xml" optional="false"/>
 
 	<property name="bundleId" value="com.eu.evidence.rtdruid.oil.core"/>
 	<property name="bundleVersion" value="${frtd_oil_core_v}.${build_numer}"/>
 	
-	<import file="../compileTools/manual_build_features.xml" optional="false"/>
+	<import file="../../../../products/tool_build_scripts/manual_build_features.xml" optional="false"/>
 	
 	
 	
@@ -25,15 +23,15 @@
 ******************************************
 -->	
 	<target name="all.plugins">
-		<ant antfile="manual_build.xml" dir="../open_rtd_templates" target="${target}">
+		<ant antfile="manual_build.xml" dir="../../../core/plugin_rtd_templates" target="${target}">
 			<property name="bundleId" value="com.eu.evidence.templates.core"/>
 			<property name="bundleVersion" value="${rtd_templates_v}.${build_numer}"/>
 		</ant>
-		<ant antfile="manual_build.xml" dir="../open_rtd_oil_core" target="${target}">
+		<ant antfile="manual_build.xml" dir="../plugin_rtd_oil_core" target="${target}">
 			<property name="bundleId" value="com.eu.evidence.rtdruid.oil.core"/>
 			<property name="bundleVersion" value="${rtd_oil_core_v}.${build_numer}"/>
 		</ant>
-		<ant antfile="manual_build.xml" dir="../open_rtd_oil_ui" target="${target}">
+		<ant antfile="manual_build.xml" dir="../plugin_rtd_oil_ui" target="${target}">
 			<property name="bundleId" value="com.eu.evidence.rtdruid.oil.ui"/>
 			<property name="bundleVersion" value="${rtd_oil_ui_v}.${build_numer}"/>
 		</ant>

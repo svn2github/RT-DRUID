@@ -6,14 +6,12 @@
 	                 COMMON
 	******************************************
 	-->
-		<target name="import" unless="ANT_PARAMETERS">	
-			<import file="../ant_parameters.xml" optional="false"/>
-		</target>
+		<import file="../../../../products/tool_build_scripts/ant_parameters.xml" optional="false"/>
 
 		<property name="bundleId" value="com.eu.evidence.ee.templates.s12"/>
 		<property name="bundleVersion" value="${ftemplates_ee_s12_v}.${build_numer}"/>
 		
-		<import file="../compileTools/manual_build_features.xml" optional="false"/>
+		<import file="../../../../products/tool_build_scripts/manual_build_features.xml" optional="false"/>
 		
 		
 		
@@ -23,7 +21,7 @@
 	******************************************
 	-->	
 		<target name="all.plugins">
-			<ant antfile="manual_build.xml" dir="../open_ee_templates_s12" target="${target}">
+			<ant antfile="manual_build.xml" dir="../plugin_ee_templates_s12" target="${target}">
 				<property name="bundleId" value="com.eu.evidence.ee.templates.s12"/>
 				<property name="bundleVersion" value="${templates_ee_s12_v}.${build_numer}"/>
 			</ant>

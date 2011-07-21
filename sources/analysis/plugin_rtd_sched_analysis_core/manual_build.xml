@@ -8,11 +8,9 @@
                  COMMON
 ******************************************
 -->
-	<target name="import" unless="ANT_PARAMETERS">	
-		<import file="../ant_parameters.xml" optional="false"/>
-	</target>
+	<import file="../../../products/tool_build_scripts/ant_parameters.xml" optional="false"/>
 
-	<import file="../compileTools/manual_build_plugins.xml" optional="false"/>
+	<import file="../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
 	
 	<property name="bundleId" value="com.eu.evidence.rtdruid.jscan.core"/>
 	<property name="bundleVersion" value="${rtd_jscan_core_v}.${build_numer}"/>
@@ -57,7 +55,7 @@
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
 			<param name="jar_name" value="rtdruid_jscan_core"/>
-			<param name="common_build_sources" value="src/hidden/:src/internal/:src/public/"/>
+			<param name="common_build_sources" value="src/internal/:src/public/"/>
 			<reference refid="common_build_classpath"/>
 			<reference refid="common_build_binary_files"/>
 		</antcall>
