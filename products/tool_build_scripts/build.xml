@@ -10,6 +10,12 @@
 	All plugins
 *******************************
 -->
+	<target name="enable.all.rtdruid.features" if="enable_all_rtdruid_features">
+		<echo>Enabling all features</echo>
+		<property name="enable_oil_core_features">true</property>
+		<property name="enable_oil_ee_features">true</property>
+		<property name="enable_sched_analysis_features">true</property>
+	</target>
 			
 	<!-- Maybe is better to autogenerate this target, inside ant or outside and then import here -->
 	<target name="oil_core.features" if="enable_oil_core_features">
@@ -48,6 +54,15 @@
 	</target>
 
 	<target name="all.features">
+		<condition property="enable_all_rtdruid_features" value="true">
+			<and>
+				<not><isset property="enable_oil_core_features"/></not>
+				<not><isset property="enable_oil_ee_features"/></not>
+				<not><isset property="enable_sched_analysis_features"/></not>
+			</and>
+		</condition>
+		<antcall target="enable.all.rtdruid.features"/>
+
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/core/feature_rtd_core"/>
 
 		<antcall target="oil_core.features"/>
@@ -84,7 +99,6 @@
 		
 		<antcall target="all.features">
 			<param name="target" value="build.update.jar"/>
-<!--			<param name="target" value="build.plugin"/>-->
 		</antcall>
 	
 	</target>
@@ -92,18 +106,62 @@
 
 <!--
 *******************************
-	optional step 5 : Add sources
+	step 3 : Add sources
 *******************************
-- - >
+-->
 	
-	<target name="build.sources" depends="import" description="Create a zip containing all sources of rtdruid's plug-ins.">
-		
+	<target name="build.sources" depends="import" description="Build all source features and plugins.">
+<!--		
 		<antcall target="all.features">
 			<param name="target" value="build.sources"/>
 		</antcall>
-	
+-->	
 	</target>
+
+
+<!--
+*******************************
+	optional step 4 : Sign jars
+*******************************
 -->
+	
+	<target name="sign.jars" depends="import" description="Sign all features and plugins.">
+<!--		
+		<antcall target="all.features">
+			<param name="target" value="to.do"/>
+		</antcall>
+-->	
+	</target>
+
+
+<!--
+*******************************
+	step 5 : Fix categories
+*******************************
+-->
+	
+	<target name="add.p2.categories" depends="import" description="Add p2 categories to website">
+		<p2.publish.featuresAndBundles
+		    metadataRepository="file:${site.output}"
+		    artifactRepository="file:${site.output}"
+		    publishArtifacts="true"
+		    compress="true"
+		    source="${site.output}"
+		/>
+
+		<eclipse.publish.featuresAndBundles
+		    metadataRepository="file:${site.output}"
+		    artifactRepository="file:${site.output}"
+		    compress="true"
+			category="file:${basedir}/category.xml"
+		>
+			<features dir="${site.output}"/>
+			<bundles dir="${site.output}"/>
+		</eclipse.publish.featuresAndBundles>
+				
+	</target>
+
+
 	
 <!--
 *******************************
@@ -113,7 +171,7 @@
 	
 	<target name="zip.plugin" depends="import" description="Make all zip files">
 		<zip
-				zipfile="${outputFile}.zip"
+				zipfile="${output.folder}/${outputFile}.zip"
 				basedir="${product.temp.folder}"
 				filesonly="true"
 				whenempty="skip"
@@ -128,6 +186,10 @@
 
 	<target name="zip.distribution" depends="import" description="Make a zip file that contains the plugin.">
 		<antcall target="build.features"/>
+		<antcall target="build.sources"/>
+		<antcall target="sign.jars"/>
+		<antcall target="add.p2.categories"/>
+		<antcall target="zip.plugin"/>
 	</target>
 
 <!--
@@ -162,50 +224,61 @@
 	<target name="help">
 		
 		<echo>
-		
-		OLD!!!!!!!!!!!!!!!!
-		
-		This little Ant scritp has 3 target:
+===================================		
+This little Ant scritp has 3 target:
 	* zip.distribution = make a .zip that contains all plugins and
 	                     features
 	* zip.distribution.with.sources = make a .zip that contains all plugins and
-	                     theirs sources
-	* clean      = remove all previous results (temp files, jars
+	                     theirs sources (NOT fully working jet)
+	* clean      = remove all previous results (EE sources and templates, temp files, jars
 	               and zips)
-	
-Also there is an important variable:
-	* destination   = where put the result of "zip.distribution"
+
+===================================
+Also there are few important variables:
+	* ee.base.location = where EE sources are located. If present, build scripts will update
+                             EE sources and templates inside RT-Druid plugins before build them
+	* temp.folder      = where put partial results
+	* destination      = where put the result of "zip.distribution"
 	                         Default value = current directory
+	* outputFile       = the name of "web site" zip file
 
-The syntax is
+To enable a sub set of RT-Druid plugin you should enable one or more of these variables	
+		enable_oil_core_features
+		enable_oil_ee_features
+		enable_sched_analysis_features
 
+===================================
+Build can be run using start_ant_builder.sh script, 
+directly invoking ant or through eclipse ant "external tool"
+			
 	sh start_ant_builder.sh [ant options] [target1 [...[targetN]]]
 	
 	option to set a variable:
 		-DvarName=value
+			
+	note: start_ant_builder.sh need ECLIPSE_HOME environment variable set to eclipse location 
 		
+===================================
 examples
 	
-	To produce a zip file (with source) in current directory
-		sh start_ant_builder.sh zip.distribution zip.sources
-
-	To produce a zip file (without source) in "../my/output/directory"
+	To produce a zip file named "RT_Druid" contains a website (without source), 
+			adding EE sources and templates from "D:\work\Evidence\Erika\ee",
+			saving temp files in "e:\work\temp_folder" and
+			saving outputs (website) in "e:\work\output_folder" :
 		sh start_ant_builder.sh \
-		   -Ddestination=../my/output/directory \
+		   -Denable_oil_core_features=true \
+		   -Denable_oil_ee_features=true \
+		   -Denable_sched_analysis_features=true \
+		   -Dee.base.location=D:\work\Evidence\Erika\ee \
+		   -Dtemp.folder=E:\work\temp_folder \
+		   -Ddestination=E:\work\output_folder \
+		   -DoutputFile=RT_Druid \
 		   zip.distribution
 
-	To produce a zip file without protections
-		sh start_ant_builder.sh	-DdisableProtections="true" zip.distribution
-	
-RT-Druid plugins subset:		
-	enable_oil_core_features
-	enable_oil_ee_features
-	enable_sched_analysis_features
-	enable_autosar_features
-	enable_xtc_features
+===================================	
 
 NB
-	Ant with eclipse needs to make a "workspace" subdirectory
+	Ant with eclipse may build a "workspace" subdirectory
 		</echo>
 	</target>
 

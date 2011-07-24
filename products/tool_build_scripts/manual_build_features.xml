@@ -12,6 +12,10 @@
 		</antcall>
 	</target>
 	
+	<target name="all.features"/>
+	<target name="all.plugins"/>
+	<target name="update.feature"/>
+	
 	<target name="all.children" depends="all.features,all.plugins,update.feature">
 	</target>
 
