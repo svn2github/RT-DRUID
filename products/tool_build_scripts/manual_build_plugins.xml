@@ -7,6 +7,19 @@
                  COMMON
 ******************************************
 -->
+	
+	<target name="sign.jar" if="sign.key.location">
+		<signjar 
+				jar="${jar.location}"
+				alias="${sign.key.alias}"
+				keypass="${sign.key.keypass}"
+				storepass="${sign.key.storepass}"
+				keystore="${sign.key.location}"
+				sigfile="EVIDENCEF"
+		/>
+	</target>
+
+	
 	<target name="common_build.update.jar" description="Build the plug-in for an update site.">
 <!--		<delete dir="${temp.folder}"/> -->
 		<mkdir dir="${temp.folder}"/>
@@ -16,9 +29,15 @@
 			<param name="destination.temp.folder" value="${plugin.temp.folder}/${plugin_id}_${plugin_vers}/"/>
 		</antcall>
 		<jar destfile="${plugin.destination}/${plugin_id}_${plugin_vers}.jar" basedir="${plugin.temp.folder}/${plugin_id}_${plugin_vers}" filesetmanifest="merge"/>
+		<antcall target="sign.jar">
+				<param name="jar.location" value="${plugin.destination}/${plugin_id}_${plugin_vers}.jar"/>
+		</antcall>
+
 <!--		<delete dir="${temp.folder}"/>-->
 	</target>
 
+	
+	
 
 	<target name="common_build.jar" description="Create jar.">
 <!--		<delete dir="${temp.folder}/rtdruid_core.jar.bin"/>-->
@@ -48,6 +67,10 @@
 
 		<mkdir dir="${plugin.temp.folder}/${plugin_id}_${plugin_vers}"/>
 		<jar destfile="${plugin.temp.folder}/${plugin_id}_${plugin_vers}/${jar_name}.jar" basedir="${build.result.folder}/${jar_name}.bin"/>
+		<antcall target="sign.jar">
+				<param name="jar.location" value="${plugin.temp.folder}/${plugin_id}_${plugin_vers}/${jar_name}.jar"/>
+		</antcall>
+		
 <!--		<delete dir="${temp.folder}/${jar_name}.bin"/>-->
 	</target>
 

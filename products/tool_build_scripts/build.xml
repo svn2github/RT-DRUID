@@ -247,6 +247,16 @@ To enable a sub set of RT-Druid plugin you should enable one or more of these va
 		enable_oil_ee_features
 		enable_sched_analysis_features
 
+
+===================================
+Each jar is signed during the build, if sign.key.location variable is set.
+			All these variables are required during the sign procedure:
+	* sign.key.location  = the file that contains the key
+	* sign.key.alias     = the alias to use
+	* sign.key.storepass = the password of key storage
+	* sign.key.keypass   = the password of private key
+
+
 ===================================
 Build can be run using start_ant_builder.sh script, 
 directly invoking ant or through eclipse ant "external tool"

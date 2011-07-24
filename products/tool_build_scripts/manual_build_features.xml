@@ -37,7 +37,18 @@
 		<antcall target="all.children"/>
 	</target> 
 
+	<target name="sign.jar" if="sign.key.location">
+		<signjar 
+				jar="${jar.location}"
+				alias="${sign.key.alias}"
+				keypass="${sign.key.keypass}"
+				storepass="${sign.key.storepass}"
+				keystore="${sign.key.location}"
+				sigfile="EVIDENCEF"
+		/>
+	</target>
 
+	
 
 	<target name="common_build.update.jar" description="Build the feature jar for an update site.">
 		<antcall target="all.children">
@@ -56,6 +67,9 @@
 		</antcall>
 		<mkdir dir="${feature.destination}"/>
 		<jar destfile="${feature.destination}/${feature_id}_${feature_version}.jar" basedir="${feature.temp.folder}/features/${feature_id}_${feature_version}"/>
+		<antcall target="sign.jar">
+				<param name="jar.location" value="${feature.destination}/${feature_id}_${feature_version}.jar"/>
+		</antcall>
 	</target>
 
 	
