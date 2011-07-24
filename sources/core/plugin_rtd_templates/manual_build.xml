@@ -14,7 +14,7 @@
 	<import file="../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
 	
 	<property name="bundleId" value="com.eu.evidence.templates.core"/>
-	<property name="bundleVersion" value="${rtd_templates_v}.${build_numer}"/>
+	<property name="bundleVersion" value="${rtd_templates_v}.${build_number}"/>
 
 
 <!--

@@ -9,7 +9,7 @@
 		<import file="../../../../products/tool_build_scripts/ant_parameters.xml" optional="false"/>
 
 		<property name="bundleId" value="com.eu.evidence.rtdruid.oil.ee.fp_edf"/>
-		<property name="bundleVersion" value="${frtd_oil_ee_fp_edf_v}.${build_numer}"/>
+		<property name="bundleVersion" value="${frtd_oil_ee_fp_edf_v}.${build_number}"/>
 		
 		<import file="../../../../products/tool_build_scripts/manual_build_features.xml" optional="false"/>
 		
@@ -23,7 +23,7 @@
 		<target name="all.plugins">
 			<ant antfile="manual_build.xml" dir="../plugin_rtd_oil_ee_fp_edf_core" target="${target}">
 				<property name="bundleId" value="com.eu.evidence.rtdruid.oil.fp_edf.core"/>
-				<property name="bundleVersion" value="${rtd_oil_ee_fp_edf_core_v}.${build_numer}"/>
+				<property name="bundleVersion" value="${rtd_oil_ee_fp_edf_core_v}.${build_number}"/>
 			</ant>
 		</target>
 
@@ -48,7 +48,7 @@
 				<param name="feature_id" value="${bundleId}"/>
 				<param name="feature_version" value="${bundleVersion}"/>
 				<param name="feature_featureIds" value=""/>
-				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.fp_edf.core:0.0.0,${rtd_oil_ee_fp_edf_core_v}.${build_numer},"/>
+				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.fp_edf.core:0.0.0,${rtd_oil_ee_fp_edf_core_v}.${build_number},"/>
 			</antcall>
 		</target>
 		
@@ -57,7 +57,7 @@
 				<param name="feature_id" value="${bundleId}"/>
 				<param name="feature_version" value="${bundleVersion}"/>
 				<param name="feature_featureIds" value=""/>
-				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.fp_edf.core:0.0.0,${rtd_oil_ee_fp_edf_core_v}.${build_numer},"/>
+				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.fp_edf.core:0.0.0,${rtd_oil_ee_fp_edf_core_v}.${build_number},"/>
 			</antcall>
 		</target>
 </project>

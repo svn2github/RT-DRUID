@@ -140,6 +140,9 @@
 		<echo file="${compilation.problem.marker}" message="com.eu.evidence.rtdruid.core : compilation.error.occured=${compilation.error.occured}"/>
 	</target>
 
+	<target name="clean">
+<!-- default target does nothing -->
+	</target>
 
 
 </project>

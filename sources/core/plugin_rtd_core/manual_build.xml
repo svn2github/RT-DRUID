@@ -12,7 +12,7 @@
 	<import file="../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
 	
 	<property name="bundleId" value="com.eu.evidence.rtdruid.core"/>
-	<property name="bundleVersion" value="${rtd_core_v}.${build_numer}"/>
+	<property name="bundleVersion" value="${rtd_core_v}.${build_number}"/>
 
 
 <!--

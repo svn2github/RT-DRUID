@@ -66,6 +66,11 @@
 		<delete dir="${temp.folder}"/>
 		<delete file="${output.folder}/${outputFile}.zip"/>
 		
+		<antcall target="all.features">
+			<param name="target" value="clean"/>
+		</antcall>
+		
+		
 	</target>
 
 			

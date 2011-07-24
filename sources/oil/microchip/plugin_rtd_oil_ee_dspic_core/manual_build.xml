@@ -11,7 +11,7 @@
 		<import file="../../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
 		
 		<property name="bundleId" value="com.eu.evidence.rtdruid.oil.dspic.core"/>
-		<property name="bundleVersion" value="${rtd_oil_ee_dspic_core_v}.${build_numer}"/>
+		<property name="bundleVersion" value="${rtd_oil_ee_dspic_core_v}.${build_number}"/>
 
 
 	<!--
@@ -30,13 +30,13 @@
 			<path id="common_build_classpath">
 				<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
 				
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_numer}/rtdruid_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core.jar"/>
 				<pathelement path="${plugin.temp.folder}/*/rtdruid_core.jar"/>
 				
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.core_${rtd_oil_core_v}.${build_numer}/rtdruid_oil_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.core_${rtd_oil_core_v}.${build_number}/rtdruid_oil_core.jar"/>
 				<pathelement path="${plugin.temp.folder}/*/rtdruid_oil_core.jar"/>
 
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_${rtd_oil_ee_core_v}.${build_numer}/rtdruid_oil_ee_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_${rtd_oil_ee_core_v}.${build_number}/rtdruid_oil_ee_core.jar"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_*/rtdruid_oil_ee_core.jar"/>
 
 			</path>

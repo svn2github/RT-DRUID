@@ -12,7 +12,7 @@
 		<import file="../../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
 		
 		<property name="bundleId" value="com.eu.evidence.rtdruid.oil.arm.ui"/>
-		<property name="bundleVersion" value="${rtd_oil_ee_arm_ui_v}.${build_numer}"/>
+		<property name="bundleVersion" value="${rtd_oil_ee_arm_ui_v}.${build_number}"/>
 
 
 	<!--
@@ -31,25 +31,25 @@
 			<path id="common_build_classpath">
 				<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
 				
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_numer}/rtdruid_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core.jar"/>
 				<pathelement path="${plugin.temp.folder}/*/rtdruid_core.jar"/>
 
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core.ui_${rtd_core_ui_v}.${build_numer}/"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core.ui_${rtd_core_ui_v}.${build_number}/"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core.ui_*/"/>
 
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.core_${rtd_oil_core_v}.${build_numer}/rtdruid_oil_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.core_${rtd_oil_core_v}.${build_number}/rtdruid_oil_core.jar"/>
 				<pathelement path="${plugin.temp.folder}/*/rtdruid_oil_core.jar"/>
 
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.cdt.ui_${rtd_oil_cdt_v}.${build_numer}/"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.cdt.ui_${rtd_oil_cdt_v}.${build_number}/"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.cdt.ui_*/"/>
 				
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_${rtd_oil_ee_core_v}.${build_numer}/rtdruid_oil_ee_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_${rtd_oil_ee_core_v}.${build_number}/rtdruid_oil_ee_core.jar"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_*/rtdruid_oil_ee_core.jar"/>
 
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.ui_${rtd_oil_ee_ui_v}.${build_numer}/"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.ui_${rtd_oil_ee_ui_v}.${build_number}/"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.ui_*/"/>
 
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.arm.core_${rtd_oil_ee_arm_core_v}.${build_numer}/"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.arm.core_${rtd_oil_ee_arm_core_v}.${build_number}/"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.arm.core_*/"/>
 
 			</path>

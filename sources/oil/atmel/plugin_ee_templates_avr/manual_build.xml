@@ -11,7 +11,7 @@
 		<import file="../../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
 		
 		<property name="bundleId" value="com.eu.evidence.ee.templates.avr"/>
-		<property name="bundleVersion" value="${templates_ee_avr_v}.${build_numer}"/>
+		<property name="bundleVersion" value="${templates_ee_avr_v}.${build_number}"/>
 
 
 	<!--
@@ -30,7 +30,7 @@
 <!--			<path id="common_build_classpath">
 				<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
 				
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_${rtd_templates_v}.${build_numer}/"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_${rtd_templates_v}.${build_number}/"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_*/"/>
 				
 			</path>
@@ -61,7 +61,7 @@
 			</antcall>
 		</target>
 
-		<target name="gather.bin.parts" if="destination.temp.folder">
+		<target name="gather.bin.parts" if="destination.temp.folder" depends="update.templates">
 			<fileset dir="${basedir}" id="common_gather_binary">
 				<include name="META-INF/"/>
 			<include name="epl-v10.html/"/>
@@ -86,5 +86,19 @@
 			<delete file="${compilation.problem.marker}" quiet="true"/>
 			<available property="templates_avr.jar" file="${build.result.folder}/templates_avr.jar"/>
 			<antcall target="templates_avr.jar"/>
+		</target>
+
+	
+	<!-- Update EE source code -->
+		<target name="update.templates" if="ee.base.location">
+			<antcall target="clean"/>
+			<mkdir dir="examples/avr5"/>
+			<copy todir="examples/avr5">
+				<fileset dir="${ee.base.location}/examples/avr5"/>
+			</copy>
+		</target>
+
+		<target name="clean">
+			<delete dir="examples"/>
 		</target>
 </project>

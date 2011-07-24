@@ -13,7 +13,7 @@
 		<import file="../../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
 		
 		<property name="bundleId" value="com.eu.evidence.ee"/>
-		<property name="bundleVersion" value="${ee_code_v}.${build_numer}"/>
+		<property name="bundleVersion" value="${ee_code_v}.${build_number}"/>
 
 
 	<!--
@@ -32,13 +32,13 @@
 <!--			<path id="common_build_classpath">
 				<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
 				
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.core_${rtd_oil_core_v}.${build_numer}/rtdruid_oil_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.core_${rtd_oil_core_v}.${build_number}/rtdruid_oil_core.jar"/>
 				<pathelement path="${plugin.temp.folder}/*/rtdruid_oil_core.jar"/>
 
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_${rtd_oil_ee_core_v}.${build_numer}/rtdruid_oil_ee_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_${rtd_oil_ee_core_v}.${build_number}/rtdruid_oil_ee_core.jar"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_*/rtdruid_oil_ee_core.jar"/>
 				
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_${rtd_templates_v}.${build_numer}/"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_${rtd_templates_v}.${build_number}/"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_*/"/>
 				
 			</path>
@@ -69,7 +69,7 @@
 			</antcall>
 		</target>
 
-		<target name="gather.bin.parts" if="destination.temp.folder">
+		<target name="gather.bin.parts" if="destination.temp.folder" depends="update.ee.sources">
 			<fileset dir="${basedir}" id="common_gather_binary">
 				<include name="META-INF/"/>
 			<include name="epl-v10.html/"/>
@@ -92,5 +92,24 @@
 			<delete file="${compilation.problem.marker}" quiet="true"/>
 			<available property="ee_core.jar" file="${build.result.folder}/ee_core.jar"/>
 			<antcall target="ee_core.jar"/>
+		</target>
+	
+	
+
+	<!-- Update EE source code -->
+		<target name="update.ee.sources" if="ee.base.location">
+			<antcall target="clean"/>
+			<mkdir dir="ee_base/pkg"/>
+			<mkdir dir="ee_base/contrib"/>
+			<copy todir="ee_base/pkg">
+				<fileset dir="${ee.base.location}/pkg"/>
+			</copy>
+			<copy todir="ee_base/contrib">
+				<fileset dir="${ee.base.location}/contrib"/>
+			</copy>
+		</target>
+	
+		<target name="clean">
+			<delete dir="ee_base"/>
 		</target>
 </project>

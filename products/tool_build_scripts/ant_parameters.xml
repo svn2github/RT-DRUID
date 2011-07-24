@@ -2,7 +2,16 @@
 <!-- $Id: ant_parameters.xml,v 1.22 2008/05/14 16:59:01 durin Exp $ -->
 <project basedir=".">
 
-	<target name="import" unless="ANT_PARAMETERS" >
+	
+	
+	<target name="set_build_number" unless="build_number">
+		<tstamp>
+			<format property="build_number" pattern="yyyyMMddHHmmss"/>
+		</tstamp>
+	</target>
+	
+	
+	<target name="import" unless="ANT_PARAMETERS" depends="set_build_number">
 
 	<property name="ANT_PARAMETERS" value="TRUE"/>
 
@@ -12,7 +21,7 @@
 *******************************
 -->
 	<property name="rtd_feature_version" value="1.6.0"/>
-	<property name="rtd_build_numer" value="${build_numer}"/>
+	<property name="rtd_build_number" value="${build_number}"/>
 	
 	<property name="frtd_core_v"           value="1.6.0"/>
 	<property name="rtd_core_v"            value="1.6.0"/>

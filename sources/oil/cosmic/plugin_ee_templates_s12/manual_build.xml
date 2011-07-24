@@ -11,7 +11,7 @@
 		<import file="../../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
 		
 		<property name="bundleId" value="com.eu.evidence.ee.templates.s12"/>
-		<property name="bundleVersion" value="${templates_ee_s12_v}.${build_numer}"/>
+		<property name="bundleVersion" value="${templates_ee_s12_v}.${build_number}"/>
 
 
 	<!--
@@ -30,7 +30,7 @@
 <!--			<path id="common_build_classpath">
 				<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
 				
-				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_${rtd_templates_v}.${build_numer}/"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_${rtd_templates_v}.${build_number}/"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_*/"/>
 				
 			</path>
@@ -61,7 +61,7 @@
 			</antcall>
 		</target>
 
-		<target name="gather.bin.parts" if="destination.temp.folder">
+		<target name="gather.bin.parts" if="destination.temp.folder" depends="update.templates">
 			<fileset dir="${basedir}" id="common_gather_binary">
 				<include name="META-INF/"/>
 			<include name="epl-v10.html/"/>
@@ -87,4 +87,20 @@
 			<available property="templates_s12.jar" file="${build.result.folder}/templates_s12.jar"/>
 			<antcall target="templates_s12.jar"/>
 		</target>
+	
+	
+	<!-- Update EE source code -->
+		<target name="update.templates" if="ee.base.location">
+			<antcall target="clean"/>
+			<mkdir dir="examples/s12xs"/>
+			<copy todir="examples/s12xs">
+				<fileset dir="${ee.base.location}/examples/s12xs"/>
+			</copy>
+		</target>
+	
+	
+		<target name="clean">
+			<delete dir="examples"/>
+		</target>
+
 </project>
