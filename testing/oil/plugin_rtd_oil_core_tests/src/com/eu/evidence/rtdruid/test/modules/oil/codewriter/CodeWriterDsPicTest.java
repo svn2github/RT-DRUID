@@ -258,6 +258,107 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	public void testDS_PIC24HJ64GP502() {
+	    final String text =
+		"CPU test_application {" + 
+		"" + 
+		"	OS EE {" + 
+		"		EE_OPT = \"DEBUG\";" + 
+		"" + 
+		"		CPU_DATA = PIC30 {" + 
+		"			APP_SRC = \"code.c\";" + 
+		"			MULTI_STACK = FALSE;" + 
+		"			ICD2 = TRUE;" + 
+		"		};" + 
+		"" + 
+		"		MCU_DATA = PIC30 {" + 
+		"			MODEL = PIC24HJ64GP502;" + 
+		"		};" + 
+		"" + 
+		"		STATUS = EXTENDED;" + 
+		"		STARTUPHOOK = FALSE;" + 
+		"		ERRORHOOK = FALSE;" + 
+		"		SHUTDOWNHOOK = FALSE;" + 
+		"		PRETASKHOOK = FALSE;" + 
+		"		POSTTASKHOOK = FALSE;" + 
+		"		USEGETSERVICEID = FALSE;" + 
+		"		USEPARAMETERACCESS = FALSE;" + 
+		"		USERESSCHEDULER = FALSE;" + 
+		"		KERNEL_TYPE = BCC1;" +
+		"	};" + 
+		"" + 
+		"	/* this is the OIL part for the task displaying the christmas tree */" + 
+		"    TASK Task1 {" + 
+		"		PRIORITY = 0x01;   /* Low priority */" + 
+		"		AUTOSTART = FALSE;" + 
+		"		STACK = SHARED;" + 
+		"		SCHEDULE = FULL;" + 
+		"		ACTIVATION = 1;    /* only one pending activation */" + 
+		"	};	" + 
+		"	" + 
+		"	/* this is the OIL part for the task activated by the button press */" + 
+		"    TASK Task2 {" + 
+		"		PRIORITY = 0x02;   /* High priority */" + 
+		"		SCHEDULE = FULL;" + 
+		"		AUTOSTART = TRUE;	" + 
+		"		STACK = SHARED;" +
+		"		ACTIVATION = 1;" +
+		"    };" + 
+		"};";
+		commonWriterTest(text, 1);
+	}
+
+	public void testDS_PIC33FJ64MC802() {
+	    final String text =
+		"CPU test_application {" + 
+		"" + 
+		"	OS EE {" + 
+		"		EE_OPT = \"DEBUG\";" + 
+		"" + 
+		"		CPU_DATA = PIC30 {" + 
+		"			APP_SRC = \"code.c\";" + 
+		"			MULTI_STACK = FALSE;" + 
+		"			ICD2 = TRUE;" + 
+		"		};" + 
+		"" + 
+		"		MCU_DATA = PIC30 {" + 
+		"			MODEL = PIC33FJ64MC802;" + 
+		"		};" + 
+		"" + 
+		"		STATUS = EXTENDED;" + 
+		"		STARTUPHOOK = FALSE;" + 
+		"		ERRORHOOK = FALSE;" + 
+		"		SHUTDOWNHOOK = FALSE;" + 
+		"		PRETASKHOOK = FALSE;" + 
+		"		POSTTASKHOOK = FALSE;" + 
+		"		USEGETSERVICEID = FALSE;" + 
+		"		USEPARAMETERACCESS = FALSE;" + 
+		"		USERESSCHEDULER = FALSE;" + 
+		"		KERNEL_TYPE = BCC1;" +
+		"	};" + 
+		"" + 
+		"	/* this is the OIL part for the task displaying the christmas tree */" + 
+		"    TASK Task1 {" + 
+		"		PRIORITY = 0x01;   /* Low priority */" + 
+		"		AUTOSTART = FALSE;" + 
+		"		STACK = SHARED;" + 
+		"		SCHEDULE = FULL;" + 
+		"		ACTIVATION = 1;    /* only one pending activation */" + 
+		"	};	" + 
+		"	" + 
+		"	/* this is the OIL part for the task activated by the button press */" + 
+		"    TASK Task2 {" + 
+		"		PRIORITY = 0x02;   /* High priority */" + 
+		"		SCHEDULE = FULL;" + 
+		"		AUTOSTART = TRUE;	" + 
+		"		STACK = SHARED;" +
+		"		ACTIVATION = 1;" +
+		"    };" + 
+		"};";
+		commonWriterTest(text, 1);
+	}
+
+	
 	public void testDS_PIC30_BCC1() {
 	    final String text =
 		"CPU test_application {" + 
