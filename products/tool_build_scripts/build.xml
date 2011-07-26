@@ -10,12 +10,6 @@
 	All plugins
 *******************************
 -->
-	<target name="enable.all.rtdruid.features" if="enable_all_rtdruid_features">
-		<echo>Enabling all features</echo>
-		<property name="enable_oil_core_features">true</property>
-		<property name="enable_oil_ee_features">true</property>
-		<property name="enable_sched_analysis_features">true</property>
-	</target>
 			
 	<!-- Maybe is better to autogenerate this target, inside ant or outside and then import here -->
 	<target name="oil_core.features" if="enable_oil_core_features">
@@ -54,17 +48,28 @@
 	</target>
 
 	<target name="all.features">
+		<!-- Check if we have to enable all features-->
 		<condition property="enable_all_rtdruid_features" value="true">
 			<and>
+				<not><isset property="enable_only_core_features"/></not>
+
 				<not><isset property="enable_oil_core_features"/></not>
 				<not><isset property="enable_oil_ee_features"/></not>
 				<not><isset property="enable_sched_analysis_features"/></not>
 			</and>
 		</condition>
-		<antcall target="enable.all.rtdruid.features"/>
-
-		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/core/feature_rtd_core"/>
-
+		<condition property="enable_oil_core_features" value="true">
+			<isset property="enable_all_rtdruid_features"/>
+		</condition>
+		<condition property="enable_oil_ee_features" value="true">
+			<isset property="enable_all_rtdruid_features"/>
+		</condition>
+		<condition property="enable_sched_analysis_features" value="true">
+			<isset property="enable_all_rtdruid_features"/>
+		</condition>
+		
+		
+		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/core/feature_rtd_core" />
 		<antcall target="oil_core.features"/>
 		<antcall target="oil_ee.features"/>
 		<antcall target="sched_analysis.features"/>
@@ -172,7 +177,7 @@
 	<target name="zip.plugin" depends="import" description="Make all zip files">
 		<zip
 				zipfile="${output.folder}/${outputFile}.zip"
-				basedir="${product.temp.folder}"
+				basedir="${site.output}"
 				filesonly="true"
 				whenempty="skip"
 				update="false"/>
