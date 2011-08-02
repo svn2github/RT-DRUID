@@ -1,28 +1,28 @@
 				
 <project default="main">
-	<property name="builder" value="${basedir}/ant" />
+	
+	<property name="base.build.dir" value="${basedir}" />
+	
+	<property name="builder" value="${base.build.dir}/ant" />
 	<property file="build_ant.properties"/>
-	<target name="main">
-		<property name="baseLocation" value="${eclipse.home}"/>
-		<!-- by default, check for deltapack co-located with eclipse -->
-		<property name="deltapack" value="${eclipse.home}/delta_pack/eclipse"/>
+	<import file="build_common.xml"/>
 
-		<!-- Check that we have a deltapack -->
-		<available property="haveDeltaPack" file="${deltapack}"/>
-		<fail unless="haveDeltaPack" message="The deltapack is required to build this product.  Please edit buildProduct.xml or set the &quot;deltapack&quot; property." />
-			
-		<property name="buildDirectory" value="${basedir}/ant/buildDirectory"/>
-		<property name="pluginPath" value="${basedir}/..${path.separator}${deltapack}" />
-		<property name="buildTempFolder" value="${buildDirectory}" />
-			
+	<property name="required.iu" value="com.eu.evidence.ee,com.eu.evidence.ee.templates.avr,com.eu.evidence.ee.templates.ppc,com.eu.evidence.ee.templates.dspic,com.eu.evidence.ee.templates.s12,com.eu.evidence.ee.templates.tricore"/>
+
+	<target name="main" depends="-init">
+
+		<!-- copy the product file (it is expected to be there) -->
+		<mkdir dir="${buildDirectory}/features/product_standalone_rtd_oil"/>
+		<copy todir="${buildDirectory}/features/product_standalone_rtd_oil" file="com_eu_evidence_rtdruid_oil_standalone_ant.product"/>
+		
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
-
-		<move todir="${basedir}">
-			<fileset dir="${buildDirectory}/${buildLabel}" includes="*.zip"/>
-		</move>
-
-		<!-- refresh the workspace - - >
-		<eclipse.convertPath fileSystemPath="${basedir}" property="resourcePath"/>
-		<eclipse.refreshLocal resource="${resourcePath}" depth="infinite"/> -->
+	
+		<antcall target="complete_all">
+			<param name="input.file.dir" value="${buildDirectory}/${buildLabel}"/>
+			<param name="with_ant" value="true"/>
+		</antcall>
+		
+		<antcall target="saveSpace"/>
+		
 	</target>
 </project>
