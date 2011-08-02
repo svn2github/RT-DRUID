@@ -15,6 +15,12 @@
 		<property name="bundleId" value="com.eu.evidence.ee"/>
 		<property name="bundleVersion" value="${ee_code_v}.${build_number}"/>
 
+	
+		<fileset dir="${ee.base.location}" id="ee_sources">
+			<include name="pkg/**/*"/>
+			<include name="contrib/**/*"/>
+		</fileset>
+
 
 	<!--
 	******************************************
@@ -69,12 +75,18 @@
 			</antcall>
 		</target>
 
-		<target name="gather.bin.parts" if="destination.temp.folder" depends="update.ee.sources">
+		<target name="gather.bin.parts" if="destination.temp.folder">
+			
+			<antcall target="common_gather.bin.files">
+				<param name="subfolder" value="ee_base"/>
+				<reference refid="ee_sources" torefid="common_gather_binary"/>
+			</antcall>
+			
+			
 			<fileset dir="${basedir}" id="common_gather_binary">
 				<include name="META-INF/"/>
 			<include name="epl-v10.html/"/>
 				<include name="plugin.xml"/>
-				<include name="ee_base/"/>
 				<include name="rtdruid.png"/>
 				<include name="about.ini"/>
 			</fileset>
@@ -97,15 +109,12 @@
 	
 
 	<!-- Update EE source code -->
-		<target name="update.ee.sources" if="ee.base.location">
+		<target name="update.ee.files" if="ee.base.location">
 			<antcall target="clean"/>
-			<mkdir dir="ee_base/pkg"/>
-			<mkdir dir="ee_base/contrib"/>
-			<copy todir="ee_base/pkg">
-				<fileset dir="${ee.base.location}/pkg"/>
-			</copy>
-			<copy todir="ee_base/contrib">
-				<fileset dir="${ee.base.location}/contrib"/>
+
+			<mkdir dir="${basedir}/ee_base"/>
+			<copy todir="${basedir}/ee_base">
+				<fileset refid="ee_sources"/>
 			</copy>
 		</target>
 	

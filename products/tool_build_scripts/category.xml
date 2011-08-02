@@ -72,12 +72,6 @@
    <feature url="features/com.eu.evidence.rtdruid.jscan_1.6.0.qualifier.jar" id="com.eu.evidence.rtdruid.jscan" version="1.6.0.qualifier">
       <category name="RT_Druid_analysis"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.xtc_1.6.0.qualifier.jar" id="com.eu.evidence.rtdruid.xtc" version="1.6.0.qualifier">
-      <category name="RT_Druid_analysis"/>
-   </feature>
-   <feature url="features/com.eu.evidence.rtdruid.autosar_1.6.0.qualifier.jar" id="com.eu.evidence.rtdruid.autosar" version="1.6.0.qualifier">
-      <category name="RT_Druid_analysis"/>
-   </feature>
    <category-def name="RT_Druid_Core" label="RT-Druid core plugins"/>
    <category-def name="RT_Druid_for_ee" label="RT-Druid plugins for Erika Enterprise">
       <description>

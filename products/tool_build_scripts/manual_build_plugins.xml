@@ -132,18 +132,22 @@
 		/>
 	</target>
 
-
+	<target name="common_gather.bin.files" if="destination.temp.folder">
+		<condition property="subfolder" value="">
+			<not><isset property="subfolder"/></not>
+		</condition>
+		<mkdir dir="${destination.temp.folder}/${subfolder}"/>
+		<copy todir="${destination.temp.folder}/${subfolder}" failonerror="true" overwrite="true">
+			<fileset refid="common_gather_binary"/>
+		</copy>
+	</target>
+	
 	<target name="common_gather.bin.parts" if="destination.temp.folder">
 		<mkdir dir="${destination.temp.folder}"/>
-<!--		<copy todir="${plugin.temp.folder}/${plugin_id}_${plugin_vers}" failonerror="true" overwrite="false" >
-			<fileset dir="${build.result.folder}">
-				<include name="rtdruid_core.jar"/>
-			</fileset>
-		</copy>
--->
 		<copy todir="${destination.temp.folder}" failonerror="true" overwrite="true">
 			<fileset refid="common_gather_binary"/>
 		</copy>
+		
 		<eclipse.versionReplacer path="${destination.temp.folder}" version="${plugin_vers}"/>
 		<antcall target="apitools.generation">
 			<param name="target.folder" value="${destination.temp.folder}"/>
@@ -164,8 +168,11 @@
 	</target>
 
 	<target name="clean">
-<!-- default target does nothing -->
+		<!-- default target does nothing -->
 	</target>
 
+	<target name="update.ee.files">
+		<!-- default target does nothing -->
+	</target>
 
 </project>

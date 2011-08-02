@@ -12,6 +12,11 @@
 		
 		<property name="bundleId" value="com.eu.evidence.ee.templates.ppc"/>
 		<property name="bundleVersion" value="${templates_ee_ppc_v}.${build_number}"/>
+	
+		<fileset dir="${ee.base.location}" id="ee_examples">
+			<include name="examples/ppc/**/*"/>
+		</fileset>
+
 
 
 	<!--
@@ -61,7 +66,13 @@
 			</antcall>
 		</target>
 
-		<target name="gather.bin.parts" if="destination.temp.folder" depends="update.templates">
+		<target name="gather.bin.parts" if="destination.temp.folder">
+			
+			<antcall target="common_gather.bin.files">
+				<reference refid="ee_examples" torefid="common_gather_binary"/>
+			</antcall>
+
+					
 			<fileset dir="${basedir}" id="common_gather_binary">
 				<include name="META-INF/"/>
 			<include name="epl-v10.html/"/>
@@ -90,11 +101,10 @@
 	
 	
 	<!-- Update EE source code -->
-		<target name="update.templates" if="ee.base.location">
+		<target name="update.ee.files" if="ee.base.location">
 			<antcall target="clean"/>
-			<mkdir dir="examples/ppc"/>
-			<copy todir="examples/ppc">
-				<fileset dir="${ee.base.location}/examples/ppc"/>
+			<copy todir="${basedir}">
+				<fileset refid="ee_examples"/>
 			</copy>
 		</target>
 	

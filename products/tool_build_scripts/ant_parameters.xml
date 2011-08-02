@@ -6,8 +6,11 @@
 	
 	<target name="set_build_number" unless="build_number">
 		<tstamp>
-			<format property="build_number" pattern="yyyyMMddHHmmss"/>
+			<format property="build_number" pattern="yyyyMMdd_HHmm"/>
 		</tstamp>
+		<echo>
+		Build number is ${build_number} 
+		</echo>
 	</target>
 	
 	
@@ -21,7 +24,6 @@
 *******************************
 -->
 	<property name="rtd_feature_version" value="1.6.0"/>
-	<property name="rtd_build_number" value="${build_number}"/>
 	
 	<property name="frtd_core_v"           value="1.6.0"/>
 	<property name="rtd_core_v"            value="1.6.0"/>

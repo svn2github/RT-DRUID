@@ -3,7 +3,7 @@
 
 	
 	<import file="ant_parameters.xml" optional="false"/>
-
+	
 			
 <!--
 *******************************
@@ -132,9 +132,7 @@
 	
 	<target name="sign.jars" depends="import" description="Sign all features and plugins.">
 <!--		
-		<antcall target="all.features">
-			<param name="target" value="to.do"/>
-		</antcall>
+		each jar is signed during the build
 -->	
 	</target>
 
@@ -175,6 +173,7 @@
 -->
 	
 	<target name="zip.plugin" depends="import" description="Make all zip files">
+		<property name="outputFile" value="rtdruid_tux_website_${build_number}"/>
 		<zip
 				zipfile="${output.folder}/${outputFile}.zip"
 				basedir="${site.output}"
@@ -191,7 +190,6 @@
 
 	<target name="zip.distribution" depends="import" description="Make a zip file that contains the plugin.">
 		<antcall target="build.features"/>
-		<antcall target="build.sources"/>
 		<antcall target="sign.jars"/>
 		<antcall target="add.p2.categories"/>
 		<antcall target="zip.plugin"/>
@@ -204,21 +202,27 @@
 -->
 <!--	
 	<target name="zip.distribution.with.sources" depends="import" description="Make a zip file that contains the plugin with all sources.">
-		
-		<antcall target="clean">
-			<param name="outputFile" value="${output.folder}/rtd_demo_${rtd_oil_niossupport_v}"/>
-		</antcall>
-		<antcall target="build.plugins"/>
-		<antcall target="obfuscate.jars"/>
-		<antcall target="crypt.jars"/>
+
+		<antcall target="build.features"/>
 		<antcall target="build.sources"/>
-		<antcall target="zip.plugin">
-			<param name="outputFile" value="${output.folder}/rtd_demo_${rtd_oil_niossupport_v}"/>
-		</antcall>
+		<antcall target="sign.jars"/>
+		<antcall target="add.p2.categories"/>
+		<antcall target="zip.plugin"/>
 	</target>
 -->	
 	
 
+<!--
+*******************************
+	Update EE files inside RT-Druid plugins.
+	Note: dis step is not required during the build
+*******************************
+-->
+	<target name="update.ee.files">
+		<antcall target="all.features">
+			<param name="target" value="update.ee.files"/>
+		</antcall>
+	</target>
 	
 <!--
 *******************************
@@ -230,13 +234,16 @@
 		
 		<echo>
 ===================================		
-This little Ant scritp has 3 target:
+This little Ant scritp has 4 target:
 	* zip.distribution = make a .zip that contains all plugins and
 	                     features
 	* zip.distribution.with.sources = make a .zip that contains all plugins and
 	                     theirs sources (NOT fully working jet)
 	* clean      = remove all previous results (EE sources and templates, temp files, jars
 	               and zips)
+	* update.ee.files = fill RT-Druid sources with all files of EE distributed with RT-Druid
+						(useful at debug time)
+
 
 ===================================
 Also there are few important variables:

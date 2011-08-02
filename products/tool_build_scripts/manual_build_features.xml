@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="common file to build features">
+<project name="common_build_for_features">
 
 <!--
 ******************************************
@@ -9,6 +9,11 @@
 	<target name="clean">
 		<antcall target="all.children">
 			<param name="target" value="clean"/>
+		</antcall>
+	</target>
+	<target name="update.ee.files">
+		<antcall target="all.children">
+			<param name="target" value="update.ee.files"/>
 		</antcall>
 	</target>
 	
@@ -130,7 +135,7 @@
 
 
 <!--
-     Gather sources files
+     Gather source files
 -->
 
 	<target name="gather.sources">
@@ -142,7 +147,7 @@
 
 	
 <!--
-     Gather sources files
+     Gather log files
 -->
 
 	<target name="gather.logs">

@@ -13,6 +13,10 @@
 		<property name="bundleId" value="com.eu.evidence.ee.templates.tricore"/>
 		<property name="bundleVersion" value="${templates_ee_tricore_v}.${build_number}"/>
 
+		<fileset dir="${ee.base.location}" id="ee_examples">
+			<include name="examples/tricore1/**/*"/>
+		</fileset>
+
 
 	<!--
 	******************************************
@@ -61,7 +65,13 @@
 			</antcall>
 		</target>
 
-		<target name="gather.bin.parts" if="destination.temp.folder" depends="update.templates">
+		<target name="gather.bin.parts" if="destination.temp.folder">
+			
+			<antcall target="common_gather.bin.files">
+				<reference refid="ee_examples" torefid="common_gather_binary"/>
+			</antcall>
+
+					
 			<fileset dir="${basedir}" id="common_gather_binary">
 				<include name="META-INF/"/>
 			<include name="epl-v10.html/"/>
@@ -90,11 +100,10 @@
 	
 	
 	<!-- Update EE source code -->
-		<target name="update.templates" if="ee.base.location">
+		<target name="update.ee.files" if="ee.base.location">
 			<antcall target="clean"/>
-			<mkdir dir="examples/tricore1"/>
-			<copy todir="examples/tricore1">
-				<fileset dir="${ee.base.location}/examples/tricore1"/>
+			<copy todir="${basedir}">
+				<fileset refid="ee_examples"/>
 			</copy>
 		</target>
 
