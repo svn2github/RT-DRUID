@@ -80,6 +80,8 @@ public interface ISimpleGenResKeywords {
 	public final static String COUNTER_TICKS = "counter_ticks";
 	public final static String COUNTER_MIN_CYCLE = "counter_minCycle";
 	
+	public final static String COUNTER_OS_APPLICATION_NAME = "counter_mapped_to_an_os_application";
+
 	/***************************************************************************
 	 * Alarm
 	 **************************************************************************/
@@ -101,6 +103,8 @@ public interface ISimpleGenResKeywords {
 	public final static String ALARM_CALL_BACK = "alarm_call_back";
 	/** contains true if the task name is remote */
 	public final static String ALARM_TASK_IS_REMOTE = "alarm_task_is_remote";
+
+	public final static String ALARM_OS_APPLICATION_NAME = "alarm_mapped_to_an_os_application";
 
 
 	/***************************************************************************
@@ -130,7 +134,8 @@ public interface ISimpleGenResKeywords {
 	/** Contains all names of resources linked to a root resource (ArrayList) */
 	public static final String RESOURCE_CHAIN_LIST = "resource_chain_list";
 
-	
+	public final static String RESOURCE_OS_APPLICATION_NAME = "resource_mapped_to_an_os_application";
+
 	/***************************************************************************
 	 * Event
 	 **************************************************************************/
@@ -245,6 +250,16 @@ public interface ISimpleGenResKeywords {
 	/***************************************************************************
 	 * OS Application
 	 **************************************************************************/
+	public final static String OS_APPL_ID = "os_application_id";
 	public final static String OS_APPL_STACK = "os_application_stack";
 
+	public final static String OS_APPL_LIST_REF_ALARM = "os_application_list_ref_alarm";
+	public final static String OS_APPL_LIST_REF_COUNTER = "os_application_list_ref_counter";
+	public final static String OS_APPL_LIST_REF_ISR = "os_application_list_ref_isr";
+	public final static String OS_APPL_LIST_REF_RESOURCE = "os_application_list_ref_resource";
+	public final static String OS_APPL_LIST_REF_TASK = "os_application_list_ref_task";
+	
+	public final static String OS_APPL_SHARED_STACK_ID = "os_application_shared_stack_id";
+	
 }
+

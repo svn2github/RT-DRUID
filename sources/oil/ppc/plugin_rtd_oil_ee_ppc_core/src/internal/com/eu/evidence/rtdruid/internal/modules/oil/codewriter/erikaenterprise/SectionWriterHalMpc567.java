@@ -66,12 +66,12 @@ public class SectionWriterHalMpc567 extends SectionWriter
 
 	static final String PPC_MCU = "PPCE200ZX";
 	static final String ERR_CPU_TYPE = "Freescale PPC E200Zx";
-	static final String SGR_OS_APPL_IRQ_STACK_ID = "sgr__os_application__irq_stack_id__integer";
+	static final String SGR_OS_APPL_SHARED_STACK_ID = "sgr__os_application__shared_stack_id__integer";
 	static final String SGR_OS_CPU_SYS_STACK_SIZE = "sgr__os_cpu_system_stack_size";
 	
 	static final String SGR_OS_MCU_MODEL = "sgr__os_cpu__mcu_model";
 
-	
+	static final String STACK_BASE_NAME = "EE_stack_";
 	/**
 	 * 
 	 */
@@ -468,7 +468,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 //			StringBuffer stackPatternFill = new StringBuffer();
 			
 			sbInithal_c.append(commentWriterC
-					.writerBanner("Stack definition for Freescale"+mcu_type+", PPC "+cpu_type));
+					.writerBanner("Stack definition for Freescale"+mcu_type+", PPC "+cpu_type.toLowerCase()));
 			
 			ITreeInterface ti = vt.newTreeInterface();
 
@@ -572,17 +572,18 @@ public class SectionWriterHalMpc567 extends SectionWriter
 					tListN.add(sgr.getString(ISimpleGenResKeywords.TASK_SYS_ID));
 				}
 
-				// fill data for each irq stack, related to OS applications
+				// fill data for each shared stack, related to OS applications
 				for (Iterator<ISimpleGenRes> iter = osApplications.iterator(); iter.hasNext();) {
 
 					ISimpleGenRes sgr = (ISimpleGenRes) iter.next();
-//					tList.add(IWritersKeywords.dummyName + sgr.getName());
-//					tListN.add(" ");
+					tList.add(EEStacks.APPLICATION_SHARED_PREFIX+ sgr.getName());
+					tListN.add(" ");
 
-					tList.add(EEStacks.APPLICATION_IRQ_PREFIX + sgr.getName());
-					tListN.add("");
+//					tList.add(EEStacks.APPLICATION_IRQ_PREFIX+ sgr.getName());
+//					tListN.add("");
 					
-					sgr.setObject(SGR_OS_APPL_IRQ_STACK_ID, new Integer((tList.size()-1)));
+					sgr.setObject(SGR_OS_APPL_SHARED_STACK_ID, new Integer((tList.size()-1)));
+					sgr.setObject(EEStacks.STACK_BASE_NAME_PREFIX, STACK_BASE_NAME);
 				}
 				// compute total stack size and add it to memory requirement
 //				int offset[][] = elStack.taskOffsets((String[]) tList
@@ -617,23 +618,20 @@ public class SectionWriterHalMpc567 extends SectionWriter
 //			    stackPatternFill.append("#ifdef __DCC__\n" +
 //			    		"#pragma section STACK \".stack\" \".stack\" standard RW\n");
 				
-			 // fill data for each irq stack, related to OS applications
+			 // fill data for each shared stack, related to OS applications
 				for (Iterator<ISimpleGenRes> iter = osApplications.iterator(); iter.hasNext();) {
 
 					ISimpleGenRes sgr = (ISimpleGenRes) iter.next();
-					Integer index = (Integer) sgr.getObject(SGR_OS_APPL_IRQ_STACK_ID);
+					Integer index = (Integer) sgr.getObject(SGR_OS_APPL_SHARED_STACK_ID);
 
-					sgr.setProperty(OS_APPLICATION_IRQ_STACK_ID,"" + pos[index.intValue()]);
+					sgr.setProperty(ISimpleGenResKeywords.OS_APPL_SHARED_STACK_ID,"" + pos[index.intValue()]);
 					
-					String name = sgr.getName();
-//					stackPatternFill.append(
-//							"#pragma section STACK_"+name.toUpperCase()+" \"."+name+"_stack\" \"."+name+"_stack\" standard RW\n");
-
 				}
 					
 				// DESCRIPTIONS
+				
 				for (int j = 0; j < pos.length; j++) {
-					if (!tList.get(j).startsWith(EEStacks.APPLICATION_IRQ_PREFIX)) {
+					if (!tList.get(j).startsWith(EEStacks.APPLICATION_SHARED_PREFIX)) {
 						sbStack.append(pre + post + indent + indent + +pos[j]+"U");
 						// set new values for "post" and "pre"
 						post = " /* " + tList.get(j) + "*/\n";
@@ -646,8 +644,8 @@ public class SectionWriterHalMpc567 extends SectionWriter
 					 * not, infact in the second case append the new description
 					 * to the old one
 					 */ 
-					String tid = tList.get(j).startsWith(EEStacks.APPLICATION_IRQ_PREFIX) ?
-							"irq stack " +tList.get(j).substring(EEStacks.APPLICATION_IRQ_PREFIX.length())
+					String tid = tList.get(j).startsWith(EEStacks.APPLICATION_SHARED_PREFIX) ?
+							"shared stack " +tList.get(j).substring(EEStacks.APPLICATION_SHARED_PREFIX.length())
 							: "Task " +tListN.get(j)+ " (" + tList.get(j) + ")";
 					descrStack[pos[j]] = (descrStack[pos[j]] == null) ?
 							// The first description
@@ -673,20 +671,18 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				for (int j = 1; j < size.length; j++) {
 				    long value = size[j][0];
 //				    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
-					sbStackDecl.append(indent1 + "EE_STACK_T EE_STACK_ATTRIB EE_e200z7_stack_"+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* "+descrStack[j]+" */\n");
-					sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+" // size = "+size[j][0]+" bytes \n");
+					sbStackDecl.append(indent1 + "EE_STACK_T " +
+								(memoryId[j] == null ? "EE_STACK_ATTRIB" : "EE_STACK_ATTRIB_NAME("+memoryId[j]+")") +
+								" "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* "+descrStack[j]+" */\n");
+					sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+" " + commentWriterC.writerSingleLineComment("size = "+size[j][0]+" bytes"));
 					
 					// USED BY ORTI
 					stackTmp.add(new EEStackData(j, new long[] {size[j][0]}, new long[] {size[j][0]},
-							new String[] {" (int)(&EE_e200z7_stack_"+j+")"}, true)); // DELTA
-
-					String section_name = memoryId[j] == null ? "" : "_" + memoryId[j].toUpperCase();
-
-//					stackPatternFill.append("#pragma use_section STACK"+section_name+" EE_e200z7_stack_"+j+"\n");
+							new String[] {" (int)(&"+STACK_BASE_NAME+j+")"}, true)); // DELTA
 				}
 
 				
-				int tos_size = size.length - osApplications.size();
+				int tos_size = size.length; // - osApplications.size();
 				
 				// open system tos
 				sbStack.append(indent
@@ -699,7 +695,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				 */
 				for (int j = 0; j < tos_size; j++) {
 				    
-			        String value = j == 0 ? "{0}" : "{(EE_ADDR)(&EE_e200z7_stack_"+j+"[EE_STACK_INITP(STACK_"+j+"_SIZE)])}"; // DELTA
+			        String value = j == 0 ? "{0}" : "{(EE_ADDR)(&"+STACK_BASE_NAME+j+"[EE_STACK_INITP(STACK_"+j+"_SIZE)])}"; // DELTA
 
 					sbStack.append(pre
 							+ post
@@ -721,22 +717,20 @@ public class SectionWriterHalMpc567 extends SectionWriter
 					    int j = size.length;
 					    long value = irqSize[0];
 //					    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
-						sbStackDecl.append(indent1 + "EE_STACK_T EE_STACK_ATTRIB EE_e200z7_stack_"+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* irq stack */\n");
-						sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+" // size = "+irqSize[0]+" bytes \n");
+						sbStackDecl.append(indent1 + "EE_STACK_T EE_STACK_ATTRIB "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* irq stack */\n");
+						sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+ " " + commentWriterC.writerSingleLineComment("size = "+irqSize[0]+" bytes"));
 
 						sbStack
 								.append(indent+"/* stack used only by IRQ handlers */\n"
 										+ indent+"struct EE_TOS EE_e200z7_IRQ_tos = {\n"
-										+ indent+indent+"(EE_ADDR)(&EE_e200z7_stack_"+j+"[EE_STACK_INITP(STACK_"+j+"_SIZE)])\n" // DELTA
+										+ indent+indent+"(EE_ADDR)(&"+STACK_BASE_NAME+j+"[EE_STACK_INITP(STACK_"+j+"_SIZE)])\n" // DELTA
 										+ indent+"};\n\n");
 						
 						// REQUIRED By ORTI's STACK
 						int eesdID = stackTmp.size();
 						stackTmp.add(new EEStackData(eesdID, new long[] {irqSize[0]}, new long[] {irqSize[0]},
-								new String[] {" (int)(&EE_e200z7_stack_"+j+")"}, true)); // DELTA
+								new String[] {" (int)(&"+STACK_BASE_NAME+j+")"}, true)); // DELTA
 
-//						stackPatternFill.append("#pragma use_section STACK EE_e200z7_stack_"+j+"\n");
-						
 						sgrCpu.setProperty(ISimpleGenResKeywords.OS_IRQ_STACK_ID, ""+eesdID);
 					}
 				}
@@ -761,15 +755,6 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			        sbStack
 //			        +stackPatternFill
 			        );
-
-			
-			if (checkMemoryProtection()) {
-				sbInithal_c.append(commentWriterC.writerBanner("Memory Partitions") +
-						commentWriterC.writerSingleLineComment("NI: e' sempre cosi' ?") +
-						indent1 + "struct EE_e200z7_TLB_entry {\n"+
-						indent2 + "EE_UREG	mas;\n" +
-						indent1 + "} EE_e200z7_TLB_entries[1];\n\n");
-			}
 		}
 
 		return sbInithal_c;
@@ -916,8 +901,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
             sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile_variables.toString());
 
 	}
-	
-	
+
 	
 	/**
 	 * This metod takes an array and returns the first element, or null if the
@@ -933,9 +917,5 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		}
 		return answer;
 	}
-	
 
-	protected boolean checkMemoryProtection() {
-		return parent.checkKeyword(SectionWriterKernelSystemCalls.EE_OPT_MEMORY_PROTECTION);
-	}
 }

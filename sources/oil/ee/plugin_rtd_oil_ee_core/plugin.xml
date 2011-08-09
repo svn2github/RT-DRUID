@@ -28,6 +28,9 @@
       <implementation_file
             path="oil_files/com.oil">
       </implementation_file>
+      <implementation_file
+            path="oil_files/memory_protection.oil">
+      </implementation_file>
    </extension>
 <!--   <extension
          point="com.eu.evidence.rtdruid.oil.ee.core.eeSectionWriter">
@@ -85,6 +88,15 @@
             </xsltStep>
          </xsltStep>
       </xsltWriter>
+   </extension>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeSectionWriter">
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterMemoryProtection">
+      </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterOsApplication">
+      </writer>
    </extension>
 
 

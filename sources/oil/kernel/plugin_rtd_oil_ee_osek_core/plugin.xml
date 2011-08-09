@@ -4,12 +4,15 @@
    <extension
          point="com.eu.evidence.rtdruid.oil.ee.core.eeSectionWriter">
       <writer
-            class="com.eu.evidence.rtdruid.hidden.modules.oil.codewriter.erikaenterprise.SectionWriterKernelOsek"
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterKernelOsek"
             id="OSEK">
       </writer>
       <writer
-            class="com.eu.evidence.rtdruid.hidden.modules.oil.codewriter.erikaenterprise.SectionWriterOrti_osek"
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterOrti_osek"
             id="ORTI">
+      </writer>
+       <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterKernelSystemCalls">
       </writer>
    </extension>
 

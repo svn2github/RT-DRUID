@@ -5,6 +5,8 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.keywords;
 
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
+
 /**
  * This class contains all keys used by writers as identifiers for rtosWriter or
  * sections. Many of these keys are the keywords used inside an Oil File.
@@ -94,6 +96,19 @@ public interface IWritersKeywords {
 
 	/** Identifies an OSEK ECC2 kernel */
 	public final static String OSEK_ECC2 = "ECC2";
+
+	/** Identifies an OSEK BCC1 kernel */
+	public final static String OSEK_SC1 = "SC1";
+
+	/** Identifies an OSEK BCC2 kernel */
+	public final static String OSEK_SC2 = "SC2";
+
+	/** Identifies an OSEK ECC1 kernel */
+	public final static String OSEK_SC3 = "SC3";
+
+	/** Identifies an OSEK ECC2 kernel */
+	public final static String OSEK_SC4 = "SC4";
+
 	
 	/** Identifies an FP kernel */
 	public final static String FP = "FP";
@@ -113,6 +128,20 @@ public interface IWritersKeywords {
 	/** Identifies an CBS kernel */
 	public final static String CBS = "CBS";
 
+	/** Enables the support for sys calls (if available) */
+	public final static String KERNEL_SYS_CALL = "OS_SYS_CALL";
+
+	/** Enables the os applications for the current kernel (if available) */
+	public final static String KERNEL_OS_APPLICATION = "OS_APPLICATION";
+
+	/** Enables the memory protection for the current kernel (if available) */
+	public final static String KERNEL_MEMORY_PROTECTION = "MEMORY_PROTECTION";
+
+	/** Common memory protection writer: writer type */
+	public final static String KERNEL_MEMORY_PROTECTION_TYPE = SWCategoryManager.TYPE_KERNEL;
+	/** Common memory protection writer: priority inside writer type */
+	public final static int KERNEL_MEMORY_PROTECTION_PRIORITY = 6;
+	
 	// ---------------------- Var Tree -----------------------
 	
 	/** Contains the path of Project that contains the OilFile */

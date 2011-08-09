@@ -125,6 +125,126 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 	}
 	
 	
+	public void testAutosar_2() {
+	    final String text =
+	    		"CPU PerfTestApp {\n" +
+			"	OS EE {\n" +
+			"		CFLAGS = \"-I../inc\";\n" +
+			"		CFLAGS = \"-Xsmall-data=0\";\n" +
+
+//			"		EE_OPT = \"__OO_SEM__\";\n" +
+
+			"		MEMORY_PROTECTION = TRUE;\n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			MODEL = E200Z7;\n" +
+			"			APP_SRC = \"code.c\";\n" +
+			"			APP_SRC = \"app1.c\";\n" +
+			"			APP_SRC = \"app2.c\";\n" +
+			"			APP_SRC = \"trusted.c\";\n" +
+			"			MULTI_STACK = TRUE;\n" +
+			"		};\n" +
+			"\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5674F;\n" +
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"\n" +
+			"		KERNEL_TYPE = SC4;\n" +
+			"\n" +
+			"//		ORTI_SECTIONS = ALL;\n" +
+			"	};\n" +
+			"\n" +
+			"	TASK MainTask {\n" +
+			"		PRIORITY = 10;\n" +
+			"		ACTIVATION = 1;\n" +
+			"		SCHEDULE = FULL;\n" +
+			"		AUTOSTART = TRUE;\n" +
+			"		STACK = SHARED;\n" +
+			"	};\n" +
+			"\n" +
+			"	TASK TrustedTask {\n" +
+			"		PRIORITY = 1;\n" +
+			"		ACTIVATION = 1;\n" +
+			"		SCHEDULE = FULL;\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"	};\n" +
+			"\n" +
+			"	TASK App1Task {\n" +
+			"		PRIORITY = 4;\n" +
+			"		ACTIVATION = 1;\n" +
+			"		SCHEDULE = FULL;\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"	};\n" +
+			"\n" +
+			"	TASK App2Task {\n" +
+			"		PRIORITY = 4;\n" +
+			"		ACTIVATION = 1;\n" +
+			"		SCHEDULE = FULL;\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"	};\n" +
+			"\n" +
+			"	ISR TrustedIsr {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};\n" +
+			"\n" +
+			"	ISR App1Isr {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};\n" +
+			"\n" +
+			"	ISR App2Isr {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};\n" +
+			"\n" +
+			"	OSAPPLICATION TrustedApp {\n" +
+			"		TRUSTED = TRUE;\n" +
+			"		OS_APP_ISR_REF = \"TrustedIsr\";\n" +
+			"		OS_APP_TASK_REF = \"MainTask\";\n" +
+			"		OS_APP_TASK_REF = \"TrustedTask\";\n" +
+			
+			"		MEMORY_BASE = 0x40010000;\n" +
+			"		MEMORY_SIZE = 0x10000;\n" +
+
+			"		SHARED_STACK_SIZE = 512;\n" +
+			"	};\n" +
+			"\n" +
+			"	OSAPPLICATION App1 {\n" +
+			"		TRUSTED = FALSE;\n" +
+			"		OS_APP_ISR_REF = \"App1Isr\";\n" +
+			"		OS_APP_TASK_REF = \"App1Task\";\n" +
+
+			"		MEMORY_BASE = 0x40020000;\n" +
+			"		MEMORY_SIZE = 0x10000;\n" +
+
+			"		SHARED_STACK_SIZE = 512;\n" +
+			"	};\n" +
+			"\n" +
+			"	OSAPPLICATION App2 {\n" +
+			"		TRUSTED = FALSE;\n" +
+			"		OS_APP_ISR_REF = \"App2Isr\";\n" +
+			"		OS_APP_TASK_REF = \"App2Task\";\n" +
+
+			"		MEMORY_BASE = 0x40030000;\n" +
+			"		MEMORY_SIZE = 0x4000;\n" +
+			"		SHARED_STACK_SIZE = 512;\n" +
+			"	};\n" +
+			"};\n";
+  
+		writerTest(text, 1);
+	}
+	
 	
 	// ------------------------------
 

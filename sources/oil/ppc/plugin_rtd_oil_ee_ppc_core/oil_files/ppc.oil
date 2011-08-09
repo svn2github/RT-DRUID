@@ -1,7 +1,9 @@
 OIL_VERSION = "2.4";
 
 IMPLEMENTATION ee {
-    OS {
+	OS {
+		UINT32 MAX_NESTING_LEVEL;
+		
     	ENUM [
     		MPC5 {
                 STRING ID = "default_cpu";

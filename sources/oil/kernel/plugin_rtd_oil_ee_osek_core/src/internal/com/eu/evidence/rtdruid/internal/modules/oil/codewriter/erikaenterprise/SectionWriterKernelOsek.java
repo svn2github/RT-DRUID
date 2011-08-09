@@ -3,7 +3,7 @@
  *
  * $Id: SectionWriterKernelOsek.java,v 1.6 2008/04/18 15:26:29 durin Exp $
  */
-package com.eu.evidence.rtdruid.hidden.modules.oil.codewriter.erikaenterprise;
+package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
+import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.AutoOptions;
@@ -22,6 +23,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.E
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.IncompatibleWriterKeywordsException;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.RequiredWriterKeywordsException;
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
@@ -38,6 +40,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDe
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDescriptionManager;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This writer build files for an Osek Kernel
@@ -45,7 +48,7 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
  * @author Nicola Serreli
  */
 public class SectionWriterKernelOsek extends SectionWriter implements
-		IEEWriterKeywords, IExtractKeywordsExtentions, IGetEEOPTExtentions {
+		IEEWriterKeywords, IExtractKeywordsExtentions, IExtractObjectsExtentions, IGetEEOPTExtentions {
 	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -76,7 +79,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			IWritersKeywords.OSEK_BCC1, //
 			IWritersKeywords.OSEK_BCC2, //
 			IWritersKeywords.OSEK_ECC1, //
-			IWritersKeywords.OSEK_ECC2 //
+			IWritersKeywords.OSEK_ECC2, //
+			IWritersKeywords.OSEK_SC1, //
+			IWritersKeywords.OSEK_SC2, //
+			IWritersKeywords.OSEK_SC3, //
+			IWritersKeywords.OSEK_SC4 //
 	};
 
 	/**
@@ -1352,10 +1359,94 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			// add a new line
 			buffer.append("\n");
 		
+			
+			
+			writeIsr(ool, answer[rtosId]);
 		}
 		
 		return answer;
 	}
+	
+	
+
+	
+	protected void writeIsr(IOilObjectList ool, IOilWriterBuffer answer) {
+		final String indent1 = IWritersKeywords.INDENT;
+		final String indent2 = indent1 + IWritersKeywords.INDENT;
+
+		List<ISimpleGenRes> isrList = ool.getList(IOilObjectList.ISR);
+		List<ISimpleGenRes> osApplications = ool.getList(IOilObjectList.OSAPPLICATION);
+		ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
+
+		StringBuffer ee_h_buffer = answer.get(FILE_EE_CFG_H);
+		final ICommentWriter commentWriterH = getCommentWriter(os, FileTypes.H);
+
+		StringBuffer ee_c_buffer = answer.get(FILE_EE_CFG_C);
+		final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
+		
+
+		int max_level = 16;
+		if (os.containsProperty(OsekConstants.SGR_OS_MAX_NESTING_LEVEL)) {
+			max_level = os.getInt(OsekConstants.SGR_OS_MAX_NESTING_LEVEL);
+		}
+
+		// ee_cfg.h
+		ee_h_buffer.append(
+				commentWriterH.writerBanner("ISR definition") +
+				indent1 + "#define EE_MAX_NESTING_LEVEL     "+max_level+"\n" +
+				indent1 + "#define EE_MAX_ISR               " + (isrList.size()) +"\n\n"); 				
+
+		// ee_cfg.c
+		ee_c_buffer.append(
+				commentWriterC.writerBanner("ISR definition") +
+				indent1 + "EE_as_ISR_RAM_type EE_as_ISR_stack[EE_MAX_NESTING_LEVEL];\n\n" +
+				indent1 + "const EE_as_ISR_ROM_type EE_as_ISR_ROM[EE_MAX_ISR] = {\n");
+				
+		StringBuffer appl_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR to Application mapping"));
+		StringBuffer isr_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR id"));
+
+		String pre = "";
+		for (ISimpleGenRes isr : isrList) {
+			String name = isr.getName();
+			
+			int aid = isr.containsProperty(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME) ? 
+					1+ getOsApplicationIndex(isr.getString(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME), osApplications)
+					: 0;
+			int iid = isr.getInt(ISimpleGenResKeywords.ISR_ID);
+			appl_id.append(indent1 + "#define ISR2_APP_"+name+"\t" + aid + "\n");
+			isr_id.append(indent1 + "#define ISR2_ID_"+name+"\t" + iid + "\n");
+			
+			ee_c_buffer.append(pre + indent2 + "{ ISR2_APP_"+name+" }");
+			pre = ",\n";
+		}
+
+		ee_h_buffer.append(appl_id + "\n" + isr_id + "\n");
+		
+		ee_c_buffer.append("\n"+indent1+"};\n\n");
+
+	}
+	
+
+	/**
+	 * 
+	 * @param osAppl
+	 *            os application name
+	 * @param osApplicationList
+	 *            all os applications
+	 * @return the position in the array of specified os application
+	 */
+	protected int getOsApplicationIndex(String osAppl, List<ISimpleGenRes> osApplicationList) {
+		if (osAppl != null) {
+			for (int i=0; i<osApplicationList.size(); i++) {
+				if (osAppl.equals(osApplicationList.get(i).getName())) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+	
+	
 
 	/* (non-Javadoc)
 	 * @see com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.IExtractKeywordsExtentions#updateKeywords(java.util.ArrayList, java.lang.String[])
@@ -1366,13 +1457,26 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		if (!(keywords.contains(IWritersKeywords.OSEK_BCC1) ||
 				keywords.contains(IWritersKeywords.OSEK_BCC2) ||
 				keywords.contains(IWritersKeywords.OSEK_ECC1) ||
-				keywords.contains(IWritersKeywords.OSEK_ECC2))) {
+				keywords.contains(IWritersKeywords.OSEK_ECC2) ||
+				keywords.contains(IWritersKeywords.OSEK_SC1) ||
+				keywords.contains(IWritersKeywords.OSEK_SC2) ||
+				keywords.contains(IWritersKeywords.OSEK_SC3) ||
+				keywords.contains(IWritersKeywords.OSEK_SC4))) {
 			return;
 		}
 
 		if (!keywords.contains(IWritersKeywords.OSEK_KERNEL)) {
 			keywords.add(IWritersKeywords.OSEK_KERNEL);
 		}
+		if (keywords.contains(IWritersKeywords.OSEK_SC4)) {
+			if (!keywords.contains(IWritersKeywords.KERNEL_MEMORY_PROTECTION)) {
+				keywords.add(IWritersKeywords.KERNEL_MEMORY_PROTECTION);
+			}
+			if (!keywords.contains(IWritersKeywords.OSEK_ECC2)) {
+				keywords.add(IWritersKeywords.OSEK_ECC2);
+			}
+		}
+
 		
 		final IVarTree vt = parent.getVt();
 
@@ -1400,6 +1504,46 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		
 	}
 	
+	
+	
+	
+	@Override
+	public void updateObjects() throws OilCodeWriterException {
+		final IVarTree vt = parent.getVt();
+
+		final String osNestingLevelPath = S
+					+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
+					+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MAX_NESTING_LEVEL";
+
+		final IOilObjectList[] oilObjects = parent.getOilObjects();	
+		for (IOilObjectList ool : oilObjects) {
+
+			
+			{ // nesting level
+				ISimpleGenRes os = ool.getList(IOilObjectList.OS).get(0);
+				String[] value = CommonUtils.getValue(vt, os.getPath() + osNestingLevelPath);
+				if (value != null && value.length>0 && value[0] != null && value[0].length()>0) {
+					os.setProperty(OsekConstants.SGR_OS_MAX_NESTING_LEVEL, value[0]);
+				}
+			}
+
+			
+			// isr
+			List<ISimpleGenRes> isrs = ool.getList(IOilObjectList.ISR);
+			int isr_id = 0;
+			for (ISimpleGenRes isr : isrs) {
+				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_ID)) {
+					isr.setProperty(ISimpleGenResKeywords.ISR_ID, ""+isr_id);
+					isr_id ++;
+				}
+
+			}
+
+		}
+	}
+
+
+	
 	/* (non-Javadoc)
 	 * @see com.eu.evidence.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions#getEEOpt(int)
 	 */
@@ -1410,8 +1554,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		if (!(parent.checkKeyword(IWritersKeywords.OSEK_BCC1) ||
 				parent.checkKeyword(IWritersKeywords.OSEK_BCC2) ||
 				parent.checkKeyword(IWritersKeywords.OSEK_ECC1) ||
-				parent.checkKeyword(IWritersKeywords.OSEK_ECC2))) {
-			return answer;
+				keywords.contains(IWritersKeywords.OSEK_ECC2) ||
+				keywords.contains(IWritersKeywords.OSEK_SC1) ||
+				keywords.contains(IWritersKeywords.OSEK_SC2) ||
+				keywords.contains(IWritersKeywords.OSEK_SC3) ||
+				keywords.contains(IWritersKeywords.OSEK_SC4))) {
 		}
 		
 		
@@ -1429,6 +1576,14 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								"__OO_ECC1__" },
 						{ IWritersKeywords.OSEK_ECC2,
 								"__OO_ECC2__" },
+						{ IWritersKeywords.OSEK_SC1,
+								"__OO_SC1__" },
+						{ IWritersKeywords.OSEK_SC2,
+								"__OO_SC2__" },
+						{ IWritersKeywords.OSEK_SC3,
+								"__AS_SC3__" },
+						{ IWritersKeywords.OSEK_SC4,
+								"__OO_ECC2__ __AS_SC4__" },
 
 						// -------- OSEK -------------
 						{ OsekConstants.DEF__OSEKOS_EXTENDED_STATUS__,
@@ -1485,7 +1640,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		    ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 			List<Integer> requiredOilObjects = (List<Integer>) sgrCpu.getObject(SGRK__FORCE_ARRAYS_LIST__);
 
-			boolean supportNestedIRQ = CpuUtility.getSupportForNestedIRQ(sgrCpu);
+//			boolean supportNestedIRQ = CpuUtility.getSupportForNestedIRQ(sgrCpu);
 
 			
 			// from Oil Object List
@@ -1500,6 +1655,15 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					&& !requiredOilObjects.contains(new Integer(IOilObjectList.RESOURCE))) {
 				answer.add("__OO_NO_RESOURCES__");
 			}
+			
+			if (parent.checkKeyword(IWritersKeywords.OSEK_ECC1) 
+				|| parent.checkKeyword(IWritersKeywords.OSEK_ECC2)) {
+				if (ool.getList(IOilObjectList.EVENT).size() == 0
+						&& !requiredOilObjects.contains(new Integer(IOilObjectList.EVENT))) {
+					answer.add("__OO_NO_EVENTS__");
+				}
+			}
+			
 
 			{ // ... autostart
 				ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);

@@ -43,7 +43,9 @@ public final class EEStacks implements IEEWriterKeywords {
 	public final int FORCE_ALWAYS = 1<<3;
 
 	
-	public final static String APPLICATION_IRQ_PREFIX = "__application_irq_prefix__";
+//	public final static String APPLICATION_IRQ_PREFIX = "__application_irq_prefix__";
+	public final static String APPLICATION_SHARED_PREFIX = "__stack__shared_prefix__";
+	public final static String STACK_BASE_NAME_PREFIX = "__stack__base_name_prefix__";
 	
 	/**
 	 * Contains the link between a task and its stacks (user and system)
@@ -425,32 +427,32 @@ public final class EEStacks implements IEEWriterKeywords {
 					}
 				}
 
-				String irqStack = currAppl.getPath() + S + oilVarPrefix + S
-						+ "IRQ_STACK_SIZE" ;
-
-				int irq = -1;
-				{
-					String[] val = CommonUtils.getValue(vt, irqStack);
-					
-					if (val != null && val.length>0 && val[0] != null) {
-						try {
-							irq = (Integer.decode(val[0])).intValue();
-						} catch (Exception e) {
-							throw new RuntimeException("Stacks : Wrong value ("
-									+ val[0] + ") for application " + currAppl.getName());
-						}
-						if ((irq % STACK_UNIT) != 0) {
-							Messages.sendWarningNl("Round stack size of application "+currAppl.getName()+" ("
-									+ irq + ") to next multiple of "
-									+ STACK_UNIT + " byte", null,
-									"187203ert71023897", null);
-							
-							irq += STACK_UNIT - (irq % STACK_UNIT);
-						}
-					} else {
-						throw new RuntimeException("Stacks : Expected an irq stack for application " + currAppl.getName());
-					}
-				}
+//				String irqStack = currAppl.getPath() + S + oilVarPrefix + S
+//						+ "IRQ_STACK_SIZE" ;
+//
+//				int irq = -1;
+//				{
+//					String[] val = CommonUtils.getValue(vt, irqStack);
+//					
+//					if (val != null && val.length>0 && val[0] != null) {
+//						try {
+//							irq = (Integer.decode(val[0])).intValue();
+//						} catch (Exception e) {
+//							throw new RuntimeException("Stacks : Wrong value ("
+//									+ val[0] + ") for application " + currAppl.getName());
+//						}
+//						if ((irq % STACK_UNIT) != 0) {
+//							Messages.sendWarningNl("Round stack size of application "+currAppl.getName()+" ("
+//									+ irq + ") to next multiple of "
+//									+ STACK_UNIT + " byte", null,
+//									"187203ert71023897", null);
+//							
+//							irq += STACK_UNIT - (irq % STACK_UNIT);
+//						}
+//					} else {
+//						throw new RuntimeException("Stacks : Expected an irq stack for application " + currAppl.getName());
+//					}
+//				}
 
 				if (shared != -1) {
 					String idSt = new String("A" + autoId);
@@ -460,33 +462,33 @@ public final class EEStacks implements IEEWriterKeywords {
 					stackList.add(new StackDescr(idSt, new int[]{shared}, currAppl.getName()));
 	
 					
-					int index = Collections.binarySearch(taskList, IWritersKeywords.dummyName + currAppl
+					int index = Collections.binarySearch(taskList, APPLICATION_SHARED_PREFIX + currAppl
 							.getName());
 					if (index > -1) {
 						throw new RuntimeException(
-								"Stacks : multiple definition for a task ("+IWritersKeywords.dummyName
+								"Stacks : multiple definition for a task ("
 										+ currAppl.getName() + ")");
 					}
-					taskList.add(-index - 1, (new Tasks(IWritersKeywords.dummyName + currAppl.getName(), idSt)));
+					taskList.add(-index - 1, (new Tasks(APPLICATION_SHARED_PREFIX + currAppl.getName(), idSt)));
 				}
 
-				if (irq != -1) {
-					String idSt = new String("A" + autoId);
-					autoId++;
-	
-					// store size
-					stackList.add(new StackDescr(idSt, new int[]{irq}, currAppl.getName()));
-	
-					
-					int index = Collections.binarySearch(taskList, APPLICATION_IRQ_PREFIX + currAppl
-							.getName());
-					if (index > -1) {
-						throw new RuntimeException(
-								"Stacks : multiple definition for a task (" +APPLICATION_IRQ_PREFIX
-										+ currAppl.getName() + "): the same name is used also to identify irq stack");
-					}
-					taskList.add(-index - 1, (new Tasks(APPLICATION_IRQ_PREFIX + currAppl.getName(), idSt)));
-				}
+//				if (irq != -1) {
+//					String idSt = new String("A" + autoId);
+//					autoId++;
+//	
+//					// store size
+//					stackList.add(new StackDescr(idSt, new int[]{irq}, currAppl.getName()));
+//	
+//					
+//					int index = Collections.binarySearch(taskList, APPLICATION_IRQ_PREFIX + currAppl
+//							.getName());
+//					if (index > -1) {
+//						throw new RuntimeException(
+//								"Stacks : multiple definition for a task (" +APPLICATION_IRQ_PREFIX
+//										+ currAppl.getName() + "): the same name is used also to identify irq stack");
+//					}
+//					taskList.add(-index - 1, (new Tasks(APPLICATION_IRQ_PREFIX + currAppl.getName(), idSt)));
+//				}
 
 			}
 		}
@@ -547,7 +549,7 @@ public final class EEStacks implements IEEWriterKeywords {
 				
 				// check if this task is connected to a specific OS_application
 				if (currTask.containsProperty(ISimpleGenResKeywords.TASK_OS_APPLICATION_NAME)) {
-					String os_appl_id = currTask.getString(ISimpleGenResKeywords.TASK_OS_APPLICATION_NAME);
+					String os_appl_id = APPLICATION_SHARED_PREFIX + currTask.getString(ISimpleGenResKeywords.TASK_OS_APPLICATION_NAME);
 					
 					int index = Collections.binarySearch(taskList, os_appl_id);
 					if (index > -1) {

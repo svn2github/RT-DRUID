@@ -110,12 +110,12 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	/** A SimpleGenResKeyword that identifies the stack of a TASK (an EEStackData) */
 	public final static String SGRK_TASK_STACK = "task_stack_data_description";
 	
-	
-	/** A SimpleGenResKeyword that identifies the irq stack of a OS application (an EEStackData) */
-	public final static String OS_APPLICATION_IRQ_STACK = "sgr_os_application_irq_stack";
-
-	/** A SimpleGenResKeyword that identifies the irq stack of a OS application (an string) */
-	public final static String OS_APPLICATION_IRQ_STACK_ID = "sgr_os_application_irq_stack_id";
+//	
+//	/** A SimpleGenResKeyword that identifies the irq stack of a OS application (an EEStackData) */
+//	public final static String OS_APPLICATION_IRQ_STACK = "sgr_os_application_irq_stack";
+//
+//	/** A SimpleGenResKeyword that identifies the irq stack of a OS application (an string) */
+//	public final static String OS_APPLICATION_IRQ_STACK_ID = "sgr_os_application_irq_stack_id";
 	
 	/**
 	 * Contains a list of Integer that identifies Oil Objects, using

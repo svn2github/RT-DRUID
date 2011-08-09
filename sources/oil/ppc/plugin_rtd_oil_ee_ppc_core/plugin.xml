@@ -10,9 +10,6 @@
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterHalMpc567">
       </writer>
        <writer
-            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterKernelSystemCalls">
-      </writer>
-       <writer
              class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterComMpc567">
        </writer>
    </extension>
@@ -36,9 +33,6 @@
 		<implementation_file
 			path="oil_files/ppc.oil">
 		</implementation_file>
-  <implementation_file
-        path="oil_files/memory_protection.oil">
-  </implementation_file>
 	</extension>
 
 </plugin>

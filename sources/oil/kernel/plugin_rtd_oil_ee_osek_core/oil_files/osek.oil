@@ -14,9 +14,13 @@ IMPLEMENTATION ee {
  
         ENUM [
            	BCC1,
-			BCC2,
-			ECC1,
-			ECC2
+           	BCC2,
+           	ECC1,
+           	ECC2,
+           	SC1,
+           	SC2,
+           	SC3,
+           	SC4
         ] KERNEL_TYPE;
     };
 
