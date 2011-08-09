@@ -107,7 +107,7 @@
 		
 		<zip
 			zipfile="${output.file}"
-			basedir="${TEMP_DIR}/${archivePrefix}"
+			basedir="${TEMP_DIR}"
 			filesonly="true"
 			whenempty="skip"
 			update="false"/>

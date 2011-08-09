@@ -187,7 +187,7 @@
 		<condition property="output.folder" value="${destination}">
 			<isset property="destination"/>
 		</condition>
-		<property name="output.folder"         value="${basedir}"/>
+		<property name="output.folder"         value="${basedir}/output"/>
 		
 	<!-- temporary directory where the product is build -->
 	<property name="product.temp.folder"   value="${temp.folder}/product.temp.folder"/>
