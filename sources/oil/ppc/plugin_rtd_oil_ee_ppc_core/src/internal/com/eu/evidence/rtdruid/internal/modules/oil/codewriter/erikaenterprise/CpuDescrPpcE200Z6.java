@@ -24,6 +24,12 @@ public class CpuDescrPpcE200Z6 extends CpuHwDescription {
 		handlesEmpyVector = false;
 		
 		macros = new MacrosForSharedData();
+		
+
+		/*
+		 * (16 interrupts priorities and 3 timers)
+		 */
+		maxNestedInts = 19;
 	}
 	
 	@Override

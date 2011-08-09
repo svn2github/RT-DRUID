@@ -1385,9 +1385,12 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
 		
 
-		int max_level = 16;
+		int max_level = CpuHwDescription.DEFAULT_MAX_NESTING_LEVEL;
+		
 		if (os.containsProperty(OsekConstants.SGR_OS_MAX_NESTING_LEVEL)) {
 			max_level = os.getInt(OsekConstants.SGR_OS_MAX_NESTING_LEVEL);
+		} else if (os.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
+			max_level = ((CpuHwDescription) os.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)).getMaxNestedInts();
 		}
 
 		// ee_cfg.h

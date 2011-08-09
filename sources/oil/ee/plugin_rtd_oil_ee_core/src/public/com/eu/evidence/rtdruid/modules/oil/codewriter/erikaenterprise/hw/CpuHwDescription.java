@@ -19,6 +19,10 @@ public class CpuHwDescription {
 	 * Number of bytes used to store the stack address.
 	 */
 	public final static boolean DEFAULT_supportForNestedIRQ = true;
+
+
+
+	public static final int DEFAULT_MAX_NESTING_LEVEL = 16;
 	
 	
 
@@ -70,6 +74,11 @@ public class CpuHwDescription {
 	 * 
 	 */
 	protected IMacrosForSharedData macros = new EmptyMacrosForSharedData();
+	
+	/**
+	 * The maximum number of nested interrupts 
+	 */
+	protected int maxNestedInts = DEFAULT_MAX_NESTING_LEVEL;
 	
 	/**
 	 * Build a new Cpu HW Description
@@ -133,4 +142,9 @@ public class CpuHwDescription {
 	public IMacrosForSharedData getShareDataMacros() {
 		return macros;
 	}
+	
+	public int getMaxNestedInts() {
+		return maxNestedInts;
+	}
+	
 }
