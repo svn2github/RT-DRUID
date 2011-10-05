@@ -204,7 +204,7 @@ public class Mico32BoardXP2Camera extends AMico32Board {
 	 */
 	public void updateObjects(final IOilObjectList[] oilObjects, ArrayList<String> eeoptions) throws OilCodeWriterException {
 
-		eeoptions.add("__XP2_CAMERA_BOARD__");
+		eeoptions.add("__FPG_EYE__");
 		int all = 0;
 		
 		if (foundOptions.contains(ALL_ETHERNET)) {
