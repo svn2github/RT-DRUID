@@ -49,7 +49,7 @@ public class RtdruidLog {
 			System.err.print(">>> ");
 			e.printStackTrace();
 			Rtd_corePlugin.log(e);
-			System.err.println("<<<");
+			System.err.println("<<<\n");
 		}
 	}
 
@@ -61,7 +61,7 @@ public class RtdruidLog {
 		
 		if (!FINAL) {
 			// print the stack trace
-			System.err.print(">>> " + txt + "<<<");
+			System.err.print(">>> " + txt + "<<<\n");
 		}
 	}
 
