@@ -358,14 +358,14 @@ public class XMI2XMLlTest {
 
 	private static IVTResource prepareXMIReader() throws IOException {
 		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), DataPackage.eINSTANCE, null);
-		filler.fill(DataFactory.eINSTANCE.createSystem());
+		filler.fill(VarTreeUtil.newVarTreeRoot());
 
 		return (IVTResource) filler.getResource();
 	}
 	
 	private static IVarTree prepareTree() throws IOException {
 		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), DataPackage.eINSTANCE, null);
-		filler.fill(DataFactory.eINSTANCE.createSystem());
+		filler.fill(VarTreeUtil.newVarTreeRoot());
 
 		return (IVarTree) filler.getEditingDomain();
 	}

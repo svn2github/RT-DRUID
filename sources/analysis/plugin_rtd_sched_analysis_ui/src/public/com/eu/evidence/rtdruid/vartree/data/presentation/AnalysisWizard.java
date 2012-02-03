@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.dialogs.Dialog;
@@ -62,7 +63,6 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 
 import com.eu.evidence.rtdruid.desk.Messages;
-
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
 import com.eu.evidence.rtdruid.internal.modules.jscan.ValueNotFoundException;
@@ -77,7 +77,6 @@ import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.tools.CheckReferences;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
@@ -606,7 +605,7 @@ public class AnalysisWizard extends Wizard {
 			}
 		}*/
 		
-		ObjectWithID root =null;
+		EObject root =null;
 		String fname = resources[0];
 
 		
@@ -619,7 +618,7 @@ public class AnalysisWizard extends Wizard {
 				de = (DataEditor) idp;
 				
 				Resource res = (Resource) ((DataEditor) idp).getEditingDomain().getResourceSet().getResources().get(0);
-				root = (ObjectWithID) res.getContents().get(0);
+				root = res.getContents().get(0);
 
 			} else {
 				String openResourceMessage = "Selected resource is already open with another editor.\n" +
@@ -658,10 +657,10 @@ public class AnalysisWizard extends Wizard {
 				MessageDialog.openWarning(getShell(), "No data", fname
 						+ " doesn't contain data");
 			}
-			root = (ObjectWithID) res.getContents().get(0);
+			root = res.getContents().get(0);
 
 		} else {
-			root = (ObjectWithID) VarTreeUtil.copy(root);
+			root = VarTreeUtil.copy(root);
 		}
 		
 		

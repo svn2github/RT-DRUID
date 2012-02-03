@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * This interface is used to import data into the internal data structure from
  * another kind of formalism.
@@ -45,7 +47,6 @@ public interface IRTDImporter {
 	 * @throws IOException
 	 *             if there is any problem while reading the input stream.
 	 */
-	com.eu.evidence.rtdruid.vartree.data.System load(InputStream input,
-			Map<?, ?> options) throws IOException;
+	EObject load(InputStream input, Map<?, ?> options) throws IOException;
 
 }

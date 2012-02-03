@@ -22,17 +22,15 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.xml.sax.ErrorHandler;
 
 import com.eu.evidence.rtdruid.io.IRTDExporter;
 import com.eu.evidence.rtdruid.io.IRTDImporter;
 import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.vartree.VarTreeIdHandler;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.System;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 /** 
  * This class convert an Evidence XML file into a Evidence XMI file (for EMF) and vice versa
@@ -102,9 +100,9 @@ public class RTDResourceManager extends XMIResourceImpl implements IVTResource {
 					}
 					options.put(IRTDImporter.OPT_PARENT_IMPORTER, new IRTDImporter() {
 					
-						public System load(InputStream input, Map<?, ?> options) throws IOException {
+						public EObject load(InputStream input, Map<?, ?> options) throws IOException {
 							doSuperLoad(input, options);
-							return (com.eu.evidence.rtdruid.vartree.data.System) getContents().get(0);
+							return getContents().get(0);
 						}
 					});
 
@@ -125,7 +123,7 @@ public class RTDResourceManager extends XMIResourceImpl implements IVTResource {
 					}
 		
 					// Run the RTD importer
-					com.eu.evidence.rtdruid.vartree.data.System root = importer.load(inputStream, options);
+					EObject root = importer.load(inputStream, options);
 					if (root != null) {
 						if (getContents().size() != 0) {
 							getContents().set(0,root);
@@ -151,8 +149,8 @@ public class RTDResourceManager extends XMIResourceImpl implements IVTResource {
 				inputStream.reset();
 		
 				if (emptyFile) { // is empty .. then add the first one element
-					com.eu.evidence.rtdruid.vartree.data.System root = DataFactory.eINSTANCE.createSystem();
-					root.setName(new StringVar("default system"));
+					EObject root = VarTreeUtil.newVarTreeRoot();
+					VarTreeIdHandler.setId(root, "default system");
 					getContents().add(root);
 					return;
 				}
@@ -173,12 +171,13 @@ public class RTDResourceManager extends XMIResourceImpl implements IVTResource {
 				 *  before return, compact multiple instance of the same node
 				 *  (two o more node with the same id)
 				 */
-				ObjectWithID oldRoot = (ObjectWithID) getContents().get(0);
-				
-				ObjectWithID newRoot = DataFactory.eINSTANCE.createSystem();
-				getContents().set(0, newRoot);
-				newRoot.setObjectID(oldRoot.getObjectID());
-				VarTreeUtil.merge(newRoot, oldRoot);//newRoot.merge(oldRoot, "", false);
+				EObject oldRoot = getContents().get(0);
+				if (oldRoot != null) {
+					EObject newRoot = EcoreUtil.create(oldRoot.eClass());
+					getContents().set(0, newRoot);
+					VarTreeIdHandler.setId(newRoot, VarTreeIdHandler.getId(oldRoot));
+					VarTreeUtil.merge(newRoot, oldRoot);//newRoot.merge(oldRoot, "", false);
+				}
 			}
 		}
 	}
@@ -210,7 +209,7 @@ public class RTDResourceManager extends XMIResourceImpl implements IVTResource {
 			}
 			options.put(IRTDExporter.OPT_PARENT_EXPORTER, new IRTDExporter() {
 			
-				public void export(OutputStream output, System data, Map<?, ?> options)
+				public void export(OutputStream output, EObject data, Map<?, ?> options)
 						throws IOException {
 					doSuperSave(output, options);
 				}
@@ -219,14 +218,11 @@ public class RTDResourceManager extends XMIResourceImpl implements IVTResource {
 			// Run the RTD exporter
 			IRTDExporter exporter = RTDResourceManagerFactory.getInstance().getExport(exp_type);
 			if (exporter != null && getContents().size()>0) {
-				EObject o = getContents().get(0);
-				if (o instanceof com.eu.evidence.rtdruid.vartree.data.System) {
-					com.eu.evidence.rtdruid.vartree.data.System root = (com.eu.evidence.rtdruid.vartree.data.System) o;
-					exporter.export(outputStream, root, options);
-					if (!getContents().contains(root)) {
-						// set the root here again
-						getContents().add(0, root);
-					}
+				EObject root = getContents().get(0);
+				exporter.export(outputStream, root, options);
+				if (!getContents().contains(root)) {
+					// set the root here again
+					getContents().add(0, root);
 				}
 				return;
 			}

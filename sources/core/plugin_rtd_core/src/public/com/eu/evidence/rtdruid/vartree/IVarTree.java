@@ -16,7 +16,6 @@ import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.vartree.IAdapterFactoryEditingDomain;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 
 /**
  * This interface is the used to contain every data.

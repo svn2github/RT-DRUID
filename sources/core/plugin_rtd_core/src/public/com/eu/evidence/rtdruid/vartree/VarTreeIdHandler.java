@@ -20,7 +20,6 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 
 public class VarTreeIdHandler {
 
@@ -175,9 +174,9 @@ public class VarTreeIdHandler {
 	 	}
 	 	
 		EReference eFeature = first.eContainmentFeature();
-	 	if (second instanceof ObjectWithID
+	 	if (second instanceof EObject
 	 			&& eFeature.getEType().isInstance(second)) {
-	 		String oTmp = getId((ObjectWithID) second);
+	 		String oTmp = getId((EObject) second);
 	 		return (tmp == null ? oTmp == null : tmp.equals(oTmp));
 	 	} else if (second instanceof String) {
 			return (tmp == null ? second == null : tmp.equals(second));

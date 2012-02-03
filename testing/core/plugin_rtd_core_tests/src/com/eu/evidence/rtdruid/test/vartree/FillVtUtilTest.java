@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.ecore.EObject;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.io.IVTResource;
@@ -21,9 +22,7 @@ import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.tests.vartree.data.FillVtUtil;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 
 /**
  *
@@ -77,7 +76,7 @@ public class FillVtUtilTest {
 	@Test
 	public void testFill() throws IOException {
 		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), DataPackage.eINSTANCE, null);
-		ObjectWithID root = DataFactory.eINSTANCE.createSystem();
+		EObject root = VarTreeUtil.newVarTreeRoot();
 		filler.fill(root);
 
 		assertNotNull(filler.getEditingDomain());
@@ -93,8 +92,8 @@ public class FillVtUtilTest {
 	@Test
 	public void testMultiFill() throws IOException {
 		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), DataPackage.eINSTANCE, null);
-		ObjectWithID root1 = DataFactory.eINSTANCE.createSystem();
-		ObjectWithID root2 = DataFactory.eINSTANCE.createSystem();
+		EObject root1 = VarTreeUtil.newVarTreeRoot();
+		EObject root2 = VarTreeUtil.newVarTreeRoot();
 		int root1_children_size = root1.eContents().size();
 		int root2_children_size = root2.eContents().size();
 		assertEquals(root1_children_size, root2_children_size);
@@ -120,8 +119,8 @@ public class FillVtUtilTest {
 	@Test
 	public void testGenericFill() throws IOException {
 		FillVtUtil filler = new FillVtUtil(DataPackage.eINSTANCE);
-		ObjectWithID root1 = DataFactory.eINSTANCE.createSystem();
-		ObjectWithID root2 = DataFactory.eINSTANCE.createSystem();
+		EObject root1 = VarTreeUtil.newVarTreeRoot();
+		EObject root2 = VarTreeUtil.newVarTreeRoot();
 		filler.fill(root1);
 		filler.fill(root2);
 

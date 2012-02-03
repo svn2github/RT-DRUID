@@ -135,13 +135,13 @@ import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreeProvider;
 import com.eu.evidence.rtdruid.vartree.IllegalIDException;
+import com.eu.evidence.rtdruid.vartree.VarTreeIdHandler;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.Activation;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCostList;
 import com.eu.evidence.rtdruid.vartree.data.CpuSched;
 import com.eu.evidence.rtdruid.vartree.data.ExecTimeList;
 import com.eu.evidence.rtdruid.vartree.data.MutexRef;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.data.PartialOrder;
 import com.eu.evidence.rtdruid.vartree.data.ResourceRef;
 import com.eu.evidence.rtdruid.vartree.data.Rtos;
@@ -582,15 +582,15 @@ public class DataEditor
 			      /** Little class used to restore an object id
 			       * */
 			      class RestoreObjectId {
-			      	public ObjectWithID obj;
+			      	public EObject obj;
 			      	public String oldId;
 			      	
-			      	public RestoreObjectId(ObjectWithID o, String id) {
+			      	public RestoreObjectId(EObject o, String id) {
 			      		obj = o;
 			      		oldId = id;
 			      	}
 			      	public void restore() {
-			      		obj.setObjectID(oldId);
+			      		VarTreeIdHandler.setId(obj, oldId);
 			      	}
 			      }
 			      ArrayList restoreObjects = new ArrayList();
@@ -604,14 +604,14 @@ public class DataEditor
 				   ************************************************************/
 			      if (command instanceof PasteFromClipboardCommand) {
 			      	
-			      	if (!(((PasteFromClipboardCommand) command).getOwner() instanceof ObjectWithID)) {
+			      	if (!(((PasteFromClipboardCommand) command).getOwner() instanceof EObject)) {
 				      	sendMessage("Not valid past from Clipboard");
 						
 				        mostRecentCommand = null;
 				        command.dispose();
 				        return;
 			      	}
-			      	ObjectWithID dest = (ObjectWithID) ((PasteFromClipboardCommand) command).getOwner(); // destination
+			      	EObject dest = (EObject) ((PasteFromClipboardCommand) command).getOwner(); // destination
 			      	Collection source = editingDomain.getClipboard(); // element to copy
 			      	ArrayList references = new ArrayList(source.size());
 			      	
@@ -634,7 +634,7 @@ public class DataEditor
 			      	Iterator iter = source.iterator();
 			      	while(iter.hasNext()) {
 			      		Object o = iter.next();
-			      		if (!(o instanceof ObjectWithID)) {
+			      		if (!(o instanceof EObject)) {
 					      	sendMessage("Not valid past from Clipboard");
 							
 					        mostRecentCommand = null;
@@ -652,7 +652,7 @@ public class DataEditor
 			      	if (next) {
 			      		references.clear();
 			      		
-			      		dest = (ObjectWithID) dest.eContainer();
+			      		dest = (EObject) dest.eContainer();
 			      		next = false || (dest ==null);
 
 				      	if (!next) {
@@ -660,7 +660,7 @@ public class DataEditor
 				      	}
 				      	iter = source.iterator();
 				      	while(iter.hasNext() && !next) {
-				      		ObjectWithID o1 = (ObjectWithID) iter.next();
+				      		EObject o1 = (EObject) iter.next();
 				      		EStructuralFeature ref = null; // owiip.getChildFeatureContainer(dest, o1);
 				      		if ( ref == null || !(ref instanceof EReference)) {
 				      			next = true;
@@ -686,7 +686,7 @@ public class DataEditor
 			      	iter = source.iterator();
 			      	Iterator refIter = references.iterator();
 			      	while(iter.hasNext()) {
-			      		ObjectWithID o1 = (ObjectWithID) iter.next();
+			      		EObject o1 = (EObject) iter.next();
 			      		EReference ref = (EReference) refIter.next();;
 			      		
 			      		if (ref.isMany()) {
@@ -700,9 +700,9 @@ public class DataEditor
 				      		}
 			      			
 			      			EList lista = (EList) dest.eGet(ref);
-			      			if ( lista.contains(o1) || ids.contains(o1.getObjectID())) {
+			      			if ( lista.contains(o1) || ids.contains(VarTreeIdHandler.getId(o1))) {
 			      				
-			      				final String origId = o1.getObjectID();
+			      				final String origId = VarTreeIdHandler.getId(o1);
 			      				String tmpId = origId;
 			      				String[] splitId = DataPath.resolveId(tmpId);
 			      				if (splitId.length == 1) {
@@ -725,7 +725,7 @@ public class DataEditor
 				      					}
 				      				}
 				      				
-				      				o1.setObjectID(newId);
+				      				VarTreeIdHandler.getId(o1);
 				      				
 				      				restoreObjects.add( new RestoreObjectId(o1, origId));
 				      				
@@ -733,7 +733,7 @@ public class DataEditor
 	  			      				ArrayList tmp = new ArrayList();
 									tmp.add(lista.get(lista.indexOf(o1)));
 						      		setSelectionToViewer(tmp);
-							      	sendMessage("Try to overwrite an existent node with the same ID ("+o1.getObjectID()+"). Remove it first.");
+							      	sendMessage("Try to overwrite an existent node with the same ID ("+VarTreeIdHandler.getId(o1)+"). Remove it first.");
 									
 							        mostRecentCommand = null;
 							        command.dispose();
@@ -750,14 +750,14 @@ public class DataEditor
 						        return;
 			      			}
 */
-			      			ids.add(o1.getObjectID());
+			      			ids.add(VarTreeIdHandler.getId(o1));
 			      			
 			      		} else {
 			      			if (dest.eGet(ref) != null) {
 			      				ArrayList tmp = new ArrayList();
 								tmp.add(dest.eGet(ref));
 					      		setSelectionToViewer(tmp);
-						      	sendMessage("Try to overwrite an existent node with the same ID ("+o1.getObjectID()+"). Remove it first.");
+						      	sendMessage("Try to overwrite an existent node with the same ID ("+VarTreeIdHandler.getId(o1)+"). Remove it first.");
 								
 						        mostRecentCommand = null;
 						        command.dispose();
@@ -789,9 +789,9 @@ public class DataEditor
 				      	
 				      	Iterator iter = newChilds.iterator();
 				      	while (iter.hasNext()) {
-				      		ObjectWithID o = (ObjectWithID) iter.next();
+				      		EObject o = (EObject) iter.next();
 		      				
-		      				String[] splitId = DataPath.resolveId(o.getObjectID());
+		      				String[] splitId = DataPath.resolveId(VarTreeIdHandler.getId(o));
 		      				
 		      				boolean classType =
 		      					   (o instanceof Activation)
@@ -823,7 +823,7 @@ public class DataEditor
 			      					}
 			      				}
 			      				
-			      				o.setObjectID(newId);
+			      				VarTreeIdHandler.setId(o, newId);
 		      				} else {
 		      					if (ownerList.contains(o)) {
 		      						iter.remove();
@@ -847,14 +847,14 @@ public class DataEditor
 				    	// used on "single value" child
 		      			
 				      	SetCommand tmp = (SetCommand) ((CreateChildCommand) command).getCommand();
-				      	ObjectWithID o = (ObjectWithID) tmp.getValue();
+				      	EObject o = (EObject) tmp.getValue();
 //				      	Object parent = tmp.getOwner();
 				      	
-	      				String[] splitId = DataPath.resolveId(o.getObjectID());
+	      				String[] splitId = DataPath.resolveId(VarTreeIdHandler.getId(o));
 	      				splitId[0] = o.eClass().getName();
 	      				String newId = DataPath.makeId(splitId);
 
-	      				o.setObjectID( newId );
+	      				VarTreeIdHandler.setId(o, newId);
 	      				
 	      				// only for RTOS element
 	      				if (o instanceof Rtos) {
@@ -873,28 +873,28 @@ public class DataEditor
 				   ************************************************************/
 			      else if (command instanceof DragAndDropCommand) {
 			      	
-			      	if (!(((DragAndDropCommand) command).getOwner() instanceof ObjectWithID)) {
+			      	if (!(((DragAndDropCommand) command).getOwner() instanceof EObject)) {
 				      	sendMessage("Not valid Drag and Drop");
 						
 				        mostRecentCommand = null;
 				        command.dispose();
 				        return;
 			      	}
-			      	ObjectWithID dest = (ObjectWithID) ((DragAndDropCommand) command).getOwner(); // destinazione
+			      	EObject dest = (EObject) ((DragAndDropCommand) command).getOwner(); // destinazione
 			      	Collection source = ((DragAndDropCommand) command).getCollection(); // destinazione
 			      	
 			      	boolean next = false;
 			      	Iterator iter = source.iterator();
 			      	while(iter.hasNext()) {
 			      		Object o = iter.next();
-			      		if (!(o instanceof ObjectWithID)) {
+			      		if (!(o instanceof EObject)) {
 					      	sendMessage("Not valid Drag and Drop");
 							
 					        mostRecentCommand = null;
 					        command.dispose();
 					        return;
 			      		}
-			      		ObjectWithID o1 = (ObjectWithID) o;
+			      		EObject o1 = (EObject) o;
 			      		if (o1.eContainer().getClass() != dest.getClass()) {
 			      			next = true;
 			      			break;
@@ -902,12 +902,12 @@ public class DataEditor
 			      	}
 			      	if (next) {
 			      		
-			      		dest = (ObjectWithID) dest.eContainer();
+			      		dest = (EObject) dest.eContainer();
 			      		next = false || (dest ==null);
 			      		
 				      	iter = source.iterator();
 				      	while(iter.hasNext() && !next) {
-				      		ObjectWithID o1 = (ObjectWithID) iter.next();
+				      		EObject o1 = (EObject) iter.next();
 				      		if (o1.eContainer().getClass() != dest.getClass()) {
 				      			next = true;
 				      		}
@@ -926,7 +926,7 @@ public class DataEditor
 			      	HashMap usedID = new HashMap();
 			      	iter = source.iterator();
 			      	while(iter.hasNext()) {
-			      		ObjectWithID o1 = (ObjectWithID) iter.next();
+			      		EObject o1 = (EObject) iter.next();
 			      		
 			      		EReference ref = o1.eContainmentFeature();
 			      		if (ref.isMany()) {
@@ -935,7 +935,7 @@ public class DataEditor
 			      				ArrayList tmp = new ArrayList();
 								tmp.add(lista.get(lista.indexOf(o1)));
 					      		setSelectionToViewer(tmp);
-						      	sendMessage("Try to overwrite an existent node with the same ID ("+o1.getObjectID()+"). Remove it first.");
+						      	sendMessage("Try to overwrite an existent node with the same ID ("+VarTreeIdHandler.getId(o1)+"). Remove it first.");
 								
 						        mostRecentCommand = null;
 						        command.dispose();
@@ -948,20 +948,20 @@ public class DataEditor
 				      			ids = new ArrayList();
 				      			usedID.put(ref, ids);
 				      		}
-			      			if ( ids.contains(o1.getObjectID())) {
-						      	sendMessage("Try to past more than one node with the same ID ("+o1.getObjectID()+")");
+			      			if ( ids.contains(VarTreeIdHandler.getId(o1))) {
+						      	sendMessage("Try to past more than one node with the same ID ("+VarTreeIdHandler.getId(o1)+")");
 								
 						        mostRecentCommand = null;
 						        command.dispose();
 						        return;
 			      			}
-			      			ids.add(o1.getObjectID());			      			
+			      			ids.add(VarTreeIdHandler.getId(o1));			      			
 			      		} else {
 			      			if (dest.eGet(ref) != null) {
 			      				ArrayList tmp = new ArrayList();
 								tmp.add(dest.eGet(ref));
 					      		setSelectionToViewer(tmp);
-						      	sendMessage("Try to overwrite an existent node with the same ID ("+o1.getObjectID()+"). Remove it first.");
+						      	sendMessage("Try to overwrite an existent node with the same ID ("+VarTreeIdHandler.getId(o1)+"). Remove it first.");
 								
 						        mostRecentCommand = null;
 						        command.dispose();

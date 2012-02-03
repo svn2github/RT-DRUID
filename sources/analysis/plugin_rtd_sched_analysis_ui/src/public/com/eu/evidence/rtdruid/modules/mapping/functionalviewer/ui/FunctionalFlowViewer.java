@@ -12,6 +12,7 @@ import java.util.HashMap;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalViewer;
@@ -38,7 +39,6 @@ import com.eu.evidence.rtdruid.modules.mapping.functionalviewer.model.ModelLoade
 import com.eu.evidence.rtdruid.modules.mapping.functionalviewer.parts.ActivityPartFactory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 
 /**
  * 
@@ -220,7 +220,7 @@ public class FunctionalFlowViewer extends GraphicalEditor {
 				throw new RuntimeException(e.getMessage());
 			}
 	
-			ObjectWithID root = (ObjectWithID) res.getContents().get(0);
+			EObject root = res.getContents().get(0);
 	
 			vt.setRoot(root);
 			res.getContents().clear();

@@ -17,14 +17,13 @@ import com.eu.evidence.rtdruid.io.IRTDImporter;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
-import com.eu.evidence.rtdruid.vartree.data.System;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 
 public class OilIO implements IRTDImporter, IRTDExporter {
 	
 
 	@Override
-	public System load(InputStream input, Map<?, ?> options) throws IOException {
+	public EObject load(InputStream input, Map<?, ?> options) throws IOException {
 		if (input == null) {
 			throw new NullPointerException("Null input");
 		}
@@ -40,17 +39,13 @@ public class OilIO implements IRTDImporter, IRTDExporter {
 
 		(new OilReader()).load(input, vt, fileName, filePath);
 		
-		System answer = null;
 		EList<Resource> resList = vt.getResourceSet().getResources();
 		EList<EObject> objList = resList!=null && resList.size()>0 ? resList.get(0).getContents() : null;
-		EObject obj = objList!=null && objList.size()>0 ? objList.get(0) : null;
-		answer = obj instanceof System ? (System) obj : null;
-
-		return answer;
+		return objList!=null && objList.size()>0 ? objList.get(0) : null;
 	}
 
 	@Override
-	public void export(OutputStream output, System data, Map<?, ?> options)
+	public void export(OutputStream output, EObject data, Map<?, ?> options)
 			throws IOException {
 		if (output == null) {
 			throw new NullPointerException("Null output");

@@ -33,8 +33,8 @@ import com.eu.evidence.rtdruid.internal.vartree.data.provider.DataItemProviderAd
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
-import com.eu.evidence.rtdruid.vartree.VarTreePointerEMF;
 import com.eu.evidence.rtdruid.vartree.IVariable.NotValidValueException;
+import com.eu.evidence.rtdruid.vartree.VarTreePointerEMF;
 import com.eu.evidence.rtdruid.vartree.variables.StringMVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 

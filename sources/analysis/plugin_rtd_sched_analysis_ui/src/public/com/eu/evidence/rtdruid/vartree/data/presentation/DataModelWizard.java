@@ -49,9 +49,9 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.modules.jscan.ui.rtd_jscan_ui.Rtd_jscan_uiPlugin;
 import com.eu.evidence.rtdruid.ui.Rtd_core_uiPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
+import com.eu.evidence.rtdruid.vartree.VarTreeIdHandler;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 
 
@@ -71,13 +71,13 @@ public class DataModelWizard extends Wizard implements INewWizard {
 	 */
 	protected DataPackage dataPackage = DataPackage.eINSTANCE;
 
-	/**
-	 * This caches an instance of the model factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected DataFactory dataFactory = dataPackage.getDataFactory();
+//	/**
+//	 * This caches an instance of the model factory.
+//	 * <!-- begin-user-doc -->
+//	 * <!-- end-user-doc -->
+//	 * @generated
+//	 */
+//	protected DataFactory dataFactory = dataPackage.getDataFactory();
 
 	/**
 	 * This is the file creation page.
@@ -137,8 +137,8 @@ public class DataModelWizard extends Wizard implements INewWizard {
 	EObject createInitialModel() {
 //		EClass eClass = (EClass)dataPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
 //		EObject rootObject = dataFactory.create(eClass);
-		com.eu.evidence.rtdruid.vartree.data.System rootObject = DataFactory.eINSTANCE.createSystem();
-		rootObject.setName(new StringVar("default system"));
+		EObject rootObject = VarTreeUtil.newVarTreeRoot();
+		VarTreeIdHandler.setId(rootObject, "default system");
 		return rootObject;
 	}
 

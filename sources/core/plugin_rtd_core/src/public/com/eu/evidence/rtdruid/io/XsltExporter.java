@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.emf.ecore.EObject;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 
@@ -41,7 +42,7 @@ public class XsltExporter implements IRTDExporter {
 
 	
 	public void export(OutputStream outputStream,
-			final com.eu.evidence.rtdruid.vartree.data.System data,
+			final EObject data,
 			Map<?, ?> options) throws IOException {
 
 		IRTDExporter parent = (IRTDExporter) options.get(OPT_PARENT_EXPORTER);

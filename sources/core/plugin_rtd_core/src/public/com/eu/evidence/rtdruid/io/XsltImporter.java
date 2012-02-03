@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * This class implements a IRTDImporter that uses an xslt file to convert the
@@ -38,7 +39,7 @@ public class XsltImporter implements IRTDImporter {
 	}
 
 	
-	public com.eu.evidence.rtdruid.vartree.data.System load(InputStream input,
+	public EObject load(InputStream input,
 			Map<?, ?> options) throws IOException {
 
 		PipedInputStream inPipe = new PipedInputStream();

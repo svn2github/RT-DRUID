@@ -15,16 +15,15 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileList;
 import org.apache.tools.ant.types.FileSet;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import com.eu.evidence.rtdruid.ant.common.Util;
 import com.eu.evidence.rtdruid.desk.Messages;
-
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
 import com.eu.evidence.rtdruid.io.IVTResource;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.tools.CheckReferences;
 
 /**
@@ -103,7 +102,7 @@ public class JScanTask extends Task {
         IVarTree vt = VarTreeUtil.newVarTree();
         
         // load files
-        ObjectWithID[] roots = new ObjectWithID[allFiles.size()];
+        EObject[] roots = new EObject[allFiles.size()];
         for (int i=0; i<allFiles.size(); i++) {
         	String fname = (String) allFiles.get(i);
         	//fname = fname.replace('\\', '/');
@@ -117,7 +116,7 @@ public class JScanTask extends Task {
 	        if (res.getContents().size() == 0) {
 	        	throw new BuildException(fname + " doesn't have data");
 	        }
-	        roots[i] = (ObjectWithID) res.getContents().get(0);
+	        roots[i] = res.getContents().get(0);
         }
         
 /*		if (Messages.getErrorNumber() > 0
@@ -130,7 +129,7 @@ public class JScanTask extends Task {
 
         // merge loaded files (throw exceptions if they aren't compatible,
         // like different System name) 
-        ObjectWithID root = (ObjectWithID) VarTreeUtil.copy(roots[0]);
+        EObject root = VarTreeUtil.copy(roots[0]);
         { // store all in VarTree (to enable merge is required that a resource contains the "root" object)
 	        vt.setRoot(root);
         }

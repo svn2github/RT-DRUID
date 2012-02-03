@@ -27,7 +27,6 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import com.eu.evidence.rtdruid.desk.Messages;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.variables.BooleanMVar;
 import com.eu.evidence.rtdruid.vartree.variables.BooleanVar;
 import com.eu.evidence.rtdruid.vartree.variables.DoubleMVar;
@@ -249,7 +248,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 				throw new IllegalStateException("Try to add more than one system");
 			}
 			
-			EObject newRoot = DataFactory.eINSTANCE.createSystem();
+			EObject newRoot = VarTreeUtil.newVarTreeRoot();
 			VarTreeIdHandler.setId(newRoot, new String[] {nameId});
 			root.add(newRoot);
 			execFlushCommandStack();

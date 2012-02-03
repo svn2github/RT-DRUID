@@ -7,8 +7,7 @@ import java.net.URL;
 import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
-
-import com.eu.evidence.rtdruid.vartree.data.System;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * This class combines both {@link IRTDExporter} and {@link IRTDImporter} for
@@ -52,13 +51,13 @@ public class XsltImportExport implements IRTDImporter, IRTDExporter {
 		this.in_dtdFile = dtdFile;
 	}
 
-	public System load(InputStream input, Map<?, ?> options) throws IOException {
+	public EObject load(InputStream input, Map<?, ?> options) throws IOException {
 		XsltImporter in = new XsltImporter(in_xsltFile, in_dtdFile);
 		return in.load(input, options);
 	}
 
 	
-	public void export(OutputStream output, System data, Map<?, ?> options)
+	public void export(OutputStream output, EObject data, Map<?, ?> options)
 			throws IOException {
 		XsltExporter out = new XsltExporter(out_xsltFile);
 		out.export(output, data, options);

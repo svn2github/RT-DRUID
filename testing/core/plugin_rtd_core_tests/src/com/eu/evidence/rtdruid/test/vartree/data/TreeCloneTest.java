@@ -30,14 +30,13 @@ import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.io.XMI2XMLlTest;
 import com.eu.evidence.rtdruid.tests.vartree.data.FillVtUtil;
 import com.eu.evidence.rtdruid.vartree.IVariable;
+import com.eu.evidence.rtdruid.vartree.VarTreeIdHandler;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
-import com.eu.evidence.rtdruid.vartree.data.System;
 import com.eu.evidence.rtdruid.vartree.data.TaskSched;
 import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
 
@@ -56,7 +55,7 @@ public class TreeCloneTest {
 	@Test
 	public void testClone() throws Throwable {
 
-		ObjectWithID root = fill();
+		EObject root = fill();
 
 		EObject root2 = VarTreeUtil.copy(root);
 
@@ -70,11 +69,11 @@ public class TreeCloneTest {
 	 */
 	@Test
 	public void testClone2() throws Throwable {
-		ObjectWithID root1 = DataFactory.eINSTANCE.createSystem();
-		root1.setObjectID("a\\b/\\*c");
+		EObject root1 = VarTreeUtil.newVarTreeRoot();
+		VarTreeIdHandler.setId(root1, "a\\b/\\*c");
 		EObject root2 = VarTreeUtil.copy(root1);
-		ObjectWithID root3 = DataFactory.eINSTANCE.createSystem();
-		root3.setObjectID(root1.getObjectID());
+		EObject root3 = VarTreeUtil.newVarTreeRoot();
+		VarTreeIdHandler.setId(root3, VarTreeIdHandler.getId(root1));
 			
 		assertNotSame(root1 , root2);
 		assertNotSame(root1 , root3);
@@ -92,13 +91,13 @@ public class TreeCloneTest {
 	 */
 	@Test
 	public void testMerge() throws Throwable {
-		ObjectWithID root1 = fill();
-		ObjectWithID root2 = fill();
+		EObject root1 = fill();
+		EObject root2 = fill();
 		
 		// note: root1 and root2 contains the same values
 		compare(root1, root2);
 
-		doTestMerge(root1, root2, DataFactory.eINSTANCE.createSystem());
+		doTestMerge(root1, root2, VarTreeUtil.newVarTreeRoot());
 	}
 	
 	/**
@@ -110,11 +109,11 @@ public class TreeCloneTest {
 	public void testMergeDistinct() throws Throwable {
 
 		FillVtUtil f1 = fillFiller();
-		ObjectWithID root1 = (ObjectWithID) f1.getLastRoot();
-		ObjectWithID root2 = (ObjectWithID)fillFiller(f1.getNextID()+1).getLastRoot();
+		EObject root1 = f1.getLastRoot();
+		EObject root2 = fillFiller(f1.getNextID()+1).getLastRoot();
 		assertFalse(VarTreeUtil.compare(root1, root2).isOK());
 
-		ObjectWithID dest = DataFactory.eINSTANCE.createSystem();
+		EObject dest = VarTreeUtil.newVarTreeRoot();
 		doTestMerge(root1, root2, dest);
 	}
 
@@ -125,22 +124,22 @@ public class TreeCloneTest {
 	@Test
 	public void testMergeWithResource() throws Throwable {
 
-		ObjectWithID root1 = fill();
-		ObjectWithID root2 = fill();
+		EObject root1 = fill();
+		EObject root2 = fill();
 
 		IVTResource res = createResource();
-		ObjectWithID dest = DataFactory.eINSTANCE.createSystem();
+		EObject dest = VarTreeUtil.newVarTreeRoot();
 		res.getContents().add(dest);
 		
 		assertNotNull(dest.eResource());
 		doTestMerge(root1, root2, dest);
 	}
 	
-	private void doTestMerge(ObjectWithID root1, ObjectWithID root2, ObjectWithID dest) throws Throwable {
+	private void doTestMerge(EObject root1, EObject root2, EObject dest) throws Throwable {
 		// set the same system name for all trees!!!
-		root1.setObjectID("MySystem");
-		root2.setObjectID("MySystem");
-		dest.setObjectID("MySystem");
+		VarTreeIdHandler.setId(root1, "MySystem");
+		VarTreeIdHandler.setId(root2, "MySystem");
+		VarTreeIdHandler.setId(dest, "MySystem");
 
 		VarTreeUtil.merge(dest, root1);
 		
@@ -161,11 +160,11 @@ public class TreeCloneTest {
 		VarTreeUtil.merge(dest, root2);
 		assertNotSame(dest , root1);
 		assertNotSame(dest , root2);
-		checkTrees(dest, new ObjectWithID[] { root1, root1, root1, root2 }, true);
+		checkTrees(dest, new EObject[] { root1, root1, root1, root2 }, true);
 
 		ok = false;
 		try {
-			checkTrees(dest, new ObjectWithID[] { root1, root1, root1 }, true);
+			checkTrees(dest, new EObject[] { root1, root1, root1 }, true);
 
 		} catch (AssertionError e) {
 			//e.printStackTrace();
@@ -175,7 +174,7 @@ public class TreeCloneTest {
 
 		ok = false;
 		try {
-			checkTrees(dest, new ObjectWithID[] { root1, root1, root2 }, true);
+			checkTrees(dest, new EObject[] { root1, root1, root2 }, true);
 
 		} catch (AssertionError e) {
 			//e.printStackTrace();
@@ -185,7 +184,7 @@ public class TreeCloneTest {
 
 		ok = false;
 		try {
-			checkTrees(dest, new ObjectWithID[] { root1, root1, root1, root2 }, false);
+			checkTrees(dest, new EObject[] { root1, root1, root1, root2 }, false);
 
 		} catch (AssertionError e) {
 			//e.printStackTrace();
@@ -195,7 +194,7 @@ public class TreeCloneTest {
 
 		ok = false;
 		try {
-			checkTrees(dest, new ObjectWithID[] { root1, root1, root1 }, false);
+			checkTrees(dest, new EObject[] { root1, root1, root1 }, false);
 
 		} catch (AssertionError e) {
 			//e.printStackTrace();
@@ -228,8 +227,8 @@ public class TreeCloneTest {
 			"</SCHEDULABILITY>" +
 			"</SYSTEM>";
 		
-		ObjectWithID root1 = (ObjectWithID) Vt2StringUtilities.loadString(xmlInput1).getResourceSet().getResources().get(0).getContents().get(0);
-		ObjectWithID root2 = (ObjectWithID) Vt2StringUtilities.loadString(xmlInput2).getResourceSet().getResources().get(0).getContents().get(0);
+		EObject root1 = Vt2StringUtilities.loadString(xmlInput1).getResourceSet().getResources().get(0).getContents().get(0);
+		EObject root2 = Vt2StringUtilities.loadString(xmlInput2).getResourceSet().getResources().get(0).getContents().get(0);
 
 		compare(root1, root1);
 		compare(root2, root2);
@@ -251,53 +250,54 @@ public class TreeCloneTest {
 	
 	@Test
 	public void testMerge3() throws Throwable {
-		doTestMerge3(DataFactory.eINSTANCE.createSystem());
+		doTestMerge3(VarTreeUtil.newVarTreeRoot());
 	}
 	
 	@Test
 	public void testMerge3WithResource() throws Throwable {
 	
 		IVTResource res = createResource();
-		System root = DataFactory.eINSTANCE.createSystem();
+		EObject root = VarTreeUtil.newVarTreeRoot();
 		res.getContents().add(root);
 		
 		doTestMerge3(root);
 	}
 		
-	private void doTestMerge3(System root) throws Throwable {
-		root.setObjectID("id");
+	private void doTestMerge3(EObject eObjRoot) throws Throwable {
+		com.eu.evidence.rtdruid.vartree.data.System root = (com.eu.evidence.rtdruid.vartree.data.System) eObjRoot;
+		VarTreeIdHandler.setId(root, "id");
 		Schedulability sched = DataFactory.eINSTANCE.createSchedulability();
 		root.setSchedulability(sched);
 		SchedulingScenario sScen = DataFactory.eINSTANCE.createSchedulingScenario();
-		sScen.setObjectID("Abc");
+		VarTreeIdHandler.setId(sScen, "Abc");
 		sched.getSchedulingScenarioList().add(sScen);
 		{
 			TaskSched ts = DataFactory.eINSTANCE.createTaskSched();
-			ts.setObjectID("t1");
+			VarTreeIdHandler.setId(ts, "t1");
 			ts.setUtilization(new DoubleVar("0.1"));
 			assertTrue(sScen.getTaskSchedList().add(ts));
 		}
 		{
 			TaskSched ts = DataFactory.eINSTANCE.createTaskSched();
-			ts.setObjectID("t1");
+			VarTreeIdHandler.setId(ts, "t1");
 			ts.setUtilization(new DoubleVar("0.3"));
 			assertTrue(sScen.getTaskSchedList().add(ts)); // NB
 			assertFalse(sScen.getTaskSchedList().add(ts)); // NB
 
-			ts.setObjectID("t2");
+			VarTreeIdHandler.setId(ts, "t2");
 			assertFalse(sScen.getTaskSchedList().add(ts));
 
-			boolean ok = false;
-			try {
-				ts.setObjectID("t1");
-			} catch (RuntimeException e) {
-				ok = true;
-			}
-			assertTrue(ok);
+//			boolean ok = false;
+//			try {
+				VarTreeIdHandler.setId(ts, "t1");
+//			} catch (RuntimeException e) {
+//				ok = true;
+//			}
+//			assertTrue(ok);
 		}
 		
-		System root2 = DataFactory.eINSTANCE.createSystem();
-		root2.setObjectID("id");
+		EObject root2 = VarTreeUtil.newVarTreeRoot();
+		VarTreeIdHandler.setId(root2, "id");
 
 		VarTreeUtil.merge(root2, root);
 		compare(root2, root);
@@ -322,8 +322,8 @@ public class TreeCloneTest {
 			"</SCHEDULABILITY>" +
 			"</SYSTEM>";
 		
-		ObjectWithID root1 = (ObjectWithID) XMI2XMLlTest.loadStringRtd(xmlInput1).getContents().get(0);
-		ObjectWithID root2 = (ObjectWithID) XMI2XMLlTest.loadStringRtd(xmlInput2).getContents().get(0);
+		EObject root1 = XMI2XMLlTest.loadStringRtd(xmlInput1).getContents().get(0);
+		EObject root2 = XMI2XMLlTest.loadStringRtd(xmlInput2).getContents().get(0);
 		
 		assertTrue(VarTreeUtil.compare(root1, root1).isOK());
 
@@ -352,7 +352,7 @@ public class TreeCloneTest {
 	 * @throws Throwable 
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void checkTrees(ObjectWithID dest, ObjectWithID[] sources, boolean multiValue) throws Throwable {
+	private void checkTrees(EObject dest, EObject[] sources, boolean multiValue) throws Throwable {
 		if (sources.length == 0) {
 			return;
 		}
@@ -414,16 +414,16 @@ public class TreeCloneTest {
 			EReference ref1 = (EReference) children1.get(i);
 
 			if (ref1.isMany()) {
-				EList<ObjectWithID> el1 = (EList<ObjectWithID>) dest.eGet(ref1);
+				EList<EObject> el1 = (EList<EObject>) dest.eGet(ref1);
 
-				LinkedList<ObjectWithID>[] el2 = new LinkedList[sources.length];
+				LinkedList<EObject>[] el2 = new LinkedList[sources.length];
 				for (int h = 0; h < sources.length; h++) {
-					el2[h] = new LinkedList((EList<ObjectWithID>) sources[h].eGet(ref1));
+					el2[h] = new LinkedList((EList<EObject>) sources[h].eGet(ref1));
 				}
 
 				for (int j = 0; j < el1.size(); j++) {
-					ObjectWithID o1 = (ObjectWithID) el1.get(j);
-					ObjectWithID[] next = remove(o1, el2, multiValue);
+					EObject o1 = el1.get(j);
+					EObject[] next = remove(o1, el2, multiValue);
 
 //					if (next.length == 0) {
 //						int a=0;
@@ -443,11 +443,11 @@ public class TreeCloneTest {
 				}
 
 			} else {
-				ObjectWithID o1 = (ObjectWithID) dest.eGet(ref1);
+				EObject o1 = (EObject) dest.eGet(ref1);
 
-				ArrayList<ObjectWithID> next = new ArrayList<ObjectWithID>();
+				ArrayList<EObject> next = new ArrayList<EObject>();
 				for (int h = 0; h < sources.length; h++) {
-					ObjectWithID t = (ObjectWithID) sources[h].eGet(ref1);
+					EObject t = (EObject) sources[h].eGet(ref1);
 					if (t != null) {
 						next.add(t);
 					}
@@ -457,8 +457,8 @@ public class TreeCloneTest {
 				if (next.size() == 1) {
 					compare(o1, (EObject) next.get(0));
 				} else {
-					checkTrees(o1, (ObjectWithID[]) next
-							.toArray(new ObjectWithID[0]), multiValue);
+					checkTrees(o1, (EObject[]) next
+							.toArray(new EObject[0]), multiValue);
 				}
 
 			}
@@ -501,21 +501,21 @@ public class TreeCloneTest {
 	}
 
 	/**
-	 * Check that the given ObjectWithID appears at least in one parent list
+	 * Check that the given EObject appears at least in one parent list
 	 */
-	private ObjectWithID[] remove(ObjectWithID val, LinkedList<ObjectWithID>[] parents, boolean multiValues) {
-		ArrayList<ObjectWithID> answer = new ArrayList<ObjectWithID>();
+	private EObject[] remove(EObject val, LinkedList<EObject>[] parents, boolean multiValues) {
+		ArrayList<EObject> answer = new ArrayList<EObject>();
 
-		String curID = val.getObjectID();
+		String curID = VarTreeIdHandler.getId(val);
 
 		for (int i = 0; i < parents.length; i++) {
-			Iterator<ObjectWithID> iter = parents[i].iterator();
+			Iterator<EObject> iter = parents[i].iterator();
 
 			boolean go = false;
 			while (!go && iter.hasNext()) {
-				ObjectWithID v = (ObjectWithID) iter.next();
+				EObject v = iter.next();
 
-				String sourceID = v.getObjectID();
+				String sourceID = VarTreeIdHandler.getId(v);
 				if (curID == null ? sourceID == null : curID.equals(sourceID)) {
 
 					iter.remove();
@@ -528,15 +528,15 @@ public class TreeCloneTest {
 			}
 		}
 
-		return (ObjectWithID[]) answer.toArray(new ObjectWithID[0]);
+		return (EObject[]) answer.toArray(new EObject[0]);
 	}
 
 	/**
 	 * @return
 	 * @throws IOException 
 	 */
-	protected ObjectWithID fill() throws IOException {
-		return (ObjectWithID) fillFiller().getLastRoot();
+	protected EObject fill() throws IOException {
+		return (EObject) fillFiller().getLastRoot();
 	}
 	
 	protected FillVtUtil fillFiller() throws IOException {
@@ -546,7 +546,7 @@ public class TreeCloneTest {
 	protected FillVtUtil fillFiller(int startingValue) throws IOException {
 		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), DataPackage.eINSTANCE, createResource());
 		filler.setNextID(startingValue);
-		ObjectWithID root = DataFactory.eINSTANCE.createSystem();
+		EObject root = VarTreeUtil.newVarTreeRoot();
 		filler.fill(root);
 		return filler;
 	}

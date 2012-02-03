@@ -23,7 +23,6 @@ import com.eu.evidence.rtdruid.ant.common.Util;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 
 /**
  * @author Nicola Serreli
@@ -77,7 +76,7 @@ public class Convert extends Task {
         IVarTree vt = VarTreeUtil.newVarTree();
         
         // load files
-        ObjectWithID[] roots = new ObjectWithID[allFiles.size()];
+        EObject[] roots = new EObject[allFiles.size()];
         for (int i=0; i<allFiles.size(); i++) {
         	String fname = (String) allFiles.get(i);
         	myLog("Loading", fname);
@@ -90,7 +89,7 @@ public class Convert extends Task {
 	        if (res.getContents().size() == 0) {
 	        	throw new BuildException(fname + " doesn't have data");
 	        }
-	        roots[i] = (ObjectWithID) res.getContents().get(0);
+	        roots[i] = res.getContents().get(0);
         }
         
         

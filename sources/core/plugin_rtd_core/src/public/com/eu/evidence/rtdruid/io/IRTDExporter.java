@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * This interface is used to export data from internal data structure to another
  * kind of formalism.
@@ -43,7 +45,7 @@ public interface IRTDExporter {
 	 *             if there is any problem while reading the input stream.
 	 */
 	void export(OutputStream output,
-			com.eu.evidence.rtdruid.vartree.data.System data, Map<?, ?> options)
+			EObject data, Map<?, ?> options)
 			throws IOException;
 
 }

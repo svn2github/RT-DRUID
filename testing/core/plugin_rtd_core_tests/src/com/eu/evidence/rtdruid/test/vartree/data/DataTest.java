@@ -17,6 +17,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -26,8 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.vartree.data.provider.DataItemProviderAdapterFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.System;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 
 /**
@@ -71,7 +71,7 @@ public class DataTest {
 	 */ 
 	@Test
 	public void testObjectWithID() {
-		System root = DataFactory.eINSTANCE.createSystem();
+		EObject root = VarTreeUtil.newVarTreeRoot();
 		
 		checkObjectWithID(root, new ArrayList<Class<?>>());
 	}
@@ -103,8 +103,7 @@ public class DataTest {
 							.getEStructuralFeature());
 
 					// add new node
-					EObject newValue = DataFactory.eINSTANCE.create(cp
-							.getEValue().eClass());
+					EObject newValue = EcoreUtil.create(cp.getEValue().eClass());
 
 					newChildren.add(newValue);
 					checkObjectWithID(newValue, path);

@@ -13,8 +13,12 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import com.eu.evidence.rtdruid.internal.vartree.VarTree;
+import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 
-public abstract class VarTreeUtil {
+public final class VarTreeUtil {
+	
+	/** disable constructor */
+	private VarTreeUtil() {}
 
 	/**
 	 * The correct way to build a new VarTree
@@ -28,6 +32,13 @@ public abstract class VarTreeUtil {
 	 */
 	public static IVarTree newVarTree(CommandStack commandStack) {
 		return new VarTree(commandStack);
+	}
+	
+	/**
+	 * The correct way to build a new VarTree
+	 */
+	public static EObject newVarTreeRoot() {
+		return DataFactory.eINSTANCE.createSystem();
 	}
 
 	/**
