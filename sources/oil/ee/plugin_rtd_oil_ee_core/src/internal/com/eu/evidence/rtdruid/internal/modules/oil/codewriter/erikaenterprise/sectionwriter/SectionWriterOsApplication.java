@@ -147,7 +147,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		// ee_cfg.h
 		ee_h_buffer.append(
 				commentWriterH.writerBanner("OS APPLICATIONS definition") +
-				indent1 + "#define EE_MAX_APP " + applications.size() +"\n\n"); 				
+				indent1 + "#define EE_MAX_APP " + applications.size() +"U\n\n"); 				
 
 		// ee_cfg.c
 		ee_c_buffer.append(
@@ -159,8 +159,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				indent1 + "const EE_as_Application_ROM_type EE_as_Application_ROM[EE_MAX_APP] = {\n");
 		
 		StringBuffer application_ram = new StringBuffer(
-				indent1 + "EE_as_Application_RAM_type EE_as_Application_RAM[EE_MAX_APP+1] = {\n" +
-				indent2 + "EE_APP_RAM_INIT(0,0),\n");
+				indent1 + "EE_as_Application_RAM_type EE_as_Application_RAM[EE_MAX_APP+1U] = {\n" +
+				indent2 + "EE_APP_RAM_INIT(0,0U),\n");
 		
 				
 		String end = "";
@@ -184,7 +184,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					indent1 + "extern int _ebss_"+name+";\n");
 
 			application_rom.append(end +
-					indent2 + "{ &_load_data_"+name+", &_sdata_"+name+", &_sbss_"+name+", &_ebss_"+name+" }");
+					indent2 + "{{ &_load_data_"+name+", &_sdata_"+name+", &_sbss_"+name+", &_ebss_"+name+" }}");
 
 			application_ram.append(end +
 					indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)], "+
@@ -251,14 +251,14 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		final String path_task     = osApplBasePath+ "TASK";
 		
 
-		final String taskOsApplRefPath = S
-				+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
-				+ IOilXMLLabels.OBJ_TASK + parent.getOilHwRtosPrefix() + "APPLICATION"; 
-
-	
-	final String isrOsApplRefPath = S
-				+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
-				+ IOilXMLLabels.OBJ_ISR + parent.getOilHwRtosPrefix() + "APPLICATION";
+//		final String taskOsApplRefPath = S
+//				+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
+//				+ IOilXMLLabels.OBJ_TASK + parent.getOilHwRtosPrefix() + "APPLICATION"; 
+//
+//	
+//	final String isrOsApplRefPath = S
+//				+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
+//				+ IOilXMLLabels.OBJ_ISR + parent.getOilHwRtosPrefix() + "APPLICATION";
 	
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();	
