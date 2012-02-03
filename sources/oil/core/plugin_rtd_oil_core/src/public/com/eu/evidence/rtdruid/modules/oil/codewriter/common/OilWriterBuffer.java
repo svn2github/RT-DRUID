@@ -8,6 +8,7 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.common;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
@@ -122,7 +123,7 @@ public class OilWriterBuffer implements IOilWriterBuffer {
 	 */
 	public void append(String buffId, String buffer) {
 
-		get(buffId).append(buffer);
+		appendAndCheckImports(get(buffId), buffer);
 	}
 
 	/**
@@ -142,7 +143,7 @@ public class OilWriterBuffer implements IOilWriterBuffer {
 				String key = (String) iter.next();
 				// use this.get(String) to get the rigth StringBuffer (and create a
 				// new one if needed)
-				get(key).append((StringBuffer) buffer.buffers.get(key));
+				appendAndCheckImports(get(key), buffer.buffers.get(key).toString());
 			}
 			
 			
@@ -164,6 +165,68 @@ public class OilWriterBuffer implements IOilWriterBuffer {
 		}
 	}
 
+	/**
+	 * 
+	 */
+	protected void appendAndCheckImports(StringBuffer dest, String source) {
+		
+		LinkedHashSet<String> imports = new LinkedHashSet<String>();
+		
+		String first = searchImports(imports, dest.toString());
+		int count = imports.size();
+		String second = searchImports(imports, source);
+		if (imports.size() == count) {
+			dest.append(second);
+		} else {
+			
+			dest.setLength(0);
+			for (String im: imports) {
+				dest.append(im);
+			}
+			dest.append(first + second);
+		}
+		
+		
+	}
+	
+	/**
+	 * This method required a not null ArrayList of Strings. It fills this array
+	 * with all found imports and remove them from given string.
+	 */
+	protected String searchImports(Set<String> imports, String source) {
+		final String IMPORT_START = "#include ";
+		
+		StringBuffer buff = new StringBuffer();
+		for (int i=0; i<source.length(); ) {
+			
+			// get one line
+			String one_line = "";
+			int next_newline = source.indexOf("\n", i);
+			if (next_newline == -1) {
+				one_line = source.substring(i);
+				i = source.length();
+			} else {
+				if ((source.length()> (next_newline+1) ) && source.charAt(next_newline+1) == '\r') {
+					next_newline++;
+				}
+				one_line = source.substring(i, next_newline+1);
+				i = next_newline+1;
+			}
+			
+			if (one_line.trim().startsWith(IMPORT_START)) {
+				String new_line = one_line.trim() 
+						+ (one_line.endsWith("\n\r") ? "\n\r" 
+								: (one_line.endsWith("\r\n") ? "\r\n" 
+										: (one_line.endsWith("\n") ? "\n" : "")));
+				imports.add(new_line);
+			} else {
+				buff.append(one_line);
+			}
+			
+		}
+		return buff.toString();
+	}
+	
 	// ----------------------
 
 	/**
