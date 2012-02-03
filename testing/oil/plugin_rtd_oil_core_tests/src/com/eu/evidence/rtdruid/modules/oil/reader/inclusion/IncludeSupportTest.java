@@ -1,7 +1,8 @@
 package com.eu.evidence.rtdruid.modules.oil.reader.inclusion;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -68,7 +69,11 @@ public class IncludeSupportTest {
 	private String getLibPath() throws IOException {
 		return getFile(BASE_PATH+"/lib1");
 	}
-	
+
+	private String trim(String txt) throws IOException {
+		return txt.replace("\r", "").trim();
+	}
+
 
 	@Test
 	public void testIncludeSupport() throws IOException {
@@ -76,10 +81,10 @@ public class IncludeSupportTest {
 		IncludeSupport incSup = new IncludeSupport(".");
 		incSup.addLibPath(getLibPath());
 
-		String out = incSup.compose(getMainPath(), false);
+		String out = trim(incSup.compose(getMainPath(), false));
 		
 		String result = loadFile(getFile(BASE_PATH+"/result.txt"));
-		assertTrue(result.equals(out));
+		assertEquals(result, out);
 	}
 
 	
@@ -89,11 +94,11 @@ public class IncludeSupportTest {
 		IncludeSupport incSup = new IncludeSupport(".");
 		incSup.addLibPath(getLibPath());
 
-		String out = incSup.compose(getFile(BASE_PATH+"/multi_dir_main.txt"), false);
-		System.out.println(">>>\n"+out+"<<<");
+		String out = trim(incSup.compose(getFile(BASE_PATH+"/multi_dir_main.txt"), false));
+//		System.out.println(">>>\n"+out+"<<<");
 		
 		String result = loadFile(getFile(BASE_PATH+"/multi_dir_result.txt"));
-		assertTrue(result.equals(out));
+		assertEquals(result, out);
 	}
 
 	@Test
@@ -102,11 +107,11 @@ public class IncludeSupportTest {
 		IncludeSupport incSup = new IncludeSupport(".");
 		incSup.addLibPath(getLibPath());
 
-		String out = incSup.compose(getFile(BASE_PATH+"/incl_dir_1/first_dir_child.txt"), false);
-		System.out.println(">>>\n"+out+"<<<");
+		String out = trim(incSup.compose(getFile(BASE_PATH+"/incl_dir_1/first_dir_child.txt"), false));
+//		System.out.println(">>>\n"+out+"<<<");
 		
 		String result = loadFile(getFile(BASE_PATH+"/multi_dir_firstChild_result.txt"));
-		assertTrue(result.equals(out));
+		assertEquals(result, out);
 	}
 
 	
@@ -117,11 +122,11 @@ public class IncludeSupportTest {
 		incSup.addLibPath(getLibPath());
 		String filename = BASE_PATH+"/multi_dir_main.txt";
 
-		String out = incSup.compose(getStream(filename), getFile(filename), getDir(filename));
-		System.out.println(">>>\n"+out+"<<<");
+		String out = trim(incSup.compose(getStream(filename), getFile(filename), getDir(filename)));
+//		System.out.println(">>>\n"+out+"<<<");
 		
 		String result = loadFile(getFile(BASE_PATH+"/multi_dir_result.txt"));
-		assertTrue(result.equals(out));
+		assertEquals(result, out);
 	}
 
 	@Test
@@ -131,11 +136,11 @@ public class IncludeSupportTest {
 		incSup.addLibPath(getLibPath());
 		String filename = BASE_PATH+"/incl_dir_1/first_dir_child.txt";
 
-		String out = incSup.compose(getStream(filename), getFile(filename), getDir(filename));
-		System.out.println(">>>\n"+out+"<<<");
+		String out = trim(incSup.compose(getStream(filename), getFile(filename), getDir(filename)));
+//		System.out.println(">>>\n"+out+"<<<");
 		
 		String result = loadFile(getFile(BASE_PATH+"/multi_dir_firstChild_result.txt"));
-		assertTrue(result.equals(out));
+		assertEquals(result, out);
 	}
 
 	@Test(expected=IOException.class)
@@ -156,7 +161,7 @@ public class IncludeSupportTest {
 		incSup.addLibPath(getLibPath());
 		String filename = BASE_PATH+"/seed/pic32/conf.oil";
 
-		String out = incSup.compose(getStream(filename), getFile(filename), getDir(filename));
+		String out = trim(incSup.compose(getStream(filename), getFile(filename), getDir(filename)));
 //		File f= new File("e:/pippo.oil");
 //		try {
 //			FileWriter fw = new FileWriter(f);
@@ -167,10 +172,10 @@ public class IncludeSupportTest {
 //			e.printStackTrace();
 //			fail(e.getMessage());
 //		}
-		System.out.println(">>>\n"+out+"<<<");
+//		System.out.println(">>>\n"+out+"<<<");
 		
 		String result = loadFile(getFile(BASE_PATH+"/seed/pic32/result.oil"));
-		assertTrue(result.equals(out));
+		assertEquals(result, out);
 	}
 	
 	
@@ -183,26 +188,28 @@ public class IncludeSupportTest {
 		String filename = filepath + "/conf.oil";
 
 		
-		File f = new File("."); // current working directory
-		System.out.println(f.getAbsolutePath());
+//		File f = new File("."); // current working directory
+//		System.out.println(f.getAbsolutePath());
 		
 		File inputf = new File(filename);
 
 		
-		String out = incSup.compose(new FileInputStream(inputf), filename, filepath);
-		System.out.println(">>>\n"+out+"<<<");
+		String out = trim(incSup.compose(new FileInputStream(inputf), filename, filepath));
+//		System.out.println(">>>\n"+out+"<<<");
 		
 		String result = loadFile(getFile(BASE_PATH+"/seed/pic32/result.oil"));
-		assertTrue(result.equals(out));
+		assertEquals(result, out);
 	}
 	
 	
 	@Test
 	public void testSeed_generation() throws IOException, OilWorkerException {
-		String filename = BASE_PATH+"/seed/pic32/conf.oil";
-		
+		String filename = getFile( BASE_PATH+"/seed/pic32/conf.oil");
+
+		assertTrue((new File(filename).exists()));
+
 		WorkerOilConfWriter writer = new WorkerOilConfWriter(new StdOutLogger());
-		writer.setInputfile(getFile(filename));
+		writer.setInputfile(filename);
 		writer.setOutputdir("e:/seed_test");
 		
 		writer.execute();
@@ -210,9 +217,16 @@ public class IncludeSupportTest {
 	
 	@Test
 	public void testSeed_relative_paths_generation() throws OilWorkerException {
+
+		File f = new File("."); // current working directory
+		System.out.println(f.getAbsolutePath());
 		
 		// this test have to be run setting the correct "current working directory"
-		String filename = "pic32/conf.oil";
+		String filename = "src" + BASE_PATH + 
+				"/seed/pic32/conf.oil";
+		
+		assertTrue(filename, (new File(filename).exists()));
+		
 		
 		WorkerOilConfWriter writer = new WorkerOilConfWriter(new StdOutLogger());
 		writer.setInputfile(filename);
@@ -233,6 +247,6 @@ public class IncludeSupportTest {
 			buffer.append((char) a);
 		}
 
-		return buffer.toString();
+		return trim(buffer.toString());
 	}
 }
