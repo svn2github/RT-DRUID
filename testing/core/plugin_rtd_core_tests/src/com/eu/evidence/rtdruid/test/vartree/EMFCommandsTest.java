@@ -13,6 +13,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CopyToClipboardCommand;
 
 import com.eu.evidence.rtdruid.desk.RTDFactory;
@@ -91,6 +93,18 @@ public class EMFCommandsTest extends TestCase {
 			
 			assertTrue(task.getSchedulingList().contains(scheds[i]));
 			assertTrue(((Task) result).getSchedulingList().contains(scheds[i]));
+			
+			EList<Scheduling> list = ((Task) result).getSchedulingList(); 
+			for (Scheduling s: list) {
+				int match = 0;
+				for (int check_id=0; check_id<scheds.length; check_id++) {
+					if (EcoreUtil.equals(s, scheds[check_id])) {
+						match++;
+					}
+				}
+				assertTrue(match == 1);
+			}
+
 		}
 		
 	}

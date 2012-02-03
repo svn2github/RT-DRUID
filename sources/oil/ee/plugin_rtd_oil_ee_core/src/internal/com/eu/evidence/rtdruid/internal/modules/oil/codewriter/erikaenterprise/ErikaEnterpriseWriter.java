@@ -1474,7 +1474,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 					
 					if (ISimpleGenResKeywords.ALARM_ACTIVATE_TASK.equals(type)) {
 						taskName = curr.getString(ISimpleGenResKeywords.ALARM_ACTIVATE_TASK);
-					} else if (ISimpleGenResKeywords.ALARM_ACTIVATE_TASK.equals(type)) {
+					} else if (ISimpleGenResKeywords.ALARM_SET_EVENT.equals(type)) {
 						taskName = ((String[]) curr.getObject(ISimpleGenResKeywords.ALARM_SET_EVENT))[0];
 					} else {
 						taskName = null;

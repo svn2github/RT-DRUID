@@ -122,7 +122,7 @@ public final class DataPath {
 			return new String[] { null };
 		}
 		
-		risp = splitPath(values);
+		risp = values.split(" " + SEPARATOR + " ");//splitPath(values);
 		
 		// remove white spaces
 //		if (risp.length >1) {
@@ -130,9 +130,10 @@ public final class DataPath {
 /*				if ((risp[i].trim()).equals(NULL_ID)) {
 					risp[i] = null;
 				} else {
-*/					int start = (i ==0 ? 0 : 1);
-					int end = risp[i].length() - (i == (risp.length -1) ? 0 : 1);
-					risp[i] = removeSlash(risp[i].substring(start, end)); // NB: removeSlash(NULL_ID) = null
+*///					int start = (i ==0 ? 0 : 1);
+//					int end = risp[i].length() - (i == (risp.length -1) ? 0 : 1);
+//					risp[i] = removeSlash(risp[i].substring(start, end)); // NB: removeSlash(NULL_ID) = null
+					risp[i] = removeSlash(risp[i]); // NB: removeSlash(NULL_ID) = null
 //				}
 			}  
 /*		} else {
