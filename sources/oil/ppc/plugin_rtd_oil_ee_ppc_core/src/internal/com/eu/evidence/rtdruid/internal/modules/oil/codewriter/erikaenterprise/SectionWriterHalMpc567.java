@@ -669,7 +669,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				
 				// USED BY ORTI
 				stackTmp.add(new EEStackData(0, new long[] {512}, new long[] {0},
-						new String[] {" (int)&_stack0 - 504 "}, true));
+						new String[] {" (int)&EE_e200zx_sys_stack "}, true));
 				
 
 //				 DECLARE STACK SIZE && STACK (ARRAY)
