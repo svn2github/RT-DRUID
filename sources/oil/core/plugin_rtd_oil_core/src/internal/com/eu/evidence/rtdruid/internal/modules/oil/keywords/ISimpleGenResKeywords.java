@@ -140,6 +140,8 @@ public interface ISimpleGenResKeywords {
 	 * Event
 	 **************************************************************************/
 	public final static String EVENT_MASK = "event_mask";
+	public final static String EVENT_CPU_BITSET = "event_cpu_id_bitset";
+	
 	
 	/***************************************************************************
 	 * Network message

@@ -6,6 +6,7 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
@@ -434,6 +435,9 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 		boolean rn_sem = false;
 		
 		BitSet rn_set = new BitSet(5);
+
+		
+		setEventMask(oilObjects);
 		
 		for (int rtosId = 0; rtosId < oilObjects.length; rtosId++) {
 
@@ -445,11 +449,28 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 			
 			// ------------------ RN COUNTER ------------------
 			int rn_counter_number = 0;
+			
 			os.setObject(DEF__RN_COUNTER__, new Integer(rn_counter_number));
 
 			// ------------------ RN EVENT ------------------
 			int rn_event_number = 0;
-			os.setObject(DEF__RN_EVENT__, new Integer(rn_event_number));
+			{
+				List<ISimpleGenRes> eventList = ool.getList(IOilObjectList.EVENT);
+				for (Iterator<ISimpleGenRes> iter = eventList.iterator(); iter.hasNext();) {
+					ISimpleGenRes curr = (ISimpleGenRes) iter.next();
+					
+					if (curr.containsProperty(ISimpleGenResKeywords.EVENT_CPU_BITSET)) {
+						if (((BitSet) curr.getObject(ISimpleGenResKeywords.EVENT_CPU_BITSET)).cardinality() > 1) {
+							rn_event_number ++;
+						}
+					}
+				}
+	
+				os.setObject(DEF__RN_EVENT__, new Integer(rn_event_number));
+				if (rn_event_number>0) {
+					rn_event = true;
+				}
+			}
 
 			// ------------------ RN TASK ------------------
 			int rn_task_number = 0;
@@ -518,4 +539,232 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 		return answer;
 	}
 
+	
+	/**
+	 * Sets a valid mask for each event.
+	 * 
+	 * NOTE: this method is enabled does not take care of remote events. 
+	 *       Moreover, this method set masks only for those events that does not have it. 
+	 * 
+	 * @throws OilCodeWriterException
+	 *             if there're too many events
+	 */
+	protected void setEventMask(IOilObjectList[] oilObjects) throws OilCodeWriterException {
+		
+		/*
+		 * Get OS/HAS_REMOTE_NOTIFICATION 
+		 */
+		final boolean useAlwaysRemoteEvent;
+		{
+			final String str_ALWAYS = "ALWAYS";
+			final String str_IFREQUIRED = "IFREQUIRED";
+			
+			
+			String[] values = parent.getRtosCommonChildType("USEREMOTEEVENT");
+			if (values.length == 0 ) {
+				useAlwaysRemoteEvent = false; // TODO: default value
+				
+			} else if (values.length >1) {
+				throw new OilCodeWriterException("OS/USEREMOTEEVENT is setted with different values");
+				
+			} else if (str_ALWAYS.equals(values[0])) {
+				useAlwaysRemoteEvent = true;
+				
+			} else if (str_IFREQUIRED.equals(values[0])) {
+				useAlwaysRemoteEvent = false;
+				
+			} else {
+
+					throw new OilCodeWriterException("Only " + str_ALWAYS + " and " 
+							+ str_IFREQUIRED + " are valid values for OS/USEREMOTEEVENT.\n"
+							+"\tFound "+values[0]);
+			}
+		}
+
+		
+		
+		/*
+		 * For each event, check where they are required
+		 */
+		HashMap<String, BitSet> event_to_cpu_map = new HashMap<String, BitSet>();
+		if (!useAlwaysRemoteEvent) {
+			for (int rtosId = 0; rtosId < oilObjects.length; rtosId++) {
+				
+				List<ISimpleGenRes> taskList = oilObjects[rtosId].getList(IOilObjectList.TASK);
+				for (ISimpleGenRes task: taskList) {
+					if (task.containsProperty(ISimpleGenResKeywords.TASK_EVENT_LIST)) {
+						List<String> events = (List<String>) task.getObject(ISimpleGenResKeywords.TASK_EVENT_LIST);
+						
+						for (String event: events){
+							BitSet bs;
+							if (event_to_cpu_map.containsKey(event)) {
+								bs = event_to_cpu_map.get(event);
+							} else {
+								bs = new BitSet();
+								event_to_cpu_map.put(event, bs);
+							}
+							bs.set(rtosId);
+						}
+					}
+				}
+			
+				List<ISimpleGenRes> alarmList = oilObjects[rtosId].getList(IOilObjectList.ALARM);
+				for (ISimpleGenRes alarm: alarmList) {
+					if (alarm.containsProperty(ISimpleGenResKeywords.ALARM_SET_EVENT)) {
+						// {taskName, eventName}
+						String[] task_event = (String[]) alarm.getObject(ISimpleGenResKeywords.ALARM_SET_EVENT);
+						{
+							String event = task_event[1];
+							BitSet bs;
+							if (event_to_cpu_map.containsKey(event)) {
+								bs = event_to_cpu_map.get(event);
+							} else {
+								bs = new BitSet();
+								event_to_cpu_map.put(event, bs);
+							}
+							bs.set(rtosId);
+						}
+					}
+				}
+				
+			}
+		}
+		
+		
+		/*
+		 * For each cpu, store all used mask
+		 */
+		BitSet[] bits = new BitSet[oilObjects.length];
+		for (int i=0; i<bits.length; i++) {
+			bits[i] = new BitSet();
+		}
+		/*
+		 * And for each event, store the used mask
+		 */
+		HashMap<String, BitSet> event_mask_map = new HashMap<String, BitSet>();
+		for (int rtosId = 0; rtosId < oilObjects.length; rtosId++) {
+			List<ISimpleGenRes> eventList = oilObjects[rtosId].getList(IOilObjectList.EVENT);
+			for (Iterator<ISimpleGenRes> iter = eventList.iterator(); iter.hasNext();) {
+
+				ISimpleGenRes curr = (ISimpleGenRes) iter.next();
+				if (curr.containsProperty(ISimpleGenResKeywords.EVENT_MASK)) {
+					final String ev_name = curr.getName();
+					long value = curr.getLong(ISimpleGenResKeywords.EVENT_MASK);
+					
+					long tmp = 1;
+					int tti=0;
+					for (; tti<65; tti++) {
+						if (tmp == value) {
+							break;
+						}
+						tmp = tmp << 1;
+					}
+					if (tmp != value) {
+						throw new OilCodeWriterException("Not Valid mask for " + ev_name);
+					}
+					
+					
+					if (event_mask_map.containsKey(ev_name)) {
+						if (!event_mask_map.get(ev_name).get(tti)) {
+							throw new OilCodeWriterException("Found two different masks for the same event " + curr.getName());
+						}
+					} else {
+						BitSet bs = new BitSet();
+						bs.set(tti);
+						event_mask_map.put(ev_name, bs);
+					}
+					
+					if (useAlwaysRemoteEvent) {
+						for (int i=0; i<oilObjects.length; i++) {
+							bits[i].set(tti);
+						}
+					} else {
+						if (event_to_cpu_map.containsKey(ev_name)) {
+							BitSet cpuIds = event_to_cpu_map.get(ev_name);
+							for (int i=0; i<oilObjects.length; i++) {
+								if (cpuIds.get(i)) {
+									bits[i].set(tti);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+
+		BitSet all_true = new BitSet();
+		all_true.set(0, oilObjects.length, true);
+		
+		/*
+		 * Set mask
+		 */
+		for (int rtosId = 0; rtosId < oilObjects.length; rtosId++) {
+			List<ISimpleGenRes> eventList = oilObjects[rtosId].getList(IOilObjectList.EVENT);
+			for (Iterator<ISimpleGenRes> iter = eventList.iterator(); iter.hasNext();) {
+
+				ISimpleGenRes curr = (ISimpleGenRes) iter.next();
+				final String ev_name = curr.getName();
+				
+				if (useAlwaysRemoteEvent || event_to_cpu_map.containsKey(ev_name)) {
+					BitSet cpuIds = useAlwaysRemoteEvent ? all_true : event_to_cpu_map.get(ev_name);
+					
+					int mask;
+					if (event_mask_map.containsKey(ev_name)) {
+						mask = event_mask_map.get(ev_name).nextSetBit(0);
+					} else {
+						mask = getValidMask(cpuIds, bits);
+						{
+							BitSet bs = new BitSet();
+							bs.set(mask);
+							event_mask_map.put(ev_name, bs);
+						}
+					}
+					
+					curr.setProperty(ISimpleGenResKeywords.EVENT_MASK, "" + (1<<mask));
+					curr.setObject(ISimpleGenResKeywords.EVENT_CPU_BITSET, cpuIds);
+				} else {
+					curr.setProperty(ISimpleGenResKeywords.EVENT_MASK, "" + (0));
+					curr.setObject(ISimpleGenResKeywords.EVENT_CPU_BITSET, new BitSet());
+				}
+				
+			}
+
+		}
+
+	}
+	
+	
+	protected int getValidMask(BitSet cpuIds, BitSet[] usedMasks) throws OilCodeWriterException {
+		int answer = 0;
+		boolean searching = true;
+		
+		for (; searching && answer <65; ) {
+			
+			boolean valid_mask = true;
+			
+			for (int i=0; i<usedMasks.length && valid_mask; i++) {
+				if (cpuIds.get(i) && usedMasks[i].get(answer)) {
+					valid_mask = false;
+				}
+			}
+			searching = !valid_mask;
+			if (searching) {
+				answer++;
+			}
+		}
+		
+		if (answer == 65) {
+			throw new OilCodeWriterException("Not able to automatically set the mask to all events!!");
+		}
+		
+		for (int i=0; i<usedMasks.length; i++) {
+			if (cpuIds.get(i)) {
+				usedMasks[i].set(answer);
+			}
+		}
+
+		
+		return answer;
+	}
 }

@@ -34,7 +34,8 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
  * 
  * @author Nicola Serreli
  */
-public class SectionWriterCommonKernelDefs extends SectionWriter implements IEEWriterKeywords, IEEoptConstant {
+public class SectionWriterCommonKernelDefs extends SectionWriter 
+		implements IEEWriterKeywords, IEEoptConstant {
 	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -107,10 +108,10 @@ public class SectionWriterCommonKernelDefs extends SectionWriter implements IEEW
 		final String indent = IWritersKeywords.INDENT;
 		final int rtosNumber = oilObjects.length;
 		IOilWriterBuffer[] answer = new IOilWriterBuffer[oilObjects.length];
-		
-		// prepare all task's ids
-		setEventMask(oilObjects);
-		// computeAutoStart(); called inside INIT()
+
+		// set all "unset" masks
+		setEventMask(oilObjects);	
+
 		// check if this a binary distribution
 		final boolean binaryDistr = parent.checkKeyword(IDistributionConstant.DEF__EE_USE_BINARY_DISTRIBUTION__);
 		final boolean binaryDistrFull = binaryDistr && parent.checkKeyword(IDistributionConstant.DEF__EE_USE_BINARY_DISTRIBUTION_FULL__); 
@@ -251,17 +252,27 @@ public class SectionWriterCommonKernelDefs extends SectionWriter implements IEEW
 				 */
 
 				List<ISimpleGenRes> eventList = ool.getList(IOilObjectList.EVENT);
-
-				if (eventList.size() > 0) {
-					buffer.append("\n" + indent + commentWriterH.writerSingleLineComment("EVENT definition")); // \n");
-
-					for (Iterator<ISimpleGenRes> iter = eventList.iterator(); iter.hasNext();) {
-						ISimpleGenRes curr = (ISimpleGenRes) iter.next();
+				StringBuffer tmp_event = new StringBuffer();
+				for (Iterator<ISimpleGenRes> iter = eventList.iterator(); iter.hasNext();) {
+					ISimpleGenRes curr = (ISimpleGenRes) iter.next();
+					
+					boolean add = true;
+					if (curr.containsProperty(ISimpleGenResKeywords.EVENT_CPU_BITSET)) {
+						add = ((BitSet) curr.getObject(ISimpleGenResKeywords.EVENT_CPU_BITSET)).get(rtosId);
+					}
+					
+					if (add) {
 						String mask = (Long.toHexString(curr
 								.getLong(ISimpleGenResKeywords.EVENT_MASK)));
-						buffer.append(indent + "#define " + curr.getName()
+						tmp_event.append(indent + "#define " + curr.getName()
 								+ " 0x" + mask.toUpperCase() + "U\n");
 					}
+				}
+
+				if (tmp_event.length() > 0) {
+					buffer.append("\n"+ 
+							indent + commentWriterH.writerSingleLineComment("EVENT definition") +
+							tmp_event); // \n");
 				}
 			}
 
@@ -462,23 +473,23 @@ public class SectionWriterCommonKernelDefs extends SectionWriter implements IEEW
 		return answer;
 	}
 	
-
-
+	
 	/**
 	 * Sets a valid mask for each event.
 	 * 
+	 * NOTE: this method is enabled does not take care of remote events. 
+	 *       Moreover, this method set masks only for those events that does not have it. 
+	 * 
 	 * @throws OilCodeWriterException
 	 *             if there're too many events
-	 * 
-	 * @deprecated da migliorare pesantemente
 	 */
 	protected void setEventMask(IOilObjectList[] oilObjects) throws OilCodeWriterException {
 		
-		BitSet usedMasks = new BitSet();
-		boolean unsettedMask = false;
-		
 		// check used events
 		for (int i = 0; i < oilObjects.length; i++) {
+			boolean unsettedMask = false;
+			BitSet usedMasks = new BitSet();
+			
 			List<ISimpleGenRes> eventList = oilObjects[i].getList(IOilObjectList.EVENT);
 			for (Iterator<ISimpleGenRes> iter = eventList.iterator(); iter.hasNext();) {
 
@@ -503,22 +514,16 @@ public class SectionWriterCommonKernelDefs extends SectionWriter implements IEEW
 					unsettedMask = true;
 				}
 			}
-		}
-		
-		
-		if (!unsettedMask) { //all masks are setted
-			return;
-		}
-		
-		// set all mask = auto
-		int maskPos = 0;
-		for (int i = 0; i < oilObjects.length; i++) {
-			List<ISimpleGenRes> eventList = oilObjects[i].getList(IOilObjectList.EVENT);
+			
+			if (!unsettedMask) { //all masks are setted
+				return;
+			}
+			
+			// set all mask = auto
+			int maskPos = 0;
 			for (Iterator<ISimpleGenRes> iter = eventList.iterator(); iter.hasNext();) {
 
 				ISimpleGenRes curr = (ISimpleGenRes) iter.next();
-
-				// stop ?
 				if (!curr.containsProperty(ISimpleGenResKeywords.EVENT_MASK)) {
 					// search an unused mask
 					while (usedMasks.get(maskPos) && maskPos<65) {
@@ -533,7 +538,7 @@ public class SectionWriterCommonKernelDefs extends SectionWriter implements IEEW
 					maskPos++;
 				}
 			}
-		}
+		}		
 	}
 
 }
