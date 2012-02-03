@@ -8,6 +8,7 @@ package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -243,11 +244,11 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		final String path_mem_shared = osApplBasePath+ "SHARED_STACK_SIZE";
 		final String path_mem_irq = osApplBasePath+ "IRQ_STACK_SIZE";
 		
-		final String path_alarm    = osApplBasePath+ "OS_APP_ALARM_REF";
-		final String path_counter  = osApplBasePath+ "OS_APP_COUNTER_REF";
-		final String path_isr      = osApplBasePath+ "OS_APP_ISR_REF";
-		final String path_resource = osApplBasePath+ "OS_APP_RESOURCE_REF";
-		final String path_task     = osApplBasePath+ "OS_APP_TASK_REF";
+		final String path_alarm    = osApplBasePath+ "ALARM";
+		final String path_counter  = osApplBasePath+ "COUNTER";
+		final String path_isr      = osApplBasePath+ "ISR";
+		final String path_resource = osApplBasePath+ "RESOURCE";
+		final String path_task     = osApplBasePath+ "TASK";
 		
 
 		final String taskOsApplRefPath = S
@@ -336,7 +337,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						if (!map_alarm.containsKey(val)) {
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the alarm " + val);
 						}
-						if (add_appl_ref(map_alarm.get(val), ISimpleGenResKeywords.ALARM_OS_APPLICATION_NAME, appl_name)) {
+						if (add_appl_ref(map_alarm.get(val), ISimpleGenResKeywords.ALARM_OS_APPLICATION_NAME, appl_name, id)) {
 							alarms.add(val);
 						}
 					}
@@ -349,7 +350,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						if (!map_counter.containsKey(val)) {
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the counter " + val);
 						}
-						if (add_appl_ref(map_counter.get(val), ISimpleGenResKeywords.COUNTER_OS_APPLICATION_NAME, appl_name)) {
+						if (add_appl_ref(map_counter.get(val), ISimpleGenResKeywords.COUNTER_OS_APPLICATION_NAME, appl_name, id)) {
 							counter.add(val);
 						}
 					}
@@ -362,7 +363,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						if (!map_isr.containsKey(val)) {
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the isr " + val);
 						}
-						if (add_appl_ref(map_isr.get(val), ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME, appl_name)) {
+						if (add_appl_ref(map_isr.get(val), ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME, appl_name, id)) {
 							isr.add(val);
 						}
 					}
@@ -375,7 +376,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						if (!map_resource.containsKey(val)) {
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the resource " + val);
 						}
-						if (add_appl_ref(map_resource.get(val), ISimpleGenResKeywords.RESOURCE_OS_APPLICATION_NAME, appl_name)) {
+						if (add_appl_ref(map_resource.get(val), ISimpleGenResKeywords.RESOURCE_OS_APPLICATION_NAME, appl_name, id)) {
 							resource.add(val);
 						}
 					}
@@ -389,10 +390,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the task " + val);
 						}
 						ISimpleGenRes sgr_task = map_task.get(val);
-						if (add_appl_ref(sgr_task, ISimpleGenResKeywords.TASK_OS_APPLICATION_NAME, appl_name)) {
+						if (add_appl_ref(sgr_task, ISimpleGenResKeywords.TASK_OS_APPLICATION_NAME, appl_name, id)) {
 							task.add(val);
-							
-							sgr_task.setProperty(ISimpleGenResKeywords.OS_APPL_ID, "" +id);
 						}
 					}
 					appl.setObject(ISimpleGenResKeywords.OS_APPL_LIST_REF_TASK, task);
@@ -404,41 +403,127 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			
 			
 			
-			/**** OLD CODE ***/
+//			/**** OLD CODE ***/
+//			
+//			// tasks
+//			List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.TASK);
+//			for (ISimpleGenRes task : tasks) {
+//			
+//				String[] os_appl_ref = CommonUtils.getValue(vt, task.getPath() + taskOsApplRefPath);
+//				if (os_appl_ref != null && os_appl_ref.length>0 && os_appl_ref[0] != null && os_appl_ref[0].length()>0) {
+//					add_appl_ref(task, ISimpleGenResKeywords.TASK_OS_APPLICATION_NAME, os_appl_ref[0]);
+//				}
+//				
+//			}
+//
+//			// isr
+//			List<ISimpleGenRes> isrs = ool.getList(IOilObjectList.ISR);
+//			int isr_id = 0;
+//			for (ISimpleGenRes isr : isrs) {
+//			
+//				String[] os_appl_ref = CommonUtils.getValue(vt, isr.getPath() + isrOsApplRefPath);
+//				if (os_appl_ref != null && os_appl_ref.length>0 && os_appl_ref[0] != null && os_appl_ref[0].length()>0) {
+//					add_appl_ref(isr, ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME, os_appl_ref[0]);
+//				}
+//
+//				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_ID)) {
+//					isr.setProperty(ISimpleGenResKeywords.ISR_ID, ""+isr_id);
+//					isr_id ++;
+//				}
+//
+//			}
+//
 			
-			// tasks
-			List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.TASK);
-			for (ISimpleGenRes task : tasks) {
-			
-				String[] os_appl_ref = CommonUtils.getValue(vt, task.getPath() + taskOsApplRefPath);
-				if (os_appl_ref != null && os_appl_ref.length>0 && os_appl_ref[0] != null && os_appl_ref[0].length()>0) {
-					add_appl_ref(task, ISimpleGenResKeywords.TASK_OS_APPLICATION_NAME, os_appl_ref[0]);
+			if (applications.size() >0) {
+				
+				// check 
+				List<String> not_map_alarm = new LinkedList<String>();
+				List<String> not_map_counter = new LinkedList<String>();
+				List<String> not_map_isr = new LinkedList<String>();
+				List<String> not_map_resource = new LinkedList<String>();
+				List<String> not_map_task = new LinkedList<String>();
+
+				List<ISimpleGenRes> alarms = ool.getList(IOilObjectList.ALARM);
+				for (ISimpleGenRes alarm : alarms) {
+					if (!alarm.containsProperty(ISimpleGenResKeywords.OS_APPL_ID)) {
+						not_map_alarm.add(alarm.getName());
+					}
+				}
+				List<ISimpleGenRes> counters = ool.getList(IOilObjectList.COUNTER);
+				for (ISimpleGenRes counter : counters) {
+					if (!counter.containsProperty(ISimpleGenResKeywords.OS_APPL_ID)) {
+						not_map_counter.add(counter.getName());
+					}
+				}
+				List<ISimpleGenRes> isrs = ool.getList(IOilObjectList.ISR);
+				for (ISimpleGenRes isr : isrs) {
+					if (!isr.containsProperty(ISimpleGenResKeywords.OS_APPL_ID)) {
+						not_map_isr.add(isr.getName());
+					}
+				}
+				List<ISimpleGenRes> resources = ool.getList(IOilObjectList.RESOURCE);
+				for (ISimpleGenRes resource : resources) {
+					if (!resource.containsProperty(ISimpleGenResKeywords.OS_APPL_ID)) {
+						not_map_resource.add(resource.getName());
+					}
+				}
+
+				List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.TASK);
+				for (ISimpleGenRes task : tasks) {
+					if (!task.containsProperty(ISimpleGenResKeywords.OS_APPL_ID)) {
+						not_map_task.add(task.getName());
+					}
 				}
 				
+				StringBuffer buff = new StringBuffer();
+				if (not_map_alarm.size()>0) {
+					buff.append("Alarm not mapped to any OsApplication:");
+					for (String s: not_map_alarm) {
+						buff.append(" " + s );
+					}
+					buff.append("\n");
+				}
+				if (not_map_counter.size()>0) {
+					buff.append("Counter not mapped to any OsApplication:");
+					for (String s: not_map_counter) {
+						buff.append(" " + s );
+					}
+					buff.append("\n");
+				}
+				if (not_map_isr.size()>0) {
+					buff.append("Isr not mapped to any OsApplication:");
+					for (String s: not_map_isr) {
+						buff.append(" " + s );
+					}
+					buff.append("\n");
+				}
+				if (not_map_resource.size()>0) {
+					buff.append("Resource not mapped to any OsApplication:");
+					for (String s: not_map_resource) {
+						buff.append(" " + s );
+					}
+					buff.append("\n");
+				}
+				if (not_map_task.size()>0) {
+					buff.append("Task not mapped to any OsApplication:");
+					for (String s: not_map_task) {
+						buff.append(" " + s );
+					}
+					buff.append("\n");
+				}
+				
+				if (buff.length()>0) {
+					throw new OilCodeWriterException(buff.toString());					
+				}
+					
 			}
 
-			// isr
-			List<ISimpleGenRes> isrs = ool.getList(IOilObjectList.ISR);
-			int isr_id = 0;
-			for (ISimpleGenRes isr : isrs) {
 			
-				String[] os_appl_ref = CommonUtils.getValue(vt, isr.getPath() + isrOsApplRefPath);
-				if (os_appl_ref != null && os_appl_ref.length>0 && os_appl_ref[0] != null && os_appl_ref[0].length()>0) {
-					add_appl_ref(isr, ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME, os_appl_ref[0]);
-				}
-
-				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_ID)) {
-					isr.setProperty(ISimpleGenResKeywords.ISR_ID, ""+isr_id);
-					isr_id ++;
-				}
-
-			}
-
 		}
 	}
 
 	
-	protected boolean add_appl_ref(ISimpleGenRes sgr, String pName, String os_appl_name) throws OilCodeWriterException {
+	protected boolean add_appl_ref(ISimpleGenRes sgr, String pName, String os_appl_name, int id) throws OilCodeWriterException {
 		if (sgr == null) {
 			return false;
 		}
@@ -450,6 +535,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			return false;
 		}
 		sgr.setProperty(pName, os_appl_name);
+		sgr.setProperty(ISimpleGenResKeywords.OS_APPL_ID, "" +id);
+
 		return true;
 	}
 	

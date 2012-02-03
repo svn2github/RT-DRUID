@@ -579,8 +579,8 @@ public class SectionWriterHalMpc567 extends SectionWriter
 					tList.add(EEStacks.APPLICATION_SHARED_PREFIX+ sgr.getName());
 					tListN.add(" ");
 
-//					tList.add(EEStacks.APPLICATION_IRQ_PREFIX+ sgr.getName());
-//					tListN.add("");
+					tList.add(EEStacks.APPLICATION_IRQ_PREFIX+ sgr.getName());
+					tListN.add("");
 					
 					sgr.setObject(SGR_OS_APPL_SHARED_STACK_ID, new Integer((tList.size()-1)));
 					sgr.setObject(EEStacks.STACK_BASE_NAME_PREFIX, STACK_BASE_NAME);
@@ -614,9 +614,6 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				String[] descrStack = new String[size.length];
 				sbStack.append(indent
 						+ "const EE_UREG EE_std_thread_tos["+MAX_TASK+"+1] = {\n");
-
-//			    stackPatternFill.append("#ifdef __DCC__\n" +
-//			    		"#pragma section STACK \".stack\" \".stack\" standard RW\n");
 				
 			 // fill data for each shared stack, related to OS applications
 				for (Iterator<ISimpleGenRes> iter = osApplications.iterator(); iter.hasNext();) {
@@ -631,10 +628,13 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				// DESCRIPTIONS
 				
 				for (int j = 0; j < pos.length; j++) {
-					if (!tList.get(j).startsWith(EEStacks.APPLICATION_SHARED_PREFIX)) {
+					String stack_name = tList.get(j);
+					if (!stack_name.startsWith(EEStacks.APPLICATION_SHARED_PREFIX) 
+							&& !stack_name.startsWith(EEStacks.APPLICATION_IRQ_PREFIX)) {
+						
 						sbStack.append(pre + post + indent + indent + +pos[j]+"U");
 						// set new values for "post" and "pre"
-						post = " /* " + tList.get(j) + "*/\n";
+						post = " /* " + stack_name + "*/\n";
 						pre = ",\t";
 					}
 
@@ -644,9 +644,14 @@ public class SectionWriterHalMpc567 extends SectionWriter
 					 * not, infact in the second case append the new description
 					 * to the old one
 					 */ 
-					String tid = tList.get(j).startsWith(EEStacks.APPLICATION_SHARED_PREFIX) ?
-							"shared stack " +tList.get(j).substring(EEStacks.APPLICATION_SHARED_PREFIX.length())
-							: "Task " +tListN.get(j)+ " (" + tList.get(j) + ")";
+					final String tid;
+					if (stack_name.startsWith(EEStacks.APPLICATION_SHARED_PREFIX)) {
+						tid = "shared stack " +stack_name.substring(EEStacks.APPLICATION_SHARED_PREFIX.length()); 
+					} else if (stack_name.startsWith(EEStacks.APPLICATION_IRQ_PREFIX)) {
+						tid = "ISR stack for " +stack_name.substring(EEStacks.APPLICATION_IRQ_PREFIX.length()); 
+					} else {
+						tid = "Task " +tListN.get(j)+ " (" + stack_name + ")";
+					}
 					descrStack[pos[j]] = (descrStack[pos[j]] == null) ?
 							// The first description
 							(tid)
@@ -682,7 +687,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				}
 
 				
-				int tos_size = size.length; // - osApplications.size();
+				int tos_size = size.length - osApplications.size();
 				
 				// open system tos
 				sbStack.append(indent

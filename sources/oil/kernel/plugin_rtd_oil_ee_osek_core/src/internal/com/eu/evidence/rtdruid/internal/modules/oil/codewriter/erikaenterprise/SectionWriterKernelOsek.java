@@ -1419,7 +1419,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			appl_id.append(indent1 + "#define ISR2_APP_"+name+"\t" + aid + "\n");
 			isr_id.append(indent1 + "#define ISR2_ID_"+name+"\t" + iid + "\n");
 			
-			ee_c_buffer.append(pre + indent2 + "{ ISR2_APP_"+name+" }");
+			ee_c_buffer.append(pre + indent2 + "{ "+aid+" }");
 			pre = ",\n";
 		}
 

@@ -24,7 +24,7 @@ public interface IOilXMLLabels {
 	public static final String OBJ_APPMODE = "APPMODE";
 
 	/** Identifies an Application Mode */
-	public static final String OBJ_OSAPPLICATION = "OSAPPLICATION";
+	public static final String OBJ_OSAPPLICATION = "APPLICATION";
 
 	/** Identifies a Task */
 	public static final String OBJ_TASK = "TASK";

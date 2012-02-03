@@ -129,7 +129,7 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 			
 			ee_c_buffer.append(
 					commentWriterC.writerBanner("Memory Partitions") +
-					indent1+ "const EE_MEMPROT_ENTRY_T EE_hal_memprot_entries[EE_HAL_MEMPROT_ENTRIES(EE_MAX_APP+1)] = {\n"+
+					indent1+ "const EE_MEMPROT_ENTRY_T EE_hal_memprot_entries[EE_HAL_MEMPROT_ENTRIES(EE_MAX_APP)] = {\n"+
 					indent2+ "EE_MEMPROT_SYSTEM_ENTRY"
 					);
 

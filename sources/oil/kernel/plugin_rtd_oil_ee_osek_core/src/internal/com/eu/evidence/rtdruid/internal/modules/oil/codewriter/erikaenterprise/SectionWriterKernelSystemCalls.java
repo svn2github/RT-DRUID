@@ -147,7 +147,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 
 		StringBuffer ee_c_buffer = answer.get(FILE_EE_CFG_C);
 		ee_c_buffer.append(commentWriterC.writerBanner("System Calls") + 
-				"const EE_ADDR EE_syscall_table[] = {\n");
+				"const EE_ADDR EE_syscall_table[EE_SYSCALL_NR] = {\n");
 				
 		StringBuffer ids = new StringBuffer();
 		StringBuffer shortNames = new StringBuffer();
