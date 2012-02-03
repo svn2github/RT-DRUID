@@ -27,7 +27,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.ui.Rtd_oil_uiPlugin;
 
@@ -211,7 +211,7 @@ public class OilImplementationView extends ViewPart {
 			
 			OilImplFactory factory = OilImplFactory.getAnInstance(RTDFactory.newVarTree());
 			factory.reloadDefault();
-			OilImplID[] ids = factory.getImplNames();
+			IOilImplID[] ids = factory.getImplNames();
 			if (ids.length >0) {
 				IOilImplementation impls = factory.getImpl(ids[0]);
 				String oiltxt = impls.toOil();

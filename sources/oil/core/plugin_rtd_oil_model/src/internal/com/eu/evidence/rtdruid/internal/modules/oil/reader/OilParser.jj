@@ -8,60 +8,230 @@ options {
 //	FORCE_LA_CHECK = true;
 	
 	DEBUG_PARSER = false;
-	OPTIMIZE_TOKEN_MANAGER = false;
+//	OPTIMIZE_TOKEN_MANAGER = false;
 	
 }
 
-PARSER_BEGIN (IncludeParser)
-package rtdruid.modules.oil.reader;
+PARSER_BEGIN (OilParser)
+package com.eu.evidence.rtdruid.internal.modules.oil.reader;
 
 import java.util.LinkedList;
 
-/** Parse a file and search all "include".
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
-Partendo dal file/stream specificato nel costruttore, ricorsivamente 
-sostituisce le righe 
-	#include <nomefile>
-ed
-	#include "path/nomefile"
-con i file da esse identificate.
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-Per eliminare il problema di ricorsioni cicliche conviene usare 
-uno stack che contiene l'attuale successione di file e controllare di
-volta in volta che non ci sia un ciclo. O qualcosa di simile.
-Magari normalizzare il nome del file in modo da evitare cicli in cui
-uno stesso file e' incluso usando nomi diversi con nomi 
-
-Per gestire correttamente i numeri di riga, conviene realizzare una
-tabella di corrispondenza, magari mantenendo anche la storia delle inclusioni.
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
 
 
+/** Parse an oil file and convert it into a XML file.
 * @author Nicola Serreli
 */
-public class IncludeParser {
+public class OilParser extends MergeHelper {
 
 	protected final static String LOCATION = "Location_inside_the_oil";
+        
+        protected final static String[] ATTR_ATT_LIST = {
+    			IOilXMLLabels.ATTR_AUTO,
+    			IOilXMLLabels.ATTR_DEFAULT_VALUE,
+    			IOilXMLLabels.ATTR_MULTIPLE_VALUES,
+    			IOilXMLLabels.ATTR_TYPE,
+    			IOilXMLLabels.ATTR_WITH_AUTO
+    		};
+        protected final static String[] ATTR_REF_LIST = {
+    			IOilXMLLabels.ATTR_MULTIPLE_VALUES,
+    			IOilXMLLabels.ATTR_OBJ_TYPE,
+    		};
+        protected final static String[] ATTR_VAR_LIST = {
+    			IOilXMLLabels.ATTR_DEFAULT_VALUE,
+    			IOilXMLLabels.ATTR_MULTIPLE_VALUES,
+    			IOilXMLLabels.ATTR_WITH_AUTO
+    		};
+        protected final static String[] ATTR_RANGE_LIST = {
+    			IOilXMLLabels.ATTR_MAX,
+    			IOilXMLLabels.ATTR_MIN
+    		};
+//	protected String defaultImplementationFile = null;
+	protected boolean enableApplicationSection = true;
 
-	protected String currentFileName;
+	/*public static void main(String args[]) throws ParseException {
+		OilParser parser = new OilParser(System.in);
+
+		OilInfo risp = parser.start();
+		System.out.println("--- FINE ---");
+		System.out.println(risp.getImpl().getDocumentElement().toString() );
+		System.out.println(risp.getAppl().getDocumentElement().toString() );
+		
+	}*/
+
+//	public void setDefaultImplementationFile(String fileName) {
+//		defaultImplementationFile = fileName;
+//	}
+	public void setEnableApplicationSection(boolean value) {
+		enableApplicationSection = value;
+	}
 	
+	/**
+	 * Search a child with specified properties. If itsn't found, make a new one. 
+	 */
+	protected Element makeElement(Node parent, String elemName, String attrName, String attrValue) {
+		NodeList children = parent.getChildNodes();
+		
+		for (int i=0; i<children.getLength(); i++) {
+			Node n = children.item(i);
+			
+			if (n instanceof Element) {
+				Element child =(Element) n;
+				
+				// check properties
+				boolean ok = checkStrings(elemName,child.getNodeName());
+				if (ok && attrName != null) {
+					ok = checkStrings(attrValue, child.getAttribute(attrName));
+				}
+				if (ok) { // found
+					return child;
+				}
+			}
+		}
+		
+		Element child = parent.getOwnerDocument().createElement(elemName);
+		if (attrName != null) {
+			child.setAttribute(attrName, attrValue);
+		}
+		
+		parent.appendChild(child);
+		
+		return child;
+	}
+	/**
+	 * Search a child with specified properties. If itsn't found, make a new one. 
+	 */
+	protected Element makeElement(Node parent, String elemName, String[] attrName, String[] attrValue) {
+		NodeList children = parent.getChildNodes();
+		
+		for (int i=0; i<children.getLength(); i++) {
+			Node n = children.item(i);
+			
+			if (n instanceof Element) {
+				Element child =(Element) n;
+				
+				// check properties
+				boolean ok = checkStrings(elemName,child.getNodeName());
+				for (int att=0; att<attrName.length && ok; att++) {
+				
+					ok = checkStrings(attrValue[att], child.getAttribute(attrName[att]));
+				}
+			
+				if (ok) { // found
+					return child;
+				}
+			}
+		}
+		
+		Element child = parent.getOwnerDocument().createElement(elemName);
+		for (int att=0; att<attrName.length; att++) {
+			child.setAttribute(attrName[att], attrValue[att]);
+		}
+		
+		parent.appendChild(child);
+		
+		return child;
+	}
+
+	/**
+	 * Search an attribute and check the value. If the attribute doesn't exist, set it. 
+	 *
+	 * @throws ParseException if the attribute is already setted but with a different value
+	 */
+	protected void setAttribute(Element elem, String attrName, String attrValue, Token token)
+			 throws ParseException {
+			 
+		if (!elem.hasAttribute(attrName)) {
+			if (attrValue != null) {
+				elem.setAttribute(attrName, attrValue);
+			}
+			
+		} else if (!checkStrings(elem.getAttribute(attrName), attrValue)) {
+			throw new ParseException("Found an element declared more than one time with differents proterties.\n"
+			+ "property = " + attrName + "; old value = " + elem.getAttribute(attrName) + "; new value = " + attrValue + "\n"
+			+ "(row =" +token.beginLine + ", col = "+token.beginColumn+")");
+		}
+	}
 
 }
 
-PARSER_END (IncludeParser)
+PARSER_END (OilParser)
 
 
 // ----------- START ----------------
 
-StringBuffer start(HashMap<String> absFiles, String currentFile, Srting basePath, String[] libPaths) :
+OilInfo start() :
 {
-	
+	DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+	Document impl, appl;
+	String nome = null;
+
+	try {
+		impl = docFactory.newDocumentBuilder().newDocument();
+		appl = docFactory.newDocumentBuilder().newDocument();
+	} catch (ParserConfigurationException e) {
+		throw new IllegalStateException("OilParser: exception during creation of a new Document:\n\t"
+			+ e.getMessage());
+	}
+
+	Element root1 = impl.createElement(IOilXMLLabels.ELEM_IMPLEMENTATION);
+	impl.appendChild( root1 );
+
+	Element root2 = appl.createElement(IOilXMLLabels.ELEM_APPLICATION);
+	appl.appendChild( root2 );
 }
 {
-	// Drops the information about version
-	OIL_version()
-	// nome identified this Builder and will be the first "cpu" type
-	nome = implementation_definition(root1)
-	application_definition(appl, root2)
+	
+	(
+		// Drops the information about version
+		OIL_version()
+		// nome identifies this Builder and will be the first "cpu" type
+		nome = implementation_definition(root1)
+	)?
+
+	{  if (nome == null) {
+/*		// use the default Implementation File
+		OilInfo childInfo = null;
+		InputStream input = this.getClass().getResourceAsStream(defaultImplementationFile);
+		OilParser child = new OilParser(input);
+		child.setEnableApplicationSection(false);
+		try {
+			childInfo = child.start();
+		} catch (ParseException e) {
+			//e.printStackTrace();
+		    throw new RuntimeException(
+			    "OilReader: exception during the parse.",
+                            e);
+		} catch (RuntimeException e) {
+			//e.printStackTrace();
+		    throw new RuntimeException(
+			    "OilReader: exception during the parse.",
+				    e);
+		}
+		nome = childInfo.name;
+	        impl = childInfo.impl;	
+	    */    
+/*	  } else {
+		// Drops the information about version
+		OIL_version()
+		// nome identifies this Builder and will be the first "cpu" type
+		nome = implementation_definition(root1)
+*/	  }
+	}
+
+
+	// check the application Section only if required
+	//({if (enableApplicationSection) { application_definition(appl, root2); }})?
+	( application_definition(appl, root2) )?
 	<EOF>
 
 	{
@@ -96,10 +266,53 @@ SPECIAL_TOKEN : /* COMMENTS */
 // Reserved Word
 TOKEN:
 {
-	<INCLUDE : "#INCLUDE">
+	<TRUE : "TRUE">
+|	
+	<FALSE: "FALSE">
 |
-	<DEF_PATH : "<" (~["\"","<",">"])* ">" >
+	<UINT32 : "UINT32">
 |
+	<INT32 : "INT32">
+|
+	<UINT64 : "UINT64">
+|
+	<INT64 : "INT64">
+|		
+	<FLOAT : "FLOAT">
+|		
+	<ENUM : "ENUM">
+|		 
+	<STRING : "STRING">
+|
+	<BOOLEAN : "BOOLEAN">
+|
+	<AUTO : "AUTO">
+|
+	<NO_DEFAULT : "NO_DEFAULT">
+|
+	<OIL_VERSION : "OIL_VERSION">
+|
+	<IMPLEMENTATION : "IMPLEMENTATION">
+|
+	<CPU : "CPU">
+|
+	<auto_specifier : "WITH_AUTO"  >
+|
+	<object :
+		"OS" | "APPLICATION" | "TASK" | "COUNTER" | "ALARM" | "RESOURCE" |
+		"EVENT" | "ISR" | "MESSAGE" | "COM" | "NM" | "NETWORKMESSAGE" |
+		"APPMODE" | "IPDU"
+	>
+|	
+	<object_ref_type :
+		"OS_TYPE" | "APPLICATION_TYPE" | "TASK_TYPE" | "COUNTER_TYPE" | "ALARM_TYPE" |
+		"RESOURCE_TYPE" | "EVENT_TYPE" | "ISR_TYPE" | "MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" |
+		"COMMM_TYPE" | "NM_TYPE" | "APPMODE_TYPE" | "IPDU_TYPE"
+	>
+}
+
+TOKEN:
+{
 	<String : "\"" (~["\""])* "\"" >
 }
 
@@ -199,7 +412,7 @@ String implementation_definition(Node elem) :
 	{
 		//System.err.println("nome = " + t1.image );
 		nome = t1.image;
-		((Element) elem).setAttribute(OilXMLLabels.ATTR_NAME, nome);
+		((Element) elem).setAttribute(IOilXMLLabels.ATTR_NAME, nome);
 	}
 	"{" 
 		(implementation_spec(elem))+	// ONE or MORE implementation_spec
@@ -219,7 +432,7 @@ void implementation_spec(Node elem) :
 {
 	// get name of this container
 	t1=<object> {
-		nContainer = makeElement(elem, OilXMLLabels.ELEM_FIRST_LEVEL_OBJ, OilXMLLabels.ATTR_OBJ_TYPE, t1.image);
+		nContainer = makeElement(elem, IOilXMLLabels.ELEM_FIRST_LEVEL_OBJ, IOilXMLLabels.ATTR_OBJ_TYPE, t1.image);
 	}
 	"{" 
 		(implementation_def(nContainer, false) )*	// ZERO o MORE implemenation_def
@@ -327,7 +540,7 @@ void impl_attr_def(Node elem, boolean nested) :
 
 	{// Look over data
 
-		if (searchElement(elem, OilXMLLabels.ELEM_REFERENCE, OilXMLLabels.ATTR_NAME, nameToken.image)) {
+		if (searchElement(elem, IOilXMLLabels.ELEM_REFERENCE, IOilXMLLabels.ATTR_NAME, nameToken.image) != null) {
 			throw new ParseException("Found an element declared more than one time with differents proterties.\n"
 			+ nameToken.image + " declared as REFERENCE and as " + tipoTxt + "\n"
 			+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
@@ -341,25 +554,25 @@ void impl_attr_def(Node elem, boolean nested) :
 		     tipo ==  INT64 ||
 		     tipo ==  FLOAT ||
 		     tipo == STRING ) {
-			if (searchElement(elem, OilXMLLabels.ELEM_VARIANT, OilXMLLabels.ATTR_NAME, nameToken.image)) {
+			if (searchElement(elem, IOilXMLLabels.ELEM_VARIANT, IOilXMLLabels.ATTR_NAME, nameToken.image) != null) {
 				throw new ParseException("Found an element declared more than one time with differents proterties.\n"
 				+ nameToken.image + " declared as VARIANT and as " + tipoTxt + "\n"
 				+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
 			}
-			nodo = makeElement(elem, OilXMLLabels.ELEM_ATTRIBUTE, OilXMLLabels.ATTR_NAME, nameToken.image);
+			nodo = makeElement(elem, IOilXMLLabels.ELEM_ATTRIBUTE, IOilXMLLabels.ATTR_NAME, nameToken.image);
 		}
 		else {	// ENUM , BOOLEAN
 			
-			if (searchElement(elem, OilXMLLabels.ELEM_ATTRIBUTE, OilXMLLabels.ATTR_NAME, nameToken.image)) {
+			if (searchElement(elem, IOilXMLLabels.ELEM_ATTRIBUTE, IOilXMLLabels.ATTR_NAME, nameToken.image) != null) {
 				throw new ParseException("Found an element declared more than one time with differents proterties.\n"
 				+ nameToken.image + " declared as ATTRIBUTE and as " + tipoTxt + "\n"
 				+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
 			}
-			nodo = makeElement(elem, OilXMLLabels.ELEM_VARIANT, OilXMLLabels.ATTR_NAME, nameToken.image);
+			nodo = makeElement(elem, IOilXMLLabels.ELEM_VARIANT, IOilXMLLabels.ATTR_NAME, nameToken.image);
 		}
 		
 		tipoTxt = tipoTxt.toUpperCase();
-		setAttribute(nodo, OilXMLLabels.ATTR_TYPE, tipoTxt, nameToken);
+		setAttribute(nodo, IOilXMLLabels.ATTR_TYPE, tipoTxt, nameToken);
 
 		if (nested) {
 			setAttribute(nodo, LOCATION, "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")", nameToken);
@@ -368,49 +581,49 @@ void impl_attr_def(Node elem, boolean nested) :
 
 		// with auto option
 		if (wAuto) {
-			setAttribute(nodo, OilXMLLabels.ATTR_WITH_AUTO, "true", nameToken);
+			setAttribute(nodo, IOilXMLLabels.ATTR_WITH_AUTO, "true", nameToken);
 		}
 
 		// default Value / auto Value
 		if (dValue != null) {
 			if (dValue[0] != null) {
-				setAttribute(nodo, OilXMLLabels.ATTR_DEFAULT_VALUE, dValue[0], nameToken);
+				setAttribute(nodo, IOilXMLLabels.ATTR_DEFAULT_VALUE, dValue[0], nameToken);
 			} else if (dValue[1] != null) {
-				setAttribute(nodo, OilXMLLabels.ATTR_AUTO, "true", nameToken);
+				setAttribute(nodo, IOilXMLLabels.ATTR_AUTO, "true", nameToken);
 			}
 		}
 		
 		// multiple Values option
 		if (multiValues) {
-			setAttribute(nodo, OilXMLLabels.ATTR_MULTIPLE_VALUES, "true", nameToken);
+			setAttribute(nodo, IOilXMLLabels.ATTR_MULTIPLE_VALUES, "true", nameToken);
 		}
 
 		// range or list of values
 		if (values != null) {
 			// range
 			if (values[0].equals("range") ) {
-				if (searchElement(nodo, OilXMLLabels.ELEM_VALUE, null, null)) {
+				if (searchElement(nodo, IOilXMLLabels.ELEM_VALUE, null, null) != null) {
 					throw new ParseException("Found an element declared more than one time with differents proterties.\n"
 					+ "RANGE-VALUE of " + nameToken.image + "\n"
 					+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
 				}
 				
-                                Element el = makeElement(elem, OilXMLLabels.ELEM_RANGE, (String) null, (String) null);
+                                Element el = makeElement(elem, IOilXMLLabels.ELEM_RANGE, (String) null, (String) null);
 				
-				setAttribute(el, OilXMLLabels.ATTR_MIN, values[1], nameToken);
-				setAttribute(el, OilXMLLabels.ATTR_MIN, values[2], nameToken);
+				setAttribute(el, IOilXMLLabels.ATTR_MIN, values[1], nameToken);
+				setAttribute(el, IOilXMLLabels.ATTR_MIN, values[2], nameToken);
 			}
 
 			// list of values
 			else if (values[0].equals("value") ) {
-				if (searchElement(nodo, OilXMLLabels.ELEM_RANGE, null, null)) {
+				if (searchElement(nodo, IOilXMLLabels.ELEM_RANGE, null, null) != null) {
 					throw new ParseException("Found an element declared more than one time with differents proterties.\n"
 					+ "RANGE-VALUE of " + nameToken.image + "\n"
 					+ "(row =" +nameToken.beginLine + ", col = "+nameToken.beginColumn+")");
 				}
 				
 				for (int i=1; i< values.length; i++) {
-					makeElement(elem, OilXMLLabels.ELEM_VALUE, OilXMLLabels.ATTR_VALUE, values[1]);
+					makeElement(elem, IOilXMLLabels.ELEM_VALUE, IOilXMLLabels.ATTR_VALUE, values[1]);
 				}
 			}
 		}
@@ -429,7 +642,7 @@ void impl_attr_def(Node elem, boolean nested) :
 
 		// description
 		if (descr != null) {
-			Element nDescr = nodo.getOwnerDocument().createElement(OilXMLLabels.ELEM_DESCRIPTION);
+			Element nDescr = nodo.getOwnerDocument().createElement(IOilXMLLabels.ELEM_DESCRIPTION);
 			nDescr.appendChild( nodo.getOwnerDocument().createTextNode( descr ) );
 			nodo.appendChild(nDescr);
 		}
@@ -563,12 +776,12 @@ Element[] enumeration(Document doc) :
 
 Element enumerator(Document doc) :
 {
-	Element elem = doc.createElement(OilXMLLabels.ELEM_ENUMERATOR);
+	Element elem = doc.createElement(IOilXMLLabels.ELEM_ENUMERATOR);
 	Token t;
 }
 {
 	t = <name> {
-		elem.setAttribute(OilXMLLabels.ATTR_NAME, t.image);
+		elem.setAttribute(IOilXMLLabels.ATTR_NAME, t.image);
 	}
 	impl_parameter_list(elem)
 	(addDescription(elem))? // description
@@ -637,11 +850,11 @@ Element[] bool_values(Document doc) :
 
 	// create two Element (True and ...
 	risp = new Element[2];
-	risp[0] = doc.createElement(OilXMLLabels.ELEM_ENUMERATOR);
-	risp[0].setAttribute(OilXMLLabels.ATTR_NAME, "TRUE");
+	risp[0] = doc.createElement(IOilXMLLabels.ELEM_ENUMERATOR);
+	risp[0].setAttribute(IOilXMLLabels.ATTR_NAME, "TRUE");
 	// .. and false)
-	risp[1] = doc.createElement(OilXMLLabels.ELEM_ENUMERATOR);
-	risp[1].setAttribute(OilXMLLabels.ATTR_NAME, "FALSE");
+	risp[1] = doc.createElement(IOilXMLLabels.ELEM_ENUMERATOR);
+	risp[1].setAttribute(IOilXMLLabels.ATTR_NAME, "FALSE");
 
 }
 {
@@ -697,23 +910,23 @@ void impl_ref_def(Node elem, boolean nested) :
 	t1=<object_ref_type> {
 	}
 	(t2=<name> | t2=<object>) {
-		if (searchElement(elem, OilXMLLabels.ELEM_VARIANT, OilXMLLabels.ATTR_NAME, t2.image)
-			|| searchElement(elem, OilXMLLabels.ELEM_ATTRIBUTE, OilXMLLabels.ATTR_NAME, t2.image)) {
+		if (searchElement(elem, IOilXMLLabels.ELEM_VARIANT, IOilXMLLabels.ATTR_NAME, t2.image) != null
+			|| searchElement(elem, IOilXMLLabels.ELEM_ATTRIBUTE, IOilXMLLabels.ATTR_NAME, t2.image) != null) {
 			throw new ParseException("Found an element declared more than one time with differents proterties.\n"
 			+ t2.image + " declared as VARIANT/ATTRIBUTE and as " + t1.image + "\n"
 			+ "(row =" +t2.beginLine + ", col = "+t2.beginColumn+")");
 		}
-		nodo = makeElement(elem, OilXMLLabels.ELEM_REFERENCE, OilXMLLabels.ATTR_NAME, t2.image);
+		nodo = makeElement(elem, IOilXMLLabels.ELEM_REFERENCE, IOilXMLLabels.ATTR_NAME, t2.image);
 
 		
 		if (nested) {
 			setAttribute(nodo, LOCATION, "(row =" +t2.beginLine + ", col = "+t2.beginColumn+")", t2);
 		}
-		setAttribute(nodo, OilXMLLabels.ATTR_OBJ_REF_TYPE, t1.image, t2);
+		setAttribute(nodo, IOilXMLLabels.ATTR_OBJ_REF_TYPE, t1.image, t2);
 
 	}
 	("[" "]" {
-		setAttribute(nodo, OilXMLLabels.ATTR_MULTIPLE_VALUES, "true", t2);
+		setAttribute(nodo, IOilXMLLabels.ATTR_MULTIPLE_VALUES, "true", t2);
 	})? 
 	(addDescription(nodo))? // description
 	";"
@@ -728,7 +941,7 @@ void application_definition(Document doc, Element elem) :
 {	
 	<CPU> 
 	t=<name> {
-		elem.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+		elem.setAttribute(IOilXMLLabels.ATTR_NAME, t.image );
 	}
 	"{" object_definition_list(doc, elem) "}"
 	(addDescription(elem))? // description
@@ -747,15 +960,15 @@ void object_definition_list(Document doc, Element elem) :
 void object_definition(Document doc, Node elem) :
 {
 	Token t;
-	Element nodo = doc.createElement(OilXMLLabels.ELEM_OBJECT);
+	Element nodo = doc.createElement(IOilXMLLabels.ELEM_OBJECT);
 	elem.appendChild(nodo);
 }
 {
 	t = <object> {
-		nodo.setAttribute(OilXMLLabels.ATTR_TYPE, t.image );
+		nodo.setAttribute(IOilXMLLabels.ATTR_TYPE, t.image );
 	}
 	t = <name> {
-		nodo.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+		nodo.setAttribute(IOilXMLLabels.ATTR_NAME, t.image );
 	}
 	( "{" parameter_list(doc, nodo) "}" )?
 	(addDescription(nodo))? // description
@@ -774,12 +987,12 @@ void parameter_list(Document doc, Node elem) :
 void parameter(Document doc, Node elem) :
 {
 	Token t;
-	Element nodo = doc.createElement(OilXMLLabels.ELEM_PARAMETER);
+	Element nodo = doc.createElement(IOilXMLLabels.ELEM_PARAMETER);
 	elem.appendChild(nodo);
 }
 {
 	(t=<name> | t=<object>) {
-		nodo.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+		nodo.setAttribute(IOilXMLLabels.ATTR_NAME, t.image );
 	} "=" attribute_value(doc, nodo)
 	(addDescription(nodo))? // description
 	";"
@@ -793,35 +1006,35 @@ void attribute_value(Document doc, Element elem) :
 }
 {
 	t = <name> {
-		 nodo = doc.createElement(OilXMLLabels.ELEM_ENUM_VALUE);
+		 nodo = doc.createElement(IOilXMLLabels.ELEM_ENUM_VALUE);
 		 elem.appendChild(nodo);
 	
-		nodo.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+		nodo.setAttribute(IOilXMLLabels.ATTR_NAME, t.image );
 
 	} ( "{" parameter_list(doc, nodo) "}")?
 |
 	( t = <TRUE> | t = <FALSE> ) {
-		nodo = doc.createElement(OilXMLLabels.ELEM_ENUM_VALUE);
+		nodo = doc.createElement(IOilXMLLabels.ELEM_ENUM_VALUE);
 		elem.appendChild(nodo);
 	
-		nodo.setAttribute(OilXMLLabels.ATTR_NAME, t.image );
+		nodo.setAttribute(IOilXMLLabels.ATTR_NAME, t.image );
 
 	}( "{" parameter_list(doc, nodo) "}" )?
 |
 	t = <number> {
-		elem.setAttribute(OilXMLLabels.ATTR_CURR_VALUE, t.image );
+		elem.setAttribute(IOilXMLLabels.ATTR_CURR_VALUE, t.image );
 	}
 |
 	t = <float_> {
-		elem.setAttribute(OilXMLLabels.ATTR_CURR_VALUE, t.image );
+		elem.setAttribute(IOilXMLLabels.ATTR_CURR_VALUE, t.image );
 	}
 |
 	s = getString() {
-		elem.setAttribute(OilXMLLabels.ATTR_CURR_VALUE, s );
+		elem.setAttribute(IOilXMLLabels.ATTR_CURR_VALUE, s );
 	}
 |
 	t = "AUTO" {
-		elem.setAttribute(OilXMLLabels.ATTR_AUTO, "true" );
+		elem.setAttribute(IOilXMLLabels.ATTR_AUTO, "true" );
 	}
 }
 
@@ -831,7 +1044,7 @@ void addDescription(Element elem) :
 }
 {
 	descr = getDescription() {
-                Element nDescr = elem.getOwnerDocument().createElement(OilXMLLabels.ELEM_DESCRIPTION);
+                Element nDescr = elem.getOwnerDocument().createElement(IOilXMLLabels.ELEM_DESCRIPTION);
                 nDescr.appendChild( elem.getOwnerDocument().createTextNode( descr ) );
                 elem.appendChild(nDescr);
         }

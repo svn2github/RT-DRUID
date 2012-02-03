@@ -3,6 +3,7 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.common;
 import org.w3c.dom.Document;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplFactory_Impl;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
@@ -34,7 +35,7 @@ public abstract class OilImplFactory {
 	 * @return true if specified data are correctly added, false if there was a
 	 *         previous OilImplementation with the same id and different data.
 	 */
-	public abstract boolean add(OilImplID id, Document data);
+	public abstract boolean add(IOilImplID id, Document data);
 
 	/**
 	 * Add a new Implementation
@@ -58,7 +59,7 @@ public abstract class OilImplFactory {
 	 * 
 	 * @return true if specified data are correctly added.
 	 */
-	public abstract boolean merge(OilImplID id, Document data);
+	public abstract boolean merge(IOilImplID id, Document data);
 
 	/**
 	 * Add a new Implementation. If already exist an Implementation with the same ID,
@@ -76,7 +77,7 @@ public abstract class OilImplFactory {
 	 * 
 	 * @return an id for each stored OilImplementation object
 	 */
-	public abstract OilImplID[] getImplNames();
+	public abstract IOilImplID[] getImplNames();
 
 	/**
 	 * Returns the OilImplementation idenfied by specified id
@@ -86,7 +87,7 @@ public abstract class OilImplFactory {
 	 * 
 	 * @return the required OilImplementation or null if not found.
 	 */
-	public abstract IOilImplementation getImpl(OilImplID id);
+	public abstract IOilImplementation getImpl(IOilImplID id);
 
 	/**
 	 * Removes all OilImplementation

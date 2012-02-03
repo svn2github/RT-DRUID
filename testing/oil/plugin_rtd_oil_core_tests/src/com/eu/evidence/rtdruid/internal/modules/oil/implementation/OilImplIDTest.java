@@ -8,6 +8,7 @@ package com.eu.evidence.rtdruid.internal.modules.oil.implementation;
 import junit.framework.TestCase;
 
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 
 /**
  * @author Nicola Serreli
@@ -15,14 +16,14 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
 public class OilImplIDTest extends TestCase {
 
 	public void testOilImplID() {
-		OilImplID a = new OilImplID("a","a","b");
-		OilImplID b = new OilImplID("a","a","b");
+		IOilImplID a = new OilImplID("a","a","b");
+		IOilImplID b = new OilImplID("a","a","b");
 		assertTrue(a!=null);
 		assertTrue(b!=null);
 		assertTrue(a!=b);
 		
 		// check null values
-		OilImplID c = a;
+		IOilImplID c = a;
 		a = new OilImplID(null, "a", "b");
 		assertTrue(a!=c);
 
@@ -55,8 +56,8 @@ public class OilImplIDTest extends TestCase {
 	 * Class under test for String toString()
 	 */
 	public void testToString() {
-		OilImplID a = new OilImplID("?","a","b");
-		OilImplID b = new OilImplID(null,"a","b");
+		IOilImplID a = new OilImplID("?","a","b");
+		IOilImplID b = new OilImplID(null,"a","b");
 		assertTrue(a.toString() != null);
 		assertTrue(a.toString().equals(b.toString()));
 		assertTrue("HW = a, RT-OS = b".equals(a.toString()));
@@ -88,7 +89,7 @@ public class OilImplIDTest extends TestCase {
 	 * Class under test for String toString()
 	 */
 	public void testToString2() {
-		OilImplID a = new OilImplID("?","a","b");
+		IOilImplID a = new OilImplID("?","a","b");
 		assertTrue("HW = a, RT-OS = b".equals(a.toString()));
 		
 		// check null values
@@ -106,17 +107,17 @@ public class OilImplIDTest extends TestCase {
 	 * Class under test for boolean equals(Object)
 	 */
 	public void testEqualsObject() {
-		OilImplID a1 = new OilImplID("?","a","b");
-		OilImplID a2 = new OilImplID("??","a","b");
-		OilImplID b1 = new OilImplID("?",null, "b");
-		OilImplID b2 = new OilImplID("?",null, "b");
-		OilImplID c1 = new OilImplID("?","a", null);
-		OilImplID c2 = new OilImplID("?","a", null);
-		OilImplID d1 = new OilImplID("?",null, null);
-		OilImplID d2 = new OilImplID("?",null, null);
-		OilImplID e1 = new OilImplID("?","a","c");
-		OilImplID e2 = new OilImplID("?","c","b");
-		OilImplID e3 = new OilImplID("?","c","d");
+		IOilImplID a1 = new OilImplID("?","a","b");
+		IOilImplID a2 = new OilImplID("??","a","b");
+		IOilImplID b1 = new OilImplID("?",null, "b");
+		IOilImplID b2 = new OilImplID("?",null, "b");
+		IOilImplID c1 = new OilImplID("?","a", null);
+		IOilImplID c2 = new OilImplID("?","a", null);
+		IOilImplID d1 = new OilImplID("?",null, null);
+		IOilImplID d2 = new OilImplID("?",null, null);
+		IOilImplID e1 = new OilImplID("?","a","c");
+		IOilImplID e2 = new OilImplID("?","c","b");
+		IOilImplID e3 = new OilImplID("?","c","d");
 
 		// a1
 		assertTrue(a1==a1 &&  a1.equals(a1));
@@ -396,17 +397,17 @@ public class OilImplIDTest extends TestCase {
 	 * Class under test for boolean equals(Object)
 	 */
 	public void testHashCode() {
-		OilImplID a1 = new OilImplID("?","a","b");
-		OilImplID a2 = new OilImplID("??","a","b");
-		OilImplID b1 = new OilImplID("?",null, "b");
-		OilImplID b2 = new OilImplID("?",null, "b");
-		OilImplID c1 = new OilImplID("?","a", null);
-		OilImplID c2 = new OilImplID("?","a", null);
-		OilImplID d1 = new OilImplID("?",null, null);
-		OilImplID d2 = new OilImplID("?",null, null);
-		OilImplID e1 = new OilImplID("?","a","c");
-		OilImplID e2 = new OilImplID("?","c","b");
-		OilImplID e3 = new OilImplID("?","c","d");
+		IOilImplID a1 = new OilImplID("?","a","b");
+		IOilImplID a2 = new OilImplID("??","a","b");
+		IOilImplID b1 = new OilImplID("?",null, "b");
+		IOilImplID b2 = new OilImplID("?",null, "b");
+		IOilImplID c1 = new OilImplID("?","a", null);
+		IOilImplID c2 = new OilImplID("?","a", null);
+		IOilImplID d1 = new OilImplID("?",null, null);
+		IOilImplID d2 = new OilImplID("?",null, null);
+		IOilImplID e1 = new OilImplID("?","a","c");
+		IOilImplID e2 = new OilImplID("?","c","b");
+		IOilImplID e3 = new OilImplID("?","c","d");
 
 		// a1
 		assertTrue(a1==a1 &&  (a1.hashCode() == a1.hashCode()));
@@ -513,8 +514,8 @@ public class OilImplIDTest extends TestCase {
 		assertTrue(d2!=e3 && !(d2.hashCode() == e3.hashCode()));
 
 		
-		OilImplID h1 = new OilImplID("?","a","b");
-		OilImplID h2 = new OilImplID("??","b","a");
+		IOilImplID h1 = new OilImplID("?","a","b");
+		IOilImplID h2 = new OilImplID("??","b","a");
 		assertTrue(h1!=h2 && !(h1.hashCode() == h2.hashCode()));
 		
 

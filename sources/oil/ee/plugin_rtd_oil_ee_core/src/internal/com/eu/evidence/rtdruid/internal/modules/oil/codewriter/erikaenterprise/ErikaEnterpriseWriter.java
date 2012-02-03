@@ -16,7 +16,6 @@ import java.util.Properties;
 
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
@@ -39,6 +38,7 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractOb
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.location.EEPaths;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.ISectionWriter;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.init.DataPath;

@@ -22,11 +22,12 @@ import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplFactory_Impl;
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplElementDescr;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplPointer;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.ISubVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
@@ -217,7 +218,7 @@ public class OilApplPointer extends VarTreePointerEMF implements
 
 				String objType = (String) pathSk.pop();
 
-				OilImplID oilId;
+				IOilImplID oilId;
 				{
 					String tmp1 = DataPath.removeSlash(DataPath.removeSlash((String) pathSk.pop()));
 					String tmp2 = DataPath.removeSlash(DataPath.removeSlash((String) pathSk.pop()));
@@ -704,7 +705,7 @@ public class OilApplPointer extends VarTreePointerEMF implements
 
 				String objType = (String) pathSk.pop();
 
-				OilImplID oilId;
+				IOilImplID oilId;
 				{
 					String tmp1 = (String) pathSk.pop();
 					String tmp2 = (String) pathSk.pop();

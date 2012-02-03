@@ -19,15 +19,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import com.eu.evidence.rtdruid.desk.RtdruidLog;
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.internal.modules.oil.model.OilModelLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.MergeHelper;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilInfo;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilParser;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplElementDescr;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplPointer;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 
 
 
@@ -44,7 +44,7 @@ public class OilImplementation implements IOilImplementation {
     // ---------------------------------------------
 
 	/** The identifier of this Implementation */
-	final protected OilImplID name;
+	final protected IOilImplID name;
 
 	/** All data */
 	final protected Document doc;
@@ -74,7 +74,7 @@ public class OilImplementation implements IOilImplementation {
 	 * @param data
 	 *            contains the xml rapresentation of Oil Implementation part
 	 */
-	OilImplementation(OilImplID id, Document data) {
+	OilImplementation(IOilImplID id, Document data) {
 		if (id == null) {
 			throw new NullPointerException("Required a not null ID");
 		}
@@ -95,7 +95,7 @@ public class OilImplementation implements IOilImplementation {
 	 * 
 	 * @return the identifier.
 	 */
-	public OilImplID getId() {
+	public IOilImplID getId() {
 		return name;
 	}
 
@@ -404,8 +404,8 @@ public class OilImplementation implements IOilImplementation {
 		if (o instanceof IOilImplementation) {
 			return name.compareTo(((IOilImplementation) o).getId());
 		}
-		if (o instanceof OilImplID) {
-			return name.compareTo((OilImplID) o);
+		if (o instanceof IOilImplID) {
+			return name.compareTo((IOilImplID) o);
 		}
 
 		throw new IllegalArgumentException("Not a valid type " + o);
@@ -434,7 +434,7 @@ public class OilImplementation implements IOilImplementation {
 				OilInfo info = new OilParser(new ByteArrayInputStream(o.toOil().getBytes())).start();
 				return equalsImpl(info.getImpl());
 			} catch (Exception e) {
-				RtdruidLog.log(e);
+				OilModelLog.log(e);
 			}
 		}
 		return false;
@@ -688,7 +688,7 @@ public class OilImplementation implements IOilImplementation {
 				OilInfo info = new OilParser(new ByteArrayInputStream(o.toOil().getBytes())).start();
 				return mergeImpl(info.getImpl());
 			} catch (Exception e) {
-				RtdruidLog.log(e);
+				OilModelLog.log(e);
 			}
 		}
 		
@@ -734,7 +734,7 @@ public class OilImplementation implements IOilImplementation {
 			this.oilRapresentation = null;
 
 		} catch (Exception e) {
-			RtdruidLog.log(e);
+			OilModelLog.log(e);
 			return false;
 		}
 		return true;

@@ -8,7 +8,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
+
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 
 /** Token Manager. */
 public class OilParserTokenManager implements OilParserConstants

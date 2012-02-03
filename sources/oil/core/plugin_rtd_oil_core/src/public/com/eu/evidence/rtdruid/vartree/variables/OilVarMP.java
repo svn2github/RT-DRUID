@@ -35,8 +35,8 @@ import org.xml.sax.SAXException;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilTransformException;
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.internal.vartree.data.oil.impl.OilApplPointer;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.IMountPointVar;
 import com.eu.evidence.rtdruid.vartree.ISubVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable;

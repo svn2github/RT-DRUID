@@ -16,9 +16,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplElementDescr;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplPointer;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 
 
 

@@ -1,6 +1,5 @@
 package com.eu.evidence.rtdruid.modules.oil.interfaces;
 
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
 
 
 public interface IOilImplementation extends Comparable<Object> {
@@ -10,7 +9,7 @@ public interface IOilImplementation extends Comparable<Object> {
 	 * 
 	 * @return the identifier.
 	 */
-	public OilImplID getId();
+	public IOilImplID getId();
 
 	/**
 	 * Return the number of definition of current Implementation.

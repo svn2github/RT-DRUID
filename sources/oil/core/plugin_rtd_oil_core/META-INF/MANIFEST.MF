@@ -8,7 +8,8 @@ Require-Bundle: com.eu.evidence.rtdruid.core,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
  com.eu.evidence.templates.core,
- org.eclipse.emf.ecore.xmi
+ org.eclipse.emf.ecore.xmi,
+ com.eu.evidence.rtdruid.oil.model;bundle-version="2.0.0";visibility:=reexport
 Bundle-Vendor: Evidence S.r.l.
 Export-Package: com.eu.evidence.rtdruid.internal.modules.oil.exceptions,
  com.eu.evidence.rtdruid.internal.modules.oil.keywords,

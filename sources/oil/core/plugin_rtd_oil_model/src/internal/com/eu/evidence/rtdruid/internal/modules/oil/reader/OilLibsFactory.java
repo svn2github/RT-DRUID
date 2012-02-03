@@ -11,7 +11,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.internal.modules.oil.model.OilModelLog;
 
 /**
  * This class is used to collect oil libraries, using the Extension Point
@@ -72,7 +72,7 @@ public class OilLibsFactory {
 
 					URL url = bundle.getResource(path);
 					if (url == null) {
-						RtdruidLog.log("Oil library not found " + path);
+						OilModelLog.log("Oil library not found " + path);
 						continue; // next
 					}
 
@@ -80,7 +80,7 @@ public class OilLibsFactory {
 					try {
 						loc = FileLocator.toFileURL(url);
 					} catch (IOException e) {
-						RtdruidLog
+						OilModelLog
 								.log("Cannot open the Oil library " + path, e);
 						continue; // next
 					}
@@ -94,14 +94,14 @@ public class OilLibsFactory {
 								answer.add(file);
 							}
 						} else {
-							RtdruidLog
+							OilModelLog
 									.log("Cannot find or read the specified Oil library directory "
 											+ file);
 							continue; // next
 						}
 					}
 				} catch (Exception e) {
-					RtdruidLog.log("Unable to get oil library directory.", e);
+					OilModelLog.log("Unable to get oil library directory.", e);
 				}
 			}
 		}

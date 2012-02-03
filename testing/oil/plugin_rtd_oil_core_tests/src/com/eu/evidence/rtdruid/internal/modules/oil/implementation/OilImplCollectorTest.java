@@ -9,7 +9,7 @@ import org.eclipse.core.runtime.Platform;
 
 import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
@@ -18,8 +18,7 @@ public class OilImplCollectorTest extends TestCase {
 
 	public void testImplementationsNumber() {
 		System.out.println(">>> TEST IMPLEMENTATION NUMBER");
-		OilImplCollector oic = new OilImplCollector();
-		IOilImplementation[] impls = oic.getAllOilImplementation();
+		IOilImplementation[] impls = OilImplCollector.getAllOilImplementation();
 		System.out.println("found implementations are : " + impls.length);
 		
 		IConfigurationElement[] config = Platform.getExtensionRegistry()
@@ -32,8 +31,7 @@ public class OilImplCollectorTest extends TestCase {
 	
 	public void testGetAllImplementations() {
 		System.out.println(">>> TEST GET IMPLEMENTATION");
-		OilImplCollector oic = new OilImplCollector();
-		IOilImplementation[] impls = oic.getAllOilImplementation();
+		IOilImplementation[] impls = OilImplCollector.getAllOilImplementation();
 		System.out.println("found implementations are : " + impls.length);
 
 		for (IOilImplementation impl : impls) {
@@ -45,13 +43,12 @@ public class OilImplCollectorTest extends TestCase {
 	
 	public void testMergeImplementations() {
 		System.out.println(">>> TEST MERGE IMPLEMENTATION");
-		OilImplCollector oic = new OilImplCollector();
-		IOilImplementation[] impls = oic.getAllOilImplementation();
+		IOilImplementation[] impls = OilImplCollector.getAllOilImplementation();
 
 		IVarTree vt = RTDFactory.newVarTree();
 		OilImplFactory oif = OilImplFactory.getAnInstance(vt);
 		
-		HashSet<OilImplID> ids = new HashSet<OilImplID>();
+		HashSet<IOilImplID> ids = new HashSet<IOilImplID>();
 		for (IOilImplementation impl : impls) {
 			ids.add(impl.getId());
 			oif.merge(impl);
@@ -59,7 +56,7 @@ public class OilImplCollectorTest extends TestCase {
 		
 		System.out.println("Founded id: " + ids.size());
 		
-		for (OilImplID id : ids) {
+		for (IOilImplID id : ids) {
 			IOilImplementation impl = oif.getImpl(id);
 
 			System.out.println();

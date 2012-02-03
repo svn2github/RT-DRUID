@@ -5,7 +5,7 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.reader;
 
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 
 /**
  * @author Nicola Serreli

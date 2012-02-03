@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import org.w3c.dom.Document;
 
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
@@ -65,7 +65,7 @@ public class OilImplFactory_Impl extends OilImplFactory {
 	 * @return true if specified data are correctly added, false if there was a
 	 *         previous OilImplementation with the same id and different data.
 	 */
-	public boolean add(OilImplID id, Document data) {
+	public boolean add(IOilImplID id, Document data) {
 		return add(new OilImplementation(id, data));
 	}
 
@@ -111,7 +111,7 @@ public class OilImplFactory_Impl extends OilImplFactory {
 	 * 
 	 * @return true if specified data are correctly added.
 	 */
-	public boolean merge(OilImplID id, Document data) {
+	public boolean merge(IOilImplID id, Document data) {
 		return merge(new OilImplementation(id, data));
 	}
 
@@ -150,14 +150,14 @@ public class OilImplFactory_Impl extends OilImplFactory {
 	 * 
 	 * @return an id for each stored OilImplementation object
 	 */
-	public OilImplID[] getImplNames() {
-		ArrayList<OilImplID> names = new ArrayList<OilImplID>(descrList.size());
+	public IOilImplID[] getImplNames() {
+		ArrayList<IOilImplID> names = new ArrayList<IOilImplID>(descrList.size());
 		Iterator<IOilImplementation> iter = descrList.iterator();
 		while (iter.hasNext()) {
 			names.add(((IOilImplementation) iter.next()).getId());
 		}
 
-		return (OilImplID[]) names.toArray(new OilImplID[0]);
+		return (IOilImplID[]) names.toArray(new IOilImplID[0]);
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class OilImplFactory_Impl extends OilImplFactory {
 	 * 
 	 * @return the required OilImplementation or null if not found.
 	 */
-	public IOilImplementation getImpl(OilImplID id) {
+	public IOilImplementation getImpl(IOilImplID id) {
 		Iterator<IOilImplementation> iter = descrList.iterator();
 		while (iter.hasNext()) {
 			IOilImplementation curr = (IOilImplementation) iter.next();

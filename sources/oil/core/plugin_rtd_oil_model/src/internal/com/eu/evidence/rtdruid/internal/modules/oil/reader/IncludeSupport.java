@@ -13,7 +13,7 @@ import java.util.Stack;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.internal.modules.oil.model.OilModelLog;
 
 /**
  * This class tries to solve {@link #INCLUDE_KW include} requests, using
@@ -297,7 +297,7 @@ public class IncludeSupport {
 			}
 		} catch (FileNotFoundException e) {
 			// not possible (the file is checked before the open operation)
-			RtdruidLog.log(e);
+			OilModelLog.log(e);
 		}
 
 		// end parse
@@ -336,7 +336,7 @@ public class IncludeSupport {
 				if (f.exists() && f.canRead() && f.isFile()) {
 
 					if (answer != null) {
-						RtdruidLog
+						OilModelLog
 								.log("Warning found multiple match for the oil library "
 										+ fileName);
 					} else {

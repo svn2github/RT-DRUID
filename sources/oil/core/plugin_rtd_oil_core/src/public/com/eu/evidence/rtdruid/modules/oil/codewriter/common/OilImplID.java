@@ -5,12 +5,14 @@
  */
 package com.eu.evidence.rtdruid.modules.oil.codewriter.common;
 
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
+
 /**
  * An Identifier for Oil Implementation Objects
  * 
  * @author Nicola Serreli
  */
-public class OilImplID implements Comparable<OilImplID> {
+public class OilImplID implements IOilImplID {
 
 	/** Contains the type of CPU */
 	protected final String cpuType;
@@ -18,14 +20,14 @@ public class OilImplID implements Comparable<OilImplID> {
 	/** Contains the type of RT-OS */
 	protected final String rtosType;
 
-	/** Contains the name of Implementation section insede the input oil file */
+	/** Contains the name of Implementation section inside the input oil file */
 	protected final String implementationName;
 
 	/**
 	 * Construct a new OilImplID.
 	 * 
 	 * @param implName
-	 *            the name of Implementation section insede the input oil file
+	 *            the name of Implementation section inside the input oil file
 	 * @param cpu
 	 *            identifies a cpu (can be null)
 	 * @param rtos
@@ -66,33 +68,32 @@ public class OilImplID implements Comparable<OilImplID> {
 						.equals(oi.rtosType));
 	}
 
-	/**
-	 * Compare another OilImplId with current OilImplId.
-	 * Check first cpuType and then rtosType; null values comes first.
-	 * 
-	 * @param o
-	 *            the Object to be compared.
-	 * 
-	 * @return a negative integer, zero, or a positive integer as this object is
-	 *         less than, equal to, or greater than the specified object.
-	 * 
-	 * @throws NullPointerException
-	 *             if specified object is Null
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.modules.oil.codewriter.common.IOilImplID#compareTo(com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID)
 	 */
-	public int compareTo(OilImplID o) {
+	@Override
+	public int compareTo(IOilImplID o) {
 		if (o == null) {
 			throw new NullPointerException("Required a not null object");
 		}
-		OilImplID oi = (OilImplID) o;
-
-		// first null values
-		int res = 0;
-		res = (cpuType == null ? (oi.cpuType == null ? 0 : -1)
-				: (oi.cpuType == null ? 1 : cpuType.compareTo(oi.cpuType)));
-
-		return res != 0 ? res : (rtosType == null ? (oi.rtosType == null ? 0
-				: -1) : (oi.rtosType == null ? 1 : rtosType
-				.compareTo(oi.rtosType)));
+		
+		if (o instanceof OilImplID) {
+			
+			OilImplID oi = (OilImplID) o;
+	
+			// first null values
+			int res = 0;
+			res = (cpuType == null ? (oi.cpuType == null ? 0 : -1)
+					: (oi.cpuType == null ? 1 : cpuType.compareTo(oi.cpuType)));
+	
+			return res != 0 ? res : (rtosType == null ? (oi.rtosType == null ? 0
+					: -1) : (oi.rtosType == null ? 1 : rtosType
+					.compareTo(oi.rtosType)));
+		} else {
+			return implementationName == null ?
+					(o.getImplementationName() == null ? 0 : -1)
+					: (o.getImplementationName() == null ? 1 : implementationName.compareTo(o.getImplementationName()));
+		}
 	}
 
 	/**
@@ -113,11 +114,10 @@ public class OilImplID implements Comparable<OilImplID> {
 		return rtosType;
 	}
 
-	/**
-	 * Returns the Implementation Name
-	 * 
-	 * @return the implementation name
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.modules.oil.codewriter.common.IOilImplID#getImplementationName()
 	 */
+	@Override
 	public String getImplementationName() {
 		return implementationName;
 	}
@@ -132,7 +132,7 @@ public class OilImplID implements Comparable<OilImplID> {
 	 * @param rtos
 	 *            identifies a rt-os
 	 */
-	public OilImplID clone() {
+	public IOilImplID clone() {
 		return new OilImplID(implementationName, cpuType, rtosType);
 	}
 

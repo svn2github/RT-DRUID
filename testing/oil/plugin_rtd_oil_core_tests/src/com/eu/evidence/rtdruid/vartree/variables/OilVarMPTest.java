@@ -13,8 +13,8 @@ import java.util.Stack;
 import junit.framework.TestCase;
 
 import com.eu.evidence.rtdruid.desk.RTDFactory;
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWritertTest;
 import com.eu.evidence.rtdruid.vartree.ISubVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;

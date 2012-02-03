@@ -25,7 +25,7 @@ import org.w3c.dom.Document;
 import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplFactory_Impl;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.data.init.VtCompare;
@@ -472,7 +472,7 @@ public class OilReaderTest extends TestCase {
     /** Try to load a splitted Oil Implementation Section */
     public void testLoad_test_1_splitted() {
     	IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
-        OilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
+        IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
         assertTrue(oids != null);
         assertTrue(oids.length == 0);
         
@@ -486,7 +486,7 @@ public class OilReaderTest extends TestCase {
 
     public void testLoad_test_1_vt() {
     	IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
-        OilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
+        IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
         assertTrue(oids != null);
         assertTrue(oids.length == 0);
         
@@ -509,7 +509,7 @@ public class OilReaderTest extends TestCase {
     
     public void testLoad_test_1() {
     	IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
-        OilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
+        IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
         assertTrue(oids != null);
         assertTrue(oids.length == 0);
         
@@ -749,7 +749,7 @@ public class OilReaderTest extends TestCase {
     
     public void testLoad_test_1_and_2() {
     	IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
-        OilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
+        IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
         assertTrue(oids != null);
         assertTrue(oids.length == 0);
         
@@ -913,7 +913,7 @@ public class OilReaderTest extends TestCase {
 		+ "	 EVENT evento1 {};\n"
 		+ "};\n";
     public void testLoad_test_SenzaImplementation() {
-        OilImplID[] oids = OilImplFactory_Impl.getAnInstance((IVarTree) RTDFactory.get(IVarTree.class)).getImplNames();
+        IOilImplID[] oids = OilImplFactory_Impl.getAnInstance((IVarTree) RTDFactory.get(IVarTree.class)).getImplNames();
         assertTrue(oids != null);
         assertTrue(oids.length == 0);
         
@@ -954,7 +954,7 @@ public class OilReaderTest extends TestCase {
 		+ "};\n"
 		+ "};\n";
     public void testLoad_test_enumWrong() {
-        OilImplID[] oids = OilImplFactory_Impl.getAnInstance((IVarTree) RTDFactory.get(IVarTree.class)).getImplNames();
+        IOilImplID[] oids = OilImplFactory_Impl.getAnInstance((IVarTree) RTDFactory.get(IVarTree.class)).getImplNames();
         assertTrue(oids != null);
         assertTrue(oids.length == 0);
         

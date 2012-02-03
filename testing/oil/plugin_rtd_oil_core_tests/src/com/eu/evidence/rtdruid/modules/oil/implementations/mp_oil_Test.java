@@ -12,8 +12,8 @@ import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplFactor
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplPointer;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplElementDescr;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplPointer;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -66,7 +66,7 @@ public class mp_oil_Test extends TestCase implements FilenameFilter {
 	public void test() {
 		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
 		
-		OilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
+		IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
 		assertTrue(oids != null);
 	    assertTrue(oids.length == 0);
 		final String filename = "com/eu/evidence/rtdruid/modules/oil/templates/ee_appl.oil";
@@ -81,8 +81,8 @@ public class mp_oil_Test extends TestCase implements FilenameFilter {
 
 		OilImplFactory oif = OilImplFactory_Impl.getAnInstance(vt);
 		OilImplFactory oif2 = OilImplFactory_Impl.getAnInstance(vt);
-		OilImplID[] oif_ids = oif.getImplNames();
-		OilImplID[] oif_ids2 = oif2.getImplNames();
+		IOilImplID[] oif_ids = oif.getImplNames();
+		IOilImplID[] oif_ids2 = oif2.getImplNames();
 		IOilImplPointer oip = oif.getImpl(oif_ids[0]).getPointer();
 		IOilImplPointer oip2 = oif2.getImpl(oif_ids2[0]).getPointer();
 
@@ -211,8 +211,8 @@ public class mp_oil_Test extends TestCase implements FilenameFilter {
 	}
 
 	public boolean compare_oif(OilImplFactory oif1, OilImplFactory oif2) throws NullPointerException {
-		OilImplID[] oif1_ids = oif1.getImplNames();
-		OilImplID[] oif2_ids = oif2.getImplNames();
+		IOilImplID[] oif1_ids = oif1.getImplNames();
+		IOilImplID[] oif2_ids = oif2.getImplNames();
 		if ( (oif1_ids == null) || (oif2_ids == null) )
 			throw new NullPointerException();
 		int l = oif1_ids.length;

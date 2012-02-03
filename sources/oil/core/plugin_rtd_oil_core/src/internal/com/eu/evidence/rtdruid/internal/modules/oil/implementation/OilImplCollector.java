@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilInfo;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilParser;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.transform.OilTransformFactory;
 
@@ -65,7 +65,7 @@ public class OilImplCollector {
 						x[i] = new InputNamedStream(fileName, FileLocator.openStream(bundle, new Path(fileName), false));
 					}
 					catch (Exception e) {
-			        	RtdruidLog.log(OilImplCollector.class.getName() + ": " +
+						RtdruidLog.log(OilImplCollector.class.getName() + ": " +
 			            		"Unable to get oil implementation InputStream.", e);
 					}
 				}
@@ -84,7 +84,7 @@ public class OilImplCollector {
             		"Unable to parse oil file ("+in.name+").", e);
 			return null;
 		}
-		OilImplID oiid = OilTransformFactory.INSTANCE.getOilId(parsed.getName());
+		IOilImplID oiid = OilTransformFactory.INSTANCE.getOilId(parsed.getName());
 		assert(oiid != null);
 		Document data = parsed.getImpl();
 		assert(data != null);

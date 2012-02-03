@@ -25,7 +25,6 @@ import org.w3c.dom.NodeList;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.common.OilObjectList;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilTransformException;
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplFactory_Impl;
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
@@ -34,8 +33,10 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplElementDescr;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplPointer;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.IMultiValues;
 import com.eu.evidence.rtdruid.vartree.ISubVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
@@ -131,12 +132,14 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public void load(IVarTree lvt, Document appl, OilImplID id)
+	public void load(IVarTree lvt, Document appl, IOilImplID iid)
 			throws OilTransformException {
 		Assert.isLegal(lvt != null, "Expected a not null VarTree");
 		Assert.isLegal(appl != null, "Expected a not null Document");
-		Assert.isLegal(id != null, "Expected a not null OilImplID");
+		Assert.isLegal(iid != null, "Expected a not null OilImplID");
 
+		OilImplID id = (OilImplID) iid;
+		
 		vt = lvt;
 		oilImpl = OilImplFactory.getAnInstance(vt).getImpl(id);
 
@@ -1326,7 +1329,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeAppmode(IVarTreePointer vtp, Element parent, OilImplID id)
+	protected void storeAppmode(IVarTreePointer vtp, Element parent, IOilImplID id)
 			throws OilTransformException {
 
 		String[] modeNamePath = { DPKG.getSystem_Modes().getName(),
@@ -1412,7 +1415,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeNetworkMessages(IVarTreePointer vtp, Element parent, OilImplID id)
+	protected void storeNetworkMessages(IVarTreePointer vtp, Element parent, IOilImplID id)
 			throws OilTransformException {
 
 		String[] frameNamePath = { DPKG.getSystem_Architectural().getName(),
@@ -2217,9 +2220,11 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public String write(IVarTree vt, OilImplID id, String rtosPath)
+	public String write(IVarTree vt, IOilImplID iid, String rtosPath)
 			throws OilTransformException {
 
+		OilImplID id = (OilImplID) iid;
+		
 		// init
 		this.vt = vt;
 
@@ -2261,7 +2266,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public String write(IVarTree vt, OilImplID id, String[] rtosPaths)
+	public String write(IVarTree vt, IOilImplID id, String[] rtosPaths)
 			throws OilTransformException {
 		throw new UnsupportedOperationException(
 				"Default Oil Transformer doesn't support export from more than one rtos");
@@ -2298,7 +2303,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @param id
 	 *            identifies the Implementation
 	 */
-	protected void writeImplementation(StringBuffer buffer, OilImplID id) {
+	protected void writeImplementation(StringBuffer buffer, IOilImplID id) {
 		IOilImplementation impl = OilImplFactory_Impl.getAnInstance(vt).getImpl(id);
 
 		buffer.append(impl.toOil());

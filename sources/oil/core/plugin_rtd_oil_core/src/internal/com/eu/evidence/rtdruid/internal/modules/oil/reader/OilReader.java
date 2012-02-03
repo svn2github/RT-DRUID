@@ -8,8 +8,6 @@ package com.eu.evidence.rtdruid.internal.modules.oil.reader;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,6 +17,7 @@ import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplCollector;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilReader;
 import com.eu.evidence.rtdruid.modules.oil.transform.IOilTransform;
@@ -161,7 +160,7 @@ final public class OilReader implements IOilReader {
             				, e);
         }
         
-        OilImplID oid;
+        IOilImplID oid;
 		OilImplFactory oif = OilImplFactory.getAnInstance(vt);
         if (parsed.getName() == null) {
         	// add every implementation defined using Extention Point
@@ -169,7 +168,7 @@ final public class OilReader implements IOilReader {
     			oif.merge(impl);
     		}
     		
-    		OilImplID[] ids = oif.getImplNames();
+    		IOilImplID[] ids = oif.getImplNames();
     		if (ids.length == 1) {
     			oid = ids[0];
     		} else {

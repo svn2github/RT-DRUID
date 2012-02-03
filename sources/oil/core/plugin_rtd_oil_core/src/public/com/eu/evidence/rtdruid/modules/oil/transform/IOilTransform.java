@@ -10,7 +10,7 @@ package com.eu.evidence.rtdruid.modules.oil.transform;
 import org.w3c.dom.Document;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilTransformException;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
@@ -35,7 +35,7 @@ public interface IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public void load(IVarTree vt, Document appl, OilImplID id)
+	public void load(IVarTree vt, Document appl, IOilImplID id)
 			throws OilTransformException;
 
 	/**
@@ -54,7 +54,7 @@ public interface IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public String write(IVarTree vt, OilImplID id, String rtosPath)
+	public String write(IVarTree vt, IOilImplID id, String rtosPath)
 			throws OilTransformException;
 
 	/**
@@ -73,7 +73,7 @@ public interface IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public String write(IVarTree vt, OilImplID id, String[] rtosPaths)
+	public String write(IVarTree vt, IOilImplID id, String[] rtosPaths)
 			throws OilTransformException;
 
 }

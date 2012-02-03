@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilApplPackage;
 import com.eu.evidence.rtdruid.vartree.data.oil.Value;
