@@ -14,6 +14,7 @@ import com.eu.evidence.rtdruid.modules.oil.implementation.OilEcoreCreator;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 public class OilEcoreCreatorTest {
@@ -71,9 +72,42 @@ public class OilEcoreCreatorTest {
 		
 		assertTrue(found);
 		
-		
 		OilEcoreCreator.save(DataPackage.eINSTANCE, "./data.ecore");
 	}
-	
+
+	@Test
+	public void testFillRtdOilEcore() {
+
+		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);;
+		
+		OilImplFactory oif = OilImplFactory.getAnInstance(vt);
+		oif.reloadDefault();
+		IOilImplID[] ids = oif.getImplNames();
+		assertTrue(ids.length == 1);
+		EPackage ePkg = null;
+		for (IOilImplID id : ids) {
+		
+			System.out.println("Building " + id.getImplementationName());
+			IOilImplementation impl = oif.getImpl(id);
+			
+			
+			OilEcoreCreator oec = OilEcoreCreator.getCreator(impl);
+			ePkg = oec.buildPackage();
+		}
+		assertTrue(ePkg != null);
+		
+		FillVtTest.fill(vt);
+		IVarTreePointer vtp = vt.newVarTreePointer();
+		assertTrue(vtp.goFirstChild()); // System
+		assertTrue(vtp.go(DataPackage.Literals.ARCHITECTURAL.getName())); // Archtectural
+		assertTrue(vtp.go(DataPackage.Literals.ARCHITECTURAL__TASK_LIST.getName())); // TaskList
+		assertTrue(vtp.goFirstChild()); // A Task
+		assertTrue(vtp.getType().equalsIgnoreCase(DataPackage.Literals.TASK.getName())); // TASK type
+		
+		assertTrue(vtp.go("TASK_OIL_EXT")); // oil extention
+		
+	}
 
 }
+
+
