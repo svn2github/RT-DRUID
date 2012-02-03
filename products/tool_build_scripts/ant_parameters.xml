@@ -102,6 +102,9 @@
 		<property name="ftemplates_ee_ppc_v"   value="1.6.0"/>
 		<property name="templates_ee_ppc_v"    value="1.6.0"/>
 	
+		<property name="ftemplates_ee_mico32_v"   value="1.6.0"/>
+		<property name="templates_ee_mico32_v"    value="1.6.0"/>
+
 	
 	<property name="frtd_jscan_core_v"     value="1.6.0"/>
 	<property name="rtd_jscan_core_v"      value="1.6.0"/>

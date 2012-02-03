@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="com.eu.evidence.ee.templates.mico32" default="build.jars" basedir=".">
+
+	<!--
+	******************************************
+	                 COMMON
+	******************************************
+	-->
+		<import file="../../../../products/tool_build_scripts/ant_parameters.xml" optional="false"/>
+
+		<import file="../../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
+		
+		<property name="bundleId" value="com.eu.evidence.ee.templates.mico32"/>
+		<property name="bundleVersion" value="${templates_ee_mico32_v}.${build_number}"/>
+
+		<fileset dir="${ee.base.location}" id="ee_examples">
+			<include name="examples/mico32/templates/**/*"/>
+		</fileset>
+
+
+	<!--
+	******************************************
+	                 SPECIFIC
+	******************************************
+	-->
+		<target name="build.update.jar" description="Build the plug-in: ${bundleId} for an update site.">
+			<antcall target="common_build.update.jar">
+				<param name="plugin_id" value="${bundleId}"/>
+				<param name="plugin_vers" value="${bundleVersion}"/>
+			</antcall>
+		</target>
+
+		<target name="templates_mico32.jar" unless="templates_mico32.jar" description="Create jars: ${bundleId} templates_mico32.jar.">
+<!--			<path id="common_build_classpath">
+				<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
+				
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_${rtd_templates_v}.${build_number}/"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_*/"/>
+				
+			</path>
+			<resources id="common_build_binary_files">
+				<fileset dir="java_src/" >
+					<include name="**/*"/>
+					<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+					<exclude name="**/package.htm*"/>
+				</fileset>
+			</resources>	
+
+			<antcall target="common_build.dir">
+				<param name="plugin_id" value="${bundleId}"/>
+				<param name="plugin_vers" value="${bundleVersion}"/>
+				<param name="jar_name" value="templates_mico32"/>
+				<param name="common_build_sources" value="java_src/"/>
+				<reference refid="common_build_classpath"/>
+				<reference refid="common_build_binary_files"/>
+			</antcall>-->
+		</target>
+
+		<target name="publish.bin.parts">
+			<antcall target="common_publish.bin.parts">
+				<param name="plugin_id" value="${bundleId}"/>
+				<param name="plugin_vers" value="${bundleVersion}"/>
+				<param name="jar_name" value="templates_mico32"/>
+			</antcall>
+		</target>
+
+		<target name="gather.bin.parts" if="destination.temp.folder">
+			
+			<antcall target="common_gather.bin.files">
+				<reference refid="ee_examples" torefid="common_gather_binary"/>
+			</antcall>
+			
+			
+			
+			<fileset dir="${basedir}" id="common_gather_binary">
+				<include name="META-INF/"/>
+			<include name="epl-v10.html/"/>
+				<include name="VERSION"/>
+				<include name="about.html"/>
+				<include name="about.ini"/>
+				<include name="plugin.xml"/>
+				<include name="rtdruid.png"/>
+			</fileset>
+
+			<antcall target="common_gather.bin.parts">
+				<param name="plugin_id" value="${bundleId}"/>
+				<param name="plugin_vers" value="${bundleVersion}"/>
+				<param name="jar_name" value="templates_mico32"/>
+				<reference refid="common_gather_binary"/>
+			</antcall>
+		</target>
+
+		<!---->
+		<target name="build.jars" description="Compile classes and build nested jars for the plug-in: ${bundleId}.">
+			<delete file="${compilation.problem.marker}" quiet="true"/>
+			<available property="templates_mico32.jar" file="${build.result.folder}/templates_mico32.jar"/>
+			<antcall target="templates_mico32.jar"/>
+		</target>
+	
+	
+	<!-- Update EE source code -->
+		<target name="update.ee.files" if="ee.base.location">
+			<antcall target="clean"/>
+			<copy todir="${basedir}">
+				<fileset refid="ee_examples"/>
+			</copy>
+		</target>
+	
+
+		<target name="clean">
+			<delete dir="examples"/>
+		</target>
+</project>

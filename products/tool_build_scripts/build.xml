@@ -43,6 +43,7 @@
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/cosmic/feature_ee_templates_s12"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/ppc/feature_ee_templates_ppc"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/infineon/feature_ee_templates_tricore"/>
+		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/lattice/feature_ee_templates_mico32"/>
 	</target>
 
 	<target name="sched_analysis.features" if="enable_sched_analysis_features">
