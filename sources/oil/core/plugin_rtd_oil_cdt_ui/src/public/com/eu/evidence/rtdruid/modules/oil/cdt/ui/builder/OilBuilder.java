@@ -36,9 +36,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.desk.RTDFactory;
@@ -52,10 +49,12 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.Rtd_oil_cdt_Plugin;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.cygwin.MyMakeBuilder;
+import com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.EELocationLinkVar;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.RTDOilProjectNature;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilReaderFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.options.OptionsManager;
+import com.eu.evidence.rtdruid.modules.oil.ee.ui.location.ErikaEnterpriseLocationProjectHandler;
 import com.eu.evidence.rtdruid.ui.common.RTDConsole;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -159,7 +158,7 @@ public class OilBuilder extends IncrementalProjectBuilder {
 					Messages.sendTextNl("\nThere are some Errors.\n");
 
 					// force to build again all the next time
-					forgetLastBuiltState();
+					//forgetLastBuiltState();
 
 					// try to stop build (It's the best way?)
 					if (monitor != null) {
@@ -267,9 +266,9 @@ public class OilBuilder extends IncrementalProjectBuilder {
     // ------------------------- INCREMENTATL -------------------------
 
     protected class DeltaBuilder {
-        protected HashMap rebuild = new HashMap();
-        protected HashMap confBuffer = new HashMap();
-        protected HashMap visited = new HashMap();
+        protected HashMap<IProject, String> rebuild = new HashMap<IProject, String>();
+        protected HashMap<IProject, Object> confBuffer = new HashMap<IProject, Object>();
+        protected HashMap<IProject, String> visited = new HashMap<IProject, String>();
         
         //protected IProjectBuilder builder;// = getProjectBuilder();
         protected boolean rebuilded = false;
@@ -295,8 +294,9 @@ public class OilBuilder extends IncrementalProjectBuilder {
                 
                 String resName = res.getProjectRelativePath().toString();
                 build |= ".project".equals(resName);
+                build |= ".cproject".equals(resName);
                 
-                build |= confFile.equals("" + resName);
+                build |= confFile.equals(resName);
                 //System.err.println("\t>>rebuild = " + build);
 
                 if (build) {
@@ -335,8 +335,8 @@ long a1 = System.currentTimeMillis();
             // rebuild output dir
             if (rebuild.size() > 0) {
                 
-                Set keys = rebuild.keySet();
-                for (Iterator iter = keys.iterator(); iter.hasNext();) {
+                Set<IProject> keys = rebuild.keySet();
+                for (Iterator<IProject> iter = keys.iterator(); iter.hasNext();) {
                     
                     IProject project = (IProject) iter.next();
                     String configFile = (String) rebuild.get(project);
@@ -352,6 +352,7 @@ long a1 = System.currentTimeMillis();
                     IProjectBuilder builder = getProjectBuilder(file.getFullPath(), project);
                     try {
                     	rebuilded = builder.store();
+                    	EELocationLinkVar.reindex(project);
             		} catch (/*NotFoundSignature*/Exception e) {
             			RtdruidLog.log(e);
             			//activeSignaturesView(file);
@@ -367,7 +368,7 @@ long a1 = System.currentTimeMillis();
             		
             		
             		// try to build myMake file
-    	        	MyMakeBuilder myMakeBuilder = new MyMakeBuilder(getProject());
+    	        	MyMakeBuilder myMakeBuilder = new MyMakeBuilder(getProject(), builder.getOptions());
     	        	try {
     	    			myMakeBuilder.buildFile();
     	    		} catch (IOException e) {
@@ -380,8 +381,8 @@ long a1 = System.currentTimeMillis();
             // check other visited projects
             if (visited.size() > 0) {
                 
-                Set allVisistedProjects = visited.keySet();
-                for (Iterator iter = allVisistedProjects.iterator(); iter.hasNext();) {
+                Set<IProject> allVisistedProjects = visited.keySet();
+                for (Iterator<IProject> iter = allVisistedProjects.iterator(); iter.hasNext();) {
                     
                 	// check the configFile
                     IProject project = (IProject) iter.next();
@@ -390,9 +391,8 @@ long a1 = System.currentTimeMillis();
                     IFile file = project.getFile(configFile);
                     if (!file.exists()) {
                         
-                        // TODO : log something !!!!
-                        throw new RuntimeException("The project " + project.getName() + " doesn't contains the RT-Druid config file " + configFile);
-                        //continue; // next
+                        RtdruidLog.log("The project " + project.getName() + " doesn't contains the RT-Druid config file " + configFile);
+                    	continue; // next
                     }
                     long configFileTimeStamp = file.getLocalTimeStamp();
 
@@ -442,6 +442,7 @@ long a1 = System.currentTimeMillis();
                     
                     if (forceRebuild) {
                     	rebuilded = builder.store();
+                    	EELocationLinkVar.reindex(project);
                     	
 //                        try {
 //                        	NiosProjectBuilder.setCDTWorkFolder(project, builder.getWorkFolder());
@@ -451,7 +452,7 @@ long a1 = System.currentTimeMillis();
 //                        }
                     	
                     	// try to build myMake file
-        	        	MyMakeBuilder myMakeBuilder = new MyMakeBuilder(getProject());
+        	        	MyMakeBuilder myMakeBuilder = new MyMakeBuilder(getProject(), builder.getOptions());
         	        	try {
         	    			myMakeBuilder.buildFile();
         	    		} catch (IOException e) {
@@ -490,7 +491,7 @@ long a1 = System.currentTimeMillis();
             
             // Check if this project is valid and contains the required attribute 
             String tmp = null;
-    	    Map attributes = OilBuilder.getParameters(project);
+    	    Map<String, String> attributes = OilBuilder.getParameters(project);
     	    if (attributes != null && attributes.containsKey(OilBuilder.ATTR_CONFIG_FILE)) {
     	        tmp = (String) attributes.get(OilBuilder.ATTR_CONFIG_FILE);
     	    } 
@@ -561,15 +562,15 @@ long a1 = System.currentTimeMillis();
      * Return a Map with all parameters setted in the specified project for this Builder.
      * If the project is closed or doesn't use this builder, returns a null map.
      *  */
-    public static Map getParameters(IProject project) {
+    public static Map<String, String> getParameters(IProject project) {
         try {
             if (project != null && project.isOpen()) {
 	            ICommand command = RTDOilProjectNature.getBuildSpec(project, BUILDER_ID);
 	            if (command != null) {
 	                
-	                Map answer = command.getArguments();
+	                Map<String, String> answer = command.getArguments();
 	                if (answer == null) {
-	                    answer = new HashMap();
+	                    answer = new HashMap<String, String>();
 	                }
 	                return answer;
 	            }
@@ -587,7 +588,7 @@ long a1 = System.currentTimeMillis();
      * Return a Map with all parameters setted in the specified project for this Builder.
      * If the project is closed or doesn't use this builder, returns a null map.
      *  */
-    public static void setParameters(IProject project, Map newAttributes) {
+    public static void setParameters(IProject project, Map<String, String> newAttributes) {
         try {
             if (project != null && project.isOpen()) {
 	            ICommand command = RTDOilProjectNature.getBuildSpec(project, BUILDER_ID);
@@ -611,7 +612,7 @@ long a1 = System.currentTimeMillis();
         
         // Check if this project is valid and contains the required attribute 
         String tmp = null;
-	    Map attributes = OilBuilder.getParameters(project);
+	    Map<String, String> attributes = OilBuilder.getParameters(project);
 	    if (attributes != null && attributes.containsKey(OilBuilder.ATTR_CONFIG_FILE)) {
 	        tmp = (String) attributes.get(OilBuilder.ATTR_CONFIG_FILE);
 	    } 
@@ -635,6 +636,7 @@ interface IProjectBuilder {
 	public abstract boolean store();
 	public abstract IOilWriterBuffer[] getWriterBuffers();
 	public abstract IPath getOutputFolder();
+	public abstract HashMap<String, Object> getOptions();
 
 };
 
@@ -661,6 +663,8 @@ class ProjectBuilder implements IProjectBuilder {
 	
 	private IVarTree vt;
 	protected boolean disableSignature = false;
+	
+	protected HashMap<String, Object> options;
 	
 	
 	public ProjectBuilder(IPath configFile, IProject project) {
@@ -725,7 +729,7 @@ class ProjectBuilder implements IProjectBuilder {
 		 **********************************************************************/
         Messages.sendTextNl("Compute configuration's files\n");
         try {
-        	HashMap wrtierProperties = getWriterProperties(true, vt, rtosPath);
+        	HashMap<String, Object> wrtierProperties = getWriterProperties(true, vt, rtosPath);
         	Messages.setCurrent(NULL_OUTPUT);
         	objects = RtosFactory.INSTANCE.extractObjects(vt, rtosPath, wrtierProperties);
         	
@@ -737,7 +741,7 @@ class ProjectBuilder implements IProjectBuilder {
         }
         	
         try {
-        	HashMap wrtierProperties = getWriterProperties(false, vt, rtosPath);
+        	HashMap<String, Object> wrtierProperties = getWriterProperties(false, vt, rtosPath);
         	buffers = RtosFactory.INSTANCE.write(vt, rtosPath, wrtierProperties);
         } catch (OilCodeWriterException e) {
 			RtdruidLog.log(e);
@@ -898,13 +902,17 @@ class ProjectBuilder implements IProjectBuilder {
 		return buffers;
 	}
 	
+	public HashMap<String, Object> getOptions() {
+		return options;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.eu.evidence.rtdruid.modules.oil.ui.actions.OilWriterWizard#getWriterProperties()
 	 * TODO : VA standardizzato da qualche parte !!!
 	 */
-	protected HashMap getWriterProperties(boolean enableMessages, IVarTree vt, String[] rtosPath) {
+	protected HashMap<String, Object> getWriterProperties(boolean enableMessages, IVarTree vt, String[] rtosPath) {
 		// get Parent properties
-		HashMap<String, Object> answer = new HashMap<String, Object>();
+		options = new HashMap<String, Object>();
 		
 		{
 			// output dir 
@@ -914,7 +922,7 @@ class ProjectBuilder implements IProjectBuilder {
 				
 				String last = path.lastSegment();
 				if (last != null && last.length() != 0 && path.segmentCount()>1) {
-					answer.put(IWritersKeywords.WRITER_LAST_OUTPUT_DIR, last);
+					options.put(IWritersKeywords.WRITER_LAST_OUTPUT_DIR, last);
 				}
 				String base = "";
 				for (int i=0; i<outputPrjPath.segmentCount()-1; i++) {
@@ -922,11 +930,11 @@ class ProjectBuilder implements IProjectBuilder {
 					base += "..";
 				}
 				
-				answer.put(IWritersKeywords.WRITER_OUTPUT_DIR_SET, Boolean.TRUE);
-				answer.put(IWritersKeywords.WRITER_WS_OUTPUT_projectbase_DIR, base);
+				options.put(IWritersKeywords.WRITER_OUTPUT_DIR_SET, Boolean.TRUE);
+				options.put(IWritersKeywords.WRITER_WS_OUTPUT_projectbase_DIR, base);
 				
 				//ResourcesPlugin.getWorkspace().getRoot().getFile(path).getLocation();
-				answer.put(IWritersKeywords.WRITER_WS_PATH_OUTPUT_DIR,
+				options.put(IWritersKeywords.WRITER_WS_PATH_OUTPUT_DIR,
 						outputPrjPath.toString());
 						//ResourcesPlugin.getWorkspace().getRoot().getFile(path).getProjectRelativePath().toString());
 						//ResourcesPlugin.getWorkspace().getRoot().getFile(path).getLocation().toOSString());
@@ -934,13 +942,23 @@ class ProjectBuilder implements IProjectBuilder {
 			}
 		}
 		
+		{
+			/*
+			 * Erika Enterprise Files Location
+			 */
+			String path = (new ErikaEnterpriseLocationProjectHandler(project)).getProjectErikaEnterpriseLocation();
+			if (path != null && path.length()>0) { 
+				options.put(IWritersKeywords.ERIKA_ENTERPRISE_LOCATION, path);
+			}
+		}
+		
 		{	/*
 		 	 * BuilderOptions Extentions
 		 	 */
-			answer.putAll(OptionsManager.getOptions());
+			options.putAll(OptionsManager.getOptions());
 		}
 
-		return answer;
+		return options;
 	}
 	
 	// --------------------------------------------------------------

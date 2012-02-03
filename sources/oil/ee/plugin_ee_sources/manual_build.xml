@@ -89,7 +89,7 @@
 		<target name="gather.bin.parts" if="destination.temp.folder">
 			
 			<antcall target="common_gather.bin.files">
-				<param name="subfolder" value="ee_base"/>
+				<param name="subfolder" value="ee_files"/>
 				<reference refid="ee_sources" torefid="common_gather_binary"/>
 			</antcall>
 			
@@ -128,13 +128,13 @@
 		<target name="update.ee.files" if="ee.base.location">
 			<antcall target="clean"/>
 
-			<mkdir dir="${basedir}/ee_base"/>
-			<copy todir="${basedir}/ee_base">
+			<mkdir dir="${basedir}/ee_files"/>
+			<copy todir="${basedir}/ee_files">
 				<fileset refid="ee_sources"/>
 			</copy>
 		</target>
 	
 		<target name="clean">
-			<delete dir="ee_base"/>
+			<delete dir="ee_files"/>
 		</target>
 </project>

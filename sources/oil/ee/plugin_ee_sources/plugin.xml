@@ -4,13 +4,10 @@
    <extension
          point="com.eu.evidence.rtdruid.oil.ee.core.eeSrc">
       <sourceDistribution
-            VersionFile="ee_base/VERSION"
-            contribs="ee_base/contrib/"
-            sources="ee_base/">
+            VersionFile="ee_files/VERSION"
+            contribs="ee_files/contrib/"
+            erikaFiles="ee_files/">
       </sourceDistribution>
-      <evidenceBase
-            path="/">
-      </evidenceBase>
    </extension>
 <!--
    <extension

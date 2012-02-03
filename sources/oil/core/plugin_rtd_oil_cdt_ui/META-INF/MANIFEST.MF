@@ -18,7 +18,9 @@ Require-Bundle: com.eu.evidence.rtdruid.core,
  org.eclipse.cdt.managedbuilder.core,
  org.eclipse.cdt.managedbuilder.ui,
  org.eclipse.cdt.core,
- org.eclipse.emf.ecore.xmi
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.core.variables,
+ com.eu.evidence.rtdruid.oil.ee.ui
 Eclipse-LazyStart: true
 Bundle-Vendor: Evidence S.r.l.
 

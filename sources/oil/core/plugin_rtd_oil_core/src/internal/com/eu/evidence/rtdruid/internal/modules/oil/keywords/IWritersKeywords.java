@@ -21,7 +21,10 @@ public interface IWritersKeywords {
 	final static String TXT = "abcdefgh12345678!@#$%^&*qwertyui";
 	/** Identifies Erika Enterprise */
 	public final static String RTOS_EE = "EE";
-	
+
+	/** Identifies Erika Enterprise Sources Location (host path) */
+	public final static String ERIKA_ENTERPRISE_LOCATION = "Erika_Enterprise_Location";
+
 
 	//  ------------------------ CPU ------------------------
 

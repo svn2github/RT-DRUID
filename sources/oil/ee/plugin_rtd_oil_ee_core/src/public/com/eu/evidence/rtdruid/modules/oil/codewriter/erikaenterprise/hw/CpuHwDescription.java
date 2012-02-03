@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.CommentsManager;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
 
 /**
  * This class is used to store some attributes required by a lot of common

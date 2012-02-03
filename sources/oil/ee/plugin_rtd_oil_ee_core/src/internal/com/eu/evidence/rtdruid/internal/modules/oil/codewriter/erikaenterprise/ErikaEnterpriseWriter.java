@@ -14,11 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IDistributionConstant;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
@@ -37,6 +32,12 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDescriptionManager;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IDistributionConstant;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.location.EEPaths;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.ISectionWriter;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
@@ -1882,7 +1883,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 					
 					StringBuffer sb = buffer.get(id);
 					if (sb.length()>0) {
-						String def_id = "__" + id.replace('.', '_').replace(' ', '_').toUpperCase() + "__";
+						String def_id = getIncludeDefine(id);
 						sb.insert(0,"#ifndef " +def_id +"\n" +
 								"#define " +def_id +"\n\n");
 						sb.append("#endif\n\n");
@@ -1891,6 +1892,22 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 			}
 			
 		}
+	}
+	
+	/**
+	 * This method computes the symbol for a generic .h/.hpp file.
+	 * The returned string is used to protect the file with ifndef ... define ... statements
+	 *   
+	 * @param id
+	 * @return
+	 */
+	public static String getIncludeDefine(String id) {
+		return "__" + id.replace('.', '_').replace(' ', '_').toUpperCase() + "__";
+	}
+
+	public String getEE_location() {
+		return options.containsKey(IWritersKeywords.ERIKA_ENTERPRISE_LOCATION) ?
+				(String) options.get(IWritersKeywords.ERIKA_ENTERPRISE_LOCATION) : EEPaths.getEe_base();
 	}
 
 }

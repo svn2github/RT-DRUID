@@ -2,6 +2,7 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.common.xsltcodegeneration
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -18,6 +19,21 @@ public class ComposedXsltParameterProvider implements IXsltParameterProvider {
 
 	private ArrayList<IXsltParameterProvider> providers = new ArrayList<IXsltParameterProvider>();
 
+	protected HashMap<String, Object> options = new HashMap<String, Object>();
+
+	/**
+	 * Add some options
+	 */
+	public void setOptions(Map<String, Object> options) {
+		if (options != null) {
+			this.options.clear();
+			this.options.putAll(options);
+			for (IXsltParameterProvider pp: providers) {
+				pp.setOptions(options);
+			}
+		}
+	}
+	
 	/**
 	 * Add a new parameter provider.
 	 * 
@@ -26,6 +42,7 @@ public class ComposedXsltParameterProvider implements IXsltParameterProvider {
 	public void add(IXsltParameterProvider provider) {
 		if (provider != null && !providers.contains(provider)) {
 			providers.add(provider);
+			provider.setOptions(options);
 		}
 	}
 

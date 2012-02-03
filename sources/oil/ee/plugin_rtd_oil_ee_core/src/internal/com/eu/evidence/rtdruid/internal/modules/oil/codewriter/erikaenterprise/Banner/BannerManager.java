@@ -5,8 +5,8 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.Banner;
 
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 
 /**
  * @author Nicola Serreli

@@ -46,6 +46,9 @@
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_${rtd_templates_v}.${build_number}/"/>
 				<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_*/"/>
 
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.ui_${rtd_oil_ee_ui_v}.${build_number}/"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.ui_*/"/>
+
 			</path>
 			<resources id="common_build_binary_files">
 				<fileset dir="src/public" >

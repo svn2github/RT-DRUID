@@ -14,10 +14,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 import com.eu.evidence.modules.oil.arm7.constants.Arm7Constants;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.EEPaths;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
@@ -26,14 +22,17 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
@@ -613,8 +612,6 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 			    StringBuffer sbMakefile = new StringBuffer(commentWriterMf.writerBanner("ARM 7"));
 			    
 			    {	// PATHs
-					final String eeBasePath = EEPaths.getEe_base();
-			    	
 		        	HashMap<String, ?> options = parent.getOptions();
 
 			        String gcc = wrapper.wrapPath("c:/set/arm7/gcc/path"); 
@@ -641,9 +638,6 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 					}
 
 			        sbMakefile.append(
-			        		"ifndef EEBASE\n" +
-			        		IWritersKeywords.INDENT + "EEBASE  := "+wrapper.wrapPath(eeBasePath)+"\n" +
-			                "endif\n" +
 			                "APPBASE := " + appBase + "\n" +
 			                "OUTBASE := " + outputDir + "\n" +
 			                "ARM7_GCCDIR := "+gcc+"\n\n" + 

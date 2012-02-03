@@ -16,9 +16,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 import com.eu.evidence.modules.oil.avr.constants.AvrConstants;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.EEPaths;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
@@ -36,6 +33,8 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
@@ -708,8 +707,6 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 
 			    
 			    {	// PATHs
-					final String eeBasePath = EEPaths.getEe_base();
-
 		        	HashMap<String, ?> options = parent.getOptions();
 
 			    	String avr5_gcc_Path = "C:\\programmi\\AVRGCC\\avrgcc";
@@ -736,9 +733,6 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 			    	}
 
 			        sbMakefile.append(
-			        		"ifndef EEBASE\n" +
-			        		IWritersKeywords.INDENT + "EEBASE  := "+wrapper.wrapPath(eeBasePath)+"\n" +
-			                "endif\n" +
 			                "APPBASE := " + appBase + "\n" +
 			                "OUTBASE := " + outputDir + "\n" +
 			                "AVR5_DIR:= "+wrapper.wrapPath(avr5_gcc_Path)+"\n" +

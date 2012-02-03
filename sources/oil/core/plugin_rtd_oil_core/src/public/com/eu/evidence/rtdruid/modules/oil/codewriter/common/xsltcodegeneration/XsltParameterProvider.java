@@ -1,7 +1,7 @@
 package com.eu.evidence.rtdruid.modules.oil.codewriter.common.xsltcodegeneration;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 
 /**
@@ -11,9 +11,21 @@ import java.util.Map;
  * 
  */
 public class XsltParameterProvider implements IXsltParameterProvider {
+	
+	protected HashMap<String, Object> options = new HashMap<String, Object>();
 
 	private LinkedHashMap<String, IXsltParameter> parameters = new LinkedHashMap<String, IXsltParameter>();
 
+	/**
+	 * Add some options
+	 */
+	public void setOptions(Map<String, Object> options) {
+		if (options != null) {
+			this.options.clear();
+			this.options.putAll(options);
+		}
+	}
+	
 	/**
 	 * Add a new parameter. If there is already a parameter with the same ID; it
 	 * is replaced
@@ -56,4 +68,5 @@ public class XsltParameterProvider implements IXsltParameterProvider {
 		return parameters.get(ID);
 	}
 
+	
 }

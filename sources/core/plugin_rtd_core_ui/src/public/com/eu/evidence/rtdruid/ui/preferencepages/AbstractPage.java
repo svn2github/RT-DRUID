@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -110,6 +111,33 @@ abstract public class AbstractPage extends PreferencePage implements
 		composite.setLayoutData(data);
 		return composite;
 	}
+	
+	/**
+	 * Creates composite control and sets the default layout data.
+	 * 
+	 * @param parent
+	 *            the parent of the new composite
+	 * @param numColumns
+	 *            the number of columns for the new composite
+	 * @return the newly-created coposite
+	 */
+	protected Group createGroup(Composite parent, String label, int numColumns) {
+		Group composite = new Group(parent, SWT.SHADOW_ETCHED_IN);
+		composite.setText(label);
+
+		//GridLayout
+		GridLayout layout = new GridLayout();
+		layout.numColumns = numColumns;
+		composite.setLayout(layout);
+
+		//GridData
+		GridData data = new GridData();
+		data.verticalAlignment = GridData.FILL;
+		data.horizontalAlignment = GridData.FILL;
+		composite.setLayoutData(data);
+		return composite;
+	}
+
 
 	/**
 	 * Utility method that creates a label instance and sets the default layout

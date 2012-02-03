@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension
-         point="com.eu.evidence.rtdruid.oil.core.builderOptions">
-      <options
-            class="com.eu.evidence.rtdruid.internal.modules.oil.ee.ui.preferencepages.Options">
-      </options>
-   </extension>
-
+   <extension-point id="erikaLocationListener" name="Erika Enterprise Location Listener" schema="schema/erikaLocationListener.exsd"/>
 
 <!-- Preference Page -->
    <extension
@@ -16,6 +10,15 @@
             category="com.eu.evidence.rtdruid.preferencePagesID"
             class="com.eu.evidence.rtdruid.ui.preferencepages.EmptyPage"
             name="Oil">
+       </page>
+   </extension>
+
+   <extension
+      point = "org.eclipse.ui.preferencePages">
+       <page id="com.eu.evidence.rtdruid.oil.eeLocationPreferencePagesID"
+            category="com.eu.evidence.rtdruid.oil.preferencePagesID"
+            class="com.eu.evidence.rtdruid.internal.modules.oil.ee.ui.preferencepages.ErikaSourcesPreference"
+            name="Erika Enterprise">
        </page>
    </extension>
 
@@ -48,4 +51,14 @@
        <toc file="toc.xml" primary="true" />
    </extension>
 
+
+   <extension
+         point="org.eclipse.core.variables.dynamicVariables">
+      <variable
+            description="Points to the Erika Enterprise Base directory"
+            name="erika_enterprise_location"
+            resolver="com.eu.evidence.rtdruid.modules.oil.ee.ui.location.EEBaseDynamicVariableResolver"
+            supportsArgument="true">
+      </variable>
+   </extension>
 </plugin>

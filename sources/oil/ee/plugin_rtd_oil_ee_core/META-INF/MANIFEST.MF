@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid erika enterprise main plugin (Core)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.ee.core;singleton:=true
 Bundle-Version: 1.6.0.qualifier
-Bundle-Activator: com.eu.evidence.modules.oil.erikaenterprise.Activator
+Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.erikaenterprise.Activator
 Require-Bundle: org.eclipse.core.runtime,
  com.eu.evidence.rtdruid.core,
  com.eu.evidence.rtdruid.oil.core,
@@ -11,9 +11,10 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.
-Export-Package: com.eu.evidence.modules.oil.erikaenterprise.constants,
- com.eu.evidence.modules.oil.erikaenterprise.interfaces,
- com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise,
+Export-Package: com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise,
  com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise,
- com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw
+ com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw,
+ com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants,
+ com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces,
+ com.eu.evidence.rtdruid.modules.oil.erikaenterprise.location
 Bundle-ClassPath: rtdruid_oil_ee_core.jar

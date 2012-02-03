@@ -13,6 +13,10 @@ import com.eu.evidence.rtdruid.modules.oil.ee.ui.Activator;
  * @author Nicola Serreli
  */
 public interface IOPPConstants {
+
+	/** Identifies the Erika Enterprise Location Preference page */
+	public static final String EE_LOCATION_PREFERENCE_PAGE_ID = "com.eu.evidence.rtdruid.oil.eeLocationPreferencePagesID";
+	
 	// identifies the prefix of all oil preferences
 	public static final String PLUGIN_ID = Activator.PLUGIN_ID;
 	public static final String PREFIX = PLUGIN_ID+".";

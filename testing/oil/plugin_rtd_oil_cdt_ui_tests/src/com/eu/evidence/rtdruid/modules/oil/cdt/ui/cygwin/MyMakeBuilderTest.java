@@ -18,7 +18,7 @@ public class MyMakeBuilderTest extends TestCase {
 	
 	public void testGetLocation() {
 		
-		MyMakeBuilder builder = new MyMakeBuilder(null);
+		MyMakeBuilder builder = new MyMakeBuilder(null, null);
 		MyMakePath p = builder.getLocation();
 		System.out.println(p.osPath);
 		if (p instanceof MyMakeEclipseRelativePath) {
@@ -28,7 +28,7 @@ public class MyMakeBuilderTest extends TestCase {
 	
 	public void testGetState() {
 		
-		MyMakeBuilder builder = new MyMakeBuilder(null);
+		MyMakeBuilder builder = new MyMakeBuilder(null, null);
 		String s = builder.getLocation().osPath;
 		assertTrue(s != null);
 		

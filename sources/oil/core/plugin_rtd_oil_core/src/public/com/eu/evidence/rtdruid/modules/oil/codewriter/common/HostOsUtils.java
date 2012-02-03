@@ -52,7 +52,7 @@ public class HostOsUtils {
 
 			// protect '\' chars ?
 
-			answer = "$(shell cygpath `cygpath -ms \"" + path + "\"`)";
+			answer = "$(shell cygpath `cygpath -ms '" + path + "'`)";
 			break;
 
 		case LINUX:

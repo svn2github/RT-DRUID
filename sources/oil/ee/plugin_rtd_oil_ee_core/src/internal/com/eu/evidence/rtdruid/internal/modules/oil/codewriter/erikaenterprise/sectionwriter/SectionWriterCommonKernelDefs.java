@@ -8,12 +8,11 @@ package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IDistributionConstant;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEoptConstant;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
@@ -27,6 +26,10 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IDistributionConstant;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEoptConstant;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
 /**
@@ -37,6 +40,8 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
  */
 public class SectionWriterCommonKernelDefs extends SectionWriter 
 		implements IEEWriterKeywords, IEEoptConstant {
+	
+	public final static boolean includeEE_opt_application = true;
 	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -404,6 +409,57 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 				}
 			}
 						
+			
+			/*
+			 * 
+			 *  EE_OPT inside an .h file
+			 * 
+			 * 
+			 */
+			if (includeEE_opt_application) {
+
+				Set<String> not_valid_defines = new HashSet<String>();
+				not_valid_defines.add("DEBUG");
+				
+				final StringBuffer buffer_ee_opt = buffer;
+				buffer_ee_opt.append("#ifndef " + FILE_EE_CFG_H_SECTION_EEOPT_DEFINES + "\n");
+				
+				/*******************************************************************
+				 * USER OPTIONS
+				 ******************************************************************/
+				{
+					buffer_ee_opt.append(commentWriterH
+							.writerBanner("User options"));
+					String[] options = parent.extractEE_Opts(IGetEEOPTExtentions.EE_OPT_USER_ONLY, rtosId);
+					for (int i=0; i<options.length; i++) {
+						if (!not_valid_defines.contains(options[i])) {
+							buffer_ee_opt.append("#define " + options[i] + "\n");
+						}
+					}
+					
+				}
+
+				{
+					/*******************************************************************
+					 * AUTOMATIC OPTIONS
+					 ******************************************************************/
+					buffer_ee_opt.append(commentWriterH
+							.writerBanner("Automatic options"));
+
+					String[] options = parent.extractEE_Opts(EE_OPT_COMMON_AUTO_ONLY | EE_OPT_CPU_ONLY, rtosId);
+					for (int i=0; i<options.length; i++) {
+						if (!not_valid_defines.contains(options[i])) {
+							buffer_ee_opt.append("#define " + options[i] + "\n");
+						}
+					}
+				}
+				
+				buffer_ee_opt.append("\n#endif\n\n");
+				
+			}
+			
+			
+			
 			
 			// define max number of objects for a binary distribution
 			if (binaryDistr) {

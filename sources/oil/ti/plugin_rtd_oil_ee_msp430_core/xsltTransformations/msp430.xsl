@@ -57,10 +57,6 @@ EE_UREG EE_std_active_tos = 0U; /* dummy */
 # Configuration for <xsl:value-of select="@Name"/>
 EEOPT += __MSP430__
 
-ifndef EEBASE
-EEBASE  := <PARAMETER name="eebase"/>
-endif
-
 APPBASE := ..
 OUTPUT_DIR := .
 

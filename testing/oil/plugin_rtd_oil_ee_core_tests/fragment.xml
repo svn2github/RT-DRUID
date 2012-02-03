@@ -4,13 +4,7 @@
    <extension
          point="com.eu.evidence.rtdruid.oil.ee.core.eeSrc">
       <extSourceDistribution
-            sources="c:\">
-      </extSourceDistribution>
-      <extSourceDistribution
-            sources="${eclipse_home}/features">
-      </extSourceDistribution>
-      <extSourceDistribution
-            sources=".">
+            erikaFiles="${eclipse_home}/features">
       </extSourceDistribution>
    </extension>
 

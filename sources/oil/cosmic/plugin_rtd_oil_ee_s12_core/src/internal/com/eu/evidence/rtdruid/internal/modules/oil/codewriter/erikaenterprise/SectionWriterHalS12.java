@@ -19,10 +19,6 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import com.eu.evidence.modules.oil.erikaenterprise.constants.EEPaths;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
@@ -42,6 +38,9 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWr
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.s12.Activator;
 import com.eu.evidence.rtdruid.modules.oil.s12.constants.S12Constants;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
@@ -543,8 +542,6 @@ public class SectionWriterHalS12 extends SectionWriter
 		    StringBuffer sbMakefile = new StringBuffer(commentWriterMf.writerBanner("Freescale S12"));
 		    
 		    {	// PATHs
-				final String eeBasePath = EEPaths.getEe_base();
-		    	
 	        	HashMap<String, ?> options = parent.getOptions();
 
 		        String outputDir = "Debug";
@@ -587,9 +584,6 @@ public class SectionWriterHalS12 extends SectionWriter
 //					useEEgcc_comp = (""+true).equals(tmp);
 //				}
 		        sbMakefile.append(
-		        		"ifndef EEBASE\n" +
-		        		IWritersKeywords.INDENT + "EEBASE  := "+wrapper.wrapPath(eeBasePath)+"\n" +
-		                "endif\n" +
 		                "APPBASE := " + appBase + "\n" +
 		                "OUTBASE := " + outputDir + "\n\n" + 
 		                "ifndef COSMIC_ASMDIR\n" +

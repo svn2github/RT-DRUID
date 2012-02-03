@@ -40,6 +40,7 @@ import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.cygwin.MyMakeBuilder;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.cygwin.MyMakeBuilder.MyMakeEclipseRelativePath;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.cygwin.MyMakeBuilder.MyMakePath;
+import com.eu.evidence.rtdruid.modules.oil.ee.ui.location.ErikaEnterpriseLocationProjectHandler;
 
 /**
  * A class that implements an Oil Project
@@ -76,7 +77,7 @@ public class RTDOilProjectNature implements IProjectNature {
 		try {
 			// init CDT keywords
 			// = CCorePlugin.getDefault().getBundle().getVersion();
-			Dictionary dict = CCorePlugin.getDefault().getBundle().getHeaders();
+			Dictionary<String, String> dict = CCorePlugin.getDefault().getBundle().getHeaders();
 			Object version = dict.get("Bundle-Version");
 			if (version instanceof Version) {
 				v = (Version) version;
@@ -166,7 +167,6 @@ public class RTDOilProjectNature implements IProjectNature {
 	 *  
 	 */
 	public RTDOilProjectNature() {
-		//System.err.println("nuova istanza della RT-Druid Nature");
 	}
 
 	/*
@@ -251,11 +251,10 @@ public class RTDOilProjectNature implements IProjectNature {
 		description.setBuildSpec(newCommands);
 		project.setDescription(description, null);
 	}
-
+	
 	/**
 	 * Set CDT work folder
 	 */
-	@SuppressWarnings("unchecked")
 	public static void setCDTOutputFolder(IProject project, String newFolder) throws CoreException {
 		
 		if (newFolder == null) {
@@ -273,7 +272,7 @@ public class RTDOilProjectNature implements IProjectNature {
 			
 			for (int i=0; i<commands.length; i++) {
 				if (commands[i].getBuilderName().equals(V_OLD_KEY_BUILD_ID)) {
-					Map arguments = commands[i].getArguments();
+					Map<String, String> arguments = commands[i].getArguments();
 					final String key = V_OLD_KEY_BUILD_LOCATION;
 		
 					// always enabled
@@ -295,27 +294,20 @@ public class RTDOilProjectNature implements IProjectNature {
 				ICBuildSetting bset = cc.getBuildSetting();
 				COutputEntry output = new COutputEntry(newFolder, new IPath[0], 0);
 				bset.setOutputDirectories(new ICOutputEntry[] {output});
-				
+			
 			}
 			CCorePlugin.getDefault().setProjectDescription(project, cpd);
 			
-			
-			
+			EELocationLinkVar.setEEIncludePaths(project, null);
 		}
-/*		
-		ICDescriptor descriptor = CCorePlugin.getDefault().getCProjectDescription(project, false);
-		if (descriptor == null) {
-			return;
-		}
-		
-		Element element = descriptor.getProjectData("org.eclipse.cdt.core.pathentry");
-*/
 	}
+	
+	
+	
 	
 	/**
 	 * Set CDT work folder
 	 */
-	@SuppressWarnings("unchecked")
 	public static void setCDTWorkFolder(IProject project, String newFolder) throws CoreException {
 		
 		if (newFolder == null) {
@@ -333,7 +325,7 @@ public class RTDOilProjectNature implements IProjectNature {
 			
 			for (int i=0; i<commands.length; i++) {
 				if (commands[i].getBuilderName().equals(V_OLD_KEY_BUILD_ID)) {
-					Map arguments = commands[i].getArguments();
+					Map<String, String> arguments = commands[i].getArguments();
 					final String key = V_OLD_KEY_BUILD_LOCATION;
 		
 					// always enabled
@@ -373,11 +365,10 @@ public class RTDOilProjectNature implements IProjectNature {
 	/**
 	 * Set CDT work folder
 	 */
-	@SuppressWarnings("unchecked")
 	public static void setCDTBuildCommand(IProject project, String newCommand) throws CoreException {
 		
 		if (newCommand == null) {
-	    	MyMakeBuilder myMakeBuilder = new MyMakeBuilder(project);
+	    	MyMakeBuilder myMakeBuilder = new MyMakeBuilder(project, null);
 	    	MyMakePath mmp = myMakeBuilder.getLocation();
 	    	newCommand = mmp instanceof MyMakeEclipseRelativePath ? 
 	    			((MyMakeEclipseRelativePath) mmp).fsPath : mmp.osPath;
@@ -400,7 +391,7 @@ public class RTDOilProjectNature implements IProjectNature {
 			
 			for (int i=0; i<commands.length; i++) {
 				if (commands[i].getBuilderName().equals(V_OLD_KEY_BUILD_ID)) {
-					Map arguments = commands[i].getArguments();
+					Map<String, String> arguments = commands[i].getArguments();
 					{	final String key= V_OLD_KEY_BUILD_COMMAND;
 											
 						if (arguments.containsKey(key)
@@ -454,7 +445,6 @@ public class RTDOilProjectNature implements IProjectNature {
 	/**
 	 * Get the output folder setted inside the CDT options 
 	 */
-	@SuppressWarnings("unchecked")
 	public static String getCDTWorkFolder(IProject project) {
 		
 		try {
@@ -468,10 +458,10 @@ public class RTDOilProjectNature implements IProjectNature {
 				
 				for (int i=0; i<commands.length; i++) {
 					if (commands[i].getBuilderName().equals(V_OLD_KEY_BUILD_ID)) {
-						Map arguments = commands[i].getArguments();
+						Map<String, String> arguments = commands[i].getArguments();
 						
 						if (arguments.containsKey(V_OLD_KEY_BUILD_LOCATION)) {
-							return "" + arguments.get(V_OLD_KEY_BUILD_LOCATION);
+							return arguments.get(V_OLD_KEY_BUILD_LOCATION);
 						}
 					}
 				}
@@ -482,7 +472,7 @@ public class RTDOilProjectNature implements IProjectNature {
 								
 				for (ICConfigurationDescription cc : cpds) {
 					ICBuildSetting bset = cc.getBuildSetting();
-
+					
 					ICOutputEntry[] outputs = bset.getOutputDirectories();
 					if (outputs.length >0) {
 	//					cc.getConfigurationData()
@@ -515,6 +505,11 @@ public class RTDOilProjectNature implements IProjectNature {
 		} catch (CoreException e) {
 			return null;
 		}
+	}
+	
+	
+	public static boolean usesGlobalEELocation(IProject project) {
+		return (new ErikaEnterpriseLocationProjectHandler(project)).getCurrentChoice() == null; 
 	}
 
 }

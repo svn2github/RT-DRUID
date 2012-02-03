@@ -19,7 +19,6 @@
       <complexType>
          <choice minOccurs="1" maxOccurs="unbounded">
             <element ref="sourceDistribution"/>
-            <element ref="evidenceBase"/>
             <element ref="extSourceDistribution"/>
          </choice>
          <attribute name="point" type="string" use="required">
@@ -51,7 +50,7 @@
 
    <element name="sourceDistribution">
       <complexType>
-         <attribute name="VersionFile" type="string" use="required">
+         <attribute name="VersionFile" type="string">
             <annotation>
                <documentation>
                   
@@ -61,10 +60,10 @@
                </appInfo>
             </annotation>
          </attribute>
-         <attribute name="sources" type="string">
+         <attribute name="erikaFiles" type="string">
             <annotation>
                <documentation>
-                  
+                  The location of Erika Files inside the plugin
                </documentation>
                <appInfo>
                   <meta.attribute kind="resource"/>
@@ -100,10 +99,12 @@ It can be relative to the eclipse_location (or a generic eclipse variable that i
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="sources" type="string" use="required">
+         <attribute name="erikaFiles" type="string" use="required">
             <annotation>
                <documentation>
-                  it can be an abosolute path or can contains eclipse variables (like eclipse_location)
+                  The location of Erika Files.
+
+It can be an abosolute path or can contains eclipse variables (like eclipse_location)
                </documentation>
             </annotation>
          </attribute>
@@ -112,21 +113,6 @@ It can be relative to the eclipse_location (or a generic eclipse variable that i
                <documentation>
                   
                </documentation>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
-   <element name="evidenceBase">
-      <complexType>
-         <attribute name="path" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appInfo>
-                  <meta.attribute kind="resource"/>
-               </appInfo>
             </annotation>
          </attribute>
       </complexType>

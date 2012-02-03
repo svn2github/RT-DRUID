@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-import com.eu.evidence.modules.oil.erikaenterprise.constants.EEPaths;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEoptConstant;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
@@ -29,6 +26,8 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEoptConstant;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
@@ -42,6 +41,8 @@ import com.eu.evidence.rtdruid.vartree.data.DataPackage;
  * @author Nicola Serreli
  */
 public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriterKeywords, IEEoptConstant {
+	
+	protected final static String ERIKA_INNER_MAKEFILE_DEFINE = "__ERIKA_INNER_MAKEFILE_CALL__";
 	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -164,14 +165,29 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
 			 * Common EE_BASE
 			 **********************************************************************/
 		
-			final String eeBasePath = EEPaths.getEe_base();
+			final String eeBasePath = parent.getEE_location();
 			HostOsUtils wrapper = HostOsUtils.common;
 			sbCommon_mk.append(
 					commentWriterMf.writerBanner("Makefile created by RT-Druid\n\nCommon file") +"\n"+
 					commentWriterMf.writerSingleLineComment("Erika base directory") +
-	        		"ifndef EEBASE\n" +
-	        		IWritersKeywords.INDENT + "EEBASE  := "+wrapper.wrapPath(eeBasePath)+"\n" +
-	                "endif\n"
+					"ifneq ($("+ERIKA_INNER_MAKEFILE_DEFINE+"), yes)\n" +
+					"ifdef ERIKA_FILES\n"+
+					"ifdef EEBASE\n"+
+					IWritersKeywords.INDENT + "$(warning EEBASE is set, but it has been overridden by ERIKA_FILES)\n"+
+					"endif\n"+
+					"EEBASE := "+wrapper.wrapPath("${ERIKA_FILES}")+"\n"+
+					"\n"+
+					"else # ERIKA_FILES\n"+
+					"\n"+
+					"ifndef EEBASE\n"+
+					"        EEBASE := "+wrapper.wrapPath(eeBasePath)+"\n"+
+					"else\n"+
+					"        $(warning The usage of EEBASE is deprecated. Please use ERIKA_FILES)\n"+
+					"endif\n"+
+					"endif # ERIKA_FILES\n"+
+					"# ERIKA_FILES has fulfilled its role. Make sure it's not used inside Erika makefiles\n"+ 
+					"ERIKA_FILES :=\n\n"+
+					"endif " +commentWriterMf.writerSingleLineComment(ERIKA_INNER_MAKEFILE_DEFINE)+"\n"
 	        );
 			
 			// ---------------- Configurator Number ----------------
@@ -196,6 +212,9 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
 			
 			for (int eeId = 0; eeId < eeOpts.length; eeId++) {
 				sbCommon_mk.append("EEOPT += " + eeOpts[eeId] + "\n");
+			}
+			if (SectionWriterCommonKernelDefs.includeEE_opt_application) {
+				sbCommon_mk.append("EEOPT += " + FILE_EE_CFG_H_SECTION_EEOPT_DEFINES + "\n");
 			}
 			sbCommon_mk.append("\n");
 		}
@@ -479,6 +498,9 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
         sbMakefile.append(
         		commentWriter.writerBanner("Include common and standard makefiles ...") +
         			"include common.mk\n\n"+
+        			"export EEBASE\n" +
+        			ERIKA_INNER_MAKEFILE_DEFINE+":=yes\n"+
+        			"export " + ERIKA_INNER_MAKEFILE_DEFINE +"\n" +
         			"__BASE_MAKEFILE__ = yes\n" + 
         			"include $(EEBASE)/pkg/cfg/rules.mk\n\n");
 

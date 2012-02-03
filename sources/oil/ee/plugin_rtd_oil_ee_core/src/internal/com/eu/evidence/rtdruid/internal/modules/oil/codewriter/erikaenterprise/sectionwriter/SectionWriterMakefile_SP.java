@@ -11,26 +11,24 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.List;
 
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEoptConstant;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
-import com.eu.evidence.rtdruid.desk.ReadVersion;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtdruidConfiguratorNumber;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEoptConstant;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
 /**
@@ -153,7 +151,7 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 //							+ "#\n\n" +
 //
 							"### Setting Erika's variables:\n"
-							+ "# EEBASE = ../../..\n"
+							+ "# ERIKA_FILES= ../../..\n"
 							+ "# APPBASE = .\n"
 							+ "# \n"
 							+ "# EEOPT =\n\n");
@@ -199,7 +197,39 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 				for (int i=0; i<options.length; i++) {
 				    sbMakefile.append("EEOPT += " + options[i] + "\n");
 				}
+				if (SectionWriterCommonKernelDefs.includeEE_opt_application) {
+					sbMakefile.append("EEOPT += " + FILE_EE_CFG_H_SECTION_EEOPT_DEFINES + "\n");
+				}
 			}
+			
+			
+			/*******************************************************************
+			 * EEBASE
+			 ******************************************************************/
+			{
+				final String eeBasePath = parent.getEE_location();
+				HostOsUtils wrapper = HostOsUtils.common;
+				sbMakefile.append(
+						commentWriterMf.writerBanner("Erika base directory") +
+						"ifdef ERIKA_FILES\n"+
+						"ifdef EEBASE\n"+
+						IWritersKeywords.INDENT + "$(warning EEBASE is set, but it has been overridden by ERIKA_FILES)\n"+
+						"endif\n"+
+						"EEBASE := "+wrapper.wrapPath("${ERIKA_FILES}")+"\n"+
+						"\n"+
+						"else # ERIKA_FILES\n"+
+						"\n"+
+						"ifndef EEBASE\n"+
+						"        EEBASE := "+wrapper.wrapPath(eeBasePath)+"\n"+
+						"else\n"+
+						"        $(warning The usage of EEBASE is deprecated. Please use ERIKA_FILES)\n"+
+						"endif\n"+
+						"endif # ERIKA_FILES\n"+
+						"# ERIKA_FILES has fulfilled its role. Make sure it's not used inside Erika makefiles\n"+ 
+						"ERIKA_FILES :=\n"					
+		        );
+			}
+			
 			
 			
 			/*******************************************************************

@@ -20,6 +20,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.ISWCategory;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.ISectionWriter;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.ISectionWriterWithOptions;
 import com.eu.evidence.rtdruid.modules.oil.transform.IOilTransform;
 import com.eu.evidence.rtdruid.modules.oil.transform.OilTransformFactory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -32,7 +33,7 @@ import com.eu.evidence.rtdruid.vartree.tools.Search;
  * 
  *
  */
-public abstract class XsltWriter implements ISectionWriter {
+public abstract class XsltWriter implements ISectionWriter, ISectionWriterWithOptions {
 	
 	protected final boolean Stdo_debug = false;
 	
@@ -43,7 +44,7 @@ public abstract class XsltWriter implements ISectionWriter {
 	
 	protected IVarTree vt;
 	protected String[] rtosPrefix;
-	protected HashMap<String, ?> opt;
+	protected HashMap<String, Object> opt;
 	
 	protected XsltComponent transformation;
 	
@@ -53,6 +54,15 @@ public abstract class XsltWriter implements ISectionWriter {
 		this.writerId = writerId;
 		this.category = category == null ? SWCategoryManager.EMPTY_CATEGORY : category;
 		debugger = Stdo_debug ? new StdoXsltDebugger() : new NullXsltDebugger();
+		opt = new HashMap<String, Object>();
+	}
+	
+	@Override
+	public void initOptions(Map<String, Object> options) {
+		opt.clear();
+		if (options != null) {
+			opt.putAll(options);
+		}
 	}
 
 	public void setDebugger(IXsltDebugger debugger) {
@@ -134,8 +144,9 @@ public abstract class XsltWriter implements ISectionWriter {
 
 	protected IOilWriterBuffer[] finalizeGeneration(ArrayList<Document> documents) throws OilCodeWriterException {
 		
-		
-		Map<String, IXsltParameter> parameters = XsltWriterTransfFactory.getParameters().getAllAsMap();
+		IXsltParameterProvider paramProvider = XsltWriterTransfFactory.getParameters();
+		paramProvider.setOptions(opt);
+		Map<String, IXsltParameter> parameters = paramProvider.getAllAsMap();
 		
 		
 		

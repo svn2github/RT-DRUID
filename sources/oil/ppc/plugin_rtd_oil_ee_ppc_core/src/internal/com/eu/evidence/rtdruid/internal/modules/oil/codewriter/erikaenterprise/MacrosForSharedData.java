@@ -1,6 +1,6 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
 
 public class MacrosForSharedData implements IMacrosForSharedData {
 

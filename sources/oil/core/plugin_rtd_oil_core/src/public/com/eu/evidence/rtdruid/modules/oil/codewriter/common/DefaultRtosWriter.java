@@ -8,10 +8,12 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.common;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.ISectionWriter;
+import com.eu.evidence.rtdruid.modules.oil.interfaces.ISectionWriterWithOptions;
 
 
 
@@ -39,11 +41,19 @@ public abstract class DefaultRtosWriter extends AbstractRtosWriter {
 	 * @throws OilCodeWriterException
 	 *             throw this exception if there are some problems
 	 */
+	@SuppressWarnings("unchecked")
 	public final IOilWriterBuffer[] write() throws OilCodeWriterException {
 		ArrayList<IOilWriterBuffer> answer = new ArrayList<IOilWriterBuffer>();
 
 		ISectionWriter[] writers = getWriters();
 
+		// set options
+		for (int i = 0; i < writers.length; i++) {
+			if (writers[i] instanceof ISectionWriterWithOptions) {
+				((ISectionWriterWithOptions) writers[i]).initOptions((Map<String, Object>) options);
+			}
+		}
+		
 		// search keys
 		for (int i = 0; i < writers.length; i++) {
 			writers[i].checkKeys(keys);

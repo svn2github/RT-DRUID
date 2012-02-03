@@ -15,10 +15,6 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import com.eu.evidence.modules.oil.erikaenterprise.constants.EEPaths;
-import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
-import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
@@ -38,6 +34,9 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDe
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDescriptionManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
@@ -806,8 +805,6 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		    StringBuffer sbMakefile_variables = new StringBuffer(commentWriterMf.writerBanner("Freescale"+mcu_type+", PPC "+cpu_type));
 		    
 		    {	// PATHs
-				final String eeBasePath = EEPaths.getEe_base();
-		    	
 	        	HashMap<String, ?> options = parent.getOptions();
 
 		        String outputDir = "Debug";
@@ -829,9 +826,6 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		    	
 		    	
 		        sbMakefile_variables.append(
-		        		"ifndef EEBASE\n" +
-		        		IWritersKeywords.INDENT + "EEBASE  := "+wrapper.wrapPath(eeBasePath)+"\n" +
-		                "endif\n" +
 		                "APPBASE := " + appBase + "\n" +
 		                "OUTBASE := " + outputDir + "\n\n"
 		                

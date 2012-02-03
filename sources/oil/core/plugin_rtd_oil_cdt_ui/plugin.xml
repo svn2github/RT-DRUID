@@ -18,15 +18,24 @@
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            objectClass="org.eclipse.core.resources.IProject"
-            adaptable="true"
             name="Oil properties"
             class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.OilProjectProperties"
             id="com.eu.evidence.rtdruid.modules.oil.OilProjectPropertiesID">
-         <filter
-               name="nature"
-               value="com.eu.evidence.rtdruid.oil.niossupport.natureID">
-         </filter>
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+		          <test property="org.eclipse.core.resources.projectNature" value="com.eu.evidence.rtdruid.oil.niossupport.natureID"/>
+		     </adapt>         
+         </enabledWhen>
+      </page>
+      <page
+            name="Erika Files Location"
+            class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.EELocationProjectProperties"
+            id="com.eu.evidence.rtdruid.modules.oil.EEFilesLocationProjectPropertiesID">
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+		          <test property="org.eclipse.core.resources.projectNature" value="com.eu.evidence.rtdruid.oil.niossupport.natureID"/>
+		     </adapt>         
+         </enabledWhen>
       </page>
    </extension>
    <extension
@@ -124,6 +133,25 @@
           name="RTD_test">
     </wizard>
  </extension>
+ <extension
+       point="com.eu.evidence.rtdruid.oil.ee.ui.erikaLocationListener">
+    <listener
+          class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.ErikaEnterpriseLocationListener">
+    </listener>
+    <projectListener
+          class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.ErikaEnterpriseProjectLocationLinkResolver">
+    </projectListener>
+    <listener
+          class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.ErikaEnterpriseProjectLocationLinkResolver">
+    </listener>
+ </extension>
+
+<extension point="org.eclipse.core.resources.variableResolvers">
+   <variableResolver
+         class="com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.ErikaEnterpriseProjectLocationLinkResolver"
+         variable="ERIKA_ENTERPRISE_LOC">
+   </variableResolver>
+</extension>
 
 
 </plugin>

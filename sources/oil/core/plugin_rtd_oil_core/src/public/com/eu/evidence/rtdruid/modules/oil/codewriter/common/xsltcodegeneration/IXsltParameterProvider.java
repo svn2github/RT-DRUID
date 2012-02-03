@@ -3,6 +3,11 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.common.xsltcodegeneration
 import java.util.Map;
 
 public interface IXsltParameterProvider {
+	
+	/**
+	 * Add some options
+	 */
+	void setOptions(Map<String, Object> options);
 
 	/**
 	 * 
