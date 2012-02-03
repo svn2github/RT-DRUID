@@ -21,6 +21,7 @@
 
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/core/feature_rtd_oil_cdt"/>
 
+		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/arm/feature_rtd_oil_ee_cortex"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/arm/feature_rtd_oil_ee_arm"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/atmel/feature_rtd_oil_ee_avr"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/microchip/feature_rtd_oil_ee_dspic"/>

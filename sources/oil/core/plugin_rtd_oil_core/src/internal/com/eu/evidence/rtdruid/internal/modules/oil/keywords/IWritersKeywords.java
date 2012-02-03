@@ -61,6 +61,9 @@ public interface IWritersKeywords {
 	/** Identifies a TriCore architecture (one or more cpu?) */
 	public final static String CPU_TRICORE1 = "TRICORE1";
 
+	/** Identifies a Cortex M0 architecture (one or more cpu?) */
+	public final static String CPU_CORTEX_M0 = "CORTEX_M0";
+	
 	/** Identifies a PIC 30 architecture (one or more cpu?) */
 	public final static String CPU_PIC_30 = "PIC30";
 
