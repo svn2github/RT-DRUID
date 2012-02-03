@@ -2,33 +2,32 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
-
-
-
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.eu.evidence.rtdruid.vartree.data.Cpu;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.OsApplication;
 import com.eu.evidence.rtdruid.vartree.data.Rtos;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -49,68 +48,67 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *
  * @generated
  */
-public class CpuImpl extends ObjectWithIDImpl implements Cpu
-{
+public class CpuImpl extends ObjectWithIDImpl implements Cpu {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar NAME_EDEFAULT = null;
+	protected static final StringVar NAME_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar name = NAME_EDEFAULT;
+	protected StringVar name = NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getModel() <em>Model</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModel()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar MODEL_EDEFAULT = null;
+	protected static final StringVar MODEL_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getModel() <em>Model</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModel()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar model = MODEL_EDEFAULT;
+	protected StringVar model = MODEL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getRtos() <em>Rtos</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getRtos()
 	 * @generated
 	 * @ordered
 	 */
-  protected Rtos rtos = null;
+	protected Rtos rtos;
 
-  /**
-  	 * The cached value of the '{@link #getOsApplication() <em>Os Application</em>}' containment reference list.
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @see #getOsApplication()
-  	 * @generated
-  	 * @ordered
-  	 */
-  	protected EList osApplication;
-  
+	/**
+	 * The cached value of the '{@link #getOsApplication() <em>Os Application</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOsApplication()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<OsApplication> osApplication;
+
 	/**
 	 * The default value of the '{@link #getSpeed() <em>Speed</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -173,75 +171,59 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected CpuImpl() {
+	protected CpuImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getCpu();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.CPU;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getName() {
+	public StringVar getName() {
 		return name;
 	}
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setName(StringVar newName)
-  {
-	if ( !checkNewID(makeID(newName)) ) return;
-
-  	// Store old ID
-  	String old_ID = getObjectID();
-
-	setNameGen(newName);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setNameGen(StringVar newName) {
-    StringVar oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CPU__NAME, oldName, name));
-  }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(StringVar newName) {
+		StringVar oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CPU__NAME, oldName, name));
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getModel() {
+	public StringVar getModel() {
 		return model;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setModel(StringVar newModel) {
+	public void setModel(StringVar newModel) {
 		StringVar oldModel = model;
 		model = newModel;
 		if (eNotificationRequired())
@@ -250,10 +232,10 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Rtos getRtos() {
+	public Rtos getRtos() {
 		return rtos;
 	}
 
@@ -262,20 +244,7 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EList getOsApplication() {
-  		if (osApplication == null) {
-  			osApplication = new EObjectContainmentUniqueEList(OsApplication.class, this, DataPackage.CPU__OS_APPLICATION);
-  		}
-  		return osApplication;
-  	}
-  
-	  
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public NotificationChain basicSetRtos(Rtos newRtos, NotificationChain msgs) {
+	public NotificationChain basicSetRtos(Rtos newRtos, NotificationChain msgs) {
 		Rtos oldRtos = rtos;
 		rtos = newRtos;
 		if (eNotificationRequired()) {
@@ -287,10 +256,10 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setRtos(Rtos newRtos) {
+	public void setRtos(Rtos newRtos) {
 		if (newRtos != rtos) {
 			NotificationChain msgs = null;
 			if (rtos != null)
@@ -306,93 +275,103 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-   	public DoubleVar getSpeed() {
- 		return speed;
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
- 	public void setSpeed(DoubleVar newSpeed) {
- 		DoubleVar oldSpeed = speed;
- 		speed = newSpeed;
- 		if (eNotificationRequired())
- 			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CPU__SPEED, oldSpeed, speed));
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
- 	public StringVar getSpeed_Unit() {
- 		return speed_Unit;
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
- 	public void setSpeed_Unit(StringVar newSpeed_Unit) {
- 		StringVar oldSpeed_Unit = speed_Unit;
- 		speed_Unit = newSpeed_Unit;
- 		if (eNotificationRequired())
- 			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CPU__SPEED_UNIT, oldSpeed_Unit, speed_Unit));
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
- 	public StringVar getBinaryImage() {
- 		return binaryImage;
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
- 	public void setBinaryImage(StringVar newBinaryImage) {
- 		StringVar oldBinaryImage = binaryImage;
- 		binaryImage = newBinaryImage;
- 		if (eNotificationRequired())
- 			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CPU__BINARY_IMAGE, oldBinaryImage, binaryImage));
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case DataPackage.CPU__RTOS:
-					return basicSetRtos(null, msgs);
-				case DataPackage.CPU__OS_APPLICATION:
-					return ((InternalEList)getOsApplication()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	public EList<OsApplication> getOsApplication() {
+		if (osApplication == null) {
+			osApplication = new EObjectContainmentEList<OsApplication>(OsApplication.class, this, DataPackage.CPU__OS_APPLICATION);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return osApplication;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public DoubleVar getSpeed() {
+		return speed;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSpeed(DoubleVar newSpeed) {
+		DoubleVar oldSpeed = speed;
+		speed = newSpeed;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CPU__SPEED, oldSpeed, speed));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getSpeed_Unit() {
+		return speed_Unit;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSpeed_Unit(StringVar newSpeed_Unit) {
+		StringVar oldSpeed_Unit = speed_Unit;
+		speed_Unit = newSpeed_Unit;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CPU__SPEED_UNIT, oldSpeed_Unit, speed_Unit));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getBinaryImage() {
+		return binaryImage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBinaryImage(StringVar newBinaryImage) {
+		StringVar oldBinaryImage = binaryImage;
+		binaryImage = newBinaryImage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CPU__BINARY_IMAGE, oldBinaryImage, binaryImage));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case DataPackage.CPU__RTOS:
+				return basicSetRtos(null, msgs);
+			case DataPackage.CPU__OS_APPLICATION:
+				return ((InternalEList<?>)getOsApplication()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.CPU__NAME:
 				return getName();
 			case DataPackage.CPU__MODEL:
@@ -408,17 +387,18 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 			case DataPackage.CPU__BINARY_IMAGE:
 				return getBinaryImage();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.CPU__NAME:
 				setName((StringVar)newValue);
 				return;
@@ -430,7 +410,7 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 				return;
 			case DataPackage.CPU__OS_APPLICATION:
 				getOsApplication().clear();
-				getOsApplication().addAll((Collection)newValue);
+				getOsApplication().addAll((Collection<? extends OsApplication>)newValue);
 				return;
 			case DataPackage.CPU__SPEED:
 				setSpeed((DoubleVar)newValue);
@@ -442,17 +422,17 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 				setBinaryImage((StringVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.CPU__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -475,17 +455,17 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 				setBinaryImage(BINARY_IMAGE_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.CPU__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case DataPackage.CPU__MODEL:
@@ -501,16 +481,16 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 			case DataPackage.CPU__BINARY_IMAGE:
 				return BINARY_IMAGE_EDEFAULT == null ? binaryImage != null : !BINARY_IMAGE_EDEFAULT.equals(binaryImage);
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -528,27 +508,4 @@ public class CpuImpl extends ObjectWithIDImpl implements Cpu
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(name);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setNameGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //CpuImpl

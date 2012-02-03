@@ -2,21 +2,9 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
-
-
-import static com.eu.evidence.rtdruid.vartree.data.DataPackage.RESOURCE;
-
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import com.eu.evidence.rtdruid.vartree.data.Activation;
 import com.eu.evidence.rtdruid.vartree.data.Annotation;
@@ -70,10 +58,9 @@ import com.eu.evidence.rtdruid.vartree.data.Trigger;
 import com.eu.evidence.rtdruid.vartree.data.Type;
 import com.eu.evidence.rtdruid.vartree.data.Var;
 import com.eu.evidence.rtdruid.vartree.data.VarMap;
-import com.eu.evidence.rtdruid.vartree.data.init.TrueCloneable;
+
 import com.eu.evidence.rtdruid.vartree.variables.BooleanVar;
 import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
-import com.eu.evidence.rtdruid.vartree.variables.FastTaskToProcVar;
 import com.eu.evidence.rtdruid.vartree.variables.FloatVar;
 import com.eu.evidence.rtdruid.vartree.variables.IntegerVar;
 import com.eu.evidence.rtdruid.vartree.variables.LongVar;
@@ -82,353 +69,347 @@ import com.eu.evidence.rtdruid.vartree.variables.PropertyVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
  * @generated
  */
-public class DataPackageImpl extends EPackageImpl implements DataPackage
-{
-    public static class Stupid implements TrueCloneable {
-        private Object dp = null;
-        public Stupid() {
-            try {
-                dp = DataPackageImpl.init();
-            } catch (Throwable e) {
-                // do nothing (some ClassNotFound are 'good')
-            	e.printStackTrace();
-            }
-        }
-        public Object clone() {
-            return dp;
-        }
-    }
+public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass systemEClass = null;
+	private EClass systemEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass objectWithIDEClass = null;
+	private EClass objectWithIDEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass modesEClass = null;
+	private EClass modesEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass modeEClass = null;
+	private EClass modeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass functionalEClass = null;
+	private EClass functionalEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass implementationEClass = null;
+	private EClass implementationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass procEClass = null;
+	private EClass procEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass architecturalEClass = null;
+	private EClass architecturalEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass mappingEClass = null;
+	private EClass mappingEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass annotationEClass = null;
+	private EClass annotationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass schedulabilityEClass = null;
+	private EClass schedulabilityEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass varEClass = null;
+	private EClass varEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass triggerEClass = null;
+	private EClass triggerEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass eventEClass = null;
+	private EClass eventEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass partialOrderEClass = null;
+	private EClass partialOrderEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass systemImplementationEClass = null;
+	private EClass systemImplementationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass subSystemEClass = null;
+	private EClass subSystemEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass timeConstEClass = null;
+	private EClass timeConstEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass methodRefEClass = null;
+	private EClass methodRefEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass providedInterfaceEClass = null;
+	private EClass providedInterfaceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass requiredInterfaceEClass = null;
+	private EClass requiredInterfaceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass orderEClass = null;
+	private EClass orderEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass timeConstElementEClass = null;
+	private EClass timeConstElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass ecuEClass = null;
+	private EClass ecuEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass taskEClass = null;
+	private EClass taskEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass resourceEClass = null;
+	private EClass resourceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass busEClass = null;
+	private EClass busEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass frameEClass = null;
+	private EClass frameEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass signalEClass = null;
+	private EClass signalEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass mutexEClass = null;
+	private EClass mutexEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass cpuEClass = null;
+	private EClass cpuEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass rtosEClass = null;
+	private EClass rtosEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass schedulingEClass = null;
+	private EClass schedulingEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass activationEClass = null;
+	private EClass activationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass resourceRefEClass = null;
+	private EClass resourceRefEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass mutexRefEClass = null;
+	private EClass mutexRefEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass execTimeEClass = null;
+	private EClass execTimeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass execTimeListEClass = null;
+	private EClass execTimeListEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass distributionEClass = null;
+	private EClass distributionEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass sampleEClass = null;
+	private EClass sampleEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass procMapEClass = null;
+	private EClass procMapEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass taskMapEClass = null;
+	private EClass taskMapEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass varMapEClass = null;
+	private EClass varMapEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass schedulingScenarioEClass = null;
+	private EClass schedulingScenarioEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass cpuSchedEClass = null;
+	private EClass cpuSchedEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EClass taskSchedEClass = null;
+	private EClass taskSchedEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass cacheMissCostListEClass = null;
@@ -460,7 +441,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 	 * @generated
 	 */
 	private EClass osApplicationEClass = null;
-	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -470,52 +451,52 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EDataType doubleVarEDataType = null;
+	private EDataType doubleVarEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EDataType floatVarEDataType = null;
+	private EDataType floatVarEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EDataType integerVarEDataType = null;
+	private EDataType integerVarEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EDataType longVarEDataType = null;
+	private EDataType longVarEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EDataType oilVarEDataType = null;
+	private EDataType oilVarEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EDataType stringVarEDataType = null;
+	private EDataType stringVarEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private EDataType timeVarEDataType = null;
+	private EDataType timeVarEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -523,13 +504,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 	 * @generated
 	 */
 	private EDataType propertyVarEDataType = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	private EDataType taskToProcMapVarEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -540,50 +514,40 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 	 * initialization of the package, or returns the registered package,
 	 * if one already exists.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-  private DataPackageImpl() {
+	private DataPackageImpl() {
 		super(eNS_URI, DataFactory.eINSTANCE);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private static boolean isInited = false;
+	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link DataPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-  public static DataPackage init() {
+	public static DataPackage init() {
 		if (isInited) return (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 
 		// Obtain or create and register package
-		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new DataPackageImpl());
+		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DataPackageImpl());
 
 		isInited = true;
 
@@ -596,102 +560,105 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		// Mark meta-data to indicate it can't be changed
 		theDataPackage.freeze();
 
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(DataPackage.eNS_URI, theDataPackage);
 		return theDataPackage;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getSystem() {
+	public EClass getSystem() {
 		return systemEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getSystem_Name() {
-		return (EAttribute)systemEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getSystem_Modes() {
-		return (EReference)systemEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getSystem_Functional() {
-		return (EReference)systemEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getSystem_Architectural() {
-		return (EReference)systemEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getSystem_Mapping() {
-		return (EReference)systemEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getSystem_Annotation() {
+	public EReference getSystem_Annotation() {
 		return (EReference)systemEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EReference getSystem_Schedulability() {
+	public EReference getSystem_Architectural() {
+		return (EReference)systemEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSystem_Functional() {
+		return (EReference)systemEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSystem_Mapping() {
+		return (EReference)systemEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSystem_Modes() {
+		return (EReference)systemEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSystem_Name() {
+		return (EAttribute)systemEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSystem_Schedulability() {
 		return (EReference)systemEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
- 	public EAttribute getSystem_XTC_Cookie() {
- 		return (EAttribute)systemEClass.getEStructuralFeatures().get(7);
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
-  public EClass getObjectWithID() {
+	public EAttribute getSystem_XTC_Cookie() {
+		return (EAttribute)systemEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getObjectWithID() {
 		return objectWithIDEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getObjectWithID_Properties() {
@@ -700,10 +667,10 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getModes() {
+	public EClass getModes() {
 		return modesEClass;
 	}
 
@@ -718,46 +685,46 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getMode() {
+	public EClass getMode() {
 		return modeEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getMode_Name() {
+	public EAttribute getMode_Name() {
 		return (EAttribute)modeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getFunctional() {
+	public EClass getFunctional() {
 		return functionalEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EReference getFunctional_EventList() {
+	public EReference getFunctional_EventList() {
 		return (EReference)functionalEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EReference getFunctional_PartialOrderList() {
+	public EReference getFunctional_PartialOrderList() {
 		return (EReference)functionalEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -772,64 +739,64 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EReference getFunctional_TimeConstList() {
+	public EReference getFunctional_TimeConstList() {
 		return (EReference)functionalEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  	public EReference getFunctional_TypeList() {
-  		return (EReference)functionalEClass.getEStructuralFeatures().get(4);
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+	public EReference getFunctional_TypeList() {
+		return (EReference)functionalEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getImplementation() {
 		return implementationEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getProc() {
+	public EClass getProc() {
 		return procEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getProc_Methods() {
-		return (EAttribute)procEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getProc_MethodRefList() {
+	public EReference getProc_MethodRefList() {
 		return (EReference)procEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getArchitectural() {
+	public EAttribute getProc_Methods() {
+		return (EAttribute)procEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getArchitectural() {
 		return architecturalEClass;
 	}
 
@@ -898,10 +865,10 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getMapping() {
+	public EClass getMapping() {
 		return mappingEClass;
 	}
 
@@ -934,19 +901,10 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getMapping_InverseTaskToProc() {
-		return (EAttribute)mappingEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getAnnotation() {
+	public EClass getAnnotation() {
 		return annotationEClass;
 	}
 
@@ -961,7 +919,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getAnnotation_CacheMissCostLists() {
@@ -973,7 +931,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getSchedulability() {
+	public EClass getSchedulability() {
 		return schedulabilityEClass;
 	}
 
@@ -988,100 +946,100 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getVar() {
+	public EClass getVar() {
 		return varEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getVar_Type() {
-		return (EAttribute)varEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getVar_Methods() {
+	public EAttribute getVar_Methods() {
 		return (EAttribute)varEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getTrigger() {
+	public EAttribute getVar_Type() {
+		return (EAttribute)varEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTrigger() {
 		return triggerEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EReference getTrigger_MethodRefList() {
+	public EReference getTrigger_MethodRefList() {
 		return (EReference)triggerEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getEvent() {
+	public EClass getEvent() {
 		return eventEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getEvent_Name() {
+	public EAttribute getEvent_Name() {
 		return (EAttribute)eventEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getEvent_Type() {
-		return (EAttribute)eventEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getEvent_MethodRefName() {
+	public EAttribute getEvent_MethodRefName() {
 		return (EAttribute)eventEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getPartialOrder() {
+	public EAttribute getEvent_Type() {
+		return (EAttribute)eventEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPartialOrder() {
 		return partialOrderEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getPartialOrder_ModeRef() {
+	public EAttribute getPartialOrder_ModeRef() {
 		return (EAttribute)partialOrderEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1096,37 +1054,37 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getSystemImplementation() {
+	public EClass getSystemImplementation() {
 		return systemImplementationEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getSystemImplementation_Name() {
+	public EAttribute getSystemImplementation_Name() {
 		return (EAttribute)systemImplementationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getSubSystem() {
+	public EClass getSubSystem() {
 		return subSystemEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EReference getSubSystem_Implementation() {
+	public EReference getSubSystem_Implementation() {
 		return (EReference)subSystemEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1150,19 +1108,19 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getTimeConst() {
+	public EClass getTimeConst() {
 		return timeConstEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTimeConst_ModeRef() {
+	public EAttribute getTimeConst_ModeRef() {
 		return (EAttribute)timeConstEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1177,55 +1135,46 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getMethodRef() {
+	public EClass getMethodRef() {
 		return methodRefEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getMethodRef_Name() {
+	public EAttribute getMethodRef_Name() {
 		return (EAttribute)methodRefEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getMethodRef_MethodName() {
+	public EAttribute getMethodRef_MethodName() {
 		return (EAttribute)methodRefEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getProvidedInterface() {
+	public EClass getProvidedInterface() {
 		return providedInterfaceEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getProvidedInterface_Name() {
-		return (EAttribute)providedInterfaceEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getProvidedInterface_LocalMethodRef() {
+	public EAttribute getProvidedInterface_LocalMethodRef() {
 		return (EAttribute)providedInterfaceEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1240,109 +1189,118 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getRequiredInterface() {
+	public EAttribute getProvidedInterface_Name() {
+		return (EAttribute)providedInterfaceEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRequiredInterface() {
 		return requiredInterfaceEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getRequiredInterface_Name() {
-		return (EAttribute)requiredInterfaceEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getRequiredInterface_ExternalMethodRef() {
+	public EAttribute getRequiredInterface_ExternalMethodRef() {
 		return (EAttribute)requiredInterfaceEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getOrder() {
+	public EAttribute getRequiredInterface_Name() {
+		return (EAttribute)requiredInterfaceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOrder() {
 		return orderEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getOrder_FirstEvent() {
+	public EAttribute getOrder_FirstEvent() {
 		return (EAttribute)orderEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getOrder_SecondEvent() {
+	public EAttribute getOrder_SecondEvent() {
 		return (EAttribute)orderEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getTimeConstElement() {
+	public EClass getTimeConstElement() {
 		return timeConstElementEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTimeConstElement_FirstEvent() {
-		return (EAttribute)timeConstElementEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getTimeConstElement_SecondEvent() {
-		return (EAttribute)timeConstElementEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getTimeConstElement_BoundType() {
+	public EAttribute getTimeConstElement_BoundType() {
 		return (EAttribute)timeConstElementEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTimeConstElement_BoundValue() {
+	public EAttribute getTimeConstElement_BoundValue() {
 		return (EAttribute)timeConstElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getEcu() {
+	public EAttribute getTimeConstElement_FirstEvent() {
+		return (EAttribute)timeConstElementEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTimeConstElement_SecondEvent() {
+		return (EAttribute)timeConstElementEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getEcu() {
 		return ecuEClass;
 	}
 
@@ -1357,19 +1315,19 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getEcu_Name() {
+	public EAttribute getEcu_Name() {
 		return (EAttribute)ecuEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getTask() {
+	public EClass getTask() {
 		return taskEClass;
 	}
 
@@ -1384,28 +1342,19 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTask_Name() {
+	public EAttribute getTask_Name() {
 		return (EAttribute)taskEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTask_Type() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getTask_OilVar() {
+	public EAttribute getTask_OilVar() {
 		return (EAttribute)taskEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -1429,28 +1378,28 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getResource() {
+	public EAttribute getTask_Type() {
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getResource() {
 		return resourceEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getResource_Name() {
-		return (EAttribute)resourceEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getResource_Methods() {
+	public EAttribute getResource_Methods() {
 		return (EAttribute)resourceEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1465,64 +1414,82 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getBus() {
+	public EAttribute getResource_Name() {
+		return (EAttribute)resourceEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBus() {
 		return busEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getBus_Name() {
+	public EAttribute getBus_Name() {
 		return (EAttribute)busEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getBus_Type() {
-		return (EAttribute)busEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getBus_Speed() {
+	public EAttribute getBus_Speed() {
 		return (EAttribute)busEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getFrame() {
+	public EAttribute getBus_Type() {
+		return (EAttribute)busEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getFrame() {
 		return frameEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getFrame_Name() {
-		return (EAttribute)frameEClass.getEStructuralFeatures().get(5);
+	public EAttribute getFrame_ActivationClass() {
+		return (EAttribute)frameEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getFrame_ActivationType() {
+	public EAttribute getFrame_ActivationRate() {
+		return (EAttribute)frameEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFrame_ActivationType() {
 		return (EAttribute)frameEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -1537,199 +1504,190 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getFrame_ActivationClass() {
-		return (EAttribute)frameEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getFrame_ActivationRate() {
-		return (EAttribute)frameEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getFrame_Length() {
+	public EAttribute getFrame_Length() {
 		return (EAttribute)frameEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getSignal() {
+	public EAttribute getFrame_Name() {
+		return (EAttribute)frameEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSignal() {
 		return signalEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getSignal_Name() {
+	public EAttribute getSignal_Name() {
 		return (EAttribute)signalEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getSignal_Type() {
-		return (EAttribute)signalEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getSignal_OilVar() {
+	public EAttribute getSignal_OilVar() {
 		return (EAttribute)signalEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getMutex() {
+	public EAttribute getSignal_Type() {
+		return (EAttribute)signalEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getMutex() {
 		return mutexEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getMutex_Name() {
+	public EAttribute getMutex_Name() {
 		return (EAttribute)mutexEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getMutex_Policy() {
-		return (EAttribute)mutexEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getMutex_OilVar() {
+	public EAttribute getMutex_OilVar() {
 		return (EAttribute)mutexEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getCpu() {
+	public EAttribute getMutex_Policy() {
+		return (EAttribute)mutexEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCpu() {
 		return cpuEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getCpu_Name() {
+	public EAttribute getCpu_Name() {
 		return (EAttribute)cpuEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getCpu_Model() {
+	public EAttribute getCpu_Model() {
 		return (EAttribute)cpuEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EReference getCpu_Rtos() {
+	public EReference getCpu_Rtos() {
 		return (EReference)cpuEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EReference getCpu_OsApplication() {
-  		return (EReference)cpuEClass.getEStructuralFeatures().get(3);
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  public EAttribute getCpu_Speed() {
- 		return (EAttribute)cpuEClass.getEStructuralFeatures().get(4);
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
- 	public EAttribute getCpu_Speed_Unit() {
- 		return (EAttribute)cpuEClass.getEStructuralFeatures().get(5);
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
- 	public EAttribute getCpu_BinaryImage() {
- 		return (EAttribute)cpuEClass.getEStructuralFeatures().get(6);
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
-  public EClass getRtos() {
+	public EReference getCpu_OsApplication() {
+		return (EReference)cpuEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCpu_Speed() {
+		return (EAttribute)cpuEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCpu_Speed_Unit() {
+		return (EAttribute)cpuEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCpu_BinaryImage() {
+		return (EAttribute)cpuEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRtos() {
 		return rtosEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getRtos_Name() {
+	public EAttribute getRtos_Name() {
 		return (EAttribute)rtosEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getRtos_OilVar() {
+	public EAttribute getRtos_OilVar() {
 		return (EAttribute)rtosEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1744,7 +1702,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getRtos_Methods() {
@@ -1756,241 +1714,241 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getScheduling() {
+	public EClass getScheduling() {
 		return schedulingEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getScheduling_ModeRef() {
+	public EAttribute getScheduling_ModeRef() {
 		return (EAttribute)schedulingEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getScheduling_Priority() {
-		return (EAttribute)schedulingEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getScheduling_Threshold() {
-		return (EAttribute)schedulingEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
-	 * @generated
-	 */
-  	public EAttribute getScheduling_Stack() {
-  			return (EAttribute)schedulingEClass.getEStructuralFeatures().get(4);
-  	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getScheduling_PreemptionGroupName() {
+	public EAttribute getScheduling_PreemptionGroupName() {
 		return (EAttribute)schedulingEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getActivation() {
+	public EAttribute getScheduling_Priority() {
+		return (EAttribute)schedulingEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getScheduling_Threshold() {
+		return (EAttribute)schedulingEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getScheduling_Stack() {
+		return (EAttribute)schedulingEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getActivation() {
 		return activationEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getActivation_ModeRef() {
-		return (EAttribute)activationEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getActivation_Type() {
-		return (EAttribute)activationEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getActivation_ActNumber() {
+	public EAttribute getActivation_ActNumber() {
 		return (EAttribute)activationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getActivation_ActivationClass() {
+	public EAttribute getActivation_ActivationClass() {
 		return (EAttribute)activationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getActivation_Period() {
-		return (EAttribute)activationEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getActivation_Offset() {
-		return (EAttribute)activationEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getActivation_Deadline() {
+	public EAttribute getActivation_Deadline() {
 		return (EAttribute)activationEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getResourceRef() {
+	public EAttribute getActivation_ModeRef() {
+		return (EAttribute)activationEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getActivation_Offset() {
+		return (EAttribute)activationEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getActivation_Period() {
+		return (EAttribute)activationEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getActivation_Type() {
+		return (EAttribute)activationEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getResourceRef() {
 		return resourceRefEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getResourceRef_ModeRef() {
+	public EAttribute getResourceRef_ModeRef() {
 		return (EAttribute)resourceRefEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getResourceRef_ResourceMethodRef() {
+	public EAttribute getResourceRef_ResourceMethodRef() {
 		return (EAttribute)resourceRefEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getMutexRef() {
+	public EClass getMutexRef() {
 		return mutexRefEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getMutexRef_ModeRef() {
+	public EAttribute getMutexRef_ModeRef() {
 		return (EAttribute)mutexRefEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getMutexRef_MutexName() {
+	public EAttribute getMutexRef_MutexName() {
 		return (EAttribute)mutexRefEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getExecTime() {
+	public EClass getExecTime() {
 		return execTimeEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getExecTime_Type() {
-		return (EAttribute)execTimeEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getExecTime_Ref() {
-		return (EAttribute)execTimeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getExecTime_Worst() {
-		return (EAttribute)execTimeEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getExecTime_Best() {
+	public EAttribute getExecTime_Best() {
 		return (EAttribute)execTimeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EReference getExecTime_Distribution() {
+	public EReference getExecTime_Distribution() {
 		return (EReference)execTimeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getExecTimeList() {
+	public EAttribute getExecTime_Ref() {
+		return (EAttribute)execTimeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExecTime_Type() {
+		return (EAttribute)execTimeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExecTime_Worst() {
+		return (EAttribute)execTimeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getExecTimeList() {
 		return execTimeListEClass;
 	}
 
@@ -2005,28 +1963,28 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getExecTimeList_ModeRef() {
+	public EAttribute getExecTimeList_ModeRef() {
 		return (EAttribute)execTimeListEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getDistribution() {
+	public EClass getDistribution() {
 		return distributionEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getDistribution_Avg() {
+	public EAttribute getDistribution_Avg() {
 		return (EAttribute)distributionEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -2041,103 +1999,103 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getDistribution_Variance() {
-		return (EAttribute)distributionEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getDistribution_Type() {
+	public EAttribute getDistribution_Type() {
 		return (EAttribute)distributionEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getSample() {
+	public EAttribute getDistribution_Variance() {
+		return (EAttribute)distributionEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSample() {
 		return sampleEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getSample_Value() {
-		return (EAttribute)sampleEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getSample_Probability() {
+	public EAttribute getSample_Probability() {
 		return (EAttribute)sampleEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getProcMap() {
+	public EAttribute getSample_Value() {
+		return (EAttribute)sampleEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getProcMap() {
 		return procMapEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getProcMap_ProcRef() {
-		return (EAttribute)procMapEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getProcMap_ModeRef() {
+	public EAttribute getProcMap_ModeRef() {
 		return (EAttribute)procMapEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getProcMap_TaskRef() {
-		return (EAttribute)procMapEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getProcMap_Order() {
+	public EAttribute getProcMap_Order() {
 		return (EAttribute)procMapEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getProcMap_OnceEveryK() {
-	  		return (EAttribute)procMapEClass.getEStructuralFeatures().get(4);
-}
-	  
+	public EAttribute getProcMap_ProcRef() {
+		return (EAttribute)procMapEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProcMap_TaskRef() {
+		return (EAttribute)procMapEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProcMap_OnceEveryK() {
+		return (EAttribute)procMapEClass.getEStructuralFeatures().get(4);
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2146,103 +2104,103 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 	public EAttribute getProcMap_MethodRefName() {
 		return (EAttribute)procMapEClass.getEStructuralFeatures().get(5);
 	}
-	
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTaskMap() {
 		return taskMapEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTaskMap_TaskRef() {
-		return (EAttribute)taskMapEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getTaskMap_ModeRef() {
+	public EAttribute getTaskMap_ModeRef() {
 		return (EAttribute)taskMapEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTaskMap_RtosRef() {
+	public EAttribute getTaskMap_RtosRef() {
 		return (EAttribute)taskMapEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getVarMap() {
+	public EAttribute getTaskMap_TaskRef() {
+		return (EAttribute)taskMapEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getVarMap() {
 		return varMapEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getVarMap_VarRef() {
-		return (EAttribute)varMapEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getVarMap_ModeRef() {
-		return (EAttribute)varMapEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getVarMap_FrameRef() {
-		return (EAttribute)varMapEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getVarMap_BusRef() {
+	public EAttribute getVarMap_BusRef() {
 		return (EAttribute)varMapEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getVarMap_MutexRef() {
+	public EAttribute getVarMap_FrameRef() {
+		return (EAttribute)varMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVarMap_ModeRef() {
+		return (EAttribute)varMapEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVarMap_MutexRef() {
 		return (EAttribute)varMapEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getSchedulingScenario() {
+	public EAttribute getVarMap_VarRef() {
+		return (EAttribute)varMapEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSchedulingScenario() {
 		return schedulingScenarioEClass;
 	}
 
@@ -2257,19 +2215,19 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getSchedulingScenario_ModeRef() {
+	public EAttribute getSchedulingScenario_ModeRef() {
 		return (EAttribute)schedulingScenarioEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getSchedulingScenario_Reports() {
+	public EAttribute getSchedulingScenario_Reports() {
 		return (EAttribute)schedulingScenarioEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -2284,55 +2242,37 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getCpuSched() {
+	public EClass getCpuSched() {
 		return cpuSchedEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getCpuSched_CpuRef() {
-		return (EAttribute)cpuSchedEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getCpuSched_Utilization() {
-		return (EAttribute)cpuSchedEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getCpuSched_Boundary() {
+	public EAttribute getCpuSched_Boundary() {
 		return (EAttribute)cpuSchedEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getCpuSched_MaxStackSize() {
-  		return (EAttribute)cpuSchedEClass.getEStructuralFeatures().get(5);
-  	}
+	public EAttribute getCpuSched_CpuRef() {
+		return (EAttribute)cpuSchedEClass.getEStructuralFeatures().get(1);
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getCpuSched_Schedulable() {
+	public EAttribute getCpuSched_Schedulable() {
 		return (EAttribute)cpuSchedEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -2347,154 +2287,172 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getTaskSched() {
+	public EAttribute getCpuSched_Utilization() {
+		return (EAttribute)cpuSchedEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCpuSched_MaxStackSize() {
+		return (EAttribute)cpuSchedEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTaskSched() {
 		return taskSchedEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTaskSched_TaskRef() {
-		return (EAttribute)taskSchedEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getTaskSched_Utilization() {
-		return (EAttribute)taskSchedEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getTaskSched_CDelta() {
+	public EAttribute getTaskSched_CDelta() {
 		return (EAttribute)taskSchedEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTaskSched_TDelta() {
-		return (EAttribute)taskSchedEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getTaskSched_ResponseTime() {
+	public EAttribute getTaskSched_ResponseTime() {
 		return (EAttribute)taskSchedEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EAttribute getTaskSched_Schedulable() {
+	public EAttribute getTaskSched_Schedulable() {
 		return (EAttribute)taskSchedEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  	public EClass getCacheMissCostList() {
-  		return cacheMissCostListEClass;
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  	public EReference getCacheMissCostList_CacheMissCostItemsList() {
-  		return (EReference)cacheMissCostListEClass.getEStructuralFeatures().get(0);
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  	public EAttribute getCacheMissCostList_ModeRef() {
-  		return (EAttribute)cacheMissCostListEClass.getEStructuralFeatures().get(1);
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  	public EClass getCacheMissCost() {
-  		return cacheMissCostEClass;
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  	public EAttribute getCacheMissCost_Best() {
-  		return (EAttribute)cacheMissCostEClass.getEStructuralFeatures().get(0);
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  	public EReference getCacheMissCost_Distribution() {
-  		return (EReference)cacheMissCostEClass.getEStructuralFeatures().get(1);
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  	public EAttribute getCacheMissCost_Ref() {
-  		return (EAttribute)cacheMissCostEClass.getEStructuralFeatures().get(2);
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  	public EAttribute getCacheMissCost_Type() {
-  		return (EAttribute)cacheMissCostEClass.getEStructuralFeatures().get(3);
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  	public EAttribute getCacheMissCost_Worst() {
-  		return (EAttribute)cacheMissCostEClass.getEStructuralFeatures().get(4);
-  	}
-  
-  	/**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  	public EClass getField() {
+	public EAttribute getTaskSched_TaskRef() {
+		return (EAttribute)taskSchedEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTaskSched_TDelta() {
+		return (EAttribute)taskSchedEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTaskSched_Utilization() {
+		return (EAttribute)taskSchedEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCacheMissCostList() {
+		return cacheMissCostListEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCacheMissCostList_CacheMissCostItemsList() {
+		return (EReference)cacheMissCostListEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCacheMissCostList_ModeRef() {
+		return (EAttribute)cacheMissCostListEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCacheMissCost() {
+		return cacheMissCostEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCacheMissCost_Best() {
+		return (EAttribute)cacheMissCostEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCacheMissCost_Distribution() {
+		return (EReference)cacheMissCostEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCacheMissCost_Ref() {
+		return (EAttribute)cacheMissCostEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCacheMissCost_Type() {
+		return (EAttribute)cacheMissCostEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCacheMissCost_Worst() {
+		return (EAttribute)cacheMissCostEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getField() {
 		return fieldEClass;
 	}
 
@@ -2567,142 +2525,132 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 	 * @generated
 	 */
 	public EClass getOsApplication() {
-			return osApplicationEClass;
-		}
-	
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public EAttribute getOsApplication_Name() {
-			return (EAttribute)osApplicationEClass.getEStructuralFeatures().get(0);
-		}
-	
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public EAttribute getOsApplication_OilVar() {
-			return (EAttribute)osApplicationEClass.getEStructuralFeatures().get(1);
-		}
-	
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public EDataType getBooleanVar() {
+		return osApplicationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getOsApplication_Name() {
+		return (EAttribute)osApplicationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getOsApplication_OilVar() {
+		return (EAttribute)osApplicationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getBooleanVar() {
 		return booleanVarEDataType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EDataType getDoubleVar() {
+	public EDataType getDoubleVar() {
 		return doubleVarEDataType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EDataType getFloatVar() {
+	public EDataType getFloatVar() {
 		return floatVarEDataType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EDataType getIntegerVar() {
+	public EDataType getIntegerVar() {
 		return integerVarEDataType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EDataType getLongVar() {
+	public EDataType getLongVar() {
 		return longVarEDataType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EDataType getOilVar() {
+	public EDataType getOilVar() {
 		return oilVarEDataType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EDataType getStringVar() {
+	public EDataType getStringVar() {
 		return stringVarEDataType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EDataType getTimeVar() {
+	public EDataType getTimeVar() {
 		return timeVarEDataType;
 	}
 
-  	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public EDataType getTaskToProcMapVar() {
-			return taskToProcMapVarEDataType;
-	}
-	
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EDataType getPropertyVar() {
 		return propertyVarEDataType;
 	}
 
-
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public DataFactory getDataFactory() {
+	public DataFactory getDataFactory() {
 		return (DataFactory)getEFactoryInstance();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private boolean isCreated = false;
+	private boolean isCreated = false;
 
 	/**
 	 * Creates the meta-model objects for the package.  This method is
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void createPackageContents() {
+	public void createPackageContents() {
 		if (isCreated) return;
 		isCreated = true;
 
@@ -2752,8 +2700,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		createEReference(mappingEClass, MAPPING__PROC_MAP_LIST);
 		createEReference(mappingEClass, MAPPING__TASK_MAP_LIST);
 		createEReference(mappingEClass, MAPPING__VAR_MAP_LIST);
-		createEAttribute(mappingEClass, MAPPING__INVERSE_TASK_TO_PROC);
-		
+
 		annotationEClass = createEClass(ANNOTATION);
 		createEReference(annotationEClass, ANNOTATION__EXEC_TIME_LISTS);
 		createEReference(annotationEClass, ANNOTATION__CACHE_MISS_COST_LISTS);
@@ -2873,7 +2820,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		createEAttribute(schedulingEClass, SCHEDULING__PRIORITY);
 		createEAttribute(schedulingEClass, SCHEDULING__THRESHOLD);
 		createEAttribute(schedulingEClass, SCHEDULING__STACK);
-		
+
 		activationEClass = createEClass(ACTIVATION);
 		createEAttribute(activationEClass, ACTIVATION__ACT_NUMBER);
 		createEAttribute(activationEClass, ACTIVATION__ACTIVATION_CLASS);
@@ -2941,10 +2888,10 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		cpuSchedEClass = createEClass(CPU_SCHED);
 		createEAttribute(cpuSchedEClass, CPU_SCHED__BOUNDARY);
 		createEAttribute(cpuSchedEClass, CPU_SCHED__CPU_REF);
-		createEAttribute(cpuSchedEClass, CPU_SCHED__MAX_STACK_SIZE);
 		createEAttribute(cpuSchedEClass, CPU_SCHED__SCHEDULABLE);
 		createEAttribute(cpuSchedEClass, CPU_SCHED__SPEED_FACTOR);
 		createEAttribute(cpuSchedEClass, CPU_SCHED__UTILIZATION);
+		createEAttribute(cpuSchedEClass, CPU_SCHED__MAX_STACK_SIZE);
 
 		taskSchedEClass = createEClass(TASK_SCHED);
 		createEAttribute(taskSchedEClass, TASK_SCHED__CDELTA);
@@ -2953,7 +2900,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		createEAttribute(taskSchedEClass, TASK_SCHED__TASK_REF);
 		createEAttribute(taskSchedEClass, TASK_SCHED__TDELTA);
 		createEAttribute(taskSchedEClass, TASK_SCHED__UTILIZATION);
-		
+
 		cacheMissCostListEClass = createEClass(CACHE_MISS_COST_LIST);
 		createEReference(cacheMissCostListEClass, CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST);
 		createEAttribute(cacheMissCostListEClass, CACHE_MISS_COST_LIST__MODE_REF);
@@ -2974,7 +2921,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		createEAttribute(typeEClass, TYPE__NAME);
 		createEReference(typeEClass, TYPE__FIELD);
 		createEAttribute(typeEClass, TYPE__DIM);
-		
+
 		osApplicationEClass = createEClass(OS_APPLICATION);
 		createEAttribute(osApplicationEClass, OS_APPLICATION__NAME);
 		createEAttribute(osApplicationEClass, OS_APPLICATION__OIL_VAR);
@@ -2988,25 +2935,24 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		oilVarEDataType = createEDataType(OIL_VAR);
 		stringVarEDataType = createEDataType(STRING_VAR);
 		timeVarEDataType = createEDataType(TIME_VAR);
-		taskToProcMapVarEDataType = createEDataType(FAST_TASK_TO_PROC_MAP_VAR);
 		propertyVarEDataType = createEDataType(PROPERTY_VAR);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  private boolean isInitialized = false;
+	private boolean isInitialized = false;
 
 	/**
 	 * Complete the initialization of the package and its meta-model.  This
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void initializePackageContents() {
+	public void initializePackageContents() {
 		if (isInitialized) return;
 		isInitialized = true;
 
@@ -3014,6 +2960,10 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		setName(eNAME);
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
+
+		// Create type parameters
+
+		// Set bounds for type parameters
 
 		// Add supertypes to classes
 		systemEClass.getESuperTypes().add(this.getObjectWithID());
@@ -3074,26 +3024,26 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		initEReference(getSystem_Functional(), this.getFunctional(), null, "Functional", null, 0, 1, com.eu.evidence.rtdruid.vartree.data.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSystem_Mapping(), this.getMapping(), null, "Mapping", null, 0, 1, com.eu.evidence.rtdruid.vartree.data.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSystem_Modes(), this.getModes(), null, "Modes", null, 0, 1, com.eu.evidence.rtdruid.vartree.data.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSystem_Name(), this.getStringVar(), "Name", null, 1, 1, com.eu.evidence.rtdruid.vartree.data.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSystem_Name(), this.getStringVar(), "Name", null, 1, 1, com.eu.evidence.rtdruid.vartree.data.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSystem_Schedulability(), this.getSchedulability(), null, "Schedulability", null, 0, 1, com.eu.evidence.rtdruid.vartree.data.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
- 		initEAttribute(getSystem_XTC_Cookie(), this.getStringVar(), "XTC_Cookie", null, 0, -1, com.eu.evidence.rtdruid.vartree.data.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
- 		
+		initEAttribute(getSystem_XTC_Cookie(), this.getStringVar(), "XTC_Cookie", null, 0, -1, com.eu.evidence.rtdruid.vartree.data.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(objectWithIDEClass, ObjectWithID.class, "ObjectWithID", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getObjectWithID_Properties(), this.getPropertyVar(), "properties", null, 0, 1, ObjectWithID.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = addEOperation(objectWithIDEClass, ecorePackage.getEBoolean(), "checkNewID");
-		addEParameter(op, ecorePackage.getEString(), "newID");
+		EOperation op = addEOperation(objectWithIDEClass, ecorePackage.getEBoolean(), "checkNewID", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "newID", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(objectWithIDEClass, ecorePackage.getEString(), "getObjectID");
+		addEOperation(objectWithIDEClass, ecorePackage.getEString(), "getObjectID", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(objectWithIDEClass, ecorePackage.getEBoolean(), "setObjectID");
-		addEParameter(op, ecorePackage.getEString(), "newID");
+		op = addEOperation(objectWithIDEClass, ecorePackage.getEBoolean(), "setObjectID", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "newID", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(modesEClass, Modes.class, "Modes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getModes_ModeList(), this.getMode(), null, "ModeList", null, 0, -1, Modes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(modeEClass, Mode.class, "Mode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getMode_Name(), this.getStringVar(), "Name", null, 1, 1, Mode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMode_Name(), this.getStringVar(), "Name", null, 1, 1, Mode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(functionalEClass, Functional.class, "Functional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFunctional_EventList(), this.getEvent(), null, "EventList", null, 0, -1, Functional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3121,8 +3071,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		initEReference(getMapping_ProcMapList(), this.getProcMap(), null, "ProcMapList", null, 0, -1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMapping_TaskMapList(), this.getTaskMap(), null, "TaskMapList", null, 0, -1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMapping_VarMapList(), this.getVarMap(), null, "VarMapList", null, 0, -1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMapping_InverseTaskToProc(), this.getTaskToProcMapVar(), "InverseTaskToProc", null, 0, 1, Mapping.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
-		
+
 		initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAnnotation_ExecTimeLists(), this.getExecTimeList(), null, "ExecTimeLists", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAnnotation_CacheMissCostLists(), this.getCacheMissCostList(), null, "CacheMissCostLists", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3138,16 +3087,16 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		initEReference(getTrigger_MethodRefList(), this.getMethodRef(), null, "MethodRefList", null, 0, -1, Trigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(eventEClass, Event.class, "Event", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEvent_Name(), this.getStringVar(), "Name", null, 1, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEvent_Name(), this.getStringVar(), "Name", null, 1, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEvent_MethodRefName(), this.getStringVar(), "MethodRefName", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEvent_Type(), this.getStringVar(), "Type", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(partialOrderEClass, PartialOrder.class, "PartialOrder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPartialOrder_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, PartialOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPartialOrder_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, PartialOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPartialOrder_OrderList(), this.getOrder(), null, "OrderList", null, 0, -1, PartialOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(systemImplementationEClass, SystemImplementation.class, "SystemImplementation", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSystemImplementation_Name(), this.getStringVar(), "Name", null, 1, 1, SystemImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSystemImplementation_Name(), this.getStringVar(), "Name", null, 1, 1, SystemImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(subSystemEClass, SubSystem.class, "SubSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSubSystem_Implementation(), this.getImplementation(), null, "Implementation", null, 0, -1, SubSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3155,21 +3104,21 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		initEReference(getSubSystem_RequiredInterfaceList(), this.getRequiredInterface(), null, "RequiredInterfaceList", null, 0, -1, SubSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(timeConstEClass, TimeConst.class, "TimeConst", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTimeConst_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, TimeConst.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTimeConst_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, TimeConst.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTimeConst_TimeConstElementList(), this.getTimeConstElement(), null, "TimeConstElementList", null, 0, -1, TimeConst.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(methodRefEClass, MethodRef.class, "MethodRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getMethodRef_Name(), this.getStringVar(), "Name", null, 1, 1, MethodRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMethodRef_Name(), this.getStringVar(), "Name", null, 1, 1, MethodRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMethodRef_MethodName(), this.getStringVar(), "MethodName", null, 0, 1, MethodRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(providedInterfaceEClass, ProvidedInterface.class, "ProvidedInterface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getProvidedInterface_LocalMethodRef(), this.getStringVar(), "LocalMethodRef", null, 0, 1, ProvidedInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProvidedInterface_LocalObjectRef(), this.getStringVar(), "LocalObjectRef", null, 0, 1, ProvidedInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getProvidedInterface_Name(), this.getStringVar(), "Name", null, 1, 1, ProvidedInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProvidedInterface_Name(), this.getStringVar(), "Name", null, 1, 1, ProvidedInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(requiredInterfaceEClass, RequiredInterface.class, "RequiredInterface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRequiredInterface_ExternalMethodRef(), this.getStringVar(), "ExternalMethodRef", null, 0, 1, RequiredInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRequiredInterface_Name(), this.getStringVar(), "Name", null, 1, 1, RequiredInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRequiredInterface_Name(), this.getStringVar(), "Name", null, 1, 1, RequiredInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(orderEClass, Order.class, "Order", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getOrder_FirstEvent(), this.getStringVar(), "FirstEvent", null, 1, 1, Order.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3183,11 +3132,11 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 		initEClass(ecuEClass, Ecu.class, "Ecu", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEcu_CpuList(), this.getCpu(), null, "CpuList", null, 0, -1, Ecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEcu_Name(), this.getStringVar(), "Name", null, 1, 1, Ecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEcu_Name(), this.getStringVar(), "Name", null, 1, 1, Ecu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTask_ActivationList(), this.getActivation(), null, "ActivationList", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTask_Name(), this.getStringVar(), "Name", null, 1, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_Name(), this.getStringVar(), "Name", null, 1, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_OilVar(), this.getOilVar(), "OilVar", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_ResourceRefList(), this.getResourceRef(), null, "ResourceRefList", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_SchedulingList(), this.getScheduling(), null, "SchedulingList", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3196,10 +3145,10 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		initEClass(resourceEClass, Resource.class, "Resource", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getResource_Methods(), this.getStringVar(), "Methods", null, 0, -1, Resource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getResource_MutexRefList(), this.getMutexRef(), null, "MutexRefList", null, 0, -1, Resource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getResource_Name(), this.getStringVar(), "Name", null, 1, 1, Resource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getResource_Name(), this.getStringVar(), "Name", null, 1, 1, Resource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(busEClass, Bus.class, "Bus", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getBus_Name(), this.getStringVar(), "Name", null, 1, 1, Bus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBus_Name(), this.getStringVar(), "Name", null, 1, 1, Bus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBus_Speed(), this.getLongVar(), "Speed", null, 0, 1, Bus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBus_Type(), this.getStringVar(), "Type", null, 0, 1, Bus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3209,20 +3158,20 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		initEAttribute(getFrame_ActivationType(), this.getStringVar(), "ActivationType", null, 0, 1, Frame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFrame_Id(), this.getStringVar(), "Id", null, 0, 1, Frame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFrame_Length(), this.getLongVar(), "Length", null, 0, 1, Frame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getFrame_Name(), this.getStringVar(), "Name", null, 1, 1, Frame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFrame_Name(), this.getStringVar(), "Name", null, 1, 1, Frame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(signalEClass, Signal.class, "Signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSignal_Name(), this.getStringVar(), "Name", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSignal_Name(), this.getStringVar(), "Name", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSignal_OilVar(), this.getOilVar(), "OilVar", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSignal_Type(), this.getStringVar(), "Type", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mutexEClass, Mutex.class, "Mutex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getMutex_Name(), this.getStringVar(), "Name", null, 1, 1, Mutex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMutex_Name(), this.getStringVar(), "Name", null, 1, 1, Mutex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMutex_OilVar(), this.getOilVar(), "OilVar", null, 0, 1, Mutex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMutex_Policy(), this.getStringVar(), "Policy", null, 0, 1, Mutex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cpuEClass, Cpu.class, "Cpu", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCpu_Name(), this.getStringVar(), "Name", null, 1, 1, Cpu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCpu_Name(), this.getStringVar(), "Name", null, 1, 1, Cpu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCpu_Model(), this.getStringVar(), "Model", null, 0, 1, Cpu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCpu_Rtos(), this.getRtos(), null, "Rtos", null, 0, 1, Cpu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCpu_OsApplication(), this.getOsApplication(), null, "OsApplication", null, 0, -1, Cpu.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3237,27 +3186,27 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		initEAttribute(getRtos_Methods(), this.getStringVar(), "Methods", null, 0, -1, Rtos.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(schedulingEClass, Scheduling.class, "Scheduling", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getScheduling_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, Scheduling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getScheduling_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, Scheduling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScheduling_PreemptionGroupName(), this.getStringVar(), "PreemptionGroupName", null, 0, 1, Scheduling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScheduling_Priority(), this.getIntegerVar(), "Priority", null, 0, 1, Scheduling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScheduling_Threshold(), this.getIntegerVar(), "Threshold", null, 0, 1, Scheduling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScheduling_Stack(), this.getIntegerVar(), "Stack", null, 0, 1, Scheduling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		
+
 		initEClass(activationEClass, Activation.class, "Activation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getActivation_ActNumber(), this.getIntegerVar(), "ActNumber", null, 0, 1, Activation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getActivation_ActivationClass(), this.getStringVar(), "ActivationClass", null, 0, 1, Activation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getActivation_Deadline(), this.getTimeVar(), "Deadline", null, 0, 1, Activation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getActivation_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, Activation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getActivation_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, Activation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getActivation_Offset(), this.getTimeVar(), "Offset", null, 0, 1, Activation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getActivation_Period(), this.getTimeVar(), "Period", null, 0, 1, Activation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getActivation_Type(), this.getStringVar(), "Type", null, 0, 1, Activation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(resourceRefEClass, ResourceRef.class, "ResourceRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getResourceRef_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, ResourceRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getResourceRef_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, ResourceRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getResourceRef_ResourceMethodRef(), this.getStringVar(), "ResourceMethodRef", null, 0, -1, ResourceRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mutexRefEClass, MutexRef.class, "MutexRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getMutexRef_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, MutexRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMutexRef_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, MutexRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMutexRef_MutexName(), this.getStringVar(), "MutexName", null, 0, 1, MutexRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(execTimeEClass, ExecTime.class, "ExecTime", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3269,7 +3218,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 		initEClass(execTimeListEClass, ExecTimeList.class, "ExecTimeList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getExecTimeList_ExecTimeItemsList(), this.getExecTime(), null, "ExecTimeItemsList", null, 0, -1, ExecTimeList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getExecTimeList_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, ExecTimeList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getExecTimeList_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, ExecTimeList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(distributionEClass, Distribution.class, "Distribution", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDistribution_Avg(), this.getTimeVar(), "Avg", null, 0, 1, Distribution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3303,29 +3252,29 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 
 		initEClass(schedulingScenarioEClass, SchedulingScenario.class, "SchedulingScenario", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSchedulingScenario_CpuSchedList(), this.getCpuSched(), null, "CpuSchedList", null, 0, -1, SchedulingScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSchedulingScenario_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, SchedulingScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSchedulingScenario_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, SchedulingScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSchedulingScenario_Reports(), this.getStringVar(), "Reports", null, 0, -1, SchedulingScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSchedulingScenario_TaskSchedList(), this.getTaskSched(), null, "TaskSchedList", null, 0, -1, SchedulingScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cpuSchedEClass, CpuSched.class, "CpuSched", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCpuSched_Boundary(), this.getDoubleVar(), "Boundary", null, 0, 1, CpuSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCpuSched_CpuRef(), this.getStringVar(), "CpuRef", null, 1, 1, CpuSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCpuSched_MaxStackSize(), this.getIntegerVar(), "MaxStackSize", null, 0, 1, CpuSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCpuSched_CpuRef(), this.getStringVar(), "CpuRef", null, 1, 1, CpuSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCpuSched_Schedulable(), this.getBooleanVar(), "Schedulable", null, 0, 1, CpuSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCpuSched_SpeedFactor(), this.getDoubleVar(), "SpeedFactor", null, 0, 1, CpuSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCpuSched_Utilization(), this.getDoubleVar(), "Utilization", null, 0, 1, CpuSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCpuSched_MaxStackSize(), this.getIntegerVar(), "MaxStackSize", null, 0, 1, CpuSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(taskSchedEClass, TaskSched.class, "TaskSched", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTaskSched_CDelta(), this.getDoubleVar(), "CDelta", null, 0, 1, TaskSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskSched_ResponseTime(), this.getTimeVar(), "ResponseTime", null, 0, 1, TaskSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskSched_Schedulable(), this.getBooleanVar(), "Schedulable", null, 0, 1, TaskSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTaskSched_TaskRef(), this.getStringVar(), "TaskRef", null, 1, 1, TaskSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskSched_TaskRef(), this.getStringVar(), "TaskRef", null, 1, 1, TaskSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskSched_TDelta(), this.getDoubleVar(), "TDelta", null, 0, 1, TaskSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskSched_Utilization(), this.getDoubleVar(), "Utilization", null, 0, 1, TaskSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cacheMissCostListEClass, CacheMissCostList.class, "CacheMissCostList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCacheMissCostList_CacheMissCostItemsList(), this.getCacheMissCost(), null, "CacheMissCostItemsList", null, 0, -1, CacheMissCostList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCacheMissCostList_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, CacheMissCostList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCacheMissCostList_ModeRef(), this.getStringVar(), "ModeRef", null, 1, 1, CacheMissCostList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cacheMissCostEClass, CacheMissCost.class, "CacheMissCost", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCacheMissCost_Best(), this.getTimeVar(), "Best", null, 0, 1, CacheMissCost.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3340,12 +3289,12 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		initEAttribute(getField_Size(), this.getIntegerVar(), "Size", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getType_Name(), this.getStringVar(), "Name", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getType_Name(), this.getStringVar(), "Name", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getType_Field(), this.getField(), null, "Field", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getType_Dim(), this.getIntegerVar(), "Dim", "1", 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(osApplicationEClass, OsApplication.class, "OsApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getOsApplication_Name(), this.getStringVar(), "Name", null, 0, 1, OsApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getOsApplication_Name(), this.getStringVar(), "Name", null, 0, 1, OsApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getOsApplication_OilVar(), this.getOilVar(), "OilVar", null, 0, 1, OsApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
@@ -3357,7 +3306,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage
 		initEDataType(oilVarEDataType, OilVar.class, "OilVar", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(stringVarEDataType, StringVar.class, "StringVar", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(timeVarEDataType, TimeVar.class, "TimeVar", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(taskToProcMapVarEDataType, FastTaskToProcVar.class, "FastTaskToProcMapVar", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(propertyVarEDataType, PropertyVar.class, "PropertyVar", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource

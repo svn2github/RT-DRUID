@@ -2,24 +2,26 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.Var;
+
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.Var;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,71 +37,83 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *
  * @generated
  */
-public class VarImpl extends ImplementationImpl implements Var
-{
+public class VarImpl extends ImplementationImpl implements Var {
 	/**
 	 * The cached value of the '{@link #getMethods() <em>Methods</em>}' attribute list.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getMethods()
 	 * @generated
 	 * @ordered
 	 */
-  protected EList methods = null;
+	protected EList<StringVar> methods;
 
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getType()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar TYPE_EDEFAULT = null;
+	protected static final StringVar TYPE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getType()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar type = TYPE_EDEFAULT;
+	protected StringVar type = TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected VarImpl() {
+	protected VarImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getVar();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.VAR;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getType() {
+	public EList<StringVar> getMethods() {
+		if (methods == null) {
+			methods = new EDataTypeUniqueEList<StringVar>(StringVar.class, this, DataPackage.VAR__METHODS);
+		}
+		return methods;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getType() {
 		return type;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setType(StringVar newType) {
+	public void setType(StringVar newType) {
 		StringVar oldType = type;
 		type = newType;
 		if (eNotificationRequired())
@@ -108,66 +122,48 @@ public class VarImpl extends ImplementationImpl implements Var
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EList getMethods() {
-		if (methods == null) {
-			methods = new EDataTypeUniqueEList(StringVar.class, this, DataPackage.VAR__METHODS);
-		}
-		return methods;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case DataPackage.VAR__NAME:
-				return getName();
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.VAR__METHODS:
 				return getMethods();
 			case DataPackage.VAR__TYPE:
 				return getType();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case DataPackage.VAR__NAME:
-				setName((StringVar)newValue);
-				return;
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.VAR__METHODS:
 				getMethods().clear();
-				getMethods().addAll((Collection)newValue);
+				getMethods().addAll((Collection<? extends StringVar>)newValue);
 				return;
 			case DataPackage.VAR__TYPE:
 				setType((StringVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case DataPackage.VAR__NAME:
-				setName(NAME_EDEFAULT);
-				return;
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.VAR__METHODS:
 				getMethods().clear();
 				return;
@@ -175,34 +171,32 @@ public class VarImpl extends ImplementationImpl implements Var
 				setType(TYPE_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case DataPackage.VAR__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.VAR__METHODS:
 				return methods != null && !methods.isEmpty();
 			case DataPackage.VAR__TYPE:
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());

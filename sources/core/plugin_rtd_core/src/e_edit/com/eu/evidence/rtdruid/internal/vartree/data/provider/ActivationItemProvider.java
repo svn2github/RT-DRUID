@@ -2,35 +2,34 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ActivationItemProvider.java,v 1.1 2005/09/28 15:22:29 durin Exp $
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.Activation;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
+import com.eu.evidence.rtdruid.vartree.variables.PropertyVar;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.Activation;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
-
 /**
- * This is the item provider adpater for a {@link rtdruid.vartree.data.Activation} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.Activation} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -59,7 +58,8 @@ public class ActivationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -75,42 +75,6 @@ public class ActivationItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Mode Ref feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addModeRefPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Activation_ModeRef_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_ModeRef_feature", "_UI_Activation_type"),
-				 DataPackage.eINSTANCE.getActivation_ModeRef(),
-				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
-	}
-
-	/**
-	 * This adds a property descriptor for the Type feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Activation_Type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_Type_feature", "_UI_Activation_type"),
-				 DataPackage.eINSTANCE.getActivation_Type(),
-				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
-	}
-
-	/**
 	 * This adds a property descriptor for the Act Number feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -118,14 +82,18 @@ public class ActivationItemProvider
 	 */
 	protected void addActNumberPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Activation_ActNumber_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_ActNumber_feature", "_UI_Activation_type"),
-				 DataPackage.eINSTANCE.getActivation_ActNumber(),
+				 DataPackage.Literals.ACTIVATION__ACT_NUMBER,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -136,50 +104,18 @@ public class ActivationItemProvider
 	 */
 	protected void addActivationClassPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Activation_ActivationClass_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_ActivationClass_feature", "_UI_Activation_type"),
-				 DataPackage.eINSTANCE.getActivation_ActivationClass(),
+				 DataPackage.Literals.ACTIVATION__ACTIVATION_CLASS,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
-	}
-
-	/**
-	 * This adds a property descriptor for the Period feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addPeriodPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Activation_Period_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_Period_feature", "_UI_Activation_type"),
-				 DataPackage.eINSTANCE.getActivation_Period(),
-				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
-	}
-
-	/**
-	 * This adds a property descriptor for the Offset feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addOffsetPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Activation_Offset_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_Offset_feature", "_UI_Activation_type"),
-				 DataPackage.eINSTANCE.getActivation_Offset(),
-				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -190,14 +126,106 @@ public class ActivationItemProvider
 	 */
 	protected void addDeadlinePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Activation_Deadline_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_Deadline_feature", "_UI_Activation_type"),
-				 DataPackage.eINSTANCE.getActivation_Deadline(),
+				 DataPackage.Literals.ACTIVATION__DEADLINE,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Mode Ref feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addModeRefPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Activation_ModeRef_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_ModeRef_feature", "_UI_Activation_type"),
+				 DataPackage.Literals.ACTIVATION__MODE_REF,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Offset feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addOffsetPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Activation_Offset_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_Offset_feature", "_UI_Activation_type"),
+				 DataPackage.Literals.ACTIVATION__OFFSET,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Period feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addPeriodPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Activation_Period_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_Period_feature", "_UI_Activation_type"),
+				 DataPackage.Literals.ACTIVATION__PERIOD,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Activation_Type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Activation_Type_feature", "_UI_Activation_type"),
+				 DataPackage.Literals.ACTIVATION__TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -206,28 +234,21 @@ public class ActivationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/Activation");
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Activation"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
-		
-		String modeValue = varToString(((Activation)object).getModeRef());
-		String typeValue = varToString(((Activation)object).getType());
-		String periodValue = varToString(((Activation)object).getPeriod());
-		
-		String label = 
-				"(" + (modeValue == null ? "no ModeRef" : modeValue) + ")"
-				+ (typeValue == null ? "" : " " + 
-						("periodic".equalsIgnoreCase(typeValue) && periodValue!= null ? periodValue + " " : "" )
-						+ typeValue.toString()
-				); 
+		PropertyVar labelValue = ((Activation)object).getProperties();
+		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Activation_type") :
 			getString("_UI_Activation_type") + " " + label;
@@ -240,6 +261,7 @@ public class ActivationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -258,24 +280,15 @@ public class ActivationItemProvider
 	}
 
 	/**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
 	}
 
 }

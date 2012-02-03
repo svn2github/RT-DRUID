@@ -2,39 +2,36 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SystemItemProvider.java,v 1.2 2007/09/19 14:18:37 durin Exp $
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.DataFactory;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
-
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.System;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-
 /**
- * This is the item provider adpater for a {@link rtdruid.vartree.data.System} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.System} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -63,7 +60,8 @@ public class SystemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -81,14 +79,18 @@ public class SystemItemProvider
 	 */
 	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_System_Name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_System_Name_feature", "_UI_System_type"),
-				 DataPackage.eINSTANCE.getSystem_Name(),
+				 DataPackage.Literals.SYSTEM__NAME,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -104,7 +106,7 @@ public class SystemItemProvider
 				 getResourceLocator(),
 				 getString("_UI_System_XTC_Cookie_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_System_XTC_Cookie_feature", "_UI_System_type"),
-				 DataPackage.eINSTANCE.getSystem_XTC_Cookie(),
+				 DataPackage.Literals.SYSTEM__XTC_COOKIE,
 				 true,
 				 false,
 				 false,
@@ -121,15 +123,16 @@ public class SystemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(DataPackage.eINSTANCE.getSystem_Annotation());
-			childrenFeatures.add(DataPackage.eINSTANCE.getSystem_Architectural());
-			childrenFeatures.add(DataPackage.eINSTANCE.getSystem_Functional());
-			childrenFeatures.add(DataPackage.eINSTANCE.getSystem_Mapping());
-			childrenFeatures.add(DataPackage.eINSTANCE.getSystem_Modes());
-			childrenFeatures.add(DataPackage.eINSTANCE.getSystem_Schedulability());
+			childrenFeatures.add(DataPackage.Literals.SYSTEM__ANNOTATION);
+			childrenFeatures.add(DataPackage.Literals.SYSTEM__ARCHITECTURAL);
+			childrenFeatures.add(DataPackage.Literals.SYSTEM__FUNCTIONAL);
+			childrenFeatures.add(DataPackage.Literals.SYSTEM__MAPPING);
+			childrenFeatures.add(DataPackage.Literals.SYSTEM__MODES);
+			childrenFeatures.add(DataPackage.Literals.SYSTEM__SCHEDULABILITY);
 		}
 		return childrenFeatures;
 	}
@@ -139,6 +142,7 @@ public class SystemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
@@ -152,18 +156,20 @@ public class SystemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/System");
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/System"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
-		StringVar labelValue = ((System)object).getName();
+		StringVar labelValue = ((com.eu.evidence.rtdruid.vartree.data.System)object).getName();
 		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_System_type") :
@@ -177,10 +183,11 @@ public class SystemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(System.class)) {
+		switch (notification.getFeatureID(com.eu.evidence.rtdruid.vartree.data.System.class)) {
 			case DataPackage.SYSTEM__NAME:
 			case DataPackage.SYSTEM__XTC_COOKIE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
@@ -198,54 +205,45 @@ public class SystemItemProvider
 	}
 
 	/**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSystem_Annotation(),
+				(DataPackage.Literals.SYSTEM__ANNOTATION,
 				 DataFactory.eINSTANCE.createAnnotation()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSystem_Architectural(),
+				(DataPackage.Literals.SYSTEM__ARCHITECTURAL,
 				 DataFactory.eINSTANCE.createArchitectural()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSystem_Functional(),
+				(DataPackage.Literals.SYSTEM__FUNCTIONAL,
 				 DataFactory.eINSTANCE.createFunctional()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSystem_Mapping(),
+				(DataPackage.Literals.SYSTEM__MAPPING,
 				 DataFactory.eINSTANCE.createMapping()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSystem_Modes(),
+				(DataPackage.Literals.SYSTEM__MODES,
 				 DataFactory.eINSTANCE.createModes()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSystem_Schedulability(),
+				(DataPackage.Literals.SYSTEM__SCHEDULABILITY,
 				 DataFactory.eINSTANCE.createSchedulability()));
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
 	}
 
 }

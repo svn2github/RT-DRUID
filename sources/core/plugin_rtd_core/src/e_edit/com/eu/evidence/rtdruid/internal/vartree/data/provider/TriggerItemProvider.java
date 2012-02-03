@@ -2,33 +2,35 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TriggerItemProvider.java,v 1.1 2005/09/28 15:22:29 durin Exp $
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.DataFactory;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.Trigger;
+
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.Trigger;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-
 /**
- * This is the item provider adpater for a {@link rtdruid.vartree.data.Trigger} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.Trigger} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -57,7 +59,8 @@ public class TriggerItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -73,14 +76,27 @@ public class TriggerItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(DataPackage.eINSTANCE.getTrigger_MethodRefList());
+			childrenFeatures.add(DataPackage.Literals.TRIGGER__METHOD_REF_LIST);
 		}
 		return childrenFeatures;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
+	}
 
 	/**
 	 * This returns Trigger.gif.
@@ -88,16 +104,18 @@ public class TriggerItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/Trigger");
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Trigger"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		StringVar labelValue = ((Trigger)object).getName();
 		String label = labelValue == null ? null : labelValue.toString();
@@ -113,6 +131,7 @@ public class TriggerItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -125,28 +144,20 @@ public class TriggerItemProvider
 	}
 
 	/**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getTrigger_MethodRefList(),
+				(DataPackage.Literals.TRIGGER__METHOD_REF_LIST,
 				 DataFactory.eINSTANCE.createMethodRef()));
 	}
 
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
-	}
 }

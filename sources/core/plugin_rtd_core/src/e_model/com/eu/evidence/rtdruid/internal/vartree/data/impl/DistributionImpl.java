@@ -2,33 +2,32 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.Distribution;
+import com.eu.evidence.rtdruid.vartree.data.Sample;
 
-
+import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.InternalEList;
 
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.Distribution;
-import com.eu.evidence.rtdruid.vartree.data.Sample;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
-import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,27 +45,26 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
  *
  * @generated
  */
-public class DistributionImpl extends ObjectWithIDImpl implements Distribution
-{
+public class DistributionImpl extends ObjectWithIDImpl implements Distribution {
 	/**
 	 * The default value of the '{@link #getAvg() <em>Avg</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getAvg()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final TimeVar AVG_EDEFAULT = null;
+	protected static final TimeVar AVG_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getAvg() <em>Avg</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getAvg()
 	 * @generated
 	 * @ordered
 	 */
-  protected TimeVar avg = AVG_EDEFAULT;
+	protected TimeVar avg = AVG_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getSampleList() <em>Sample List</em>}' containment reference list.
@@ -76,81 +74,82 @@ public class DistributionImpl extends ObjectWithIDImpl implements Distribution
 	 * @generated
 	 * @ordered
 	 */
-	protected EList sampleList = null;
+	protected EList<Sample> sampleList;
 
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getType()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar TYPE_EDEFAULT = null;
+	protected static final StringVar TYPE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getType()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar type = TYPE_EDEFAULT;
+	protected StringVar type = TYPE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getVariance() <em>Variance</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getVariance()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final DoubleVar VARIANCE_EDEFAULT = null;
+	protected static final DoubleVar VARIANCE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getVariance() <em>Variance</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getVariance()
 	 * @generated
 	 * @ordered
 	 */
-  protected DoubleVar variance = VARIANCE_EDEFAULT;
+	protected DoubleVar variance = VARIANCE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected DistributionImpl() {
+	protected DistributionImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getDistribution();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.DISTRIBUTION;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public TimeVar getAvg() {
+	public TimeVar getAvg() {
 		return avg;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setAvg(TimeVar newAvg) {
+	public void setAvg(TimeVar newAvg) {
 		TimeVar oldAvg = avg;
 		avg = newAvg;
 		if (eNotificationRequired())
@@ -160,51 +159,30 @@ public class DistributionImpl extends ObjectWithIDImpl implements Distribution
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getSampleList() {
+	public EList<Sample> getSampleList() {
 		if (sampleList == null) {
-			sampleList = new EObjectContainmentUniqueEList(Sample.class, this, DataPackage.DISTRIBUTION__SAMPLE_LIST);
+			sampleList = new EObjectContainmentEList<Sample>(Sample.class, this, DataPackage.DISTRIBUTION__SAMPLE_LIST);
 		}
 		return sampleList;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public DoubleVar getVariance() {
-		return variance;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setVariance(DoubleVar newVariance) {
-		DoubleVar oldVariance = variance;
-		variance = newVariance;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DISTRIBUTION__VARIANCE, oldVariance, variance));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public StringVar getType() {
+	public StringVar getType() {
 		return type;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setType(StringVar newType) {
+	public void setType(StringVar newType) {
 		StringVar oldType = type;
 		type = newType;
 		if (eNotificationRequired())
@@ -213,28 +191,47 @@ public class DistributionImpl extends ObjectWithIDImpl implements Distribution
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case DataPackage.DISTRIBUTION__SAMPLE_LIST:
-					return ((InternalEList)getSampleList()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
-		}
-		return eBasicSetContainer(null, featureID, msgs);
+	public DoubleVar getVariance() {
+		return variance;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void setVariance(DoubleVar newVariance) {
+		DoubleVar oldVariance = variance;
+		variance = newVariance;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DISTRIBUTION__VARIANCE, oldVariance, variance));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case DataPackage.DISTRIBUTION__SAMPLE_LIST:
+				return ((InternalEList<?>)getSampleList()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.DISTRIBUTION__AVG:
 				return getAvg();
 			case DataPackage.DISTRIBUTION__SAMPLE_LIST:
@@ -244,23 +241,24 @@ public class DistributionImpl extends ObjectWithIDImpl implements Distribution
 			case DataPackage.DISTRIBUTION__VARIANCE:
 				return getVariance();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.DISTRIBUTION__AVG:
 				setAvg((TimeVar)newValue);
 				return;
 			case DataPackage.DISTRIBUTION__SAMPLE_LIST:
 				getSampleList().clear();
-				getSampleList().addAll((Collection)newValue);
+				getSampleList().addAll((Collection<? extends Sample>)newValue);
 				return;
 			case DataPackage.DISTRIBUTION__TYPE:
 				setType((StringVar)newValue);
@@ -269,17 +267,17 @@ public class DistributionImpl extends ObjectWithIDImpl implements Distribution
 				setVariance((DoubleVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.DISTRIBUTION__AVG:
 				setAvg(AVG_EDEFAULT);
 				return;
@@ -293,17 +291,17 @@ public class DistributionImpl extends ObjectWithIDImpl implements Distribution
 				setVariance(VARIANCE_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.DISTRIBUTION__AVG:
 				return AVG_EDEFAULT == null ? avg != null : !AVG_EDEFAULT.equals(avg);
 			case DataPackage.DISTRIBUTION__SAMPLE_LIST:
@@ -313,16 +311,16 @@ public class DistributionImpl extends ObjectWithIDImpl implements Distribution
 			case DataPackage.DISTRIBUTION__VARIANCE:
 				return VARIANCE_EDEFAULT == null ? variance != null : !VARIANCE_EDEFAULT.equals(variance);
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -336,17 +334,4 @@ public class DistributionImpl extends ObjectWithIDImpl implements Distribution
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return "Distribution";
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-		return getObjectID().equals(newID);
-	}
 } //DistributionImpl

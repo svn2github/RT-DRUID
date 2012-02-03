@@ -2,35 +2,34 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TaskMapItemProvider.java,v 1.1 2005/09/28 15:22:29 durin Exp $
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.TaskMap;
 
+import com.eu.evidence.rtdruid.vartree.variables.PropertyVar;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.TaskMap;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
-
 /**
- * This is the item provider adpater for a {@link rtdruid.vartree.data.TaskMap} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.TaskMap} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -59,7 +58,8 @@ public class TaskMapItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -71,24 +71,6 @@ public class TaskMapItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Task Ref feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addTaskRefPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TaskMap_TaskRef_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TaskMap_TaskRef_feature", "_UI_TaskMap_type"),
-				 DataPackage.eINSTANCE.getTaskMap_TaskRef(),
-				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
-	}
-
-	/**
 	 * This adds a property descriptor for the Mode Ref feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,14 +78,18 @@ public class TaskMapItemProvider
 	 */
 	protected void addModeRefPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_TaskMap_ModeRef_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_TaskMap_ModeRef_feature", "_UI_TaskMap_type"),
-				 DataPackage.eINSTANCE.getTaskMap_ModeRef(),
+				 DataPackage.Literals.TASK_MAP__MODE_REF,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -114,14 +100,40 @@ public class TaskMapItemProvider
 	 */
 	protected void addRtosRefPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_TaskMap_RtosRef_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_TaskMap_RtosRef_feature", "_UI_TaskMap_type"),
-				 DataPackage.eINSTANCE.getTaskMap_RtosRef(),
+				 DataPackage.Literals.TASK_MAP__RTOS_REF,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Task Ref feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTaskRefPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_TaskMap_TaskRef_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_TaskMap_TaskRef_feature", "_UI_TaskMap_type"),
+				 DataPackage.Literals.TASK_MAP__TASK_REF,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -130,26 +142,24 @@ public class TaskMapItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/TaskMap");
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/TaskMap"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
-		String modeValue = varToString(((TaskMap)object).getModeRef());
-		String taskValue = varToString(((TaskMap)object).getTaskRef());
-		String rtosValue = varToString(((TaskMap)object).getRtosRef());
-
-		return getString("_UI_TaskMap_type")
-			+ " (" + ( modeValue == null ? "no ModeRef" : modeValue) + ") "
-			+ (taskValue == null ? "no Task" : taskValue)
-			+ " -> " + (rtosValue == null ? "no Rtos" : rtosValue);
-
+		PropertyVar labelValue = ((TaskMap)object).getProperties();
+		String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ?
+			getString("_UI_TaskMap_type") :
+			getString("_UI_TaskMap_type") + " " + label;
 	}
 
 	/**
@@ -159,6 +169,7 @@ public class TaskMapItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -173,24 +184,15 @@ public class TaskMapItemProvider
 	}
 
 	/**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
 	}
 
 }

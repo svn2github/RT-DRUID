@@ -6,15 +6,17 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.Field;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.IntegerVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,9 +25,9 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link rtdruid.vartree.data.impl.FieldImpl#getName <em>Name</em>}</li>
- *   <li>{@link rtdruid.vartree.data.impl.FieldImpl#getType <em>Type</em>}</li>
- *   <li>{@link rtdruid.vartree.data.impl.FieldImpl#getSize <em>Size</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FieldImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FieldImpl#getType <em>Type</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FieldImpl#getSize <em>Size</em>}</li>
  * </ul>
  * </p>
  *
@@ -106,8 +108,9 @@ public class FieldImpl extends ObjectWithIDImpl implements Field {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getField();
+		return DataPackage.Literals.FIELD;
 	}
 
 	/**
@@ -119,33 +122,16 @@ public class FieldImpl extends ObjectWithIDImpl implements Field {
 		return name;
 	}
 
-	 /**
-	   * <!-- begin-user-doc -->
-	   * <!-- end-user-doc -->
-	   * @generated NOT
-	   */
-	  public void setName(StringVar newName)
-	  {
-		if ( !checkNewID(makeID(newName)) ) return;
-	  	
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		setNameGen(newName);
-
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-	  }
-	  /**
-	   * <!-- begin-user-doc -->
-	   * <!-- end-user-doc -->
-	   * @generated
-	   */
-	  private void setNameGen(StringVar newName) {
-	    StringVar oldName = name;
-	    name = newName;
-	    if (eNotificationRequired())
-	   		eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.FIELD__NAME, oldName, name));
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(StringVar newName) {
+		StringVar oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.FIELD__NAME, oldName, name));
 	}
 
 	/**
@@ -195,6 +181,7 @@ public class FieldImpl extends ObjectWithIDImpl implements Field {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case DataPackage.FIELD__NAME:
@@ -212,6 +199,7 @@ public class FieldImpl extends ObjectWithIDImpl implements Field {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case DataPackage.FIELD__NAME:
@@ -232,6 +220,7 @@ public class FieldImpl extends ObjectWithIDImpl implements Field {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case DataPackage.FIELD__NAME:
@@ -252,6 +241,7 @@ public class FieldImpl extends ObjectWithIDImpl implements Field {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case DataPackage.FIELD__NAME:
@@ -269,6 +259,7 @@ public class FieldImpl extends ObjectWithIDImpl implements Field {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -283,27 +274,4 @@ public class FieldImpl extends ObjectWithIDImpl implements Field {
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(name);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setNameGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //FieldImpl

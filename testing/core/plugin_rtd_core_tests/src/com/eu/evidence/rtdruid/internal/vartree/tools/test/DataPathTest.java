@@ -157,6 +157,10 @@ public class DataPathTest extends TestCase {
 			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId(tmp))) );
 		}
 		{ 
+			String[] tmp = { "a", "b" };
+			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId(tmp))) );
+		}
+		{ 
 			String[] tmp = { null, null };
 			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId(tmp))) );
 		}

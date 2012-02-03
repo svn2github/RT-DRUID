@@ -154,7 +154,7 @@ public class VtCompare {
 							assertTrue(((IVariable) o2).get() == null);
 						} else {
 							int at1_id = at1.getEAttributeType().getClassifierID();
-							if (!(at1_id == DataPackage.FAST_TASK_TO_PROC_MAP_VAR )) {
+	//						if (!(at1_id == DataPackage.FAST_TASK_TO_PROC_MAP_VAR )) {
 
 								if (! ((IVariable) o1).toString().equals(
 										((IVariable) o2).toString()) ) {
@@ -163,7 +163,7 @@ public class VtCompare {
 								
 								assertTrue(((IVariable) o1).toString().equals(
 										((IVariable) o2).toString()));
-							}
+	//						}
 						}
 		
 					}

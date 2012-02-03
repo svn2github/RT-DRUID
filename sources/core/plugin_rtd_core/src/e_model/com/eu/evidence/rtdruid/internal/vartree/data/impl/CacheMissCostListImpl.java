@@ -6,57 +6,56 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
+import com.eu.evidence.rtdruid.vartree.data.CacheMissCost;
+import com.eu.evidence.rtdruid.vartree.data.CacheMissCostList;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.CacheMissCost;
-import com.eu.evidence.rtdruid.vartree.data.CacheMissCostList;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-
 /**
- * <!-- begin-user-doc --> An implementation of the model object '
- * <em><b>Cache Miss Cost List</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Cache Miss Cost List</b></em>'.
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>
- * {@link com.eu.evidence.rtdruid.rtdruid.vartree.data.impl.CacheMissCostListImpl#getCacheMissCostItemsList
- * <em>Cache Miss Cost Items List</em>}</li>
- * <li>{@link com.eu.evidence.rtdruid.rtdruid.vartree.data.impl.CacheMissCostListImpl#getModeRef <em>
- * Mode Ref</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.CacheMissCostListImpl#getCacheMissCostItemsList <em>Cache Miss Cost Items List</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.CacheMissCostListImpl#getModeRef <em>Mode Ref</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class CacheMissCostListImpl extends ObjectWithIDImpl implements
-		CacheMissCostList {
+public class CacheMissCostListImpl extends ObjectWithIDImpl implements CacheMissCostList {
 	/**
-	 * The cached value of the '{@link #getCacheMissCostItemsList()
-	 * <em>Cache Miss Cost Items List</em>}' containment reference list. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getCacheMissCostItemsList() <em>Cache Miss Cost Items List</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getCacheMissCostItemsList()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList cacheMissCostItemsList = null;
+	protected EList<CacheMissCost> cacheMissCostItemsList;
 
 	/**
-	 * The default value of the '{@link #getModeRef() <em>Mode Ref</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
@@ -64,9 +63,9 @@ public class CacheMissCostListImpl extends ObjectWithIDImpl implements
 	protected static final StringVar MODE_REF_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getModeRef() <em>Mode Ref</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
@@ -74,8 +73,8 @@ public class CacheMissCostListImpl extends ObjectWithIDImpl implements
 	protected StringVar modeRef = MODE_REF_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected CacheMissCostListImpl() {
@@ -83,32 +82,30 @@ public class CacheMissCostListImpl extends ObjectWithIDImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getCacheMissCostList();
+		return DataPackage.Literals.CACHE_MISS_COST_LIST;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
-	public EList getCacheMissCostItemsList() {
+	public EList<CacheMissCost> getCacheMissCostItemsList() {
 		if (cacheMissCostItemsList == null) {
-			cacheMissCostItemsList = new EObjectContainmentUniqueEList(
-					CacheMissCost.class,
-					this,
-					DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST);
+			cacheMissCostItemsList = new EObjectContainmentEList<CacheMissCost>(CacheMissCost.class, this, DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST);
 		}
 		return cacheMissCostItemsList;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public StringVar getModeRef() {
@@ -116,128 +113,109 @@ public class CacheMissCostListImpl extends ObjectWithIDImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	public void setModeRef(StringVar newModeRef) {
-		if ( !checkNewID(makeID(newModeRef)) ) return;
-
-		// Store old ID
-		String old_ID = getObjectID();
-		
-		setModeRefGen(newModeRef);
-	
-		// ASk to update ID
-		didSetObjectID(old_ID);
-	  }
-	  /**
-	   * <!-- begin-user-doc -->
-	   * <!-- end-user-doc -->
-	   * @generated
-	   */
-	  private void setModeRefGen(StringVar newModeRef) {
 		StringVar oldModeRef = modeRef;
 		modeRef = newModeRef;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					DataPackage.CACHE_MISS_COST_LIST__MODE_REF, oldModeRef,
-					modeRef));
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CACHE_MISS_COST_LIST__MODE_REF, oldModeRef, modeRef));
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-		case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
-			return ((InternalEList) getCacheMissCostItemsList()).basicRemove(
-					otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
+				return ((InternalEList<?>)getCacheMissCostItemsList()).basicRemove(otherEnd, msgs);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-		case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
-			return getCacheMissCostItemsList();
-		case DataPackage.CACHE_MISS_COST_LIST__MODE_REF:
-			return getModeRef();
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
+				return getCacheMissCostItemsList();
+			case DataPackage.CACHE_MISS_COST_LIST__MODE_REF:
+				return getModeRef();
 		}
-		return super.eGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-		case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
-			getCacheMissCostItemsList().clear();
-			getCacheMissCostItemsList().addAll((Collection) newValue);
-			return;
-		case DataPackage.CACHE_MISS_COST_LIST__MODE_REF:
-			setModeRef((StringVar) newValue);
-			return;
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
+				getCacheMissCostItemsList().clear();
+				getCacheMissCostItemsList().addAll((Collection<? extends CacheMissCost>)newValue);
+				return;
+			case DataPackage.CACHE_MISS_COST_LIST__MODE_REF:
+				setModeRef((StringVar)newValue);
+				return;
 		}
-		super.eSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-		case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
-			getCacheMissCostItemsList().clear();
-			return;
-		case DataPackage.CACHE_MISS_COST_LIST__MODE_REF:
-			setModeRef(MODE_REF_EDEFAULT);
-			return;
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
+				getCacheMissCostItemsList().clear();
+				return;
+			case DataPackage.CACHE_MISS_COST_LIST__MODE_REF:
+				setModeRef(MODE_REF_EDEFAULT);
+				return;
 		}
-		super.eUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-		case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
-			return cacheMissCostItemsList != null
-					&& !cacheMissCostItemsList.isEmpty();
-		case DataPackage.CACHE_MISS_COST_LIST__MODE_REF:
-			return MODE_REF_EDEFAULT == null ? modeRef != null
-					: !MODE_REF_EDEFAULT.equals(modeRef);
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case DataPackage.CACHE_MISS_COST_LIST__CACHE_MISS_COST_ITEMS_LIST:
+				return cacheMissCostItemsList != null && !cacheMissCostItemsList.isEmpty();
+			case DataPackage.CACHE_MISS_COST_LIST__MODE_REF:
+				return MODE_REF_EDEFAULT == null ? modeRef != null : !MODE_REF_EDEFAULT.equals(modeRef);
 		}
-		return super.eIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (ModeRef: ");
@@ -246,27 +224,4 @@ public class CacheMissCostListImpl extends ObjectWithIDImpl implements
 		return result.toString();
 	}
 
-		/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(modeRef);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setModeRefGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
-} // CacheMissCostListImpl
+} //CacheMissCostListImpl

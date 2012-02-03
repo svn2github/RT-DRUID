@@ -10,8 +10,9 @@ package com.eu.evidence.rtdruid.internal.vartree.data.oil.impl;
 
 import org.eclipse.emf.ecore.EClass;
 
+import com.eu.evidence.rtdruid.vartree.PublicObjectWithIDImpl;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilApplPackage;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilObjectWithID;
 
@@ -24,7 +25,7 @@ import com.eu.evidence.rtdruid.vartree.data.oil.OilObjectWithID;
  *
  * @generated NOT
  */
-public abstract class OilObjectWithIDImpl extends ObjectWithIDImpl implements OilObjectWithID {
+public abstract class OilObjectWithIDImpl extends PublicObjectWithIDImpl implements OilObjectWithID {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -48,5 +49,8 @@ public abstract class OilObjectWithIDImpl extends ObjectWithIDImpl implements Oi
 	 	return (ObjectWithID) OilApplFactoryImpl.eINSTANCE.create(eClass());
 	 }
 	 
+	 protected String[] resolveID(String newID) {
+		 return DataPath.resolveId(newID);
+	 }
 
 } //OilObjectWithIDImpl

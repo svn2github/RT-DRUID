@@ -2,22 +2,9 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
-
-
-
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.eu.evidence.rtdruid.vartree.data.Architectural;
 import com.eu.evidence.rtdruid.vartree.data.Bus;
@@ -28,9 +15,18 @@ import com.eu.evidence.rtdruid.vartree.data.Mutex;
 import com.eu.evidence.rtdruid.vartree.data.Resource;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
 import com.eu.evidence.rtdruid.vartree.data.Task;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
 
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -51,8 +47,7 @@ import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
  *
  * @generated
  */
-public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
-{
+public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural {
 	/**
 	 * The cached value of the '{@link #getBusList() <em>Bus List</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -61,7 +56,7 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * @generated
 	 * @ordered
 	 */
-	protected EList busList = null;
+	protected EList<Bus> busList;
 
 	/**
 	 * The cached value of the '{@link #getEcuList() <em>Ecu List</em>}' containment reference list.
@@ -71,7 +66,7 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * @generated
 	 * @ordered
 	 */
-	protected EList ecuList = null;
+	protected EList<Ecu> ecuList;
 
 	/**
 	 * The cached value of the '{@link #getFrameList() <em>Frame List</em>}' containment reference list.
@@ -81,7 +76,7 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * @generated
 	 * @ordered
 	 */
-	protected EList frameList = null;
+	protected EList<Frame> frameList;
 
 	/**
 	 * The cached value of the '{@link #getMutexList() <em>Mutex List</em>}' containment reference list.
@@ -91,7 +86,7 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * @generated
 	 * @ordered
 	 */
-	protected EList mutexList = null;
+	protected EList<Mutex> mutexList;
 
 	/**
 	 * The cached value of the '{@link #getResourceList() <em>Resource List</em>}' containment reference list.
@@ -101,7 +96,7 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * @generated
 	 * @ordered
 	 */
-	protected EList resourceList = null;
+	protected EList<Resource> resourceList;
 
 	/**
 	 * The cached value of the '{@link #getSignalList() <em>Signal List</em>}' containment reference list.
@@ -111,7 +106,7 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * @generated
 	 * @ordered
 	 */
-	protected EList signalList = null;
+	protected EList<Signal> signalList;
 
 	/**
 	 * The cached value of the '{@link #getTaskList() <em>Task List</em>}' containment reference list.
@@ -121,34 +116,35 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * @generated
 	 * @ordered
 	 */
-	protected EList taskList = null;
+	protected EList<Task> taskList;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected ArchitecturalImpl() {
+	protected ArchitecturalImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getArchitectural();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.ARCHITECTURAL;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getBusList() {
+	public EList<Bus> getBusList() {
 		if (busList == null) {
-			busList = new EObjectContainmentUniqueEList(Bus.class, this, DataPackage.ARCHITECTURAL__BUS_LIST);
+			busList = new EObjectContainmentEList<Bus>(Bus.class, this, DataPackage.ARCHITECTURAL__BUS_LIST);
 		}
 		return busList;
 	}
@@ -156,11 +152,11 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getEcuList() {
+	public EList<Ecu> getEcuList() {
 		if (ecuList == null) {
-			ecuList = new EObjectContainmentUniqueEList(Ecu.class, this, DataPackage.ARCHITECTURAL__ECU_LIST);
+			ecuList = new EObjectContainmentEList<Ecu>(Ecu.class, this, DataPackage.ARCHITECTURAL__ECU_LIST);
 		}
 		return ecuList;
 	}
@@ -168,11 +164,11 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getFrameList() {
+	public EList<Frame> getFrameList() {
 		if (frameList == null) {
-			frameList = new EObjectContainmentUniqueEList(Frame.class, this, DataPackage.ARCHITECTURAL__FRAME_LIST);
+			frameList = new EObjectContainmentEList<Frame>(Frame.class, this, DataPackage.ARCHITECTURAL__FRAME_LIST);
 		}
 		return frameList;
 	}
@@ -180,11 +176,11 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getMutexList() {
+	public EList<Mutex> getMutexList() {
 		if (mutexList == null) {
-			mutexList = new EObjectContainmentUniqueEList(Mutex.class, this, DataPackage.ARCHITECTURAL__MUTEX_LIST);
+			mutexList = new EObjectContainmentEList<Mutex>(Mutex.class, this, DataPackage.ARCHITECTURAL__MUTEX_LIST);
 		}
 		return mutexList;
 	}
@@ -192,11 +188,11 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getResourceList() {
+	public EList<Resource> getResourceList() {
 		if (resourceList == null) {
-			resourceList = new EObjectContainmentUniqueEList(Resource.class, this, DataPackage.ARCHITECTURAL__RESOURCE_LIST);
+			resourceList = new EObjectContainmentEList<Resource>(Resource.class, this, DataPackage.ARCHITECTURAL__RESOURCE_LIST);
 		}
 		return resourceList;
 	}
@@ -204,11 +200,11 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getSignalList() {
+	public EList<Signal> getSignalList() {
 		if (signalList == null) {
-			signalList = new EObjectContainmentUniqueEList(Signal.class, this, DataPackage.ARCHITECTURAL__SIGNAL_LIST);
+			signalList = new EObjectContainmentEList<Signal>(Signal.class, this, DataPackage.ARCHITECTURAL__SIGNAL_LIST);
 		}
 		return signalList;
 	}
@@ -216,51 +212,49 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getTaskList() {
+	public EList<Task> getTaskList() {
 		if (taskList == null) {
-			taskList = new EObjectContainmentUniqueEList(Task.class, this, DataPackage.ARCHITECTURAL__TASK_LIST);
+			taskList = new EObjectContainmentEList<Task>(Task.class, this, DataPackage.ARCHITECTURAL__TASK_LIST);
 		}
 		return taskList;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case DataPackage.ARCHITECTURAL__BUS_LIST:
-					return ((InternalEList)getBusList()).basicRemove(otherEnd, msgs);
-				case DataPackage.ARCHITECTURAL__ECU_LIST:
-					return ((InternalEList)getEcuList()).basicRemove(otherEnd, msgs);
-				case DataPackage.ARCHITECTURAL__FRAME_LIST:
-					return ((InternalEList)getFrameList()).basicRemove(otherEnd, msgs);
-				case DataPackage.ARCHITECTURAL__MUTEX_LIST:
-					return ((InternalEList)getMutexList()).basicRemove(otherEnd, msgs);
-				case DataPackage.ARCHITECTURAL__RESOURCE_LIST:
-					return ((InternalEList)getResourceList()).basicRemove(otherEnd, msgs);
-				case DataPackage.ARCHITECTURAL__SIGNAL_LIST:
-					return ((InternalEList)getSignalList()).basicRemove(otherEnd, msgs);
-				case DataPackage.ARCHITECTURAL__TASK_LIST:
-					return ((InternalEList)getTaskList()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case DataPackage.ARCHITECTURAL__BUS_LIST:
+				return ((InternalEList<?>)getBusList()).basicRemove(otherEnd, msgs);
+			case DataPackage.ARCHITECTURAL__ECU_LIST:
+				return ((InternalEList<?>)getEcuList()).basicRemove(otherEnd, msgs);
+			case DataPackage.ARCHITECTURAL__FRAME_LIST:
+				return ((InternalEList<?>)getFrameList()).basicRemove(otherEnd, msgs);
+			case DataPackage.ARCHITECTURAL__MUTEX_LIST:
+				return ((InternalEList<?>)getMutexList()).basicRemove(otherEnd, msgs);
+			case DataPackage.ARCHITECTURAL__RESOURCE_LIST:
+				return ((InternalEList<?>)getResourceList()).basicRemove(otherEnd, msgs);
+			case DataPackage.ARCHITECTURAL__SIGNAL_LIST:
+				return ((InternalEList<?>)getSignalList()).basicRemove(otherEnd, msgs);
+			case DataPackage.ARCHITECTURAL__TASK_LIST:
+				return ((InternalEList<?>)getTaskList()).basicRemove(otherEnd, msgs);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.ARCHITECTURAL__BUS_LIST:
 				return getBusList();
 			case DataPackage.ARCHITECTURAL__ECU_LIST:
@@ -276,57 +270,58 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 			case DataPackage.ARCHITECTURAL__TASK_LIST:
 				return getTaskList();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.ARCHITECTURAL__BUS_LIST:
 				getBusList().clear();
-				getBusList().addAll((Collection)newValue);
+				getBusList().addAll((Collection<? extends Bus>)newValue);
 				return;
 			case DataPackage.ARCHITECTURAL__ECU_LIST:
 				getEcuList().clear();
-				getEcuList().addAll((Collection)newValue);
+				getEcuList().addAll((Collection<? extends Ecu>)newValue);
 				return;
 			case DataPackage.ARCHITECTURAL__FRAME_LIST:
 				getFrameList().clear();
-				getFrameList().addAll((Collection)newValue);
+				getFrameList().addAll((Collection<? extends Frame>)newValue);
 				return;
 			case DataPackage.ARCHITECTURAL__MUTEX_LIST:
 				getMutexList().clear();
-				getMutexList().addAll((Collection)newValue);
+				getMutexList().addAll((Collection<? extends Mutex>)newValue);
 				return;
 			case DataPackage.ARCHITECTURAL__RESOURCE_LIST:
 				getResourceList().clear();
-				getResourceList().addAll((Collection)newValue);
+				getResourceList().addAll((Collection<? extends Resource>)newValue);
 				return;
 			case DataPackage.ARCHITECTURAL__SIGNAL_LIST:
 				getSignalList().clear();
-				getSignalList().addAll((Collection)newValue);
+				getSignalList().addAll((Collection<? extends Signal>)newValue);
 				return;
 			case DataPackage.ARCHITECTURAL__TASK_LIST:
 				getTaskList().clear();
-				getTaskList().addAll((Collection)newValue);
+				getTaskList().addAll((Collection<? extends Task>)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.ARCHITECTURAL__BUS_LIST:
 				getBusList().clear();
 				return;
@@ -349,17 +344,17 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 				getTaskList().clear();
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.ARCHITECTURAL__BUS_LIST:
 				return busList != null && !busList.isEmpty();
 			case DataPackage.ARCHITECTURAL__ECU_LIST:
@@ -375,21 +370,7 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 			case DataPackage.ARCHITECTURAL__TASK_LIST:
 				return taskList != null && !taskList.isEmpty();
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return "Architectural";
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-		return getObjectID().equals(newID);
-	}
 } //ArchitecturalImpl

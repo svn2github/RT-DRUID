@@ -19,19 +19,15 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecore.resource.impl.PlatformResourceURIHandlerImpl.WorkbenchHelper;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.xml.sax.ErrorHandler;
 
-import com.eu.evidence.rtdruid.desk.Messages;
-import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.io.IRTDExporter;
 import com.eu.evidence.rtdruid.io.IRTDImporter;
+import com.eu.evidence.rtdruid.vartree.VarTreeCopy;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.data.System;
@@ -182,7 +178,7 @@ public class RTDResourceManager extends XMIResourceImpl implements IVTResource {
 				ObjectWithID newRoot = DataFactory.eINSTANCE.createSystem();
 				getContents().set(0, newRoot);
 				newRoot.setObjectID(oldRoot.getObjectID());
-				newRoot.merge(oldRoot, "", false);
+				VarTreeCopy.merge(newRoot, oldRoot);//newRoot.merge(oldRoot, "", false);
 			}
 		}
 	}

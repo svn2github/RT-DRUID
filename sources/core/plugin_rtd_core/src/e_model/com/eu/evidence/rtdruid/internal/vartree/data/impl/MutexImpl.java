@@ -2,24 +2,21 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
-
-
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.Mutex;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.OilVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,160 +33,122 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *
  * @generated
  */
-public class MutexImpl extends ObjectWithIDImpl implements Mutex
-{
+public class MutexImpl extends ObjectWithIDImpl implements Mutex {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar NAME_EDEFAULT = null;
+	protected static final StringVar NAME_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar name = NAME_EDEFAULT;
+	protected StringVar name = NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getOilVar() <em>Oil Var</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getOilVar()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final OilVar OIL_VAR_EDEFAULT = null;
+	protected static final OilVar OIL_VAR_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getOilVar() <em>Oil Var</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getOilVar()
 	 * @generated
 	 * @ordered
 	 */
-  protected OilVar oilVar = OIL_VAR_EDEFAULT;
+	protected OilVar oilVar = OIL_VAR_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getPolicy() <em>Policy</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getPolicy()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar POLICY_EDEFAULT = null;
+	protected static final StringVar POLICY_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getPolicy() <em>Policy</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getPolicy()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar policy = POLICY_EDEFAULT;
+	protected StringVar policy = POLICY_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected MutexImpl() {
+	protected MutexImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getMutex();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.MUTEX;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getName() {
+	public StringVar getName() {
 		return name;
 	}
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setName(StringVar newName)
-  {
-	if ( !checkNewID(makeID(newName)) ) return;
-  	
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-	setNameGen(newName);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setNameGen(StringVar newName) {
-    StringVar oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.MUTEX__NAME, oldName, name));
-  }
-
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getPolicy() {
-		return policy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setPolicy(StringVar newPolicy) {
-		StringVar oldPolicy = policy;
-		policy = newPolicy;
+	public void setName(StringVar newName) {
+		StringVar oldName = name;
+		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.MUTEX__POLICY, oldPolicy, policy));
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.MUTEX__NAME, oldName, name));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public OilVar getOilVar() {
+	public OilVar getOilVar() {
 		return oilVar;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setOilVar(OilVar newOilVar) {
+	public void setOilVar(OilVar newOilVar) {
 		OilVar oldOilVar = oilVar;
 		oilVar = newOilVar;
 		if (eNotificationRequired())
@@ -198,11 +157,33 @@ public class MutexImpl extends ObjectWithIDImpl implements Mutex
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public StringVar getPolicy() {
+		return policy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPolicy(StringVar newPolicy) {
+		StringVar oldPolicy = policy;
+		policy = newPolicy;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.MUTEX__POLICY, oldPolicy, policy));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.MUTEX__NAME:
 				return getName();
 			case DataPackage.MUTEX__OIL_VAR:
@@ -210,17 +191,17 @@ public class MutexImpl extends ObjectWithIDImpl implements Mutex
 			case DataPackage.MUTEX__POLICY:
 				return getPolicy();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.MUTEX__NAME:
 				setName((StringVar)newValue);
 				return;
@@ -231,17 +212,17 @@ public class MutexImpl extends ObjectWithIDImpl implements Mutex
 				setPolicy((StringVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.MUTEX__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -252,17 +233,17 @@ public class MutexImpl extends ObjectWithIDImpl implements Mutex
 				setPolicy(POLICY_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.MUTEX__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case DataPackage.MUTEX__OIL_VAR:
@@ -270,16 +251,16 @@ public class MutexImpl extends ObjectWithIDImpl implements Mutex
 			case DataPackage.MUTEX__POLICY:
 				return POLICY_EDEFAULT == null ? policy != null : !POLICY_EDEFAULT.equals(policy);
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -293,27 +274,4 @@ public class MutexImpl extends ObjectWithIDImpl implements Mutex
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(name);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setNameGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //MutexImpl

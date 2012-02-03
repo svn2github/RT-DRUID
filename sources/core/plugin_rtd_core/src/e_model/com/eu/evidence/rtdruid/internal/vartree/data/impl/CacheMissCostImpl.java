@@ -6,21 +6,20 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCost;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.Distribution;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,19 +28,17 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link com.eu.evidence.rtdruid.vartree.data.impl.CacheMissCostImpl#getBest <em>Best</em>}</li>
- *   <li>{@link com.eu.evidence.rtdruid.vartree.data.impl.CacheMissCostImpl#getDistribution <em>Distribution</em>}</li>
- *   <li>{@link com.eu.evidence.rtdruid.vartree.data.impl.CacheMissCostImpl#getRef <em>Ref</em>}</li>
- *   <li>{@link com.eu.evidence.rtdruid.vartree.data.impl.CacheMissCostImpl#getType <em>Type</em>}</li>
- *   <li>{@link com.eu.evidence.rtdruid.vartree.data.impl.CacheMissCostImpl#getWorst <em>Worst</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.CacheMissCostImpl#getBest <em>Best</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.CacheMissCostImpl#getDistribution <em>Distribution</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.CacheMissCostImpl#getRef <em>Ref</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.CacheMissCostImpl#getType <em>Type</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.CacheMissCostImpl#getWorst <em>Worst</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost {
-	
-	
 	/**
 	 * The default value of the '{@link #getBest() <em>Best</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -70,7 +67,7 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 	 * @generated
 	 * @ordered
 	 */
-	 protected Distribution distribution = null;
+	protected Distribution distribution;
 
 	/**
 	 * The default value of the '{@link #getRef() <em>Ref</em>}' attribute.
@@ -146,109 +143,9 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getCacheMissCost();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public StringVar getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-  public void setType(StringVar newType) {
-  	{
-  		newType = varToUpperCase(newType);
-		if ( !checkNewID(makeSlahedID(new IVariable[] { ref, newType })) ) return;
-  	}
-
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-  	setTypeGen(newType);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setTypeGen(StringVar newType) {
-		StringVar oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CACHE_MISS_COST__REF, oldType, type));
-	}
-
-/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public StringVar getRef() {
-		return ref;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	   * @generated NOT
-	   */
-	  public void setRef(StringVar newRef)
-	  {
-		{
-			if ( !checkNewID(makeSlahedID(new IVariable[] { newRef, type })) ) return;
-		}
-	
-		// Store old ID
-		String old_ID = getObjectID();
-		
-		setRefGen(newRef);
-		
-		// ASk to update ID
-		didSetObjectID(old_ID);
-	  }
-	  /**
-	   * <!-- begin-user-doc -->
-	   * <!-- end-user-doc -->
-	   * @generated
-	   */
-	  private void setRefGen(StringVar newRef) {
-	    StringVar oldRef = ref;
-	    ref = newRef;
-	    if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CACHE_MISS_COST__REF, oldRef, ref));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TimeVar getWorst() {
-		return worst;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setWorst(TimeVar newWorst) {
-		TimeVar oldWorst = worst;
-		worst = newWorst;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CACHE_MISS_COST__WORST, oldWorst, worst));
+		return DataPackage.Literals.CACHE_MISS_COST;
 	}
 
 	/**
@@ -320,16 +217,8 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case DataPackage.CACHE_MISS_COST__DISTRIBUTION:
-					return basicSetDistribution(null, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
-		}
-		return eBasicSetContainer(null, featureID, msgs);
+	public StringVar getRef() {
+		return ref;
 	}
 
 	/**
@@ -337,8 +226,77 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void setRef(StringVar newRef) {
+		StringVar oldRef = ref;
+		ref = newRef;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CACHE_MISS_COST__REF, oldRef, ref));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(StringVar newType) {
+		StringVar oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CACHE_MISS_COST__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TimeVar getWorst() {
+		return worst;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWorst(TimeVar newWorst) {
+		TimeVar oldWorst = worst;
+		worst = newWorst;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CACHE_MISS_COST__WORST, oldWorst, worst));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case DataPackage.CACHE_MISS_COST__DISTRIBUTION:
+				return basicSetDistribution(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.CACHE_MISS_COST__BEST:
 				return getBest();
 			case DataPackage.CACHE_MISS_COST__DISTRIBUTION:
@@ -350,7 +308,7 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 			case DataPackage.CACHE_MISS_COST__WORST:
 				return getWorst();
 		}
-		return super.eGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -358,8 +316,9 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.CACHE_MISS_COST__BEST:
 				setBest((TimeVar)newValue);
 				return;
@@ -376,7 +335,7 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 				setWorst((TimeVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -384,8 +343,9 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.CACHE_MISS_COST__BEST:
 				setBest(BEST_EDEFAULT);
 				return;
@@ -402,7 +362,7 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 				setWorst(WORST_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -410,8 +370,9 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.CACHE_MISS_COST__BEST:
 				return BEST_EDEFAULT == null ? best != null : !BEST_EDEFAULT.equals(best);
 			case DataPackage.CACHE_MISS_COST__DISTRIBUTION:
@@ -423,7 +384,7 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 			case DataPackage.CACHE_MISS_COST__WORST:
 				return WORST_EDEFAULT == null ? worst != null : !WORST_EDEFAULT.equals(worst);
 		}
-		return super.eIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
@@ -431,6 +392,7 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -446,38 +408,5 @@ public class CacheMissCostImpl extends ObjectWithIDImpl implements CacheMissCost
 		result.append(')');
 		return result.toString();
 	}
-
-		/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeSlahedID(new IVariable[] { ref, type});
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-		
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setRefGen (tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		setTypeGen(tmp[1] == null ? (StringVar) null : new StringVar(tmp[1]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
-	
-  public boolean checkNewID(String newID) {
-	String[] tmp = resolveID(newID);
-	tmp[1] = tmp[1] == null ? null : tmp[1].toUpperCase();
-
-	return super.checkNewID(DataPath.makeId(new String[] { tmp[0], tmp[1]}));
-  }
-
 
 } //CacheMissCostImpl

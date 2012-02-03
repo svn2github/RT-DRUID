@@ -51,12 +51,14 @@ public class VTLoadTest extends TestCase {
 	
 	@Override
 	protected void setUp() throws Exception {
-		super.setUp();
+		super.setUp();		
+		System.err.flush();
 		System.out.println("/*****************************************************\n" +
 				           " *  " + this.getClass().getName() + " -> " + getName() + "\n" +
 				           " ****************************************************" +
 				           "" +
 				           "/\n");
+		System.out.flush();
 		
 		correct = (IVarTree) RTDFactory.get(IVarTree.class); //prepare also Data Factory
 		
@@ -76,11 +78,13 @@ public class VTLoadTest extends TestCase {
 	protected void tearDown() throws Exception {
 		correct = null;
 		super.tearDown();
+		System.err.flush();
+		System.out.flush();
 	}
 	
 	private final static String ertd_version = 
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-		"<rtdruid.vartree.data:System xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:rtdruid.vartree.data=\"http://rtdruid.vartree.data\" Name=\"hp_test5 (bug 223)\">\n" +
+		"<com.eu.evidence.rtdruid.data:System xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:com.eu.evidence.rtdruid.data=\"http://www.evidence.eu.com/rtdruid/data\" Name=\"hp_test5 (bug 223)\">\n" +
 		"  <Schedulability>\n" +
 		"    <SchedulingScenarioList>\n" +
 		"      <CpuSchedList Boundary=\"0.7347722898562381\" CpuRef=\"CPU0.erika\" Schedulable=\"false\" SpeedFactor=\"1.4285714285714286\" Utilization=\"1.1484126984126983\"/>\n" +
@@ -88,10 +92,10 @@ public class VTLoadTest extends TestCase {
 		"      <TaskSchedList CDelta=\"-3.0\" ResponseTime=\"2.0ms\" Schedulable=\"true\" TaskRef=\"t2\" Utilization=\"2.0\"/>\n" +
 		"    </SchedulingScenarioList>\n" +
 		"  </Schedulability>\n" +
-		"</rtdruid.vartree.data:System>";
+		"</com.eu.evidence.rtdruid.data:System>";
 	
 	private final static String common = 
-		"<SYSTEM xmlns:rtdruid.vartree.data=\"http://rtdruid.vartree.data\"  Name=\"hp_test5 (bug 223)\">" +
+		"<SYSTEM xmlns:com.eu.evidence.rtdruid.data=\"http://www.evidence.eu.com/rtdruid/data\"  Name=\"hp_test5 (bug 223)\">" +
 		"<SCHEDULABILITY>" +
 		"<SCHEDULINGSCENARIO>" +
 		"<CPUSCHED CpuRef=\"CPU0.erika\" Utilization=\"1.1484126984126983\" SpeedFactor=\"1.4285714285714286\" Boundary=\"0.7347722898562381\" Schedulable=\"false\"/>" +
@@ -103,7 +107,7 @@ public class VTLoadTest extends TestCase {
 	
 	private final static String xmlInput1 = 
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + 
-		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
+		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.4.dtd\">" +
 		common;
 	
 	private final static String xmlInput2 = 
@@ -111,7 +115,7 @@ public class VTLoadTest extends TestCase {
 		common;
 	
 	private final static String xmlInput3 = 
-		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
+		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.4.dtd\">" +
 		common;
 	
 	private final static String xmlInput4 = 

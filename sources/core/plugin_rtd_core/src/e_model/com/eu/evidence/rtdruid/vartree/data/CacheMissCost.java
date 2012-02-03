@@ -41,7 +41,7 @@ public interface CacheMissCost extends ObjectWithID {
 	 * @return the value of the '<em>Best</em>' attribute.
 	 * @see #setBest(TimeVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getCacheMissCost_Best()
-	 * @model dataType="rtdruid.vartree.data.TimeVar"
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.TimeVar"
 	 * @generated
 	 */
 	TimeVar getBest();
@@ -93,7 +93,7 @@ public interface CacheMissCost extends ObjectWithID {
 	 * @return the value of the '<em>Ref</em>' attribute.
 	 * @see #setRef(StringVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getCacheMissCost_Ref()
-	 * @model dataType="rtdruid.vartree.data.StringVar" required="true"
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.StringVar" required="true"
 	 * @generated
 	 */
 	StringVar getRef();
@@ -119,7 +119,7 @@ public interface CacheMissCost extends ObjectWithID {
 	 * @return the value of the '<em>Type</em>' attribute.
 	 * @see #setType(StringVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getCacheMissCost_Type()
-	 * @model dataType="rtdruid.vartree.data.StringVar" required="true"
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.StringVar" required="true"
 	 * @generated
 	 */
 	StringVar getType();
@@ -145,7 +145,7 @@ public interface CacheMissCost extends ObjectWithID {
 	 * @return the value of the '<em>Worst</em>' attribute.
 	 * @see #setWorst(TimeVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getCacheMissCost_Worst()
-	 * @model dataType="rtdruid.vartree.data.TimeVar"
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.TimeVar"
 	 * @generated
 	 */
 	TimeVar getWorst();

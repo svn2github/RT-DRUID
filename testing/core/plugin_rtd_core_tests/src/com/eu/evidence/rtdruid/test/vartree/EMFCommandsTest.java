@@ -24,7 +24,6 @@ import com.eu.evidence.rtdruid.vartree.data.Architectural;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.Task;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.data.init.VtCompare;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
@@ -76,7 +75,7 @@ public class EMFCommandsTest extends TestCase {
 		
 		assertTrue(com.canExecute());
 		com.execute();
-		Collection col = vt.getClipboard();
+		Collection<Object> col = vt.getClipboard();
 		assertTrue(col != null);
 		assertTrue(col.size() == 1);
 		
@@ -92,7 +91,7 @@ public class EMFCommandsTest extends TestCase {
 		for (int i=0; i<scheds.length; i++) {
 			
 			assertTrue(task.getSchedulingList().contains(scheds[i]));
-			assertTrue(((Task) result).getSchedulingList().contains(scheds[i]));
+			assertTrue(!((Task) result).getSchedulingList().contains(scheds[i]));
 			
 			EList<Scheduling> list = ((Task) result).getSchedulingList(); 
 			for (Scheduling s: list) {
@@ -104,7 +103,6 @@ public class EMFCommandsTest extends TestCase {
 				}
 				assertTrue(match == 1);
 			}
-
 		}
 		
 	}
@@ -141,13 +139,14 @@ public class EMFCommandsTest extends TestCase {
 		
 		assertTrue(com.canExecute());
 		com.execute();
-		Collection col = vt.getClipboard();
+		Collection<Object> col = vt.getClipboard();
 		assertTrue(col != null);
 		assertTrue(col.size() == 1);
 		
 		Object result = col.toArray()[0];
 		assertTrue(result instanceof Task);
 		String t = (new VtCompare(task, (Task) result)).getText(); assertTrue(t, t== null);
+		assertTrue(EcoreUtil.equals(task, (Task) result));
 	}
 
 }

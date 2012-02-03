@@ -2,38 +2,37 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CpuItemProvider.java,v 1.2 2007/09/19 14:18:37 durin Exp $
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.Cpu;
+import com.eu.evidence.rtdruid.vartree.data.DataFactory;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
-
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.Cpu;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-
 /**
- * This is the item provider adpater for a {@link rtdruid.vartree.data.Cpu} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.Cpu} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -62,7 +61,8 @@ public class CpuItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -83,14 +83,18 @@ public class CpuItemProvider
 	 */
 	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Cpu_Name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Cpu_Name_feature", "_UI_Cpu_type"),
-				 DataPackage.eINSTANCE.getCpu_Name(),
+				 DataPackage.Literals.CPU__NAME,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -101,14 +105,18 @@ public class CpuItemProvider
 	 */
 	protected void addModelPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Cpu_Model_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Cpu_Model_feature", "_UI_Cpu_type"),
-				 DataPackage.eINSTANCE.getCpu_Model(),
+				 DataPackage.Literals.CPU__MODEL,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -124,7 +132,7 @@ public class CpuItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Cpu_Speed_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Cpu_Speed_feature", "_UI_Cpu_type"),
-				 DataPackage.eINSTANCE.getCpu_Speed(),
+				 DataPackage.Literals.CPU__SPEED,
 				 true,
 				 false,
 				 false,
@@ -146,7 +154,7 @@ public class CpuItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Cpu_Speed_Unit_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Cpu_Speed_Unit_feature", "_UI_Cpu_type"),
-				 DataPackage.eINSTANCE.getCpu_Speed_Unit(),
+				 DataPackage.Literals.CPU__SPEED_UNIT,
 				 true,
 				 false,
 				 false,
@@ -168,7 +176,7 @@ public class CpuItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Cpu_BinaryImage_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Cpu_BinaryImage_feature", "_UI_Cpu_type"),
-				 DataPackage.eINSTANCE.getCpu_BinaryImage(),
+				 DataPackage.Literals.CPU__BINARY_IMAGE,
 				 true,
 				 false,
 				 false,
@@ -185,13 +193,27 @@ public class CpuItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(DataPackage.eINSTANCE.getCpu_Rtos());
-			childrenFeatures.add(DataPackage.eINSTANCE.getCpu_OsApplication());
+			childrenFeatures.add(DataPackage.Literals.CPU__RTOS);
+			childrenFeatures.add(DataPackage.Literals.CPU__OS_APPLICATION);
 		}
 		return childrenFeatures;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
 	}
 
 	/**
@@ -200,8 +222,9 @@ public class CpuItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/Cpu");
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Cpu"));
 	}
 
 	/**
@@ -210,6 +233,7 @@ public class CpuItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		StringVar labelValue = ((Cpu)object).getName();
 		String label = labelValue == null ? null : labelValue.toString();
@@ -225,6 +249,7 @@ public class CpuItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -245,34 +270,25 @@ public class CpuItemProvider
 	}
 
 	/**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getCpu_Rtos(),
+				(DataPackage.Literals.CPU__RTOS,
 				 DataFactory.eINSTANCE.createRtos()));
-		
+
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getCpu_OsApplication(),
+				(DataPackage.Literals.CPU__OS_APPLICATION,
 				 DataFactory.eINSTANCE.createOsApplication()));
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
 	}
 
 }

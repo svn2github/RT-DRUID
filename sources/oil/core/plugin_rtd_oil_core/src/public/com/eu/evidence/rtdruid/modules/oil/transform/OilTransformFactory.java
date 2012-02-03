@@ -88,6 +88,8 @@ final public class OilTransformFactory {
             throw new RuntimeException("Oil Transform Factory : " + e.getMessage());
         } catch (InvocationTargetException e) {
             throw new RuntimeException("Oil Transform Factory : " + e.getMessage());
+        } catch (NoClassDefFoundError e) {
+            throw new RuntimeException("Oil Transform Factory : " + e.getMessage());
         }
         //throw new IllegalArgumentException("Unknow oil id : " + id);
     }

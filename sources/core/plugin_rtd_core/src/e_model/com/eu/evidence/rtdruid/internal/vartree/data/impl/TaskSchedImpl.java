@@ -2,26 +2,23 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
-
-
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.TaskSched;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.BooleanVar;
 import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,220 +38,161 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
  *
  * @generated
  */
-public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched
-{
+public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched {
 	/**
 	 * The default value of the '{@link #getCDelta() <em>CDelta</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getCDelta()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final DoubleVar CDELTA_EDEFAULT = null;
+	protected static final DoubleVar CDELTA_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getCDelta() <em>CDelta</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getCDelta()
 	 * @generated
 	 * @ordered
 	 */
-  protected DoubleVar cDelta = CDELTA_EDEFAULT;
+	protected DoubleVar cDelta = CDELTA_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getResponseTime() <em>Response Time</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getResponseTime()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final TimeVar RESPONSE_TIME_EDEFAULT = null;
+	protected static final TimeVar RESPONSE_TIME_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getResponseTime() <em>Response Time</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getResponseTime()
 	 * @generated
 	 * @ordered
 	 */
-  protected TimeVar responseTime = RESPONSE_TIME_EDEFAULT;
+	protected TimeVar responseTime = RESPONSE_TIME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getSchedulable() <em>Schedulable</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getSchedulable()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final BooleanVar SCHEDULABLE_EDEFAULT = null;
+	protected static final BooleanVar SCHEDULABLE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getSchedulable() <em>Schedulable</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getSchedulable()
 	 * @generated
 	 * @ordered
 	 */
-  protected BooleanVar schedulable = SCHEDULABLE_EDEFAULT;
+	protected BooleanVar schedulable = SCHEDULABLE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getTaskRef() <em>Task Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getTaskRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar TASK_REF_EDEFAULT = null;
+	protected static final StringVar TASK_REF_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getTaskRef() <em>Task Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getTaskRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar taskRef = TASK_REF_EDEFAULT;
+	protected StringVar taskRef = TASK_REF_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getTDelta() <em>TDelta</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getTDelta()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final DoubleVar TDELTA_EDEFAULT = null;
+	protected static final DoubleVar TDELTA_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getTDelta() <em>TDelta</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getTDelta()
 	 * @generated
 	 * @ordered
 	 */
-  protected DoubleVar tDelta = TDELTA_EDEFAULT;
+	protected DoubleVar tDelta = TDELTA_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getUtilization() <em>Utilization</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getUtilization()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final DoubleVar UTILIZATION_EDEFAULT = null;
+	protected static final DoubleVar UTILIZATION_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getUtilization() <em>Utilization</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getUtilization()
 	 * @generated
 	 * @ordered
 	 */
-  protected DoubleVar utilization = UTILIZATION_EDEFAULT;
+	protected DoubleVar utilization = UTILIZATION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected TaskSchedImpl() {
+	protected TaskSchedImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getTaskSched();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.TASK_SCHED;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getTaskRef() {
-		return taskRef;
-	}
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setTaskRef(StringVar newTaskRef)
-  {
-	if ( !checkNewID(makeID(newTaskRef)) ) return;
-
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-	setTaskRefGen(newTaskRef);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setTaskRefGen(StringVar newTaskRef) {
-    StringVar oldTaskRef = taskRef;
-    taskRef = newTaskRef;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TASK_SCHED__TASK_REF, oldTaskRef, taskRef));
-  }
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public DoubleVar getUtilization() {
-		return utilization;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setUtilization(DoubleVar newUtilization) {
-		DoubleVar oldUtilization = utilization;
-		utilization = newUtilization;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TASK_SCHED__UTILIZATION, oldUtilization, utilization));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public DoubleVar getCDelta() {
+	public DoubleVar getCDelta() {
 		return cDelta;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setCDelta(DoubleVar newCDelta) {
+	public void setCDelta(DoubleVar newCDelta) {
 		DoubleVar oldCDelta = cDelta;
 		cDelta = newCDelta;
 		if (eNotificationRequired())
@@ -263,40 +201,19 @@ public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public DoubleVar getTDelta() {
-		return tDelta;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setTDelta(DoubleVar newTDelta) {
-		DoubleVar oldTDelta = tDelta;
-		tDelta = newTDelta;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TASK_SCHED__TDELTA, oldTDelta, tDelta));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public TimeVar getResponseTime() {
+	public TimeVar getResponseTime() {
 		return responseTime;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setResponseTime(TimeVar newResponseTime) {
+	public void setResponseTime(TimeVar newResponseTime) {
 		TimeVar oldResponseTime = responseTime;
 		responseTime = newResponseTime;
 		if (eNotificationRequired())
@@ -305,19 +222,19 @@ public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public BooleanVar getSchedulable() {
+	public BooleanVar getSchedulable() {
 		return schedulable;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setSchedulable(BooleanVar newSchedulable) {
+	public void setSchedulable(BooleanVar newSchedulable) {
 		BooleanVar oldSchedulable = schedulable;
 		schedulable = newSchedulable;
 		if (eNotificationRequired())
@@ -326,11 +243,75 @@ public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public StringVar getTaskRef() {
+		return taskRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTaskRef(StringVar newTaskRef) {
+		StringVar oldTaskRef = taskRef;
+		taskRef = newTaskRef;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TASK_SCHED__TASK_REF, oldTaskRef, taskRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DoubleVar getTDelta() {
+		return tDelta;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTDelta(DoubleVar newTDelta) {
+		DoubleVar oldTDelta = tDelta;
+		tDelta = newTDelta;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TASK_SCHED__TDELTA, oldTDelta, tDelta));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DoubleVar getUtilization() {
+		return utilization;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUtilization(DoubleVar newUtilization) {
+		DoubleVar oldUtilization = utilization;
+		utilization = newUtilization;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TASK_SCHED__UTILIZATION, oldUtilization, utilization));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.TASK_SCHED__CDELTA:
 				return getCDelta();
 			case DataPackage.TASK_SCHED__RESPONSE_TIME:
@@ -344,17 +325,17 @@ public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched
 			case DataPackage.TASK_SCHED__UTILIZATION:
 				return getUtilization();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.TASK_SCHED__CDELTA:
 				setCDelta((DoubleVar)newValue);
 				return;
@@ -374,17 +355,17 @@ public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched
 				setUtilization((DoubleVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.TASK_SCHED__CDELTA:
 				setCDelta(CDELTA_EDEFAULT);
 				return;
@@ -404,17 +385,17 @@ public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched
 				setUtilization(UTILIZATION_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.TASK_SCHED__CDELTA:
 				return CDELTA_EDEFAULT == null ? cDelta != null : !CDELTA_EDEFAULT.equals(cDelta);
 			case DataPackage.TASK_SCHED__RESPONSE_TIME:
@@ -428,16 +409,16 @@ public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched
 			case DataPackage.TASK_SCHED__UTILIZATION:
 				return UTILIZATION_EDEFAULT == null ? utilization != null : !UTILIZATION_EDEFAULT.equals(utilization);
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -457,27 +438,4 @@ public class TaskSchedImpl extends ObjectWithIDImpl implements TaskSched
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(taskRef);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setTaskRefGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //TaskSchedImpl

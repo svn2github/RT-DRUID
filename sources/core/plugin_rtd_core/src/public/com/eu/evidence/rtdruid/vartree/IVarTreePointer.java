@@ -98,7 +98,7 @@ public interface IVarTreePointer {
 	*
 	*	@throws IllegalStateException	if current node is a container.
 	*/
-	public IVariable getNewVar();
+	public IVariable getNewVar(String initialValue);
 	
 	/** Sets a variable.
 	*

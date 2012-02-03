@@ -2,28 +2,27 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.Rtos;
 
-
+import com.eu.evidence.rtdruid.vartree.variables.OilVar;
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.Rtos;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
-import com.eu.evidence.rtdruid.vartree.variables.OilVar;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,53 +34,52 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.RtosImpl#getName <em>Name</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.RtosImpl#getOilVar <em>Oil Var</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.RtosImpl#getType <em>Type</em>}</li>
- *   <li>{@link com.eu.evidence.rtdruid.vartree.data.impl.RtosImpl#getMethods <em>Methods</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.RtosImpl#getMethods <em>Methods</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class RtosImpl extends ObjectWithIDImpl implements Rtos
-{
+public class RtosImpl extends ObjectWithIDImpl implements Rtos {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar NAME_EDEFAULT = null;
+	protected static final StringVar NAME_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar name = NAME_EDEFAULT;
+	protected StringVar name = NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getOilVar() <em>Oil Var</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getOilVar()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final OilVar OIL_VAR_EDEFAULT = null;
+	protected static final OilVar OIL_VAR_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getOilVar() <em>Oil Var</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getOilVar()
 	 * @generated
 	 * @ordered
 	 */
-  protected OilVar oilVar = OIL_VAR_EDEFAULT;
+	protected OilVar oilVar = OIL_VAR_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -103,7 +101,7 @@ public class RtosImpl extends ObjectWithIDImpl implements Rtos
 	 */
 	protected StringVar type = TYPE_EDEFAULT;
 
- 	/**
+	/**
 	 * The cached value of the '{@link #getMethods() <em>Methods</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -111,72 +109,63 @@ public class RtosImpl extends ObjectWithIDImpl implements Rtos
 	 * @generated
 	 * @ordered
 	 */
-	protected EList methods;
+	protected EList<StringVar> methods;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected RtosImpl() {
+	protected RtosImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getRtos();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.RTOS;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getName() {
+	public StringVar getName() {
 		return name;
 	}
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setName(StringVar newName)
-  {
-	if ( !checkNewID(makeID(newName)) ) return;
-  	
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-    StringVar oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.RTOS__NAME, oldName, name));
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-
-  }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(StringVar newName) {
+		StringVar oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.RTOS__NAME, oldName, name));
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public OilVar getOilVar() {
+	public OilVar getOilVar() {
 		return oilVar;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setOilVar(OilVar newOilVar) {
+	public void setOilVar(OilVar newOilVar) {
 		OilVar oldOilVar = oilVar;
 		oilVar = newOilVar;
 		if (eNotificationRequired())
@@ -206,12 +195,12 @@ public class RtosImpl extends ObjectWithIDImpl implements Rtos
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-		public EList getMethods() {
+	public EList<StringVar> getMethods() {
 		if (methods == null) {
-			methods = new EDataTypeUniqueEList(StringVar.class, this, DataPackage.RTOS__METHODS);
+			methods = new EDataTypeUniqueEList<StringVar>(StringVar.class, this, DataPackage.RTOS__METHODS);
 		}
 		return methods;
 	}
@@ -221,8 +210,9 @@ public class RtosImpl extends ObjectWithIDImpl implements Rtos
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.RTOS__NAME:
 				return getName();
 			case DataPackage.RTOS__OIL_VAR:
@@ -232,17 +222,18 @@ public class RtosImpl extends ObjectWithIDImpl implements Rtos
 			case DataPackage.RTOS__METHODS:
 				return getMethods();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.RTOS__NAME:
 				setName((StringVar)newValue);
 				return;
@@ -254,20 +245,20 @@ public class RtosImpl extends ObjectWithIDImpl implements Rtos
 				return;
 			case DataPackage.RTOS__METHODS:
 				getMethods().clear();
-				getMethods().addAll((Collection)newValue);
+				getMethods().addAll((Collection<? extends StringVar>)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.RTOS__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -281,17 +272,17 @@ public class RtosImpl extends ObjectWithIDImpl implements Rtos
 				getMethods().clear();
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.RTOS__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case DataPackage.RTOS__OIL_VAR:
@@ -301,16 +292,16 @@ public class RtosImpl extends ObjectWithIDImpl implements Rtos
 			case DataPackage.RTOS__METHODS:
 				return methods != null && !methods.isEmpty();
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -326,28 +317,4 @@ public class RtosImpl extends ObjectWithIDImpl implements Rtos
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		if (true) return "Rtos"; // just until a cpu can contain only one RTOS
-		
-		return makeID(name);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-//	  	String old_ID = getObjectID();
-		// ASk to update ID
-//	  	didSetObjectID(old_ID);
-
-	  	// just until a cpu can contain only one RTOS
-		// setName(newID == null ? (StringVar) null : new StringVar(newID));
-		return true;
-	}
 } //RtosImpl

@@ -206,7 +206,9 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 		if ( point.goAbsolute(path)) {
 			// get variable
 			IVariable tv = point.getVar();
-			return tv == null ? point.getNewVar() : tv ;
+			tv = tv == null ? point.getNewVar(null) : tv ;
+			if (tv == null) { /*DEBUG*/			throw new Error("Try to get a not null var");		}
+			return tv;
 		}
 
 		// Not found
@@ -306,7 +308,10 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 			// get variable, if it's a leaf node
 			if ( !figli.isContainer() ) {
 				IVariable tv = figli.getVar(); 
-				risp.add( tv == null ? point.getNewVar() : tv);
+				if (tv != null) {
+					//risp.add( tv == null ? point.getNewVar() : tv);
+					risp.add(tv);
+				}
 			}
 
 		} while (point.goNextSibling());
@@ -578,9 +583,10 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 		// set variable
 		IVariable var = point.getVar();
 		if (var == null) {
-			var = point.getNewVar();
+			var = point.getNewVar(data);
+		} else {
+			var.set(data);
 		}
-		var.set(data);
 		point.setVar(var);
 	}	
 	

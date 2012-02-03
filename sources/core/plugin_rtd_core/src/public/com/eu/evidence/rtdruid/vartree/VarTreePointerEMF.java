@@ -16,6 +16,7 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -27,10 +28,10 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import com.eu.evidence.rtdruid.desk.Messages;
+import com.eu.evidence.rtdruid.internal.vartree.data.impl.DataFactoryImpl;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
 import com.eu.evidence.rtdruid.vartree.variables.BooleanMVar;
 import com.eu.evidence.rtdruid.vartree.variables.BooleanVar;
 import com.eu.evidence.rtdruid.vartree.variables.DoubleMVar;
@@ -42,6 +43,7 @@ import com.eu.evidence.rtdruid.vartree.variables.IntegerVar;
 import com.eu.evidence.rtdruid.vartree.variables.LongMVar;
 import com.eu.evidence.rtdruid.vartree.variables.LongVar;
 import com.eu.evidence.rtdruid.vartree.variables.MultiValues;
+import com.eu.evidence.rtdruid.vartree.variables.OilVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringMVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeMVar;
@@ -805,17 +807,18 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 					// look for a child with given name
 					EList<?> refList = (EList<?>) current.pointer.eGet(current.attr);
 					
-					if (refList instanceof EObjectContainmentUniqueEList<?>) {
-						EObjectContainmentUniqueEList<?> list = (EObjectContainmentUniqueEList<?>) refList;
-						int pos = list.indexOfById(step);
-						if (pos >=0) {
-							current.pointer = (EObject) list.get(pos);
-							current.attr = null;
-							risp = true;
-							
-						}
-						
-					} else {
+//					if (refList instanceof EObjectContainmentUniqueEList<?>) {
+//						EObjectContainmentUniqueEList<?> list = (EObjectContainmentUniqueEList<?>) refList;
+//						int pos = list.indexOfById(step);
+//						if (pos >=0) {
+//							current.pointer = (EObject) list.get(pos);
+//							current.attr = null;
+//							risp = true;
+//							
+//						}
+//						
+//					} else 
+					{
 					for (int i=0; i<refList.size(); i++) {
 						ObjectWithID ref = (ObjectWithID) refList.get(i);
 						if (step.equals(ref.getObjectID())) {
@@ -1198,7 +1201,23 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 	
 		return risp;
 	}
+
+	protected IVariable getEmptyVar(Class<?> type) {
+		IVariable risp = null;
+		
+		if (type == StringVar.class) {			risp = new StringVar(); }
+		else if (type == IntegerVar.class) {	risp = new IntegerVar(); }
+		else if (type == LongVar.class) {		risp = new LongVar(); }
+		else if (type == DoubleVar.class) {		risp = new DoubleVar(); }
+		else if (type == FloatVar.class) {		risp = new FloatVar(); }
+		else if (type == BooleanVar.class) {	risp = new BooleanVar(); }
+		else if (type == TimeVar.class) {		risp = new TimeVar(); }
+		else { throw new RuntimeException("Illegal var type :" + type); }
 	
+		return risp;
+	}
+	
+
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.IVarTreePointer#getVar()
 	 */
@@ -1217,8 +1236,9 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 				if (risp == null) {
 				    
 				    if ( treeFactory instanceof DataFactory) {
-				        risp = (IVariable) ((DataFactory) treeFactory).createExtendedVarFromString(( (EAttribute) point.attr).getEAttributeType(), null );
-				    } else {
+				        risp = (IVariable) ((DataFactoryImpl) treeFactory).createExtendedVarFromString(( (EAttribute) point.attr).getEAttributeType(), null );
+				    } else 
+				    {
 				        risp = (IVariable) treeFactory.createFromString(( (EAttribute) point.attr).getEAttributeType(), null );
 				    }
 				} else {
@@ -1235,20 +1255,36 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.IVarTreePointer#getVar()
 	 */
-	public IVariable getNewVar() {
+	public IVariable getNewVar(String value) {
 		if (point.attr != null && point.attr instanceof EAttribute) {
 
-			EAttribute at = (EAttribute) point.attr; 
-			Class<?> type = at.getEAttributeType().getInstanceClass();
+			EAttribute at = (EAttribute) point.attr;
+			EDataType atType = at.getEAttributeType();
+			Class<?> type = atType.getInstanceClass();
 
 			IVariable risp = null;
 			
 			if (at.isMany()) {
 				risp = convert(type, null);
+				if (value != null) {
+					risp.set(value);
+					///*DEBUG*/			throw new Error("Values must be set: " + value);
+				}
+
 	
 			} else {
 
-				risp = (IVariable) ((DataFactory) treeFactory).createExtendedVarFromString(at.getEAttributeType(), null);
+				if (treeFactory instanceof DataFactory) {
+					risp = (IVariable) ((DataFactoryImpl) treeFactory)
+							.createExtendedVarFromString(atType, value);
+				} else {
+					risp = (IVariable) treeFactory
+							.createFromString(atType, value);
+				}
+				
+				if (risp == null) {
+					risp = getEmptyVar(type);
+				}
 			}
 
 			return risp;

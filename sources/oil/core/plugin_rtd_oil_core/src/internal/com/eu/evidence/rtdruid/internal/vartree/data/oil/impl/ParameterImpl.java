@@ -129,15 +129,15 @@ public abstract class ParameterImpl extends OilObjectWithIDImpl implements Param
 	 */
 	public void setName(StringVar newName) {
 		  
-		if ( name!=null || !checkNewID(makeID(newName)) ) return;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  			
+//		if ( name!=null || !checkNewID(makeID(newName)) ) return;
+//
+//	  	// Store old ID
+//	  	String old_ID = getObjectID();
+//	  			
 		setNameGen(newName);
 
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
+//		// ASk to update ID
+//	  	didSetObjectID(old_ID);
 	}
 	
 	/**
@@ -297,12 +297,12 @@ public abstract class ParameterImpl extends OilObjectWithIDImpl implements Param
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(name);
-	}
+//	/* (non-Javadoc)
+//	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
+//	 */
+//	public String getObjectID() {
+//		return makeID(name);
+//	}
 
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
@@ -316,7 +316,7 @@ public abstract class ParameterImpl extends OilObjectWithIDImpl implements Param
 		setNameGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
 	  			
 		// ASk to update ID
-	  	didSetObjectID(old_ID);
+//	  	didSetObjectID(old_ID);
 		return true;
 	}
 	

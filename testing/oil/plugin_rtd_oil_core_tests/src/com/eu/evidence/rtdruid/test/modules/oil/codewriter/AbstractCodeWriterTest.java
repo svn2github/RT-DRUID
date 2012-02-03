@@ -50,7 +50,10 @@ public class AbstractCodeWriterTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		System.err.flush();
+		System.out.flush();
 		System.out.println("\n\n************\n TEST " + getClass().getName() + " - " + getName() + "\n************\n\n");
+		System.out.flush();
 	}
 
 	/**

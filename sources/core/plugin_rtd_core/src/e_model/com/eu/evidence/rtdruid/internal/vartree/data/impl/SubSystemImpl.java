@@ -2,29 +2,27 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
-
-
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.Implementation;
 import com.eu.evidence.rtdruid.vartree.data.ProvidedInterface;
 import com.eu.evidence.rtdruid.vartree.data.RequiredInterface;
 import com.eu.evidence.rtdruid.vartree.data.SubSystem;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,17 +39,16 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *
  * @generated
  */
-public class SubSystemImpl extends ImplementationImpl implements SubSystem
-{
+public class SubSystemImpl extends ImplementationImpl implements SubSystem {
 	/**
 	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getImplementation()
 	 * @generated
 	 * @ordered
 	 */
-  protected EList implementation = null;
+	protected EList<Implementation> implementation;
 
 	/**
 	 * The cached value of the '{@link #getProvidedInterfaceList() <em>Provided Interface List</em>}' containment reference list.
@@ -61,7 +58,7 @@ public class SubSystemImpl extends ImplementationImpl implements SubSystem
 	 * @generated
 	 * @ordered
 	 */
-	protected EList providedInterfaceList = null;
+	protected EList<ProvidedInterface> providedInterfaceList;
 
 	/**
 	 * The cached value of the '{@link #getRequiredInterfaceList() <em>Required Interface List</em>}' containment reference list.
@@ -71,48 +68,47 @@ public class SubSystemImpl extends ImplementationImpl implements SubSystem
 	 * @generated
 	 * @ordered
 	 */
-	protected EList requiredInterfaceList = null;
+	protected EList<RequiredInterface> requiredInterfaceList;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected SubSystemImpl() {
+	protected SubSystemImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getSubSystem();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.SUB_SYSTEM;
 	}
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public EList getImplementation()
-  {
-    if (implementation == null)
-    {
-      implementation = new EObjectContainmentUniqueEList(Implementation.class, this, DataPackage.SUB_SYSTEM__IMPLEMENTATION);
-    }
-    return implementation;
-  }
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getProvidedInterfaceList() {
+	public EList<Implementation> getImplementation() {
+		if (implementation == null) {
+			implementation = new EObjectContainmentEList<Implementation>(Implementation.class, this, DataPackage.SUB_SYSTEM__IMPLEMENTATION);
+		}
+		return implementation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<ProvidedInterface> getProvidedInterfaceList() {
 		if (providedInterfaceList == null) {
-			providedInterfaceList = new EObjectContainmentUniqueEList(ProvidedInterface.class, this, DataPackage.SUB_SYSTEM__PROVIDED_INTERFACE_LIST);
+			providedInterfaceList = new EObjectContainmentEList<ProvidedInterface>(ProvidedInterface.class, this, DataPackage.SUB_SYSTEM__PROVIDED_INTERFACE_LIST);
 		}
 		return providedInterfaceList;
 	}
@@ -120,45 +116,41 @@ public class SubSystemImpl extends ImplementationImpl implements SubSystem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getRequiredInterfaceList() {
+	public EList<RequiredInterface> getRequiredInterfaceList() {
 		if (requiredInterfaceList == null) {
-			requiredInterfaceList = new EObjectContainmentUniqueEList(RequiredInterface.class, this, DataPackage.SUB_SYSTEM__REQUIRED_INTERFACE_LIST);
+			requiredInterfaceList = new EObjectContainmentEList<RequiredInterface>(RequiredInterface.class, this, DataPackage.SUB_SYSTEM__REQUIRED_INTERFACE_LIST);
 		}
 		return requiredInterfaceList;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case DataPackage.SUB_SYSTEM__IMPLEMENTATION:
-					return ((InternalEList)getImplementation()).basicRemove(otherEnd, msgs);
-				case DataPackage.SUB_SYSTEM__PROVIDED_INTERFACE_LIST:
-					return ((InternalEList)getProvidedInterfaceList()).basicRemove(otherEnd, msgs);
-				case DataPackage.SUB_SYSTEM__REQUIRED_INTERFACE_LIST:
-					return ((InternalEList)getRequiredInterfaceList()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case DataPackage.SUB_SYSTEM__IMPLEMENTATION:
+				return ((InternalEList<?>)getImplementation()).basicRemove(otherEnd, msgs);
+			case DataPackage.SUB_SYSTEM__PROVIDED_INTERFACE_LIST:
+				return ((InternalEList<?>)getProvidedInterfaceList()).basicRemove(otherEnd, msgs);
+			case DataPackage.SUB_SYSTEM__REQUIRED_INTERFACE_LIST:
+				return ((InternalEList<?>)getRequiredInterfaceList()).basicRemove(otherEnd, msgs);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case DataPackage.SUB_SYSTEM__NAME:
-				return getName();
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.SUB_SYSTEM__IMPLEMENTATION:
 				return getImplementation();
 			case DataPackage.SUB_SYSTEM__PROVIDED_INTERFACE_LIST:
@@ -166,47 +158,42 @@ public class SubSystemImpl extends ImplementationImpl implements SubSystem
 			case DataPackage.SUB_SYSTEM__REQUIRED_INTERFACE_LIST:
 				return getRequiredInterfaceList();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case DataPackage.SUB_SYSTEM__NAME:
-				setName((StringVar)newValue);
-				return;
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.SUB_SYSTEM__IMPLEMENTATION:
 				getImplementation().clear();
-				getImplementation().addAll((Collection)newValue);
+				getImplementation().addAll((Collection<? extends Implementation>)newValue);
 				return;
 			case DataPackage.SUB_SYSTEM__PROVIDED_INTERFACE_LIST:
 				getProvidedInterfaceList().clear();
-				getProvidedInterfaceList().addAll((Collection)newValue);
+				getProvidedInterfaceList().addAll((Collection<? extends ProvidedInterface>)newValue);
 				return;
 			case DataPackage.SUB_SYSTEM__REQUIRED_INTERFACE_LIST:
 				getRequiredInterfaceList().clear();
-				getRequiredInterfaceList().addAll((Collection)newValue);
+				getRequiredInterfaceList().addAll((Collection<? extends RequiredInterface>)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case DataPackage.SUB_SYSTEM__NAME:
-				setName(NAME_EDEFAULT);
-				return;
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.SUB_SYSTEM__IMPLEMENTATION:
 				getImplementation().clear();
 				return;
@@ -217,19 +204,17 @@ public class SubSystemImpl extends ImplementationImpl implements SubSystem
 				getRequiredInterfaceList().clear();
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case DataPackage.SUB_SYSTEM__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.SUB_SYSTEM__IMPLEMENTATION:
 				return implementation != null && !implementation.isEmpty();
 			case DataPackage.SUB_SYSTEM__PROVIDED_INTERFACE_LIST:
@@ -237,27 +222,7 @@ public class SubSystemImpl extends ImplementationImpl implements SubSystem
 			case DataPackage.SUB_SYSTEM__REQUIRED_INTERFACE_LIST:
 				return requiredInterfaceList != null && !requiredInterfaceList.isEmpty();
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
-  
-  /* *
-   * check also the name of parent node
-   */
- /* public void setName(StringVar newName)
-  {
-  	String tmpId = makeID(newName);
-  	SubSystem padre = (SubSystem) eContainer();
-	if ( !checkNewID(tmpId) 
-			&& (padre != null ? padre.getObjectID().equals(tmpId): true)
-			&& !getImplementation().contains(tmpId)) {
-		return;
-	}
-  	
-    StringVar oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM_IMPLEMENTATION__NAME, oldName, name));
-  }*/
 
 } //SubSystemImpl

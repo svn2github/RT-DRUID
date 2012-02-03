@@ -2,8 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
@@ -22,24 +21,24 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTrigger()
- * @model 
+ * @model
  * @generated
  */
-public interface Trigger extends SystemImplementation{
+public interface Trigger extends SystemImplementation {
 	/**
 	 * Returns the value of the '<em><b>Method Ref List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.MethodRef}.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Method Ref List</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Method Ref List</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Ref List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTrigger_MethodRefList()
-	 * @model type="rtdruid.vartree.data.MethodRef" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-  EList getMethodRefList();
+	EList<MethodRef> getMethodRefList();
 
 } // Trigger

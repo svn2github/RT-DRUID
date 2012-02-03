@@ -61,7 +61,7 @@ public final class RTDFactory {
 
 		// default constructors
 		if (type == DataPackage.class) {
-			return new DataPackageImpl.Stupid().clone();
+			return DataPackage.eINSTANCE;
 		}
 		if (type == DataFactory.class) {
 			return new DataFactoryImpl();

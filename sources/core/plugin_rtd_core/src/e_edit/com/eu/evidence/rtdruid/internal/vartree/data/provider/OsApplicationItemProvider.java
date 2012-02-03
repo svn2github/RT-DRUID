@@ -7,29 +7,29 @@
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.OsApplication;
+
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.OsApplication;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-
 /**
- * This is the item provider adapter for a {@link rtdruid.vartree.data.OsApplication} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.OsApplication} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -58,7 +58,8 @@ public class OsApplicationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -81,7 +82,7 @@ public class OsApplicationItemProvider
 				 getResourceLocator(),
 				 getString("_UI_OsApplication_Name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_OsApplication_Name_feature", "_UI_OsApplication_type"),
-				 DataPackage.eINSTANCE.getOsApplication_Name(),
+				 DataPackage.Literals.OS_APPLICATION__NAME,
 				 true,
 				 false,
 				 false,
@@ -103,7 +104,7 @@ public class OsApplicationItemProvider
 				 getResourceLocator(),
 				 getString("_UI_OsApplication_OilVar_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_OsApplication_OilVar_feature", "_UI_OsApplication_type"),
-				 DataPackage.eINSTANCE.getOsApplication_OilVar(),
+				 DataPackage.Literals.OS_APPLICATION__OIL_VAR,
 				 true,
 				 false,
 				 false,
@@ -118,6 +119,7 @@ public class OsApplicationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/OsApplication"));
 	}
@@ -128,6 +130,7 @@ public class OsApplicationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		StringVar labelValue = ((OsApplication)object).getName();
 		String label = labelValue == null ? null : labelValue.toString();
@@ -143,6 +146,7 @@ public class OsApplicationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -162,17 +166,9 @@ public class OsApplicationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
-	}
 }

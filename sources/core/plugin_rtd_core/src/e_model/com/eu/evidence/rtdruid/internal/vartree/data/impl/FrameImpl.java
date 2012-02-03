@@ -2,24 +2,21 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
-
-
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.Frame;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.LongVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,199 +36,203 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *
  * @generated
  */
-public class FrameImpl extends ObjectWithIDImpl implements Frame
-{
+public class FrameImpl extends ObjectWithIDImpl implements Frame {
 	/**
 	 * The default value of the '{@link #getActivationClass() <em>Activation Class</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActivationClass()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar ACTIVATION_CLASS_EDEFAULT = null;
+	protected static final StringVar ACTIVATION_CLASS_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getActivationClass() <em>Activation Class</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActivationClass()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar activationClass = ACTIVATION_CLASS_EDEFAULT;
+	protected StringVar activationClass = ACTIVATION_CLASS_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getActivationRate() <em>Activation Rate</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActivationRate()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar ACTIVATION_RATE_EDEFAULT = null;
+	protected static final StringVar ACTIVATION_RATE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getActivationRate() <em>Activation Rate</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActivationRate()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar activationRate = ACTIVATION_RATE_EDEFAULT;
+	protected StringVar activationRate = ACTIVATION_RATE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getActivationType() <em>Activation Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActivationType()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar ACTIVATION_TYPE_EDEFAULT = null;
+	protected static final StringVar ACTIVATION_TYPE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getActivationType() <em>Activation Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActivationType()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar activationType = ACTIVATION_TYPE_EDEFAULT;
+	protected StringVar activationType = ACTIVATION_TYPE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getId()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar ID_EDEFAULT = null;
+	protected static final StringVar ID_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getId()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar id = ID_EDEFAULT;
+	protected StringVar id = ID_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getLength() <em>Length</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getLength()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final LongVar LENGTH_EDEFAULT = null;
+	protected static final LongVar LENGTH_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getLength() <em>Length</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getLength()
 	 * @generated
 	 * @ordered
 	 */
-  protected LongVar length = LENGTH_EDEFAULT;
+	protected LongVar length = LENGTH_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar NAME_EDEFAULT = null;
+	protected static final StringVar NAME_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar name = NAME_EDEFAULT;
+	protected StringVar name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected FrameImpl() {
+	protected FrameImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getFrame();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.FRAME;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getName() {
-		return name;
+	public StringVar getActivationClass() {
+		return activationClass;
 	}
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setName(StringVar newName)
-  {
-	if ( !checkNewID(makeID(newName)) ) return;
-  	
-  	// Store old ID
-  	String old_ID = getObjectID();
-
-	setNameGen(newName);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setNameGen(StringVar newName) {
-    StringVar oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.FRAME__NAME, oldName, name));
-  }
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getActivationType() {
+	public void setActivationClass(StringVar newActivationClass) {
+		StringVar oldActivationClass = activationClass;
+		activationClass = newActivationClass;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.FRAME__ACTIVATION_CLASS, oldActivationClass, activationClass));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getActivationRate() {
+		return activationRate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setActivationRate(StringVar newActivationRate) {
+		StringVar oldActivationRate = activationRate;
+		activationRate = newActivationRate;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.FRAME__ACTIVATION_RATE, oldActivationRate, activationRate));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getActivationType() {
 		return activationType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setActivationType(StringVar newActivationType) {
+	public void setActivationType(StringVar newActivationType) {
 		StringVar oldActivationType = activationType;
 		activationType = newActivationType;
 		if (eNotificationRequired())
@@ -261,61 +262,19 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getActivationClass() {
-		return activationClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setActivationClass(StringVar newActivationClass) {
-		StringVar oldActivationClass = activationClass;
-		activationClass = newActivationClass;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.FRAME__ACTIVATION_CLASS, oldActivationClass, activationClass));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public StringVar getActivationRate() {
-		return activationRate;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setActivationRate(StringVar newActivationRate) {
-		StringVar oldActivationRate = activationRate;
-		activationRate = newActivationRate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.FRAME__ACTIVATION_RATE, oldActivationRate, activationRate));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public LongVar getLength() {
+	public LongVar getLength() {
 		return length;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setLength(LongVar newLength) {
+	public void setLength(LongVar newLength) {
 		LongVar oldLength = length;
 		length = newLength;
 		if (eNotificationRequired())
@@ -324,11 +283,33 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public StringVar getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(StringVar newName) {
+		StringVar oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.FRAME__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.FRAME__ACTIVATION_CLASS:
 				return getActivationClass();
 			case DataPackage.FRAME__ACTIVATION_RATE:
@@ -342,17 +323,17 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame
 			case DataPackage.FRAME__NAME:
 				return getName();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.FRAME__ACTIVATION_CLASS:
 				setActivationClass((StringVar)newValue);
 				return;
@@ -372,17 +353,17 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame
 				setName((StringVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.FRAME__ACTIVATION_CLASS:
 				setActivationClass(ACTIVATION_CLASS_EDEFAULT);
 				return;
@@ -402,17 +383,17 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame
 				setName(NAME_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.FRAME__ACTIVATION_CLASS:
 				return ACTIVATION_CLASS_EDEFAULT == null ? activationClass != null : !ACTIVATION_CLASS_EDEFAULT.equals(activationClass);
 			case DataPackage.FRAME__ACTIVATION_RATE:
@@ -426,16 +407,16 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame
 			case DataPackage.FRAME__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -455,27 +436,4 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(name);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setNameGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //FrameImpl

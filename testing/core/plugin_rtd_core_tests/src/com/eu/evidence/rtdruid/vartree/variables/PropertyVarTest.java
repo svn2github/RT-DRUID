@@ -128,7 +128,7 @@ public class PropertyVarTest extends TestCase {
 		assertTrue(vtp.go(DataPackage.eINSTANCE.getObjectWithID_Properties().getName()));
 		IVariable v = vtp.getVar();
 		if (v == null) {
-			v = vtp.getNewVar();
+			v = vtp.getNewVar(null);
 		}
 		assertTrue(v instanceof PropertyVar);
 		((PropertyVar) v).set("k1", "v1");

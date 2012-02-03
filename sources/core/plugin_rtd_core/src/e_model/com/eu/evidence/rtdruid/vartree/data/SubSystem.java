@@ -2,8 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
@@ -24,25 +23,25 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getSubSystem()
- * @model 
+ * @model
  * @generated
  */
-public interface SubSystem extends Implementation{
+public interface SubSystem extends Implementation {
 	/**
 	 * Returns the value of the '<em><b>Implementation</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.Implementation}.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Implementation</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Implementation</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Implementation</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getSubSystem_Implementation()
-	 * @model type="rtdruid.vartree.data.Implementation" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-  EList getImplementation();
+	EList<Implementation> getImplementation();
 
 	/**
 	 * Returns the value of the '<em><b>Provided Interface List</b></em>' containment reference list.
@@ -55,10 +54,10 @@ public interface SubSystem extends Implementation{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Provided Interface List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getSubSystem_ProvidedInterfaceList()
-	 * @model type="rtdruid.vartree.data.ProvidedInterface" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getProvidedInterfaceList();
+	EList<ProvidedInterface> getProvidedInterfaceList();
 
 	/**
 	 * Returns the value of the '<em><b>Required Interface List</b></em>' containment reference list.
@@ -71,9 +70,9 @@ public interface SubSystem extends Implementation{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Required Interface List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getSubSystem_RequiredInterfaceList()
-	 * @model type="rtdruid.vartree.data.RequiredInterface" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getRequiredInterfaceList();
+	EList<RequiredInterface> getRequiredInterfaceList();
 
 } // SubSystem

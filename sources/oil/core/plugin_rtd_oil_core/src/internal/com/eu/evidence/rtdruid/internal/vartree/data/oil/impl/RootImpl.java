@@ -16,11 +16,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
 import com.eu.evidence.rtdruid.vartree.data.oil.HW;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilApplPackage;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilObjectWithID;
@@ -119,7 +119,7 @@ public class RootImpl extends OilObjectWithIDImpl implements Root {
 	 */
 	public EList<HW> getHwList() {
 		if (hwList == null) {
-			hwList = new EObjectContainmentUniqueEList<HW>(HW.class, this, OilApplPackage.ROOT__HW_LIST);
+			hwList = new EObjectContainmentEList<HW>(HW.class, this, OilApplPackage.ROOT__HW_LIST);
 		}
 		return hwList;
 	}
@@ -140,15 +140,15 @@ public class RootImpl extends OilObjectWithIDImpl implements Root {
 	 */
 	public void setObjectType(StringVar newObjectType) {
 		  
-		if ( !checkNewID(makeID(newObjectType)) ) return;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
+//		if ( !checkNewID(makeID(newObjectType)) ) return;
+//
+//	  	// Store old ID
+//	  	String old_ID = getObjectID();
 	  			
 		setObjectTypeGen(newObjectType);
 	  			
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
+//		// ASk to update ID
+//	  	didSetObjectID(old_ID);
 	}
 	
 	/**
@@ -277,12 +277,12 @@ public class RootImpl extends OilObjectWithIDImpl implements Root {
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(objectType);
-	}
+//	/* (non-Javadoc)
+//	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
+//	 */
+//	public String getObjectID() {
+//		return makeID(objectType);
+//	}
 
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
@@ -297,7 +297,7 @@ public class RootImpl extends OilObjectWithIDImpl implements Root {
 		setObjectTypeGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
 	  			
 		// ASk to update ID
-	  	didSetObjectID(old_ID);
+//	  	didSetObjectID(old_ID);
 		return true;
 	}
 	

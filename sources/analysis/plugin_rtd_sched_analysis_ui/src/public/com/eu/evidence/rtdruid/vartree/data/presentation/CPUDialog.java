@@ -238,8 +238,7 @@ public class CPUDialog extends Dialog {
 					}
 				}
 			} else {
-				IVariable tmpVar = curr.getNewVar();
-				tmpVar.set(value);
+				IVariable tmpVar = curr.getNewVar(value);
 				curr.setVar(tmpVar);
 			}
 		}

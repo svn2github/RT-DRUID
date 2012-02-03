@@ -20,7 +20,8 @@ import com.eu.evidence.rtdruid.vartree.AdapterFactoryLoader;
 public class AdapterFactoryLoaderImpl extends AdapterFactoryLoader {
 
     /** Returns factories required by rtdruid.vartree.data */
-    public Class<AdapterFactory>[] getFactoryies() {
+    @SuppressWarnings("unchecked")
+	public Class<AdapterFactory>[] getFactoryies() {
         return (Class<AdapterFactory>[]) new Class[]
         {
         	DataItemProviderAdapterFactory.class,

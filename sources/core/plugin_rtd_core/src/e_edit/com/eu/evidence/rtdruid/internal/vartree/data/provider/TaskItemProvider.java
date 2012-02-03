@@ -2,39 +2,37 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TaskItemProvider.java,v 1.1 2005/09/28 15:22:29 durin Exp $
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.DataFactory;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.Task;
 
-
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.Task;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-
 /**
- * This is the item provider adpater for a {@link rtdruid.vartree.data.Task} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.Task} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -63,7 +61,8 @@ public class TaskItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -82,32 +81,18 @@ public class TaskItemProvider
 	 */
 	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Task_Name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Task_Name_feature", "_UI_Task_type"),
-				 DataPackage.eINSTANCE.getTask_Name(),
+				 DataPackage.Literals.TASK__NAME,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
-	}
-
-	/**
-	 * This adds a property descriptor for the Type feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Task_Type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Task_Type_feature", "_UI_Task_type"),
-				 DataPackage.eINSTANCE.getTask_Type(),
-				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -118,14 +103,40 @@ public class TaskItemProvider
 	 */
 	protected void addOilVarPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_Task_OilVar_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Task_OilVar_feature", "_UI_Task_type"),
-				 DataPackage.eINSTANCE.getTask_OilVar(),
+				 DataPackage.Literals.TASK__OIL_VAR,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Task_Type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Task_Type_feature", "_UI_Task_type"),
+				 DataPackage.Literals.TASK__TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -136,12 +147,13 @@ public class TaskItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(DataPackage.eINSTANCE.getTask_ActivationList());
-			childrenFeatures.add(DataPackage.eINSTANCE.getTask_ResourceRefList());
-			childrenFeatures.add(DataPackage.eINSTANCE.getTask_SchedulingList());
+			childrenFeatures.add(DataPackage.Literals.TASK__ACTIVATION_LIST);
+			childrenFeatures.add(DataPackage.Literals.TASK__RESOURCE_REF_LIST);
+			childrenFeatures.add(DataPackage.Literals.TASK__SCHEDULING_LIST);
 		}
 		return childrenFeatures;
 	}
@@ -151,6 +163,7 @@ public class TaskItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
@@ -164,16 +177,18 @@ public class TaskItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/Task");
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Task"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		StringVar labelValue = ((Task)object).getName();
 		String label = labelValue == null ? null : labelValue.toString();
@@ -189,6 +204,7 @@ public class TaskItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -208,39 +224,30 @@ public class TaskItemProvider
 	}
 
 	/**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getTask_ActivationList(),
+				(DataPackage.Literals.TASK__ACTIVATION_LIST,
 				 DataFactory.eINSTANCE.createActivation()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getTask_ResourceRefList(),
+				(DataPackage.Literals.TASK__RESOURCE_REF_LIST,
 				 DataFactory.eINSTANCE.createResourceRef()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getTask_SchedulingList(),
+				(DataPackage.Literals.TASK__SCHEDULING_LIST,
 				 DataFactory.eINSTANCE.createScheduling()));
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
 	}
 
 }

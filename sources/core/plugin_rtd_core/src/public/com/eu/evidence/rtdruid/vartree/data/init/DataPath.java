@@ -127,14 +127,14 @@ public final class DataPath {
 		// remove white spaces
 //		if (risp.length >1) {
 			for (int i=0; i< risp.length; i++) {
-/*				if ((risp[i].trim()).equals(NULL_ID)) {
-					risp[i] = null;
-				} else {
-*///					int start = (i ==0 ? 0 : 1);
+///*				if ((risp[i].trim()).equals(NULL_ID)) {
+//					risp[i] = null;
+//				} else {
+//*/					int start = (i ==0 ? 0 : 1);
 //					int end = risp[i].length() - (i == (risp.length -1) ? 0 : 1);
 //					risp[i] = removeSlash(risp[i].substring(start, end)); // NB: removeSlash(NULL_ID) = null
-					risp[i] = removeSlash(risp[i]); // NB: removeSlash(NULL_ID) = null
-//				}
+				risp[i] = removeSlash(risp[i]); // NB: removeSlash(NULL_ID) = null
+////				}
 			}  
 /*		} else {
 			 if ((risp[0].trim()).equals(NULL_ID)) {
@@ -171,7 +171,7 @@ public final class DataPath {
 	
 		// search char after char
 		char[] tmpString = path.toCharArray();
-		LinkedList risp = new LinkedList();
+		LinkedList<String> risp = new LinkedList<String>();
 		int lastPos=0; int curr=0;
 		boolean protect= false;
 		for (curr=0; curr<tmpString.length; curr++) {

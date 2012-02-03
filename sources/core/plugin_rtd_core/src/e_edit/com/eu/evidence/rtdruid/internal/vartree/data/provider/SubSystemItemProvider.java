@@ -2,34 +2,35 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SubSystemItemProvider.java,v 1.1 2005/09/28 15:22:29 durin Exp $
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.DataFactory;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.SubSystem;
+
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.SubSystem;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-
 /**
- * This is the item provider adpater for a {@link rtdruid.vartree.data.SubSystem} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.SubSystem} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -58,7 +59,8 @@ public class SubSystemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -74,12 +76,13 @@ public class SubSystemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(DataPackage.eINSTANCE.getSubSystem_Implementation());
-			childrenFeatures.add(DataPackage.eINSTANCE.getSubSystem_ProvidedInterfaceList());
-			childrenFeatures.add(DataPackage.eINSTANCE.getSubSystem_RequiredInterfaceList());
+			childrenFeatures.add(DataPackage.Literals.SUB_SYSTEM__IMPLEMENTATION);
+			childrenFeatures.add(DataPackage.Literals.SUB_SYSTEM__PROVIDED_INTERFACE_LIST);
+			childrenFeatures.add(DataPackage.Literals.SUB_SYSTEM__REQUIRED_INTERFACE_LIST);
 		}
 		return childrenFeatures;
 	}
@@ -89,6 +92,7 @@ public class SubSystemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
@@ -96,23 +100,24 @@ public class SubSystemItemProvider
 		return super.getChildFeature(object, child);
 	}
 
-
 	/**
 	 * This returns SubSystem.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/SubSystem");
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SubSystem"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		StringVar labelValue = ((SubSystem)object).getName();
 		String label = labelValue == null ? null : labelValue.toString();
@@ -128,6 +133,7 @@ public class SubSystemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -142,48 +148,40 @@ public class SubSystemItemProvider
 	}
 
 	/**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSubSystem_Implementation(),
+				(DataPackage.Literals.SUB_SYSTEM__IMPLEMENTATION,
 				 DataFactory.eINSTANCE.createProc()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSubSystem_Implementation(),
+				(DataPackage.Literals.SUB_SYSTEM__IMPLEMENTATION,
 				 DataFactory.eINSTANCE.createVar()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSubSystem_Implementation(),
+				(DataPackage.Literals.SUB_SYSTEM__IMPLEMENTATION,
 				 DataFactory.eINSTANCE.createSubSystem()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSubSystem_ProvidedInterfaceList(),
+				(DataPackage.Literals.SUB_SYSTEM__PROVIDED_INTERFACE_LIST,
 				 DataFactory.eINSTANCE.createProvidedInterface()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getSubSystem_RequiredInterfaceList(),
+				(DataPackage.Literals.SUB_SYSTEM__REQUIRED_INTERFACE_LIST,
 				 DataFactory.eINSTANCE.createRequiredInterface()));
 	}
 
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
-	}
 }

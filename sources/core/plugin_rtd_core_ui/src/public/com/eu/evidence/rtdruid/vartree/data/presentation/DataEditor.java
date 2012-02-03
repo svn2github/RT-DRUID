@@ -131,6 +131,7 @@ import com.eu.evidence.rtdruid.ui.Rtd_core_uiPlugin;
 import com.eu.evidence.rtdruid.ui.common.ShowLogo;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreeProvider;
+import com.eu.evidence.rtdruid.vartree.PublicObjectWithIDItemProvider;
 import com.eu.evidence.rtdruid.vartree.data.Activation;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCostList;
 import com.eu.evidence.rtdruid.vartree.data.CpuSched;
@@ -147,8 +148,7 @@ import com.eu.evidence.rtdruid.vartree.data.TaskSched;
 import com.eu.evidence.rtdruid.vartree.data.TimeConst;
 import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
+import com.eu.evidence.rtdruid.vartree.data.init.IllegalIDException;
 import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
@@ -620,7 +620,7 @@ public class DataEditor
 		      		 */
 			      	AdapterFactory af = editingDomain.getAdapterFactory();
 			      	Adapter a = af.adapt(dest, dest);
-			      	if (!(a instanceof ObjectWithIDItemProvider)) {
+			      	if (!(a instanceof PublicObjectWithIDItemProvider)) {
 				      	sendMessage("Not valid past from Clipboard");
 						
 				        mostRecentCommand = null;
@@ -628,7 +628,7 @@ public class DataEditor
 				        return;
 			      	}
 			      	
-			      	ObjectWithIDItemProvider owiip = (ObjectWithIDItemProvider) a;
+			      	PublicObjectWithIDItemProvider owiip = (PublicObjectWithIDItemProvider) a;
 			      	boolean next = false;
 			      	Iterator iter = source.iterator();
 			      	while(iter.hasNext()) {
@@ -655,7 +655,7 @@ public class DataEditor
 			      		next = false || (dest ==null);
 
 				      	if (!next) {
-				      		owiip = (ObjectWithIDItemProvider) af.adapt(dest, dest);
+				      		owiip = (PublicObjectWithIDItemProvider) af.adapt(dest, dest);
 				      	}
 				      	iter = source.iterator();
 				      	while(iter.hasNext() && !next) {
@@ -978,7 +978,7 @@ public class DataEditor
 			        commandList.add(command);
 			        ++top;
 			      }
-			      catch (ObjectWithIDImpl.IllegalIDException e) {
+			      catch (IllegalIDException e) {
 			      	sendMessage(e.getMessage());
 					
 			        mostRecentCommand = null;

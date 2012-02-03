@@ -2,17 +2,15 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
-
-
-import org.eclipse.emf.common.util.EList;
 
 import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,35 +28,35 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getDistribution()
- * @model 
+ * @model
  * @generated
  */
-public interface Distribution extends ObjectWithID{
+public interface Distribution extends ObjectWithID {
 	/**
 	 * Returns the value of the '<em><b>Avg</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Avg</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Avg</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Avg</em>' attribute.
 	 * @see #setAvg(TimeVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getDistribution_Avg()
-	 * @model dataType="rtdruid.vartree.data.TimeVar"
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.TimeVar"
 	 * @generated
 	 */
-  TimeVar getAvg();
+	TimeVar getAvg();
 
 	/**
 	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Distribution#getAvg <em>Avg</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Avg</em>' attribute.
 	 * @see #getAvg()
 	 * @generated
 	 */
-  void setAvg(TimeVar value);
+	void setAvg(TimeVar value);
 
 	/**
 	 * Returns the value of the '<em><b>Sample List</b></em>' containment reference list.
@@ -71,61 +69,61 @@ public interface Distribution extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Sample List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getDistribution_SampleList()
-	 * @model type="rtdruid.vartree.data.Sample" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getSampleList();
-
-	/**
-	 * Returns the value of the '<em><b>Variance</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Variance</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-	 * @return the value of the '<em>Variance</em>' attribute.
-	 * @see #setVariance(DoubleVar)
-	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getDistribution_Variance()
-	 * @model dataType="rtdruid.vartree.data.DoubleVar"
-	 * @generated
-	 */
-  DoubleVar getVariance();
-
-	/**
-	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Distribution#getVariance <em>Variance</em>}' attribute.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Variance</em>' attribute.
-	 * @see #getVariance()
-	 * @generated
-	 */
-  void setVariance(DoubleVar value);
+	EList<Sample> getSampleList();
 
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
 	 * @see #setType(StringVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getDistribution_Type()
-	 * @model dataType="rtdruid.vartree.data.StringVar"
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.StringVar"
 	 * @generated
 	 */
-  StringVar getType();
+	StringVar getType();
 
 	/**
 	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Distribution#getType <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
 	 * @see #getType()
 	 * @generated
 	 */
-  void setType(StringVar value);
+	void setType(StringVar value);
+
+	/**
+	 * Returns the value of the '<em><b>Variance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Variance</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Variance</em>' attribute.
+	 * @see #setVariance(DoubleVar)
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getDistribution_Variance()
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.DoubleVar"
+	 * @generated
+	 */
+	DoubleVar getVariance();
+
+	/**
+	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Distribution#getVariance <em>Variance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Variance</em>' attribute.
+	 * @see #getVariance()
+	 * @generated
+	 */
+	void setVariance(DoubleVar value);
 
 } // Distribution

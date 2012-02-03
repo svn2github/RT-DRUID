@@ -22,6 +22,7 @@ import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeCopy;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
 import com.eu.evidence.rtdruid.vartree.tools.CheckReferences;
@@ -129,14 +130,14 @@ public class JScanTask extends Task {
 
         // merge loaded files (throw exceptions if they aren't compatible,
         // like different System name) 
-        ObjectWithID root = (ObjectWithID) roots[0].clone();
+        ObjectWithID root = VarTreeCopy.copy(roots[0]);
         { // store all in VarTree (to enable merge is required that a resource contains the "root" object)
 	        vt.setRoot(root);
         }
         for (int i=1; i<roots.length; i++) {
         	myLog("Merging",(String) allFiles.get(i));
         	try {
-        		root.merge(roots[i], "", false);
+        		VarTreeCopy.merge(root, roots[i]);
         	} catch (RuntimeException e) {
         		throw new BuildException(e.getMessage());
         	}

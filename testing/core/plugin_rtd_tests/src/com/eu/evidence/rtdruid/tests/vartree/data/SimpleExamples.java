@@ -368,59 +368,59 @@ public class SimpleExamples {
 		"</ECU>" +
 		"<TASK Name=\"/Architecture/ECU4/OSEK/Timer10ms\">" +
 		"<SCHEDULING Priority=\"0\" Threshold=\"0\" PreemptionGroupName=\"COOPERATIVE\"/>" +
-		"<ACTIVATION Offset=\"0\" Deadline=\"\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU3/OSEK/Init\">" +
-		"<SCHEDULING Priority=\"\" Threshold=\"\" PreemptionGroupName=\"\"/>" +
-		"<ACTIVATION Offset=\"\" Deadline=\"\" Type=\"sporadic\" Class=\"InitTask\"/>" +
+		"<SCHEDULING Priority=\"0\" Threshold=\"0\" PreemptionGroupName=\"0\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"sporadic\" Class=\"InitTask\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU3/OSEK/Task_2msec\">" +
 		"<SCHEDULING Priority=\"10\" Threshold=\"10\" PreemptionGroupName=\"PREEMPTIVE\"/>" +
-		"<ACTIVATION Offset=\"0\" Deadline=\"\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.002\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.002\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU3/OSEK/Task_10msec\">" +
 		"<SCHEDULING Priority=\"2\" Threshold=\"2\" PreemptionGroupName=\"PREEMPTIVE\"/>" +
-		"<ACTIVATION Offset=\"0\" Deadline=\"\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU3/OSEK/SW_IRQ1\">" +
 		"<SCHEDULING Priority=\"0\" Threshold=\"0\" PreemptionGroupName=\"PREEMPTIVE\"/>" +
-		"<ACTIVATION Offset=\"\" Deadline=\"\" Type=\"sporadic\" Class=\"SwIntTask\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"sporadic\" Class=\"SwIntTask\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU3/OSEK/Prc_count\">" +
 		"<SCHEDULING Priority=\"12\" Threshold=\"12\" PreemptionGroupName=\"PREEMPTIVE\"/>" +
-		"<ACTIVATION Offset=\"0\" Deadline=\"\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU2/OSEK/Init\">" +
-		"<SCHEDULING Priority=\"\" Threshold=\"\" PreemptionGroupName=\"\"/>" +
-		"<ACTIVATION Offset=\"\" Deadline=\"\" Type=\"sporadic\" Class=\"InitTask\"/>" +
+		"<SCHEDULING Priority=\"0\" Threshold=\"0\" PreemptionGroupName=\"0\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"sporadic\" Class=\"InitTask\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU2/OSEK/Task_1msec\">" +
 		"<SCHEDULING Priority=\"10\" Threshold=\"10\" PreemptionGroupName=\"PREEMPTIVE\"/>" +
-		"<ACTIVATION Offset=\"0\" Deadline=\"\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.001\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.001\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU2/OSEK/Task_10msec\">" +
 		"<SCHEDULING Priority=\"5\" Threshold=\"5\" PreemptionGroupName=\"PREEMPTIVE\"/>" +
-		"<ACTIVATION Offset=\"0\" Deadline=\"\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU2/OSEK/Init_bis\">" +
-		"<SCHEDULING Priority=\"\" Threshold=\"\" PreemptionGroupName=\"\"/>" +
-		"<ACTIVATION Offset=\"\" Deadline=\"\" Type=\"sporadic\" Class=\"InitTask\"/>" +
+		"<SCHEDULING Priority=\"0\" Threshold=\"0\" PreemptionGroupName=\"0\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"sporadic\" Class=\"InitTask\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU2/OSEK/Task_4msec\">" +
 		"<SCHEDULING Priority=\"0\" Threshold=\"0\" PreemptionGroupName=\"PREEMPTIVE\"/>" +
-		"<ACTIVATION Offset=\"0\" Deadline=\"\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.004\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.004\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU1/OSEK1/Init\">" +
-		"<SCHEDULING Priority=\"\" Threshold=\"\" PreemptionGroupName=\"\"/>" +
-		"<ACTIVATION Offset=\"\" Deadline=\"\" Type=\"sporadic\" Class=\"InitTask\"/>" +
+		"<SCHEDULING Priority=\"0\" Threshold=\"0\" PreemptionGroupName=\"0\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"sporadic\" Class=\"InitTask\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU1/OSEK1/Task_2msec\">" +
 		"<SCHEDULING Priority=\"10\" Threshold=\"10\" PreemptionGroupName=\"PREEMPTIVE\"/>" +
-		"<ACTIVATION Offset=\"0\" Deadline=\"\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.002\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.002\"/>" +
 		"</TASK>" +
 		"<TASK Name=\"/Architecture/ECU1/OSEK1/Task_10msec\">" +
 		"<SCHEDULING Priority=\"2\" Threshold=\"2\" PreemptionGroupName=\"PREEMPTIVE\"/>" +
-		"<ACTIVATION Offset=\"0\" Deadline=\"\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
+		"<ACTIVATION Offset=\"0\" Deadline=\"0\" Type=\"periodic\" Class=\"PeriodicTask\" Period=\"0.01\"/>" +
 		"</TASK>" +
 		"</ARCHITECTURAL>" +
 		"<MAPPING>" +

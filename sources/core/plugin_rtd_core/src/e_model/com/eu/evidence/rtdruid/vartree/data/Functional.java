@@ -2,8 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
@@ -26,41 +25,41 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getFunctional()
- * @model 
+ * @model
  * @generated
  */
-public interface Functional extends ObjectWithID{
+public interface Functional extends ObjectWithID {
 	/**
 	 * Returns the value of the '<em><b>Event List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.Event}.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Event List</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Event List</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Event List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getFunctional_EventList()
-	 * @model type="rtdruid.vartree.data.Event" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-  EList getEventList();
+	EList<Event> getEventList();
 
 	/**
 	 * Returns the value of the '<em><b>Partial Order List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.PartialOrder}.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Partial Order List</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Partial Order List</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Partial Order List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getFunctional_PartialOrderList()
-	 * @model type="rtdruid.vartree.data.PartialOrder" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-  EList getPartialOrderList();
+	EList<PartialOrder> getPartialOrderList();
 
 	/**
 	 * Returns the value of the '<em><b>Implementation</b></em>' containment reference list.
@@ -73,41 +72,41 @@ public interface Functional extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Implementation</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getFunctional_Implementation()
-	 * @model type="rtdruid.vartree.data.SystemImplementation" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getImplementation();
+	EList<SystemImplementation> getImplementation();
 
 	/**
 	 * Returns the value of the '<em><b>Time Const List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.TimeConst}.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Time Const List</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Time Const List</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Time Const List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getFunctional_TimeConstList()
-	 * @model type="rtdruid.vartree.data.TimeConst" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-  EList getTimeConstList();
-  
-  	/**
-  	 * Returns the value of the '<em><b>Type List</b></em>' containment reference list.
-  	 * The list contents are of type {@link rtdruid.vartree.data.Type}.
-  	 * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Type List</em>' containment reference list isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
-  	 * @return the value of the '<em>Type List</em>' containment reference list.
-  	 * @see rtdruid.vartree.data.DataPackage#getFunctional_TypeList()
-  	 * @model type="rtdruid.vartree.data.Type" containment="true"
-  	 * @generated
-  	 */
-  EList getTypeList();
+	EList<TimeConst> getTimeConstList();
+
+	/**
+	 * Returns the value of the '<em><b>Type List</b></em>' containment reference list.
+	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.Type}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type List</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type List</em>' containment reference list.
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getFunctional_TypeList()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Type> getTypeList();
 
 } // Functional

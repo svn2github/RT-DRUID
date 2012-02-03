@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EReference;
 import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
+import com.eu.evidence.rtdruid.vartree.VarTreeCopy;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.data.Schedulability;
@@ -56,7 +57,7 @@ public class TreeCloneTest extends TestCase {
 
 		ObjectWithID root = (ObjectWithID) (new FillVtTest()).fill();
 
-		ObjectWithID root2 = (ObjectWithID) root.clone();
+		ObjectWithID root2 = VarTreeCopy.copy(root);
 
 		assertTrue(root != root2);
 		String t = (new VtCompare(root, root2)).getText();
@@ -71,7 +72,7 @@ public class TreeCloneTest extends TestCase {
 
 		ObjectWithID root1 = DataFactory.eINSTANCE.createSystem();
 		root1.setObjectID("a\\b/\\*c");
-		ObjectWithID root2 = (ObjectWithID) root1.clone();
+		ObjectWithID root2 = VarTreeCopy.copy(root1);
 		ObjectWithID root3 = DataFactory.eINSTANCE.createSystem();
 		root3.setObjectID(root1.getObjectID());
 
@@ -102,7 +103,7 @@ public class TreeCloneTest extends TestCase {
 		root2.setObjectID("MySystem");
 		dest.setObjectID("MySystem");
 
-		dest.merge(root1, "", false);
+		VarTreeCopy.merge(dest, root1);
 		assertTrue(dest != root1);
 		String t;
 		t = (new VtCompare(dest, root1)).getText(); assertTrue(t, t== null);
@@ -110,8 +111,8 @@ public class TreeCloneTest extends TestCase {
 
 		boolean ok = false;
 		// anothers two times
-		dest.merge(root1, "", false);
-		dest.merge(root1, "", false);
+		VarTreeCopy.merge(dest, root1);
+		VarTreeCopy.merge(dest, root1);
 		assertTrue(dest != root1);
 		
 
@@ -119,7 +120,7 @@ public class TreeCloneTest extends TestCase {
 		assertTrue( !(new VtCompare(root1, dest)).checkTrees());
 
 		// and with the other tree
-		dest.merge(root2, "", false);
+		VarTreeCopy.merge(dest, root2);
 		assertTrue(dest != root1);
 		assertTrue(dest != root2);
 		checkTrees(dest, new ObjectWithID[] { root1, root1, root1, root2 }, true);
@@ -185,22 +186,22 @@ public class TreeCloneTest extends TestCase {
 		root2.setObjectID("MySystem");
 		dest.setObjectID("MySystem");
 
-		dest.merge(root1, "", false);
+		VarTreeCopy.merge(dest, root1);
 		assertTrue(dest != root1);
 		String t;
 		t = (new VtCompare(dest, root1)).getText(); assertTrue(t, t== null);
 		t = (new VtCompare(root1, dest)).getText(); assertTrue(t, t== null);
 
 		// anothers two times
-		dest.merge(root1, "", false);
-		dest.merge(root1, "", false);
+		VarTreeCopy.merge(dest, root1);
+		VarTreeCopy.merge(dest, root1);
 		assertTrue(dest != root1);
 		
 		t = (new VtCompare(dest, root1)).getText(); assertTrue(t, t== null);
 		t = (new VtCompare(root1, dest)).getText(); assertTrue(t, t== null);
 
 		// and wit the other tree
-		dest.merge(root2, "", false);
+		VarTreeCopy.merge(dest, root2);
 		assertTrue(dest != root1);
 		assertTrue(dest != root2);
 		checkTrees(dest, new ObjectWithID[] { root1, root1, root1, root2 }, false);
@@ -275,17 +276,17 @@ public class TreeCloneTest extends TestCase {
 		assertTrue( !(new VtCompare(root1, root2)).checkTrees());
 
 		// without set a resource
-		ObjectWithID root1_bis = (ObjectWithID) root1.clone();
-		root1_bis.merge(root2, "/", false);
+		ObjectWithID root1_bis = VarTreeCopy.copy(root1);
+		VarTreeCopy.merge(root1_bis, root2);
 
 		// after set a resource
 		IVTResource res = createResource();
-		ObjectWithID root1_tris = (ObjectWithID) root1.clone();
+		ObjectWithID root1_tris = VarTreeCopy.copy(root1);
 		res.getContents().add(root1_tris);
 		boolean ok = false;
 		try {
 //			root2.merge(root1_bis, "/");
-			root1_tris.merge(root2, "/", false);
+			VarTreeCopy.merge(root1_tris, root2);
 		} catch (RuntimeException e) { ok = true; } 
 		assertTrue(ok);
 	}
@@ -322,7 +323,7 @@ public class TreeCloneTest extends TestCase {
 		System root2 = DataFactory.eINSTANCE.createSystem();
 		root2.setObjectID("id");
 
-		root2.merge(root, "/", false);
+		VarTreeCopy.merge(root2, root);
 	}
 	
 	public void testMerge3WithResource() {
@@ -365,7 +366,7 @@ public class TreeCloneTest extends TestCase {
 		System root2 = DataFactory.eINSTANCE.createSystem();
 		root2.setObjectID("id");
 
-		root2.merge(root, "/", false);
+		VarTreeCopy.merge(root2, root);
 	}
 	
 	/*public void testMerge4() {

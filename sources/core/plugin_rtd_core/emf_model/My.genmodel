@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="ASCII"?>
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/rtdruid_vartree_data/src"
-    editDirectory="/rtdruid_vartree_data_edit/src" editorDirectory="/rtdruid_vartree_data_editor/src"
-    modelPluginID="rtdruid.vartree.data" modelName="Data" editPluginClass="rtdruid.vartree.data.provider.DataEditPlugin"
-    editorPluginClass="rtdruid.vartree.data.presentation.DataEditorPlugin">
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/plugin_rtd_core/src/e_model"
+    editDirectory="/plugin_rtd_core/src/e_edit" editorDirectory="" modelPluginID="com.eu.evidence.rtdruid.core"
+    redirection="" modelName="Data" modelPluginClass="com.eu.evidence.rtdruid.Rtd_coreModelPlugin"
+    editPluginClass="com.eu.evidence.rtdruid.Rtd_coreModelPlugin" editorPluginClass="rtdruid.vartree.data.presentation.DataEditorPlugin"
+    updateClasspath="false" rootImplementsInterface="" featureMapWrapperClass="" testsDirectory=""
+    complianceLevel="5.0" editPluginID="com.eu.evidence.rtdruid.core" editorPluginID="rtdruid.vartree.data.editor"
+    language="" interfaceNamePattern="" classNamePattern="">
   <foreignModel>data.ecore</foreignModel>
-  <genPackages prefix="Data" basePackage="rtdruid.vartree" ecorePackage="data.ecore#/">
+  <genPackages prefix="Data" basePackage="com.eu.evidence" interfacePackageSuffix="vartree.data"
+      metaDataPackageSuffix="vartree.data" classPackageSuffix="internal.vartree.data.impl"
+      utilityPackageSuffix="internal.vartree.data.init" providerPackageSuffix="internal.vartree.data.provider"
+      testsPackageSuffix="vartree.data.tests" ecorePackage="data.ecore#/">
     <genDataTypes ecoreDataType="data.ecore#//BooleanVar"/>
     <genDataTypes ecoreDataType="data.ecore#//DoubleVar"/>
     <genDataTypes ecoreDataType="data.ecore#//FloatVar"/>
@@ -15,6 +21,7 @@
     <genDataTypes ecoreDataType="data.ecore#//OilVar"/>
     <genDataTypes ecoreDataType="data.ecore#//StringVar"/>
     <genDataTypes ecoreDataType="data.ecore#//TimeVar"/>
+    <genDataTypes ecoreDataType="data.ecore#//PropertyVar"/>
     <genClasses ecoreClass="data.ecore#//System">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Annotation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Architectural"/>
@@ -23,8 +30,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Modes"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//System/Name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Schedulability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//System/XTC_Cookie"/>
     </genClasses>
     <genClasses ecoreClass="data.ecore#//ObjectWithID">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ObjectWithID/properties"/>
       <genOperations ecoreOperation="data.ecore#//ObjectWithID/checkNewID">
         <genParameters ecoreParameter="data.ecore#//ObjectWithID/checkNewID/newID"/>
       </genOperations>
@@ -44,6 +53,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/PartialOrderList"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/Implementation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/TimeConstList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/TypeList"/>
     </genClasses>
     <genClasses ecoreClass="data.ecore#//Implementation"/>
     <genClasses ecoreClass="data.ecore#//Proc">
@@ -66,6 +76,7 @@
     </genClasses>
     <genClasses ecoreClass="data.ecore#//Annotation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Annotation/ExecTimeLists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Annotation/CacheMissCostLists"/>
     </genClasses>
     <genClasses ecoreClass="data.ecore#//Schedulability">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Schedulability/SchedulingScenarioList"/>
@@ -165,17 +176,23 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Model"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Cpu/Rtos"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Cpu/OsApplication"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Speed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Speed_Unit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/BinaryImage"/>
     </genClasses>
     <genClasses ecoreClass="data.ecore#//Rtos">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/Name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/OilVar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/Methods"/>
     </genClasses>
     <genClasses ecoreClass="data.ecore#//Scheduling">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/ModeRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/PreemptionGroupName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Priority"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Stack"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Threshold"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Stack"/>
     </genClasses>
     <genClasses ecoreClass="data.ecore#//Activation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/ActNumber"/>
@@ -220,6 +237,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/Order"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/ProcRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/TaskRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/OnceEveryK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/MethodRefName"/>
     </genClasses>
     <genClasses ecoreClass="data.ecore#//TaskMap">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskMap/ModeRef"/>
@@ -242,10 +261,10 @@
     <genClasses ecoreClass="data.ecore#//CpuSched">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/Boundary"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/CpuRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/MaxStackSize"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/Schedulable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/SpeedFactor"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/Utilization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/MaxStackSize"/>
     </genClasses>
     <genClasses ecoreClass="data.ecore#//TaskSched">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/CDelta"/>
@@ -254,6 +273,31 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/TaskRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/TDelta"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/Utilization"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//CacheMissCostList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//CacheMissCostList/CacheMissCostItemsList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCostList/ModeRef"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//CacheMissCost">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCost/Best"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//CacheMissCost/Distribution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCost/Ref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCost/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCost/Worst"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Field/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Field/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Field/Size"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Type/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Type/Field"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Type/Dim"/>
+    </genClasses>
+    <genClasses ecoreClass="data.ecore#//OsApplication">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//OsApplication/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//OsApplication/OilVar"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

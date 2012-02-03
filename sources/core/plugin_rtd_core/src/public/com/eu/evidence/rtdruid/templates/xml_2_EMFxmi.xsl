@@ -12,9 +12,9 @@ xmlns:xsi=" "
 
 <xsl:for-each select="SYSTEM">
 
-<rtdruid.vartree.data:System xmi:version="2.0"
+<com.eu.evidence.rtdruid.data:System xmi:version="2.0"
   xmlns:xmi="http://www.omg.org/XMI"
-  xmlns:rtdruid.vartree.data="http://rtdruid.vartree.data"
+  xmlns:com.eu.evidence.rtdruid.data="http://www.evidence.eu.com/rtdruid/data"
 >
   <xsl:apply-templates select="@Name"/>
 
@@ -53,8 +53,8 @@ xmlns:xsi=" "
       <xsl:apply-templates select="SCHEDULABILITY"/>
     </Schedulability>
   </xsl:if>
-  
-</rtdruid.vartree.data:System>
+ 
+</com.eu.evidence.rtdruid.data:System>
 </xsl:for-each>
 </xsl:template>
 
@@ -404,7 +404,7 @@ xmlns:xsi=" "
 <xsl:template match="PROC">
 
   <Implementation>
-    <xsl:attribute name="xsi:type">rtdruid.vartree.data:Proc</xsl:attribute>
+    <xsl:attribute name="xsi:type">com.eu.evidence.rtdruid.data:Proc</xsl:attribute>
 	<xsl:apply-templates select="@Name"/>
 
     <xsl:for-each select="METHOD/@Name">
@@ -471,7 +471,7 @@ xmlns:xsi=" "
 <xsl:template match="SUBSYSTEM">
 
   <Implementation>
-    <xsl:attribute name="xsi:type">rtdruid.vartree.data:SubSystem</xsl:attribute>
+    <xsl:attribute name="xsi:type">com.eu.evidence.rtdruid.data:SubSystem</xsl:attribute>
 	<xsl:apply-templates select="@Name"/>
 
     <xsl:apply-templates select="IMPLEMENTATION/PROC"/>
@@ -522,7 +522,7 @@ xmlns:xsi=" "
 <xsl:template match="TRIGGER">
 
   <Implementation>
-    <xsl:attribute name="xsi:type">rtdruid.vartree.data:Trigger</xsl:attribute>
+    <xsl:attribute name="xsi:type">com.eu.evidence.rtdruid.data:Trigger</xsl:attribute>
 	<xsl:apply-templates select="@Name"/>
 
     <xsl:apply-templates select="METHODREF"/>
@@ -564,7 +564,7 @@ xmlns:xsi=" "
 <xsl:template match="VAR">
 
   <Implementation>
-    <xsl:attribute name="xsi:type">rtdruid.vartree.data:Var</xsl:attribute>
+    <xsl:attribute name="xsi:type">com.eu.evidence.rtdruid.data:Var</xsl:attribute>
 	<xsl:apply-templates select="@Name"/>
 	<xsl:apply-templates select="@Type"/>
 

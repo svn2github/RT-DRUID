@@ -241,8 +241,7 @@ public class TaskUtility implements ITaskUtility {
 		
 		// set the type
 		if (vtp.go(TASK_T)) {
-			IVariable v = vtp.getNewVar();
-			v.set("task");
+			IVariable v = vtp.getNewVar("task");
 			vtp.setVar(v);
 			vtp.goParent();
 		}
@@ -261,8 +260,7 @@ public class TaskUtility implements ITaskUtility {
 				vtp.add(ACTIVATION_T, ACTIVATION_T);
 				vtp.go(ACTIVATION_T);
 			}
-			IVariable v = vtp.getNewVar();
-			v.set("periodic");
+			IVariable v = vtp.getNewVar("periodic");
 			vtp.setVar(v);
 			
 			vtp.goParent(); // activation

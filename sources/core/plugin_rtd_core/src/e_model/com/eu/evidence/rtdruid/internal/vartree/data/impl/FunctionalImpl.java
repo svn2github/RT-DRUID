@@ -2,22 +2,9 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
-
-
-
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.Event;
@@ -26,9 +13,18 @@ import com.eu.evidence.rtdruid.vartree.data.PartialOrder;
 import com.eu.evidence.rtdruid.vartree.data.SystemImplementation;
 import com.eu.evidence.rtdruid.vartree.data.TimeConst;
 import com.eu.evidence.rtdruid.vartree.data.Type;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
 
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,33 +37,32 @@ import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FunctionalImpl#getPartialOrderList <em>Partial Order List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FunctionalImpl#getImplementation <em>Implementation</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FunctionalImpl#getTimeConstList <em>Time Const List</em>}</li>
- *   <li>{@link com.eu.evidence.rtdruid.vartree.data.impl.FunctionalImpl#getTypeList <em>Type List</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FunctionalImpl#getTypeList <em>Type List</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class FunctionalImpl extends ObjectWithIDImpl implements Functional
-{
+public class FunctionalImpl extends ObjectWithIDImpl implements Functional {
 	/**
 	 * The cached value of the '{@link #getEventList() <em>Event List</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getEventList()
 	 * @generated
 	 * @ordered
 	 */
-  protected EList eventList = null;
+	protected EList<Event> eventList;
 
 	/**
 	 * The cached value of the '{@link #getPartialOrderList() <em>Partial Order List</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getPartialOrderList()
 	 * @generated
 	 * @ordered
 	 */
-  protected EList partialOrderList = null;
+	protected EList<PartialOrder> partialOrderList;
 
 	/**
 	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' containment reference list.
@@ -77,144 +72,137 @@ public class FunctionalImpl extends ObjectWithIDImpl implements Functional
 	 * @generated
 	 * @ordered
 	 */
-	protected EList implementation = null;
+	protected EList<SystemImplementation> implementation;
 
 	/**
 	 * The cached value of the '{@link #getTimeConstList() <em>Time Const List</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getTimeConstList()
 	 * @generated
 	 * @ordered
 	 */
-  protected EList timeConstList = null;
+	protected EList<TimeConst> timeConstList;
 
-  /**
-  	 * The cached value of the '{@link #getTypeList() <em>Type List</em>}' containment reference list.
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @see #getTypeList()
-  	 * @generated
-  	 * @ordered
-  	 */
-  protected EList typeList;
-  
+	/**
+	 * The cached value of the '{@link #getTypeList() <em>Type List</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTypeList()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Type> typeList;
+
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected FunctionalImpl() {
+	protected FunctionalImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getFunctional();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.FUNCTIONAL;
 	}
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public EList getEventList()
-  {
-    if (eventList == null)
-    {
-      eventList = new EObjectContainmentUniqueEList(Event.class, this, DataPackage.FUNCTIONAL__EVENT_LIST);
-    }
-    return eventList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT 
-   */
-  public EList getPartialOrderList()
-  {
-    if (partialOrderList == null)
-    {
-      partialOrderList = new EObjectContainmentUniqueEList(PartialOrder.class, this, DataPackage.FUNCTIONAL__PARTIAL_ORDER_LIST);
-    }
-    return partialOrderList;
-  }
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getImplementation() {
+	public EList<Event> getEventList() {
+		if (eventList == null) {
+			eventList = new EObjectContainmentEList<Event>(Event.class, this, DataPackage.FUNCTIONAL__EVENT_LIST);
+		}
+		return eventList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<PartialOrder> getPartialOrderList() {
+		if (partialOrderList == null) {
+			partialOrderList = new EObjectContainmentEList<PartialOrder>(PartialOrder.class, this, DataPackage.FUNCTIONAL__PARTIAL_ORDER_LIST);
+		}
+		return partialOrderList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<SystemImplementation> getImplementation() {
 		if (implementation == null) {
-			implementation = new EObjectContainmentUniqueEList(SystemImplementation.class, this, DataPackage.FUNCTIONAL__IMPLEMENTATION);
+			implementation = new EObjectContainmentEList<SystemImplementation>(SystemImplementation.class, this, DataPackage.FUNCTIONAL__IMPLEMENTATION);
 		}
 		return implementation;
 	}
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT 
-   */
-  public EList getTimeConstList()
-  {
-    if (timeConstList == null)
-    {
-      timeConstList = new EObjectContainmentUniqueEList(TimeConst.class, this, DataPackage.FUNCTIONAL__TIME_CONST_LIST);
-    }
-    return timeConstList;
-  }
-
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  	public EList getTypeList() {
-  		if (typeList == null) {
-  			typeList = new EObjectContainmentUniqueEList(Type.class, this, DataPackage.FUNCTIONAL__TYPE_LIST);
-  		}
-  		return typeList;
-  	}
-  
-  	/**
- * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
- * @generated
- */
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case DataPackage.FUNCTIONAL__EVENT_LIST:
-					return ((InternalEList)getEventList()).basicRemove(otherEnd, msgs);
-				case DataPackage.FUNCTIONAL__PARTIAL_ORDER_LIST:
-					return ((InternalEList)getPartialOrderList()).basicRemove(otherEnd, msgs);
-				case DataPackage.FUNCTIONAL__IMPLEMENTATION:
-					return ((InternalEList)getImplementation()).basicRemove(otherEnd, msgs);
-				case DataPackage.FUNCTIONAL__TIME_CONST_LIST:
-					return ((InternalEList)getTimeConstList()).basicRemove(otherEnd, msgs);
-				case DataPackage.FUNCTIONAL__TYPE_LIST:
-					return ((InternalEList)getTypeList()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	public EList<TimeConst> getTimeConstList() {
+		if (timeConstList == null) {
+			timeConstList = new EObjectContainmentEList<TimeConst>(TimeConst.class, this, DataPackage.FUNCTIONAL__TIME_CONST_LIST);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return timeConstList;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public EList<Type> getTypeList() {
+		if (typeList == null) {
+			typeList = new EObjectContainmentEList<Type>(Type.class, this, DataPackage.FUNCTIONAL__TYPE_LIST);
+		}
+		return typeList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case DataPackage.FUNCTIONAL__EVENT_LIST:
+				return ((InternalEList<?>)getEventList()).basicRemove(otherEnd, msgs);
+			case DataPackage.FUNCTIONAL__PARTIAL_ORDER_LIST:
+				return ((InternalEList<?>)getPartialOrderList()).basicRemove(otherEnd, msgs);
+			case DataPackage.FUNCTIONAL__IMPLEMENTATION:
+				return ((InternalEList<?>)getImplementation()).basicRemove(otherEnd, msgs);
+			case DataPackage.FUNCTIONAL__TIME_CONST_LIST:
+				return ((InternalEList<?>)getTimeConstList()).basicRemove(otherEnd, msgs);
+			case DataPackage.FUNCTIONAL__TYPE_LIST:
+				return ((InternalEList<?>)getTypeList()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.FUNCTIONAL__EVENT_LIST:
 				return getEventList();
 			case DataPackage.FUNCTIONAL__PARTIAL_ORDER_LIST:
@@ -226,49 +214,50 @@ public class FunctionalImpl extends ObjectWithIDImpl implements Functional
 			case DataPackage.FUNCTIONAL__TYPE_LIST:
 				return getTypeList();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.FUNCTIONAL__EVENT_LIST:
 				getEventList().clear();
-				getEventList().addAll((Collection)newValue);
+				getEventList().addAll((Collection<? extends Event>)newValue);
 				return;
 			case DataPackage.FUNCTIONAL__PARTIAL_ORDER_LIST:
 				getPartialOrderList().clear();
-				getPartialOrderList().addAll((Collection)newValue);
+				getPartialOrderList().addAll((Collection<? extends PartialOrder>)newValue);
 				return;
 			case DataPackage.FUNCTIONAL__IMPLEMENTATION:
 				getImplementation().clear();
-				getImplementation().addAll((Collection)newValue);
+				getImplementation().addAll((Collection<? extends SystemImplementation>)newValue);
 				return;
 			case DataPackage.FUNCTIONAL__TIME_CONST_LIST:
 				getTimeConstList().clear();
-				getTimeConstList().addAll((Collection)newValue);
+				getTimeConstList().addAll((Collection<? extends TimeConst>)newValue);
 				return;
 			case DataPackage.FUNCTIONAL__TYPE_LIST:
 				getTypeList().clear();
-				getTypeList().addAll((Collection)newValue);
+				getTypeList().addAll((Collection<? extends Type>)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.FUNCTIONAL__EVENT_LIST:
 				getEventList().clear();
 				return;
@@ -285,17 +274,17 @@ public class FunctionalImpl extends ObjectWithIDImpl implements Functional
 				getTypeList().clear();
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.FUNCTIONAL__EVENT_LIST:
 				return eventList != null && !eventList.isEmpty();
 			case DataPackage.FUNCTIONAL__PARTIAL_ORDER_LIST:
@@ -307,21 +296,7 @@ public class FunctionalImpl extends ObjectWithIDImpl implements Functional
 			case DataPackage.FUNCTIONAL__TYPE_LIST:
 				return typeList != null && !typeList.isEmpty();
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return "Functional";
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-		return getObjectID().equals(newID);
-	}
 } //FunctionalImpl

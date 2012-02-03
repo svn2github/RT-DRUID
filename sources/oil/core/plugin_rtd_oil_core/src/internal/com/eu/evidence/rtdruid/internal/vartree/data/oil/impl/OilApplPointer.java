@@ -9,6 +9,7 @@ package com.eu.evidence.rtdruid.internal.vartree.data.oil.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Stack;
@@ -33,7 +34,6 @@ import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.VarTreePointerEMF;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
 import com.eu.evidence.rtdruid.vartree.data.oil.Enumerator;
 import com.eu.evidence.rtdruid.vartree.data.oil.HW;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilApplFactory;
@@ -45,6 +45,7 @@ import com.eu.evidence.rtdruid.vartree.data.oil.Root;
 import com.eu.evidence.rtdruid.vartree.data.oil.Value;
 import com.eu.evidence.rtdruid.vartree.data.oil.Variant;
 import com.eu.evidence.rtdruid.vartree.variables.BooleanVar;
+import com.eu.evidence.rtdruid.vartree.variables.IntegerVar;
 import com.eu.evidence.rtdruid.vartree.variables.MultiValues;
 import com.eu.evidence.rtdruid.vartree.variables.OilVarMP;
 import com.eu.evidence.rtdruid.vartree.variables.StringDescrMVar;
@@ -158,8 +159,7 @@ public class OilApplPointer extends VarTreePointerEMF implements
 					throw new IllegalArgumentException("required "+oilAppPack.getHW().getName()+" as type");
 				}
 
-				int index = ((EObjectContainmentUniqueEList)
-						((Root) point.pointer).getHwList()).indexOfById(namedId);
+				int index = getIndex(((Root) point.pointer).getHwList(), namedId);
 				
 				if (index <0) { // add a new element
 					ObjectWithID hw = OilApplFactory.eINSTANCE.createHW();
@@ -172,8 +172,8 @@ public class OilApplPointer extends VarTreePointerEMF implements
 				}
 				
 				// use an "old" node
-				return DataPath.addSlash(( (ObjectWithID) ((EObjectContainmentUniqueEList)
-						((Root) point.pointer).getHwList()).get(index)).getObjectID());
+				return DataPath.addSlash(( (ObjectWithID) 
+						(((Root) point.pointer).getHwList()).get(index)).getObjectID());
 			}
 
 			if (point.pointer instanceof HW
@@ -183,8 +183,7 @@ public class OilApplPointer extends VarTreePointerEMF implements
 					throw new IllegalArgumentException("required "+oilAppPack.getRTOS().getName()+" as type");
 				}
 
-				int index = ((EObjectContainmentUniqueEList)
-						((HW) point.pointer).getRtosList()).indexOfById(namedId);
+				int index = getIndex(((HW) point.pointer).getRtosList(), namedId);
 				
 				if (index <0) { // add a new element
 					ObjectWithID rt = OilApplFactory.eINSTANCE.createRTOS();
@@ -197,7 +196,7 @@ public class OilApplPointer extends VarTreePointerEMF implements
 				}
 				
 				// use an "old" node
-				return DataPath.addSlash(( (ObjectWithID) ((EObjectContainmentUniqueEList)
+				return DataPath.addSlash(( (ObjectWithID) (
 						((HW) point.pointer).getRtosList()).get(index)).getObjectID());
 			}
 			
@@ -259,6 +258,21 @@ public class OilApplPointer extends VarTreePointerEMF implements
 		return super.add(name, type);
 //		throw new IllegalStateException("Try to add a new element in a wrong place");
 	}
+
+	private int getIndex(EList<? extends EObject> list, String namedId) {
+//		return ((EObjectContainmentUniqueEList)
+//		(list).indexOfById(namedId);		
+		
+		for (int i=0; i<list.size(); i++) {
+			ObjectWithID ref = (ObjectWithID) list.get(i);
+			if (namedId.equals(ref.getObjectID())) {
+				return i;
+			}
+		}
+
+		
+		return -1;
+	}
 	
 	protected String add(String name, String type, IOilImplPointer oiPointer, LittlePointer current, boolean useCommand) {
 		final int point=0;
@@ -277,10 +291,10 @@ public class OilApplPointer extends VarTreePointerEMF implements
 								break;
 							}
 							
-							EObjectContainmentUniqueEList eocue = (EObjectContainmentUniqueEList)
-									current.pointer.eGet(current.attr);
+							//EObjectContainmentUniqueEList eocue = (EObjectContainmentUniqueEList)
+							EList<EObject> eocue = (EList<EObject>) current.pointer.eGet(current.attr);
 							
-							int index = eocue.indexOfById(namedId);
+							int index = getIndex(eocue, namedId);
 							if (index <0) { // add a new element
 								Value pa = OilApplFactory.eINSTANCE.createValue();
 								pa.setObjectID(name);
@@ -351,10 +365,11 @@ public class OilApplPointer extends VarTreePointerEMF implements
 								break;
 							}
 							
-							EObjectContainmentUniqueEList eocue = (EObjectContainmentUniqueEList)
+							//EObjectContainmentUniqueEList eocue = (EObjectContainmentUniqueEList)
+							EList<EObject> eocue = (EList<EObject>) 
 									current.pointer.eGet(current.attr);
 							
-							int index = eocue.indexOfById(namedId);
+							int index = getIndex(eocue, namedId);
 							if (index <0) { // add a new element
 								String defaultValue = null;
 								Variant pa = OilApplFactory.eINSTANCE.createVariant();
@@ -437,10 +452,11 @@ public class OilApplPointer extends VarTreePointerEMF implements
 								break;
 							}
 							
-							EObjectContainmentUniqueEList eocue = (EObjectContainmentUniqueEList)
+							//EObjectContainmentUniqueEList eocue = (EObjectContainmentUniqueEList)
+							EList<EObject> eocue = (EList<EObject>) 
 									current.pointer.eGet(current.attr);
 							
-							int index = eocue.indexOfById(namedId);
+							int index = getIndex(eocue, namedId);
 							if (index <0) { // add a new element
 								Value pa = OilApplFactory.eINSTANCE.createValue();
 								pa.setObjectID(name);
@@ -508,14 +524,18 @@ public class OilApplPointer extends VarTreePointerEMF implements
 								break;
 							}
 							
-							EObjectContainmentUniqueEList eocue = (EObjectContainmentUniqueEList)
+							//EObjectContainmentUniqueEList eocue = (EObjectContainmentUniqueEList)
+							EList<EObject> eocue = (EList<EObject>) 
 									current.pointer.eGet(current.attr);
 							
-							int index = eocue.indexOfById(namedId);
+							int index = getIndex(eocue, namedId);
 							if (index <0) { // add a new element
 								Enumerator pa = OilApplFactory.eINSTANCE.createEnumerator();
 								pa.setValue(new StringVar(name));
 								
+								// add the index
+								int validId = getEnumValidIndex(eocue);
+								pa.setIndex(new IntegerVar("" + validId));
 								/*
 								// set attributes
 								Enumeration en = children[i].getAttributes().propertyNames();
@@ -574,6 +594,39 @@ public class OilApplPointer extends VarTreePointerEMF implements
 
 	}
 	
+	private int getEnumValidIndex(EList<EObject> list) {
+		
+		// get all used indexes
+		ArrayList<Integer> usedIds = new ArrayList<Integer>();
+		for (EObject o: list) {
+			if (o instanceof OilObjectWithID) {
+				OilObjectWithID oo = (OilObjectWithID) o;
+				String id = oo.getObjectID();
+				
+				try {
+					Integer val = Integer.decode(id);
+					int index = Collections.binarySearch(usedIds, val);
+					if (index <0) {
+						usedIds.add(-index -1, val);
+					}
+				} catch (Exception e) {
+					// do nothing
+				}
+			}
+		}
+		
+		// get the first not used id. note that all indexes are sorted
+		int i=0;
+		for (; i<usedIds.size(); i++) {
+			if (i != usedIds.get(i).intValue()) {
+				break;
+			}
+		}
+
+		
+		return i;
+	}
+
 	/** Checks if names are equals and types are equals (null is equal only to null)*/
 	private boolean check(String name1, String name2, String type1, String type2) {
 		return (name1 == null ? name2 == null : name1.equals(name2)) 

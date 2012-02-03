@@ -28,7 +28,6 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubContributionItem;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -40,8 +39,6 @@ import org.eclipse.ui.PartInitException;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.ui.Rtd_core_uiPlugin;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
 
 /**
  * This is the action bar contributor for the Data model editor.
@@ -420,27 +417,27 @@ public class DataActionBarContributor
 //		schedulabilityAnalysisMenuManager.add(eaEDFAction);
 //		schedulabilityAnalysisMenuManager.add(periodSensAction);
 //		
-		submenuManager.add(new Action("GC") {
-			public void run() {
-				for (int i=0; i<5; i++) {
-					System.gc();
-					System.runFinalization();
-					try {
-						Thread.sleep(100);
-					} catch (Exception e) {
-						// nothing
-					}
-				}
-				
-				MessageDialog.openInformation(
-						activeEditorPart.getSite().getShell(),
-						"NOTA!!!",
-						 "ObjectWithId = " + ObjectWithIDImpl.cont + "\n"
-						+"Object..List = " + EObjectContainmentUniqueEList.cont);
-	
-			}
-		});
-
+//		submenuManager.add(new Action("GC") {
+//			public void run() {
+//				for (int i=0; i<5; i++) {
+//					System.gc();
+//					System.runFinalization();
+//					try {
+//						Thread.sleep(100);
+//					} catch (Exception e) {
+//						// nothing
+//					}
+//				}
+//				
+//				MessageDialog.openInformation(
+//						activeEditorPart.getSite().getShell(),
+//						"NOTA!!!",
+//						 "ObjectWithId = " + ObjectWithIDImpl.cont + "\n"
+//						+"Object..List = " + EObjectContainmentUniqueEList.cont);
+//	
+//			}
+//		});
+//
 /*		schedulabilityAnalysisMenuManager.add(jscanAction);		
 		schedulabilityAnalysisMenuManager.add(jscanOffsetAction);
 		schedulabilityAnalysisMenuManager.add(eaAction);

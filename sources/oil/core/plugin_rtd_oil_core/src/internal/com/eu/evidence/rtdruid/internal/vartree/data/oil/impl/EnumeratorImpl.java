@@ -16,11 +16,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
 import com.eu.evidence.rtdruid.vartree.data.oil.Enumerator;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilApplPackage;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilObjectWithID;
@@ -120,7 +120,7 @@ public class EnumeratorImpl extends OilObjectWithIDImpl implements Enumerator {
 	 */
 	public EList getParameterList() {
 		if (parameterList == null) {
-			parameterList = new EObjectContainmentUniqueEList(Parameter.class, this, OilApplPackage.ENUMERATOR__PARAMETER_LIST);
+			parameterList = new EObjectContainmentEList(Parameter.class, this, OilApplPackage.ENUMERATOR__PARAMETER_LIST);
 		}
 		return parameterList;
 	}
@@ -162,15 +162,15 @@ public class EnumeratorImpl extends OilObjectWithIDImpl implements Enumerator {
 	 */
 	public void setIndex(IntegerVar newIndex) {
 		
-		if ( !checkNewID(makeID(newIndex)) ) return;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  			
+//		if ( !checkNewID(makeID(newIndex)) ) return;
+//
+//	  	// Store old ID
+//	  	String old_ID = getObjectID();
+//	  			
 		setIndexGen(newIndex);
 
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
+//		// ASk to update ID
+//	  	didSetObjectID(old_ID);
 	}
 	
 	/**
@@ -277,26 +277,26 @@ public class EnumeratorImpl extends OilObjectWithIDImpl implements Enumerator {
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(index);
-	}
+//	/* (non-Javadoc)
+//	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
+//	 */
+//	public String getObjectID() {
+//		return makeID(index);
+//	}
 
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
 	 */
 	public boolean setObjectID(String newID) {
 	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
+//
+//	  	// Store old ID
+//	  	String old_ID = getObjectID();
 	  			
 		String[] tmp = resolveID(newID);
 		setIndexGen(tmp[0] == null ? (IntegerVar) null : new IntegerVar(tmp[0]));
 		// ASk to update ID
-	  	didSetObjectID(old_ID);
+//	  	didSetObjectID(old_ID);
 		return true;
 	}
 	

@@ -2,8 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
@@ -18,5 +17,5 @@ package com.eu.evidence.rtdruid.vartree.data;
  * @model abstract="true"
  * @generated
  */
-public interface Implementation extends SystemImplementation{
+public interface Implementation extends SystemImplementation {
 } // Implementation

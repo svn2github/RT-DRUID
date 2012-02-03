@@ -8,7 +8,6 @@ package com.eu.evidence.rtdruid.vartree.tools;
 
 
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
@@ -17,7 +16,6 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.variables.FastTaskToProcVar;
 
 /** This class contains many functions that look for a mapping between two compatible objects
  * 
@@ -445,56 +443,56 @@ public class Mapping {
 			throw new NullPointerException ("Required a Not Null task Name");
 		}
 
-		final boolean use_fast_code = true;
+		final boolean use_fast_code = false;
 
 		if (use_fast_code) {
-			ITreeInterface ti = vt.newTreeInterface();
-			
-			// check all ProcMap
-			String path = sysPath + S + DataPackage.eINSTANCE.getMapping().getName()
-					+ S + DataPackage.eINSTANCE.getMapping_InverseTaskToProc().getName();
-			
-			if (!ti.exist(path, null)) {
-				return new String[0];
-			}
-
-			FastTaskToProcVar v = (FastTaskToProcVar) ti.getValue(path);
-			
-			// Get default mapping
-			LinkedHashSet<String> procsDefaultMode = v.getProcs(null, taskName);
-			
-			if (modeRef != null) {
-				LinkedHashSet<String> procsCurrentMode = new LinkedHashSet<String> (v.getProcs(modeRef, taskName));
-				
-				// construct a copy and remove procs that are already inside procsCurrentMode
-				procsDefaultMode = new LinkedHashSet<String> (procsDefaultMode);
-				procsDefaultMode.removeAll(procsCurrentMode);
-				
-				IVarTreePointer vtp = vt.newVarTreePointer();
-				vtp.go(sysPath + S + DataPackage.eINSTANCE.getMapping().getName()
-						+ S + DataPackage.eINSTANCE.getMapping_ProcMapList().getName());
-				for (Iterator<String> iter = procsDefaultMode.iterator(); iter.hasNext(); ) {
-					String proc = iter.next();
-					
-					// check if current proc is mapped to "something" in this
-					// mode, is not mapped to current task,
-					// otherwise it should be stored inside procsCurrentMode
-					String[] idList = { modeRef, proc };
-
-					String procPath =/* sysPath + S + DataPackage.eINSTANCE.getMapping().getName()
-							+ S + DataPackage.eINSTANCE.getMapping_ProcMapList().getName() 
-							+ S +*/ DataPath.makeSlashedId(idList);
-					
-					if (vtp.exist(procPath)) {
-						iter.remove();
-					}
-				}
-				
-				procsCurrentMode.addAll(procsDefaultMode);
-				procsDefaultMode = procsCurrentMode; 
-			}
-
-			return (String[]) procsDefaultMode.toArray(new String[procsDefaultMode.size()]);
+//			ITreeInterface ti = vt.newTreeInterface();
+//			
+//			// check all ProcMap
+//			String path = sysPath + S + DataPackage.eINSTANCE.getMapping().getName()
+//					+ S + DataPackage.eINSTANCE.getMapping_InverseTaskToProc().getName();
+//			
+//			if (!ti.exist(path, null)) {
+//				return new String[0];
+//			}
+//
+//			FastTaskToProcVar v = (FastTaskToProcVar) ti.getValue(path);
+//			
+//			// Get default mapping
+//			LinkedHashSet<String> procsDefaultMode = v.getProcs(null, taskName);
+//			
+//			if (modeRef != null) {
+//				LinkedHashSet<String> procsCurrentMode = new LinkedHashSet<String> (v.getProcs(modeRef, taskName));
+//				
+//				// construct a copy and remove procs that are already inside procsCurrentMode
+//				procsDefaultMode = new LinkedHashSet<String> (procsDefaultMode);
+//				procsDefaultMode.removeAll(procsCurrentMode);
+//				
+//				IVarTreePointer vtp = vt.newVarTreePointer();
+//				vtp.go(sysPath + S + DataPackage.eINSTANCE.getMapping().getName()
+//						+ S + DataPackage.eINSTANCE.getMapping_ProcMapList().getName());
+//				for (Iterator<String> iter = procsDefaultMode.iterator(); iter.hasNext(); ) {
+//					String proc = iter.next();
+//					
+//					// check if current proc is mapped to "something" in this
+//					// mode, is not mapped to current task,
+//					// otherwise it should be stored inside procsCurrentMode
+//					String[] idList = { modeRef, proc };
+//
+//					String procPath =/* sysPath + S + DataPackage.eINSTANCE.getMapping().getName()
+//							+ S + DataPackage.eINSTANCE.getMapping_ProcMapList().getName() 
+//							+ S +*/ DataPath.makeSlashedId(idList);
+//					
+//					if (vtp.exist(procPath)) {
+//						iter.remove();
+//					}
+//				}
+//				
+//				procsCurrentMode.addAll(procsDefaultMode);
+//				procsDefaultMode = procsCurrentMode; 
+//			}
+//
+			return null; //(String[]) procsDefaultMode.toArray(new String[procsDefaultMode.size()]);
 		
 		} else { // old Code (slow)
 		

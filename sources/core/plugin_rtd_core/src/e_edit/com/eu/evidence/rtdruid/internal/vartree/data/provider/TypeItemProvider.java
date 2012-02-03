@@ -7,31 +7,32 @@
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.DataFactory;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.Type;
+
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.Type;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-
 /**
- * This is the item provider adapter for a {@link rtdruid.vartree.data.Type} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.Type} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -60,7 +61,8 @@ public class TypeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -83,7 +85,7 @@ public class TypeItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Type_Name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Type_Name_feature", "_UI_Type_type"),
-				 DataPackage.eINSTANCE.getType_Name(),
+				 DataPackage.Literals.TYPE__NAME,
 				 true,
 				 false,
 				 false,
@@ -91,7 +93,7 @@ public class TypeItemProvider
 				 null,
 				 null));
 	}
-	
+
 	/**
 	 * This adds a property descriptor for the Dim feature.
 	 * <!-- begin-user-doc -->
@@ -105,7 +107,7 @@ public class TypeItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Type_Dim_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Type_Dim_feature", "_UI_Type_type"),
-				 DataPackage.eINSTANCE.getType_Dim(),
+				 DataPackage.Literals.TYPE__DIM,
 				 true,
 				 false,
 				 false,
@@ -113,7 +115,7 @@ public class TypeItemProvider
 				 null,
 				 null));
 	}
-	
+
 	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
@@ -122,10 +124,11 @@ public class TypeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(DataPackage.eINSTANCE.getType_Field());
+			childrenFeatures.add(DataPackage.Literals.TYPE__FIELD);
 		}
 		return childrenFeatures;
 	}
@@ -135,6 +138,7 @@ public class TypeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
@@ -148,6 +152,7 @@ public class TypeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/Type"));
 	}
@@ -158,6 +163,7 @@ public class TypeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		StringVar labelValue = ((Type)object).getName();
 		String label = labelValue == null ? null : labelValue.toString();
@@ -173,6 +179,7 @@ public class TypeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -195,20 +202,14 @@ public class TypeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getType_Field(),
+				(DataPackage.Literals.TYPE__FIELD,
 				 DataFactory.eINSTANCE.createField()));
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
 	}
 
 }

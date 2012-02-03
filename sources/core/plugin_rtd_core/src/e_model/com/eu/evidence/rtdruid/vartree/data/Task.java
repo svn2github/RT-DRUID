@@ -2,16 +2,14 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
-
-import org.eclipse.emf.common.util.EList;
-
 import com.eu.evidence.rtdruid.vartree.variables.OilVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,10 +29,10 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTask()
- * @model 
+ * @model
  * @generated
  */
-public interface Task extends ObjectWithID{
+public interface Task extends ObjectWithID {
 	/**
 	 * Returns the value of the '<em><b>Activation List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.Activation}.
@@ -46,88 +44,62 @@ public interface Task extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Activation List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTask_ActivationList()
-	 * @model type="rtdruid.vartree.data.Activation" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getActivationList();
+	EList<Activation> getActivationList();
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(StringVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTask_Name()
-	 * @model dataType="rtdruid.vartree.data.StringVar" required="true"
+	 * @model id="true" dataType="com.eu.evidence.rtdruid.vartree.data.StringVar" required="true"
 	 * @generated
 	 */
-  StringVar getName();
+	StringVar getName();
 
 	/**
 	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Task#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated
 	 */
-  void setName(StringVar value);
-
-	/**
-	 * Returns the value of the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see #setType(StringVar)
-	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTask_Type()
-	 * @model dataType="rtdruid.vartree.data.StringVar"
-	 * @generated
-	 */
-  StringVar getType();
-
-	/**
-	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Task#getType <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see #getType()
-	 * @generated
-	 */
-  void setType(StringVar value);
+	void setName(StringVar value);
 
 	/**
 	 * Returns the value of the '<em><b>Oil Var</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Oil Var</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Oil Var</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Oil Var</em>' attribute.
 	 * @see #setOilVar(OilVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTask_OilVar()
-	 * @model dataType="rtdruid.vartree.data.OilVar"
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.OilVar"
 	 * @generated
 	 */
-  OilVar getOilVar();
+	OilVar getOilVar();
 
 	/**
 	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Task#getOilVar <em>Oil Var</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Oil Var</em>' attribute.
 	 * @see #getOilVar()
 	 * @generated
 	 */
-  void setOilVar(OilVar value);
+	void setOilVar(OilVar value);
 
 	/**
 	 * Returns the value of the '<em><b>Resource Ref List</b></em>' containment reference list.
@@ -140,10 +112,10 @@ public interface Task extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resource Ref List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTask_ResourceRefList()
-	 * @model type="rtdruid.vartree.data.ResourceRef" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getResourceRefList();
+	EList<ResourceRef> getResourceRefList();
 
 	/**
 	 * Returns the value of the '<em><b>Scheduling List</b></em>' containment reference list.
@@ -156,9 +128,35 @@ public interface Task extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Scheduling List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTask_SchedulingList()
-	 * @model type="rtdruid.vartree.data.Scheduling" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getSchedulingList();
+	EList<Scheduling> getSchedulingList();
+
+	/**
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see #setType(StringVar)
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getTask_Type()
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.StringVar"
+	 * @generated
+	 */
+	StringVar getType();
+
+	/**
+	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Task#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see #getType()
+	 * @generated
+	 */
+	void setType(StringVar value);
 
 } // Task

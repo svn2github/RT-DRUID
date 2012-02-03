@@ -2,25 +2,21 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
-
-
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.TimeConstElement;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,219 +34,121 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
  *
  * @generated
  */
-public class TimeConstElementImpl extends ObjectWithIDImpl implements TimeConstElement
-{
+public class TimeConstElementImpl extends ObjectWithIDImpl implements TimeConstElement {
 	/**
 	 * The default value of the '{@link #getBoundType() <em>Bound Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getBoundType()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar BOUND_TYPE_EDEFAULT = null;
+	protected static final StringVar BOUND_TYPE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getBoundType() <em>Bound Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getBoundType()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar boundType = BOUND_TYPE_EDEFAULT;
+	protected StringVar boundType = BOUND_TYPE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getBoundValue() <em>Bound Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getBoundValue()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final TimeVar BOUND_VALUE_EDEFAULT = null;
+	protected static final TimeVar BOUND_VALUE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getBoundValue() <em>Bound Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getBoundValue()
 	 * @generated
 	 * @ordered
 	 */
-  protected TimeVar boundValue = BOUND_VALUE_EDEFAULT;
+	protected TimeVar boundValue = BOUND_VALUE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getFirstEvent() <em>First Event</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getFirstEvent()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar FIRST_EVENT_EDEFAULT = null;
+	protected static final StringVar FIRST_EVENT_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getFirstEvent() <em>First Event</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getFirstEvent()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar firstEvent = FIRST_EVENT_EDEFAULT;
+	protected StringVar firstEvent = FIRST_EVENT_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getSecondEvent() <em>Second Event</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getSecondEvent()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar SECOND_EVENT_EDEFAULT = null;
+	protected static final StringVar SECOND_EVENT_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getSecondEvent() <em>Second Event</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getSecondEvent()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar secondEvent = SECOND_EVENT_EDEFAULT;
+	protected StringVar secondEvent = SECOND_EVENT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected TimeConstElementImpl() {
+	protected TimeConstElementImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getTimeConstElement();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.TIME_CONST_ELEMENT;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getFirstEvent() {
-		return firstEvent;
-	}
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setFirstEvent(StringVar newFirstEvent)
-  {
-	{
-		if ( !checkNewID(makeSlahedID(new IVariable[] {newFirstEvent, secondEvent, boundType})) ) return;
-	}
-
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-	setFirstEventGen(newFirstEvent);
-
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setFirstEventGen(StringVar newFirstEvent) {
-    StringVar oldFirstEvent = firstEvent;
-    firstEvent = newFirstEvent;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TIME_CONST_ELEMENT__FIRST_EVENT, oldFirstEvent, firstEvent));
-  }
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public StringVar getSecondEvent() {
-		return secondEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-  public void setSecondEvent(StringVar newSecondEvent) {
-		{
-			if ( !checkNewID(makeSlahedID(new IVariable[] {firstEvent, newSecondEvent, boundType})) ) return;
-		}
-		
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		setSecondEventGen(newSecondEvent);
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setSecondEventGen(StringVar newSecondEvent) {
-		StringVar oldSecondEvent = secondEvent;
-		secondEvent = newSecondEvent;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TIME_CONST_ELEMENT__SECOND_EVENT, oldSecondEvent, secondEvent));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public StringVar getBoundType() {
+	public StringVar getBoundType() {
 		return boundType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated NOT
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
-  public void setBoundType(StringVar newBoundType) {
-		{
-			if ( !checkNewID(makeSlahedID(new IVariable[] {firstEvent, secondEvent, newBoundType})) ) return;
-		}
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		setBoundTypeGen(newBoundType);
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setBoundTypeGen(StringVar newBoundType) {
-		
+	public void setBoundType(StringVar newBoundType) {
 		StringVar oldBoundType = boundType;
 		boundType = newBoundType;
 		if (eNotificationRequired())
@@ -259,19 +157,19 @@ public class TimeConstElementImpl extends ObjectWithIDImpl implements TimeConstE
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public TimeVar getBoundValue() {
+	public TimeVar getBoundValue() {
 		return boundValue;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setBoundValue(TimeVar newBoundValue) {
+	public void setBoundValue(TimeVar newBoundValue) {
 		TimeVar oldBoundValue = boundValue;
 		boundValue = newBoundValue;
 		if (eNotificationRequired())
@@ -280,11 +178,54 @@ public class TimeConstElementImpl extends ObjectWithIDImpl implements TimeConstE
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public StringVar getFirstEvent() {
+		return firstEvent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFirstEvent(StringVar newFirstEvent) {
+		StringVar oldFirstEvent = firstEvent;
+		firstEvent = newFirstEvent;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TIME_CONST_ELEMENT__FIRST_EVENT, oldFirstEvent, firstEvent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getSecondEvent() {
+		return secondEvent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSecondEvent(StringVar newSecondEvent) {
+		StringVar oldSecondEvent = secondEvent;
+		secondEvent = newSecondEvent;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.TIME_CONST_ELEMENT__SECOND_EVENT, oldSecondEvent, secondEvent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.TIME_CONST_ELEMENT__BOUND_TYPE:
 				return getBoundType();
 			case DataPackage.TIME_CONST_ELEMENT__BOUND_VALUE:
@@ -294,17 +235,17 @@ public class TimeConstElementImpl extends ObjectWithIDImpl implements TimeConstE
 			case DataPackage.TIME_CONST_ELEMENT__SECOND_EVENT:
 				return getSecondEvent();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.TIME_CONST_ELEMENT__BOUND_TYPE:
 				setBoundType((StringVar)newValue);
 				return;
@@ -318,17 +259,17 @@ public class TimeConstElementImpl extends ObjectWithIDImpl implements TimeConstE
 				setSecondEvent((StringVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.TIME_CONST_ELEMENT__BOUND_TYPE:
 				setBoundType(BOUND_TYPE_EDEFAULT);
 				return;
@@ -342,17 +283,17 @@ public class TimeConstElementImpl extends ObjectWithIDImpl implements TimeConstE
 				setSecondEvent(SECOND_EVENT_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.TIME_CONST_ELEMENT__BOUND_TYPE:
 				return BOUND_TYPE_EDEFAULT == null ? boundType != null : !BOUND_TYPE_EDEFAULT.equals(boundType);
 			case DataPackage.TIME_CONST_ELEMENT__BOUND_VALUE:
@@ -362,16 +303,16 @@ public class TimeConstElementImpl extends ObjectWithIDImpl implements TimeConstE
 			case DataPackage.TIME_CONST_ELEMENT__SECOND_EVENT:
 				return SECOND_EVENT_EDEFAULT == null ? secondEvent != null : !SECOND_EVENT_EDEFAULT.equals(secondEvent);
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -387,29 +328,4 @@ public class TimeConstElementImpl extends ObjectWithIDImpl implements TimeConstE
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeSlahedID(new IVariable[] {firstEvent, secondEvent, boundType});
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-		
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setFirstEventGen (tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		setSecondEventGen(tmp[1] == null ? (StringVar) null : new StringVar(tmp[1]));
-		setBoundTypeGen  (tmp[2] == null ? (StringVar) null : new StringVar(tmp[2]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //TimeConstElementImpl

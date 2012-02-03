@@ -6,15 +6,17 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.OsApplication;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.OilVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,8 +25,8 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link rtdruid.vartree.data.impl.OsApplicationImpl#getName <em>Name</em>}</li>
- *   <li>{@link rtdruid.vartree.data.impl.OsApplicationImpl#getOilVar <em>Oil Var</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.OsApplicationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.OsApplicationImpl#getOilVar <em>Oil Var</em>}</li>
  * </ul>
  * </p>
  *
@@ -85,8 +87,9 @@ public class OsApplicationImpl extends ObjectWithIDImpl implements OsApplication
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getOsApplication();
+		return DataPackage.Literals.OS_APPLICATION;
 	}
 
 	/**
@@ -98,37 +101,18 @@ public class OsApplicationImpl extends ObjectWithIDImpl implements OsApplication
 		return name;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(StringVar newName) {
+		StringVar oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.OS_APPLICATION__NAME, oldName, name));
+	}
 
-	  /**
-	   * <!-- begin-user-doc -->
-	   * <!-- end-user-doc -->
-	   * @generated NOT
-	   */
-	  public void setName(StringVar newName)
-	  {
-		if ( !checkNewID(makeID(newName)) ) return;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-
-		setNameGen(newName);
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-	  }
-	  
-	  /**
-	   * <!-- begin-user-doc -->
-	   * <!-- end-user-doc -->
-	   * @generated
-	   */
-	  private void setNameGen(StringVar newName) {
-	    StringVar oldName = name;
-	    name = newName;
-	    if (eNotificationRequired())
-	      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.CPU__NAME, oldName, name));
-	  }
-	  
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -155,6 +139,7 @@ public class OsApplicationImpl extends ObjectWithIDImpl implements OsApplication
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case DataPackage.OS_APPLICATION__NAME:
@@ -170,6 +155,7 @@ public class OsApplicationImpl extends ObjectWithIDImpl implements OsApplication
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case DataPackage.OS_APPLICATION__NAME:
@@ -187,6 +173,7 @@ public class OsApplicationImpl extends ObjectWithIDImpl implements OsApplication
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case DataPackage.OS_APPLICATION__NAME:
@@ -204,6 +191,7 @@ public class OsApplicationImpl extends ObjectWithIDImpl implements OsApplication
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case DataPackage.OS_APPLICATION__NAME:
@@ -219,6 +207,7 @@ public class OsApplicationImpl extends ObjectWithIDImpl implements OsApplication
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -231,28 +220,4 @@ public class OsApplicationImpl extends ObjectWithIDImpl implements OsApplication
 		return result.toString();
 	}
 
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(name);
-	}
-	
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setNameGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //OsApplicationImpl

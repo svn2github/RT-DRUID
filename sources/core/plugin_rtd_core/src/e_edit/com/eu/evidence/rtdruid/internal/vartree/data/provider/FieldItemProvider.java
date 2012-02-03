@@ -7,29 +7,29 @@
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.Field;
+
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.Field;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
-
 /**
- * This is the item provider adapter for a {@link rtdruid.vartree.data.Field} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.Field} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -58,7 +58,8 @@ public class FieldItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -82,7 +83,7 @@ public class FieldItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Field_Name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Field_Name_feature", "_UI_Field_type"),
-				 DataPackage.eINSTANCE.getField_Name(),
+				 DataPackage.Literals.FIELD__NAME,
 				 true,
 				 false,
 				 false,
@@ -104,7 +105,7 @@ public class FieldItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Field_Type_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Field_Type_feature", "_UI_Field_type"),
-				 DataPackage.eINSTANCE.getField_Type(),
+				 DataPackage.Literals.FIELD__TYPE,
 				 true,
 				 false,
 				 false,
@@ -126,7 +127,7 @@ public class FieldItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Field_Size_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Field_Size_feature", "_UI_Field_type"),
-				 DataPackage.eINSTANCE.getField_Size(),
+				 DataPackage.Literals.FIELD__SIZE,
 				 true,
 				 false,
 				 false,
@@ -141,6 +142,7 @@ public class FieldItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/Field"));
 	}
@@ -151,6 +153,7 @@ public class FieldItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		StringVar labelValue = ((Field)object).getName();
 		String label = labelValue == null ? null : labelValue.toString();
@@ -166,6 +169,7 @@ public class FieldItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -186,16 +190,9 @@ public class FieldItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
-
-	
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
 	}
 
 }

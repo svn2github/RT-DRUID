@@ -2,8 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
@@ -28,10 +27,10 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural()
- * @model 
+ * @model
  * @generated
  */
-public interface Architectural extends ObjectWithID{
+public interface Architectural extends ObjectWithID {
 	/**
 	 * Returns the value of the '<em><b>Bus List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.Bus}.
@@ -43,10 +42,10 @@ public interface Architectural extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Bus List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_BusList()
-	 * @model type="rtdruid.vartree.data.Bus" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getBusList();
+	EList<Bus> getBusList();
 
 	/**
 	 * Returns the value of the '<em><b>Ecu List</b></em>' containment reference list.
@@ -59,10 +58,10 @@ public interface Architectural extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ecu List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_EcuList()
-	 * @model type="rtdruid.vartree.data.Ecu" containment="true" required="true"
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	EList getEcuList();
+	EList<Ecu> getEcuList();
 
 	/**
 	 * Returns the value of the '<em><b>Frame List</b></em>' containment reference list.
@@ -75,10 +74,10 @@ public interface Architectural extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Frame List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_FrameList()
-	 * @model type="rtdruid.vartree.data.Frame" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getFrameList();
+	EList<Frame> getFrameList();
 
 	/**
 	 * Returns the value of the '<em><b>Mutex List</b></em>' containment reference list.
@@ -91,10 +90,10 @@ public interface Architectural extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mutex List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_MutexList()
-	 * @model type="rtdruid.vartree.data.Mutex" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getMutexList();
+	EList<Mutex> getMutexList();
 
 	/**
 	 * Returns the value of the '<em><b>Resource List</b></em>' containment reference list.
@@ -107,10 +106,10 @@ public interface Architectural extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resource List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_ResourceList()
-	 * @model type="rtdruid.vartree.data.Resource" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getResourceList();
+	EList<Resource> getResourceList();
 
 	/**
 	 * Returns the value of the '<em><b>Signal List</b></em>' containment reference list.
@@ -123,10 +122,10 @@ public interface Architectural extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Signal List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_SignalList()
-	 * @model type="rtdruid.vartree.data.Signal" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getSignalList();
+	EList<Signal> getSignalList();
 
 	/**
 	 * Returns the value of the '<em><b>Task List</b></em>' containment reference list.
@@ -139,9 +138,9 @@ public interface Architectural extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Task List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_TaskList()
-	 * @model type="rtdruid.vartree.data.Task" containment="true" required="true"
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	EList getTaskList();
+	EList<Task> getTaskList();
 
 } // Architectural

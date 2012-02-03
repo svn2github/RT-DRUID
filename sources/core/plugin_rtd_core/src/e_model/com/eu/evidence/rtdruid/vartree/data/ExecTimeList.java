@@ -2,15 +2,13 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import org.eclipse.emf.common.util.EList;
-
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,10 +24,10 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getExecTimeList()
- * @model 
+ * @model
  * @generated
  */
-public interface ExecTimeList extends ObjectWithID{
+public interface ExecTimeList extends ObjectWithID {
 	/**
 	 * Returns the value of the '<em><b>Exec Time Items List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.ExecTime}.
@@ -41,35 +39,35 @@ public interface ExecTimeList extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Exec Time Items List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getExecTimeList_ExecTimeItemsList()
-	 * @model type="rtdruid.vartree.data.ExecTime" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getExecTimeItemsList();
+	EList<ExecTime> getExecTimeItemsList();
 
 	/**
 	 * Returns the value of the '<em><b>Mode Ref</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Mode Ref</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Mode Ref</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mode Ref</em>' attribute.
 	 * @see #setModeRef(StringVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getExecTimeList_ModeRef()
-	 * @model dataType="rtdruid.vartree.data.StringVar" required="true"
+	 * @model id="true" dataType="com.eu.evidence.rtdruid.vartree.data.StringVar" required="true"
 	 * @generated
 	 */
-  StringVar getModeRef();
+	StringVar getModeRef();
 
 	/**
 	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.ExecTimeList#getModeRef <em>Mode Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Mode Ref</em>' attribute.
 	 * @see #getModeRef()
 	 * @generated
 	 */
-  void setModeRef(StringVar value);
+	void setModeRef(StringVar value);
 
 } // ExecTimeList

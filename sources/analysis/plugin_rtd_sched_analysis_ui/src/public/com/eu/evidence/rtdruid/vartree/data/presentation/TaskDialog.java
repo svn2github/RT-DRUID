@@ -387,8 +387,7 @@ public class TaskDialog extends Dialog {
 		IVarTreePointer curr = makePath(vtp, DataPath.splitPath(path),
 				DataPath.splitPath(type));
 		{
-			IVariable v = curr.getNewVar();
-			v.set("periodic");
+			IVariable v = curr.getNewVar("periodic");
 			curr.setVar(v);
 		}
 
@@ -413,8 +412,7 @@ public class TaskDialog extends Dialog {
 							+ " and cannot be mapped to a different rtos ("
 							+ rtosName + ")");
 		} else {
-			IVariable v = curr.getNewVar();
-			v.set(rtosName);
+			IVariable v = curr.getNewVar(rtosName);
 			curr.setVar(v);
 		}
 

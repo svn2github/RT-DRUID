@@ -70,6 +70,7 @@ import com.eu.evidence.rtdruid.modules.jscan.ui.rtd_jscan_ui.Rtd_jscan_uiPlugin;
 import com.eu.evidence.rtdruid.ui.common.RTDConsole;
 import com.eu.evidence.rtdruid.ui.common.ShowLogo;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeCopy;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
@@ -660,7 +661,7 @@ public class AnalysisWizard extends Wizard {
 			root = (ObjectWithID) res.getContents().get(0);
 
 		} else {
-			root = (ObjectWithID) root.clone();
+			root = VarTreeCopy.copy(root);
 		}
 		
 		

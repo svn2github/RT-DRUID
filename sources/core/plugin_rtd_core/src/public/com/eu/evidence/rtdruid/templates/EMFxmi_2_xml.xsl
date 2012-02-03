@@ -2,7 +2,7 @@
 <!-- Edited with XML Spy v4.2 -->
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-xmlns:rtdruid.vartree.data="http://rtdruid.vartree.data"
+xmlns:com.eu.evidence.rtdruid.data="http://www.evidence.eu.com/rtdruid/data"
 >
 <!-- xmlns:xsi="xsi"-->
 
@@ -11,7 +11,7 @@ xmlns:rtdruid.vartree.data="http://rtdruid.vartree.data"
 
 <xsl:template match="/">
 
-<xsl:for-each select="rtdruid.vartree.data:System">
+<xsl:for-each select="com.eu.evidence.rtdruid.data:System">
 
 <SYSTEM>
   <xsl:apply-templates select="@Name"/>
@@ -347,7 +347,7 @@ xmlns:rtdruid.vartree.data="http://rtdruid.vartree.data"
 <!--
 	Proc
 -->
-<xsl:template match='Implementation[attribute::*[1] = "rtdruid.vartree.data:Proc"]'>
+<xsl:template match='Implementation[attribute::*[1] = "com.eu.evidence.rtdruid.data:Proc"]'>
 <!--
 <a1><xsl:value-of select="attribute::*[1]"/></a1>
 <a2><xsl:value-of select="attribute::*[2]"/></a2>
@@ -417,7 +417,7 @@ xmlns:rtdruid.vartree.data="http://rtdruid.vartree.data"
 <!--
 	SubSystem
 -->
-<xsl:template match='Implementation[attribute::*[1] = "rtdruid.vartree.data:SubSystem"]'>
+<xsl:template match='Implementation[attribute::*[1] = "com.eu.evidence.rtdruid.data:SubSystem"]'>
 
   <SUBSYSTEM>
 	<xsl:apply-templates select="@Name"/>
@@ -481,7 +481,7 @@ xmlns:rtdruid.vartree.data="http://rtdruid.vartree.data"
 <!--
 	Trigger
 -->
-<xsl:template match='Implementation[attribute::*[1] = "rtdruid.vartree.data:Trigger"]'>
+<xsl:template match='Implementation[attribute::*[1] = "com.eu.evidence.rtdruid.data:Trigger"]'>
 
   <TRIGGER>
 	<xsl:apply-templates select="@Name"/>
@@ -496,7 +496,7 @@ xmlns:rtdruid.vartree.data="http://rtdruid.vartree.data"
 <!--
 	Var
 -->
-<xsl:template match='Implementation[attribute::*[1] = "rtdruid.vartree.data:Var"]'>
+<xsl:template match='Implementation[attribute::*[1] = "com.eu.evidence.rtdruid.data:Var"]'>
 
   <VAR>
 	<xsl:apply-templates select="@Name"/>

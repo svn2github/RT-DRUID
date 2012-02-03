@@ -40,6 +40,7 @@ import com.eu.evidence.rtdruid.internal.vartree.data.oil.impl.OilApplPointer;
 import com.eu.evidence.rtdruid.vartree.IMountPointVar;
 import com.eu.evidence.rtdruid.vartree.ISubVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable;
+import com.eu.evidence.rtdruid.vartree.VarTreeCopy;
 import com.eu.evidence.rtdruid.vartree.data.oil.Enumerator;
 import com.eu.evidence.rtdruid.vartree.data.oil.HW;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilApplFactory;
@@ -109,7 +110,8 @@ public class OilVarMP extends OilVar implements IMountPointVar {
 		if (this.emfDoc != null) {
 		    answer.emfDoc   = new BasicEList<OilObjectWithID>();
 		    for (int i=0; i<this.emfDoc.size(); i++) { 
-		        answer.emfDoc.add(( (OilObjectWithID) this.emfDoc.get(i)).clone());
+		    	answer.emfDoc.add(this.emfDoc.get(i)); // DEBUG : VarTreeCopy is not working with OilVarMP . this is valid until the bug is fixed
+		        //answer.emfDoc.add(VarTreeCopy.copy(( (OilObjectWithID) this.emfDoc.get(i))));
 		    }
 		} else { 
 		    answer.emfDoc   = null;

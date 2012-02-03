@@ -2,24 +2,20 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
-
-
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.VarMap;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,242 +34,141 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *
  * @generated
  */
-public class VarMapImpl extends ObjectWithIDImpl implements VarMap
-{
+public class VarMapImpl extends ObjectWithIDImpl implements VarMap {
 	/**
 	 * The default value of the '{@link #getBusRef() <em>Bus Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getBusRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar BUS_REF_EDEFAULT = null;
+	protected static final StringVar BUS_REF_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getBusRef() <em>Bus Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getBusRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar busRef = BUS_REF_EDEFAULT;
+	protected StringVar busRef = BUS_REF_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getFrameRef() <em>Frame Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getFrameRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar FRAME_REF_EDEFAULT = null;
+	protected static final StringVar FRAME_REF_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getFrameRef() <em>Frame Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getFrameRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar frameRef = FRAME_REF_EDEFAULT;
+	protected StringVar frameRef = FRAME_REF_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar MODE_REF_EDEFAULT = null;
+	protected static final StringVar MODE_REF_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar modeRef = MODE_REF_EDEFAULT;
+	protected StringVar modeRef = MODE_REF_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getMutexRef() <em>Mutex Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getMutexRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar MUTEX_REF_EDEFAULT = null;
+	protected static final StringVar MUTEX_REF_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getMutexRef() <em>Mutex Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getMutexRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar mutexRef = MUTEX_REF_EDEFAULT;
+	protected StringVar mutexRef = MUTEX_REF_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getVarRef() <em>Var Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getVarRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar VAR_REF_EDEFAULT = null;
+	protected static final StringVar VAR_REF_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getVarRef() <em>Var Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getVarRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar varRef = VAR_REF_EDEFAULT;
+	protected StringVar varRef = VAR_REF_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected VarMapImpl() {
+	protected VarMapImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getVarMap();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.VAR_MAP;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getVarRef() {
-		return varRef;
-	}
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setVarRef(StringVar newVarRef)
-  {
-	{
-		if ( !checkNewID(makeSlahedID(new IVariable[] {modeRef, newVarRef})) ) return;
-	}
-
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-	setVarRefGen(newVarRef);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setVarRefGen(StringVar newVarRef) {
-    StringVar oldVarRef = varRef;
-    varRef = newVarRef;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.VAR_MAP__VAR_REF, oldVarRef, varRef));
-  }
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public StringVar getModeRef() {
-		return modeRef;
-	}
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setModeRef(StringVar newModeRef)
-  {
-	{
-		if ( !checkNewID(makeSlahedID(new IVariable[] {newModeRef, varRef})) ) return;
-	}
-
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-	setModeRefGen(newModeRef);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setModeRefGen(StringVar newModeRef) {
-    StringVar oldModeRef = modeRef;
-    modeRef = newModeRef;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.VAR_MAP__MODE_REF, oldModeRef, modeRef));
-  }
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public StringVar getFrameRef() {
-		return frameRef;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setFrameRef(StringVar newFrameRef) {
-		StringVar oldFrameRef = frameRef;
-		frameRef = newFrameRef;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.VAR_MAP__FRAME_REF, oldFrameRef, frameRef));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public StringVar getBusRef() {
+	public StringVar getBusRef() {
 		return busRef;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setBusRef(StringVar newBusRef) {
+	public void setBusRef(StringVar newBusRef) {
 		StringVar oldBusRef = busRef;
 		busRef = newBusRef;
 		if (eNotificationRequired())
@@ -282,19 +177,61 @@ public class VarMapImpl extends ObjectWithIDImpl implements VarMap
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getMutexRef() {
+	public StringVar getFrameRef() {
+		return frameRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFrameRef(StringVar newFrameRef) {
+		StringVar oldFrameRef = frameRef;
+		frameRef = newFrameRef;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.VAR_MAP__FRAME_REF, oldFrameRef, frameRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getModeRef() {
+		return modeRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setModeRef(StringVar newModeRef) {
+		StringVar oldModeRef = modeRef;
+		modeRef = newModeRef;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.VAR_MAP__MODE_REF, oldModeRef, modeRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getMutexRef() {
 		return mutexRef;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setMutexRef(StringVar newMutexRef) {
+	public void setMutexRef(StringVar newMutexRef) {
 		StringVar oldMutexRef = mutexRef;
 		mutexRef = newMutexRef;
 		if (eNotificationRequired())
@@ -303,11 +240,33 @@ public class VarMapImpl extends ObjectWithIDImpl implements VarMap
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public StringVar getVarRef() {
+		return varRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVarRef(StringVar newVarRef) {
+		StringVar oldVarRef = varRef;
+		varRef = newVarRef;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.VAR_MAP__VAR_REF, oldVarRef, varRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.VAR_MAP__BUS_REF:
 				return getBusRef();
 			case DataPackage.VAR_MAP__FRAME_REF:
@@ -319,17 +278,17 @@ public class VarMapImpl extends ObjectWithIDImpl implements VarMap
 			case DataPackage.VAR_MAP__VAR_REF:
 				return getVarRef();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.VAR_MAP__BUS_REF:
 				setBusRef((StringVar)newValue);
 				return;
@@ -346,17 +305,17 @@ public class VarMapImpl extends ObjectWithIDImpl implements VarMap
 				setVarRef((StringVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.VAR_MAP__BUS_REF:
 				setBusRef(BUS_REF_EDEFAULT);
 				return;
@@ -373,17 +332,17 @@ public class VarMapImpl extends ObjectWithIDImpl implements VarMap
 				setVarRef(VAR_REF_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.VAR_MAP__BUS_REF:
 				return BUS_REF_EDEFAULT == null ? busRef != null : !BUS_REF_EDEFAULT.equals(busRef);
 			case DataPackage.VAR_MAP__FRAME_REF:
@@ -395,16 +354,16 @@ public class VarMapImpl extends ObjectWithIDImpl implements VarMap
 			case DataPackage.VAR_MAP__VAR_REF:
 				return VAR_REF_EDEFAULT == null ? varRef != null : !VAR_REF_EDEFAULT.equals(varRef);
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -422,28 +381,4 @@ public class VarMapImpl extends ObjectWithIDImpl implements VarMap
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeSlahedID(new IVariable[] {modeRef, varRef});
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-		
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setModeRefGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		setVarRefGen (tmp[1] == null ? (StringVar) null : new StringVar(tmp[1]));
-
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //VarMapImpl

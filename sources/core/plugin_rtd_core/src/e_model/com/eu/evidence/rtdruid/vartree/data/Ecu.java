@@ -2,15 +2,13 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import org.eclipse.emf.common.util.EList;
-
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,10 +24,10 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getEcu()
- * @model 
+ * @model
  * @generated
  */
-public interface Ecu extends ObjectWithID{
+public interface Ecu extends ObjectWithID {
 	/**
 	 * Returns the value of the '<em><b>Cpu List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.Cpu}.
@@ -41,35 +39,35 @@ public interface Ecu extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Cpu List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getEcu_CpuList()
-	 * @model type="rtdruid.vartree.data.Cpu" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getCpuList();
+	EList<Cpu> getCpuList();
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(StringVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getEcu_Name()
-	 * @model dataType="rtdruid.vartree.data.StringVar" required="true"
+	 * @model id="true" dataType="com.eu.evidence.rtdruid.vartree.data.StringVar" required="true"
 	 * @generated
 	 */
-  StringVar getName();
+	StringVar getName();
 
 	/**
 	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Ecu#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated
 	 */
-  void setName(StringVar value);
+	void setName(StringVar value);
 
 } // Ecu

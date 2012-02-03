@@ -7,15 +7,20 @@
 package com.eu.evidence.rtdruid.internal.vartree.data.oil.impl;
 
 
+import java.util.Arrays;
+
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import com.eu.evidence.rtdruid.vartree.IVariable;
+import com.eu.evidence.rtdruid.vartree.VarTreeIdHandler;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.ExtendVar;
+import com.eu.evidence.rtdruid.vartree.data.ExtendVarManager;
 import com.eu.evidence.rtdruid.vartree.data.oil.Enumerator;
 import com.eu.evidence.rtdruid.vartree.data.oil.HW;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilApplFactory;
@@ -266,7 +271,7 @@ public class OilApplFactoryImpl extends EFactoryImpl implements OilApplFactory {
 	}
 
 	static {
-		DataFactory.eINSTANCE.extendVariable(DataPackage.eINSTANCE.getOilVar(), OilVarMP.class,  new ExtendVar() {
+		ExtendVarManager.extendVariable(DataPackage.eINSTANCE.getOilVar(), OilVarMP.class,  new ExtendVar() {
 			public Object createFromString(String initialValue) {
 				return new OilVarMP(initialValue);
 				}
@@ -285,7 +290,6 @@ public class OilApplFactoryImpl extends EFactoryImpl implements OilApplFactory {
 				return "" + instanceValue;
 			}
 		});
-		
 	}
 	
 } //OilApplFactoryImpl

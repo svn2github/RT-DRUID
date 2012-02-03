@@ -14,11 +14,11 @@ import java.util.Iterator;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentAutoIndexEList;
 import com.eu.evidence.rtdruid.vartree.data.oil.Enumerator;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilApplPackage;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilObjectWithID;
@@ -75,7 +75,7 @@ public class VariantImpl extends ParameterImpl implements Variant {
 	 */
 	public EList getEnumeratorList() {
 		if (enumeratorList == null) {
-			enumeratorList = new EObjectContainmentAutoIndexEList(Enumerator.class, this, OilApplPackage.VARIANT__ENUMERATOR_LIST);
+			enumeratorList = new EObjectContainmentEList(Enumerator.class, this, OilApplPackage.VARIANT__ENUMERATOR_LIST);
 		}
 		return enumeratorList;
 	}

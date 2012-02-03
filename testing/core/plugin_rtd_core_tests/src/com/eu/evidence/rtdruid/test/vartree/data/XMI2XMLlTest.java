@@ -400,7 +400,8 @@ public class XMI2XMLlTest extends TestCase {
 		
 		boolean ok = false;
 		try {
-			loadString(xmlInput2);
+			IVarTree vt = Vt2StringUtilities.loadString(xmlInput2);
+			System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			ok = true;

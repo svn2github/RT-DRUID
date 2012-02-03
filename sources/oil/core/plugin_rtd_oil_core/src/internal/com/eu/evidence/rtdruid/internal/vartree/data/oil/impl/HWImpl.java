@@ -16,11 +16,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
 import com.eu.evidence.rtdruid.vartree.data.oil.HW;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilApplPackage;
 import com.eu.evidence.rtdruid.vartree.data.oil.OilObjectWithID;
@@ -119,7 +119,7 @@ public class HWImpl extends OilObjectWithIDImpl implements HW {
 	 */
 	public EList<RTOS> getRtosList() {
 		if (rtosList == null) {
-			rtosList = new EObjectContainmentUniqueEList<RTOS>(RTOS.class, this, OilApplPackage.HW__RTOS_LIST);
+			rtosList = new EObjectContainmentEList<RTOS>(RTOS.class, this, OilApplPackage.HW__RTOS_LIST);
 		}
 		return rtosList;
 	}
@@ -140,15 +140,15 @@ public class HWImpl extends OilObjectWithIDImpl implements HW {
 	 */
 	public void setName(StringVar newName) {
 		  
-		if ( !checkNewID(makeID(newName)) ) return;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
+//		if ( !checkNewID(makeID(newName)) ) return;
+//
+//	  	// Store old ID
+//	  	String old_ID = getObjectID();
 	  			
 		setNameGen(newName);
 	  			
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
+//		// ASk to update ID
+//	  	didSetObjectID(old_ID);
 	}
 	
 	/**
@@ -277,27 +277,27 @@ public class HWImpl extends OilObjectWithIDImpl implements HW {
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(name);
-	}
+//	/* (non-Javadoc)
+//	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
+//	 */
+//	public String getObjectID() {
+//		return makeID(name);
+//	}
 
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
 	 */
 	public boolean setObjectID(String newID) {
 	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
+//
+//	  	// Store old ID
+//	  	String old_ID = getObjectID();
 
 		String[] tmp = resolveID(newID);
 		setNameGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
 
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
+//		// ASk to update ID
+//	  	didSetObjectID(old_ID);
 		return true;
 	}
 	

@@ -2,33 +2,32 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
-
-
-
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.eu.evidence.rtdruid.vartree.data.CpuSched;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
 import com.eu.evidence.rtdruid.vartree.data.TaskSched;
-import com.eu.evidence.rtdruid.vartree.data.init.EObjectContainmentUniqueEList;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,8 +45,7 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *
  * @generated
  */
-public class SchedulingScenarioImpl extends ObjectWithIDImpl implements SchedulingScenario
-{
+public class SchedulingScenarioImpl extends ObjectWithIDImpl implements SchedulingScenario {
 	/**
 	 * The cached value of the '{@link #getCpuSchedList() <em>Cpu Sched List</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -56,37 +54,37 @@ public class SchedulingScenarioImpl extends ObjectWithIDImpl implements Scheduli
 	 * @generated
 	 * @ordered
 	 */
-	protected EList cpuSchedList = null;
+	protected EList<CpuSched> cpuSchedList;
 
 	/**
 	 * The default value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar MODE_REF_EDEFAULT = null;
+	protected static final StringVar MODE_REF_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar modeRef = MODE_REF_EDEFAULT;
+	protected StringVar modeRef = MODE_REF_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getReports() <em>Reports</em>}' attribute list.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getReports()
 	 * @generated
 	 * @ordered
 	 */
-  protected EList reports = null;
+	protected EList<StringVar> reports;
 
 	/**
 	 * The cached value of the '{@link #getTaskSchedList() <em>Task Sched List</em>}' containment reference list.
@@ -96,84 +94,68 @@ public class SchedulingScenarioImpl extends ObjectWithIDImpl implements Scheduli
 	 * @generated
 	 * @ordered
 	 */
-	protected EList taskSchedList = null;
+	protected EList<TaskSched> taskSchedList;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected SchedulingScenarioImpl() {
+	protected SchedulingScenarioImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getSchedulingScenario();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.SCHEDULING_SCENARIO;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getCpuSchedList() {
+	public EList<CpuSched> getCpuSchedList() {
 		if (cpuSchedList == null) {
-			cpuSchedList = new EObjectContainmentUniqueEList(CpuSched.class, this, DataPackage.SCHEDULING_SCENARIO__CPU_SCHED_LIST);
+			cpuSchedList = new EObjectContainmentEList<CpuSched>(CpuSched.class, this, DataPackage.SCHEDULING_SCENARIO__CPU_SCHED_LIST);
 		}
 		return cpuSchedList;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getModeRef() {
+	public StringVar getModeRef() {
 		return modeRef;
 	}
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setModeRef(StringVar newModeRef)
-  {
-	if ( !checkNewID(makeID(newModeRef)) ) return;
-  	
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-	setModeRefGen(newModeRef);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setModeRefGen(StringVar newModeRef) {
-    StringVar oldModeRef = modeRef;
-    modeRef = newModeRef;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SCHEDULING_SCENARIO__MODE_REF, oldModeRef, modeRef));
-  }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setModeRef(StringVar newModeRef) {
+		StringVar oldModeRef = modeRef;
+		modeRef = newModeRef;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SCHEDULING_SCENARIO__MODE_REF, oldModeRef, modeRef));
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EList getReports() {
+	public EList<StringVar> getReports() {
 		if (reports == null) {
-			reports = new EDataTypeUniqueEList(StringVar.class, this, DataPackage.SCHEDULING_SCENARIO__REPORTS);
+			reports = new EDataTypeUniqueEList<StringVar>(StringVar.class, this, DataPackage.SCHEDULING_SCENARIO__REPORTS);
 		}
 		return reports;
 	}
@@ -181,41 +163,39 @@ public class SchedulingScenarioImpl extends ObjectWithIDImpl implements Scheduli
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public EList getTaskSchedList() {
+	public EList<TaskSched> getTaskSchedList() {
 		if (taskSchedList == null) {
-			taskSchedList = new EObjectContainmentUniqueEList(TaskSched.class, this, DataPackage.SCHEDULING_SCENARIO__TASK_SCHED_LIST);
+			taskSchedList = new EObjectContainmentEList<TaskSched>(TaskSched.class, this, DataPackage.SCHEDULING_SCENARIO__TASK_SCHED_LIST);
 		}
 		return taskSchedList;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case DataPackage.SCHEDULING_SCENARIO__CPU_SCHED_LIST:
-					return ((InternalEList)getCpuSchedList()).basicRemove(otherEnd, msgs);
-				case DataPackage.SCHEDULING_SCENARIO__TASK_SCHED_LIST:
-					return ((InternalEList)getTaskSchedList()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case DataPackage.SCHEDULING_SCENARIO__CPU_SCHED_LIST:
+				return ((InternalEList<?>)getCpuSchedList()).basicRemove(otherEnd, msgs);
+			case DataPackage.SCHEDULING_SCENARIO__TASK_SCHED_LIST:
+				return ((InternalEList<?>)getTaskSchedList()).basicRemove(otherEnd, msgs);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.SCHEDULING_SCENARIO__CPU_SCHED_LIST:
 				return getCpuSchedList();
 			case DataPackage.SCHEDULING_SCENARIO__MODE_REF:
@@ -225,44 +205,45 @@ public class SchedulingScenarioImpl extends ObjectWithIDImpl implements Scheduli
 			case DataPackage.SCHEDULING_SCENARIO__TASK_SCHED_LIST:
 				return getTaskSchedList();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.SCHEDULING_SCENARIO__CPU_SCHED_LIST:
 				getCpuSchedList().clear();
-				getCpuSchedList().addAll((Collection)newValue);
+				getCpuSchedList().addAll((Collection<? extends CpuSched>)newValue);
 				return;
 			case DataPackage.SCHEDULING_SCENARIO__MODE_REF:
 				setModeRef((StringVar)newValue);
 				return;
 			case DataPackage.SCHEDULING_SCENARIO__REPORTS:
 				getReports().clear();
-				getReports().addAll((Collection)newValue);
+				getReports().addAll((Collection<? extends StringVar>)newValue);
 				return;
 			case DataPackage.SCHEDULING_SCENARIO__TASK_SCHED_LIST:
 				getTaskSchedList().clear();
-				getTaskSchedList().addAll((Collection)newValue);
+				getTaskSchedList().addAll((Collection<? extends TaskSched>)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.SCHEDULING_SCENARIO__CPU_SCHED_LIST:
 				getCpuSchedList().clear();
 				return;
@@ -276,17 +257,17 @@ public class SchedulingScenarioImpl extends ObjectWithIDImpl implements Scheduli
 				getTaskSchedList().clear();
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.SCHEDULING_SCENARIO__CPU_SCHED_LIST:
 				return cpuSchedList != null && !cpuSchedList.isEmpty();
 			case DataPackage.SCHEDULING_SCENARIO__MODE_REF:
@@ -296,16 +277,16 @@ public class SchedulingScenarioImpl extends ObjectWithIDImpl implements Scheduli
 			case DataPackage.SCHEDULING_SCENARIO__TASK_SCHED_LIST:
 				return taskSchedList != null && !taskSchedList.isEmpty();
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -317,27 +298,4 @@ public class SchedulingScenarioImpl extends ObjectWithIDImpl implements Scheduli
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(modeRef);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setModeRefGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //SchedulingScenarioImpl

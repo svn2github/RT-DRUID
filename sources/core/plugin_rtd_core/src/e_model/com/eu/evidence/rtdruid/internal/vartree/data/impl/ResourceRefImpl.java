@@ -2,27 +2,26 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.ResourceRef;
 
-
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.ResourceRef;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,148 +37,133 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *
  * @generated
  */
-public class ResourceRefImpl extends ObjectWithIDImpl implements ResourceRef
-{
+public class ResourceRefImpl extends ObjectWithIDImpl implements ResourceRef {
 	/**
 	 * The default value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar MODE_REF_EDEFAULT = null;
+	protected static final StringVar MODE_REF_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar modeRef = MODE_REF_EDEFAULT;
+	protected StringVar modeRef = MODE_REF_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getResourceMethodRef() <em>Resource Method Ref</em>}' attribute list.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getResourceMethodRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected EList resourceMethodRef = null;
+	protected EList<StringVar> resourceMethodRef;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected ResourceRefImpl() {
+	protected ResourceRefImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getResourceRef();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.RESOURCE_REF;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getModeRef() {
+	public StringVar getModeRef() {
 		return modeRef;
 	}
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setModeRef(StringVar newModeRef)
-  {
-	if ( !checkNewID(makeID(newModeRef)) ) return;
-  	
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-	setModeRefGen(newModeRef);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setModeRefGen(StringVar newModeRef) {
-    StringVar oldModeRef = modeRef;
-    modeRef = newModeRef;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.RESOURCE_REF__MODE_REF, oldModeRef, modeRef));
-  }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setModeRef(StringVar newModeRef) {
+		StringVar oldModeRef = modeRef;
+		modeRef = newModeRef;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.RESOURCE_REF__MODE_REF, oldModeRef, modeRef));
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EList getResourceMethodRef() {
+	public EList<StringVar> getResourceMethodRef() {
 		if (resourceMethodRef == null) {
-			resourceMethodRef = new EDataTypeUniqueEList(StringVar.class, this, DataPackage.RESOURCE_REF__RESOURCE_METHOD_REF);
+			resourceMethodRef = new EDataTypeUniqueEList<StringVar>(StringVar.class, this, DataPackage.RESOURCE_REF__RESOURCE_METHOD_REF);
 		}
 		return resourceMethodRef;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.RESOURCE_REF__MODE_REF:
 				return getModeRef();
 			case DataPackage.RESOURCE_REF__RESOURCE_METHOD_REF:
 				return getResourceMethodRef();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.RESOURCE_REF__MODE_REF:
 				setModeRef((StringVar)newValue);
 				return;
 			case DataPackage.RESOURCE_REF__RESOURCE_METHOD_REF:
 				getResourceMethodRef().clear();
-				getResourceMethodRef().addAll((Collection)newValue);
+				getResourceMethodRef().addAll((Collection<? extends StringVar>)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.RESOURCE_REF__MODE_REF:
 				setModeRef(MODE_REF_EDEFAULT);
 				return;
@@ -187,32 +171,32 @@ public class ResourceRefImpl extends ObjectWithIDImpl implements ResourceRef
 				getResourceMethodRef().clear();
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.RESOURCE_REF__MODE_REF:
 				return MODE_REF_EDEFAULT == null ? modeRef != null : !MODE_REF_EDEFAULT.equals(modeRef);
 			case DataPackage.RESOURCE_REF__RESOURCE_METHOD_REF:
 				return resourceMethodRef != null && !resourceMethodRef.isEmpty();
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -224,27 +208,4 @@ public class ResourceRefImpl extends ObjectWithIDImpl implements ResourceRef
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(modeRef);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setModeRefGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //ResourceRefImpl

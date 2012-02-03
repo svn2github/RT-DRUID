@@ -6,9 +6,9 @@
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
-import org.eclipse.emf.common.util.EList;
-
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,10 +39,10 @@ public interface CacheMissCostList extends ObjectWithID {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Cache Miss Cost Items List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getCacheMissCostList_CacheMissCostItemsList()
-	 * @model type="rtdruid.vartree.data.CacheMissCost" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getCacheMissCostItemsList();
+	EList<CacheMissCost> getCacheMissCostItemsList();
 
 	/**
 	 * Returns the value of the '<em><b>Mode Ref</b></em>' attribute.
@@ -55,7 +55,7 @@ public interface CacheMissCostList extends ObjectWithID {
 	 * @return the value of the '<em>Mode Ref</em>' attribute.
 	 * @see #setModeRef(StringVar)
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getCacheMissCostList_ModeRef()
-	 * @model dataType="rtdruid.vartree.data.StringVar" required="true"
+	 * @model id="true" dataType="com.eu.evidence.rtdruid.vartree.data.StringVar" required="true"
 	 * @generated
 	 */
 	StringVar getModeRef();

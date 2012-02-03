@@ -2,8 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
@@ -22,10 +21,10 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getModes()
- * @model 
+ * @model
  * @generated
  */
-public interface Modes extends ObjectWithID{
+public interface Modes extends ObjectWithID {
 	/**
 	 * Returns the value of the '<em><b>Mode List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.Mode}.
@@ -37,9 +36,9 @@ public interface Modes extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mode List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getModes_ModeList()
-	 * @model type="rtdruid.vartree.data.Mode" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getModeList();
+	EList<Mode> getModeList();
 
 } // Modes

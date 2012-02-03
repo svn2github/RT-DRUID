@@ -114,6 +114,7 @@
 <!ATTLIST SYSTEM
  Name CDATA #REQUIRED
  xmlns:rtdruid.vartree.data CDATA "http://rtdruid.vartree.data"
+ xmlns:com.eu.evidence.rtdruid.data CDATA "http://www.evidence.eu.com/rtdruid/data"
 >
 
 <!--

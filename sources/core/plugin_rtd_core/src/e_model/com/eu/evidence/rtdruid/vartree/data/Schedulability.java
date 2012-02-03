@@ -2,8 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
 
@@ -22,10 +21,10 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getSchedulability()
- * @model 
+ * @model
  * @generated
  */
-public interface Schedulability extends ObjectWithID{
+public interface Schedulability extends ObjectWithID {
 	/**
 	 * Returns the value of the '<em><b>Scheduling Scenario List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.SchedulingScenario}.
@@ -37,9 +36,9 @@ public interface Schedulability extends ObjectWithID{
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Scheduling Scenario List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getSchedulability_SchedulingScenarioList()
-	 * @model type="rtdruid.vartree.data.SchedulingScenario" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList getSchedulingScenarioList();
+	EList<SchedulingScenario> getSchedulingScenarioList();
 
 } // Schedulability

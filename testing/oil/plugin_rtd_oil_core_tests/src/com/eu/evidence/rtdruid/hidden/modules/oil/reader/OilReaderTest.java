@@ -457,8 +457,11 @@ public class OilReaderTest extends TestCase {
     /** Clear the OilImplFactory after each test */
     protected void setUp() throws Exception {
  //       OilImplFactory.getAnInstance(vt).clear();
-        super.setUp();
-    }
+		System.err.flush();
+		System.out.flush();
+		System.out.println("\n\n************\n TEST " + getClass().getName() + " - " + getName() + "\n************\n\n");
+		System.out.flush();
+	}
     /** Clear the OilImplFactory after each test */
     protected void tearDown() throws Exception {
   //      OilImplFactory.getAnInstance(vt).clear();
@@ -487,16 +490,20 @@ public class OilReaderTest extends TestCase {
         assertTrue(oids != null);
         assertTrue(oids.length == 0);
         
-        (new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1.getBytes()), vt);
-        String vt_rappr = Vt2StringUtilities.varTreeToString(vt);
-        System.out.println(vt_rappr);
-        IVarTree vt2 =Vt2StringUtilities.loadString(vt_rappr);
-		String t = (new VtCompare(vt, vt2)).getText(); assertTrue(t, t== null);
+        {
+	        (new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1.getBytes()), vt, null, null);
+	        String vt_ertd = Vt2StringUtilities.varTreeToStringErtd(vt);
+	        System.out.println(Vt2StringUtilities.explodeOilVar(vt_ertd));
+	        IVarTree vt2 =Vt2StringUtilities.loadString(vt_ertd, "ertd");
+			String t = (new VtCompare(vt, vt2)).getText(); assertTrue(t, t== null);
+        }
         
-        String vt_ertd = Vt2StringUtilities.varTreeToStringErtd(vt);
-        System.out.println("\n\n\n" + vt_ertd);
-        IVarTree vt3 =Vt2StringUtilities.loadString(vt_rappr);
-		t = (new VtCompare(vt, vt3)).getText(); assertTrue(t, t== null);
+        {
+	        String vt_rappr = Vt2StringUtilities.varTreeToStringRtd(vt);
+	        System.out.println("\n\n\n" + vt_rappr);
+	        IVarTree vt3 =Vt2StringUtilities.loadString(vt_rappr, "rtd");
+	        String t = (new VtCompare(vt, vt3)).getText(); assertTrue(t, t== null);
+        }
 
     }
     
@@ -910,7 +917,10 @@ public class OilReaderTest extends TestCase {
         assertTrue(oids != null);
         assertTrue(oids.length == 0);
         
-        (new OilReader()).load(new ByteArrayInputStream(OIL_TEST_SENZA_IMPL.getBytes()), (IVarTree) RTDFactory.get(IVarTree.class));
+        IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+        (new OilReader()).load(new ByteArrayInputStream(OIL_TEST_SENZA_IMPL.getBytes()), vt);
+        String vt_ertd = Vt2StringUtilities.varTreeToStringErtd(vt);
+        System.out.println("\n\n\n" + vt_ertd);
     }
     
     final static protected String OIL_TEST_WRONG_ENUM =

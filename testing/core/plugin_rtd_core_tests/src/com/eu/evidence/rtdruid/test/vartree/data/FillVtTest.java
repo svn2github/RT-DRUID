@@ -5,23 +5,19 @@ package com.eu.evidence.rtdruid.test.vartree.data;
 
 
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Properties;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -31,12 +27,12 @@ import org.eclipse.emf.edit.command.CommandParameter;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
-import com.eu.evidence.rtdruid.io.IRTDImporter;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
+import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
 
 /**
  * @author ni
@@ -120,7 +116,7 @@ public class FillVtTest extends TestCase {
 						.getEAttributeType(), os.toString());
 				current.eSet(at, tmp);
 				
-			} else if (at.getName().equals(DataPackage.eINSTANCE.getMapping_InverseTaskToProc().getName())) {
+//			} else if (at.getName().equals(DataPackage.eINSTANCE.getMapping_InverseTaskToProc().getName())) {
 				
 				// do nothing
 			} else if (at.isMany()) {
@@ -262,7 +258,8 @@ public class FillVtTest extends TestCase {
 							assertTrue(((IVariable) o2).get() == null);
 						} else {
 							int at1_id = at1.getEAttributeType().getClassifierID();
-							if (!(at1_id == DataPackage.FAST_TASK_TO_PROC_MAP_VAR )) {
+//							if (!(at1_id == DataPackage.FAST_TASK_TO_PROC_MAP_VAR )) 
+							{
 
 								if (! ((IVariable) o1).toString().equals(
 										((IVariable) o2).toString()) ) {
@@ -350,5 +347,12 @@ public class FillVtTest extends TestCase {
 		});
 
 		return answer;
+	}
+	
+	
+	public void testFill() {
+		IVarTree vt = newFilledVT();
+		
+		System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
 	}
 }

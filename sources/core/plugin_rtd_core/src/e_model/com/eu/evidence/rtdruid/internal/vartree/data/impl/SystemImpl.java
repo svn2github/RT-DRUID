@@ -2,22 +2,9 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
-
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 import com.eu.evidence.rtdruid.vartree.data.Annotation;
 import com.eu.evidence.rtdruid.vartree.data.Architectural;
@@ -26,8 +13,22 @@ import com.eu.evidence.rtdruid.vartree.data.Functional;
 import com.eu.evidence.rtdruid.vartree.data.Mapping;
 import com.eu.evidence.rtdruid.vartree.data.Modes;
 import com.eu.evidence.rtdruid.vartree.data.Schedulability;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
+
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -49,87 +50,86 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *
  * @generated
  */
-public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdruid.vartree.data.System
-{
+public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdruid.vartree.data.System {
 	/**
 	 * The cached value of the '{@link #getAnnotation() <em>Annotation</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getAnnotation()
 	 * @generated
 	 * @ordered
 	 */
-  protected Annotation annotation = null;
+	protected Annotation annotation;
 
 	/**
 	 * The cached value of the '{@link #getArchitectural() <em>Architectural</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getArchitectural()
 	 * @generated
 	 * @ordered
 	 */
-  protected Architectural architectural = null;
+	protected Architectural architectural;
 
 	/**
 	 * The cached value of the '{@link #getFunctional() <em>Functional</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getFunctional()
 	 * @generated
 	 * @ordered
 	 */
-  protected Functional functional = null;
+	protected Functional functional;
 
 	/**
 	 * The cached value of the '{@link #getMapping() <em>Mapping</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getMapping()
 	 * @generated
 	 * @ordered
 	 */
-  protected Mapping mapping = null;
+	protected Mapping mapping;
 
 	/**
 	 * The cached value of the '{@link #getModes() <em>Modes</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModes()
 	 * @generated
 	 * @ordered
 	 */
-  protected Modes modes = null;
+	protected Modes modes;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar NAME_EDEFAULT = null;
+	protected static final StringVar NAME_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar name = NAME_EDEFAULT;
+	protected StringVar name = NAME_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getSchedulability() <em>Schedulability</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getSchedulability()
 	 * @generated
 	 * @ordered
 	 */
-  protected Schedulability schedulability = null;
+	protected Schedulability schedulability;
 
 	/**
 	 * The cached value of the '{@link #getXTC_Cookie() <em>XTC Cookie</em>}' attribute list.
@@ -139,263 +139,42 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 	 * @generated
 	 * @ordered
 	 */
-	protected EList xtC_Cookie = null;
+	protected EList<StringVar> xtC_Cookie;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected SystemImpl() {
+	protected SystemImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getSystem();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.SYSTEM;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getName() {
-		return name;
-	}
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setName(StringVar newName)
-  {
-	if ( !checkNewID(makeID(newName)) ) return;
-  	
-  	// Store old ID
-  	String old_ID = getObjectID();
-  	
-	setNameGen(newName);
-	
-	// ASk to update ID
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setNameGen(StringVar newName) {
-    StringVar oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__NAME, oldName, name));
-  }
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public Modes getModes() {
-		return modes;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList getXTC_Cookie() {
-		if (xtC_Cookie == null) {
-			xtC_Cookie = new EDataTypeUniqueEList(StringVar.class, this, DataPackage.SYSTEM__XTC_COOKIE);
-		}
- 		return xtC_Cookie;
- 	}
- 
- 	/**
- 	 * <!-- begin-user-doc -->
- 	 * <!-- end-user-doc -->
- 	 * @generated
- 	 */
-  public NotificationChain basicSetModes(Modes newModes, NotificationChain msgs) {
-		Modes oldModes = modes;
-		modes = newModes;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__MODES, oldModes, newModes);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setModes(Modes newModes) {
-		if (newModes != modes) {
-			NotificationChain msgs = null;
-			if (modes != null)
-				msgs = ((InternalEObject)modes).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__MODES, null, msgs);
-			if (newModes != null)
-				msgs = ((InternalEObject)newModes).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__MODES, null, msgs);
-			msgs = basicSetModes(newModes, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__MODES, newModes, newModes));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public Functional getFunctional() {
-		return functional;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public NotificationChain basicSetFunctional(Functional newFunctional, NotificationChain msgs) {
-		Functional oldFunctional = functional;
-		functional = newFunctional;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__FUNCTIONAL, oldFunctional, newFunctional);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setFunctional(Functional newFunctional) {
-		if (newFunctional != functional) {
-			NotificationChain msgs = null;
-			if (functional != null)
-				msgs = ((InternalEObject)functional).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__FUNCTIONAL, null, msgs);
-			if (newFunctional != null)
-				msgs = ((InternalEObject)newFunctional).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__FUNCTIONAL, null, msgs);
-			msgs = basicSetFunctional(newFunctional, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__FUNCTIONAL, newFunctional, newFunctional));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public Architectural getArchitectural() {
-		return architectural;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public NotificationChain basicSetArchitectural(Architectural newArchitectural, NotificationChain msgs) {
-		Architectural oldArchitectural = architectural;
-		architectural = newArchitectural;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__ARCHITECTURAL, oldArchitectural, newArchitectural);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setArchitectural(Architectural newArchitectural) {
-		if (newArchitectural != architectural) {
-			NotificationChain msgs = null;
-			if (architectural != null)
-				msgs = ((InternalEObject)architectural).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__ARCHITECTURAL, null, msgs);
-			if (newArchitectural != null)
-				msgs = ((InternalEObject)newArchitectural).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__ARCHITECTURAL, null, msgs);
-			msgs = basicSetArchitectural(newArchitectural, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__ARCHITECTURAL, newArchitectural, newArchitectural));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public Mapping getMapping() {
-		return mapping;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public NotificationChain basicSetMapping(Mapping newMapping, NotificationChain msgs) {
-		Mapping oldMapping = mapping;
-		mapping = newMapping;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__MAPPING, oldMapping, newMapping);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setMapping(Mapping newMapping) {
-		if (newMapping != mapping) {
-			NotificationChain msgs = null;
-			if (mapping != null)
-				msgs = ((InternalEObject)mapping).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__MAPPING, null, msgs);
-			if (newMapping != null)
-				msgs = ((InternalEObject)newMapping).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__MAPPING, null, msgs);
-			msgs = basicSetMapping(newMapping, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__MAPPING, newMapping, newMapping));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public Annotation getAnnotation() {
+	public Annotation getAnnotation() {
 		return annotation;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain basicSetAnnotation(Annotation newAnnotation, NotificationChain msgs) {
+	public NotificationChain basicSetAnnotation(Annotation newAnnotation, NotificationChain msgs) {
 		Annotation oldAnnotation = annotation;
 		annotation = newAnnotation;
 		if (eNotificationRequired()) {
@@ -407,10 +186,10 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setAnnotation(Annotation newAnnotation) {
+	public void setAnnotation(Annotation newAnnotation) {
 		if (newAnnotation != annotation) {
 			NotificationChain msgs = null;
 			if (annotation != null)
@@ -426,19 +205,212 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Schedulability getSchedulability() {
+	public Architectural getArchitectural() {
+		return architectural;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetArchitectural(Architectural newArchitectural, NotificationChain msgs) {
+		Architectural oldArchitectural = architectural;
+		architectural = newArchitectural;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__ARCHITECTURAL, oldArchitectural, newArchitectural);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setArchitectural(Architectural newArchitectural) {
+		if (newArchitectural != architectural) {
+			NotificationChain msgs = null;
+			if (architectural != null)
+				msgs = ((InternalEObject)architectural).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__ARCHITECTURAL, null, msgs);
+			if (newArchitectural != null)
+				msgs = ((InternalEObject)newArchitectural).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__ARCHITECTURAL, null, msgs);
+			msgs = basicSetArchitectural(newArchitectural, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__ARCHITECTURAL, newArchitectural, newArchitectural));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Functional getFunctional() {
+		return functional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetFunctional(Functional newFunctional, NotificationChain msgs) {
+		Functional oldFunctional = functional;
+		functional = newFunctional;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__FUNCTIONAL, oldFunctional, newFunctional);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFunctional(Functional newFunctional) {
+		if (newFunctional != functional) {
+			NotificationChain msgs = null;
+			if (functional != null)
+				msgs = ((InternalEObject)functional).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__FUNCTIONAL, null, msgs);
+			if (newFunctional != null)
+				msgs = ((InternalEObject)newFunctional).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__FUNCTIONAL, null, msgs);
+			msgs = basicSetFunctional(newFunctional, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__FUNCTIONAL, newFunctional, newFunctional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Mapping getMapping() {
+		return mapping;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetMapping(Mapping newMapping, NotificationChain msgs) {
+		Mapping oldMapping = mapping;
+		mapping = newMapping;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__MAPPING, oldMapping, newMapping);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMapping(Mapping newMapping) {
+		if (newMapping != mapping) {
+			NotificationChain msgs = null;
+			if (mapping != null)
+				msgs = ((InternalEObject)mapping).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__MAPPING, null, msgs);
+			if (newMapping != null)
+				msgs = ((InternalEObject)newMapping).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__MAPPING, null, msgs);
+			msgs = basicSetMapping(newMapping, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__MAPPING, newMapping, newMapping));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Modes getModes() {
+		return modes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetModes(Modes newModes, NotificationChain msgs) {
+		Modes oldModes = modes;
+		modes = newModes;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__MODES, oldModes, newModes);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setModes(Modes newModes) {
+		if (newModes != modes) {
+			NotificationChain msgs = null;
+			if (modes != null)
+				msgs = ((InternalEObject)modes).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__MODES, null, msgs);
+			if (newModes != null)
+				msgs = ((InternalEObject)newModes).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.SYSTEM__MODES, null, msgs);
+			msgs = basicSetModes(newModes, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__MODES, newModes, newModes));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(StringVar newName) {
+		StringVar oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SYSTEM__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Schedulability getSchedulability() {
 		return schedulability;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain basicSetSchedulability(Schedulability newSchedulability, NotificationChain msgs) {
+	public NotificationChain basicSetSchedulability(Schedulability newSchedulability, NotificationChain msgs) {
 		Schedulability oldSchedulability = schedulability;
 		schedulability = newSchedulability;
 		if (eNotificationRequired()) {
@@ -450,10 +422,10 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setSchedulability(Schedulability newSchedulability) {
+	public void setSchedulability(Schedulability newSchedulability) {
 		if (newSchedulability != schedulability) {
 			NotificationChain msgs = null;
 			if (schedulability != null)
@@ -469,38 +441,48 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case DataPackage.SYSTEM__ANNOTATION:
-					return basicSetAnnotation(null, msgs);
-				case DataPackage.SYSTEM__ARCHITECTURAL:
-					return basicSetArchitectural(null, msgs);
-				case DataPackage.SYSTEM__FUNCTIONAL:
-					return basicSetFunctional(null, msgs);
-				case DataPackage.SYSTEM__MAPPING:
-					return basicSetMapping(null, msgs);
-				case DataPackage.SYSTEM__MODES:
-					return basicSetModes(null, msgs);
-				case DataPackage.SYSTEM__SCHEDULABILITY:
-					return basicSetSchedulability(null, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	public EList<StringVar> getXTC_Cookie() {
+		if (xtC_Cookie == null) {
+			xtC_Cookie = new EDataTypeUniqueEList<StringVar>(StringVar.class, this, DataPackage.SYSTEM__XTC_COOKIE);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return xtC_Cookie;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case DataPackage.SYSTEM__ANNOTATION:
+				return basicSetAnnotation(null, msgs);
+			case DataPackage.SYSTEM__ARCHITECTURAL:
+				return basicSetArchitectural(null, msgs);
+			case DataPackage.SYSTEM__FUNCTIONAL:
+				return basicSetFunctional(null, msgs);
+			case DataPackage.SYSTEM__MAPPING:
+				return basicSetMapping(null, msgs);
+			case DataPackage.SYSTEM__MODES:
+				return basicSetModes(null, msgs);
+			case DataPackage.SYSTEM__SCHEDULABILITY:
+				return basicSetSchedulability(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.SYSTEM__ANNOTATION:
 				return getAnnotation();
 			case DataPackage.SYSTEM__ARCHITECTURAL:
@@ -518,17 +500,18 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 			case DataPackage.SYSTEM__XTC_COOKIE:
 				return getXTC_Cookie();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.SYSTEM__ANNOTATION:
 				setAnnotation((Annotation)newValue);
 				return;
@@ -552,20 +535,20 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 				return;
 			case DataPackage.SYSTEM__XTC_COOKIE:
 				getXTC_Cookie().clear();
-				getXTC_Cookie().addAll((Collection)newValue);
+				getXTC_Cookie().addAll((Collection<? extends StringVar>)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.SYSTEM__ANNOTATION:
 				setAnnotation((Annotation)null);
 				return;
@@ -591,17 +574,17 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 				getXTC_Cookie().clear();
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.SYSTEM__ANNOTATION:
 				return annotation != null;
 			case DataPackage.SYSTEM__ARCHITECTURAL:
@@ -619,16 +602,16 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 			case DataPackage.SYSTEM__XTC_COOKIE:
 				return xtC_Cookie != null && !xtC_Cookie.isEmpty();
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -640,34 +623,4 @@ public class SystemImpl extends ObjectWithIDImpl implements com.eu.evidence.rtdr
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getID()
-	 */
-	public String getID() {
-		return (name == null ? null : (String) name.get());
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(name);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setNameGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //SystemImpl

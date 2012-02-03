@@ -2,10 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.vartree.data;
+
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -23,40 +24,40 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getProc()
- * @model 
+ * @model
  * @generated
  */
-public interface Proc extends Implementation{
-	/**
-	 * Returns the value of the '<em><b>Methods</b></em>' attribute list.
-	 * The list contents are of type {@link rtdruid.vartree.variables.StringVar}.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Methods</em>' attribute list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-	 * @return the value of the '<em>Methods</em>' attribute list.
-	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getProc_Methods()
-	 * @model type="rtdruid.vartree.variables.StringVar" dataType="rtdruid.vartree.data.StringVar"
-	 * @generated
-	 */
-  EList getMethods();
-
+public interface Proc extends Implementation {
 	/**
 	 * Returns the value of the '<em><b>Method Ref List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.MethodRef}.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Method Ref List</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Method Ref List</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Ref List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getProc_MethodRefList()
-	 * @model type="rtdruid.vartree.data.MethodRef" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-  EList getMethodRefList();
+	EList<MethodRef> getMethodRefList();
+
+	/**
+	 * Returns the value of the '<em><b>Methods</b></em>' attribute list.
+	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.variables.StringVar}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Methods</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Methods</em>' attribute list.
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getProc_Methods()
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.StringVar"
+	 * @generated
+	 */
+	EList<StringVar> getMethods();
 
 } // Proc

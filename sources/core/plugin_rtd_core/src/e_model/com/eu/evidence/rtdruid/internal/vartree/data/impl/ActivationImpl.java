@@ -2,25 +2,22 @@
  * <copyright>
  * </copyright>
  *
- * %W%
- * @version %I% %H%
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
-
-
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import com.eu.evidence.rtdruid.vartree.data.Activation;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDImpl;
+
 import com.eu.evidence.rtdruid.vartree.variables.IntegerVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,237 +38,181 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
  *
  * @generated
  */
-public class ActivationImpl extends ObjectWithIDImpl implements Activation
-{
+public class ActivationImpl extends ObjectWithIDImpl implements Activation {
 	/**
 	 * The default value of the '{@link #getActNumber() <em>Act Number</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActNumber()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final IntegerVar ACT_NUMBER_EDEFAULT = null;
+	protected static final IntegerVar ACT_NUMBER_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getActNumber() <em>Act Number</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActNumber()
 	 * @generated
 	 * @ordered
 	 */
-  protected IntegerVar actNumber = ACT_NUMBER_EDEFAULT;
+	protected IntegerVar actNumber = ACT_NUMBER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getActivationClass() <em>Activation Class</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActivationClass()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar ACTIVATION_CLASS_EDEFAULT = null;
+	protected static final StringVar ACTIVATION_CLASS_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getActivationClass() <em>Activation Class</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getActivationClass()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar activationClass = ACTIVATION_CLASS_EDEFAULT;
+	protected StringVar activationClass = ACTIVATION_CLASS_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDeadline() <em>Deadline</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getDeadline()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final TimeVar DEADLINE_EDEFAULT = null;
+	protected static final TimeVar DEADLINE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getDeadline() <em>Deadline</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getDeadline()
 	 * @generated
 	 * @ordered
 	 */
-  protected TimeVar deadline = DEADLINE_EDEFAULT;
+	protected TimeVar deadline = DEADLINE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar MODE_REF_EDEFAULT = null;
+	protected static final StringVar MODE_REF_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getModeRef() <em>Mode Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getModeRef()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar modeRef = MODE_REF_EDEFAULT;
+	protected StringVar modeRef = MODE_REF_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getOffset() <em>Offset</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getOffset()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final TimeVar OFFSET_EDEFAULT = null;
+	protected static final TimeVar OFFSET_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getOffset() <em>Offset</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getOffset()
 	 * @generated
 	 * @ordered
 	 */
-  protected TimeVar offset = OFFSET_EDEFAULT;
+	protected TimeVar offset = OFFSET_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getPeriod() <em>Period</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getPeriod()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final TimeVar PERIOD_EDEFAULT = null;
+	protected static final TimeVar PERIOD_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getPeriod() <em>Period</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getPeriod()
 	 * @generated
 	 * @ordered
 	 */
-  protected TimeVar period = PERIOD_EDEFAULT;
+	protected TimeVar period = PERIOD_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getType()
 	 * @generated
 	 * @ordered
 	 */
-  protected static final StringVar TYPE_EDEFAULT = null;
+	protected static final StringVar TYPE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getType()
 	 * @generated
 	 * @ordered
 	 */
-  protected StringVar type = TYPE_EDEFAULT;
+	protected StringVar type = TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected ActivationImpl() {
+	protected ActivationImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected EClass eStaticClass() {
-		return DataPackage.eINSTANCE.getActivation();
+	@Override
+	protected EClass eStaticClass() {
+		return DataPackage.Literals.ACTIVATION;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getModeRef() {
-		return modeRef;
-	}
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setModeRef(StringVar newModeRef)
-  {
-  	if ( !checkNewID(makeID(newModeRef)) ) return;
-  	
-  	String old_ID = getObjectID();
-  	setModeRefGen(newModeRef);
-  	didSetObjectID(old_ID);
-  }
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private void setModeRefGen(StringVar newModeRef) {
-  	
-	StringVar oldModeRef = modeRef;
-	modeRef = newModeRef;
-	if (eNotificationRequired())
-	  eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.ACTIVATION__MODE_REF, oldModeRef, modeRef));
-  }
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public StringVar getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setType(StringVar newType) {
-		StringVar oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.ACTIVATION__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public IntegerVar getActNumber() {
+	public IntegerVar getActNumber() {
 		return actNumber;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setActNumber(IntegerVar newActNumber) {
+	public void setActNumber(IntegerVar newActNumber) {
 		IntegerVar oldActNumber = actNumber;
 		actNumber = newActNumber;
 		if (eNotificationRequired())
@@ -280,19 +221,19 @@ public class ActivationImpl extends ObjectWithIDImpl implements Activation
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public StringVar getActivationClass() {
+	public StringVar getActivationClass() {
 		return activationClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setActivationClass(StringVar newActivationClass) {
+	public void setActivationClass(StringVar newActivationClass) {
 		StringVar oldActivationClass = activationClass;
 		activationClass = newActivationClass;
 		if (eNotificationRequired())
@@ -301,61 +242,19 @@ public class ActivationImpl extends ObjectWithIDImpl implements Activation
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public TimeVar getPeriod() {
-		return period;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setPeriod(TimeVar newPeriod) {
-		TimeVar oldPeriod = period;
-		period = newPeriod;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.ACTIVATION__PERIOD, oldPeriod, period));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public TimeVar getOffset() {
-		return offset;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public void setOffset(TimeVar newOffset) {
-		TimeVar oldOffset = offset;
-		offset = newOffset;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.ACTIVATION__OFFSET, oldOffset, offset));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public TimeVar getDeadline() {
+	public TimeVar getDeadline() {
 		return deadline;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setDeadline(TimeVar newDeadline) {
+	public void setDeadline(TimeVar newDeadline) {
 		TimeVar oldDeadline = deadline;
 		deadline = newDeadline;
 		if (eNotificationRequired())
@@ -364,11 +263,96 @@ public class ActivationImpl extends ObjectWithIDImpl implements Activation
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public StringVar getModeRef() {
+		return modeRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setModeRef(StringVar newModeRef) {
+		StringVar oldModeRef = modeRef;
+		modeRef = newModeRef;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.ACTIVATION__MODE_REF, oldModeRef, modeRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TimeVar getOffset() {
+		return offset;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOffset(TimeVar newOffset) {
+		TimeVar oldOffset = offset;
+		offset = newOffset;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.ACTIVATION__OFFSET, oldOffset, offset));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TimeVar getPeriod() {
+		return period;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPeriod(TimeVar newPeriod) {
+		TimeVar oldPeriod = period;
+		period = newPeriod;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.ACTIVATION__PERIOD, oldPeriod, period));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringVar getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(StringVar newType) {
+		StringVar oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.ACTIVATION__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case DataPackage.ACTIVATION__ACT_NUMBER:
 				return getActNumber();
 			case DataPackage.ACTIVATION__ACTIVATION_CLASS:
@@ -384,17 +368,17 @@ public class ActivationImpl extends ObjectWithIDImpl implements Activation
 			case DataPackage.ACTIVATION__TYPE:
 				return getType();
 		}
-		return super.eGet(eFeature, resolve);
-//		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case DataPackage.ACTIVATION__ACT_NUMBER:
 				setActNumber((IntegerVar)newValue);
 				return;
@@ -417,17 +401,17 @@ public class ActivationImpl extends ObjectWithIDImpl implements Activation
 				setType((StringVar)newValue);
 				return;
 		}
-		super.eSet(eFeature, newValue);
-//		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case DataPackage.ACTIVATION__ACT_NUMBER:
 				setActNumber(ACT_NUMBER_EDEFAULT);
 				return;
@@ -450,17 +434,17 @@ public class ActivationImpl extends ObjectWithIDImpl implements Activation
 				setType(TYPE_EDEFAULT);
 				return;
 		}
-		super.eUnset(eFeature);
-//		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case DataPackage.ACTIVATION__ACT_NUMBER:
 				return ACT_NUMBER_EDEFAULT == null ? actNumber != null : !ACT_NUMBER_EDEFAULT.equals(actNumber);
 			case DataPackage.ACTIVATION__ACTIVATION_CLASS:
@@ -476,16 +460,16 @@ public class ActivationImpl extends ObjectWithIDImpl implements Activation
 			case DataPackage.ACTIVATION__TYPE:
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		}
-		return super.eIsSet(eFeature);
-//		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -507,27 +491,4 @@ public class ActivationImpl extends ObjectWithIDImpl implements Activation
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#getObjectID()
-	 */
-	public String getObjectID() {
-		return makeID(modeRef);
-	}
-
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.data.ObjectWithID#setObjectID(java.lang.String)
-	 */
-	public boolean setObjectID(String newID) {
-	  	if ( !checkNewID(newID) ) return false;
-
-	  	// Store old ID
-	  	String old_ID = getObjectID();
-	  	
-		String[] tmp = resolveID(newID);
-		setModeRefGen(tmp[0] == null ? (StringVar) null : new StringVar(tmp[0]));
-		
-		// ASk to update ID
-	  	didSetObjectID(old_ID);
-		return true;
-	}
 } //ActivationImpl

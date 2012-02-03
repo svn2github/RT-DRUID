@@ -2,36 +2,37 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ExecTimeItemProvider.java,v 1.1 2005/09/28 15:22:29 durin Exp $
+ * $Id$
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
+import com.eu.evidence.rtdruid.vartree.data.DataFactory;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.data.ExecTime;
 
+import com.eu.evidence.rtdruid.vartree.variables.PropertyVar;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import com.eu.evidence.rtdruid.DataEditPlugin;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.ExecTime;
-import com.eu.evidence.rtdruid.vartree.data.init.ObjectWithIDItemProvider;
-
 /**
- * This is the item provider adpater for a {@link rtdruid.vartree.data.ExecTime} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.ExecTime} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -60,7 +61,8 @@ public class ExecTimeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -73,6 +75,28 @@ public class ExecTimeItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Best feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addBestPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ExecTime_Best_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExecTime_Best_feature", "_UI_ExecTime_type"),
+				 DataPackage.Literals.EXEC_TIME__BEST,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This adds a property descriptor for the Ref feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -80,14 +104,18 @@ public class ExecTimeItemProvider
 	 */
 	protected void addRefPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_ExecTime_Ref_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_ExecTime_Ref_feature", "_UI_ExecTime_type"),
-				 DataPackage.eINSTANCE.getExecTime_Ref(),
+				 DataPackage.Literals.EXEC_TIME__REF,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -98,14 +126,18 @@ public class ExecTimeItemProvider
 	 */
 	protected void addTypePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_ExecTime_Type_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_ExecTime_Type_feature", "_UI_ExecTime_type"),
-				 DataPackage.eINSTANCE.getExecTime_Type(),
+				 DataPackage.Literals.EXEC_TIME__TYPE,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -116,32 +148,18 @@ public class ExecTimeItemProvider
 	 */
 	protected void addWorstPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
+			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
 				 getString("_UI_ExecTime_Worst_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_ExecTime_Worst_feature", "_UI_ExecTime_type"),
-				 DataPackage.eINSTANCE.getExecTime_Worst(),
+				 DataPackage.Literals.EXEC_TIME__WORST,
 				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
-	}
-
-	/**
-	 * This adds a property descriptor for the Best feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addBestPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(new ItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ExecTime_Best_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExecTime_Best_feature", "_UI_ExecTime_type"),
-				 DataPackage.eINSTANCE.getExecTime_Best(),
-				 true,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -152,12 +170,26 @@ public class ExecTimeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(DataPackage.eINSTANCE.getExecTime_Distribution());
+			childrenFeatures.add(DataPackage.Literals.EXEC_TIME__DISTRIBUTION);
 		}
 		return childrenFeatures;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
 	}
 
 	/**
@@ -166,23 +198,24 @@ public class ExecTimeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/ExecTime");
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ExecTime"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
-		String ref = varToString(((ExecTime)object).getRef());
-		String type = varToString(((ExecTime)object).getType());
-		
-		return getString("_UI_ExecTime_type")
-			+ (type == null ? " (no Type)" : " (" + type + ")")
-			+ (ref == null ? " no Reference" : " " + ref);
+		PropertyVar labelValue = ((ExecTime)object).getProperties();
+		String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ?
+			getString("_UI_ExecTime_type") :
+			getString("_UI_ExecTime_type") + " " + label;
 	}
 
 	/**
@@ -192,6 +225,7 @@ public class ExecTimeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -210,29 +244,20 @@ public class ExecTimeItemProvider
 	}
 
 	/**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.eINSTANCE.getExecTime_Distribution(),
+				(DataPackage.Literals.EXEC_TIME__DISTRIBUTION,
 				 DataFactory.eINSTANCE.createDistribution()));
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResourceLocator getResourceLocator() {
-		return DataEditPlugin.INSTANCE;
 	}
 
 }

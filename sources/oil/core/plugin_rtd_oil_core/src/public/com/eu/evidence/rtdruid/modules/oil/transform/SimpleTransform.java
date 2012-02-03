@@ -110,7 +110,6 @@ public class SimpleTransform implements IOilTransform {
 		return new String[] { objId, OAPKG.getRoot_HwList().getName(),
 				DataPath.makeId(id.getHW()), OAPKG.getHW_RtosList().getName(),
 				DataPath.makeId(id.getRtos()) };
-
 	}
 
 	// -------------------------------
@@ -775,45 +774,18 @@ public class SimpleTransform implements IOilTransform {
 								
 								{ // add a reference to the Resource inside the task
 									lvtp = makePath(taskVtp, taskResRef[0], taskResRef[1]);
-									IVariable lvar = lvtp.getVar();
-									if (lvar == null) {
-										lvar = lvtp.getNewVar();
-									}
-									if (lvar instanceof IMultiValues) {
-										((IMultiValues) lvar).appendValue(resMethodName);
-									} else {
-										lvar.set(resMethodName);
-									}
-									lvtp.setVar(lvar);
+									updateVar(lvtp, resMethodName);
 								}
 									
 								{ // make the resource
 									lvtp = makePath(archVtp, resources[0], resources[1]);
-									IVariable lvar = lvtp.getVar();
-									if (lvar == null) {
-										lvar = lvtp.getNewVar();
-									}
-									if (lvar instanceof IMultiValues) {
-										((IMultiValues) lvar).appendValue(methodName);
-									} else {
-										lvar.set(methodName);
-									}
-									lvtp.setVar(lvar);
+									updateVar(lvtp, methodName);
 								}
 								
 								{ // make the resource's Mutex Ref
 									lvtp.goParent();
 									lvtp = makePath(lvtp, resMutexRef[0], resMutexRef[1]);
-									IVariable lvar = lvtp.getVar();
-									if (lvar == null) {
-										lvar = lvtp.getNewVar();
-									}
-									if (lvar instanceof IMultiValues) {
-										((IMultiValues) lvar).appendValue(mutexName);
-									} else {
-										lvar.set(mutexName);
-									}
-									lvtp.setVar(lvar);
+									updateVar(lvtp, mutexName);
 								}
 								
 								
@@ -830,6 +802,20 @@ public class SimpleTransform implements IOilTransform {
 			}
 		}
 
+	}
+
+	private void updateVar(IVarTreePointer lvtp, final String value) {
+		IVariable lvar = lvtp.getVar();
+		if (lvar == null) {
+			lvar = lvtp.getNewVar(value);
+		} else {
+			if (lvar instanceof IMultiValues) {
+				((IMultiValues) lvar).appendValue(value);
+			} else {
+				lvar.set(value);
+			}
+		}
+		lvtp.setVar(lvar);
 	}
 
 
@@ -1039,45 +1025,18 @@ public class SimpleTransform implements IOilTransform {
 								
 								{ // add a reference to the Resource inside the task
 									lvtp = makePath(isrVtp, isrResRef[0], isrResRef[1]);
-									IVariable lvar = lvtp.getVar();
-									if (lvar == null) {
-										lvar = lvtp.getNewVar();
-									}
-									if (lvar instanceof IMultiValues) {
-										((IMultiValues) lvar).appendValue(resMethodName);
-									} else {
-										lvar.set(resMethodName);
-									}
-									lvtp.setVar(lvar);
+									updateVar(lvtp, resMethodName);
 								}
 									
 								{ // make the resource
 									lvtp = makePath(archVtp, resources[0], resources[1]);
-									IVariable lvar = lvtp.getVar();
-									if (lvar == null) {
-										lvar = lvtp.getNewVar();
-									}
-									if (lvar instanceof IMultiValues) {
-										((IMultiValues) lvar).appendValue(methodName);
-									} else {
-										lvar.set(methodName);
-									}
-									lvtp.setVar(lvar);
+									updateVar(lvtp, methodName);
 								}
 								
 								{ // make the resource's Mutex Ref
 									lvtp.goParent();
 									lvtp = makePath(lvtp, resMutexRef[0], resMutexRef[1]);
-									IVariable lvar = lvtp.getVar();
-									if (lvar == null) {
-										lvar = lvtp.getNewVar();
-									}
-									if (lvar instanceof IMultiValues) {
-										((IMultiValues) lvar).appendValue(mutexName);
-									} else {
-										lvar.set(mutexName);
-									}
-									lvtp.setVar(lvar);
+									updateVar(lvtp, mutexName);
 								}
 								
 								
@@ -1127,8 +1086,7 @@ public class SimpleTransform implements IOilTransform {
 			checkTrue(checkStrings(curr.getVar().toString(), rtosName),
 					"Try to Map an already mapped task to a different rtos");
 		} else {
-			IVariable v = curr.getNewVar();
-			v.set(rtosName);
+			IVariable v = curr.getNewVar(rtosName);
 			curr.setVar(v);
 		}
 
@@ -1163,8 +1121,7 @@ public class SimpleTransform implements IOilTransform {
 			checkTrue(checkStrings(curr.getVar().toString(), rtosName),
 					"Try to Map an already mapped isr to a different rtos");
 		} else {
-			IVariable v = curr.getNewVar();
-			v.set(rtosName);
+			IVariable v = curr.getNewVar(rtosName);
 			curr.setVar(v);
 		}
 
@@ -1608,7 +1565,8 @@ public class SimpleTransform implements IOilTransform {
 
 					IVariable var = curr.getVar();
 					if (var == null) {
-						var = curr.getNewVar();
+						var = curr.getNewVar(null);
+						if (var == null) { /*DEBUG*/			throw new Error("Try to get a not null var");		}
 					}
 					//checkTrue(var instanceof OilVar, "Required an OilVar");
 
@@ -1644,7 +1602,8 @@ public class SimpleTransform implements IOilTransform {
 			OilImplID id) throws OilTransformException {
 		IVariable var = vtp.getVar();
 		if (var == null) {
-			var = vtp.getNewVar();
+			var = vtp.getNewVar(null);
+			if (var == null) { /*DEBUG*/			throw new Error("Try to get a not null var");		}
 		}
 		//checkTrue(var instanceof OilVar, "Required an OilVar");
 
@@ -1818,8 +1777,7 @@ public class SimpleTransform implements IOilTransform {
 
 					}
 				} else {
-					var = svtp.getNewVar();
-					var.set(value);
+					var = svtp.getNewVar(value);
 					svtp.setVar(var);
 				}
 			}
@@ -1841,8 +1799,7 @@ public class SimpleTransform implements IOilTransform {
 					IVariable var = tsvtp.getVar();
 					//if (true || var == null) {
 						// always set the value
-						var = tsvtp.getNewVar();
-						var.set("" + multiValues);
+						var = tsvtp.getNewVar("" + multiValues);
 						tsvtp.setVar(var);
 					//} else { }
 				}
@@ -1974,8 +1931,7 @@ public class SimpleTransform implements IOilTransform {
 							"Try to overwrite an already existent variable with a different value.");
 				}
 			} else {
-				IVariable tmpVar = curr.getNewVar();
-				tmpVar.set(value);
+				IVariable tmpVar = curr.getNewVar(value);
 				curr.setVar(tmpVar);
 			}
 		}

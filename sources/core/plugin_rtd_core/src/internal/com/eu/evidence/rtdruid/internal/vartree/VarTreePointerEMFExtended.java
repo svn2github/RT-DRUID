@@ -250,11 +250,11 @@ class VarTreePointerEMFExtended extends VarTreePointerEMF {
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.IVarTreePointer#getNewVar()
 	 */
-	public IVariable getNewVar() {
+	public IVariable getNewVar(String value) {
 		if (point instanceof LittlePointerExtended) {
-			return ( (LittlePointerExtended) point).subPointer.getNewVar(); 
+			return ( (LittlePointerExtended) point).subPointer.getNewVar(value); 
 		} else { 
-			return super.getNewVar();
+			return super.getNewVar(value);
 		}
 	}
 	/* (non-Javadoc)
@@ -365,7 +365,8 @@ class VarTreePointerEMFExtended extends VarTreePointerEMF {
 			IVariable risp = (IVariable) current.pointer.eGet(current.attr);  
 
 			if (risp == null) {
-				risp = (IVariable) DataFactory.eINSTANCE.createExtendedVarFromString(( (EAttribute) current.attr).getEAttributeType(), null );
+//				risp = (IVariable) DataFactory.eINSTANCE.createExtendedVarFromString(( (EAttribute) current.attr).getEAttributeType(), null );
+				risp = (IVariable) DataFactory.eINSTANCE.createFromString(( (EAttribute) current.attr).getEAttributeType(), null );
 				if (create && risp != null) {
 				    current.pointer.eSet(current.attr, risp);
 				}
