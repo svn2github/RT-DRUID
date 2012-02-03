@@ -22,6 +22,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 import com.eu.evidence.rtdruid.modules.oil.ee.ui.preferencepages.IOPPConstants;
+import com.eu.evidence.rtdruid.modules.oil.s12.constants.S12Constants;
 import com.eu.evidence.rtdruid.ui.preferencepages.AbstractPage;
 
 /**
@@ -32,9 +33,7 @@ import com.eu.evidence.rtdruid.ui.preferencepages.AbstractPage;
 public class S12Configurator extends AbstractPage {
 
 	private Text paramGcc = null;
-//    private Text paramAsm = null;
-//    private Button useEEgcc_deps = null;
-//    private Button useEEgcc_comp = null;
+    private Text paramCodeWarriorPath = null;
     
 	/**
 	 * (non-Javadoc) Method declared on PreferencePage
@@ -61,41 +60,23 @@ public class S12Configurator extends AbstractPage {
 			}
 		});
 		
-//		createLabel(composite_tab, "Asm path", 1); //$NON-NLS-1$
-//		paramAsm = createTextField(composite_tab); //$NON-NLS-1$
-//		Button asmButton = createPushButton(composite_tab, "Browse"); //$NON-NLS-1$
-//		asmButton.addSelectionListener(new SelectionListener() {
-//			public void widgetSelected(SelectionEvent e) {	work(e);	}
-//			public void widgetDefaultSelected(SelectionEvent e) {	work(e);	}
-//			protected void work(SelectionEvent e) {
-//				DirectoryDialog dia = new DirectoryDialog(getShell());
-//				String path = dia.open();
-//				if (path!=null) {
-//					paramAsm.setText(path);
-//				}
-//			}
-//		});
+		createLabel(composite_tab, "Codewarrior Compiler Path", 1); //$NON-NLS-1$
+		paramCodeWarriorPath = createTextField(composite_tab); //$NON-NLS-1$
+		Button cwButton = createPushButton(composite_tab, "Browse"); //$NON-NLS-1$
+		cwButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {	work(e);	}
+			public void widgetDefaultSelected(SelectionEvent e) {	work(e);	}
+			protected void work(SelectionEvent e) {
+				DirectoryDialog dia = new DirectoryDialog(getShell());
+				String path = dia.open();
+				if (path!=null) {
+					paramCodeWarriorPath.setText(path);
+				}
+			}
+		});
 
-//		if (false) {
-//			createLabel(composite_tab, "Use EE gcc to resolve dependecies", 1); //$NON-NLS-1$
-//			useEEgcc_deps = createCheckBox(composite_tab, ""); //$NON-NLS-1$
-//			GridData data = new GridData();
-//			data.horizontalSpan = 2;
-//			useEEgcc_deps.setLayoutData(data);
-//		}
-//
-//		if (false) {
-//			createLabel(composite_tab, "Use EE gcc to compile", 1); //$NON-NLS-1$
-//			useEEgcc_comp = createCheckBox(composite_tab, ""); //$NON-NLS-1$
-//			GridData data = new GridData();
-//			data.horizontalSpan = 2;
-//			useEEgcc_comp.setLayoutData(data);
-//		}
-
-		
 		initializeValues();
 
-		//font = null;
 		return new Composite(parent, SWT.NULL);
 	}
 
@@ -128,11 +109,8 @@ public class S12Configurator extends AbstractPage {
 	 * store.
 	 */
 	private void initializeDefaults() {
-//		paramAsm.setText(Options.DEFAULT_S12_CONF_ASM);
-		paramGcc.setText(Options.DEFAULT_S12_CONF_GCC);
-		
-//		useEEgcc_deps.setSelection(Options.DEFAULT_S12_CONF_USE_EE_GCC_DEPS);
-//		useEEgcc_comp.setSelection(Options.DEFAULT_S12_CONF_USE_EE_GCC_COMP);
+		paramCodeWarriorPath.setText(S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC);
+		paramGcc.setText(S12Constants.DEFAULT_S12_COSMIC_CONF_GCC);
 
 		enableOk();
 	}
@@ -143,23 +121,15 @@ public class S12Configurator extends AbstractPage {
 	private void initializeValues() {
 		IPreferenceStore store = getPreferenceStore();
 
-//		boolean use_ee_d = store.contains(Options.S12_CONF_USE_EE_GCC_DEPS) ? 
-//				(""+true).equals(store.getString(Options.S12_CONF_USE_EE_GCC_DEPS)) : Options.DEFAULT_S12_CONF_USE_EE_GCC_DEPS;
-//		useEEgcc_deps.setSelection(use_ee_d);
-//
-//		boolean use_ee_c = store.contains(Options.S12_CONF_USE_EE_GCC_COMP) ? 
-//				(""+true).equals(store.getString(Options.S12_CONF_USE_EE_GCC_COMP)) : Options.DEFAULT_S12_CONF_USE_EE_GCC_COMP;
-//		useEEgcc_comp.setSelection(use_ee_c);
-		
-//		String asm = store.contains(Options.S12_CONF_ASM) ?
-//				store.getString(Options.S12_CONF_ASM) 
-//				: Options.DEFAULT_S12_CONF_ASM;
-//
-//		paramAsm.setText(asm);
+		String cwPath = store.contains(Options.S12_CODEWARRIOR_CONF_GCC) ?
+				store.getString(Options.S12_CODEWARRIOR_CONF_GCC) 
+				: S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC;
+
+		paramCodeWarriorPath.setText(cwPath);
 		
 		String gcc = store.contains(Options.S12_CONF_GCC) ?
 				store.getString(Options.S12_CONF_GCC) 
-				: Options.DEFAULT_S12_CONF_GCC;
+				: S12Constants.DEFAULT_S12_COSMIC_CONF_GCC;
 		paramGcc.setText(gcc);
 
 		enableOk();
@@ -191,10 +161,7 @@ public class S12Configurator extends AbstractPage {
 	protected void storeValues() {
 		IPreferenceStore store = getPreferenceStore();
 
-//		store.setValue(Options.S12_CONF_USE_EE_GCC_DEPS, "" + useEEgcc_deps.getSelection());
-//		store.setValue(Options.S12_CONF_USE_EE_GCC_COMP, "" + useEEgcc_comp.getSelection());
-
-//		store.setValue(Options.S12_CONF_ASM, paramAsm.getText());
+		store.setValue(Options.S12_CODEWARRIOR_CONF_GCC, paramCodeWarriorPath.getText());
 		
 		store.setValue(Options.S12_CONF_GCC, paramGcc.getText());
 	}

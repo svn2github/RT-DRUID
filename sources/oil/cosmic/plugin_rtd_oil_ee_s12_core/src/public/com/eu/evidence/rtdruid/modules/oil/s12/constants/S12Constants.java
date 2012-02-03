@@ -20,12 +20,13 @@ public class S12Constants {
 	 * S12 preferences
 	 *  
 	 **************************************************************************/
-//	public final static String PREF_S12_ASM_PATH = "preference_S12__path_for_asm_compiler";
-	public final static String PREF_S12_GCC_PATH = "preference_S12__path_for_gcc_compiler";
-	//public final static String PREF_S12_USE_EE_GCC = "preference_S12__use_evidence_compiler";
-	
-//	public final static String PREF_S12_USE_EEGCC_DEPS = "preference_S12__use_evidence_compiler_4_deps";
-//	public final static String PREF_S12_USE_EEGCC_COMPILE = "preference_S12__use_evidence_compiler_4_compile";
+	public final static String PREF_S12_CODEWARRIOR_PATH = "preference_S12__path_for_codewarrior_compiler";
+	public final static String PREF_S12_COSMIC_PATH = "preference_S12__path_for_cosmic_compiler";
+	/*
+	 * Default values
+	 */
+	public static final String DEFAULT_S12_COSMIC_CONF_GCC = "c:\\Program Files\\COSMIC\\EVAL12X";
+	public static final String DEFAULT_S12_CODEWARRIOR_CONF_GCC = "c:\\Program Files\\Freescale\\CWS12v5.1";
 
 	
 

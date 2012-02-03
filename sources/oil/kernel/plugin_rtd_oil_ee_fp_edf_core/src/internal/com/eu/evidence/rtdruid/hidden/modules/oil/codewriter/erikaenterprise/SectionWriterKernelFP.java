@@ -785,13 +785,13 @@ public class SectionWriterKernelFP extends SectionWriter implements
 			{ // ... autostart
 				ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 
-				if ("true".equalsIgnoreCase(os
+				if (os.containsProperty(ISimpleGenResKeywords.OSEK_TASK_AUTOSTART) && "true".equalsIgnoreCase(os
 						.getString(ISimpleGenResKeywords.OSEK_TASK_AUTOSTART))) {
 					
 					answer.add("__OO_AUTOSTART_TASK__");
 				}
 
-				if ("true".equalsIgnoreCase(os
+				if (os.containsProperty(ISimpleGenResKeywords.OSEK_ALARM_AUTOSTART) && "true".equalsIgnoreCase(os
 						.getString(ISimpleGenResKeywords.OSEK_ALARM_AUTOSTART))) {
 					
 					answer.add("__OO_AUTOSTART_ALARM__");
@@ -806,7 +806,6 @@ public class SectionWriterKernelFP extends SectionWriter implements
 			}
 			
 		}
-
 
 		return answer;
 	}

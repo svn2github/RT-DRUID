@@ -25,23 +25,11 @@ public class Options implements IBuildOptions {
 	 * PROPERTIES
 	 */
 	public static final String S12_CONF_PREFIX=IOPPConstants.PREFIX+"S12_CONF."; //$NON-NLS-1$
-//	/** A String that identifies the choiche about use EE Gcc for compile */
-//	public static final String S12_CONF_USE_EE_GCC_COMP=S12_CONF_PREFIX+"use_ee_gcc_compile";
-//	/** A String that identifies the choiche about use EE Gcc for deps */
-//	public static final String S12_CONF_USE_EE_GCC_DEPS=S12_CONF_PREFIX+"use_ee_gcc_deps";
 
-	/** A String that identifies the GCC Path */
+	/** A String that identifies the Cosmic GCC Path */
 	public static final String S12_CONF_GCC= S12_CONF_PREFIX+"gcc_path";
-	/** A String that identifies the ASM Path */
-//	public static final String S12_CONF_ASM= S12_CONF_PREFIX+"asm_path";
-
-	/*
-	 * Default values
-	 */
-//	public static final String DEFAULT_S12_CONF_ASM = "c:\\Programmi\\COSMIC\\EVAL12X";
-	public static final String DEFAULT_S12_CONF_GCC = "c:\\Programmi\\COSMIC\\EVAL12X";
-//	public static final boolean DEFAULT_S12_CONF_USE_EE_GCC_COMP = false;
-//	public static final boolean DEFAULT_S12_CONF_USE_EE_GCC_DEPS = false;
+	/** A String that identifies the Codewarrior Gcc Path */
+	public static final String S12_CODEWARRIOR_CONF_GCC= S12_CONF_PREFIX+"codewarrior_gcc_path";
 
 	/**
 	 * Returns the values of preferences controlled by this preference page.
@@ -51,24 +39,14 @@ public class Options implements IBuildOptions {
 				.getPreferenceStore();
 		HashMap<String,String> answer = new HashMap<String,String>();
 	
-//		boolean use_ee_deps = store.contains(S12_CONF_USE_EE_GCC_DEPS) ? ("" + true)
-//				.equals(store.getString(S12_CONF_USE_EE_GCC_DEPS))
-//				: DEFAULT_S12_CONF_USE_EE_GCC_DEPS;
-//		answer.put(S12Constants.PREF_PIC30_USE_EEGCC_DEPS, "" + use_ee_deps);
-//	
-//		boolean use_ee_comp = store.contains(S12_CONF_USE_EE_GCC_COMP) ? ("" + true)
-//				.equals(store.getString(S12_CONF_USE_EE_GCC_COMP))
-//				: DEFAULT_S12_CONF_USE_EE_GCC_COMP;
-//		answer.put(S12Constants.PREF_PIC30_USE_EEGCC_COMPILE, "" + use_ee_comp);
+		String cwPath = store.contains(S12_CODEWARRIOR_CONF_GCC) ? store
+				.getString(S12_CODEWARRIOR_CONF_GCC) : S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC;
 	
-//		String asm = store.contains(S12_CONF_ASM) ? store
-//				.getString(S12_CONF_ASM) : DEFAULT_S12_CONF_ASM;
-	
-//		answer.put(S12Constants.PREF_S12_ASM_PATH, asm);
+		answer.put(S12Constants.PREF_S12_CODEWARRIOR_PATH, cwPath);
 	
 		String gcc = store.contains(S12_CONF_GCC) ? store
-				.getString(S12_CONF_GCC) : DEFAULT_S12_CONF_GCC;
-		answer.put(S12Constants.PREF_S12_GCC_PATH, gcc);
+				.getString(S12_CONF_GCC) : S12Constants.DEFAULT_S12_COSMIC_CONF_GCC;
+		answer.put(S12Constants.PREF_S12_COSMIC_PATH, gcc);
 	
 		return answer;
 	}

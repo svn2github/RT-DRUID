@@ -59,8 +59,9 @@ public class SectionWriterHalS12 extends SectionWriter
 			IExtractKeywordsExtentions {
 
 	final public String KEY_HAL_FREESCALE_S12 = "__HCS12XS__";
-	final public String _EE_OPT_COSMIC_COMPILER = "__COSMIC__";
 	final public String _EE_OPT_HAL_COSMIC_S12 = "__HCS12XS__";
+	final public String _EE_OPT_COSMIC_COMPILER = "__COSMIC__";
+	final public String _EE_OPT_CODEWARRIOR_COMPILER = "__CODEWARRIOR__";
 	
 	
 	static class MCU_MODEL {
@@ -175,6 +176,17 @@ public class SectionWriterHalS12 extends SectionWriter
 		 **********************************************************************/
 		{
 			//List requiredOilObjects = (List) sgrCpu.getObject(SGRK__FORCE_ARRAYS_LIST__);
+			boolean found_codewarrior = false; 
+			{
+				String[] existing = parent.extractEE_Opts(EE_OPT_USER_ONLY, currentRtosId);
+				
+				for (String s: existing) {
+					if (_EE_OPT_CODEWARRIOR_COMPILER.equals(s)) {
+						found_codewarrior = true;
+						break;
+					}
+				}
+			}
 
 	        // ICD 2
 	        ArrayList<String> tmp = new ArrayList<String>();
@@ -185,7 +197,11 @@ public class SectionWriterHalS12 extends SectionWriter
 	        	tmp.addAll(Arrays.asList(old));
 	        }
 	
-	        tmp.add(_EE_OPT_COSMIC_COMPILER);
+	        if (found_codewarrior) {
+	        	tmp.add(_EE_OPT_CODEWARRIOR_COMPILER);
+	        } else {
+	        	tmp.add(_EE_OPT_COSMIC_COMPILER);
+	        }
 	        tmp.add(_EE_OPT_HAL_COSMIC_S12);
 	        
 //	        {
@@ -538,6 +554,21 @@ public class SectionWriterHalS12 extends SectionWriter
          *  
          **********************************************************************/
 			HostOsUtils wrapper = HostOsUtils.common;
+			
+			
+			boolean found_codewarrior = false; 
+			{
+				String[] existing = sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS) ? 
+						(String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS) : new String[0];
+				
+				for (String s: existing) {
+					if (_EE_OPT_CODEWARRIOR_COMPILER.equals(s)) {
+						found_codewarrior = true;
+						break;
+					}
+				}
+			}
+			
 
 		    StringBuffer sbMakefile = new StringBuffer(commentWriterMf.writerBanner("Freescale S12"));
 		    
@@ -546,10 +577,8 @@ public class SectionWriterHalS12 extends SectionWriter
 
 		        String outputDir = "Debug";
 		        String appBase = "..";
-		        String gcc = wrapper.wrapPath("c:/Programmi/COSMIC/EVAL12X");
-		        String asm = wrapper.wrapPath("c:/Programmi/COSMIC/EVAL12X");
-//		        boolean useEEgcc_deps = false;
-//		        boolean useEEgcc_comp = false;
+		        String gcc = wrapper.wrapPath(found_codewarrior ? S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC : S12Constants.DEFAULT_S12_COSMIC_CONF_GCC);
+//		        String asm = wrapper.wrapPath(found_codewarrior ? S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC : S12Constants.DEFAULT_S12_COSMIC_CONF_GCC);
 		        
 		    	if (options.containsKey(IWritersKeywords.WRITER_OUTPUT_DIR_SET)) {
 					outputDir = (String) options.get(IWritersKeywords.WRITER_LAST_OUTPUT_DIR);
@@ -564,41 +593,41 @@ public class SectionWriterHalS12 extends SectionWriter
 		    	if (p.isAbsolute()) {
 		    		outputDir = wrapper.wrapPath(outputDir);
 		    	}
-		    	
-		    	
-		    	if (options.containsKey(S12Constants.PREF_S12_GCC_PATH)) {
-					String tmp = (String) options.get(S12Constants.PREF_S12_GCC_PATH);
-					if (tmp.length()>0) gcc = wrapper.wrapPath(tmp);
-				}
-		    	asm = gcc;
-//		    	if (options.containsKey(S12Constants.PREF_S12_ASM_PATH)) {
-//					String tmp = (String) options.get(S12Constants.PREF_S12_ASM_PATH);
-//					if (tmp.length()>0) asm = wrapper.wrapPath(tmp);
-//				}
-//		    	if (options.containsKey(S12Constants.PREF_S12_USE_EEGCC_DEPS)) {
-//					String tmp = (String) options.get(S12Constants.PREF_S12_USE_EEGCC_DEPS);
-//					useEEgcc_deps = (""+true).equals(tmp);
-//				}
-//		    	if (options.containsKey(S12Constants.PREF_S12_USE_EEGCC_COMPILE)) {
-//					String tmp = (String) options.get(S12Constants.PREF_S12_USE_EEGCC_COMPILE);
-//					useEEgcc_comp = (""+true).equals(tmp);
-//				}
+
 		        sbMakefile.append(
 		                "APPBASE := " + appBase + "\n" +
-		                "OUTBASE := " + outputDir + "\n\n" + 
-		                "ifndef COSMIC_ASMDIR\n" +
-		                "COSMIC_ASMDIR := "+asm+"\n" +
-		                "endif\n" +
-		                "ifndef COSMIC_CCDIR\n" +
-		                "COSMIC_CCDIR := "+gcc+"\n" +
-		                "endif\n"
-		        );
-//		        if (useEEgcc_deps) {
-//			        sbMakefile.append("COSMIC_S12_USE_EEGCC_DEPS := Y\n");
-//		        }
-//		        if (useEEgcc_comp) {
-//			        sbMakefile.append("COSMIC_S12_USE_EEGCC_COMPILE := Y\n");
-//		        }
+		                "OUTBASE := " + outputDir + "\n\n"); 
+
+		    	if (found_codewarrior) {
+			    	if (options.containsKey(S12Constants.PREF_S12_CODEWARRIOR_PATH) ) {
+						String tmp = (String) options.get(S12Constants.PREF_S12_CODEWARRIOR_PATH);
+						if (tmp.length()>0) gcc = wrapper.wrapPath(tmp);
+					}
+			    	String asm = gcc;
+			        sbMakefile.append(
+			                "ifndef COSMIC_ASMDIR\n" +
+			                "COSMIC_ASMDIR := "+asm+"\n" +
+			                "endif\n" +
+			                "ifndef COSMIC_CCDIR\n" +
+			                "COSMIC_CCDIR := "+gcc+"\n" +
+			                "endif\n"
+					        );
+		    	} else {
+			    	if (options.containsKey(S12Constants.PREF_S12_COSMIC_PATH) ) {
+						String tmp = (String) options.get(S12Constants.PREF_S12_COSMIC_PATH);
+						if (tmp.length()>0) gcc = wrapper.wrapPath(tmp);
+					}
+			    	String asm = gcc;
+			        sbMakefile.append(
+			                "ifndef COSMIC_ASMDIR\n" +
+			                "COSMIC_ASMDIR := "+asm+"\n" +
+			                "endif\n" +
+			                "ifndef COSMIC_CCDIR\n" +
+			                "COSMIC_CCDIR := "+gcc+"\n" +
+			                "endif\n"
+					        );
+		    	}
+
 		    }
 
 			CpuUtility.addSources(sgrCpu, new String[] {"$(COSMIC_INCLUDE_C)", "$(COSMIC_INCLUDE_S)"});
