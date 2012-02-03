@@ -114,6 +114,18 @@
     <templatePathProvider
           provider="com.eu.evidence.rtdruid.internal.modules.oil.templates.DynamicTemplateProvider">
     </templatePathProvider>
+ </extension>
+ <extension
+       point="com.eu.evidence.rtdruid.core.requiredAdapterFactoriesID">
+    <loader
+          class="com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilECoreFactoryLoader">
+    </loader>
+ </extension>
+ <extension
+       point="com.eu.evidence.rtdruid.core.requiredEPackageID">
+    <loader
+          class="com.eu.evidence.rtdruid.internal.vartree.data.oil.OilEPackageLoader">
+    </loader>
  </extension> 
 
 </plugin>

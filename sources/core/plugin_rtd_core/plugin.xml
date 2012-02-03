@@ -41,6 +41,11 @@
 -->
 
    <extension-point
+   		id="requiredEPackageID"
+   		name="required EPackage loader"
+   		schema="schema/com.eu.evidence.rtdruid.core.requiredEPackages.exsd"/>
+
+   <extension-point
    		id="requiredAdapterFactoriesID"
    		name="required Adapter Factories"
    		schema="schema/com.eu.evidence.rtdruid.core.requiredAdapterFactoriesID.exsd"/>

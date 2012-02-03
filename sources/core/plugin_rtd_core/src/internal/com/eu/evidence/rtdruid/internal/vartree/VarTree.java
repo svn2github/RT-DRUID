@@ -10,11 +10,14 @@ import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
+import com.eu.evidence.rtdruid.vartree.IEPackageProvider;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
@@ -56,6 +59,7 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
      */
     public VarTree(CommandStack commandStack) {
         super(getFactories(), commandStack);
+        updateResourceFactoryRegistry();
     }
 
     /**
@@ -64,6 +68,7 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
      */
     public VarTree(CommandStack commandStack, Map<Resource, Boolean> resourceToReadOnlyMap) {
         super(getFactories(), commandStack, resourceToReadOnlyMap);
+        updateResourceFactoryRegistry();
     }
 
     /**
@@ -83,9 +88,27 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
     public VarTree() {
         super(getFactories(), new BasicCommandStack());
 
+        updateResourceFactoryRegistry();
         resourceSet.getResources().add(
                 (new RTD_XMI_Factory()).createResource());
     };
+ 
+    protected void updateResourceFactoryRegistry() {
+    	Registry reg = getResourceSet().getPackageRegistry();
+    	
+    	IEPackageProvider[] epps = RequiredEPackageManager.getEPackages();
+    	for (IEPackageProvider epp: epps) {
+    		EPackage ep = epp.getEPackage(this);
+    		String ns = null;
+    		if (ep != null) {
+    			ns=ep.getNsURI();
+    			if (ns != null) {
+		    		reg.put(ns, ep);
+    			}
+    		}
+    	}
+    	
+    }
     
     /**
      * Makes a new ComposedAdapterFactory
