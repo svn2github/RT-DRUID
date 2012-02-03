@@ -17,12 +17,6 @@
             class="com.eu.evidence.rtdruid.ui.preferencepages.EmptyPage"
             name="Oil">
        </page>
-       <page
-             category="com.eu.evidence.rtdruid.oil.preferencePagesID"
-             class="com.eu.evidence.rtdruid.internal.modules.oil.ee.ui.preferencepages.OSConfigurator"
-             id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID"
-             name="Erika Enterprise">
-       </page>
    </extension>
 
 
