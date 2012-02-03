@@ -25,10 +25,10 @@
 				<property name="bundleId" value="com.eu.evidence.rtdruid.oil.cortex.core"/>
 				<property name="bundleVersion" value="${rtd_oil_ee_cortex_core_v}.${build_number}"/>
 			</ant>
-<!--			<ant antfile="manual_build.xml" dir="../plugin_rtd_oil_ee_cortex_ui" target="${target}">
+			<ant antfile="manual_build.xml" dir="../plugin_rtd_oil_ee_cortex_ui" target="${target}">
 				<property name="bundleId" value="com.eu.evidence.rtdruid.oil.cortex.ui"/>
 				<property name="bundleVersion" value="${rtd_oil_ee_cortex_ui_v}.${build_number}"/>
-			</ant>-->
+			</ant>
 		</target>
 
 		<target name="all.features">

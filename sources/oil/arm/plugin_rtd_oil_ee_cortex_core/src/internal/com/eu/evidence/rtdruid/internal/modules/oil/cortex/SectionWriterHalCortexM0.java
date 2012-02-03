@@ -40,7 +40,6 @@ import com.eu.evidence.rtdruid.modules.oil.cortex.constants.CortexConstants;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
-import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.location.EEPaths;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
@@ -493,9 +492,6 @@ public class SectionWriterHalCortexM0 extends SectionWriter
 			    StringBuffer sbMakefile = new StringBuffer(commentWriterMf.writerBanner("CORTEX M0"));
 			    
 			    {	// PATHs
-					final String eeBasePath = EEPaths.getEe_base();
-					final boolean cygwin = HostOsUtils.common.getCurrentSystem() == HostOsUtils.CYGWIN;
-			    	
 		        	HashMap<String, ?> options = parent.getOptions();
 	
 			        String outputDir = "Debug";
@@ -524,9 +520,6 @@ public class SectionWriterHalCortexM0 extends SectionWriter
 					}
 			    	
 			        sbMakefile.append(
-			        		"ifndef EEBASE\n" +
-			        		IWritersKeywords.INDENT + "EEBASE  := "+wrapper.wrapPath(eeBasePath)+"\n" +
-			                "endif\n" +
 			                "APPBASE := " + appBase + "\n" +
 			                "OUTBASE := " + outputDir + "\n\n");
 			        

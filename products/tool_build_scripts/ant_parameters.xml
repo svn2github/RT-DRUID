@@ -54,6 +54,7 @@
 
 		<property name="frtd_oil_ee_cortex_v"         value="1.6.0"/>
 		<property name="rtd_oil_ee_cortex_core_v"     value="1.6.0"/>
+		<property name="rtd_oil_ee_cortex_ui_v"     value="1.6.0"/>
 
 		<property name="frtd_oil_ee_fp_edf_v"         value="1.6.0"/>
 		<property name="rtd_oil_ee_fp_edf_core_v"     value="1.6.0"/>
