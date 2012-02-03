@@ -7,7 +7,7 @@
 	<property file="build_ant.properties"/>
 	<import file="build_common.xml"/>
 
-	<property name="required.iu" value="com.eu.evidence.ee,com.eu.evidence.ee.templates.avr,com.eu.evidence.ee.templates.ppc,com.eu.evidence.ee.templates.dspic,com.eu.evidence.ee.templates.s12,com.eu.evidence.ee.templates.tricore,com.eu.evidence.ee.templates.dspic"/>
+	<property name="required.iu" value="com.eu.evidence.ee,com.eu.evidence.ee.templates.avr,com.eu.evidence.ee.templates.ppc,com.eu.evidence.ee.templates.dspic,com.eu.evidence.ee.templates.s12,com.eu.evidence.ee.templates.tricore,com.eu.evidence.ee.templates.mico32"/>
 
 	<target name="main" depends="-init">
 
