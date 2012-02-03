@@ -372,7 +372,7 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 
 				buffer.append("\n" + indent + commentWriterH.writerSingleLineComment("APPMODE definition")); //\n");
 				if (!binaryDistr) {
-					buffer.append(indent + "#define EE_MAX_APPMODE " + appNumber + "\n");
+					buffer.append(indent + "#define EE_MAX_APPMODE " + appNumber + "U\n");
 				} else if (binaryDistrFull) {
 					buffer_c.append(indent + "const unsigned int EE_MAX_APPMODE = " + appNumber + ";\n");
 				}

@@ -609,7 +609,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				for (int j = 1; j < size.length; j++) {
 				    long value = size[j][0];
 //				    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
-					sbStackDecl.append(indent1 + "EE_STACK_T " +
+					sbStackDecl.append(indent1 + "static EE_STACK_T " +
 								(memoryId[j] == null ? "EE_STACK_ATTRIB" : "EE_STACK_ATTRIB_NAME("+memoryId[j]+")") +
 								" "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* "+descrStack[j]+" */\n");
 					sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+" " + commentWriterC.writerSingleLineComment("size = "+size[j][0]+" bytes"));
@@ -655,7 +655,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 					    int j = size.length;
 					    long value = irqSize[0];
 //					    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
-						sbStackDecl.append(indent1 + "EE_STACK_T EE_STACK_ATTRIB "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* irq stack */\n");
+						sbStackDecl.append(indent1 + "static EE_STACK_T EE_STACK_ATTRIB "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* irq stack */\n");
 						sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+ " " + commentWriterC.writerSingleLineComment("size = "+irqSize[0]+" bytes"));
 
 						sbStack

@@ -605,7 +605,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								+ indent2 + "{ ");
 				pre2 = "";
 				for (int i = 0; i < numTask; i++) {
-					buffer.append(pre2 + "1");
+					buffer.append(pre2 + "1U");
 					pre2 = ", ";
 				}
 				buffer.append("};\n\n");
@@ -639,7 +639,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									+ indent2
 									+ "{ -1, -1, -1, -1, -1, -1, -1, -1};\n\n"
 									+ indent1
-									+ "EE_UINT8  EE_rq_bitmask = 0U;\n\n");
+									+ "EE_TYPE_RQ_MASK  EE_rq_bitmask = 0U;\n\n");
 				} else {
 					buffer
 							.append(indent1
@@ -654,7 +654,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									+ indent2
 									+ "{ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};\n\n"
 									+ indent1
-									+ "EE_UINT16 EE_rq_bitmask = 0;\n\n");
+									+ "EE_TYPE_RQ_MASK EE_rq_bitmask = 0U;\n\n");
 				}
 		
 				// EE_th_rnact EE_rq_link
@@ -968,6 +968,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				List<ISimpleGenRes> alarmList = ool.getList(IOilObjectList.ALARM);
 		
 				if (alarmList.size() > 0 || requiredOilObjects.contains(new Integer(IOilObjectList.ALARM))) {
+					final String NULL_NAME = "NULL";
 					buffer.append(commentWriterC.writerBanner("Alarms"));
 					
 					LinkedList<String> callback_functions = new LinkedList<String>();
@@ -989,7 +990,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		
 						// set all values for each alarm
 						int counter_id = -1;
-						String callBackName = "NULL";
+						String callBackName = NULL_NAME;
 						//int task_id = 0;
 						String task_al_name = "0"; // default value
 						String evento = "0U";
@@ -1111,7 +1112,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						romBuffer.append(pre2 + indent2 + "{" + counter_id + ", "
 								+ notif_type + ", " + task_al_name
 								+ (withEvents ? ", " + evento : "") + ", "
-								+ "(EE_ADDR)" + callBackName + "}");
+								+ (NULL_NAME.equals(callBackName) ? "(EE_VOID_CALLBACK)" : "") + callBackName + "}");
 						pre2 = ",\n";
 					}
 					romBuffer.append("\n"+indent1 + "};\n\n");
@@ -1310,7 +1311,9 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					buffer.append("\n"+ indent1+"};\n");
 					appModes.remove(0);
 				}
-				if (ool.getList(IOilObjectList.ALARM).size() > 0) {
+				if (ool.getList(IOilObjectList.ALARM).size() > 0 && 
+						("true".equalsIgnoreCase(os
+								.getString(ISimpleGenResKeywords.OSEK_ALARM_AUTOSTART)))) {
 
 					buffer.append(commentWriterC.writerBanner("Init alarms parameters (ALARM)"));
 
