@@ -8,8 +8,8 @@ goto run
 echo Insufficient parameters
 echo Usage:  start_ant.sh ^<RT-Druid_dir^> ^[more ant options^]
 echo Note: If you need to use special caracters like ^= and spaces,
-echo       you have to protect them with ^^ indide a couple of ^"
-echo       Example: start_ant.bat ^"-Dconf_output_dir^^^=a^^ a^"
+echo       you have to protect them with a couple of ^"
+echo       Example: start_ant.bat ^"-Dconf_output_dir=a a^"
 goto end
 
 
@@ -25,19 +25,17 @@ set WSOPT=
 set all_params=
 
 :compress
-if "%1"=="" (goto :compress_end)
-
-
-:: check if the user already set -data parameter
-if /I "-data"=="%1" ( set WSOPT_set=true)
-
-:: remove " and ^ characters
-set param=%1
-for /f "useback tokens=*" %%a in ('%param%') do ( set param=%%~a )
-set param=%param:~0,-1%
+if %1.==. (goto :compress_end)
 
 :: save all parameters
-set all_params=%all_params% "%param%"
+set all_params=%all_params% %1
+
+:: check if the user already set -data parameter
+if /I .-data==.%1 ( set WSOPT_set=true)
+
+:: remove " characters
+set param=%1
+for /f "useback tokens=*" %%a in ('%param%') do ( set param=%%~a)
 
 :: split parameter into 2 parts
 set dir_out_prefix=%param:~0,18%
