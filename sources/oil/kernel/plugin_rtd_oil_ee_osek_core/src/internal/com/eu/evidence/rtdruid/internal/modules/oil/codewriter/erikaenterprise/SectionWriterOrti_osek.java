@@ -150,7 +150,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 
 			StringBuffer eeortiBuffer = answer[rtosId].get(OrtiConstants.FILE_EE_ORTI);
 			
-			StringBuffer eecfgBuffer = answer[rtosId].get(FILE_EE_CFG_C);
+//			StringBuffer eecfgBuffer = answer[rtosId].get(FILE_EE_CFG_C);
 			
 			/*******************************************************************
 			 * 
@@ -158,22 +158,6 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			 *  
 			 ******************************************************************/
 			
-			eecfgBuffer.append(
-					commentWriter.writerBanner("ORTI") +
-					indent1 + "#include \"ee.h\"\n\n" +
-					indent1 + "#ifdef __OO_ORTI_LASTERROR__\n" +
-					indent2 + "StatusType EE_ORTI_lasterror = E_OK;\n" +
-					indent1 + "#endif\n\n" +
-					indent1 + "#ifdef __OO_ORTI_SERVICETRACE__\n" +
-					indent2 + "volatile EE_UINT8 EE_ORTI_servicetrace;\n" +
-					indent1 + "#endif\n\n"
-//					#ifdef __OO_ORTI_RUNNINGISR2__
-//					/* this variable stores 0 if no ISR is running, or the address of the ISR stub
-//					   generated for the particular ISR handler */
-//					EE_ADDR EE_ORTI_runningisr2 = (EE_ADDR)0;
-//					#endif
-				);
-
 			StringBuffer all_task_id = new StringBuffer("            \"NO_TASK\" = \"-1\"");
 			StringBuffer all_priorities = new StringBuffer("            \"Not Running (0)\" = 0");
 			StringBuffer all_appmodes_id = new StringBuffer();
@@ -450,20 +434,6 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					}			
 					
 					eeortiBuffer.append("\n");
-				
-
-					// EE_CFG
-					List<ISimpleGenRes> resourceList = ool.getList(IOilObjectList.RESOURCE);
-					eecfgBuffer.append(
-	//				        indent1 + "#ifdef __OO_ORTI_PRIORITY__\n" +
-					        indent1 + "EE_TYPEPRIO EE_ORTI_th_priority["+taskList.size()+"]; /* MAX_TASK = "+taskList.size()+" */\n" +
-					        
-					        ((EE_ORTI_current & OrtiConstants.EE_ORTI_RESOURCE) != 0  && resourceList.size() >0 ? "\n" +
-					                indent1 + "EE_TYPEPRIO EE_ORTI_resource_oldpriority["+resourceList.size()+"]; /* MAX_RESOURCE = "+resourceList.size()+" */\n"
-						        : "")+
-	//				        indent1 + "#endif\n" +
-					        		"\n"
-					);
 				}
 			}
 
@@ -562,19 +532,6 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					}			
 					
 					eeortiBuffer.append("\n");
-				
-				
-				// EE_CFG
-					eecfgBuffer.append(
-	//				        indent1 + "#ifdef __OO_ORTI_ALARMTIME__\n" +
-					        indent1 + "/* this variable stores the time until an alarm expires; it is only\n" +
-					        indent1 + "   valid if an alarm is running.\n" +
-					        indent1 + "   Initvalue: all 0\n" +
-					        indent1 + "*/\n" +
-					        indent1 + "EE_TYPEPRIO EE_ORTI_alarmtime["+alarmList.size()+"]; /* MAX_ALARM = "+alarmList.size()+" */\n" +
-	//				        indent1 + "#endif\n" +
-					        		"\n");
-				
 				}
 			}
 
@@ -606,15 +563,6 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					}			
 					
 					eeortiBuffer.append("\n");
-				
-				
-				// EE_CFG
-					eecfgBuffer.append(
-//				        indent1 + "#ifdef __OO_ORTI_RES_LOCKER_TASK__" +
-				        indent1 + "EE_UREG EE_ORTI_res_locker["+resourceList.size()+"]; /* MAX_RESOURCE = "+resourceList.size()+" */\n" +
-//				        indent1 + "#endif\n" +
-		        				"\n");
-				
 				}
 			}
 
