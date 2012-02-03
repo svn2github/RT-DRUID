@@ -71,12 +71,12 @@ public class TaskSetTest extends TestCase {
 		
 		TaskSet ts = new TaskSet(vt, DataPath.makeSlashedId("Root/"));
 		
-		assertTrue(ts.getPrefixNumber() == 5);
-		assertTrue(ts.getSize(0) == 1);
-		assertTrue(ts.getSize(1) == 3);
-		assertTrue(ts.getSize(2) == 4);
-		assertTrue(ts.getSize(3) == 5);
-		assertTrue(ts.getSize(4) == 1);
+		assertEquals(ts.getPrefixNumber() , 5);
+		assertEquals(ts.getSize(0) , 1);
+		assertEquals(ts.getSize(1) , 3);
+		assertEquals(ts.getSize(2) , 4);
+		assertEquals(ts.getSize(3) , 5);
+		assertEquals(ts.getSize(4) , 1);
 		
 		
 		

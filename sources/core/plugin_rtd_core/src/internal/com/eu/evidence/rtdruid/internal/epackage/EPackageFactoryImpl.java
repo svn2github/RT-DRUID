@@ -378,7 +378,7 @@ public class EPackageFactoryImpl extends EPackageFactory {
 				RtdruidLog.log(new RuntimeException("The class " + className + " isn't an IEPackageProvider"));
 			} else {
 				answer = new LoaderElement(id, (Class<IEPackageProvider>) o.getClass());
-				answer.setAutoContributionSet("TRUE".equals(auto));
+				answer.setAutoContributionSet("TRUE".equalsIgnoreCase(auto));
 			}
 		} catch (Exception e) {
 			RtdruidLog.log(new RuntimeException("Not found the adapter factory loader " + className, e));
@@ -411,7 +411,7 @@ public class EPackageFactoryImpl extends EPackageFactory {
 				RtdruidLog.log("Cannot find the ecorePlugin file " + file + " provided by " + bundleName + " plugin");
 			} else {
 				answer = new ECoreFileElement(id, new PluginEcoreEpackageProvider(bundle, file));
-				answer.setAutoContributionSet("TRUE".equals(auto));
+				answer.setAutoContributionSet("TRUE".equalsIgnoreCase(auto));
 			}
 		}
 

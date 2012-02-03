@@ -4,15 +4,18 @@
 package com.eu.evidence.rtdruid.epackage;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.Rtd_corePlugin;
@@ -117,7 +120,7 @@ public class EcoreEpackageExtentionTest {
 		assertEquals(factoryElements.length, providers.length);
 		
 		final int max = 1 << ( factoryElements.length > 3 ? 3 : factoryElements.length); 
-		System.out.println("f "+factoryElements.length + " m " + max);
+		//System.out.println("f "+factoryElements.length + " m " + max);
 		
 		// disable all elements
 		for (IEPackageFactoryElement elem : factoryElements) {
@@ -136,7 +139,7 @@ public class EcoreEpackageExtentionTest {
 			for (int i=0; i<factoryElements.length; i++) {
 				IEPackageFactoryElement elem = factoryElements[i];
 				final boolean select = (selection & (1<<i)) != 0;
-				System.out.println("s "+selection + " i " + i + " " + select);
+				//System.out.println("s "+selection + " i " + i + " " + select);
 				elem.setAutoContributionSet(select);
 				
 				if (select) {
@@ -384,6 +387,34 @@ public class EcoreEpackageExtentionTest {
 	}
 
 	
+	@Test
+	public void testValidateGetEPackage_DefaultPackages()  throws RTDEPackageBuildException, IOException {
+		EPackageFactory epkgf = EPackageFactory.getFactory();
+		
+		for(IEPackageProvider provider : epkgf.getEPackageProviders()) {
+			validateEPackage(provider.getClass().getName(),provider.get());
+		}
+	}
+	
+	@Test
+	public void testValidateDefaultPackage()  throws RTDEPackageBuildException, IOException {
+		validateEPackage("default", EPackageFactory.getFactory().getEPackage());
+	}
+
+	private void validateEPackage(String name, EPackage ppkg) {
+		assertNotNull(ppkg);
+		BasicDiagnostic diag = new BasicDiagnostic();
+		Diagnostician diagnostician = new Diagnostician();
+		boolean result = diagnostician.validate(ppkg, diag, diagnostician.createDefaultContext());
+		StringBuffer msg = new StringBuffer(name+"\n");
+		for (Diagnostic d : diag.getChildren()) {
+			msg.append(d.getMessage());
+			msg.append("\n");
+		}
+		assertTrue(msg.toString(), result);
+	}
+
+
 	/**
 	 * Compare two ElementList computed from different EPackageFactory
 	 * 

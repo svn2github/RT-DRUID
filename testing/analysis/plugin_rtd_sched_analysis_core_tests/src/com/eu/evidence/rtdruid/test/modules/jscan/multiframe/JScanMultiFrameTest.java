@@ -558,9 +558,9 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 
 		          {
 			          ArrayList<Task.ProcData>  plist = (ArrayList<Task.ProcData>)proc_list;
-			          assertTrue(plist.size() == every[i].length);
+			          assertEquals(plist.size() , every[i].length);
 			          for (int k=0; k<plist.size(); k++) {
-			        	  assertTrue(every[i][k] == plist.get(k).getOnceEveryK());
+			        	  assertEquals(every[i][k] , plist.get(k).getOnceEveryK());
 			          }
 		          }
 		          
@@ -630,9 +630,9 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 
 		          {
 			          ArrayList<Task.ProcData>  plist = (ArrayList<Task.ProcData>)proc_list;
-			          assertTrue(plist.size() == every[i].length);
+			          assertEquals(plist.size() , every[i].length);
 			          for (int k=0; k<plist.size(); k++) {
-			        	  assertTrue(every[i][k] == plist.get(k).getOnceEveryK());
+			        	  assertEquals(every[i][k] , plist.get(k).getOnceEveryK());
 			          }
 		          }
 		          
@@ -641,10 +641,10 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		        	  double tot = 0;
 		        	  for (int k=0; k<wcets[i].length; k++) {
 		        		  System.out.println(".. k " + k + " " + wcets[i][k] + " -> " + gwcet.getWcet(k+1) + "(" + gwcet.getCumulativeWcet(k+1) + ")");
-		        		  assertTrue(wcets[i][k] == gwcet.getWcet(k+1));
+		        		  assertEquals(wcets[i][k] , gwcet.getWcet(k+1));
 		        		  tot += wcets[i][k];
 
-		        		  assertTrue(tot == gwcet.getCumulativeWcet(k+1));
+		        		  assertEquals(tot , gwcet.getCumulativeWcet(k+1));
 		        	  }
 		          }
 		          
@@ -664,14 +664,14 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		
 		{
 			options.put("abc", new Double(2));
-			boolean valida = options.contains("abc");
+			//boolean valida = options.contains("abc");
 			boolean valida2 = options.containsKey("abc");
 			assertTrue(valida2);
 			Object o1 =options.get("abc2");
 			System.out.println(o1);
 	
 			options.setProperty("abc2", "2..");
-			boolean valid = options.contains("abc2");
+			//boolean valid = options.contains("abc2");
 			boolean valid2 = options.containsKey("abc2");
 			assertTrue(valid2);
 			Object o2 =options.get("abc2");
@@ -704,7 +704,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		assertTrue(options.get(JScanImpl.EXPORT_SCHEDULING_DATA) instanceof ArrayList);
 		
 		ArrayList<Schedulability> schedulers = (ArrayList<Schedulability>) options.get(JScanImpl.EXPORT_SCHEDULING_DATA);
-		assertTrue(schedulers.size() == 1);
+		assertEquals(schedulers.size() , 1);
 		Schedulability sched = schedulers.get(0);
 		assertTrue(sched instanceof MultiFrameTaskSchedulability);
 		
@@ -726,9 +726,9 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 
 		         {
 			          ArrayList<Task.ProcData>  plist = (ArrayList<Task.ProcData>)proc_list;
-			          assertTrue(plist.size() == every[i].length);
+			          assertEquals(plist.size() , every[i].length);
 			          for (int k=0; k<plist.size(); k++) {
-			        	  assertTrue(every[i][k] == plist.get(k).getOnceEveryK());
+			        	  assertEquals(every[i][k] , plist.get(k).getOnceEveryK());
 			          }
 		          }
 		          
@@ -769,8 +769,9 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		assertTrue(options.containsKey(JScanImpl.EXPORT_SCHEDULING_DATA));
 		assertTrue(options.get(JScanImpl.EXPORT_SCHEDULING_DATA) instanceof ArrayList);
 		
+		@SuppressWarnings("unchecked")
 		ArrayList<Schedulability> schedulers = (ArrayList<Schedulability>) options.get(JScanImpl.EXPORT_SCHEDULING_DATA);
-		assertTrue(schedulers.size() == 1);
+		assertEquals(schedulers.size() , 1);
 		Schedulability sched = schedulers.get(0);
 		assertTrue(sched instanceof MultiFrameTaskSchedulability);
 		
@@ -790,7 +791,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 
 		         {
 			          ArrayList<Task.ProcData>  plist = (ArrayList<Task.ProcData>)proc_list;
-			          assertTrue(plist.size() == 0);
+			          assertEquals(plist.size() , 0);
 			          
 		          }
 		          

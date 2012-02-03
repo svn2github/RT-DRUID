@@ -13,13 +13,6 @@ import junit.framework.TestCase;
  */
 public class OffsetSchedulabilityEDFTest extends TestCase {
 	
-	public static void main(String[] args) {		
-	}
-
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
-
 	
 public void testIsTaskSetSchedulable() {
 

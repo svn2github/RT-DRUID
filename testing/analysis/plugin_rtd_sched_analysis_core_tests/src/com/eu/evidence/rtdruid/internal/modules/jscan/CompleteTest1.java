@@ -327,17 +327,17 @@ public class CompleteTest1 extends AbstractCompleteTest {
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
 
 		//vt.startComp();
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == null);
-		assertTrue(vt.getCommandStack().getUndoCommand() == null);
-		assertTrue(vt.getCommandStack().getRedoCommand() == null);
+		assertNull(vt.getCommandStack().getMostRecentCommand());
+		assertNull(vt.getCommandStack().getUndoCommand());
+		assertNull(vt.getCommandStack().getRedoCommand());
 
 		JScan.startTest(vt, system, JScan.NO_OFFSET_ID, null);
 
-		assertTrue( vt.getCurrentTransaction() == null);
+		assertNull(vt.getCurrentTransaction());
 		CompoundCommand com = (CompoundCommand) vt.getCommandStack().getMostRecentCommand();
-		assertTrue( com != null);
-		assertTrue(vt.getCommandStack().getUndoCommand() == com);
-		assertTrue(vt.getCommandStack().getRedoCommand() == null);
+		assertNotNull(com);
+		assertSame(vt.getCommandStack().getUndoCommand() , com);
+		assertNull(vt.getCommandStack().getRedoCommand());
 
 		vt.newTreeInterface().setValue(system+IVarTree.SEPARATOR
 				+"Schedulability"+IVarTree.SEPARATOR
@@ -350,8 +350,8 @@ public class CompleteTest1 extends AbstractCompleteTest {
 		vt.getCommandStack().undo();
 		vt.getCommandStack().undo();
 		check(vt, Vt2StringUtilities.loadString(example1[0]));
-		assertTrue(vt.getCommandStack().getUndoCommand() == null);
-		assertTrue(vt.getCommandStack().getRedoCommand() == com);
+		assertNull(vt.getCommandStack().getUndoCommand());
+		assertSame(vt.getCommandStack().getRedoCommand() , com);
 	}
 
 	
@@ -402,9 +402,9 @@ public class CompleteTest1 extends AbstractCompleteTest {
 			String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
 
 			//vt.startComp();
-			assertTrue(vt.getCommandStack().getMostRecentCommand() == null);
-			assertTrue(vt.getCommandStack().getUndoCommand() == null);
-			assertTrue(vt.getCommandStack().getRedoCommand() == null);
+			assertNull(vt.getCommandStack().getMostRecentCommand());
+			assertNull(vt.getCommandStack().getUndoCommand());
+			assertNull(vt.getCommandStack().getRedoCommand());
 
 			boolean ok = false;
 			try {
@@ -414,10 +414,10 @@ public class CompleteTest1 extends AbstractCompleteTest {
 			}
 			assertTrue(ok);
 
-			assertTrue( vt.getCurrentTransaction() == null);
-			assertTrue(vt.getCommandStack().getUndoCommand() == null);
-			assertTrue(vt.getCommandStack().getRedoCommand() == null);
-			assertTrue(vt.getCommandStack().getMostRecentCommand() == null);
+			assertNull(vt.getCurrentTransaction());
+			assertNull(vt.getCommandStack().getUndoCommand());
+			assertNull(vt.getCommandStack().getRedoCommand());
+			assertNull(vt.getCommandStack().getMostRecentCommand());
 
 			check(vt, Vt2StringUtilities.loadString(example1bis));
 		}

@@ -12,8 +12,6 @@ import junit.framework.TestCase;
  *
  */
 public class OffsetEDFSchedulabilityCompleteTest extends TestCase {
-	public static void main(String[] args) {
-	}
 	
 	OffsetEDFSchedulabilityComplete o ;
 	

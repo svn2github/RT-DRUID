@@ -13,6 +13,7 @@ package com.eu.evidence.rtdruid.tests.vartree.data;
  */
 public class SimpleExamples {
 
+	public final static SimpleExamples instance = new SimpleExamples();
 	
 	/**	test : try to load an example
 	*/

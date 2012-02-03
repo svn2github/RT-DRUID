@@ -5,6 +5,7 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -117,76 +118,54 @@ public class DataPathTest {
 		// makeId(String)	
 		{ 
 			String[] tmp = { null };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId((String) null ))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId((String) null )));
 		}
 		{ 
 			String[] tmp = { null };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId((String) null ))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId((String) null )));
 		}
 		{
 			String[] tmp = { "ciao" };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId("ciao" ))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId("ciao" )));
 		}
 		{
 			String[] tmp = {"ciao" + S + "abc"};
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId("ciao" + S + "abc" ))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId("ciao" + S + "abc" )));
 		}
 		{
 			String[] tmp = {"" +S+ "ciao" + S + "abc" +P};
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId("" +S+ "ciao" + S + "abc" +P ))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId("" +S+ "ciao" + S + "abc" +P )));
 		}
 		
 		{ // print a warning but work
 			String[] tmp = { null };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(null)) );
+			assertArrayEquals(tmp, DataPath.resolveId(null));
 		}
 		{ // the correct way
 			String[] tmp = { null };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(NULL_ID)) );
+			assertArrayEquals(tmp, DataPath.resolveId(NULL_ID));
 		}
 		
 		// makeId(String[])
 		{ 
 			String[] tmp = { null };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId(tmp))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId(tmp)));
 		}
 		{ 
 			String[] tmp = { "a", "b" };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId(tmp))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId(tmp)));
 		}
 		{ 
 			String[] tmp = { null, null };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId(tmp))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId(tmp)));
 		}
 		{ 
 			String[] tmp = { null, "Ciao", null };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId(tmp))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId(tmp)));
 		}
 		{ 
 			String[] tmp = { "a"+S+"b", ""+S+"Ciao"+S+S+P+P, "m"+P };
-			assertTrue( equlArrays(tmp, DataPath.resolveId(DataPath.makeId(tmp))) );
+			assertArrayEquals(tmp, DataPath.resolveId(DataPath.makeId(tmp)));
 		}
 	}
-	
-	private boolean equlArrays(String[] a, String[] b) {
-		if (a == b) return true; // stesso oggetto oppure entrambi nulli
-
-		if ( a != null && b != null) { // entrambi non nulli
-			if (a.length != b.length) return false; // dimensioni diverse
-			
-			for (int i =0; i<a.length; i++) {
-				if (a[i] == b[i]) continue; // stesso elemento o entrambi nulli
-				
-				if (a[i] == null) return false; // a e' nullo ma b non lo e' (avrebbe dato vero l'if precedente
-				
-				if (!a[i].equals(b[i])) return false; // trovato un elemento diverso   
-				
-				// prossimo elemento
-			}
-			return true;
-		}
-		// uno dei due e' nullo e l'altro no 
-		return false;
-	}
-
 }

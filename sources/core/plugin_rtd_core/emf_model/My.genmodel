@@ -8,296 +8,296 @@
     updateClasspath="false" rootImplementsInterface="" featureMapWrapperClass="" testsDirectory=""
     complianceLevel="5.0" editPluginID="com.eu.evidence.rtdruid.core" editorPluginID="rtdruid.vartree.data.editor"
     language="" interfaceNamePattern="" classNamePattern="">
-  <foreignModel>data.ecore</foreignModel>
+  <foreignModel>rtdruid_merge.ecore</foreignModel>
   <genPackages prefix="Data" basePackage="com.eu.evidence" interfacePackageSuffix="vartree.data"
       metaDataPackageSuffix="vartree.data" classPackageSuffix="internal.vartree.data.impl"
       utilityPackageSuffix="internal.vartree.data.init" providerPackageSuffix="internal.vartree.data.provider"
-      testsPackageSuffix="vartree.data.tests" ecorePackage="data.ecore#/">
-    <genDataTypes ecoreDataType="data.ecore#//BooleanVar"/>
-    <genDataTypes ecoreDataType="data.ecore#//DoubleVar"/>
-    <genDataTypes ecoreDataType="data.ecore#//FloatVar"/>
-    <genDataTypes ecoreDataType="data.ecore#//IntegerVar"/>
-    <genDataTypes ecoreDataType="data.ecore#//LongVar"/>
-    <genDataTypes ecoreDataType="data.ecore#//OilVar"/>
-    <genDataTypes ecoreDataType="data.ecore#//StringVar"/>
-    <genDataTypes ecoreDataType="data.ecore#//TimeVar"/>
-    <genDataTypes ecoreDataType="data.ecore#//PropertyVar"/>
-    <genClasses ecoreClass="data.ecore#//System">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Annotation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Architectural"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Functional"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Mapping"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Modes"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//System/Name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//System/Schedulability"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//System/XTC_Cookie"/>
+      testsPackageSuffix="vartree.data.tests" ecorePackage="rtdruid_merge.ecore#/">
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//BooleanVar"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//DoubleVar"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//FloatVar"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//IntegerVar"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//LongVar"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//OilVar"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//StringVar"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//TimeVar"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//PropertyVar"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//System">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//System/Annotation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//System/Architectural"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//System/Functional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//System/Mapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//System/Modes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//System/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//System/Schedulability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//System/XTC_Cookie"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//ObjectWithID">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ObjectWithID/properties"/>
-      <genOperations ecoreOperation="data.ecore#//ObjectWithID/checkNewID">
-        <genParameters ecoreParameter="data.ecore#//ObjectWithID/checkNewID/newID"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//ObjectWithID">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ObjectWithID/properties"/>
+      <genOperations ecoreOperation="rtdruid_merge.ecore#//ObjectWithID/checkNewID">
+        <genParameters ecoreParameter="rtdruid_merge.ecore#//ObjectWithID/checkNewID/newID"/>
       </genOperations>
-      <genOperations ecoreOperation="data.ecore#//ObjectWithID/getObjectID"/>
-      <genOperations ecoreOperation="data.ecore#//ObjectWithID/setObjectID">
-        <genParameters ecoreParameter="data.ecore#//ObjectWithID/setObjectID/newID"/>
+      <genOperations ecoreOperation="rtdruid_merge.ecore#//ObjectWithID/getObjectID"/>
+      <genOperations ecoreOperation="rtdruid_merge.ecore#//ObjectWithID/setObjectID">
+        <genParameters ecoreParameter="rtdruid_merge.ecore#//ObjectWithID/setObjectID/newID"/>
       </genOperations>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Modes">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Modes/ModeList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Modes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Modes/ModeList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Mode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Mode/Name"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Mode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Mode/Name"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Functional">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/EventList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/PartialOrderList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/Implementation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/TimeConstList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Functional/TypeList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Functional">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Functional/EventList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Functional/PartialOrderList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Functional/Implementation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Functional/TimeConstList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Functional/TypeList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Implementation"/>
-    <genClasses ecoreClass="data.ecore#//Proc">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Proc/MethodRefList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Proc/Methods"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Implementation"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Proc">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Proc/MethodRefList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Proc/Methods"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Architectural">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/BusList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/EcuList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/FrameList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/MutexList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/ResourceList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/SignalList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Architectural/TaskList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Architectural">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Architectural/BusList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Architectural/EcuList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Architectural/FrameList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Architectural/MutexList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Architectural/ResourceList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Architectural/SignalList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Architectural/TaskList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Mapping">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Mapping/ProcMapList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Mapping/TaskMapList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Mapping/VarMapList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Mapping">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Mapping/ProcMapList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Mapping/TaskMapList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Mapping/VarMapList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Annotation">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Annotation/ExecTimeLists"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Annotation/CacheMissCostLists"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Annotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Annotation/ExecTimeLists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Annotation/CacheMissCostLists"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Schedulability">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Schedulability/SchedulingScenarioList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Schedulability">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Schedulability/SchedulingScenarioList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Var">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Var/Methods"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Var/Type"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Var">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Var/Methods"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Var/Type"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Trigger">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Trigger/MethodRefList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Trigger">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Trigger/MethodRefList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Event">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Event/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Event/MethodRefName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Event/Type"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Event">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Event/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Event/MethodRefName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Event/Type"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//PartialOrder">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//PartialOrder/ModeRef"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//PartialOrder/OrderList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//PartialOrder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//PartialOrder/ModeRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//PartialOrder/OrderList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//SystemImplementation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//SystemImplementation/Name"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//SystemImplementation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//SystemImplementation/Name"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//SubSystem">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SubSystem/Implementation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SubSystem/ProvidedInterfaceList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SubSystem/RequiredInterfaceList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//SubSystem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//SubSystem/Implementation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//SubSystem/ProvidedInterfaceList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//SubSystem/RequiredInterfaceList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//TimeConst">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConst/ModeRef"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//TimeConst/TimeConstElementList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//TimeConst">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TimeConst/ModeRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//TimeConst/TimeConstElementList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//MethodRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//MethodRef/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//MethodRef/MethodName"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//MethodRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//MethodRef/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//MethodRef/MethodName"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//ProvidedInterface">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProvidedInterface/LocalMethodRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProvidedInterface/LocalObjectRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProvidedInterface/Name"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//ProvidedInterface">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ProvidedInterface/LocalMethodRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ProvidedInterface/LocalObjectRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ProvidedInterface/Name"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//RequiredInterface">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//RequiredInterface/ExternalMethodRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//RequiredInterface/Name"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//RequiredInterface">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//RequiredInterface/ExternalMethodRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//RequiredInterface/Name"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Order">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Order/FirstEvent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Order/SecondEvent"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Order">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Order/FirstEvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Order/SecondEvent"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//TimeConstElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConstElement/BoundType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConstElement/BoundValue"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConstElement/FirstEvent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TimeConstElement/SecondEvent"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//TimeConstElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TimeConstElement/BoundType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TimeConstElement/BoundValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TimeConstElement/FirstEvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TimeConstElement/SecondEvent"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Ecu">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Ecu/CpuList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Ecu/Name"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Ecu">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Ecu/CpuList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Ecu/Name"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Task">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Task/ActivationList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Task/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Task/OilVar"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Task/ResourceRefList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Task/SchedulingList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Task/Type"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Task">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Task/ActivationList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Task/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Task/OilVar"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Task/ResourceRefList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Task/SchedulingList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Task/Type"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Resource">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Resource/Methods"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Resource/MutexRefList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Resource/Name"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Resource">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Resource/Methods"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Resource/MutexRefList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Resource/Name"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Bus">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Bus/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Bus/Speed"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Bus/Type"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Bus">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Bus/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Bus/Speed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Bus/Type"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Frame">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/ActivationClass"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/ActivationRate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/ActivationType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/Id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/Length"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Frame/Name"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Frame">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Frame/ActivationClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Frame/ActivationRate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Frame/ActivationType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Frame/Id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Frame/Length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Frame/Name"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Signal">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Signal/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Signal/OilVar"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Signal/Type"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Signal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Signal/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Signal/OilVar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Signal/Type"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Mutex">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Mutex/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Mutex/OilVar"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Mutex/Policy"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Mutex">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Mutex/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Mutex/OilVar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Mutex/Policy"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Cpu">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Model"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Cpu/Rtos"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Cpu/OsApplication"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Speed"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/Speed_Unit"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Cpu/BinaryImage"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Cpu">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Cpu/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Cpu/Model"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Cpu/Rtos"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Cpu/OsApplication"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Cpu/Speed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Cpu/Speed_Unit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Cpu/BinaryImage"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Rtos">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/OilVar"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/Type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Rtos/Methods"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Rtos">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Rtos/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Rtos/OilVar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Rtos/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Rtos/Methods"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Scheduling">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/ModeRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/PreemptionGroupName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Priority"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Threshold"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Scheduling/Stack"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Scheduling">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Scheduling/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Scheduling/PreemptionGroupName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Scheduling/Priority"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Scheduling/Threshold"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Scheduling/Stack"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Activation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/ActNumber"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/ActivationClass"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/Deadline"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/ModeRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/Offset"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/Period"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Activation/Type"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Activation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Activation/ActNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Activation/ActivationClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Activation/Deadline"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Activation/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Activation/Offset"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Activation/Period"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Activation/Type"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//ResourceRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ResourceRef/ModeRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ResourceRef/ResourceMethodRef"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//ResourceRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ResourceRef/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ResourceRef/ResourceMethodRef"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//MutexRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//MutexRef/ModeRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//MutexRef/MutexName"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//MutexRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//MutexRef/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//MutexRef/MutexName"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//ExecTime">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTime/Best"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//ExecTime/Distribution"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTime/Ref"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTime/Type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTime/Worst"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//ExecTime">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ExecTime/Best"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//ExecTime/Distribution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ExecTime/Ref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ExecTime/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ExecTime/Worst"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//ExecTimeList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//ExecTimeList/ExecTimeItemsList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ExecTimeList/ModeRef"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//ExecTimeList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//ExecTimeList/ExecTimeItemsList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ExecTimeList/ModeRef"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Distribution">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Distribution/Avg"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Distribution/SampleList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Distribution/Type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Distribution/Variance"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Distribution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Distribution/Avg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Distribution/SampleList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Distribution/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Distribution/Variance"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Sample">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Sample/Probability"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Sample/Value"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Sample">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Sample/Probability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Sample/Value"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//ProcMap">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/ModeRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/Order"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/ProcRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/TaskRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/OnceEveryK"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//ProcMap/MethodRefName"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//ProcMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ProcMap/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ProcMap/Order"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ProcMap/ProcRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ProcMap/TaskRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ProcMap/OnceEveryK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//ProcMap/MethodRefName"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//TaskMap">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskMap/ModeRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskMap/RtosRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskMap/TaskRef"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//TaskMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TaskMap/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TaskMap/RtosRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TaskMap/TaskRef"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//VarMap">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/BusRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/FrameRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/ModeRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/MutexRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//VarMap/VarRef"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//VarMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//VarMap/BusRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//VarMap/FrameRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//VarMap/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//VarMap/MutexRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//VarMap/VarRef"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//SchedulingScenario">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SchedulingScenario/CpuSchedList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//SchedulingScenario/ModeRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//SchedulingScenario/Reports"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//SchedulingScenario/TaskSchedList"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//SchedulingScenario">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//SchedulingScenario/CpuSchedList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//SchedulingScenario/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//SchedulingScenario/Reports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//SchedulingScenario/TaskSchedList"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//CpuSched">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/Boundary"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/CpuRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/Schedulable"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/SpeedFactor"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/Utilization"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CpuSched/MaxStackSize"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//CpuSched">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CpuSched/Boundary"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CpuSched/CpuRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CpuSched/Schedulable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CpuSched/SpeedFactor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CpuSched/Utilization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CpuSched/MaxStackSize"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//TaskSched">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/CDelta"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/ResponseTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/Schedulable"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/TaskRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/TDelta"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//TaskSched/Utilization"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//TaskSched">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TaskSched/CDelta"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TaskSched/ResponseTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TaskSched/Schedulable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TaskSched/TaskRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TaskSched/TDelta"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//TaskSched/Utilization"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//CacheMissCostList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//CacheMissCostList/CacheMissCostItemsList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCostList/ModeRef"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//CacheMissCostList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//CacheMissCostList/CacheMissCostItemsList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CacheMissCostList/ModeRef"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//CacheMissCost">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCost/Best"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//CacheMissCost/Distribution"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCost/Ref"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCost/Type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//CacheMissCost/Worst"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//CacheMissCost">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CacheMissCost/Best"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//CacheMissCost/Distribution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CacheMissCost/Ref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CacheMissCost/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//CacheMissCost/Worst"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Field">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Field/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Field/Type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Field/Size"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Field/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Field/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Field/Size"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//Type">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Type/Name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference data.ecore#//Type/Field"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//Type/Dim"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Type/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Type/Field"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Type/Dim"/>
     </genClasses>
-    <genClasses ecoreClass="data.ecore#//OsApplication">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//OsApplication/Name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute data.ecore#//OsApplication/OilVar"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OsApplication">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OsApplication/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OsApplication/OilVar"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

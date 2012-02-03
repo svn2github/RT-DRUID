@@ -121,7 +121,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 			case IOilImplPointer.FIRST_LEVEL : {
 				String type = cd.getAttributes().getProperty(IOilXMLLabels.ATTR_OBJ_TYPE);
 				current_eclass = eCoreFactory.createEClass();
-				path.add(type);
+				path.add("OIL"+type);
 				current_eclass.setName(compute_full_name(path));
 				
 
@@ -289,14 +289,15 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				current_eclass.setAbstract(true);
 				
 				{
-					EAttribute eattr_type = eCoreFactory.createEAttribute();
-					eattr_type.setName("variant_type");
-					eattr_type.setEType(computeEType("STRING"));
-					eattr_type.setDefaultValue(type);
-					eattr_type.setChangeable(false);
-					eattr_type.setLowerBound(1);
-					eattr_type.setUpperBound(1);
-					current_eclass.getEStructuralFeatures().add(eattr_type);
+					addAnnotation("variant_type", "" + type, current_eclass);
+//					EAttribute eattr_type = eCoreFactory.createEAttribute();
+//					eattr_type.setName("variant_type");
+//					eattr_type.setEType(computeEType("STRING"));
+//					eattr_type.setDefaultValue(type);
+//					eattr_type.setChangeable(false);
+//					eattr_type.setLowerBound(1);
+//					eattr_type.setUpperBound(1);
+//					current_eclass.getEStructuralFeatures().add(eattr_type);
 				}
 				
 				{ // containment reference
@@ -332,14 +333,15 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				current_eclass.getESuperTypes().add(parent_class);
 				
 				{
-					EAttribute eattr_type = eCoreFactory.createEAttribute();
-					eattr_type.setName("type");
-					eattr_type.setEType(computeEType("STRING"));
-					eattr_type.setDefaultValue(name);
-					eattr_type.setChangeable(false);
-					eattr_type.setLowerBound(1);
-					eattr_type.setUpperBound(1);
-					current_eclass.getEStructuralFeatures().add(eattr_type);
+					addAnnotation("type", "" + name, current_eclass);
+//					EAttribute eattr_type = eCoreFactory.createEAttribute();
+//					eattr_type.setName("type");
+//					eattr_type.setEType(computeEType("STRING"));
+//					eattr_type.setDefaultValue(name);
+//					eattr_type.setChangeable(false);
+//					eattr_type.setLowerBound(1);
+//					eattr_type.setUpperBound(1);
+//					current_eclass.getEStructuralFeatures().add(eattr_type);
 				}
 				
 				
@@ -469,7 +471,10 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				pendingRef.ref.setEType(ec);
 			} else {
 				if (pendingRef.type.endsWith("_TYPE")) {
-					String new_type = pendingRef.type.substring(0, pendingRef.type.length() - "_TYPE".length());
+					String new_type = "OIL"+pendingRef.type.substring(0, pendingRef.type.length() - "_TYPE".length());
+//					if (new_type.length()>1) {
+//						new_type = Character.toUpperCase(new_type.charAt(0)) + new_type.substring(1).toLowerCase();
+//					}
 					
 					RtdruidLog.showDebug("Trying "+new_type + " instead of " + pendingRef.type+ "\n");
 

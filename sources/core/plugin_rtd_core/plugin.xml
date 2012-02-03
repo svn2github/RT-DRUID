@@ -74,7 +74,7 @@
        point="com.eu.evidence.rtdruid.core.rtdruidEPackages">
     <ecoreFile
           auto_contribute="true"
-          file="emf_model/data.ecore"
+          file="emf_model/rtdruid_base_model.ecore"
           pkg_id="RT-Druid Core - Base contribution">
     </ecoreFile>
  </extension>

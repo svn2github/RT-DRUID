@@ -886,15 +886,15 @@ System.out.println("\nFirst check\n");
 		// check for resources
 		TaskSet ts = new TaskSet(vt, system, mode);
 		ts.setProperty("resource", "", false);
-		assertTrue(ts.getPrefixNumber() == 2);
-		assertTrue(ts.getSize(1) == 4);
+		assertEquals(ts.getPrefixNumber() , 2);
+		assertEquals(ts.getSize(1) , 4);
 		{
 			Task t = (Task) ts.getItem(1, 0);
 			assertTrue("Task\\\\1".equals(t.getName()));
 			Enumeration en = t.getAllResources();
 			assertTrue(en.hasMoreElements());
 			assertTrue("Mutex/1".equals( en.nextElement()));
-			assertTrue(!en.hasMoreElements());
+			assertFalse(en.hasMoreElements());
 		}
 		{
 			Task t = (Task) ts.getItem(1, 1);
@@ -902,17 +902,17 @@ System.out.println("\nFirst check\n");
 			Enumeration en = t.getAllResources();
 			assertTrue(en.hasMoreElements());
 			assertTrue("Mutex/1".equals( en.nextElement()));
-			assertTrue(!en.hasMoreElements());
+			assertFalse(en.hasMoreElements());
 		}
 		{
 			Task t = (Task) ts.getItem(1, 2);
 			assertTrue("/Task\\\\ISR1/".equals(t.getName()));
-			assertTrue(!t.getAllResources().hasMoreElements());
+			assertFalse(t.getAllResources().hasMoreElements());
 		}
 		{
 			Task t = (Task) ts.getItem(1, 3);
 			assertTrue("Task/ISR2".equals(t.getName()));
-			assertTrue(!t.getAllResources().hasMoreElements());
+			assertFalse(t.getAllResources().hasMoreElements());
 		}
 		
 		
