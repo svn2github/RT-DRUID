@@ -51,6 +51,7 @@ import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 import com.eu.evidence.rtdruid.vartree.tools.Utility;
+import com.eu.evidence.rtdruid.vartree.variables.StringMVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 /**
@@ -2493,20 +2494,15 @@ public class SimpleTransform implements IOilTransform {
 		} else {
 //			if (vtp.exist(null /* OAPKG.getValue_Values().getName() */)) {
 				// ------------- A VARIABLE -----------------
-				String type = null;
-				{
-					IVarTreePointer tvtp = (IVarTreePointer) vtp.clone();
-					type = tvtp.getType();
-//					tvtp.go(null /* OAPKG.getParameter_Type().getName() */);
-//					IVariable var = tvtp.getVar();
-//
-//					type = "" + var;
-				}
+//				String type = vtp.getType();
+				// TODO check IOilImplementationPointer
 
-				String quote = "STRING".equalsIgnoreCase(type) ? "\"" : "";
+				//String quote = "STRING".equalsIgnoreCase(type) ? "\"" : "";
 //				vtp.go(null/* OAPKG.getValue_Values().getName() */);
 
 				IVariable var = vtp.getVar();
+				String quote = var instanceof StringVar || var instanceof StringMVar ? "\"" : "";
+				
 				if (var instanceof IMultiValues) {
 					String values[] = ((IMultiValues) var).getValues();
 					if (values == null) {
@@ -2517,7 +2513,8 @@ public class SimpleTransform implements IOilTransform {
 						buffer.append(indent + name + " = " + quote + values[i] + quote + ";\n");
 					}
 				} else {
-					if (!"null".equals("" + vtp.getVar())) {
+					String txt = "" + vtp.getVar();
+					if (!"null".equals(txt) && !txt.isEmpty()) {
 						buffer.append(indent + name + " = " + quote + vtp.getVar() + quote + ";\n");
 					}
 				}

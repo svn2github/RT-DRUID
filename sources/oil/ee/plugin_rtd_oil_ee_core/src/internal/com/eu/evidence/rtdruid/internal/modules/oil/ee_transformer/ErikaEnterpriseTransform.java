@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,12 +20,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilTransformException;
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform;
 import com.eu.evidence.rtdruid.vartree.DataPath;
+import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This class just store all data inside the OilVar of each FirstLevelObject
@@ -377,193 +384,193 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 	
 	// ****************************************************
 	
-//	/**
-//	 * Write the application section
-//	 * 
-//	 * @param buffer
-//	 *            the output (Oil)
-//	 * @param id
-//	 *            identifies the Application
-//	 * @param rtosPath
-//	 *            identifies the current rtos
-//	 */
-//	protected void writeApplication(StringBuffer buffer, OilImplID id,
-//			String rtosPath) {
-//		
-//		writeApplication(buffer, id, new String[] { rtosPath} );
-//	}
-//	/**
-//	 * Write the application section
-//	 * 
-//	 * @param buffer
-//	 *            the output (Oil)
-//	 * @param id
-//	 *            identifies the Application
-//	 * @param rtosPath
-//	 *            identifies the current rtos
-//	 */
-//	protected void writeApplication(StringBuffer buffer, OilImplID id,
-//			String[] rtosPath) {
-//
-//		String sysName = DataPath.splitPath(rtosPath[0])[0];
-//
-//		//String cpuName = splittedPath[0];
-//		String oilVarPrefix = S
+	/**
+	 * Write the application section
+	 * 
+	 * @param buffer
+	 *            the output (Oil)
+	 * @param id
+	 *            identifies the Application
+	 * @param rtosPath
+	 *            identifies the current rtos
+	 */
+	protected void writeApplication(StringBuffer buffer, OilImplID id,
+			String rtosPath) {
+		
+		writeApplication(buffer, id, new String[] { rtosPath} );
+	}
+	/**
+	 * Write the application section
+	 * 
+	 * @param buffer
+	 *            the output (Oil)
+	 * @param id
+	 *            identifies the Application
+	 * @param rtosPath
+	 *            identifies the current rtos
+	 */
+	protected void writeApplication(StringBuffer buffer, OilImplID id,
+			String[] rtosPath) {
+
+		String sysName = DataPath.splitPath(rtosPath[0])[0];
+
+		//String cpuName = splittedPath[0];
+		String oilVarPrefix = S;
 //				+ OilApplPackage.eINSTANCE.getRoot_HwList().getName() + S
 //				+ DataPath.makeSlashedId(id.getHW()) + S
 //				+ OilApplPackage.eINSTANCE.getHW_RtosList().getName() + S
 //				+ DataPath.makeSlashedId(id.getRtos()) + S
 //				+ OilApplPackage.eINSTANCE.getRTOS_ParameterList().getName()
 //				+ S;
-//
-//		//header
-//		buffer.append("CPU " + sysName + " {\n");
-//
-//		IOilObjectList ool = extractApplicationObjects(rtosPath);
-//
-//		int order[] = { IOilObjectList.OS, IOilObjectList.OSAPPLICATION, IOilObjectList.TASK,
-//				IOilObjectList.COUNTER, IOilObjectList.ALARM,
-//				IOilObjectList.RESOURCE, IOilObjectList.EVENT, IOilObjectList.ISR,
-//				IOilObjectList.MESSAGE, IOilObjectList.NETWORKMESSAGE,
-//				IOilObjectList.COM, IOilObjectList.NM, IOilObjectList.APPMODE,
-//				IOilObjectList.IPDU };
-//
-//		for (int oolId = 0; oolId < order.length; oolId++) {
-//
-//			List<ISimpleGenRes> olist = ool.getList(order[oolId]);
-//			for (Iterator<ISimpleGenRes> iter = olist.iterator(); iter.hasNext();) {
-//				ISimpleGenRes curr = (ISimpleGenRes) iter.next(); 
-//				writeApplicationObject(buffer, oilVarPrefix,
-//						curr, order[oolId], curr.getString(ISimpleGenResKeywords.RTOS_PATH));
-//			}
-//
-//		}
-//
-//		//end
-//		buffer.append("};\n\n");
-//
-//	}
+
+		//header
+		buffer.append("CPU " + sysName + " {\n");
+
+		IOilObjectList ool = extractApplicationObjects(rtosPath);
+
+		int order[] = { IOilObjectList.OS, IOilObjectList.OSAPPLICATION, IOilObjectList.TASK,
+				IOilObjectList.COUNTER, IOilObjectList.ALARM,
+				IOilObjectList.RESOURCE, IOilObjectList.EVENT, IOilObjectList.ISR,
+				IOilObjectList.MESSAGE, IOilObjectList.NETWORKMESSAGE,
+				IOilObjectList.COM, IOilObjectList.NM, IOilObjectList.APPMODE,
+				IOilObjectList.IPDU };
+
+		for (int oolId = 0; oolId < order.length; oolId++) {
+
+			List<ISimpleGenRes> olist = ool.getList(order[oolId]);
+			for (Iterator<ISimpleGenRes> iter = olist.iterator(); iter.hasNext();) {
+				ISimpleGenRes curr = (ISimpleGenRes) iter.next(); 
+				writeApplicationObject(buffer, oilVarPrefix,
+						curr, order[oolId], curr.getString(ISimpleGenResKeywords.RTOS_PATH));
+			}
+
+		}
+
+		//end
+		buffer.append("};\n\n");
+
+	}
 
 	
-//	/**
-//	 * Take all data from the given VarTree and write the rigth Oil File. It
-//	 * requireds also the id of HW and RT-OS.
-//	 * 
-//	 * @param vt
-//	 *            where store all data
-//	 * @param id
-//	 *            HW and RT-OS ids for data
-//	 * @param rtosPaths
-//	 *            identifies all rtos needed to write the oil file
-//	 * 
-//	 * @return a string with Oil syntax
-//	 * 
-//	 * @throws OilTransformException
-//	 *             if there are some problems
-//	 */
-//	public String write(IVarTree vt, OilImplID id, String[] rtosPaths)
-//			throws OilTransformException {
-//		
-//		// init
-//		this.vt = vt;
-//
-//		if (rtosPaths == null || rtosPaths.length == 0) {
-//			throw new NullPointerException("required a not null path");
-//		}
-//		for (int i=0; i<rtosPaths.length; i++) {
-//			if (!vt.newTreeInterface().exist(rtosPaths[i],
-//					DataPackage.eINSTANCE.getRtos().getName())) {
-//				throw new IllegalArgumentException(
-//						"The specified rtos path isn't valid.\n\t" + "path = "
-//								+ rtosPaths[i]);
-//			}
-//		}
-//
-//		StringBuffer buffer = new StringBuffer();
-//		if (writeImplementation) {
-//			buffer.append("OIL_VERSION = \"2.4\";\n\n");
-//	
-//			// write
-//			writeImplementation(buffer, id);
-//		}
-//
-//		writeApplication(buffer, id, rtosPaths);
-//		return buffer.toString();
-//	}
+	/**
+	 * Take all data from the given VarTree and write the rigth Oil File. It
+	 * requireds also the id of HW and RT-OS.
+	 * 
+	 * @param vt
+	 *            where store all data
+	 * @param id
+	 *            HW and RT-OS ids for data
+	 * @param rtosPaths
+	 *            identifies all rtos needed to write the oil file
+	 * 
+	 * @return a string with Oil syntax
+	 * 
+	 * @throws OilTransformException
+	 *             if there are some problems
+	 */
+	public String write(IVarTree vt, OilImplID id, String[] rtosPaths)
+			throws OilTransformException {
+		
+		// init
+		this.vt = vt;
 
-//	/**
-//	 * Write the application section
-//	 * 
-//	 * @param buffer
-//	 *            the output (Oil)
-//	 * 
-//	 * @param id
-//	 *            identifies the Application
-//	 */
-//	@SuppressWarnings("unchecked")
-//	protected void writeApplicationObject(StringBuffer buffer,
-//			String oilVarPrefix, ISimpleGenRes object, int objType, String rtosPath) {
-//		
-//		switch (objType) {
-//		case IOilObjectList.OS: {
-//
-//			ISimpleGenRes tmp = new SimpleGenRes(object.getName().contains("" + DataPath.SEPARATOR) ? extractRtosName(object.getName()) : "EE",
-//						object.getPath());
-//			
-//			// fare la copia dell'oggetto !!!
-//			HashMap properties = object.getAllProperties();
-//			for (Iterator iter = properties.keySet().iterator(); iter.hasNext(); ) {
-//				String key = (String) iter.next();
-//				tmp.setObject(key, properties.get(key));
-//			}
-//			
-//			object = tmp;
-//		}
-//			break;		
-//			
-//		case IOilObjectList.TASK: {
-//			
-//			// CPU_ID
-//						String path = DPKG.getTask_OilVar().getName() + S
-//								+ object.getString(IOilXMLLabels.ATTR_TYPE) + S
-//								+ oilVarPrefix + "CPU_ID";
-//						IVarTreePointer vtp = vt.newVarTreePointer();
-//						vtp.goAbsolute(object.getPath());
-//						if (vtp.go(path)) {
-//							// System.out.println("TROVATO CPU_ID");
-//							
-//						} else {
-//							object.setProperty(TASK_FORCE_MAPPING, Boolean.TRUE.toString());
-//						}
-//			
-//		}
-//		}
-//		super.writeApplicationObject(buffer, oilVarPrefix, object, objType, rtosPath);
-//	}
-//
-//	protected void writeApplicationObjectProperties(StringBuffer buffer, String indent,
-//			ISimpleGenRes object, int objType, String rtosPath) {
-//		super.writeApplicationObjectProperties(buffer, indent,
-//				object, objType, rtosPath);
-//		
-//		switch (objType) {
-//		case IOilObjectList.TASK: {
-//			
-//			// CPU_ID
-//			if (object.containsProperty(TASK_FORCE_MAPPING) 
-//					&& "TRUE".equalsIgnoreCase(object.getString(TASK_FORCE_MAPPING))
-//					&& object.containsProperty(TASK_MAPPING)) {
-//				String rtos_name = extractRtosName(object.getString(TASK_MAPPING));
-//				
-//				buffer.append(indent + "CPU_ID = \"" + rtos_name + "\"; // auto value\n");
-//			}
-//			
-//		}
-//		};
-//		
-//		
-//	}
-//		
+		if (rtosPaths == null || rtosPaths.length == 0) {
+			throw new NullPointerException("required a not null path");
+		}
+		for (int i=0; i<rtosPaths.length; i++) {
+			if (!vt.newTreeInterface().exist(rtosPaths[i],
+					DataPackage.eINSTANCE.getRtos().getName())) {
+				throw new IllegalArgumentException(
+						"The specified rtos path isn't valid.\n\t" + "path = "
+								+ rtosPaths[i]);
+			}
+		}
+
+		StringBuffer buffer = new StringBuffer();
+		if (writeImplementation) {
+			buffer.append("OIL_VERSION = \"2.4\";\n\n");
+	
+			// write
+			writeImplementation(buffer, id);
+		}
+
+		writeApplication(buffer, id, rtosPaths);
+		return buffer.toString();
+	}
+
+	/**
+	 * Write the application section
+	 * 
+	 * @param buffer
+	 *            the output (Oil)
+	 * 
+	 * @param id
+	 *            identifies the Application
+	 */
+	@SuppressWarnings("unchecked")
+	protected void writeApplicationObject(StringBuffer buffer,
+			String oilVarPrefix, ISimpleGenRes object, int objType, String rtosPath) {
+		
+		switch (objType) {
+		case IOilObjectList.OS: {
+
+			ISimpleGenRes tmp = new SimpleGenRes(object.getName().contains("" + DataPath.SEPARATOR) ? extractRtosName(object.getName()) : "EE",
+						object.getPath());
+			
+			// fare la copia dell'oggetto !!!
+			HashMap properties = object.getAllProperties();
+			for (Iterator iter = properties.keySet().iterator(); iter.hasNext(); ) {
+				String key = (String) iter.next();
+				tmp.setObject(key, properties.get(key));
+			}
+			
+			object = tmp;
+		}
+			break;		
+			
+		case IOilObjectList.TASK: {
+			
+			// CPU_ID
+						String path = DPKG.getTask_OilVar().getName() + S
+								+ object.getString(IOilXMLLabels.ATTR_TYPE) + S
+								+ oilVarPrefix + "CPU_ID";
+						IVarTreePointer vtp = vt.newVarTreePointer();
+						vtp.goAbsolute(object.getPath());
+						if (vtp.go(path)) {
+							// System.out.println("TROVATO CPU_ID");
+							
+						} else {
+							object.setProperty(TASK_FORCE_MAPPING, Boolean.TRUE.toString());
+						}
+			
+		}
+		}
+		super.writeApplicationObject(buffer, oilVarPrefix, object, objType, rtosPath);
+	}
+
+	protected void writeApplicationObjectProperties(StringBuffer buffer, String indent,
+			ISimpleGenRes object, int objType, String rtosPath) {
+		super.writeApplicationObjectProperties(buffer, indent,
+				object, objType, rtosPath);
+		
+		switch (objType) {
+		case IOilObjectList.TASK: {
+			
+			// CPU_ID
+			if (object.containsProperty(TASK_FORCE_MAPPING) 
+					&& "TRUE".equalsIgnoreCase(object.getString(TASK_FORCE_MAPPING))
+					&& object.containsProperty(TASK_MAPPING)) {
+				String rtos_name = extractRtosName(object.getString(TASK_MAPPING));
+				
+				buffer.append(indent + "CPU_ID = \"" + rtos_name + "\"; // auto value\n");
+			}
+			
+		}
+		};
+		
+		
+	}
+		
 	private String makeRtosId(String cpu, String rtos) {
 		return DataPath.makeSlashedId(new String[] {cpu, rtos});
 	}
