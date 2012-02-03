@@ -61,8 +61,8 @@
 		<property name="frtd_oil_ee_nios2_v"         value="1.6.0"/>
 		<property name="rtd_oil_ee_nios2_core_v"     value="1.6.0"/>
 
-		<property name="frtd_oil_ee_tricore_v"         value="1.0.0"/>
-		<property name="rtd_oil_ee_tricore_core_v"     value="1.0.0"/>
+		<property name="frtd_oil_ee_tricore_v"         value="1.6.0"/>
+		<property name="rtd_oil_ee_tricore_core_v"     value="1.6.0"/>
 
 		<property name="frtd_oil_ee_osek_v"         value="1.6.0"/>
 		<property name="rtd_oil_ee_osek_core_v"     value="1.6.0"/>
@@ -93,8 +93,8 @@
 		<property name="ftemplates_ee_s12_v"   value="1.6.0"/>
 		<property name="templates_ee_s12_v"    value="1.6.0"/>
 	
-		<property name="ftemplates_ee_tricore_v"   value="1.0.0"/>
-		<property name="templates_ee_tricore_v"    value="1.0.0"/>
+		<property name="ftemplates_ee_tricore_v"   value="1.6.0"/>
+		<property name="templates_ee_tricore_v"    value="1.6.0"/>
 		
 		<property name="ftemplates_ee_ppc_v"   value="1.6.0"/>
 		<property name="templates_ee_ppc_v"    value="1.6.0"/>
