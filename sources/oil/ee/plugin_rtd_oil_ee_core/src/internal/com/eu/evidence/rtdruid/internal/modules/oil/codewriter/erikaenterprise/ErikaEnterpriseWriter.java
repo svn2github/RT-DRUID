@@ -1062,7 +1062,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		}
 		
 		if (!valid) {
-			throw new RuntimeException("The ee_opt " + tmp + " is not valid (see C99 identifier)");
+			Messages.sendWarningNl("The ee_opt " + tmp + " contains not valid characters. It should be a symbol.", null, "eeopt", null);
 		}
 	}
 
