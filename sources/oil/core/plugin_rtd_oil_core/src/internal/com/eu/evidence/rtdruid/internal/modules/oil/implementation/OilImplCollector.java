@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilInfo;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilParser;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.transform.OilTransformFactory;

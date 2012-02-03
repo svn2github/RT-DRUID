@@ -16,6 +16,7 @@ import java.util.LinkedList;
 import org.w3c.dom.Document;
 
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
 import com.eu.evidence.rtdruid.vartree.IVarTree;

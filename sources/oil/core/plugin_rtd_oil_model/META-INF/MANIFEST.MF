@@ -6,11 +6,14 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.model.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;bundle-version="2.7.0",
- org.eclipse.emf.ecore.xmi;bundle-version="2.7.0"
+ org.eclipse.emf.ecore.xmi;bundle-version="2.7.0",
+ org.junit,
+ com.eu.evidence.rtdruid.core;bundle-version="1.6.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.
 Export-Package: com.eu.evidence.rtdruid.internal.modules.oil.implementation,
  com.eu.evidence.rtdruid.internal.modules.oil.reader,
+ com.eu.evidence.rtdruid.modules.oil.implementation,
  com.eu.evidence.rtdruid.modules.oil.interfaces,
  com.eu.evidence.rtdruid.modules.oil.keywords

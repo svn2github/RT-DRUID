@@ -3,7 +3,7 @@
  *
  * $Id: OilImplementation.java,v 1.2 2008/03/26 18:23:51 durin Exp $
  */
-package com.eu.evidence.rtdruid.internal.modules.oil.implementation;
+package com.eu.evidence.rtdruid.modules.oil.implementation;
 
 
 
@@ -19,6 +19,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
+import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplPointer;
 import com.eu.evidence.rtdruid.internal.modules.oil.model.OilModelLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.MergeHelper;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilInfo;
@@ -74,7 +75,7 @@ public class OilImplementation implements IOilImplementation {
 	 * @param data
 	 *            contains the xml rapresentation of Oil Implementation part
 	 */
-	OilImplementation(IOilImplID id, Document data) {
+	public OilImplementation(IOilImplID id, Document data) {
 		if (id == null) {
 			throw new NullPointerException("Required a not null ID");
 		}
