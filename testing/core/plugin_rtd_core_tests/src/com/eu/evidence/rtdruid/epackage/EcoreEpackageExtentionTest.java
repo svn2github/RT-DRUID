@@ -13,10 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.eclipse.emf.common.util.BasicDiagnostic;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.Rtd_corePlugin;
@@ -445,14 +442,8 @@ public class EcoreEpackageExtentionTest {
 
 	private void validateEPackage(String name, EPackage ppkg) {
 		assertNotNull(ppkg);
-		BasicDiagnostic diag = new BasicDiagnostic();
-		Diagnostician diagnostician = new Diagnostician();
-		boolean result = diagnostician.validate(ppkg, diag, diagnostician.createDefaultContext());
 		StringBuffer msg = new StringBuffer(name+"\n");
-		for (Diagnostic d : diag.getChildren()) {
-			msg.append(d.getMessage());
-			msg.append("\n");
-		}
+		boolean result = EPackageUtility.instance.modelValidate(ppkg, null, msg);
 		assertTrue(msg.toString(), result);
 	}
 

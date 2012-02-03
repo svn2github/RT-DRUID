@@ -173,7 +173,7 @@ public final class VarTreeUtil {
 	 * Try to instantiate the root element
 	 */
 	public static EObject newVarTreeRoot(EditingDomain vt) {
-		return newVarTreeRoot( vt.getResourceSet().getPackageRegistry().getEPackage(DataPackage.eNS_URI) );
+		return newVarTreeRoot( getRtDruidEPackage(vt));
 	}
 
 	/**
@@ -194,6 +194,10 @@ public final class VarTreeUtil {
 			}
 		}
 		return null;
+	}
+	
+	public static EPackage getRtDruidEPackage(EditingDomain ed) {
+		return ed.getResourceSet().getPackageRegistry().getEPackage(DataPackage.eNS_URI); 
 	}
 	
 	private static EPackage getDefaultPackage() {
@@ -478,6 +482,7 @@ public final class VarTreeUtil {
 				if (var instanceof IMultiValues) {
 					if (value != null) {
 						((IMultiValues) var).appendValue(value);
+						curr.setVar(var);
 					}
 				} else {
 					

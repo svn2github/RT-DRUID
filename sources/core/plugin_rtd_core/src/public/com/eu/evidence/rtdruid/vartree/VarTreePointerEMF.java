@@ -1429,7 +1429,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 	 * @see rtdruid.vartree.IVarTreePointer#isList()
 	 */
 	public boolean isList() {
-		return false;
+		return point.attr != null && point.attr.isMany();
 	}
 	
 	/**

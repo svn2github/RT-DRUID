@@ -8,6 +8,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -15,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
@@ -89,6 +92,21 @@ public class EPackageUtility {
 			}
 		}
 		
+		return answer;
+	}
+	
+	public boolean modelValidate(EPackage ppkg, BasicDiagnostic diag, StringBuffer buff) {
+		Diagnostician diagnostician = new Diagnostician();
+		if (diag == null) {
+			diag = new BasicDiagnostic();
+		}
+		boolean answer = diagnostician.validate(ppkg, diag, diagnostician.createDefaultContext());
+		if (buff != null) {
+			for (Diagnostic d : diag.getChildren()) {
+				buff.append(d.getMessage());
+				buff.append("\n");
+			}
+		}
 		return answer;
 	}
 }

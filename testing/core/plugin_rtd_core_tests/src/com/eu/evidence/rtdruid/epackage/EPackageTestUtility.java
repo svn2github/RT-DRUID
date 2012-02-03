@@ -12,6 +12,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.edit.domain.EditingDomain;
+
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 /**
  * this class helps during the build of an EPackage
@@ -71,6 +74,10 @@ public class EPackageTestUtility {
 		return e_type;
 	}	
 
+	public String modelToString(EditingDomain ed) throws IOException {
+		return pkgUtil.modelToString(VarTreeUtil.getRtDruidEPackage(ed));
+	}
+	
 	public String modelToString(EPackage ePackage) throws IOException {
 		return pkgUtil.modelToString(ePackage);
 	}

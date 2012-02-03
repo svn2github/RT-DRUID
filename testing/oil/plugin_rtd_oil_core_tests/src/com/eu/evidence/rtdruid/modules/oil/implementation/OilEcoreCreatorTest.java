@@ -29,7 +29,6 @@ import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilInfo;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilParser;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.ParseException;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
-import com.eu.evidence.rtdruid.modules.oil.implementation.OilEcoreCreator;
 import com.eu.evidence.rtdruid.tests.vartree.data.FillVtUtil;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.VarTreePointerEMF;
@@ -66,6 +65,7 @@ public class OilEcoreCreatorTest {
 		IOilImplementation impl = new OilImplementation(new SimpleOilID("test"), oi.getImpl());
 		OilEcoreCreator oec = new OilEcoreCreatorImpl(impl);
 		EPackage ePkg = oec.buildPackage();
+		validateEPackage(ePkg);
 		//String s = 
 				EPackageUtility.instance.modelToString(ePkg);
 //		System.out.println(s);
@@ -81,15 +81,18 @@ public class OilEcoreCreatorTest {
 		IOilImplementation impl = new OilImplementation(new SimpleOilID("test"), oi.getImpl());
 		OilEcoreCreator oec = new OilEcoreCreatorImpl(impl);
 		EPackage ePkg = oec.buildPackage();
+		validateEPackage(ePkg);
 //		String s = EPackageUtility.instance.modelToString(ePkg);
 //		System.out.println(s);
 		IEPackageFactoryElement basePackageElement = EPackageFactory.instance.getEPackageFactoryElement(Rtd_corePlugin.EPACKAGE_BASE_ID);
 		EPackage basePkg = basePackageElement.getProvider(true).get();
+		validateEPackage(basePkg);
 		
 		IEPackageMerge merger = EPackageUtility.instance.getPackageMerge();
 		merger.addEPackage(basePkg);
 		merger.addEPackage(ePkg);
 		EPackage result = merger.getResult();
+		validateEPackage(result);
 		EPackageUtility.instance.modelToString(result);
 		EClassifier sys = ePkg.getEClassifier("System");
 		assertNull(sys);
@@ -114,8 +117,8 @@ public class OilEcoreCreatorTest {
 			IOilImplementation impl = oif.getImpl(id);
 			
 			OilEcoreCreator oec = OilEcoreCreator.getCreator(impl);
-			//EPackage ePkg = 
-			oec.buildPackage();
+			EPackage ePkg = oec.buildPackage();
+			validateEPackage(ePkg);
 //			String s = EPackageUtility.instance.modelToString(ePkg);
 //			System.out.println("\n\n./prova_" + id.getImplementationName() + ".ecore\n" +s);
 		}
@@ -140,11 +143,13 @@ public class OilEcoreCreatorTest {
 		for (IOilImplID id : ids) {
 			OilEcoreCreator oec = OilEcoreCreator.getCreator(oif.getImpl(id));
 			ePkg = oec.buildPackage();
+			validateEPackage(ePkg);
 			merger.addEPackage(ePkg);
 		}
 		assertNotNull(ePkg);
 
 		EPackage result = merger.getResult();
+		validateEPackage(result);
 
 		EClassifier sys = result.getEClassifier("System");
 		assertNotNull(sys);
@@ -185,6 +190,7 @@ public class OilEcoreCreatorTest {
 			merger.addEPackage(OilEcoreCreator.getCreator(oif.getImpl(id)).buildPackage());
 		}
 		EPackage result = merger.getResult();
+		validateEPackage(result);
 		//System.out.println(EPackageUtility.instance.modelToString(result));
 
 		EClassifier sys = result.getEClassifier("System");
@@ -210,6 +216,13 @@ public class OilEcoreCreatorTest {
 		
 		assertTrue(vtp.go("TASK_OIL_EXT")); // oil extention
 		
+	}
+
+	private void validateEPackage(EPackage ppkg) {
+		assertNotNull(ppkg);
+		StringBuffer msg = new StringBuffer();
+		boolean result = EPackageUtility.instance.modelValidate(ppkg, null, msg);
+		assertTrue(msg.toString(), result);
 	}
 
 }

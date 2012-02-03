@@ -26,7 +26,11 @@ import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 public class OilEcoreCreatorImpl extends OilEcoreCreator {
 	
-	public static final boolean REFERENCE_AS_EMF_REF = true;
+	/**
+	 * If set to true, the code uses EMF references to store Oil references,
+	 * otherwise it saves the reference as string
+	 */
+	public static final boolean REFERENCE_AS_EMF_REF = false;
 	
 	/*
 	 * Instantiate EcoreFactory
@@ -34,7 +38,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 	private static final EcoreFactory eCoreFactory = EcoreFactory.eINSTANCE;
 
 	
-	private static HashMap<String, EClassifier> EMF_TYPES = null;
+	private HashMap<String, EClassifier> EMF_TYPES = null;
 	private final IOilImplementation iimpl;
 	
 	
@@ -121,7 +125,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 			case IOilImplPointer.FIRST_LEVEL : {
 				String type = cd.getAttributes().getProperty(IOilXMLLabels.ATTR_OBJ_TYPE);
 				current_eclass = eCoreFactory.createEClass();
-				path.add("OIL"+type);
+				path.add(type);
 				current_eclass.setName(compute_full_name(path));
 				
 
@@ -258,7 +262,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 					EAttribute attr_ref = eCoreFactory.createEAttribute();
 					attr_ref.setName(name);
 					attr_ref.setEType(computeEType("STRING"));
-					attr_ref.setChangeable(false);
+					attr_ref.setChangeable(true);
 					attr_ref.setLowerBound(0);
 					attr_ref.setUpperBound(multiple ? ETypedElement.UNBOUNDED_MULTIPLICITY : 1);
 
@@ -407,40 +411,21 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				answer.setName("Mode");
 			} else {
 				answer = null;
-				RtdruidLog.showDebug(new IllegalArgumentException("Unsupported rtd class " + type));
+				RtdruidLog.showDebug(/*new IllegalArgumentException*/("Unsupported rtd class " + type));
 			}
 			
 			if (answer != null) {
+				EClassifier tmp = ePackage.getEClassifier(answer.getName());
+				if (tmp != null) {
+					answer = (EClass) tmp;
+				} else {
+					ePackage.getEClassifiers().add(answer);
+				}
 				rtdEClass.put(type, answer);
-				ePackage.getEClassifiers().add(answer);
 			}
 			
 		}
 		return answer;
-	}
-
-	private String getRtdEClassExtPoint(String type) {
-		String answer = null; //type.toUpperCase() + "_OIL_EXT";
-		if (IOilXMLLabels.OBJ_TASK.equalsIgnoreCase(type)) {
-			answer = "TASK";
-		} else if (IOilXMLLabels.OBJ_ISR.equalsIgnoreCase(type)) {
-			answer = "ISR";
-		} else if (IOilXMLLabels.OBJ_OS.equalsIgnoreCase(type)) {
-			answer = "RTOS";
-		} else if (IOilXMLLabels.OBJ_OSAPPLICATION.equalsIgnoreCase(type)) {
-			answer = "OS_APPLICATION";
-		} else if (IOilXMLLabels.OBJ_RESOURCE.equalsIgnoreCase(type)) {
-			answer = "MUTEX";
-		} else if (IOilXMLLabels.OBJ_ALARM.equalsIgnoreCase(type)) {
-			answer = "ALARM";
-		} else if (IOilXMLLabels.OBJ_COUNTER.equalsIgnoreCase(type)) {
-			answer = "COUNTER";
-		} else if (IOilXMLLabels.OBJ_EVENT.equalsIgnoreCase(type)) {
-			answer = "EVENT";
-		} else if (IOilXMLLabels.OBJ_APPMODE.equalsIgnoreCase(type)) {
-			answer = "APPMODE";
-		}
-		return answer == null ? null : answer+"_OIL_EXT";
 	}
 
 	private void setRefType(EReference ref, EPackage ePackage, String type) {
@@ -476,7 +461,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 //						new_type = Character.toUpperCase(new_type.charAt(0)) + new_type.substring(1).toLowerCase();
 //					}
 					
-					RtdruidLog.showDebug("Trying "+new_type + " instead of " + pendingRef.type+ "\n");
+//					RtdruidLog.showDebug("Trying "+new_type + " instead of " + pendingRef.type+ "\n");
 
 					for (EPackage e: allRelatedEPackages) {
 						ec = e.getEClassifier(new_type);
@@ -486,7 +471,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				if (ec != null) {
 					pendingRef.ref.setEType(ec);
 				} else {
-					RtdruidLog.showDebug("Cannot find required reference : " + pendingRef.type+ "\n");
+//					RtdruidLog.showDebug("Cannot find required reference : " + pendingRef.type+ "\n");
 				}
 			}
 
@@ -507,21 +492,11 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 			addType(DataPackage.Literals.DOUBLE_VAR, "DOUBLE");
 			addType(DataPackage.Literals.STRING_VAR, "STRING");
 			
-			
-//			EMF_TYPES.put("UINT32", EcorePackage.Literals.EINT);
-//			EMF_TYPES.put("INT32", EcorePackage.Literals.EINT);
-//			EMF_TYPES.put("UINT64", EcorePackage.Literals.ELONG);
-//			EMF_TYPES.put("INT64", EcorePackage.Literals.ELONG);
-//			EMF_TYPES.put("FLOAT", EcorePackage.Literals.EFLOAT);
-//			EMF_TYPES.put("DOUBLE", EcorePackage.Literals.EDOUBLE);
-//			EMF_TYPES.put("STRING", EcorePackage.Literals.ESTRING);
-//			
-//			EList<EClassifier> types = ePackage.getEClassifiers();
-//			types.add(EcoreUtil.copy(EcorePackage.Literals.EINT));
-//			types.add(EcoreUtil.copy(EcorePackage.Literals.ELONG));
-//			types.add(EcoreUtil.copy(EcorePackage.Literals.EFLOAT));
-//			types.add(EcoreUtil.copy(EcorePackage.Literals.EDOUBLE));
-//			types.add(EcoreUtil.copy(EcorePackage.Literals.ESTRING));
+//			addType(EcorePackage.Literals.EINT, "UINT32", "INT32");
+//			addType(EcorePackage.Literals.ELONG, "UINT64", "INT64");
+//			addType(EcorePackage.Literals.EFLOAT, "FLOAT");
+//			addType(EcorePackage.Literals.EDOUBLE, "DOUBLE");
+//			addType(EcorePackage.Literals.ESTRING, "STRING");
 		}
 		return EMF_TYPES.get(type);
 	}
@@ -544,43 +519,4 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 		obj.getEAnnotations().add(annotation);
 		
 	}
-	
-
-	/* This method should be moved on a public utility function */
-	private static String compute_full_name(ArrayList<String> path) {
-		StringBuffer answer = new StringBuffer();
-		
-		String sep = "";
-		for (String elem : path) {
-			
-			answer.append(sep);
-
-			// this loop searches all sequences of _ and replace them with _counter
-			// where the counter is the number of consecutive _ (max 9)
-			int counter = 0;
-			for (byte c: elem.getBytes()) {
-				if (((char)c) == '_') {
-					counter++;
-					if (counter==9) {
-						answer.append("_9");
-						counter = 0;
-					}
-				} else {
-					if (counter >0) {
-						answer.append("_"+counter);
-						counter = 0;
-					}
-					answer.append((char)c);
-				}
-			}
-			
-			
-			// default separator is _0
-			sep = "__";
-		}
-		
-		
-		return answer.toString();
-	}
-
 }

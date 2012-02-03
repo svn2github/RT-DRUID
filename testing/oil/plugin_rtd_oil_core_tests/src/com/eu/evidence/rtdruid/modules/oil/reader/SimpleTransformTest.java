@@ -9,12 +9,14 @@ package com.eu.evidence.rtdruid.modules.oil.reader;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.junit.Test;
 
+import com.eu.evidence.rtdruid.epackage.EPackageUtility;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
@@ -41,19 +43,21 @@ public class SimpleTransformTest implements Examples {
 
 	
 	@Test
-	public void testOilWrite1() {
+	public void testOilWrite1() throws IOException {
 		IVarTree vt = VarTreeUtil.newVarTree();
+		
 		OilTransformFactory otf = OilTransformFactory.INSTANCE;
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_ARM7.getBytes()),
 				vt, null, null);
-
+		System.out.println(EPackageUtility.instance.modelToString(VarTreeUtil.getRtDruidEPackage(vt)));
 		DataPackage dpkg = DataPackage.eINSTANCE;
 		String prefix = "EE" + S + dpkg.getSystem_Architectural().getName() + S
 				+ dpkg.getArchitectural_EcuList().getName() + S + "EE" + S
 				+ dpkg.getEcu_CpuList().getName() + S + DEFAULT_CPU_NAME + S
 				+ dpkg.getCpu_Rtos().getName();
 		IOilImplID id = otf.getOilId("ee");
-		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(vt)));
+		//System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(vt)));
+		System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
 		String answer = otf.getTransform("ee").write(vt, id, prefix);
 
 		assertTrue(answer != null);

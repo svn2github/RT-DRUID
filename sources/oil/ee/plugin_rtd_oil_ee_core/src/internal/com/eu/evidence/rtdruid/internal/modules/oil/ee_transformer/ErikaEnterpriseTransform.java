@@ -6,7 +6,25 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.ee_transformer;
 
 
+import static com.eu.evidence.rtdruid.vartree.VarTreeUtil.storeAVar;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilTransformException;
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform;
+import com.eu.evidence.rtdruid.vartree.DataPath;
+import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 
 /**
  * This class just store all data inside the OilVar of each FirstLevelObject
@@ -15,326 +33,347 @@ import com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform;
  * @author Nicola Serreli
  */
 public class ErikaEnterpriseTransform extends SimpleTransform {
-//
-//	final static String DEFAULT_CPU_NAME = IWritersKeywords.DEFAULT_CPU_NAME;
-//	
-//	final static String CPU_DATA_NAME = "CPU_DATA";
-//	
-//	/**
-//	 * Store all data of an rtos inside the OilVar of element
-//	 * "/SystemName/Architecture/EcuList/OilEcu/CpuList/rtosName/Rtos", where
-//	 * the <b>SystemName </b> and <b>rtosName </b> are the values stored inside
-//	 * the <b>Application Name </b> and <b>OS Name </b>. Returns the name of
-//	 * RT-OS.
-//	 * 
-//	 * @param vtp
-//	 *            point to the system
-//	 * @param parent
-//	 *            the parent node
-//	 * @param id
-//	 *            contains the hw and rtos id of this data
-//	 * 
-//	 * @return the name of RT-OS
-//	 * 
-//	 * @throws OilTransformException
-//	 *             if there are some problems
-//	 */
-//	protected String storeOS(IVarTreePointer vtp, Element parent,
-//			String sysName, OilImplID id) throws OilTransformException {
-//		String rtosName = null;
-//		rtosNamePath = new String[] {//
-//				DPKG.getSystem_Architectural().getName(),//
-//				DPKG.getArchitectural_EcuList().getName(), //
-//				sysName, // ecu name ... from oil
-//				DPKG.getEcu_CpuList().getName(), //
-//				null, // cpu name ... from oil
-//				DPKG.getCpu_Rtos().getName(),//
-//				DPKG.getRtos_OilVar().getName()
-//				};
-//
-//		
-//		class OScpuName {
-//			public final Element os;
-//			public final String cpuName;
-//			
-//			public OScpuName(Element os, String cpuName) {
-//				this.os = os;
-//				this.cpuName = cpuName;
-//			}
-//		}
-//		LinkedList<OScpuName> finalOsList = new LinkedList<OScpuName>();
-//		
-//		
-//		
-//		// prepare where store all data
-//		Element[] osList = getAllSameElements(parent, "Object",
-//				new String[] { "type" }, new String[] { IOilXMLLabels.OBJ_OS });
-//
-//		/*
-//		 * Check that each OS object contains the description of one (or zero) cpu.
-//		 * If an OS contains more cpu, create new OS objects and move sencond, 
-//		 * third, ... cpu to this new objects.
-//		 * 
-//		 * It's valid that distinct OS contain data of the same cpu.
-//		 */
-//		String cpuName = null;
-//		for (int i = 0; i < osList.length; i++) {
-//			
-//			/*
-//			 * Parse an OS object
-//			 */
-//			
-//			// children contains the list of all CPU_DATA stored inside current OS Object
-//			Element[] children = getAllSameElements( //
-//					osList[i], //
-//					null, //
-//					new String[] { OAPKG.getParameter_Name().getName() }, // 
-//					new String[] { CPU_DATA_NAME });
-//
-//			// firstCpuName_os is the first cpuName found inside current OS object
-//			String firstCpuName_os = null;
-//
-//			// check all cpu_data
-//			for (int ci =0; ci<children.length; ci++) {
-//				/*
-//				 * Parse an CPU_DATA parameter.
-//				 * 
-//				 * a cpu_data contains one or more enumerator
-//				 */
-//				
-//				
-//				NodeList cpuDataList = children[ci].getChildNodes(); 
-//				for (int ni =0; ni<cpuDataList.getLength(); ni++) {
-//					Node cpuData = cpuDataList.item(ni);
-//
-//					/*
-//					 * Parse an enumerator inside the cpu_data
-//					 */
-//
-//					// if is an enumerator, check for cpuName (ID). If it's a different ID, than move it out, to a new OS object
-//					if (cpuData instanceof Element && IOilXMLLabels.ELEM_ENUM_VALUE.equalsIgnoreCase(cpuData.getNodeName())) {
-//						
-//						String tmpCpuName = null;
-//						{
-//							Element[] tmp = getAllSameElements( //
-//									(Element) cpuData, //
-//									OAPKG.getParameter().getName(), //
-//									new String[] { OAPKG.getParameter_Name().getName() }, // 
-//									new String[] { "ID" });
-//							if (tmp != null && tmp.length>0) {
-//								tmpCpuName = getAttribute(tmp[0], IOilXMLLabels.ATTR_CURR_VALUE);
-//							}
-//						}
-//						if (tmpCpuName == null) {
-//							tmpCpuName = DEFAULT_CPU_NAME;
-//						}
-//						
-//						if (firstCpuName_os != null && !firstCpuName_os.equalsIgnoreCase(tmpCpuName)) {
-//							
-//							/*
-//							 * Create a new OS object and move current cpu inside it 
-//							 */
-//							Document doc = parent.getOwnerDocument();
-//							
-//							// new OS
-//							Element newOS = doc.createElement(IOilXMLLabels.ELEM_OBJECT);
-//							newOS.setAttribute(IOilXMLLabels.ATTR_TYPE,  IOilXMLLabels.OBJ_OS);
-//							if (parent.hasAttribute(IOilXMLLabels.ATTR_NAME)) {
-//								newOS.setAttribute(IOilXMLLabels.ATTR_NAME, osList[i].getAttribute(IOilXMLLabels.ATTR_NAME) );
-//							}
-//							parent.appendChild(newOS);
-//							
-//							// new CPU_DATA
-//							Element newCpuData = doc.createElement(IOilXMLLabels.ELEM_PARAMETER);
-//							newCpuData.setAttribute(IOilXMLLabels.ATTR_NAME, CPU_DATA_NAME );
-//							newOS.appendChild(newCpuData);
-//							
-//							// move cpuData enumerator
-//							cpuData.getParentNode().removeChild(cpuData);
-//							newCpuData.appendChild(cpuData);
-//
-//							// save the new os inside the os-cpuName list
-//							finalOsList.add(new OScpuName(newOS, tmpCpuName));
-//							
-//						} else {
-//							firstCpuName_os = tmpCpuName;
-//							
-//							// save current os inside the os-cpuName list
-//							finalOsList.add(new OScpuName(osList[i], firstCpuName_os));
-//						}
-//
-//					}
-//				}
-//				
-//				// if this CPU_DATA is empty, remove it from OS
-//				if (children[ci].getChildNodes().getLength() == 0) {
-//					children[ci].getParentNode().removeChild(children[ci]);
-//					
-//				}
-//			}
-//
-//			if (firstCpuName_os == null) {
+
+	final static String DEFAULT_CPU_NAME = IWritersKeywords.DEFAULT_CPU_NAME;
+	
+	final static String CPU_DATA_NAME = "CPU_DATA";
+	
+	/**
+	 * Store all data of an rtos inside the OilVar of element
+	 * "/SystemName/Architecture/EcuList/OilEcu/CpuList/rtosName/Rtos", where
+	 * the <b>SystemName </b> and <b>rtosName </b> are the values stored inside
+	 * the <b>Application Name </b> and <b>OS Name </b>. Returns the name of
+	 * RT-OS.
+	 * 
+	 * @param vtp
+	 *            point to the system
+	 * @param parent
+	 *            the parent node
+	 * @param id
+	 *            contains the hw and rtos id of this data
+	 * 
+	 * @return the name of RT-OS
+	 * 
+	 * @throws OilTransformException
+	 *             if there are some problems
+	 */
+	protected String storeOS(IVarTreePointer vtp, Element parent,
+			String sysName, OilImplID id) throws OilTransformException {
+		String rtosName = null;
+		rtosNamePath = new String[] {//
+				DPKG.getSystem_Architectural().getName(),//
+				DPKG.getArchitectural_EcuList().getName(), //
+				sysName, // ecu name ... from oil
+				DPKG.getEcu_CpuList().getName(), //
+				null, // cpu name ... from oil
+				DPKG.getCpu_Rtos().getName()//
+				};
+
+		
+		class OScpuName {
+			public final Element os;
+			public final String cpuName;
+			
+			public OScpuName(Element os, String cpuName) {
+				this.os = os;
+				this.cpuName = cpuName;
+			}
+			
+			public boolean sameCpuName(String cpuName) {
+				return this.cpuName == null ? cpuName == null : this.cpuName.equals(cpuName);
+			}
+		}
+		LinkedList<OScpuName> finalOsList = new LinkedList<OScpuName>();
+		
+		
+		
+		// prepare where store all data
+		Element[] osList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT,
+				new String[] { IOilXMLLabels.ATTR_TYPE }, new String[] { IOilXMLLabels.OBJ_OS });
+
+		/*
+		 * Check that each OS object contains the description of one (or zero) cpu.
+		 * If an OS contains more cpu, create new OS objects and move sencond, 
+		 * third, ... cpu to this new objects.
+		 * 
+		 * It's valid that distinct OS contain data of the same cpu.
+		 */
+		boolean default_cpu_found = false;
+		String cpuName = null;
+		for (int i = 0; i < osList.length; i++) {
+			
+			/*
+			 * Parse an OS object
+			 */
+			
+			// children contains the list of all CPU_DATA stored inside current OS Object
+			Element[] children = getAllSameElements( //
+					osList[i], //
+					null, //
+					new String[] { IOilXMLLabels.ATTR_NAME }, // 
+					new String[] { CPU_DATA_NAME });
+
+			// firstCpuName_os is the first cpuName found inside current OS object
+			OScpuName firstCpuName_os = null;
+
+			
+			
+			
+			// check all cpu_data
+			for (int ci =0; ci<children.length; ci++) {
+				/*
+				 * Parse an CPU_DATA parameter.
+				 * 
+				 * a cpu_data contains one or more enumerator
+				 */
+				
+				
+				NodeList cpuDataList = children[ci].getChildNodes(); 
+				for (int ni =0; ni<cpuDataList.getLength(); ni++) {
+					Node cpuData = cpuDataList.item(ni);
+
+					/*
+					 * Parse an enumerator inside the cpu_data
+					 */
+
+					// if is an enumerator, check for cpuName (ID). If it's a different ID, than move it out, to a new OS object
+					if (cpuData instanceof Element && IOilXMLLabels.ELEM_ENUM_VALUE.equalsIgnoreCase(cpuData.getNodeName())) {
+						
+						String tmpCpuName = null;
+						{
+							Element[] tmp = getAllSameElements( //
+									(Element) cpuData, //
+									IOilXMLLabels.ELEM_PARAMETER, //
+									new String[] { IOilXMLLabels.ATTR_NAME }, // 
+									new String[] { "ID" });
+							if (tmp != null && tmp.length>0) {
+								tmpCpuName = getAttribute(tmp[0], IOilXMLLabels.ATTR_CURR_VALUE);
+							}
+						}
+						if (DEFAULT_CPU_NAME.equals(tmpCpuName)) {
+							default_cpu_found = true;
+						}
+						if (tmpCpuName == null) {
+							tmpCpuName = DEFAULT_CPU_NAME;
+						}
+						
+						if (firstCpuName_os != null && !firstCpuName_os.sameCpuName(tmpCpuName)) {
+							
+							/*
+							 * Create a new OS object and move current cpu inside it 
+							 */
+							Document doc = parent.getOwnerDocument();
+							
+							// new OS
+							Element newOS = doc.createElement(IOilXMLLabels.ELEM_OBJECT);
+							newOS.setAttribute(IOilXMLLabels.ATTR_TYPE,  IOilXMLLabels.OBJ_OS);
+							if (parent.hasAttribute(IOilXMLLabels.ATTR_NAME)) {
+								newOS.setAttribute(IOilXMLLabels.ATTR_NAME, osList[i].getAttribute(IOilXMLLabels.ATTR_NAME) );
+							}
+							parent.appendChild(newOS);
+							
+							// new CPU_DATA
+							Element newCpuData = doc.createElement(IOilXMLLabels.ELEM_PARAMETER);
+							newCpuData.setAttribute(IOilXMLLabels.ATTR_NAME, CPU_DATA_NAME );
+							newOS.appendChild(newCpuData);
+							
+							// move cpuData enumerator
+							cpuData.getParentNode().removeChild(cpuData);
+							newCpuData.appendChild(cpuData);
+
+							// save the new os inside the os-cpuName list
+							finalOsList.add(new OScpuName(newOS, tmpCpuName));
+							
+						} else {
+							firstCpuName_os = new OScpuName(osList[i], tmpCpuName);
+							
+							// save current os inside the os-cpuName list
+							finalOsList.add(firstCpuName_os);
+						}
+
+					}
+				}
+				
+				// if this CPU_DATA is empty, remove it from OS
+				if (children[ci].getChildNodes().getLength() == 0) {
+					children[ci].getParentNode().removeChild(children[ci]);
+					
+				}
+			}
+
+			if (firstCpuName_os == null) { // NO CPU_DATA
 //				firstCpuName_os = DEFAULT_CPU_NAME;
-//
-//				// save current os inside the os-cpuName list
-//				finalOsList.add(new OScpuName(osList[i], firstCpuName_os));
-//			}
-//
-//			
-//			if (cpuName == null) {
-//				cpuName = firstCpuName_os;
-//			}
-//		}
-//		rtosNamePath[4] = cpuName;
-//
-//		
-//		// store all instance of OS object from Oil tree
-//		for (Iterator<OScpuName> iter = finalOsList.iterator(); iter.hasNext(); ) {
-//			OScpuName current = iter.next();
-//			
-//			if (rtosName == null) {
-//				rtosName = getAttribute(current.os, "Name");
-//			} else {
-//				// check the rtosName
-//				checkTrue(checkStrings(rtosName,
-//						getAttribute(current.os, "Name")),
-//						"The oil tree contains more than one "
-//								+ IOilXMLLabels.OBJ_OS);
-//			}
-//			
-//			
-//			// update the rtosNamePath
-//			//rtosNamePath[5] = rtosName;
-//
-//			// set the HW model
-//			IVarTreePointer curr = makePath(vtp, new String[] { rtosNamePath[0],
-//					rtosNamePath[1], rtosNamePath[2], rtosNamePath[3],
-//					current.cpuName }, new String[] { rtosTypePath[0],
-//					rtosTypePath[1], rtosTypePath[2], rtosTypePath[3],
-//					rtosTypePath[4] });
-//			storeAVar(curr, DPKG.getCpu_Model().getName(), id.getHW());
-//
-//			curr = makePath(curr, new String[] { rtosNamePath[5] },
-//					new String[] { rtosTypePath[5] });
-//			storeAVar(curr, DPKG.getRtos_Name().getName(), makeRtosId(current.cpuName, rtosName));
-//			storeAVar(curr, DPKG.getRtos_Type().getName(), id.getRtos());
-//
-//			curr = makePath(curr, new String[] { rtosNamePath[6] },
-//					new String[] { rtosTypePath[6] });
-//
-//
-//			storeInsideAOilVar(curr, current.os, id);
-//		}
-//
-//		return makeRtosId(cpuName, rtosName);
-//	}
+
+				// save current os inside the os-cpuName list
+				finalOsList.add(new OScpuName(osList[i], null)); //firstCpuName_os));
+			}
+
+			
+			if (cpuName == null) {
+				cpuName = firstCpuName_os == null ? null : firstCpuName_os.cpuName;
+			}
+		}
+		if (cpuName == null) {
+			cpuName = DEFAULT_CPU_NAME;
+		}
+
+		rtosNamePath[4] = cpuName;
+
+		
+		// store all instance of OS object from Oil tree
+		for (Iterator<OScpuName> iter = finalOsList.iterator(); iter.hasNext(); ) {
+			OScpuName current = iter.next();
+			
+			if (rtosName == null) {
+				rtosName = getAttribute(current.os, "Name");
+			} else {
+				// check the rtosName
+				checkTrue(checkStrings(rtosName,
+						getAttribute(current.os, "Name")),
+						"The oil tree contains more than one "
+								+ IOilXMLLabels.OBJ_OS);
+			}
+			
+			final String currCpuName;
+			if (current.cpuName == null) {
+				if (default_cpu_found) {
+					currCpuName = DEFAULT_CPU_NAME;
+				} else {
+					currCpuName = cpuName;
+				}
+			} else {
+				currCpuName = current.cpuName;
+			}
+			
+			// update the rtosNamePath
+			//rtosNamePath[5] = rtosName;
+
+			// set the HW model
+			IVarTreePointer curr = vtp.clone().makePath(new String[] { rtosNamePath[0],
+					rtosNamePath[1], rtosNamePath[2], rtosNamePath[3],
+					currCpuName }, new String[] { rtosTypePath[0],
+					rtosTypePath[1], rtosTypePath[2], rtosTypePath[3],
+					rtosTypePath[4] });
+			storeAVar(curr, DPKG.getCpu_Model().getName(), id.getHW());
+
+			curr.makePath(new String[] { rtosNamePath[5] },
+					new String[] { rtosTypePath[5] });
+			storeAVar(curr, DPKG.getRtos_Name().getName(), makeRtosId(currCpuName, rtosName));
+			storeAVar(curr, DPKG.getRtos_Type().getName(), id.getRtos());
+
+
+			storeInsideAOilVar(curr, current.os, id);
+		}
+
+		return makeRtosId(cpuName, rtosName);
+	}
 	
-//	/* (non-Javadoc)
-//	 * @see rtdruid.modules.oil.transform.SimpleTransform#storeTasks(rtdruid.vartree.IVarTreePointer, org.w3c.dom.Element, rtdruid.modules.oil.vtextensions.OilImplID, java.lang.String)
-//	 */
-//	protected void storeTasks(IVarTreePointer vtp, Element parent, OilImplID id,
-//			String rtos) throws OilTransformException {
-//
-//		// get only the name of rtos without cpu
-//		rtos = extractRtosName(rtos);
-//		
-//		// prepare where store all data
-//		Element[] taskList = getAllSameElements(parent,
-//				IOilXMLLabels.ELEM_OBJECT,
-//				new String[] { IOilXMLLabels.ATTR_TYPE },
-//				new String[] { IOilXMLLabels.OBJ_TASK });
-//
-//		// aggregate instances of the same task
-//		ArrayList<Element> unamedTasks = new ArrayList<Element>();
-//		ArrayList<ArrayList<Element>> namedTasks = new ArrayList<ArrayList<Element>>();
-//		{
-//			// namedTasksKeys is used to group together all objects with the
-//			// same name
-//			HashMap<String, ArrayList<Element>> namedTasksKeys = new HashMap<String, ArrayList<Element>>();
-//			for (int i = 0; i < taskList.length; i++) {
-//				String tmp = getAttribute(taskList[i], IOilXMLLabels.ATTR_NAME);
-//
-//				if (tmp == null) {
-//					unamedTasks.add(taskList[i]);
-//				} else {
-//					if (namedTasksKeys.containsKey(tmp)) {
-//						namedTasksKeys.get(tmp).add(taskList[i]);
-//					} else {
-//						ArrayList<Element> ar = new ArrayList<Element>();
-//						ar.add(taskList[i]);
-//						namedTasksKeys.put(tmp, ar);
-//						namedTasks.add(ar);
-//					}
-//				}
-//			}
-//		}
-//
-//		// first the task without a name (set id to null)
-//		// it isn't possible in a oil file !!
-//		if (unamedTasks.size() > 0) {
-//			
-//			String cpu = getTaskCpuMap(unamedTasks);
-//			if (cpu == null) {
-//				cpu = DEFAULT_CPU_NAME;
-//			}
-//
-//			storeATask((IVarTreePointer) vtp.clone(), unamedTasks, id);
-//
-//			// also store mapping
-//			storeTaskMap((IVarTreePointer) vtp.clone(), null, makeRtosId(cpu, rtos));
-//		}
-//
-//		// parse all tasks. If there're more than one instance for the same
-//		// task, that task is parsed more than one time
-//		for (Iterator<ArrayList<Element>> iter = namedTasks.iterator(); iter.hasNext();) {
-//			ArrayList<Element> ar = iter.next();
-//			
-//			String cpu = getTaskCpuMap(ar);
-//			if (cpu == null) {
-//				cpu = DEFAULT_CPU_NAME;
-//			}
-//
-//			storeATask((IVarTreePointer) vtp.clone(), ar, id);
-//
-//			// also store mapping
-//			storeTaskMap((IVarTreePointer) vtp.clone(), getAttribute(ar.get(0), "Name"), DataPath.makeSlashedId(new String[] {cpu, rtos}));
-//
-//		}
-//	}
+	/* (non-Javadoc)
+	 * @see rtdruid.modules.oil.transform.SimpleTransform#storeTasks(rtdruid.vartree.IVarTreePointer, org.w3c.dom.Element, rtdruid.modules.oil.vtextensions.OilImplID, java.lang.String)
+	 */
+	protected void storeTasks(IVarTreePointer vtp, Element parent, OilImplID id,
+			String rtos) throws OilTransformException {
+
+		// get only the name of rtos without cpu
+		rtos = extractRtosName(rtos);
+		
+		// prepare where store all data
+		Element[] taskList = getAllSameElements(parent,
+				IOilXMLLabels.ELEM_OBJECT,
+				new String[] { IOilXMLLabels.ATTR_TYPE },
+				new String[] { IOilXMLLabels.OBJ_TASK });
+
+		// aggregate instances of the same task
+		ArrayList<Element> unamedTasks = new ArrayList<Element>();
+		ArrayList<ArrayList<Element>> namedTasks = new ArrayList<ArrayList<Element>>();
+		{
+			// namedTasksKeys is used to group together all objects with the
+			// same name
+			HashMap<String, ArrayList<Element>> namedTasksKeys = new HashMap<String, ArrayList<Element>>();
+			for (int i = 0; i < taskList.length; i++) {
+				String tmp = getAttribute(taskList[i], IOilXMLLabels.ATTR_NAME);
+
+				if (tmp == null) {
+					unamedTasks.add(taskList[i]);
+				} else {
+					if (namedTasksKeys.containsKey(tmp)) {
+						namedTasksKeys.get(tmp).add(taskList[i]);
+					} else {
+						ArrayList<Element> ar = new ArrayList<Element>();
+						ar.add(taskList[i]);
+						namedTasksKeys.put(tmp, ar);
+						namedTasks.add(ar);
+					}
+				}
+			}
+		}
+
+		// first the task without a name (set id to null)
+		// it isn't possible in a oil file !!
+		if (unamedTasks.size() > 0) {
+			
+			String cpu = getTaskCpuMap(unamedTasks);
+			if (cpu == null) {
+				cpu = DEFAULT_CPU_NAME;
+			}
+
+			storeATask((IVarTreePointer) vtp.clone(), unamedTasks, id);
+
+			// also store mapping
+			storeTaskMap((IVarTreePointer) vtp.clone(), null, makeRtosId(cpu, rtos));
+		}
+
+		// parse all tasks. If there're more than one instance for the same
+		// task, that task is parsed more than one time
+		for (Iterator<ArrayList<Element>> iter = namedTasks.iterator(); iter.hasNext();) {
+			ArrayList<Element> ar = iter.next();
+			
+			String cpu = getTaskCpuMap(ar);
+			if (cpu == null) {
+				cpu = DEFAULT_CPU_NAME;
+			}
+
+			storeATask((IVarTreePointer) vtp.clone(), ar, id);
+
+			// also store mapping
+			storeTaskMap((IVarTreePointer) vtp.clone(), getAttribute(ar.get(0), "Name"), DataPath.makeSlashedId(new String[] {cpu, rtos}));
+
+		}
+	}
 	
-//	/**
-//	 * Searchs inside one or more XML elements that describes a task some info
-//	 * about the mapping between task and a cpu.
-//	 * 
-//	 * @return the cpu name or null if not found
-//	 */
-//	protected String getTaskCpuMap(ArrayList<Element> task) {
-//		String answer = null;
-//
-//		for (int i=0; i<task.size(); i++) {
-//
-//			Element[] tmp = getAllSameElements( //
-//					task.get(i), //
-//					OAPKG.getParameter().getName(), //
-//					new String[] { OAPKG.getParameter_Name().getName() }, // 
-//					new String[] { "CPU_ID" });
-//			if (tmp != null) {
-//				for (int ti=0; ti<tmp.length; ti++) {
-//					
-//					String value = getAttribute(tmp[ti], IOilXMLLabels.ATTR_CURR_VALUE); 
-//					if (answer == null) {
-//						answer = value;
-//					} else {
-//						checkTrue(checkStrings(answer, value), "The same task is mapped to more than one cpu:\n"
-//								+ "\t Task = " +  getAttribute(task.get(i), IOilXMLLabels.ATTR_NAME)
-//								+ "\n\t cpu1 = " + answer
-//								+ "\n\t cpu2 = " + value);
-//					}
-//				}
-//			}
-//		}
-//		return answer;
-//	}
+	/**
+	 * Searchs inside one or more XML elements that describes a task some info
+	 * about the mapping between task and a cpu.
+	 * 
+	 * @return the cpu name or null if not found
+	 */
+	protected String getTaskCpuMap(ArrayList<Element> task) {
+		String answer = null;
+
+		for (int i=0; i<task.size(); i++) {
+
+			Element[] tmp = getAllSameElements( //
+					task.get(i), //
+					IOilXMLLabels.ELEM_PARAMETER, //
+					new String[] { IOilXMLLabels.ATTR_NAME }, // 
+					new String[] { "CPU_ID" });
+			if (tmp != null) {
+				for (int ti=0; ti<tmp.length; ti++) {
+					
+					String value = getAttribute(tmp[ti], IOilXMLLabels.ATTR_CURR_VALUE); 
+					if (answer == null) {
+						answer = value;
+					} else {
+						checkTrue(checkStrings(answer, value), "The same task is mapped to more than one cpu:\n"
+								+ "\t Task = " +  getAttribute(task.get(i), IOilXMLLabels.ATTR_NAME)
+								+ "\n\t cpu1 = " + answer
+								+ "\n\t cpu2 = " + value);
+					}
+				}
+			}
+		}
+		return answer;
+	}
 	
 	// ****************************************************
 	
@@ -525,17 +564,17 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 //		
 //	}
 //		
-//	private String makeRtosId(String cpu, String rtos) {
-//		return DataPath.makeSlashedId(new String[] {cpu, rtos});
-//	}
-//	private String extractRtosName(String rtosAndCpu) {
-//		if (rtosAndCpu == null) return null;
-//
-//		String answer = rtosAndCpu;
-//		String[] tmp = DataPath.resolveId(DataPath.removeSlash(rtosAndCpu));
-//		if (tmp.length == 2) {
-//			answer = tmp[1];
-//		}
-//		return answer;
-//	}
+	private String makeRtosId(String cpu, String rtos) {
+		return DataPath.makeSlashedId(new String[] {cpu, rtos});
+	}
+	private String extractRtosName(String rtosAndCpu) {
+		if (rtosAndCpu == null) return null;
+
+		String answer = rtosAndCpu;
+		String[] tmp = DataPath.resolveId(DataPath.removeSlash(rtosAndCpu));
+		if (tmp.length == 2) {
+			answer = tmp[1];
+		}
+		return answer;
+	}
 }
