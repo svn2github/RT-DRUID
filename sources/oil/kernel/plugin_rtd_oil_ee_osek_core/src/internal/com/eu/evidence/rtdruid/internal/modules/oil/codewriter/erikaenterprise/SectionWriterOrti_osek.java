@@ -197,6 +197,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			StringBuffer all_appmodes_id = new StringBuffer();
 			StringBuffer all_stack_id = new StringBuffer();
 			StringBuffer all_isr2 = new StringBuffer();
+			StringBuffer all_memoryProtection = new StringBuffer();
 			
 			{ // priorities and task ID
 				BitSet priorities = new BitSet();
@@ -274,6 +275,14 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				all_isr2.append("\n        ] RUNNINGISR2, \"Running ISR2\";\n\n");
 			}
 			
+			if (parent.checkKeyword(IWritersKeywords.KERNEL_OS_APPLICATION)) {
+				all_memoryProtection.append(",\n" +
+						"            \"CheckTaskMemoryAccess\" = 68,\n" +
+						"            \"CheckISRMemoryAccess\" = 70,\n" +
+						"            \"GetApplicationID\" = 72,\n" +
+						"            \"GetISRID\" = 74");
+			}
+			
 
 			
 			eeortiBuffer.append(
@@ -330,7 +339,8 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				"            \"StartOS\" = 50,\n" + 
 				"            \"ShutdownOS\" = 52,\n" + 
 				"            \"ForceSchedule\" = 54,\n" + 
-				"            \"CounterTick\" = 56\n" + 
+				"            \"CounterTick\" = 56"+
+				all_memoryProtection +"\n" + 
 				"        ] SERVICETRACE, \"OS Services Watch\";\n" + 
 				"\n" + 
 				"    /* please note int and not unsigned char */\n" + 
