@@ -5,6 +5,7 @@
  */
 package com.eu.evidence.rtdruid.io;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -41,8 +42,8 @@ import com.eu.evidence.rtdruid.vartree.data.TaskSched;
  */
 public class XMI2XMLlTest {
 
-	public final static String ERTD_EXAMPLE_STR = loadErtdExampleTxt();
-	public final static String RTD_EXAMPLE_STR = loadRtdExampleTxt();
+	public final static String ERTD_EXAMPLE_STR = loadErtdExampleTxt().trim();
+	public final static String RTD_EXAMPLE_STR = loadRtdExampleTxt().trim();
 	
 	
 	@Test
@@ -55,7 +56,26 @@ public class XMI2XMLlTest {
 		SaveThread st = new SaveThread(first, output);
 		st.start();
 		st.join();
-		assertTrue(ERTD_EXAMPLE_STR.equals(output.toString()));
+		String result = toUnixEol(output.toString()).trim();
+//		System.out.println("__"+result+"__\n\n");
+//		System.out.println("__"+ERTD_EXAMPLE_STR+"__");
+//		int line = 1;
+//		char pos = 1;
+//		assertEquals(result.length(), ERTD_EXAMPLE_STR.length());
+//		for (int i=0; i<result.length(); i++) {
+//			char c1 = result.charAt(i);
+//			char c2 = ERTD_EXAMPLE_STR.charAt(i);
+//			
+//			assertEquals("Line " + line + ", pos " + pos, c1, c2);
+//			
+//			if (c1 == '\n') {
+//				line ++;
+//				pos = 1;
+//			} else {
+//				pos ++;
+//			}
+//		}
+		assertTrue(ERTD_EXAMPLE_STR.equals(result));
 	}
 
 	@Test
@@ -70,9 +90,26 @@ public class XMI2XMLlTest {
 		st.start();
 
 		st.join();
-		
-		System.out.println(output.toString());
-		assertTrue(RTD_EXAMPLE_STR.equals(output.toString()));
+		String result = toUnixEol(output.toString()).trim();
+//		System.out.println("__"+result+"__\n\n");
+//		System.out.println("__"+RTD_EXAMPLE_STR+"__");
+//		int line = 1;
+//		char pos = 1;
+//		assertEquals(result.length(), RTD_EXAMPLE_STR.length());
+//		for (int i=0; i<result.length(); i++) {
+//			char c1 = result.charAt(i);
+//			char c2 = RTD_EXAMPLE_STR.charAt(i);
+//			
+//			assertEquals("Line " + line + ", pos " + pos, c1, c2);
+//			
+//			if (c1 == '\n') {
+//				line ++;
+//				pos = 1;
+//			} else {
+//				pos ++;
+//			}
+//		}
+		assertTrue(RTD_EXAMPLE_STR.trim().equals(result));
 	}
 
 	/**
@@ -223,9 +260,9 @@ public class XMI2XMLlTest {
 		Resource res = loadStringRtd(xmlInput1);
 		
 		com.eu.evidence.rtdruid.vartree.data.System root = (com.eu.evidence.rtdruid.vartree.data.System) res.getContents().get(0);
-		assertTrue(root.getSchedulability().getSchedulingScenarioList().size() == 1);
+		assertEquals(root.getSchedulability().getSchedulingScenarioList().size(), 1);
 		SchedulingScenario sScen = (SchedulingScenario) root.getSchedulability().getSchedulingScenarioList().get(0);
-		assertTrue(sScen.getTaskSchedList().size() == 2);
+		assertEquals(sScen.getTaskSchedList().size(), 2);
 
 		{
 			TaskSched ts = (TaskSched) sScen.getTaskSchedList().get(0);
@@ -258,9 +295,9 @@ public class XMI2XMLlTest {
 		Resource res = loadStringRtd(xmlInput1);
 		
 		com.eu.evidence.rtdruid.vartree.data.System root = (com.eu.evidence.rtdruid.vartree.data.System) res.getContents().get(0);
-		assertTrue(root.getSchedulability().getSchedulingScenarioList().size() == 1);
+		assertEquals(root.getSchedulability().getSchedulingScenarioList().size(), 1);
 		SchedulingScenario sScen = (SchedulingScenario) root.getSchedulability().getSchedulingScenarioList().get(0);
-		assertTrue(sScen.getTaskSchedList().size() == 2);
+		assertEquals(sScen.getTaskSchedList().size(), 2);
 
 		{
 			TaskSched ts = (TaskSched) sScen.getTaskSchedList().get(0);
@@ -347,10 +384,10 @@ public class XMI2XMLlTest {
 	private boolean compare(EObject dest, EObject root1) throws Throwable {
 		IStatus s = VarTreeUtil.compare(dest, root1);
 		Throwable t = s.getException();
-		if (t != null) {
-			throw t;
+		if (t == null) {
+			return s.isOK();
 		}
-		return s.isOK();
+		throw t;
 	}
 	
 
@@ -422,7 +459,9 @@ public class XMI2XMLlTest {
 			StringBuffer buff = new StringBuffer();
 			
 			for (int c = input.read(); c!= -1; c = input.read()) {
-				buff.append((char) c);
+				if (c != '\r') {
+					buff.append((char) c);
+				}
 			}
 			return buff.toString();
 		} catch (IOException e) {
@@ -435,12 +474,24 @@ public class XMI2XMLlTest {
 			StringBuffer buff = new StringBuffer();
 			
 			for (int c = input.read(); c!= -1; c = input.read()) {
-				buff.append((char) c);
+				if (c != '\r') {
+					buff.append((char) c);
+				}
 			}
 			return buff.toString();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private static String toUnixEol(String txt) {
+		StringBuffer buff = new StringBuffer(txt.length());
+		for (byte c : txt.getBytes()) {
+			if (c != '\r') {
+				buff.append((char) c);
+			}
+		}
+		return buff.toString();
 	}
 
 }

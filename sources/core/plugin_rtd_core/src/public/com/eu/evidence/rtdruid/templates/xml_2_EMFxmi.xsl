@@ -354,9 +354,9 @@ xmlns:xsi=" "
 
   
   <xsl:apply-templates select="PROC"/>
-  <xsl:apply-templates select="SUBSYSTEM"/>
-  <xsl:apply-templates select="TRIGGER"/>
   <xsl:apply-templates select="VAR"/>
+  <xsl:apply-templates select="TRIGGER"/>
+  <xsl:apply-templates select="SUBSYSTEM"/>
   
   <xsl:apply-templates select="TYPE"/>
   
@@ -475,8 +475,8 @@ xmlns:xsi=" "
 	<xsl:apply-templates select="@Name"/>
 
     <xsl:apply-templates select="IMPLEMENTATION/PROC"/>
-    <xsl:apply-templates select="IMPLEMENTATION/SUBSYSTEM"/>
 	<xsl:apply-templates select="IMPLEMENTATION/VAR"/>
+    <xsl:apply-templates select="IMPLEMENTATION/SUBSYSTEM"/>
 	
     <xsl:apply-templates select="PROVIDED_INTERFACE"/>
     <xsl:apply-templates select="REQUIRED_INTERFACE"/>
