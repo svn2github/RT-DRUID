@@ -1,8 +1,8 @@
 package com.eu.evidence.rtdruid;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -13,6 +13,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.ResourceLocator;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 
@@ -20,7 +21,7 @@ import com.eu.evidence.rtdruid.desk.RtdruidLog;
 /**
  * The main plugin class to be used in the desktop.
  */
-public class Rtd_corePlugin extends Plugin {
+public class Rtd_corePlugin extends Plugin implements ResourceLocator {
     final static String PLUGIN_ID = "com.eu.evidence.rtdruid";
     public final static String TEMPLATES_PATH = "/com/eu/evidence/rtdruid/templates";
     
@@ -78,6 +79,32 @@ public class Rtd_corePlugin extends Plugin {
 		return resourceBundle;
 	}
 	
+
+	/**
+	 */
+	public Object getImage(String key) {
+		try {
+			URL url = new URL(getBaseURL() + "icons/" + key + ".gif");
+			InputStream inputStream = url.openStream();
+			inputStream.close();
+			return url;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+    
+    /*
+     * Javadoc copied from interface.
+     */
+    public URL getBaseURL()
+    {
+      return getBundle().getEntry("/");
+    }
+    
+    
+    ////////////////////////////// LOG ////////////////////////////// 
+
 	public static void log(IStatus status) {
         if (getDefault() != null) {
         	((Plugin) getDefault()).getLog().log(status);
@@ -93,25 +120,31 @@ public class Rtd_corePlugin extends Plugin {
                 log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, e.getMessage() == null ? "" : e.getMessage(), e));
         }
 	}
-	
 
-	/**
-	 */
-    public Object getImage(String key) throws IOException
-    {
-      URL url = new URL(getBaseURL() + "icons/" + key + ".gif");
-      InputStream inputStream = url.openStream(); 
-      inputStream.close();
-      return url;
-    }
-    
-    /*
-     * Javadoc copied from interface.
-     */
-    public URL getBaseURL()
-    {
-      return getBundle().getEntry("/");
-    }
+    ////////////////////////////// RESOURCE LOCATOR ////////////////////////////// 
+
+	
+	@Override
+	public String getString(String key) {
+		return getResourceString(key);
+	}
+
+	@Override
+	public String getString(String key, boolean translate) {
+		return getResourceString(key);
+	}
+
+	@Override
+	public String getString(String key, Object[] substitutions) {
+		return MessageFormat.format(getString(key), substitutions);
+	}
+
+	@Override
+	public String getString(String key, Object[] substitutions,
+			boolean translate) {
+		return MessageFormat.format(getString(key, translate), substitutions);
+	}
+	
 }
 
 

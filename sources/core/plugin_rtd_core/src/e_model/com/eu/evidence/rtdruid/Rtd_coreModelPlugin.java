@@ -37,11 +37,12 @@ public final class Rtd_coreModelPlugin extends EMFPlugin {
 	 * Create the instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public Rtd_coreModelPlugin() {
 		super
 		  (new ResourceLocator [] {
+				  Rtd_corePlugin.getDefault()
 		   });
 	}
 
@@ -50,11 +51,11 @@ public final class Rtd_coreModelPlugin extends EMFPlugin {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the singleton instance.
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public ResourceLocator getPluginResourceLocator() {
-		return plugin;
+		return Rtd_corePlugin.getDefault(); //plugin;
 	}
 
 	/**
