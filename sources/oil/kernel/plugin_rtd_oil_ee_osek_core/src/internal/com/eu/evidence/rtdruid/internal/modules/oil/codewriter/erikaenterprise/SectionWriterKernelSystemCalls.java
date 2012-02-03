@@ -30,6 +30,16 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	protected final static String white_spaces = "                                                    ";
 	protected final static int id_def_lenght = 40;
 	
+	protected final static String[] EE_OS_INTERRUPT_IDs = {
+		"EnableAllInterrupts",
+		"DisableAllInterrupts",
+		"ResumeAllInterrupts",
+		"SuspendAllInterrupts",
+		"ResumeOSInterrupts",
+		"SuspendOSInterrupts",
+		
+	};
+	
 	protected final static String[] EE_OS_SERVICES_IDs = {
 		"ActivateTask",
 		"TerminateTask",
@@ -38,13 +48,6 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		"ForceSchedule",
 		"GetTaskID",
 		"GetTaskState",
-		
-		"EnableAllInterrupts",
-		"DisableAllInterrupts",
-		"ResumeAllInterrupts",
-		"SuspendAllInterrupts",
-		"ResumeOSInterrupts",
-		"SuspendOSInterrupts",
 		
 		"GetActiveApplicationMode",
 		"StartOS",
@@ -160,6 +163,15 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		int counter = 0;
 		final String end = ",\n\n";
 		
+		
+		// OS Services
+		for (String s: EE_OS_INTERRUPT_IDs) {
+			ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+			ee_c_buffer.append(indent1+"(EE_FADDR)EE_as_"+s+",\n");
+			counter ++;
+		}
+		int interrupts_last_id = counter -1;
+		
 		// OS Services
 		for (String s: EE_OS_SERVICES_IDs) {
 			ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
@@ -271,12 +283,12 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 			
 		}
 
-		
 		final StringBuffer ee_buffer = answer.get(FILE_EE_CFG_H);
 		ee_buffer.append(commentWriterH.writerBanner("System Calls")
 				+ ids.toString() + "\n"
-				+ "#define EE_MAX_SYS_SERVICEID		" + max_sys_serviceId + "\n"
-				+ "#define EE_SYSCALL_NR			" + (counter)+ "\n");
+				+ "#define EE_ID_interrupts_last                         "+ (interrupts_last_id <10 ? " " : "") + interrupts_last_id +"\n"
+				+ "#define EE_MAX_SYS_SERVICEID                          " + (max_sys_serviceId <10 ? " " : "") + max_sys_serviceId + "\n"
+				+ "#define EE_SYSCALL_NR                                 " + (counter <10 ? " " : "") + (counter)+ "\n");
 
 		ee_c_buffer.append("};\n\n");
 	}
