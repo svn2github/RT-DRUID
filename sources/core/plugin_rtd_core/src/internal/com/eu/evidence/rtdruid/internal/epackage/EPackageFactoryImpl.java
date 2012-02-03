@@ -8,7 +8,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.FileLocator;
@@ -47,7 +52,92 @@ public class EPackageFactoryImpl extends EPackageFactory {
 
 	protected static final String PLUGIN_ID = Rtd_corePlugin.PLUGIN_ID;
 	public static final String EXTENSION_POINT = "rtdruidEPackages";
+	
+	
+	
+	/**
+	 * This class stores all aready merged configuration of EPackage, in order
+	 * to provide the same instance of EPackage instead of rebuild a new one.
+	 * This is important if you want to allow interactions among models build
+	 * from different "call" of EPackageFactory.
+	 * 
+	 * @author Nicola Serreli
+	 * @since 2.0
+	 * 
+	 */
+	private static class EPackageMergedCache {
+		
+		/**
+		 * The cache
+		 */
+		private Map<Set<String>, EPackage> cache;
+		
+		/**
+		 * Default constructor
+		 */
+		EPackageMergedCache() {
+			cache = new LinkedHashMap<Set<String>, EPackage>();
+		}
+		
+		/**
+		 * Looks in the cache for an EPackage produced by the given list of
+		 * {@link IEPackageFactoryElement}
+		 * 
+		 * @param pkgProviders
+		 *            all contributors of the EPackage
+		 * @return the EPackage related to the given list of contributors, or
+		 *         null if not found.
+		 * @throws RTDEPackageBuildException 
+		 */
+		EPackage getEpackage(IEPackageFactoryElement ... pkgProviders) throws RTDEPackageBuildException {
+			for (Entry<Set<String>, EPackage> entry : cache.entrySet()) {
+				if (match(entry.getKey(), pkgProviders)) {
+					return entry.getValue();
+				}
+			}
+			
+			// not found !!
+			IEPackageMerge merge = EPackageUtility.instance.getPackageMerge();
+			merge.addEPackage(EcoreFactory.eINSTANCE.createEPackage());
+			Set<String> key = new HashSet<String>();
 
+			for (IEPackageFactoryElement pkgProvider : pkgProviders) {
+				key.add(pkgProvider.getId());
+				try {
+					merge.addEPackage(pkgProvider.getProvider(false).get());
+				} catch (EPackageProviderException e) {
+					RtdruidLog.log(e);
+				}
+			}
+
+			EPackage answer = merge.getResult();
+			cache.put(key, answer);
+			
+			return answer;
+		}
+		
+		
+		/**
+		 * Check if a set and an array contain the same set of elements (does
+		 * not mater the order)
+		 * 
+		 * @param set
+		 * @param array
+		 * @return
+		 */
+		private boolean match(Set<String> set, IEPackageFactoryElement[] array) {
+			boolean answer = set.size() == array.length;
+			
+			for (int i=0; answer && i<array.length; i++) {
+				answer = set.contains(array[i].getId());
+			}
+			
+			return answer;
+		}
+	}
+	
+	private static final EPackageMergedCache cache = new EPackageMergedCache();
+	
 	/**
 	 * This element is related to "loader" extension point elements
 	 * 
@@ -230,15 +320,8 @@ public class EPackageFactoryImpl extends EPackageFactory {
 	protected List<IEPackageFactoryElement> factories = null;
 
 	public EPackage getEPackage() throws RTDEPackageBuildException {
-		IEPackageMerge merge = EPackageUtility.instance.getPackageMerge();
-		merge.addEPackage(EcoreFactory.eINSTANCE.createEPackage());
-
-		for (IEPackageProvider pkgProvider : doGetEPackageProviders(false)) {
-			
-			merge.addEPackage(pkgProvider.get());
-		}
-
-		return merge.getResult();
+		
+		return cache.getEpackage(doGetEPackageFactoryElements(false));
 	}
 
 	/* **************************
@@ -255,7 +338,7 @@ public class EPackageFactoryImpl extends EPackageFactory {
 	
 	/** Creates a new instances each required factory */
 	public IEPackageProvider[] doGetEPackageProviders(boolean alsoDisable) {
-	
+		
 		// get factory list
 		init();
 
@@ -271,8 +354,9 @@ public class EPackageFactoryImpl extends EPackageFactory {
 		}
 
 		return (IEPackageProvider[]) answer.toArray(new IEPackageProvider[answer.size()]);
+		
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see com.eu.evidence.rtdruid.epackage.EPackageFactory#getEPackageFactoryElement(java.lang.String)
 	 */
@@ -287,7 +371,7 @@ public class EPackageFactoryImpl extends EPackageFactory {
 		return doGetEPackageFactoryElement(factories, id);
 	}
 	
-	public IEPackageFactoryElement doGetEPackageFactoryElement(List<IEPackageFactoryElement> list, String id) {
+	private IEPackageFactoryElement doGetEPackageFactoryElement(List<IEPackageFactoryElement> list, String id) {
 		if (id != null) {
 			for (IEPackageFactoryElement elem: list) {
 				if (id.equals(elem.getId())) {
@@ -304,8 +388,24 @@ public class EPackageFactoryImpl extends EPackageFactory {
 	 */
 	@Override
 	public IEPackageFactoryElement[] getEPackageFactoryElements() {
+		return doGetEPackageFactoryElements(true); 
+	}
+	
+	/** Creates a new instances each required factory */
+	private IEPackageFactoryElement[] doGetEPackageFactoryElements(boolean alsoDisable) {
+	
+		// get factory list
 		init();
-		return (IEPackageFactoryElement[]) factories.toArray(new IEPackageFactoryElement[factories.size()]);
+
+		ArrayList<IEPackageFactoryElement> answer = new ArrayList<IEPackageFactoryElement>();
+		for (IEPackageFactoryElement elem : factories) {
+			
+			if (alsoDisable || elem.isAutoContributionSet()) {
+				answer.add(elem);
+			}
+		}
+
+		return (IEPackageFactoryElement[]) answer.toArray(new IEPackageFactoryElement[answer.size()]);
 	}
 	
 	/* **************************
@@ -368,6 +468,10 @@ public class EPackageFactoryImpl extends EPackageFactory {
 		String className = element.getAttribute(LOADER_CLASS);
 		String id = element.getAttribute(PKG_ID);
 		String auto = element.getAttribute(AUTO_CONTRIBUTE);
+		
+		if (id == null || id.isEmpty()) {
+			id = autoId(element);
+		}
 
 		// load directly the factory's class doen't work always then
 		// ask to eclipse framework to load the required class, and
@@ -404,6 +508,11 @@ public class EPackageFactoryImpl extends EPackageFactory {
 		String bundleName = element.getContributor().getName();
 		Bundle bundle = Platform.getBundle(bundleName);
 
+		if (id == null || id.isEmpty()) {
+			id = autoId(element);
+		}
+
+
 		if (bundle == null) {
 			RtdruidLog.log("Cannot find the bundle " + bundleName);
 		} else {
@@ -417,6 +526,18 @@ public class EPackageFactoryImpl extends EPackageFactory {
 
 		return answer;
 	}
+	
+	
+
+	/**
+	 * @param element
+	 * @return
+	 */
+	protected static String autoId(IConfigurationElement element) {
+		return element.getContributor().getName() + element.hashCode();
+	}
+
+
 
 	protected static class PluginEcoreEpackageProvider extends EcoreEpackageProvider {
 

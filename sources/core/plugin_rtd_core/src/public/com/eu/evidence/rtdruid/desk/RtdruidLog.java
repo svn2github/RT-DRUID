@@ -16,7 +16,7 @@ import com.eu.evidence.rtdruid.Rtd_corePlugin;
  */
 public class RtdruidLog {
 	
-	private static boolean FINAL = false; 
+	private final static boolean FINAL = false; 
 
 	/** This method logs a String as an Exception */
 	public static void log(String txt) {
@@ -35,7 +35,6 @@ public class RtdruidLog {
 		if (txt == null)
 			txt = "null";
 		RtdruidLog.log(new RuntimeException(txt, e));
-		return;
 	}
 
 	/**
@@ -67,19 +66,6 @@ public class RtdruidLog {
 
 	/** This method logs Exceptions and Errors */
 	public static void log(Throwable e) {
-		
-		if (FINAL) {
-
-			// clear stack Trace of this Exception and all its causes !!
-			for (Throwable tmp = e; tmp !=null; tmp = tmp.getCause()) {
-				tmp.setStackTrace(new StackTraceElement[] {});
-			}
-			
-		} else {
-			// print the stack trace
-			e.printStackTrace();
-		}
-
 		Rtd_corePlugin.log(e);
 	}
 }

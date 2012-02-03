@@ -3,6 +3,7 @@
  */
 package com.eu.evidence.rtdruid.epackage;
 
+import static com.eu.evidence.rtdruid.tests.RtdAssert.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -20,6 +21,7 @@ import org.junit.Test;
 
 import com.eu.evidence.rtdruid.Rtd_corePlugin;
 import com.eu.evidence.rtdruid.epackage.EPackageFactory.IEPackageFactoryElement;
+import com.eu.evidence.rtdruid.tests.RtdAssert;
 
 
 /**
@@ -32,15 +34,55 @@ public class EcoreEpackageExtentionTest {
 	
 	private final static String RTD_CORE_BASE_CONTR_ID = Rtd_corePlugin.EPACKAGE_BASE_ID;
 
+	
 	@Test
 	public void testGetProviders() {
 		IEPackageProvider[] providers = EPackageFactory.instance.getEPackageProviders();
 		assertNotNull(providers);
 	}
-	
+
+	@Test
+	public void testGetTheSameDefaultEPackage()  throws RTDEPackageBuildException, IOException {
+		EPackage pkg1 = EPackageFactory.instance.getEPackage();
+		EPackage pkg2 = EPackageFactory.instance.getEPackage();
+		assertNotNull(pkg1);
+		assertNotNull(pkg2);
+		
+		EPackageTestUtility ptu = new EPackageTestUtility();
+		assertEquals(ptu.modelToString(pkg1), ptu.modelToString(pkg2));
+		
+		assertSame(pkg1, pkg2);
+	}
+
+	@Test
+	public void testGetTheSameEPackage1()  throws RTDEPackageBuildException, IOException {
+		EPackage pkg1 = EPackageFactory.instance.getEPackage();
+		EPackage pkg2 = EPackageFactory.getFactory().getEPackage();
+		assertNotNull(pkg1);
+		assertNotNull(pkg2);
+		
+		EPackageTestUtility ptu = new EPackageTestUtility();
+		assertEquals(ptu.modelToString(pkg1), ptu.modelToString(pkg2));
+		
+		assertSame(pkg1, pkg2);
+	}
+
+	@Test
+	public void testGetTheSameEPackage2()  throws RTDEPackageBuildException, IOException {
+		EPackage pkg1 = EPackageFactory.getFactory().getEPackage();
+		EPackage pkg2 = EPackageFactory.getFactory().getEPackage();
+		assertNotNull(pkg1);
+		assertNotNull(pkg2);
+		
+		EPackageTestUtility ptu = new EPackageTestUtility();
+		assertEquals(ptu.modelToString(pkg1), ptu.modelToString(pkg2));
+		
+		assertSame(pkg1, pkg2);
+	}
+
 	@Test
 	public void testGetEPackage()  throws RTDEPackageBuildException, IOException {
-		assertTrue(EPackageFactory.instance.getEPackageProviders().length >0);
+		RtdAssert.assertGreater(0, EPackageFactory.instance.getEPackageProviders().length);
 
 		EPackage pkg = EPackageFactory.instance.getEPackage();
 		assertNotNull(pkg);
@@ -119,7 +161,7 @@ public class EcoreEpackageExtentionTest {
 		IEPackageProvider[] providers = epkgf.getEPackageProviders();
 		assertEquals(factoryElements.length, providers.length);
 		
-		final int max = 1 << ( factoryElements.length > 3 ? 3 : factoryElements.length); 
+		final int max = 1 << Math.min( factoryElements.length, 3); 
 		//System.out.println("f "+factoryElements.length + " m " + max);
 		
 		// disable all elements
@@ -191,21 +233,21 @@ public class EcoreEpackageExtentionTest {
 
 		IEPackageFactoryElement[] el_def1 = default_epk.getEPackageFactoryElements();
 		assertNotNull(el_def1);
-		assertTrue(el_def1.length>0);
+		RtdAssert.assertGreater(0, el_def1.length);
 		for (IEPackageFactoryElement el :  el_def1) {
 			assertNotNull(el.getProvider(true));
 		}
 
 		IEPackageFactoryElement[] el_def2 = default_epk.getEPackageFactoryElements();
 		assertNotNull(el_def2);
-		assertTrue(el_def2.length>0);
+		RtdAssert.assertGreater(0, el_def2.length);
 		for (IEPackageFactoryElement el :  el_def2) {
 			assertNotNull(el.getProvider(true));
 		}
 
 		IEPackageFactoryElement[] el_new1 = new_epk.getEPackageFactoryElements();
 		assertNotNull(el_new1);
-		assertTrue(el_new1.length>0);
+		RtdAssert.assertGreater(0, el_new1.length);
 		for (IEPackageFactoryElement el :  el_new1) {
 			assertNotNull(el.getProvider(true));
 		}
@@ -233,7 +275,7 @@ public class EcoreEpackageExtentionTest {
 		
 		IEPackageFactoryElement[] modified = new_epk_2.getEPackageFactoryElements();
 		assertNotNull(modified);
-		assertTrue(modified.length>0);
+		RtdAssert.assertGreater(0, modified.length);
 
 		checkSimilarElementList(el_bef_def1, el_bef_new1a, el_bef_new2);
 		checkVerySimilarElementList(el_bef_new1a, el_bef_new1b);
@@ -242,7 +284,7 @@ public class EcoreEpackageExtentionTest {
 		boolean[] oldValues = new boolean[modified.length];
 		for(int i=0; i<modified.length; i++) {
 			oldValues[i] = modified[i].isAutoContributionSet();
-			boolean notOldValue = !oldValues[i];
+			boolean notOldValue = not(oldValues[i]);
 			modified[i].setAutoContributionSet( notOldValue );
 			assertEquals(notOldValue, modified[i].isAutoContributionSet());
 		}
@@ -282,7 +324,7 @@ public class EcoreEpackageExtentionTest {
 		boolean[] oldValues = new boolean[modified.length];
 		for(int i=0; i<modified.length; i++) {
 			oldValues[i] = modified[i].isAutoContributionSet();
-			boolean notOldValue = !oldValues[i];
+			boolean notOldValue = not(oldValues[i]);
 			modified[i].setAutoContributionSet( notOldValue );
 			assertEquals(notOldValue, modified[i].isAutoContributionSet());
 		}
@@ -315,7 +357,7 @@ public class EcoreEpackageExtentionTest {
 		// Elements list retrived before the change
 		IEPackageFactoryElement[] modified = default_epk.getEPackageFactoryElements();
 		assertNotNull(modified);
-		assertTrue(modified.length>0);
+		RtdAssert.assertGreater(0, modified.length);
 		
 		for (int i=0; i<modified.length; i++) {
 			modified[i] = null;
@@ -481,26 +523,12 @@ public class EcoreEpackageExtentionTest {
 	private void checkSimilarElement(IEPackageFactoryElement el1, IEPackageFactoryElement el2, boolean sameAutoContribution) {
 		assertNotSame(el1, el2);
 
-		checkStringEquals(el1.getId(), el2.getId());
+		assertEquals(el1.getId(), el2.getId());
 
 		if (sameAutoContribution) {
 			assertEquals(el1.isAutoContributionSet(), el2.isAutoContributionSet());
 		} else {
-			assertEquals(el1.isAutoContributionSet(), !el2.isAutoContributionSet());
-		}
-	}
-	
-	
-	/**
-	 * @param id
-	 * @param id2
-	 */
-	private void checkStringEquals(String id, String id2) {
-		if (id == null) {
-			assertNull(id2);
-		} else {
-			assertNotNull(id2);
-			assertTrue(id.equals(id2));
+			assertEquals(el1.isAutoContributionSet(), not(el2.isAutoContributionSet()));
 		}
 	}
 

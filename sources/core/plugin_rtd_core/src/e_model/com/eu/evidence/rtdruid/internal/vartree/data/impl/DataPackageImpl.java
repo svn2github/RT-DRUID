@@ -521,7 +521,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * @generated
 	 */
 	private DataPackageImpl() {
-		super(eNS_URI, DataFactory.eINSTANCE);
+		//super(eNS_URI, DataFactory.eINSTANCE);
+		setEFactoryInstance(DataFactory.eINSTANCE);
 	}
 
 	/**
@@ -544,10 +545,14 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * @generated
 	 */
 	public static DataPackage init() {
-		if (isInited) return (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
+		if (isInited) {
+			return eINSTANCE;
+			//return (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DataPackageImpl());
+		DataPackageImpl theDataPackage = new DataPackageImpl();
+				//(DataPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DataPackageImpl());
 
 		isInited = true;
 
@@ -562,7 +567,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
   
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(DataPackage.eNS_URI, theDataPackage);
+		//EPackage.Registry.INSTANCE.put(DataPackage.eNS_URI, theDataPackage);
 		return theDataPackage;
 	}
 

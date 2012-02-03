@@ -86,15 +86,15 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 	 * @generated
 	 */
 	public static DataFactory init() {
-		try {
-			DataFactory theDataFactory = (DataFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.evidence.eu.com/rtdruid/data"); 
-			if (theDataFactory != null) {
-				return theDataFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
+//		try {
+//			DataFactory theDataFactory = (DataFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.evidence.eu.com/rtdruid/data"); 
+//			if (theDataFactory != null) {
+//				return theDataFactory;
+//			}
+//		}
+//		catch (Exception exception) {
+//			EcorePlugin.INSTANCE.log(exception);
+//		}
 		return new DataFactoryImpl();
 	}
 

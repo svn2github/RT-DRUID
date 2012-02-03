@@ -7,6 +7,7 @@ package com.eu.evidence.rtdruid.test.modules.jscan.multiframe;
 
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -523,7 +524,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		""	};
 
 
-	public void testPrepareData() {
+	public void testPrepareData() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
 //		System.out.println(Utility.varTreeToStringRtd(vt));
@@ -570,7 +571,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 	}
 
 	
-	public void test1() {
+	public void test1() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -593,7 +594,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		//check(vt, Utility.loadString(example1[1]));
 	}
 
-	public void testPrepareData2() {
+	public void testPrepareData2() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example2[0]);
 		
 //		System.out.println(Utility.varTreeToStringRtd(vt));
@@ -654,7 +655,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 
 	}
 
-	public void test2() {
+	public void test2() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example2[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -742,7 +743,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 	}
 
 
-	public void test3() {
+	public void test3() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example3[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];

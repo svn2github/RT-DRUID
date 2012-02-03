@@ -2,6 +2,8 @@ package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
 import java.io.ByteArrayInputStream;
 
+import org.junit.Test;
+
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.CommentWriterCpp;
 
 
@@ -9,7 +11,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.CommentWri
 public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 	
 	
-	public void testDS_PIC32_1() {
+	@Test public void testDS_PIC32_1() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -80,7 +82,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC32_2() {
+	@Test public void testDS_PIC32_2() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -146,7 +148,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC32_BCC1() {
+	@Test public void testDS_PIC32_BCC1() {
 	    final String text =
 		"CPU test_application {" + 
 		"" + 
@@ -196,7 +198,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC32_LIB() {
+	@Test public void testDS_PIC32_LIB() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -236,7 +238,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC32_LIB_multi() {
+	@Test public void testDS_PIC32_LIB_multi() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -278,7 +280,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	public void testEmptyPIC32() {
+	@Test public void testEmptyPIC32() {
 		final String text = 
 			
 			"CPU mySystem {\n" +
@@ -292,7 +294,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 	}
 	
 
-	public void testEDF() {
+	@Test public void testEDF() {
 		final String text = 
 			
 			"CPU mySystem {\n" +
@@ -324,7 +326,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testEDF_ram() {
+	@Test public void testEDF_ram() {
 		final String text = 
 			
 			"CPU mySystem {\n" +
@@ -356,7 +358,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	public void testEDF_rom() {
+	@Test public void testEDF_rom() {
 		final String text = 
 			
 			"CPU mySystem {\n" +
@@ -389,7 +391,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 	}
 
 
-	public void testEDF_PIC32() {
+	@Test public void testEDF_PIC32() {
 		final String text = 
 			"	CPU mySystem {\n" +
 			"		OS myOs {\n" +
@@ -421,7 +423,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 			"	};\n";
 		commonWriterTest(text, 1);
 	}
-	public void testEDF_PIC32_795() {
+	@Test public void testEDF_PIC32_795() {
 		final String text = 
 			"	CPU mySystem {\n" +
 			"		OS myOs {\n" +
@@ -454,7 +456,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testEDF_PIC32_CUSTOM() {
+	@Test public void testEDF_PIC32_CUSTOM() {
 		final String text = 
 			"	CPU mySystem {\n" +
 			"		OS myOs {\n" +
@@ -497,7 +499,11 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 	public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
 		CommentWriterCpp cWriter = new CommentWriterCpp();
 		System.out.println(cWriter.writerBanner("OIL") + oil_text);
-		System.out.println(cWriter.writerBanner("XML") + oilToXmltext(new ByteArrayInputStream(oil_text.getBytes())));
+		try {
+			System.out.println(cWriter.writerBanner("XML") + oilToXmltext(new ByteArrayInputStream(oil_text.getBytes())));
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
+		}
 		System.out.println(cWriter.writerBanner("OUTPUT"));
 		DefaultTestResult result = super.commonWriterTest(oil_text, expected_cpu);
 		return result;

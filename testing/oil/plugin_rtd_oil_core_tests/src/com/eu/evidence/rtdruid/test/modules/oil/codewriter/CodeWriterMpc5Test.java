@@ -1,11 +1,13 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 
 
 public class CodeWriterMpc5Test extends AbstractCodeWriterTest {
 	
 
-	public void testMpc5CodeWriteWithoutResources() {
+	@Test public void testMpc5CodeWriteWithoutResources() {
 		final String text = "CPU EE {\n"
 			+ "    OS EE {\n"+
 			
@@ -57,7 +59,7 @@ public class CodeWriterMpc5Test extends AbstractCodeWriterTest {
 
 // with APPMODE
 
-	public void testMpc5CodeWrite() {
+	@Test public void testMpc5CodeWrite() {
 		final String text =
 			"CPU EE {\n"
 			+ "    OS EE {\n"+

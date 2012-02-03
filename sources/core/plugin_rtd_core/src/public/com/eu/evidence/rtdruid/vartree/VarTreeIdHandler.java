@@ -65,6 +65,8 @@ public class VarTreeIdHandler {
 						dpkg.getVarMap_ModeRef().getName(),
 						dpkg.getVarMap_VarRef().getName()
 				}));
+		setMap(dpkg.getRtos().getName(),
+				Arrays.asList(new String[0]));
 
 	}
 	

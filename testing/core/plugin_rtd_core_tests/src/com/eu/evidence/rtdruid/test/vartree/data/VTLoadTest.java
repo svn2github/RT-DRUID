@@ -113,7 +113,7 @@ public class VTLoadTest {
 	}
 
 	@Test
-	public void testLoad_utility_1() {
+	public void testLoad_utility_1() throws IOException {
 		
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput1);
@@ -182,7 +182,7 @@ public class VTLoadTest {
 	
 	
 	@Test
-	public void testLoad_utility_2() {
+	public void testLoad_utility_2() throws IOException {
 		
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput2);
@@ -252,7 +252,7 @@ public class VTLoadTest {
 	
 	
 	@Test
-	public void testLoad_utility_3() {
+	public void testLoad_utility_3() throws IOException {
 		
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput3);
@@ -320,7 +320,7 @@ public class VTLoadTest {
 	
 	
 	@Test
-	public void testLoad_utility_4() {
+	public void testLoad_utility_4() throws IOException {
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput4);
 //		System.out.println(Utility.varTreeToString(vt));
@@ -387,7 +387,7 @@ public class VTLoadTest {
 	
 	
 	@Test
-	public void testLoad_utility_5() {
+	public void testLoad_utility_5() throws IOException {
 		
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput5);
@@ -475,6 +475,7 @@ public class VTLoadTest {
 			if (contains_eobjects) {
 				EObject croot = correct.getResourceSet().getResources().get(0).getContents().get(0);
 				EObject testroot = res.getContents().get(0);
+				
 				String t = VarTreeUtil.compare(testroot, croot).getMessage(); assertNull(t, t);
 			}
 		}

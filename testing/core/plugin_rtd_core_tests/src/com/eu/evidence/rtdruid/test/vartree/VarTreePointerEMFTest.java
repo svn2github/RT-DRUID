@@ -16,16 +16,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
-import com.eu.evidence.rtdruid.vartree.IVariable.NotValidValueException;
 import com.eu.evidence.rtdruid.vartree.VarTreePointerEMF;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.variables.StringMVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
@@ -133,19 +136,34 @@ public abstract class VarTreePointerEMFTest {
 
 		assertTrue(vtp.goAbsolute(null));
 
+		EPackage epkg = editingDomain.getResourceSet().getPackageRegistry().getEPackage(DataPackage.eNS_URI);
 
 		nodeChildren.clear();
-		initExpectedChildrenNumber(TYPE_SYSTEM, 6); // 3 attributes + 3 references
-		initExpectedChildrenNumber(TYPE_ARCHITECTURAL, 5); 
+		initExpectedChildrenNumber(TYPE_SYSTEM, count(epkg, TYPE_SYSTEM) + 3); // attributes + 3 references
+		initExpectedChildrenNumber(TYPE_ARCHITECTURAL, count(epkg, TYPE_ARCHITECTURAL)); 
 		initExpectedChildrenNumber(TYPE_TASK_LIST, 1); // 1 Task
 		
-		initExpectedChildrenNumber(TYPE_MAPPING, 4); // taskMap, procMap, varMap, FastTaskToProcMap
-		initExpectedChildrenNumber(TYPE_FUNCTIONAL, 6); // 1 Task
-		initExpectedChildrenNumber(TYPE_TASK, 7); 
+		initExpectedChildrenNumber(TYPE_MAPPING, count(epkg, TYPE_MAPPING)); 
+		initExpectedChildrenNumber(TYPE_FUNCTIONAL, count(epkg, TYPE_FUNCTIONAL));
+		initExpectedChildrenNumber(TYPE_TASK, count(epkg, TYPE_TASK) ); 
 		
 
 		return vtp;
 	}
+
+	private int count(EPackage epkg, String type) {
+		int answer = 0;
+		EClass ecl = ((EClass) epkg.getEClassifier(type)); 
+		answer += ecl.getEAllAttributes().size();
+		
+		for (EReference ref: ecl.getEAllReferences()) {
+			if (ref.isMany()) {
+				answer++;
+			}
+		}
+		return answer;
+	}
+	
 
 	@Test
 	public void testClone() {
@@ -658,6 +676,7 @@ public abstract class VarTreePointerEMFTest {
 		
 		assertTrue(vtp.goAbsolute(S+ DataPath.makeSlashedId(VALUE_NEW_NAME) +S+ NAME_ARCHITECTURAL +S+ NAME_TASK_LIST +S+ RNAME_TASK +S+ "Type"));
 		StringVar type = (StringVar) vtp.getVar();
+		
 		assertTrue(type == null || type.get() == null );
 		//assertTrue(type.get() == null);
 	}
@@ -688,14 +707,14 @@ public abstract class VarTreePointerEMFTest {
 		
 		assertTrue(vtp.goAbsolute(S+ DataPath.makeSlashedId(VALUE_NEW_NAME) +S+ NAME_FUNCTIONAL +S+ NAME_IMPLEMENTATION +S+ RNAME_PROC +S+ "Methods"));
 		StringMVar smv = new StringMVar();
-		try {
+		{
 			smv.appendValue("a");
 			smv.appendValue("b");
 			smv.appendValue("c");
 			smv.appendValue("a");
 			smv.appendValue("b");
 			smv.appendValue("c");
-		} catch (NotValidValueException e) { assertTrue(false); }
+		}
 		vtp.setVar(smv);
 		
 		StringMVar smvr = (StringMVar) vtp.getVar();

@@ -7,6 +7,8 @@ package com.eu.evidence.rtdruid.internal.modules.jscan;
 
 
 
+import java.io.IOException;
+
 import org.eclipse.emf.common.command.CompoundCommand;
 
 import com.eu.evidence.rtdruid.vartree.DataPath;
@@ -305,7 +307,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	};
 
 	
-	public void test1() {
+	public void test1() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -321,7 +323,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 		check(vt, Vt2StringUtilities.loadString(example1[1]));
 	}
 
-	public void test1Undo() {
+	public void test1Undo() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -355,7 +357,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	}
 
 	
-	public void test1AutoUndo() {
+	public void test1AutoUndo() throws IOException {
 		String example1bis =
 			"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
 			"<SYSTEM Name=\"strano\">" +
@@ -704,7 +706,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 			"</SYSTEM>"
 		};
 
-	public void test2() {
+	public void test2() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(example2[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -866,7 +868,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
-	public void test3() {
+	public void test3() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example3[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -1028,7 +1030,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
-	public void test4() {
+	public void test4() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example4[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -1214,7 +1216,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
-	public void test5() {
+	public void test5() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example5[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -1400,7 +1402,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
-	public void test6() {
+	public void test6() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example6[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -1606,7 +1608,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
-	public void test7() {
+	public void test7() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example7[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];

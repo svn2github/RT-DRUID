@@ -6,7 +6,11 @@
 package com.eu.evidence.rtdruid.test.vartree;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
 
@@ -67,12 +71,12 @@ public class EMFCommandsTest {
 		assertTrue(com.canExecute());
 		com.execute();
 		Collection<Object> col = vt.getClipboard();
-		assertTrue(col != null);
-		assertTrue(col.size() == 1);
+		assertNotNull(col);
+		assertEquals(1, col.size() );
 		
 		Object result = col.toArray()[0];
 		assertTrue(result instanceof Task);
-		String t = VarTreeUtil.compare(task, (Task) result).getMessage(); assertTrue(t, t== null);
+		String t = VarTreeUtil.compare(task, (Task) result).getMessage(); assertNull(t, t);
 
 //		for (Object o : ((EObjectContainmentUniqueEList) ((Task) result).getSchedulingList()).getFastSearch().entrySet()) {
 //			System.out.println(o);
@@ -82,7 +86,7 @@ public class EMFCommandsTest {
 		for (int i=0; i<scheds.length; i++) {
 			
 			assertTrue(task.getSchedulingList().contains(scheds[i]));
-			assertTrue(!((Task) result).getSchedulingList().contains(scheds[i]));
+			assertFalse(((Task) result).getSchedulingList().contains(scheds[i]));
 			
 			EList<Scheduling> list = ((Task) result).getSchedulingList(); 
 			for (Scheduling s: list) {
@@ -92,7 +96,7 @@ public class EMFCommandsTest {
 						match++;
 					}
 				}
-				assertTrue(match == 1);
+				assertEquals(1, match );
 			}
 		}
 		
@@ -122,7 +126,7 @@ public class EMFCommandsTest {
 		}
 		
 		for (int i=0; i<scheds.length; i++) {
-			assertTrue(scheds[i].eResource() != null);
+			assertNotNull(scheds[i].eResource());
 		}
 
 		
@@ -132,12 +136,12 @@ public class EMFCommandsTest {
 		assertTrue(com.canExecute());
 		com.execute();
 		Collection<Object> col = vt.getClipboard();
-		assertTrue(col != null);
-		assertTrue(col.size() == 1);
+		assertNotNull(col);
+		assertEquals(1, col.size() );
 		
 		Object result = col.toArray()[0];
 		assertTrue(result instanceof Task);
-		String t = VarTreeUtil.compare(task, (Task) result).getMessage(); assertTrue(t, t== null);
+		String t = VarTreeUtil.compare(task, (Task) result).getMessage(); assertNull(t, t);
 		assertTrue(EcoreUtil.equals(task, (Task) result));
 	}
 

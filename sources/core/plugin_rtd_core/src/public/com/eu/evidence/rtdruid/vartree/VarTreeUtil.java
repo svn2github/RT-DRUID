@@ -21,12 +21,11 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 
-import com.eu.evidence.rtdruid.epackage.EPackageFactory;
-import com.eu.evidence.rtdruid.epackage.RTDEPackageBuildException;
+import com.eu.evidence.rtdruid.epackage.RtdEPackage;
 import com.eu.evidence.rtdruid.internal.vartree.VarTree;
 import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 public final class VarTreeUtil {
 
@@ -143,7 +142,6 @@ public final class VarTreeUtil {
 		}
 	}
 
-	private static final boolean USE_DYNAMIC_PACKAGES = false;
 
 	/** disable constructor */
 	private VarTreeUtil() {
@@ -189,29 +187,17 @@ public final class VarTreeUtil {
 	 * Try to instantiate the root element
 	 */
 	public static EObject newVarTreeRoot(EPackage epkg) {
-		if (USE_DYNAMIC_PACKAGES) {
-			if (epkg != null) {
-				EClassifier rootClassifier = epkg.getEClassifier(DataPackage.Literals.SYSTEM.getName());
-				if (rootClassifier != null) {
-					return EcoreUtil.create(rootClassifier.eClass());
-				}
+		if (epkg != null) {
+			EClassifier rootClassifier = epkg.getEClassifier(DataPackage.Literals.SYSTEM.getName());
+			if (rootClassifier != null) {
+				return EcoreUtil.create((EClass) rootClassifier);
 			}
 		}
-		return DataFactory.eINSTANCE.createSystem();
+		return null;
 	}
 	
 	private static EPackage getDefaultPackage() {
-		final EPackage answer;
-		if (USE_DYNAMIC_PACKAGES) {
-			try {
-				answer = EPackageFactory.instance.getEPackage();
-			} catch (RTDEPackageBuildException e) {
-				throw new RuntimeException(e);
-			}
-		} else {
-			answer = DataPackage.eINSTANCE;
-		}
-		return answer;
+		return RtdEPackage.eINSTANCE;
 	}
 
 	/**
@@ -219,9 +205,9 @@ public final class VarTreeUtil {
 	 * references
 	 * */
 	public static EObject copy(EObject original) {
-		if (original == null) {
-			return null;
-		}
+//		if (original == null) {
+//			return null;
+//		}
 
 		return EcoreUtil.copy(original);
 	}
@@ -440,4 +426,85 @@ public final class VarTreeUtil {
 		}
 		return answer;
 	}
+	
+	////////////////////////////////////////////////////////////
+	
+	/**
+	 * Checks if given node contains the var <code>varName</code> and, if true,
+	 * checks if the var's value is the given one. If the node doesn't contains
+	 * the var or if the value is null, this method creates a new var with the
+	 * given value and adds it to <code>parent</code> node.
+	 * 
+	 * @param parent
+	 *            the node that contains the node with the required var
+	 * @param varName
+	 *            identifies the variable
+	 * @param value
+	 *            the required value
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if the <code>parent</code> node already contains the variable
+	 *             but with a value different from default one.
+	 */
+	public static void storeAVar(IVarTreePointer parent, String varName, String value) {
+		storeAVar(parent, varName, value, false);
+	}
+	
+	/**
+	 * Checks if given node contains the var <code>varName</code> and, if true,
+	 * checks if the var's value is the given one. If the node doesn't contains
+	 * the var or if the value is null, this method creates a new var with the
+	 * given value and adds it to <code>parent</code> node.
+	 * 
+	 * @param parent
+	 *            the node that contains the node with the required var
+	 * @param varName
+	 *            identifies the variable
+	 * @param value
+	 *            the required value
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if the <code>parent</code> node already contains the variable
+	 *             but with another not null value.
+	 */
+	public static void storeAVar(IVarTreePointer parent, String varName, String value, boolean overwrite) {
+
+		IVarTreePointer curr = (IVarTreePointer) parent.clone();
+		if (!curr.go(varName)) {
+			curr.add(varName, new StringVar(value));
+		} else {
+			IVariable var = curr.getVar();
+			if (var != null && var.get() != null) {
+				if (var instanceof IMultiValues) {
+					if (value != null) {
+						((IMultiValues) var).appendValue(value);
+					}
+				} else {
+					
+					if (!compare(var.toString(), value)) {
+
+						if (overwrite) {
+							var.set(value);
+							curr.setVar(var);
+						} else {
+
+							// check if it was the default value
+							Object def = curr.getDefaultValue();
+							if (compare(var, def)) {
+								var.set(value);
+								curr.setVar(var);
+							} else if (!compare(value, "" +def)) {
+								throw new IllegalArgumentException(
+										"Try to change the vaule of an already set attribute ("+varName+").");
+							}
+						}
+					}
+				}
+			} else {
+				IVariable tmpVar = curr.getNewVar(value);
+				curr.setVar(tmpVar);
+			}
+		}
+	}
+	
 }

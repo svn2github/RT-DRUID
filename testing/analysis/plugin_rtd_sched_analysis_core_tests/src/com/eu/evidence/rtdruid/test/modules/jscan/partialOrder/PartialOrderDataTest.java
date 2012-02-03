@@ -1,5 +1,6 @@
 package com.eu.evidence.rtdruid.test.modules.jscan.partialOrder;
 
+import java.io.IOException;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -1125,7 +1126,7 @@ public class PartialOrderDataTest extends TestCase {
 	"</SYSTEM>";
 	
 	
-	protected void abstractLoad(String txt) {
+	protected void abstractLoad(String txt) throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(txt);
 
 		System.out.println("Load ..");
@@ -1139,7 +1140,7 @@ public class PartialOrderDataTest extends TestCase {
 	}
 	
 	
-	protected void abstractCheck(String txt) {
+	protected void abstractCheck(String txt) throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(txt);
 
 		System.out.println("Load ..");
@@ -1171,15 +1172,15 @@ public class PartialOrderDataTest extends TestCase {
 	 * 
 	 * --------------------------- */
 	
-	public void testLoad_a() {
+	public void testLoad_a() throws IOException {
 		abstractLoad(CompleteTest1.example1[0]);
 	}
 
-	public void testLoad_b() {
+	public void testLoad_b() throws IOException {
 		abstractLoad(test_1);
 	}
 
-	public void testLoad_c() {
+	public void testLoad_c() throws IOException {
 		abstractLoad(test_3);
 	}
 	
@@ -1189,23 +1190,23 @@ public class PartialOrderDataTest extends TestCase {
 	 * 
 	 * --------------------------- */
 	
-	public void testCheck_a() {
+	public void testCheck_a() throws IOException {
 		abstractCheck(CompleteTest1.example1[0]);
 	}
 
-	public void testCheck_b() {
+	public void testCheck_b() throws IOException {
 		abstractCheck(test_1);
 	}
 
-	public void testCheck_c() {
+	public void testCheck_c() throws IOException {
 		abstractCheck(test_2);
 	}
 
-	public void testCheck_d() {
+	public void testCheck_d() throws IOException {
 		abstractCheck(test_3);
 	}
 
-	public void testCheck_e() {
+	public void testCheck_e() throws IOException {
 		abstractCheck(test_4);
 	}
 	

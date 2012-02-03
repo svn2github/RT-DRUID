@@ -5,14 +5,15 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Test;
-
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -24,15 +25,15 @@ import com.eu.evidence.rtdruid.vartree.tools.SearchObjects;
 public class SearchObjectsTest {
 
 	@Test
-	public void testGetAllProcs1() {
+	public void testGetAllProcs1() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 
 		SearchObjects search = new SearchObjects(vt);
 		IData[] procs = search.getAllProcs();
 
-		assertTrue(procs != null);
+		assertNotNull(procs);
 
-		assertTrue(procs.length == 5);
+		assertEquals(5, procs.length );
 
 		for (int i = 0; i < procs.length; i++) {
 			System.out.println("" + procs[i]);
@@ -41,66 +42,66 @@ public class SearchObjectsTest {
 	}
 
 	@Test
-	public void testGetAllProcs2() {
+	public void testGetAllProcs2() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 
 		SearchObjects search = new SearchObjects(vt);
 		IData[] procs = search.getAllProcs();
 
-		assertTrue(procs != null);
+		assertNotNull(procs);
 
 		for (int i = 0; i < procs.length; i++) {
 			System.out.println("" + procs[i]);
 		}
-		assertTrue(procs.length == 25);
+		assertEquals(25, procs.length );
 
 	}
 
 	@Test
-	public void testGetAllTasks1() {
+	public void testGetAllTasks1() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 
 		SearchObjects search = new SearchObjects(vt);
 		IData[] tasks = search.getAllTasks();
 
-		assertTrue(tasks != null);
+		assertNotNull(tasks);
 
 		for (int i = 0; i < tasks.length; i++) {
 			System.out.println("" + tasks[i]);
 		}
 
-		assertTrue(tasks.length == 4);
+		assertEquals(4, tasks.length );
 
 	}
 
 	@Test
-	public void testGetAllTasks2() {
+	public void testGetAllTasks2() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 
 		SearchObjects search = new SearchObjects(vt);
 		IData[] tasks = search.getAllTasks();
 
-		assertTrue(tasks != null);
+		assertNotNull(tasks);
 
 		for (int i = 0; i < tasks.length; i++) {
 			System.out.println("" + tasks[i]);
 		}
-		assertTrue(tasks.length == 14);
+		assertEquals(14, tasks.length );
 
 	}
 
 	// SORT
 
 	@Test
-	public void testSortAll1() {
+	public void testSortAll1() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 
 		SearchObjects search = new SearchObjects(vt);
 		IData[] tasks = search.getAllTasks();
 		IData[] procs = search.getAllProcs();
 
-		assertTrue(tasks != null);
-		assertTrue(procs != null);
+		assertNotNull(tasks);
+		assertNotNull(procs);
 
 		ArrayList<IData> all = new ArrayList<IData>();
 		all.addAll(Arrays.asList(tasks));
@@ -118,15 +119,15 @@ public class SearchObjectsTest {
 	}
 
 	@Test
-	public void testSortAll2() {
+	public void testSortAll2() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 
 		SearchObjects search = new SearchObjects(vt);
 		IData[] tasks = search.getAllTasks();
 		IData[] procs = search.getAllProcs();
 
-		assertTrue(tasks != null);
-		assertTrue(procs != null);
+		assertNotNull(tasks);
+		assertNotNull(procs);
 
 		ArrayList<IData> all = new ArrayList<IData>();
 		all.addAll(Arrays.asList(tasks));
@@ -146,15 +147,15 @@ public class SearchObjectsTest {
 	// SEARCH
 
 	@Test
-	public void testSearchAll1() {
+	public void testSearchAll1() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 
 		SearchObjects search = new SearchObjects(vt);
 		IData[] tasks = search.getAllTasks();
 		IData[] procs = search.getAllProcs();
 
-		assertTrue(tasks != null);
-		assertTrue(procs != null);
+		assertNotNull(tasks);
+		assertNotNull(procs);
 
 		ArrayList<IData> all = new ArrayList<IData>();
 		all.addAll(Arrays.asList(tasks));
@@ -183,28 +184,28 @@ public class SearchObjectsTest {
 				id[2] = "TASK";
 			}
 			int pos = Collections.binarySearch(all, id, comp);
-			assertTrue(pos == i);
+			assertEquals(i, pos );
 
 			// in general, the anser can be different from pos, but cannot be <0
 			// in this example it is the same
 			id[2] = null;
 			pos = Collections.binarySearch(all, id, comp);
-			assertTrue(pos == i);
+			assertEquals(i, pos );
 
 		}
 
 	}
 
 	@Test
-	public void testSearchAll2() {
+	public void testSearchAll2() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 
 		SearchObjects search = new SearchObjects(vt);
 		IData[] tasks = search.getAllTasks();
 		IData[] procs = search.getAllProcs();
 
-		assertTrue(tasks != null);
-		assertTrue(procs != null);
+		assertNotNull(tasks);
+		assertNotNull(procs);
 
 		ArrayList<IData> all = new ArrayList<IData>();
 		all.addAll(Arrays.asList(tasks));
@@ -234,13 +235,13 @@ public class SearchObjectsTest {
 				id[2] = SearchObjects.DataComparatorSearch.TASK_ID;
 			}
 			int pos = Collections.binarySearch(all, id, comp);
-			assertTrue(pos == i);
+			assertEquals(i, pos );
 
 			// in general, the anser can be different from pos, but cannot be <0
 			// in this example it is the same
 			id[2] = null;
 			pos = Collections.binarySearch(all, id, comp);
-			assertTrue(pos == i);
+			assertEquals(i, pos );
 
 		}
 

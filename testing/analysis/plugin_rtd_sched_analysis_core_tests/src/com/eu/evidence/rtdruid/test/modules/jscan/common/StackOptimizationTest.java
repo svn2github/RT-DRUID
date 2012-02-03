@@ -6,6 +6,8 @@
  */
 package com.eu.evidence.rtdruid.test.modules.jscan.common;
 
+import java.io.IOException;
+
 import com.eu.evidence.rtdruid.internal.modules.jscan.AbstractCompleteTest;
 import com.eu.evidence.rtdruid.internal.modules.jscan.common.StackOptimization;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -365,7 +367,7 @@ public class StackOptimizationTest extends AbstractCompleteTest{
 		};
 
 		
-		public void test1() {
+		public void test1() throws IOException {
 			IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 			
 			String system = (vt.newTreeInterface()).getAllName(null, "System")[0];

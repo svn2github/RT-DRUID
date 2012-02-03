@@ -4,8 +4,6 @@ package com.eu.evidence.rtdruid.internal.vartree;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-import org.eclipse.core.runtime.Assert;
-
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -567,57 +565,28 @@ import com.eu.evidence.rtdruid.vartree.IVariable.NotValidValueException;
 		
 	}
 
-	/*
+	/**
+	 * This method ensure that a path exist; infact if one or more elements
+	 * doesn't exist, it creates them; Throws a RuntimeException if there
+	 * are some problems. <br>
+	 * Returns a different IVarTreePointer that points to the new node, at the
+	 * end of given path.
 	 * 
+	 * @param vtp
+	 *            where store the path
+	 * @param names
+	 *            names of each step (without slashes)
+	 * @param types
+	 *            the type of each step
+	 * 
+	 * @throws RuntimeException
+	 *             if the system doesn't already exist and this method cannot
+	 *             add a new System
 	 */
-	
 	public IVarTreePointer makePath(IVarTreePointer vtp, String[] names,
 			String[] types) {
-		// if vtp, names or types is null it will throw an NullPointerException;
-		// If the code is correct, it will never throw that exception.
-		// Otherwise I need to add a check for array's lengths
-		Assert.isLegal(names.length == types.length);
-
-		//System.out.println("Path");
-		//for (int i=0; i< names.length; i++) {
-		//	System.out.println("\t" +names[i] + "-" + types[i]);
-		//}
-		// use a copy !
-		vtp = (IVarTreePointer) vtp.clone();
-
-		for (int i = 0; i < names.length; i++) {
-			// try to go into the required node
-			
-			if (!vtp.go(names[i]/*DataPath.addSlash(names[i])*/)) {
-				String newName = null;
-				// try to add it
-				try{
-					newName = vtp.add(DataPath.removeSlash(names[i]), types[i]);
-				}catch(Exception e){
-					e.printStackTrace();
-					throw new RuntimeException("Cannot create " + names[i] 
-					        + " ("+types[i]+"): " + e.getMessage(), e);
-				}
-
-				// try again to go in the new node
-				if (!vtp.go(names[i]/*DataPath.addSlash(names[i])*/)) {
-					
-					
-					if (vtp.go(newName)) {
-						// may happen with oil enumerators
-						// RtdruidLog.showDebug("Check makePath .....");
-					} else {
-					
-						if(vtp.getVar()==null){
-							throw new RuntimeException(
-									"Error when try to add a node :\n\t" + "name = "
-										+ names[i] + " ,type = " + types[i]);
-						}
-					}
-				}
-			}
-		}
-		return vtp;
+		
+		return vtp.clone().makePath(names, types);
 	}
 
 }

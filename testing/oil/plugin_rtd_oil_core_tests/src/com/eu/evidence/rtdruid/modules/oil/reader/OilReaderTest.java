@@ -14,6 +14,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -74,7 +75,7 @@ public class OilReaderTest implements Examples {
     }
 
     @Test
-    public void testLoad_test_1_vt() {
+    public void testLoad_test_1_vt() throws IOException {
     	IVarTree vt = VarTreeUtil.newVarTree();
         IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
         assertNotNull(oids);

@@ -4,7 +4,7 @@ package com.eu.evidence.rtdruid.tests.vartree.data;
  */
 
 
-
+import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -191,7 +191,9 @@ public class FillVtUtil {
 		while (it.hasNext()) {
 			Object o = it.next();
 
-			if (o instanceof CommandParameter) {
+			// Expected a CommandParameter
+			assertTrue(o instanceof CommandParameter);
+			{
 				CommandParameter cp = (CommandParameter) o;
 
 				if (!cp.getEStructuralFeature().isMany()) {
@@ -214,9 +216,9 @@ public class FillVtUtil {
 					}
 
 				}
-			} else {
-				throw new RuntimeException("Expected a commandParameter !!! why not found ?? "
-								+ o);
+//			} else {
+//				throw new RuntimeException("Expected a commandParameter !!! why not found ?? "
+//								+ o);
 			}
 
 		}

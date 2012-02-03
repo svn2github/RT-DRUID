@@ -18,10 +18,13 @@ import com.eu.evidence.rtdruid.internal.io.RTDResourceManagerFactory;
  * 
  * @author Nicola Serreli
  */
-public class RTD_XMI_Factory implements Factory {
+public class RTD_XMI_Factory implements Factory,  Factory.Descriptor {
 	
 	public static final RTD_XMI_Factory instance = new RTD_XMI_Factory(); 
 	
+	public static void registrFactory() {
+		
+	}
 	
 	/*
 	 * (non-Javadoc)
@@ -55,5 +58,13 @@ public class RTD_XMI_Factory implements Factory {
 		answer[0] = "ertd";
 		System.arraycopy(tmp, 0, answer, 1, tmp.length);
 		return answer;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.ecore.resource.Resource.Factory.Descriptor#createFactory()
+	 */
+	@Override
+	public Factory createFactory() {
+		return instance;
 	}
 }

@@ -1,5 +1,7 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 
 
 
@@ -7,7 +9,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 	
 
 
-	public void testCortexDefaultCompiler() {
+	@Test public void testCortexDefaultCompiler() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -46,7 +48,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testCortexMono() {
+	@Test public void testCortexMono() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -87,7 +89,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testCortexMulti() {
+	@Test public void testCortexMulti() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -140,7 +142,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	public void testCortexMcu() {
+	@Test public void testCortexMcu() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 

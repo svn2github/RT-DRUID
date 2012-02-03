@@ -9,6 +9,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static com.eu.evidence.rtdruid.tests.RtdAssert.assertGreater;
 
 import java.io.IOException;
 
@@ -20,6 +21,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.junit.Test;
 
+import com.eu.evidence.rtdruid.epackage.RTDEPackageBuildException;
 import com.eu.evidence.rtdruid.io.IVTResource;
 import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.tests.vartree.data.FillVtUtil;
@@ -34,9 +36,9 @@ import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
  */
 public abstract class FillVtUtilTest {
 	
-	protected abstract EPackage getEPackage();
+	protected abstract EPackage getEPackage() throws RTDEPackageBuildException;
 	
-	protected EObject getRoot() {
+	protected EObject getRoot() throws RTDEPackageBuildException {
 		EPackage epkg = getEPackage();
 		EClassifier root = epkg.getEClassifier("System");
 		assertNotNull(root);
@@ -85,7 +87,7 @@ public abstract class FillVtUtilTest {
 	}
 	
 	@Test
-	public void testFill() throws IOException {
+	public void testFill() throws IOException, RTDEPackageBuildException {
 		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), null);
 		EObject root = getRoot();
 		filler.fill(root);
@@ -101,7 +103,7 @@ public abstract class FillVtUtilTest {
 	}
 
 	@Test
-	public void testMultiFill() throws IOException {
+	public void testMultiFill() throws IOException, RTDEPackageBuildException {
 		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), null);
 		EObject root1 = getRoot();
 		EObject root2 = getRoot();
@@ -111,10 +113,10 @@ public abstract class FillVtUtilTest {
 		
 		filler.fill(root1);
 		int new_root1_children_size = root1.eContents().size();
-		assertTrue(root1_children_size < new_root1_children_size);
+		assertGreater(root1_children_size ,  new_root1_children_size);
 		assertEquals(root2_children_size, root2.eContents().size());
 		filler.fill(root2);
-		assertTrue(root2_children_size < root2.eContents().size());
+		assertGreater(root2_children_size ,  root2.eContents().size());
 		assertEquals(new_root1_children_size, new_root1_children_size);
 		assertEquals(new_root1_children_size, root2.eContents().size());
 
@@ -128,7 +130,7 @@ public abstract class FillVtUtilTest {
 	}
 	
 	@Test
-	public void testGenericFill() throws IOException {
+	public void testGenericFill() throws IOException, RTDEPackageBuildException {
 		FillVtUtil filler = new FillVtUtil();
 		EObject root1 = getRoot();
 		EObject root2 = getRoot();

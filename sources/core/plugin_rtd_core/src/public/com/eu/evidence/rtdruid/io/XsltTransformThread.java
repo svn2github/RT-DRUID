@@ -223,7 +223,7 @@ class XsltTransformThread extends Thread {
 				 * TRANSFORM : (direction depends on xslt file)
 				 */
 
-				try {
+//				try {
 					// Create a transform factory instance.
 					TransformerFactory tfactory = TransformerFactory
 							.newInstance();
@@ -236,16 +236,16 @@ class XsltTransformThread extends Thread {
 					// Transform the source XML
 					transformer.transform(new StreamSource(input),
 							new StreamResult(output));
-				} catch (IOException e) {
-					addException(e);
-
-				} catch (TransformerConfigurationException e) {
-					addException(e);
-
-				} catch (TransformerException e) {
-					addException(e);
-
-				}
+//				} catch (IOException e) {
+//					addException(e);
+//
+//				} catch (TransformerConfigurationException e) {
+//					addException(e);
+//
+//				} catch (TransformerException e) {
+//					addException(e);
+//
+//				}
 
 			}
 

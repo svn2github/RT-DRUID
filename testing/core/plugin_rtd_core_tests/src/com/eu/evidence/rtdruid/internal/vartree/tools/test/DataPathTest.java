@@ -5,11 +5,12 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.eu.evidence.rtdruid.tests.RtdAssert;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 
 /**
@@ -31,11 +32,11 @@ public class DataPathTest {
 	 */
 	@Test
 	public void testMakeIdString() {
-		assertTrue( NULL_ID.equals(DataPath.makeId( (String) null )) );
+		assertEquals( NULL_ID, DataPath.makeId( (String) null ) );
 		
-		assertTrue( ("ciao").equals(DataPath.makeId( "ciao" )) );
-		assertTrue( ("ciao" + PS+ "abc").equals(DataPath.makeId( "ciao" + S + "abc" )) );
-		assertTrue( ("" +PS+ "ciao" + PS + "abc" +PP).equals(DataPath.makeId( "" +S+ "ciao" + S + "abc" +P)) );
+		assertEquals( ("ciao"), DataPath.makeId( "ciao" ) );
+		assertEquals( ("ciao" + PS+ "abc"), DataPath.makeId( "ciao" + S + "abc" ) );
+		assertEquals( ("" +PS+ "ciao" + PS + "abc" +PP), DataPath.makeId( "" +S+ "ciao" + S + "abc" +P) );
 	}
 
 	/*
@@ -43,26 +44,28 @@ public class DataPathTest {
 	 */
 	@Test
 	public void testMakeIdStringArray() {
-		boolean ok = false;
-		try {
-			assertTrue( (""+ P).equals(DataPath.makeId( (String[]) null )) );
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
+		new RtdAssert(NullPointerException.class) {
+			@Override
+			protected void doCheck() throws Throwable {
+				assertEquals( (""+ P), DataPath.makeId( (String[]) null ) );
+			}
+		};
 		
 		{ 
 			String[] tmp = { null };
-			assertTrue( NULL_ID.equals(DataPath.makeId( tmp )) );
+			assertEquals( NULL_ID, DataPath.makeId( tmp ) );
 		}
 		{ 
 			String[] tmp = { null, null };
-			assertTrue( (NULL_ID + D + NULL_ID).equals(DataPath.makeId( tmp )) );
+			assertEquals( (NULL_ID + D + NULL_ID), DataPath.makeId( tmp ) );
 		}
 		{ 
 			String[] tmp = { null, "Ciao", null };
-			assertTrue( (NULL_ID + D + "Ciao" + D + NULL_ID).equals(DataPath.makeId( tmp )) );
+			assertEquals( (NULL_ID + D + "Ciao" + D + NULL_ID), DataPath.makeId( tmp ) );
 		}
 		{ 
 			String[] tmp = { "a"+S+"b", ""+S+"Ciao"+S+S+P+P, "m"+P };
-			assertTrue( ( ("a" +PS + "b")+ D + (""+PS+"Ciao"+PS+PS+PP+PP) + D + ( "m" + PP ) ).equals(DataPath.makeId( tmp )) );
+			assertEquals( ( ("a" +PS + "b")+ D + (""+PS+"Ciao"+PS+PS+PP+PP) + D + ( "m" + PP ) ), DataPath.makeId( tmp ) );
 		}
 	}
 
@@ -71,11 +74,11 @@ public class DataPathTest {
 	 */
 	@Test
 	public void testMakeSlashedIdString() {
-		assertTrue( (DataPath.addSlash(NULL_ID)).equals(DataPath.makeSlashedId( (String) null )) );
+		assertEquals( (DataPath.addSlash(NULL_ID)), DataPath.makeSlashedId( (String) null ) );
 		
-		assertTrue( ("ciao").equals(DataPath.makeSlashedId( "ciao" )) );
-		assertTrue( ("ciao" +PP+ PS+ "abc").equals(DataPath.makeSlashedId( "ciao" + S + "abc" )) );
-		assertTrue( ("" +PP+PS+ "ciao" + PP+PS + "abc" +PP+PP).equals(DataPath.makeSlashedId( "" +S+ "ciao" + S + "abc" +P)) );
+		assertEquals( ("ciao"), DataPath.makeSlashedId( "ciao" ) );
+		assertEquals( ("ciao" +PP+ PS+ "abc"), DataPath.makeSlashedId( "ciao" + S + "abc" ) );
+		assertEquals( ("" +PP+PS+ "ciao" + PP+PS + "abc" +PP+PP), DataPath.makeSlashedId( "" +S+ "ciao" + S + "abc" +P) );
 	}
 
 
@@ -84,29 +87,31 @@ public class DataPathTest {
 	 */
 	@Test
 	public void testMakeSlashedIdStringArray() {
-		boolean ok = false;
-		try {
-			assertTrue( (""+ PP).equals(DataPath.makeId( (String[]) null )) );
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
+		new RtdAssert(NullPointerException.class) {
+			@Override
+			protected void doCheck() throws Throwable {
+				assertEquals( (""+ PP), DataPath.makeId( (String[]) null ) );
+			}
+		};
 		
 		String slashedNullId = DataPath.addSlash(NULL_ID);
 		{ 
 			String[] tmp = { null };
-			assertTrue( (slashedNullId).equals(DataPath.makeSlashedId( tmp )) );
+			assertEquals( (slashedNullId), DataPath.makeSlashedId( tmp ) );
 		}
 		{ 
 			String[] tmp = { null, null };
-			assertTrue( DataPath.addSlash(NULL_ID + D + NULL_ID).equals(DataPath.makeSlashedId( tmp )) );
+			assertEquals( DataPath.addSlash(NULL_ID + D + NULL_ID), DataPath.makeSlashedId( tmp ) );
 		}
 		{ 
 			String[] tmp = { null, "Ciao", null };
-			assertTrue( DataPath.addSlash(NULL_ID + D + "Ciao" + D + NULL_ID).equals(DataPath.makeSlashedId( tmp )) );
+			assertEquals( DataPath.addSlash(NULL_ID + D + "Ciao" + D + NULL_ID), DataPath.makeSlashedId( tmp ) );
 		}
 		{ 
 			String[] tmp = { "a"+S+"b", ""+S+"Ciao"+S+S+P+P, "m"+P };
-			assertTrue( DataPath.addSlash( ("a" +PS + "b")
+			assertEquals( DataPath.addSlash( ("a" +PS + "b")
 						+ D + (""+PS+"Ciao"+PS+PS+PP+PP)
-						+ D + ( "m" + PP ) ).equals(DataPath.makeSlashedId( tmp )) );
+						+ D + ( "m" + PP ) ), DataPath.makeSlashedId( tmp ) );
 		}
 	}
 

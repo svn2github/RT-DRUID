@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Stack;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.BasicEList;
@@ -38,6 +39,7 @@ import com.eu.evidence.rtdruid.vartree.variables.IntegerVar;
 import com.eu.evidence.rtdruid.vartree.variables.LongMVar;
 import com.eu.evidence.rtdruid.vartree.variables.LongVar;
 import com.eu.evidence.rtdruid.vartree.variables.MultiValues;
+import com.eu.evidence.rtdruid.vartree.variables.PropertyVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringMVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeMVar;
@@ -263,7 +265,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 			EStructuralFeature esf = point.pointer.eClass().getEStructuralFeature(name);
 			if (esf == null) {
 				Messages.sendErrorNl("try to add an unssuported feature (" + name + ")", null, null, null);
-				throw new IllegalArgumentException("Unsupported name for current node (no feature with given name)");
+				throw new IllegalArgumentException("Unsupported name for current node (no feature with given name:" + name + ")");
 			} 
 
 			if (esf instanceof EAttribute) { // check for an attribute
@@ -287,7 +289,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 						if (ref.isMany()) {
 							if (!type.equals(name)) {
 								Messages.sendErrorNl("try to add a reference to many, with wrong Type - Name", null, null, null);
-								throw new RuntimeException("try to add a reference to many, with wrong Type - Name");
+								throw new RuntimeException("try to add a reference to many, with wrong Type - Name (" + type + ", " + name + ")");
 							}
 							
 							
@@ -1207,6 +1209,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 		else if (type == FloatVar.class) {		risp = new FloatVar(); }
 		else if (type == BooleanVar.class) {	risp = new BooleanVar(); }
 		else if (type == TimeVar.class) {		risp = new TimeVar(); }
+		else if (type == PropertyVar.class) {	risp = new PropertyVar(); }
 		else { throw new RuntimeException("Illegal var type :" + type); }
 	
 		return risp;
@@ -1296,6 +1299,18 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 		throw new IllegalStateException("try to get a var from a container");
 	}
 
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.vartree.IVarTreePointer#getDefaultValue()
+	 */
+	@Override
+	public Object getDefaultValue() {
+		if (point.attr != null && point.attr instanceof EAttribute) {
+
+			EAttribute at = (EAttribute) point.attr;
+			return at.getDefaultValue();
+		}
+		throw new IllegalStateException("try to get a var from a container");
+	}
 	
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.IVarTreePointer#setVar(rtdruid.vartree.variables.IVariable)
@@ -1463,5 +1478,51 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 	
 	public EObject getCurrentEMFObject() {
 		return point.pointer;
+	}
+	
+	// ------------------------------------------
+	
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.vartree.IVarTreePointer#makePath(java.lang.String[], java.lang.String[])
+	 */
+	@Override
+	public IVarTreePointer makePath(String[] names, String[] types) {
+		// if vtp, names or types is null it will throw an NullPointerException;
+		// If the code is correct, it will never throw that exception.
+		// Otherwise I need to add a check for array's lengths
+		Assert.isNotNull(names);
+		Assert.isNotNull(types);
+		Assert.isLegal(names.length == types.length);
+
+		for (int i = 0; i < names.length; i++) {
+			// try to go into the required node
+
+			if (!go(names[i]/* DataPath.addSlash(names[i]) */)) {
+				String newName = null;
+				// try to add it
+				try {
+					newName = add(DataPath.removeSlash(names[i]), types[i]);
+				} catch (Exception e) {
+					throw new RuntimeException("Cannot create " + names[i] + " (" + types[i] + "): " + e.getMessage(),
+							e);
+				}
+
+				// try again to go in the new node
+				if (!go(names[i]/* DataPath.addSlash(names[i]) */)) {
+
+					if (go(newName)) {
+						// may happen with oil enumerators
+						// RtdruidLog.showDebug("Check makePath .....");
+					} else {
+
+						if (getVar() == null) {
+							throw new RuntimeException("Error when try to add a node :\n\t" + "name = " + names[i]
+									+ " ,type = " + types[i]);
+						}
+					}
+				}
+			}
+		}
+		return this;
 	}
 }

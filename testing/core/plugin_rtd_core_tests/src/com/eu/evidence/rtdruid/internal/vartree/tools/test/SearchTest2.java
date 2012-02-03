@@ -5,12 +5,16 @@
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
 // progect package
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.io.IOException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
+import com.eu.evidence.rtdruid.tests.RtdAssert;
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
@@ -75,31 +79,31 @@ public class SearchTest2 {
 		ti = vt.newTreeInterface();
 	}
 
-	@Test
-	@Ignore
-	public void testAVar() {
-		// TEST: example 2 non ha var
-	}
-
-	@Test
-	@Ignore
-	public void testALocalVar() {
-		// TEST: example 2 non ha var
-	}
+//	@Test
+//	@Ignore
+//	public void testAVar() {
+//		// TODO: example 2 does not contain Var
+//	}
+//
+//	@Test
+//	@Ignore
+//	public void testALocalVar() {
+//		// TODO: example 2 does not contain Var
+//	}
 
 	@Test
 	public void testAProc() {
 		// innesistente
-		assertTrue(Search.aProc(ti, S+"DefaultSystem", "nessuno") == null);
-		assertTrue(Search.aProc(ti, S+"DefaultSystem", "") == null);
+		assertNull(Search.aProc(ti, S+"DefaultSystem", "nessuno"));
+		assertNull(Search.aProc(ti, S+"DefaultSystem", ""));
 
 		// nome "errato"
-		assertTrue(Search.aProc(ti, S+"defaultSystem", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init") == null);
+		assertNull(Search.aProc(ti, S+"defaultSystem", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"));
 
 		// path "errato"
-		assertTrue(Search.aProc(ti, S+"DefaultSystem", Utility.pathToEvidence(DataPath.addSlash("/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"))) == null);
-		assertTrue(Search.aProc(ti, S+"Ciaooooo", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init") == null);
-		assertTrue(Search.aProc(ti, S+"", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init") == null);
+		assertNull(Search.aProc(ti, S+"DefaultSystem", Utility.pathToEvidence(DataPath.addSlash("/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"))));
+		assertNull(Search.aProc(ti, S+"Ciaooooo", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"));
+		assertNull(Search.aProc(ti, S+"", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"));
 		
 		String sys = S+ DataPath.makeSlashedId("Root/");
 		{//globale
@@ -108,7 +112,7 @@ public class SearchTest2 {
 		
 			for (int i=0; i<globalProcName.length; i++) {
 				String procName = Utility.pathToEvidence(DataPath.addSlash( globalProcName[i]));
-				assertTrue(Search.aProc(ti, sys, procName).equals( global + S + DataPath.makeSlashedId(globalProcName[i]) ));
+				assertEquals(Search.aProc(ti, sys, procName),  global + S + DataPath.makeSlashedId(globalProcName[i]) );
 			}
 		}
 		
@@ -117,7 +121,7 @@ public class SearchTest2 {
 			
 			for (int i=0; i<sub1ProcName .length; i++) {
 				String procName = "Sub1" +S+ Utility.pathToEvidence(DataPath.addSlash( sub1ProcName[i]));
-				assertTrue(Search.aProc(ti, sys, procName).equals( sub1 + S + DataPath.makeSlashedId(sub1ProcName[i]) ));
+				assertEquals(Search.aProc(ti, sys, procName),  sub1 + S + DataPath.makeSlashedId(sub1ProcName[i]) );
 			}
 		}
 
@@ -126,46 +130,47 @@ public class SearchTest2 {
 			
 			for (int i=0; i<sub2ProcName .length; i++) {
 				String procName = "Sub2" +S+ Utility.pathToEvidence(DataPath.addSlash( sub2ProcName[i]));
-				assertTrue(Search.aProc(ti, sys, procName).equals( sub2 + S + DataPath.makeSlashedId(sub2ProcName[i]) ));
+				assertEquals(Search.aProc(ti, sys, procName),  sub2 + S + DataPath.makeSlashedId(sub2ProcName[i]) );
 			}
 		}
 
 		// eccezioni
-		boolean ok= false;
-		try {
-			Search.aProc(ti, S+"DefaultSystem", null);
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
-
-		ok= false;
-		try {
-			Search.aProc(ti, null, "qualsiasi");
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
-
-		ok= false;
-		try {
-			Search.aProc(ti, null, null);
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
+		new RtdAssert(NullPointerException.class) {
+			protected void doCheck() throws Throwable {
+				Search.aProc(ti, S+"DefaultSystem", null);
+			};
+		};
+		new RtdAssert(NullPointerException.class) {
+			protected void doCheck() throws Throwable {
+				Search.aProc(ti, null, "qualsiasi");
+			};
+		};
+		new RtdAssert(NullPointerException.class) {
+			protected void doCheck() throws Throwable {
+				Search.aProc(ti, null, null);
+			};
+		};
 	}
 
 	@Test
 	public void testALocalProc() {
 		// innesistente
-		assertTrue(Search.aLocalProc(ti, S+"DefaultSystem", "nessuno") == null);
-		assertTrue(Search.aLocalProc(ti, S+"DefaultSystem", "") == null);
+		assertNull(Search.aLocalProc(ti, S+"DefaultSystem", "nessuno"));
+		assertNull(Search.aLocalProc(ti, S+"DefaultSystem", ""));
 
 		// nome "errato"
-		assertTrue(Search.aLocalProc(ti, S+"defaultSystem", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init") == null);
+		assertNull(Search.aLocalProc(ti, S+"defaultSystem", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"));
 
 		// path "errato"
-		assertTrue(Search.aLocalProc(ti, S+"DefaultSystem", Utility.pathToEvidence(DataPath.addSlash("/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"))) == null);
-		assertTrue(Search.aLocalProc(ti, S+"Ciaooooo", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init") == null);
-		assertTrue(Search.aLocalProc(ti, S+"", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init") == null);
+		assertNull(Search.aLocalProc(ti, S+"DefaultSystem", Utility.pathToEvidence(DataPath.addSlash("/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"))));
+		assertNull(Search.aLocalProc(ti, S+"Ciaooooo", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"));
+		assertNull(Search.aLocalProc(ti, S+"", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"));
  		
 		String sys = S+ DataPath.makeSlashedId("Root/");
 		{//globale
 			for (int i=0; i<globalProcName.length; i++) {
 				String procName = Utility.pathToEvidence(DataPath.addSlash( globalProcName[i]));
-				assertTrue(Search.aLocalProc(ti, sys, procName) == null);
+				assertNull(Search.aLocalProc(ti, sys, procName));
 			}
 		}
 		
@@ -174,7 +179,7 @@ public class SearchTest2 {
 			
 			for (int i=0; i<sub1ProcName .length; i++) {
 				String procName = Utility.pathToEvidence(DataPath.addSlash( sub1ProcName[i]));
-				assertTrue(Search.aLocalProc(ti, sub1, procName).equals( sub1 + S + "Implementation" + S + DataPath.makeSlashedId(sub1ProcName [i]) ));
+				assertEquals(Search.aLocalProc(ti, sub1, procName),  sub1 + S + "Implementation" + S + DataPath.makeSlashedId(sub1ProcName [i]) );
 			}
 		}
 
@@ -183,37 +188,38 @@ public class SearchTest2 {
 			
 			for (int i=0; i<sub2ProcName .length; i++) {
 				String procName = Utility.pathToEvidence(DataPath.addSlash( sub2ProcName[i]));
-				assertTrue(Search.aLocalProc(ti, sub2, procName).equals( sub2  + S + "Implementation" + S + DataPath.makeSlashedId(sub2ProcName [i]) ));
+				assertEquals(Search.aLocalProc(ti, sub2, procName),  sub2  + S + "Implementation" + S + DataPath.makeSlashedId(sub2ProcName [i]) );
 			}
 		}
 
 		// eccezioni
-		boolean ok= false;
-		try {
-			Search.aLocalProc(ti, "DefaultSystem", null);
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
-
-		ok= false;
-		try {
-			Search.aLocalProc(ti, null, "qualsiasi");
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
-
-		ok= false;
-		try {
-			Search.aLocalProc(ti, null, null);
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
+		new RtdAssert(NullPointerException.class) {
+			protected void doCheck() throws Throwable {
+				Search.aLocalProc(ti, "DefaultSystem", null);
+			};
+		};
+		new RtdAssert(NullPointerException.class) {
+			protected void doCheck() throws Throwable {
+				Search.aLocalProc(ti, null, "qualsiasi");
+			};
+		};
+		new RtdAssert(NullPointerException.class) {
+			protected void doCheck() throws Throwable {
+				Search.aLocalProc(ti, null, null);
+			};
+		};
 	}
 
 	@Test
 	public void testProcPrefix() {
 		// innesistente
-		assertTrue(Search.procPrefix(ti, S+"DefaultSystem", "nessuno") == null);
-		assertTrue(Search.procPrefix(ti, S+"DefaultSystem", "") == null);
+		assertNull(Search.procPrefix(ti, S+"DefaultSystem", "nessuno"));
+		assertNull(Search.procPrefix(ti, S+"DefaultSystem", ""));
 
 		// path "errato"
-		assertTrue(Search.procPrefix(ti, S+"defaultSystem", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init") == null);
-		assertTrue(Search.procPrefix(ti, S+"Ciaooooo", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init") == null);
-		assertTrue(Search.procPrefix(ti, S+"", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init") == null);
+		assertNull(Search.procPrefix(ti, S+"defaultSystem", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"));
+		assertNull(Search.procPrefix(ti, S+"Ciaooooo", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"));
+		assertNull(Search.procPrefix(ti, S+"", "/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init"));
 		
 		String sys = S+ DataPath.makeSlashedId("Root/");
 		{//globale
@@ -221,7 +227,7 @@ public class SearchTest2 {
 		
 			for (int i=0; i<globalProcName.length; i++) {
 				String procName = Utility.pathToEvidence(DataPath.addSlash( globalProcName[i]));
-				assertTrue(Search.procPrefix(ti, sys, procName).equals( global ));
+				assertEquals(Search.procPrefix(ti, sys, procName),  global );
 			}
 		}
 		
@@ -230,7 +236,7 @@ public class SearchTest2 {
 			
 			for (int i=0; i<sub1ProcName .length; i++) {
 				String procName = "Sub1" +S+ Utility.pathToEvidence(DataPath.addSlash( sub1ProcName[i]));
-				assertTrue(Search.procPrefix(ti, sys, procName).equals( sub1 ));
+				assertEquals(Search.procPrefix(ti, sys, procName),  sub1 );
 			}
 		}
 
@@ -239,29 +245,30 @@ public class SearchTest2 {
 			
 			for (int i=0; i<sub2ProcName .length; i++) {
 				String procName = "Sub2" +S+ Utility.pathToEvidence(DataPath.addSlash( sub2ProcName[i]));
-				assertTrue(Search.procPrefix(ti, sys, procName).equals( sub2 ));
+				assertEquals(Search.procPrefix(ti, sys, procName),  sub2 );
 			}
 		}
 
 		// eccezioni
-		boolean ok= false;
-		try {
-			Search.procPrefix(ti, S+"DefaultSystem", null);
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
-
-		ok= false;
-		try {
-			Search.procPrefix(ti, null, "qualsiasi");
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
-
-		ok= false;
-		try {
-			Search.procPrefix(ti, null, null);
-		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
+		new RtdAssert(NullPointerException.class) {
+			protected void doCheck() throws Throwable {
+				Search.procPrefix(ti, S+"DefaultSystem", null);
+			};
+		};
+		new RtdAssert(NullPointerException.class) {
+			protected void doCheck() throws Throwable {
+				Search.procPrefix(ti, null, "qualsiasi");
+			};
+		};
+		new RtdAssert(NullPointerException.class) {
+			protected void doCheck() throws Throwable {
+				Search.procPrefix(ti, null, null);
+			};
+		};
 	}
 
 	@Test
-	public void testARtos() {
+	public void testARtos() throws IOException {
 		String source = 
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
 		"<SYSTEM Name=\"defaultSystem\">" +
@@ -343,18 +350,18 @@ public class SearchTest2 {
 //			System.out.println(test[i][0]);
 			String[] answer = Search.aRtos(vt.newTreeInterface(), S+"defaultSystem", test[i][0]);
 			
-			assertTrue(answer.length == (test[i].length-1));
+			assertEquals(answer.length, (test[i].length-1));
 			for (int j=0; j< answer.length; j++) {
 //				System.out.println("\t"+answer[j] + "\t" +test[i][j+1]);
 				
-				assertTrue(answer[j] == null ? test[i][j+1] == null : answer[j].equals(test[i][j+1]));
+				assertEquals(answer[j], test[i][j+1]);
 			}
 		}
 		
 	}
 	
 	@Test
-	public void testAEvent() {
+	public void testAEvent() throws IOException {
 		String source = 
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
 		"<SYSTEM Name=\"defaultSystem\">" +
@@ -382,7 +389,7 @@ public class SearchTest2 {
 			String answer = Search.anEvent(vt.newTreeInterface(), S+"defaultSystem", test[i][0]);
 			
 			System.out.println("\t"+answer+"\t"+test[i][1]);
-			assertTrue(answer == null ? test[i][1] == null : answer.equals(test[i][1]));
+			assertEquals(answer, test[i][1]);
 		}
 		
 	}
@@ -392,12 +399,12 @@ public class SearchTest2 {
 		
 		String[] procs = Search.allProcs(vt);
 
-		assertTrue(procs != null);
+		assertNotNull(procs);
 		
 		for (int i=0; i<procs.length; i++) {
 			System.err.println(procs[i]);
 		}
-		assertTrue(procs.length == (globalProcName.length + sub1ProcName.length + sub2ProcName.length));
+		assertEquals(procs.length, (globalProcName.length + sub1ProcName.length + sub2ProcName.length));
 	}
 	
 
@@ -406,31 +413,31 @@ public class SearchTest2 {
 		
 		String[] tasks = Search.allTasks(vt.newTreeInterface());
 
-		assertTrue(tasks != null);
+		assertNotNull(tasks);
 		
 		for (int i=0; i<tasks.length; i++) {
 			System.err.println(tasks[i]);
 		}
-		assertTrue(tasks.length == 14);
+		assertEquals(14, tasks.length);
 	}
 
-	@Test
-	@Ignore
-	public void testAMethod() {
-	}
-
-	@Test
-	@Ignore
-	public void testAGlobalMethod() {
-	}
-
-	@Test
-	@Ignore
-	public void testALocalMethod() {
-	}
-
-	@Test
-	@Ignore
-	public void testAMethodRef() {
-	}
+//	@Test
+//	@Ignore
+//	public void testAMethod() {
+//	}
+//
+//	@Test
+//	@Ignore
+//	public void testAGlobalMethod() {
+//	}
+//
+//	@Test
+//	@Ignore
+//	public void testALocalMethod() {
+//	}
+//
+//	@Test
+//	@Ignore
+//	public void testAMethodRef() {
+//	}
 }

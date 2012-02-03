@@ -28,13 +28,13 @@ import org.junit.Test;
 import com.eu.evidence.rtdruid.io.IVTResource;
 import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.io.XMI2XMLlTest;
+import com.eu.evidence.rtdruid.tests.RtdAssert;
 import com.eu.evidence.rtdruid.tests.vartree.data.FillVtUtil;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.VarTreeIdHandler;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
 import com.eu.evidence.rtdruid.vartree.data.TaskSched;
@@ -135,7 +135,7 @@ public class TreeCloneTest {
 		doTestMerge(root1, root2, dest);
 	}
 	
-	private void doTestMerge(EObject root1, EObject root2, EObject dest) throws Throwable {
+	private void doTestMerge(final EObject root1, final EObject root2, final EObject dest) throws Throwable {
 		// set the same system name for all trees!!!
 		VarTreeIdHandler.setId(root1, "MySystem");
 		VarTreeIdHandler.setId(root2, "MySystem");
@@ -147,7 +147,6 @@ public class TreeCloneTest {
 		compare(dest, root1);
 		compare(root1, dest);
 
-		boolean ok = false;
 		// two more times
 		VarTreeUtil.merge(dest, root1);
 		VarTreeUtil.merge(dest, root1);
@@ -162,45 +161,26 @@ public class TreeCloneTest {
 		assertNotSame(dest , root2);
 		checkTrees(dest, new EObject[] { root1, root1, root1, root2 }, true);
 
-		ok = false;
-		try {
-			checkTrees(dest, new EObject[] { root1, root1, root1 }, true);
-
-		} catch (AssertionError e) {
-			//e.printStackTrace();
-			ok = true;
-		}
-		assertTrue(ok);
-
-		ok = false;
-		try {
-			checkTrees(dest, new EObject[] { root1, root1, root2 }, true);
-
-		} catch (AssertionError e) {
-			//e.printStackTrace();
-			ok = true;
-		}
-		assertTrue(ok);
-
-		ok = false;
-		try {
-			checkTrees(dest, new EObject[] { root1, root1, root1, root2 }, false);
-
-		} catch (AssertionError e) {
-			//e.printStackTrace();
-			ok = true;
-		}
-		assertTrue(ok);
-
-		ok = false;
-		try {
-			checkTrees(dest, new EObject[] { root1, root1, root1 }, false);
-
-		} catch (AssertionError e) {
-			//e.printStackTrace();
-			ok = true;
-		}
-		assertTrue(ok);
+		new RtdAssert() {
+			protected void doCheck() throws Throwable {
+				checkTrees(dest, new EObject[] { root1, root1, root1 }, true);
+			};
+		};
+		new RtdAssert() {
+			protected void doCheck() throws Throwable {
+				checkTrees(dest, new EObject[] { root1, root1, root2 }, true);
+			};
+		};
+		new RtdAssert() {
+			protected void doCheck() throws Throwable {
+				checkTrees(dest, new EObject[] { root1, root1, root1, root2 }, false);
+			};
+		};
+		new RtdAssert() {
+			protected void doCheck() throws Throwable {
+				checkTrees(dest, new EObject[] { root1, root1, root1 }, false);
+			};
+		};
 
 	}
 	
@@ -250,21 +230,20 @@ public class TreeCloneTest {
 	
 	@Test
 	public void testMerge3() throws Throwable {
-		doTestMerge3(VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree()));
+		doTestMerge3(DataFactory.eINSTANCE.createSystem());
 	}
 	
 	@Test
 	public void testMerge3WithResource() throws Throwable {
 	
 		IVTResource res = createResource();
-		EObject root = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
+		com.eu.evidence.rtdruid.vartree.data.System root = DataFactory.eINSTANCE.createSystem();
 		res.getContents().add(root);
 		
 		doTestMerge3(root);
 	}
 		
-	private void doTestMerge3(EObject eObjRoot) throws Throwable {
-		com.eu.evidence.rtdruid.vartree.data.System root = (com.eu.evidence.rtdruid.vartree.data.System) eObjRoot;
+	private void doTestMerge3(com.eu.evidence.rtdruid.vartree.data.System root) throws Throwable {
 		VarTreeIdHandler.setId(root, "id");
 		Schedulability sched = DataFactory.eINSTANCE.createSchedulability();
 		root.setSchedulability(sched);
@@ -296,7 +275,7 @@ public class TreeCloneTest {
 //			assertTrue(ok);
 		}
 		
-		EObject root2 = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
+		EObject root2 =  DataFactory.eINSTANCE.createSystem();
 		VarTreeIdHandler.setId(root2, "id");
 
 		VarTreeUtil.merge(root2, root);

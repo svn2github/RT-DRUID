@@ -1,5 +1,6 @@
 package com.eu.evidence.rtdruid.test.modules.jscan.procdeadlines;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import junit.framework.TestCase;
@@ -267,7 +268,7 @@ public class ProcDeadlinesTest extends TestCase {
 		"</SYSTEM>";
 
 		
-		public void test1() {
+		public void test1() throws IOException {
 			IVarTree vt =Vt2StringUtilities.loadString(test_1);
 			
 			String system = (vt.newTreeInterface()).getAllName(null, "System")[0];

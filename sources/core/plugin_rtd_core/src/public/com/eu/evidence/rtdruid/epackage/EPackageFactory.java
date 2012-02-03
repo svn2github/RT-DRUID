@@ -56,7 +56,7 @@ public abstract class EPackageFactory {
 		void setAutoContributionSet(boolean value);
 
 		/**
-		 * @return the EPackage id, or null if not set
+		 * @return the EPackageContributor id. It should be not null.
 		 */
 		String getId();
 	}

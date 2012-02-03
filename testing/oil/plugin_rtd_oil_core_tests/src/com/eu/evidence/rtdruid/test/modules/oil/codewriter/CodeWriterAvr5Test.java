@@ -1,9 +1,11 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 
 
 public class CodeWriterAvr5Test extends AbstractCodeWriterTest {
-	public void testAVR_noboard() {
+	@Test public void testAVR_noboard() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"	OS myOs {\n" + 
@@ -17,7 +19,7 @@ public class CodeWriterAvr5Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testAVR_boards() {
+	@Test public void testAVR_boards() {
 		String names[] = new String[] {
 				"NO_BOARD", "ATMEGA_STK50X","XBOW_MIB5X0"
 		};

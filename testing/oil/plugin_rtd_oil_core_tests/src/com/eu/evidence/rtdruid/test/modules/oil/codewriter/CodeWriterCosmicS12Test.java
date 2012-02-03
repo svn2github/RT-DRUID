@@ -1,11 +1,13 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 
 
 public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	
 	
-	public void testCosmic_S12_1() {
+	@Test public void testCosmic_S12_1() {
 	    final String text =
 	    	"CPU test_application {\n" +
 	    	"\n" +
@@ -72,7 +74,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testCosmic_S12_2() {
+	@Test public void testCosmic_S12_2() {
 	    final String text =
 			"CPU test_application {\n" +
 			"\n" +
@@ -131,7 +133,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	}
 	
 	
-	public void testCosmic_S12_3() {
+	@Test public void testCosmic_S12_3() {
 	    final String text =
 	    	"CPU test_application {\n" +
 	    	"\n" +
@@ -199,7 +201,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testCosmic_S12_4() {
+	@Test public void testCosmic_S12_4() {
 	    final String text =
 			"CPU test_application {\n" +
 			"\n" +
@@ -281,7 +283,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	}
 	
 	
-	public void testCosmic_S12_5() {
+	@Test public void testCosmic_S12_5() {
 	    final String text =
 			"CPU test_application {\n"+
 			"\n"+
@@ -373,7 +375,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	}
 	
 	
-	public void testCosmic_S12_6() {
+	@Test public void testCosmic_S12_6() {
 	    final String text =
 			"CPU test_application {\n"+
 			"\n"+

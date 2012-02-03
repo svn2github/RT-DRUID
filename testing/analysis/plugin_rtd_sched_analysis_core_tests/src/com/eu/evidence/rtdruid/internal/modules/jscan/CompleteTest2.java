@@ -7,6 +7,7 @@ package com.eu.evidence.rtdruid.internal.modules.jscan;
 
 
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -27,7 +28,7 @@ public class CompleteTest2 extends AbstractCompleteTest {
 		super(name);
 	}
 	
-	public void test1() {
+	public void test1() throws IOException {
 
 		String[] testcase1 = {
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
@@ -414,7 +415,7 @@ public class CompleteTest2 extends AbstractCompleteTest {
 	}
 	
 
-	public void test2() {
+	public void test2() throws IOException {
 
 		String[] testcase4 = {
 	"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
@@ -891,7 +892,7 @@ System.out.println("\nFirst check\n");
 		{
 			Task t = (Task) ts.getItem(1, 0);
 			assertTrue("Task\\\\1".equals(t.getName()));
-			Enumeration en = t.getAllResources();
+			Enumeration<String> en = t.getAllResources();
 			assertTrue(en.hasMoreElements());
 			assertTrue("Mutex/1".equals( en.nextElement()));
 			assertFalse(en.hasMoreElements());
@@ -899,7 +900,7 @@ System.out.println("\nFirst check\n");
 		{
 			Task t = (Task) ts.getItem(1, 1);
 			assertTrue("Task//2".equals(t.getName()));
-			Enumeration en = t.getAllResources();
+			Enumeration<String> en = t.getAllResources();
 			assertTrue(en.hasMoreElements());
 			assertTrue("Mutex/1".equals( en.nextElement()));
 			assertFalse(en.hasMoreElements());

@@ -5,7 +5,7 @@
  */
 package com.eu.evidence.rtdruid.modules.oil.transform;
 
-
+import static com.eu.evidence.rtdruid.vartree.VarTreeUtil.storeAVar;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Stack;
 
 import org.eclipse.core.runtime.Assert;
 import org.w3c.dom.Document;
@@ -31,7 +32,9 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplElementDescr;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
+import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplPointer;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.DataPath;
@@ -54,6 +57,7 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  * 
  * @author Nicola Serreli
  */
+@SuppressWarnings("unused")
 public class SimpleTransform implements IOilTransform {
 
 	protected final static int SYSTEM_NUMBER = 1;
@@ -73,18 +77,15 @@ public class SimpleTransform implements IOilTransform {
 	// -------------------------------
 	protected String[] rtosNamePath;
 
-	protected String[] rtosTypePath = {
-			DPKG.getSystem_Architectural().getName(),
-			DPKG.getArchitectural_EcuList().getName(), DPKG.getEcu().getName(),
-			DPKG.getEcu_CpuList().getName(), DPKG.getCpu().getName(),
-			DPKG.getCpu_Rtos().getName(), DPKG.getRtos_OilVar().getName() };
+	protected String[] rtosTypePath = { DPKG.getSystem_Architectural().getName(),
+			DPKG.getArchitectural_EcuList().getName(), DPKG.getEcu().getName(), DPKG.getEcu_CpuList().getName(),
+			DPKG.getCpu().getName(), DPKG.getCpu_Rtos().getName(), DPKG.getRtos_OilVar().getName() };
 
 	/** All types of Oil Object that are stored inside the OS's OilVar * */
-	protected String[] otherObjectsTypes = { IOilXMLLabels.OBJ_APPMODE,
-			IOilXMLLabels.OBJ_COM, IOilXMLLabels.OBJ_IPDU,
-			IOilXMLLabels.OBJ_MESSAGE, //IOilXMLLabels.OBJ_NETWORKMESSAGE,
+	protected String[] otherObjectsTypes = { IOilXMLLabels.OBJ_APPMODE, IOilXMLLabels.OBJ_COM, IOilXMLLabels.OBJ_IPDU,
+			IOilXMLLabels.OBJ_MESSAGE, // IOilXMLLabels.OBJ_NETWORKMESSAGE,
 			IOilXMLLabels.OBJ_NM };
-
+	
 	// -------------------------------
 	protected IOilImplementation oilImpl;
 
@@ -95,26 +96,24 @@ public class SimpleTransform implements IOilTransform {
 	 * 
 	 * 
 	 */
-	public static String[] makeOilVarPrefix(boolean addName, String name,
-			String objType, OilImplID id) {
+	public static String[] makeOilVarPrefix(boolean addName, String name, String objType, OilImplID id) {
 
-		String objId = (addName ? DataPath.makeSlashedId(new String[] {
-		objType, name }) : objType);
+		String objId = (addName ? DataPath.makeSlashedId(new String[] { objType, name }) : objType);
 
-		return new String[] {objType+"_OIL_EXT", objId};
-//		
-//
-//		return new String[] { objId, OAPKG.getRoot_HwList().getName(),
-//				DataPath.makeId(id.getHW()), OAPKG.getHW_RtosList().getName(),
-//				DataPath.makeId(id.getRtos()) };
+		return new String[] { objType + "_OIL_EXT", objId };
+		//
+		//
+		// return new String[] { objId, OAPKG.getRoot_HwList().getName(),
+		// DataPath.makeId(id.getHW()), OAPKG.getHW_RtosList().getName(),
+		// DataPath.makeId(id.getRtos()) };
 	}
 
 	// -------------------------------
 
 	/**
-	 * Store all given data inside the given VarTree. It requires also the id
-	 * of HW and RT-OS. Doesn't check or use Transaction or roll-back. Uses
-	 * VarTree interface. <br>
+	 * Store all given data inside the given VarTree. It requires also the id of
+	 * HW and RT-OS. Doesn't check or use Transaction or roll-back. Uses VarTree
+	 * interface. <br>
 	 * <br>
 	 * Before store anythings merge all
 	 * 
@@ -128,31 +127,28 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public void load(IVarTree lvt, Document appl, IOilImplID iid)
-			throws OilTransformException {
-		Assert.isLegal(lvt != null, "Expected a not null VarTree");
-		Assert.isLegal(appl != null, "Expected a not null Document");
-		Assert.isLegal(iid != null, "Expected a not null OilImplID");
+	public void load(IVarTree lvt, Document appl, IOilImplID iid) throws OilTransformException {
+		Assert.isNotNull(lvt, "Expected a not null VarTree");
+		Assert.isNotNull(appl, "Expected a not null Document");
+		Assert.isNotNull(iid, "Expected a not null OilImplID");
 
 		OilImplID id = (OilImplID) iid;
-		
+
 		vt = lvt;
 		oilImpl = OilImplFactory.getAnInstance(vt).getImpl(id);
 
 		Element application = appl.getDocumentElement();
-		checkTrue("application".equalsIgnoreCase(application.getNodeName()),
-				"Expected an application node");
-		
+		checkTrue("application".equalsIgnoreCase(application.getNodeName()), "Expected an application node");
+
 		if (!application.hasAttribute("Name")) {
 			// empty ?
-			
-			checkTrue(!application.hasChildNodes(),
-					"ask to create an unamed system with some children");
-			
+
+			checkTrue(!application.hasChildNodes(), "ask to create an unamed system with some children");
+
 			// nothing to do
 			return;
 		}
-		
+
 		String sysName = application.getAttribute("Name");
 		IVarTreePointer systemVtp = checkSystemName(vt, sysName);
 
@@ -196,8 +192,7 @@ public class SimpleTransform implements IOilTransform {
 	 *             if the system doesn't already exist and this method cannot
 	 *             add a new System
 	 */
-	protected IVarTreePointer checkSystemName(IVarTree vt, String name)
-			throws OilTransformException {
+	protected IVarTreePointer checkSystemName(IVarTree vt, String name) throws OilTransformException {
 		ITreeInterface ti = vt.newTreeInterface();
 		String systemType = DPKG.getSystem().getName();
 
@@ -208,26 +203,24 @@ public class SimpleTransform implements IOilTransform {
 
 		/* use an already stored */
 		if (vtp.go(S + DataPath.makeSlashedId(name))) {
-			checkTrue(systemType.equals(vtp.getType()),
-					"The required System already exist, but with a different type.");
+			checkTrue(systemType.equals(vtp.getType()), "The required System already exist, but with a different type.");
 			return vtp;
 		}
 
-		/*checkTrue(
-				currSysNumber < SYSTEM_NUMBER,
-				"VarTree already contains the max number of System, and cannot add the new given system :"
-						+ name);*/
+		/*
+		 * checkTrue( currSysNumber < SYSTEM_NUMBER,
+		 * "VarTree already contains the max number of System, and cannot add the new given system :"
+		 * + name);
+		 */
 
 		try {
-			if(currSysNumber < SYSTEM_NUMBER){
+			if (currSysNumber < SYSTEM_NUMBER) {
 				ti.addElement(name, systemType, null);
 			}
 		} catch (ITreeInterface.AddElementException e) {
-			throw new OilTransformException(
-					"Cannot make a new system with given name :" + name);
+			throw new OilTransformException("Cannot make a new system with given name :" + name);
 		}
-		checkTrue(vtp.go(S + DataPath.makeSlashedId(name)),
-				"Error when try to add the new System");
+		checkTrue(vtp.go(S + DataPath.makeSlashedId(name)), "Error when try to add the new System");
 
 		return vtp;
 
@@ -252,49 +245,39 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected String storeOS(IVarTreePointer vtp, Element parent,
-			String sysName, OilImplID id) throws OilTransformException {
+	protected String storeOS(IVarTreePointer vtp, Element parent, String sysName, OilImplID id)
+			throws OilTransformException {
 		String rtosName = null;
 		rtosNamePath = new String[] { DPKG.getSystem_Architectural().getName(),
-				DPKG.getArchitectural_EcuList().getName(), sysName, // ecu name
-																	// ... from
-																	// oil
-				DPKG.getEcu_CpuList().getName(), //
-				sysName, // cpu name ... from oil
+				DPKG.getArchitectural_EcuList().getName(), sysName, DPKG.getEcu_CpuList().getName(), sysName,
 				DPKG.getCpu_Rtos().getName(), DPKG.getRtos_OilVar().getName() };
 
 		// prepare where store all data
-		Element[] osList = getAllSameElements(parent, "Object",
-				new String[] { "type" }, new String[] { IOilXMLLabels.OBJ_OS });
+		Element[] osList = getAllSameElements(parent, "Object", new String[] { "type" },
+				new String[] { IOilXMLLabels.OBJ_OS });
 		if (osList.length > 0) {
 			rtosName = getAttribute(osList[0], "Name");
 			// update the rtosNamePath
-			//rtosNamePath[5] = rtosName;
+			// rtosNamePath[5] = rtosName;
 
 			// set the HW model
-			IVarTreePointer curr = makePath(vtp, new String[] { rtosNamePath[0],
-					rtosNamePath[1], rtosNamePath[2], rtosNamePath[3],
-					rtosNamePath[4] }, new String[] { rtosTypePath[0],
-					rtosTypePath[1], rtosTypePath[2], rtosTypePath[3],
-					rtosTypePath[4] });
+			IVarTreePointer curr = vtp.clone().makePath(new String[] { rtosNamePath[0], rtosNamePath[1], rtosNamePath[2],
+					rtosNamePath[3], rtosNamePath[4] }, new String[] { rtosTypePath[0], rtosTypePath[1],
+					rtosTypePath[2], rtosTypePath[3], rtosTypePath[4] });
 			storeAVar(curr, DPKG.getCpu_Model().getName(), id.getHW());
 
-			curr = makePath(curr, new String[] { rtosNamePath[5] },
-					new String[] { rtosTypePath[5] });
+			curr.makePath(new String[] { rtosNamePath[5] }, new String[] { rtosTypePath[5] });
 			storeAVar(curr, DPKG.getRtos_Name().getName(), rtosName);
 			storeAVar(curr, DPKG.getRtos_Type().getName(), id.getRtos());
 
-			curr = makePath(curr, new String[] { rtosNamePath[6] },
-					new String[] { rtosTypePath[6] });
+			curr.makePath(new String[] { rtosNamePath[6] }, new String[] { rtosTypePath[6] });
 
 			// store all instance of OS object from Oil tree
 			for (int i = 0; i < osList.length; i++) {
 
 				// check the rtosName
-				checkTrue(checkStrings(rtosName,
-						getAttribute(osList[i], "Name")),
-						"The oil tree contains more than one "
-								+ IOilXMLLabels.OBJ_OS);
+				checkTrue(checkStrings(rtosName, getAttribute(osList[i], "Name")),
+						"The oil tree contains more than one " + IOilXMLLabels.OBJ_OS);
 
 				storeInsideAOilVar(curr, osList[i], id);
 
@@ -306,9 +289,9 @@ public class SimpleTransform implements IOilTransform {
 
 	/**
 	 * Store all data of an Os Application inside the OilVar of element
-	 * "/SystemName/Architecture/EcuList/OilEcu/CpuList/OsApplicationsList/OsApplication", where
-	 * the <b>SystemName </b> are the values stored inside
-	 * the <b>Application Name </b>.
+	 * "/SystemName/Architecture/EcuList/OilEcu/CpuList/OsApplicationsList/OsApplication"
+	 * , where the <b>SystemName </b> are the values stored inside the
+	 * <b>Application Name </b>.
 	 * 
 	 * @param vtp
 	 *            point to the system
@@ -322,10 +305,9 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeOsApplication(IVarTreePointer vtp, Element parent,
-			String sysName, OilImplID id) throws OilTransformException {
-		String[] basePath = new String[] {
-				DPKG.getSystem_Architectural().getName(), // 0 
+	protected void storeOsApplication(IVarTreePointer vtp, Element parent, String sysName, OilImplID id)
+			throws OilTransformException {
+		String[] basePath = new String[] { DPKG.getSystem_Architectural().getName(), // 0
 				DPKG.getArchitectural_EcuList().getName(), // 1
 				sysName, // ecu name ... from oil 2
 				DPKG.getEcu_CpuList().getName(), // 3
@@ -340,18 +322,18 @@ public class SimpleTransform implements IOilTransform {
 																	// oil
 				DPKG.getEcu_CpuList().getName(), //
 				DPKG.getCpu().getName(), // cpu name ... from oil
-				DPKG.getCpu_OsApplication().getName(),
-				DPKG.getOsApplication().getName(), // Os Application name
+				DPKG.getCpu_OsApplication().getName(), DPKG.getOsApplication().getName(), // Os
+																							// Application
+																							// name
 				DPKG.getOsApplication_OilVar().getName() };
-		
-		
-		
+
 		{
 			ITreeInterface ti = vt.newTreeInterface();
-			String[] cpuNames = ti.getAllName(Search.systemName(vt) +S+ basePath[0] +S+ basePath[1] +S+ basePath[2] +S+ basePath[3], baseType[4]);
-			if (cpuNames != null && cpuNames.length>0) {
+			String[] cpuNames = ti.getAllName(Search.systemName(vt) + S + basePath[0] + S + basePath[1] + S
+					+ basePath[2] + S + basePath[3], baseType[4]);
+			if (cpuNames != null && cpuNames.length > 0) {
 				boolean default_is_valid = false;
-				for (String cpuName: cpuNames) {
+				for (String cpuName : cpuNames) {
 					if (basePath[4].equals(cpuName)) {
 						default_is_valid = true;
 						break;
@@ -362,16 +344,13 @@ public class SimpleTransform implements IOilTransform {
 				}
 			}
 		}
-		
-		
+
 		// prepare where store all data
-		Element[] osApList = getAllSameElements(parent,
-				IOilXMLLabels.ELEM_OBJECT,
-				new String[] { IOilXMLLabels.ATTR_TYPE },
-				new String[] { IOilXMLLabels.OBJ_OSAPPLICATION });
+		Element[] osApList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT,
+				new String[] { IOilXMLLabels.ATTR_TYPE }, new String[] { IOilXMLLabels.OBJ_OSAPPLICATION });
 
 		// aggregate instances of the same task
-//		ArrayList<Element> unamedOsAppl = new ArrayList<Element>();
+		// ArrayList<Element> unamedOsAppl = new ArrayList<Element>();
 		ArrayList<ArrayList<Element>> namedOsAppl = new ArrayList<ArrayList<Element>>();
 		{
 			// namedTasksKeys is used to group together all objects with the
@@ -380,32 +359,31 @@ public class SimpleTransform implements IOilTransform {
 			for (int i = 0; i < osApList.length; i++) {
 				String tmp = getAttribute(osApList[i], IOilXMLLabels.ATTR_NAME);
 
-//				if (tmp == null) {
-//					unamedOsAppl.add(osApList[i]);
-//				} else {
-					if (namedOsApplKeys.containsKey(tmp)) {
-						namedOsApplKeys.get(tmp).add(osApList[i]);
-					} else {
-						ArrayList<Element> ar = new ArrayList<Element>();
-						ar.add(osApList[i]);
-						namedOsApplKeys.put(tmp, ar);
-						namedOsAppl.add(ar);
-					}
-//				}
+				// if (tmp == null) {
+				// unamedOsAppl.add(osApList[i]);
+				// } else {
+				if (namedOsApplKeys.containsKey(tmp)) {
+					namedOsApplKeys.get(tmp).add(osApList[i]);
+				} else {
+					ArrayList<Element> ar = new ArrayList<Element>();
+					ar.add(osApList[i]);
+					namedOsApplKeys.put(tmp, ar);
+					namedOsAppl.add(ar);
+				}
+				// }
 			}
 		}
-		
-		
+
 		// parse all tasks. If there're more than one instance for the same
 		// task, that task is parsed more than one time
 		for (Iterator<ArrayList<Element>> iter = namedOsAppl.iterator(); iter.hasNext();) {
 			ArrayList<Element> ar = iter.next();
-		
+
 			// the name of a task (also a null value is valid)
 			final String osAppName = getAttribute(ar.get(0), "Name");
 
 			basePath[6] = osAppName;
-			IVarTreePointer curr = makePath(vtp, basePath, baseType);
+			IVarTreePointer curr = vtp.clone().makePath(basePath, baseType);
 
 			// store all instance of this TASK object inside the VarTree
 			for (int i = 0; i < ar.size(); i++) {
@@ -413,9 +391,9 @@ public class SimpleTransform implements IOilTransform {
 				storeInsideAOilVar(curr, ar.get(i), id);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * This method stores all tasks inside the given IVarTreePointer
 	 * 
@@ -432,14 +410,12 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeTasks(IVarTreePointer vtp, Element parent, OilImplID id,
-			String rtos) throws OilTransformException {
+	protected void storeTasks(IVarTreePointer vtp, Element parent, OilImplID id, String rtos)
+			throws OilTransformException {
 
 		// prepare where store all data
-		Element[] taskList = getAllSameElements(parent,
-				IOilXMLLabels.ELEM_OBJECT,
-				new String[] { IOilXMLLabels.ATTR_TYPE },
-				new String[] { IOilXMLLabels.OBJ_TASK });
+		Element[] taskList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT,
+				new String[] { IOilXMLLabels.ATTR_TYPE }, new String[] { IOilXMLLabels.OBJ_TASK });
 
 		// aggregate instances of the same task
 		ArrayList<Element> unamedTasks = new ArrayList<Element>();
@@ -480,7 +456,7 @@ public class SimpleTransform implements IOilTransform {
 		// task, that task is parsed more than one time
 		for (Iterator<ArrayList<Element>> iter = namedTasks.iterator(); iter.hasNext();) {
 			ArrayList<Element> ar = iter.next();
-			
+
 			storeATask((IVarTreePointer) vtp.clone(), ar, id);
 
 			// also store mapping
@@ -489,8 +465,6 @@ public class SimpleTransform implements IOilTransform {
 		}
 
 	}
-
-	
 
 	/**
 	 * This method stores all isr inside the given IVarTreePointer
@@ -508,14 +482,12 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeIsr(IVarTreePointer vtp, Element parent, OilImplID id,
-			String rtos) throws OilTransformException {
+	protected void storeIsr(IVarTreePointer vtp, Element parent, OilImplID id, String rtos)
+			throws OilTransformException {
 
 		// prepare where store all data
-		Element[] isrList = getAllSameElements(parent,
-				IOilXMLLabels.ELEM_OBJECT,
-				new String[] { IOilXMLLabels.ATTR_TYPE },
-				new String[] { IOilXMLLabels.OBJ_ISR });
+		Element[] isrList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT,
+				new String[] { IOilXMLLabels.ATTR_TYPE }, new String[] { IOilXMLLabels.OBJ_ISR });
 
 		// aggregate instances of the same task
 		ArrayList<Element> unamedIsr = new ArrayList<Element>();
@@ -556,7 +528,7 @@ public class SimpleTransform implements IOilTransform {
 		// task, that task is parsed more than one time
 		for (Iterator<ArrayList<Element>> iter = namedIsr.iterator(); iter.hasNext();) {
 			ArrayList<Element> ar = iter.next();
-			
+
 			storeAnIsr((IVarTreePointer) vtp.clone(), ar, id);
 
 			// also store mapping
@@ -566,7 +538,6 @@ public class SimpleTransform implements IOilTransform {
 
 	}
 
-	
 	/**
 	 * This method stores a task inside the given IVarTreePointer
 	 * 
@@ -584,14 +555,13 @@ public class SimpleTransform implements IOilTransform {
 				null, // task name ... from oil
 				DPKG.getTask_OilVar().getName() };
 		final String[] taskTypePath = { DPKG.getSystem_Architectural().getName(),
-				DPKG.getArchitectural_TaskList().getName(),
-				DPKG.getTask().getName(), DPKG.getTask_OilVar().getName() };
+				DPKG.getArchitectural_TaskList().getName(), DPKG.getTask().getName(), DPKG.getTask_OilVar().getName() };
 
 		// the name of a task (also a null value is valid)
 		final String taskName = getAttribute(ar.get(0), "Name");
 
 		taskNamePath[2] = taskName;
-		IVarTreePointer curr = makePath(vtp, taskNamePath, taskTypePath);
+		IVarTreePointer curr = vtp.clone().makePath(taskNamePath, taskTypePath);
 
 		curr.goParent();
 		storeAVar(curr, DPKG.getTask_Type().getName(), "task");
@@ -602,201 +572,158 @@ public class SimpleTransform implements IOilTransform {
 
 			storeInsideAOilVar(curr, ar.get(i), id);
 		}
-		
+
 		{ // move vars outside OilVar
-			IVarTreePointer oilVtp =  (IVarTreePointer) curr.clone();
+			IVarTreePointer oilVtp = (IVarTreePointer) curr.clone();
 			IVarTreePointer taskVtp = (IVarTreePointer) curr.clone();
 			taskVtp.goParent();
-			
+
 			final String path;
-			{	// prepare path
+			{ // prepare path
 				StringBuffer tmpPath = new StringBuffer();
 				String[] el = makeOilVarPrefix(false, null, IOilXMLLabels.OBJ_TASK, id);
-				
-				
-				for (int i=0; i<el.length; i++) {
-					tmpPath.append(el[i]+S);
+
+				for (int i = 0; i < el.length; i++) {
+					tmpPath.append(el[i] + S);
 				}
-				
+
 				path = null;// tmpPath.toString()+S+OilApplPackage.eINSTANCE.getRTOS_ParameterList().getName()+S;
 			}
-			
-			
+
 			{ // ----------- TYPE = task ------------
-				String[] pNames = {
-						DPKG.getTask_ActivationList().getName(), 
-						null,
-						DPKG.getActivation_Type().getName()
-				};
-				String[] pTypes = {
-						DPKG.getTask_ActivationList().getName(), 
-						DPKG.getActivation().getName(),
-						DPKG.getActivation_Type().getName()
-				};
-				
+				String[] pNames = { DPKG.getTask_ActivationList().getName(), null, DPKG.getActivation_Type().getName() };
+				String[] pTypes = { DPKG.getTask_ActivationList().getName(), DPKG.getActivation().getName(),
+						DPKG.getActivation_Type().getName() };
+
 				IVariable var = new StringVar("periodic");
-				
-				IVarTreePointer lvtp = makePath(taskVtp, pNames, pTypes);
+
+				IVarTreePointer lvtp = taskVtp.clone().makePath(pNames, pTypes);
 				lvtp.setVar(var);
 			}
-			
+
 			{ // ----------- PRIORITY ------------
-				IVarTreePointer lvtp = null;// extract(oilVtp, path +"PRIORITY"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
-				if (lvtp!= null) {
-					String[] pNames = {
-							DPKG.getTask_SchedulingList().getName(), 
-							null,
-							DPKG.getScheduling_Priority().getName()
-					};
-					String[] pTypes = {
-							DPKG.getTask_SchedulingList().getName(), 
-							DPKG.getScheduling().getName(),
-							DPKG.getScheduling_Priority().getName()
-					};
-					
-					IVariable var = lvtp.getVar();
-					// remove data
-					lvtp.goParent();
-					lvtp.destroy();
-					
-					lvtp = makePath(taskVtp, pNames, pTypes);
-					lvtp.setVar(var);
-				}
-			}
-			
-			{ // ----------- ACTIVATION ------------
-				IVarTreePointer lvtp = null;// extract(oilVtp, path +"ACTIVATION"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
-				if (lvtp!= null) {
-					String[] pNames = {
-							DPKG.getTask_ActivationList().getName(), 
-							null,
-							DPKG.getActivation_ActNumber().getName()
-					};
-					String[] pTypes = {
-							DPKG.getTask_ActivationList().getName(), 
-							DPKG.getActivation().getName(),
-							DPKG.getActivation_ActNumber().getName()
-					};
-					
-					IVariable var = lvtp.getVar();
-					// remove data
-					lvtp.goParent();
-					lvtp.destroy();
-					
-					lvtp = makePath(taskVtp, pNames, pTypes);
-					lvtp.setVar(var);
-				}
-			}
-			
-			{ // ----------- RESOURCES ------------
-				IVarTreePointer lvtp = null;// extract(oilVtp, path +"RESOURCE"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
-				if (lvtp!= null) {
+				IVarTreePointer lvtp = null;// extract(oilVtp, path
+											// +"PRIORITY"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
+				if (lvtp != null) {
+					String[] pNames = { DPKG.getTask_SchedulingList().getName(), null,
+							DPKG.getScheduling_Priority().getName() };
+					String[] pTypes = { DPKG.getTask_SchedulingList().getName(), DPKG.getScheduling().getName(),
+							DPKG.getScheduling_Priority().getName() };
 
 					IVariable var = lvtp.getVar();
 					// remove data
 					lvtp.goParent();
 					lvtp.destroy();
-					
+
+					lvtp = taskVtp.clone().makePath(pNames, pTypes);
+					lvtp.setVar(var);
+				}
+			}
+
+			{ // ----------- ACTIVATION ------------
+				IVarTreePointer lvtp = null;// extract(oilVtp, path
+											// +"ACTIVATION"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
+				if (lvtp != null) {
+					String[] pNames = { DPKG.getTask_ActivationList().getName(), null,
+							DPKG.getActivation_ActNumber().getName() };
+					String[] pTypes = { DPKG.getTask_ActivationList().getName(), DPKG.getActivation().getName(),
+							DPKG.getActivation_ActNumber().getName() };
+
+					IVariable var = lvtp.getVar();
+					// remove data
+					lvtp.goParent();
+					lvtp.destroy();
+
+					lvtp = taskVtp.clone().makePath(pNames, pTypes);
+					lvtp.setVar(var);
+				}
+			}
+
+			{ // ----------- RESOURCES ------------
+				IVarTreePointer lvtp = null;// extract(oilVtp, path
+											// +"RESOURCE"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
+				if (lvtp != null) {
+
+					IVariable var = lvtp.getVar();
+					// remove data
+					lvtp.goParent();
+					lvtp.destroy();
+
 					if (var != null) {
-						
+
 						// search all Reource's Names
 						String[] values = null;
-						
+
 						if (var instanceof IMultiValues) {
 							values = ((IMultiValues) var).getValues();
-						} else if (var.get() != null){
+						} else if (var.get() != null) {
 							values = new String[] { var.toString() };
 						}
-						
+
 						if (values != null && values.length != 0) {
-							
+
 							// path to Task's ReourcesRef
-							String[][] taskResRef = {
-									{ // Names
-										DPKG.getTask_ResourceRefList().getName(),
-										null, // mode
-										DPKG.getResourceRef_ResourceMethodRef().getName()
-									},
-									{  // Types
-										DPKG.getTask_ResourceRefList().getName(),
-										DPKG.getResourceRef().getName(),
-										DPKG.getResourceRef_ResourceMethodRef().getName()
-									}
-							};
-							
+							String[][] taskResRef = { { // Names
+									DPKG.getTask_ResourceRefList().getName(), null, // mode
+											DPKG.getResourceRef_ResourceMethodRef().getName() }, { // Types
+									DPKG.getTask_ResourceRefList().getName(), DPKG.getResourceRef().getName(),
+											DPKG.getResourceRef_ResourceMethodRef().getName() } };
+
 							// path to Resource's Method
 							String[][] resources = {
-									{
-										DPKG.getArchitectural_ResourceList().getName(), 
-										null, // resource Name
-										DPKG.getResource_Methods().getName()
-									},
-									{
-										DPKG.getArchitectural_ResourceList().getName(), 
-										DPKG.getResource().getName(),
-										DPKG.getResource_Methods().getName()
-									}
-							};
-							
+									{ DPKG.getArchitectural_ResourceList().getName(), null, // resource
+																							// Name
+											DPKG.getResource_Methods().getName() },
+									{ DPKG.getArchitectural_ResourceList().getName(), DPKG.getResource().getName(),
+											DPKG.getResource_Methods().getName() } };
+
 							// path to Resource's MutexRef
 							String[][] resMutexRef = {
-									{
-										DPKG.getResource_MutexRefList().getName(),
-										null, // mode
-										DPKG.getMutexRef_MutexName().getName()
-									},
-									{
-										DPKG.getResource_MutexRefList().getName(),
-										DPKG.getMutexRef().getName(),
-										DPKG.getMutexRef_MutexName().getName()
-									}
-							};
+									{ DPKG.getResource_MutexRefList().getName(), null, // mode
+											DPKG.getMutexRef_MutexName().getName() },
+									{ DPKG.getResource_MutexRefList().getName(), DPKG.getMutexRef().getName(),
+											DPKG.getMutexRef_MutexName().getName() } };
 
-							
 							IVarTreePointer archVtp = (IVarTreePointer) taskVtp.clone();
-							
+
 							archVtp.goParent(); // -> taskList
 							archVtp.goParent(); // -> architectural
-							
-							
-							for (int i=0; i<values.length; i++) {
+
+							for (int i = 0; i < values.length; i++) {
 								// prepare names
 								final String mutexName = values[i];
-								final String resName = "res_"+mutexName;
+								final String resName = "res_" + mutexName;
 								final String methodName = "DefaultMethod";
-								
-								final String resMethodName = Utility.pathToEvidence(DataPath.makeId(resName)) +
-									S + methodName;
-								
+
+								final String resMethodName = Utility.pathToEvidence(DataPath.makeId(resName)) + S
+										+ methodName;
+
 								// complete Resource's paths
 								resources[0][1] = resName;
-								
-								{ // add a reference to the Resource inside the task
-									lvtp = makePath(taskVtp, taskResRef[0], taskResRef[1]);
+
+								{ // add a reference to the Resource inside the
+									// task
+									lvtp = taskVtp.clone().makePath(taskResRef[0], taskResRef[1]);
 									updateVar(lvtp, resMethodName);
 								}
-									
+
 								{ // make the resource
-									lvtp = makePath(archVtp, resources[0], resources[1]);
+									lvtp = archVtp.clone().makePath(resources[0], resources[1]);
 									updateVar(lvtp, methodName);
 								}
-								
+
 								{ // make the resource's Mutex Ref
 									lvtp.goParent();
-									lvtp = makePath(lvtp, resMutexRef[0], resMutexRef[1]);
+									lvtp.makePath(resMutexRef[0], resMutexRef[1]);
 									updateVar(lvtp, mutexName);
 								}
-								
-								
-								
-								
-								
+
 							}
 						}
 					}
-					
-//					lvtp = makePath(taskVtp, pNames, pTypes);
-//					lvtp.setVar(var);
+
+					// lvtp = taskVtp.clone().makePath( pNames, pTypes);
+					// lvtp.setVar(var);
 				}
 			}
 		}
@@ -817,7 +744,6 @@ public class SimpleTransform implements IOilTransform {
 		lvtp.setVar(lvar);
 	}
 
-
 	/**
 	 * This method stores a isr inside the given IVarTreePointer
 	 * 
@@ -835,14 +761,13 @@ public class SimpleTransform implements IOilTransform {
 				null, // task name ... from oil
 				DPKG.getTask_OilVar().getName() };
 		final String[] isrTypePath = { DPKG.getSystem_Architectural().getName(),
-				DPKG.getArchitectural_TaskList().getName(),
-				DPKG.getTask().getName(), DPKG.getTask_OilVar().getName() };
+				DPKG.getArchitectural_TaskList().getName(), DPKG.getTask().getName(), DPKG.getTask_OilVar().getName() };
 
 		// the name of a task (also a null value is valid)
 		final String isrName = getAttribute(ar.get(0), "Name");
 
 		isrNamePath[2] = isrName;
-		IVarTreePointer curr = makePath(vtp, isrNamePath, isrTypePath);
+		IVarTreePointer curr = vtp.clone().makePath(isrNamePath, isrTypePath);
 
 		curr.goParent();
 		storeAVar(curr, DPKG.getTask_Type().getName(), "isr");
@@ -853,209 +778,176 @@ public class SimpleTransform implements IOilTransform {
 
 			storeInsideAOilVar(curr, ar.get(i), id);
 		}
-		
+
 		{ // move vars outside OilVar
-			IVarTreePointer oilVtp =  (IVarTreePointer) curr.clone();
+			IVarTreePointer oilVtp = (IVarTreePointer) curr.clone();
 			IVarTreePointer isrVtp = (IVarTreePointer) curr.clone();
 			isrVtp.goParent();
-			
+
 			final String path;
-			{	// prepare path
+			{ // prepare path
 				StringBuffer tmpPath = new StringBuffer();
 				String[] el = makeOilVarPrefix(false, null, IOilXMLLabels.OBJ_ISR, id);
-				
-				
-				for (int i=0; i<el.length; i++) {
-					tmpPath.append(el[i]+S);
+
+				for (int i = 0; i < el.length; i++) {
+					tmpPath.append(el[i] + S);
 				}
-				
+
 				path = null;// tmpPath.toString()+S+OilApplPackage.eINSTANCE.getRTOS_ParameterList().getName()+S;
 			}
 
 			{ // ----------- TYPE = isr ------------
-				String[] pNames = {
-						DPKG.getTask_ActivationList().getName(), 
-						null,
-						DPKG.getActivation_Type().getName()
-				};
-				String[] pTypes = {
-						DPKG.getTask_ActivationList().getName(), 
-						DPKG.getActivation().getName(),
-						DPKG.getActivation_Type().getName()
-				};
-				
+				String[] pNames = { DPKG.getTask_ActivationList().getName(), null, DPKG.getActivation_Type().getName() };
+				String[] pTypes = { DPKG.getTask_ActivationList().getName(), DPKG.getActivation().getName(),
+						DPKG.getActivation_Type().getName() };
+
 				IVariable var = new StringVar("sporadic");
-				
-				IVarTreePointer lvtp = makePath(isrVtp, pNames, pTypes);
+
+				IVarTreePointer lvtp = isrVtp.clone().makePath(pNames, pTypes);
 				lvtp.setVar(var);
 			}
 
-			
-//			{ // ----------- PRIORITY ------------
-//				IVarTreePointer lvtp = extract(oilVtp, path +"PRIORITY"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
-//				if (lvtp!= null) {
-//					String[] pNames = {
-//							DPKG.getTask_SchedulingList().getName(), 
-//							null,
-//							DPKG.getScheduling_Priority().getName()
-//					};
-//					String[] pTypes = {
-//							DPKG.getTask_SchedulingList().getName(), 
-//							DPKG.getScheduling().getName(),
-//							DPKG.getScheduling_Priority().getName()
-//					};
-//					
-//					IVariable var = lvtp.getVar();
-//					// remove data
-//					lvtp.goParent();
-//					lvtp.destroy();
-//					
-//					lvtp = makePath(taskVtp, pNames, pTypes);
-//					lvtp.setVar(var);
-//				}
-//			}
-			
-//			{ // ----------- ACTIVATION ------------
-//				IVarTreePointer lvtp = extract(oilVtp, path +"ACTIVATION"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
-//				if (lvtp!= null) {
-//					String[] pNames = {
-//							DPKG.getTask_ActivationList().getName(), 
-//							null,
-//							DPKG.getActivation_ActNumber().getName()
-//					};
-//					String[] pTypes = {
-//							DPKG.getTask_ActivationList().getName(), 
-//							DPKG.getActivation().getName(),
-//							DPKG.getActivation_ActNumber().getName()
-//					};
-//					
-//					IVariable var = lvtp.getVar();
-//					// remove data
-//					lvtp.goParent();
-//					lvtp.destroy();
-//					
-//					lvtp = makePath(taskVtp, pNames, pTypes);
-//					lvtp.setVar(var);
-//				}
-//			}
-			
+			// { // ----------- PRIORITY ------------
+			// IVarTreePointer lvtp = extract(oilVtp, path
+			// +"PRIORITY"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
+			// if (lvtp!= null) {
+			// String[] pNames = {
+			// DPKG.getTask_SchedulingList().getName(),
+			// null,
+			// DPKG.getScheduling_Priority().getName()
+			// };
+			// String[] pTypes = {
+			// DPKG.getTask_SchedulingList().getName(),
+			// DPKG.getScheduling().getName(),
+			// DPKG.getScheduling_Priority().getName()
+			// };
+			//
+			// IVariable var = lvtp.getVar();
+			// // remove data
+			// lvtp.goParent();
+			// lvtp.destroy();
+			//
+			// lvtp = taskVtp.clone().makePath(pNames, pTypes);
+			// lvtp.setVar(var);
+			// }
+			// }
+
+			// { // ----------- ACTIVATION ------------
+			// IVarTreePointer lvtp = extract(oilVtp, path
+			// +"ACTIVATION"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
+			// if (lvtp!= null) {
+			// String[] pNames = {
+			// DPKG.getTask_ActivationList().getName(),
+			// null,
+			// DPKG.getActivation_ActNumber().getName()
+			// };
+			// String[] pTypes = {
+			// DPKG.getTask_ActivationList().getName(),
+			// DPKG.getActivation().getName(),
+			// DPKG.getActivation_ActNumber().getName()
+			// };
+			//
+			// IVariable var = lvtp.getVar();
+			// // remove data
+			// lvtp.goParent();
+			// lvtp.destroy();
+			//
+			// lvtp = taskVtp.clone().makePath(pNames, pTypes);
+			// lvtp.setVar(var);
+			// }
+			// }
+
 			{ // ----------- RESOURCES ------------
-				IVarTreePointer lvtp = null;// extract(oilVtp, path +"RESOURCE"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
-				if (lvtp!= null) {
+				IVarTreePointer lvtp = null;// extract(oilVtp, path
+											// +"RESOURCE"+S+OilApplPackage.eINSTANCE.getValue_Values().getName());
+				if (lvtp != null) {
 
 					IVariable var = lvtp.getVar();
 					// remove data
 					lvtp.goParent();
 					lvtp.destroy();
-					
+
 					if (var != null) {
-						
+
 						// search all Reource's Names
 						String[] values = null;
-						
+
 						if (var instanceof IMultiValues) {
 							values = ((IMultiValues) var).getValues();
-						} else if (var.get() != null){
+						} else if (var.get() != null) {
 							values = new String[] { var.toString() };
 						}
-						
+
 						if (values != null && values.length != 0) {
-							
+
 							// path to Isr's ReourcesRef
-							String[][] isrResRef = {
-									{ // Names
-										DPKG.getTask_ResourceRefList().getName(),
-										null, // mode
-										DPKG.getResourceRef_ResourceMethodRef().getName()
-									},
-									{  // Types
-										DPKG.getTask_ResourceRefList().getName(),
-										DPKG.getResourceRef().getName(),
-										DPKG.getResourceRef_ResourceMethodRef().getName()
-									}
-							};
-							
+							String[][] isrResRef = { { // Names
+									DPKG.getTask_ResourceRefList().getName(), null, // mode
+											DPKG.getResourceRef_ResourceMethodRef().getName() }, { // Types
+									DPKG.getTask_ResourceRefList().getName(), DPKG.getResourceRef().getName(),
+											DPKG.getResourceRef_ResourceMethodRef().getName() } };
+
 							// path to Resource's Method
 							String[][] resources = {
-									{
-										DPKG.getArchitectural_ResourceList().getName(), 
-										null, // resource Name
-										DPKG.getResource_Methods().getName()
-									},
-									{
-										DPKG.getArchitectural_ResourceList().getName(), 
-										DPKG.getResource().getName(),
-										DPKG.getResource_Methods().getName()
-									}
-							};
-							
+									{ DPKG.getArchitectural_ResourceList().getName(), null, // resource
+																							// Name
+											DPKG.getResource_Methods().getName() },
+									{ DPKG.getArchitectural_ResourceList().getName(), DPKG.getResource().getName(),
+											DPKG.getResource_Methods().getName() } };
+
 							// path to Resource's MutexRef
 							String[][] resMutexRef = {
-									{
-										DPKG.getResource_MutexRefList().getName(),
-										null, // mode
-										DPKG.getMutexRef_MutexName().getName()
-									},
-									{
-										DPKG.getResource_MutexRefList().getName(),
-										DPKG.getMutexRef().getName(),
-										DPKG.getMutexRef_MutexName().getName()
-									}
-							};
+									{ DPKG.getResource_MutexRefList().getName(), null, // mode
+											DPKG.getMutexRef_MutexName().getName() },
+									{ DPKG.getResource_MutexRefList().getName(), DPKG.getMutexRef().getName(),
+											DPKG.getMutexRef_MutexName().getName() } };
 
-							
 							IVarTreePointer archVtp = (IVarTreePointer) isrVtp.clone();
-							
+
 							archVtp.goParent(); // -> taskList
 							archVtp.goParent(); // -> architectural
-							
-							
-							for (int i=0; i<values.length; i++) {
+
+							for (int i = 0; i < values.length; i++) {
 								// prepare names
 								final String mutexName = values[i];
-								final String resName = "res_"+mutexName;
+								final String resName = "res_" + mutexName;
 								final String methodName = "DefaultMethod";
-								
-								final String resMethodName = Utility.pathToEvidence(DataPath.makeId(resName)) +
-									S + methodName;
-								
+
+								final String resMethodName = Utility.pathToEvidence(DataPath.makeId(resName)) + S
+										+ methodName;
+
 								// complete Resource's paths
 								resources[0][1] = resName;
-								
-								{ // add a reference to the Resource inside the task
-									lvtp = makePath(isrVtp, isrResRef[0], isrResRef[1]);
+
+								{ // add a reference to the Resource inside the
+									// task
+									lvtp = isrVtp.clone().makePath(isrResRef[0], isrResRef[1]);
 									updateVar(lvtp, resMethodName);
 								}
-									
+
 								{ // make the resource
-									lvtp = makePath(archVtp, resources[0], resources[1]);
+									lvtp = archVtp.clone().makePath(resources[0], resources[1]);
 									updateVar(lvtp, methodName);
 								}
-								
+
 								{ // make the resource's Mutex Ref
 									lvtp.goParent();
-									lvtp = makePath(lvtp, resMutexRef[0], resMutexRef[1]);
+									lvtp.makePath(resMutexRef[0], resMutexRef[1]);
 									updateVar(lvtp, mutexName);
 								}
-								
-								
-								
-								
-								
+
 							}
 						}
 					}
-					
-//					lvtp = makePath(taskVtp, pNames, pTypes);
-//					lvtp.setVar(var);
+
+					// lvtp = taskVtp.clone().makePath(pNames, pTypes);
+					// lvtp.setVar(var);
 				}
 			}
 		}
 
 	}
 
-	
-	
 	/**
 	 * This method stores all task maps inside the given IVarTreePointer
 	 * 
@@ -1070,17 +962,13 @@ public class SimpleTransform implements IOilTransform {
 	 *             if there are some problems
 	 */
 	protected void storeTaskMap(IVarTreePointer vtp, String taskName, String rtosName) {
-		String[] mapNamePath = {
-				DPKG.getSystem_Mapping().getName(),
-				DPKG.getMapping_TaskMapList().getName(),
-				DataPath.makeId(new String[] { null, taskName }), // 
+		String[] mapNamePath = { DPKG.getSystem_Mapping().getName(), DPKG.getMapping_TaskMapList().getName(),
+				DataPath.makeId(new String[] { null, taskName }), //
 				DPKG.getTaskMap_RtosRef().getName() };
-		String[] mapTypePath = { DPKG.getSystem_Mapping().getName(),
-				DPKG.getMapping_TaskMapList().getName(),
-				DPKG.getTaskMap().getName(),
-				DPKG.getTaskMap_RtosRef().getName() };
+		String[] mapTypePath = { DPKG.getSystem_Mapping().getName(), DPKG.getMapping_TaskMapList().getName(),
+				DPKG.getTaskMap().getName(), DPKG.getTaskMap_RtosRef().getName() };
 
-		IVarTreePointer curr = makePath(vtp, mapNamePath, mapTypePath);
+		IVarTreePointer curr = vtp.clone().makePath(mapNamePath, mapTypePath);
 		if (curr.getVar() != null && curr.getVar().get() != null) {
 			checkTrue(checkStrings(curr.getVar().toString(), rtosName),
 					"Try to Map an already mapped task to a different rtos");
@@ -1105,17 +993,13 @@ public class SimpleTransform implements IOilTransform {
 	 *             if there are some problems
 	 */
 	protected void storeIsrMap(IVarTreePointer vtp, String taskName, String rtosName) {
-		String[] mapNamePath = {
-				DPKG.getSystem_Mapping().getName(),
-				DPKG.getMapping_TaskMapList().getName(),
-				DataPath.makeId(new String[] { null, taskName }), // 
+		String[] mapNamePath = { DPKG.getSystem_Mapping().getName(), DPKG.getMapping_TaskMapList().getName(),
+				DataPath.makeId(new String[] { null, taskName }), //
 				DPKG.getTaskMap_RtosRef().getName() };
-		String[] mapTypePath = { DPKG.getSystem_Mapping().getName(),
-				DPKG.getMapping_TaskMapList().getName(),
-				DPKG.getTaskMap().getName(),
-				DPKG.getTaskMap_RtosRef().getName() };
+		String[] mapTypePath = { DPKG.getSystem_Mapping().getName(), DPKG.getMapping_TaskMapList().getName(),
+				DPKG.getTaskMap().getName(), DPKG.getTaskMap_RtosRef().getName() };
 
-		IVarTreePointer curr = makePath(vtp, mapNamePath, mapTypePath);
+		IVarTreePointer curr = vtp.clone().makePath(mapNamePath, mapTypePath);
 		if (curr.getVar() != null && curr.getVar().get() != null) {
 			checkTrue(checkStrings(curr.getVar().toString(), rtosName),
 					"Try to Map an already mapped isr to a different rtos");
@@ -1140,21 +1024,19 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeMutex(IVarTreePointer vtp, Element parent, OilImplID id)
-			throws OilTransformException {
+	protected void storeMutex(IVarTreePointer vtp, Element parent, OilImplID id) throws OilTransformException {
 
 		String[] mutexNamePath = { DPKG.getSystem_Architectural().getName(),
 				DPKG.getArchitectural_MutexList().getName(), null, // mutex name
-																   // ... from
-																   // oil
+																	// ... from
+																	// oil
 				DPKG.getMutex_OilVar().getName() };
 		String[] mutexTypePath = { DPKG.getSystem_Architectural().getName(),
-				DPKG.getArchitectural_MutexList().getName(),
-				DPKG.getMutex().getName(), DPKG.getMutex_OilVar().getName() };
+				DPKG.getArchitectural_MutexList().getName(), DPKG.getMutex().getName(),
+				DPKG.getMutex_OilVar().getName() };
 
 		// prepare where store all data
-		Element[] mutexList = getAllSameElements(parent, "Object",
-				new String[] { "type" },
+		Element[] mutexList = getAllSameElements(parent, "Object", new String[] { "type" },
 				new String[] { IOilXMLLabels.OBJ_RESOURCE });
 
 		// aggregate instances of the same mutex
@@ -1186,7 +1068,7 @@ public class SimpleTransform implements IOilTransform {
 		// it isn't possible in a oil file !!
 		if (unamedMutex.size() > 0) {
 			mutexNamePath[2] = null;
-			IVarTreePointer curr = makePath(vtp, mutexNamePath, mutexTypePath);
+			IVarTreePointer curr = vtp.clone().makePath(mutexNamePath, mutexTypePath);
 
 			for (int ut = 0; ut < unamedMutex.size(); ut++) {
 
@@ -1200,7 +1082,7 @@ public class SimpleTransform implements IOilTransform {
 			ArrayList<Element> ar = iter.next();
 
 			mutexNamePath[2] = getAttribute(ar.get(0), "Name");
-			IVarTreePointer curr = makePath(vtp, mutexNamePath, mutexTypePath);
+			IVarTreePointer curr = vtp.clone().makePath(mutexNamePath, mutexTypePath);
 
 			// store all instance of this MUTEX object inside the VarTree
 			for (int i = 0; i < ar.size(); i++) {
@@ -1224,25 +1106,22 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeSignals(IVarTreePointer vtp, Element parent, OilImplID id)
-			throws OilTransformException {
+	protected void storeSignals(IVarTreePointer vtp, Element parent, OilImplID id) throws OilTransformException {
 
 		String[] signalNamePath = { DPKG.getSystem_Architectural().getName(),
 				DPKG.getArchitectural_SignalList().getName(), null // element
-																   // name ...
-																   // from oil
+																	// name ...
+																	// from oil
 		};
 		String[] signalTypePath = { DPKG.getSystem_Architectural().getName(),
-				DPKG.getArchitectural_SignalList().getName(),
-				DPKG.getSignal().getName() };
+				DPKG.getArchitectural_SignalList().getName(), DPKG.getSignal().getName() };
 
-		String[] types = { IOilXMLLabels.OBJ_ALARM, IOilXMLLabels.OBJ_COUNTER,
-				IOilXMLLabels.OBJ_EVENT };
+		String[] types = { IOilXMLLabels.OBJ_ALARM, IOilXMLLabels.OBJ_COUNTER, IOilXMLLabels.OBJ_EVENT };
 
 		for (int typeId = 0; typeId < types.length; typeId++) {
 			// prepare where store all data
-			Element[] elemList = getAllSameElements(parent, "Object",
-					new String[] { "type" }, new String[] { types[typeId] });
+			Element[] elemList = getAllSameElements(parent, "Object", new String[] { "type" },
+					new String[] { types[typeId] });
 
 			// aggregate instances of the same mutex
 			ArrayList<Element> unamedElement = new ArrayList<Element>();
@@ -1258,8 +1137,7 @@ public class SimpleTransform implements IOilTransform {
 						unamedElement.add(elemList[i]);
 					} else {
 						if (namedElementKeys.containsKey(tmp)) {
-							namedElementKeys.get(tmp)
-									.add(elemList[i]);
+							namedElementKeys.get(tmp).add(elemList[i]);
 						} else {
 							ArrayList<Element> ar = new ArrayList<Element>();
 							ar.add(elemList[i]);
@@ -1274,8 +1152,7 @@ public class SimpleTransform implements IOilTransform {
 			// it isn't possible in a oil file !!
 			if (unamedElement.size() > 0) {
 				signalNamePath[2] = null;
-				IVarTreePointer curr = makePath(vtp, signalNamePath,
-						signalTypePath);
+				IVarTreePointer curr = vtp.clone().makePath(signalNamePath, signalTypePath);
 
 				// try to set the type of this element
 				storeAVar(curr, DPKG.getSignal_Type().getName(), types[typeId]);
@@ -1284,8 +1161,7 @@ public class SimpleTransform implements IOilTransform {
 				curr.go(DPKG.getSignal_OilVar().getName());
 				for (int ut = 0; ut < unamedElement.size(); ut++) {
 
-					storeInsideAOilVar(curr, unamedElement.get(ut),
-							id);
+					storeInsideAOilVar(curr, unamedElement.get(ut), id);
 				}
 			}
 
@@ -1295,8 +1171,7 @@ public class SimpleTransform implements IOilTransform {
 				ArrayList<Element> ar = iter.next();
 
 				signalNamePath[2] = getAttribute(ar.get(0), "Name");
-				IVarTreePointer curr = makePath(vtp, signalNamePath,
-						signalTypePath);
+				IVarTreePointer curr = vtp.clone().makePath(signalNamePath, signalTypePath);
 
 				// try to set the type of this element
 				storeAVar(curr, DPKG.getSignal_Type().getName(), types[typeId]);
@@ -1325,20 +1200,20 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeAppmode(IVarTreePointer vtp, Element parent, IOilImplID id)
-			throws OilTransformException {
+	protected void storeAppmode(IVarTreePointer vtp, Element parent, IOilImplID id) throws OilTransformException {
 
-		String[] modeNamePath = { DPKG.getSystem_Modes().getName(),
-				DPKG.getModes_ModeList().getName(), null, // mode name ... from
-														  // oil
+		String[] modeNamePath = { DPKG.getSystem_Modes().getName(), DPKG.getModes_ModeList().getName(), null, // mode
+																												// name
+																												// ...
+																												// from
+																												// oil
 		/* DPKG.getMode_OilVar().getName() */};
-		String[] modeTypePath = { DPKG.getSystem_Modes().getName(),
-				DPKG.getModes_ModeList().getName(), DPKG.getMode().getName(),
+		String[] modeTypePath = { DPKG.getSystem_Modes().getName(), DPKG.getModes_ModeList().getName(),
+				DPKG.getMode().getName(),
 		/* DPKG.getMode_OilVar().getName() */};
 
 		// prepare where store all data
-		Element[] appmodeList = getAllSameElements(parent, "Object",
-				new String[] { "type" },
+		Element[] appmodeList = getAllSameElements(parent, "Object", new String[] { "type" },
 				new String[] { IOilXMLLabels.OBJ_APPMODE });
 
 		// aggregate instances of the same mutex
@@ -1355,8 +1230,7 @@ public class SimpleTransform implements IOilTransform {
 					unamedAppmode.add(appmodeList[i]);
 				} else {
 					if (namedAppmodeKeys.containsKey(tmp)) {
-						namedAppmodeKeys.get(tmp)
-								.add(appmodeList[i]);
+						namedAppmodeKeys.get(tmp).add(appmodeList[i]);
 					} else {
 						ArrayList<Element> ar = new ArrayList<Element>();
 						ar.add(appmodeList[i]);
@@ -1371,7 +1245,7 @@ public class SimpleTransform implements IOilTransform {
 		// it isn't possible in a oil file !!
 		if (unamedAppmode.size() > 0) {
 			modeNamePath[2] = null;
-			/* IVarTreePointer curr = */makePath(vtp, modeNamePath, modeTypePath);
+			/* IVarTreePointer curr = */vtp.clone().makePath(modeNamePath, modeTypePath);
 			/*
 			 * for (int ut=0; ut <unamedAppmode.size(); ut++) {
 			 * 
@@ -1385,7 +1259,7 @@ public class SimpleTransform implements IOilTransform {
 			ArrayList<Element> ar = iter.next();
 
 			modeNamePath[2] = getAttribute(ar.get(0), "Name");
-			/* IVarTreePointer curr = */makePath(vtp, modeNamePath, modeTypePath);
+			/* IVarTreePointer curr = */vtp.clone().makePath(modeNamePath, modeTypePath);
 
 			/*
 			 * // store all instance of this APPMODE object inside the VarTree
@@ -1395,7 +1269,6 @@ public class SimpleTransform implements IOilTransform {
 			 */
 		}
 	}
-
 
 	/**
 	 * This method stores all Appmode inside the given IVarTreePointer, as mode
@@ -1415,16 +1288,16 @@ public class SimpleTransform implements IOilTransform {
 			throws OilTransformException {
 
 		String[] frameNamePath = { DPKG.getSystem_Architectural().getName(),
-				DPKG.getArchitectural_FrameList().getName(), null, // mode name ... from
-														  // oil
+				DPKG.getArchitectural_FrameList().getName(), null, // mode name
+																	// ... from
+		// oil
 		/* DPKG.getMode_OilVar().getName() */};
 		String[] frameTypePath = { DPKG.getSystem_Architectural().getName(),
 				DPKG.getArchitectural_FrameList().getName(), DPKG.getFrame().getName(),
 		/* DPKG.getMode_OilVar().getName() */};
 
 		// prepare where store all data
-		Element[] appmodeList = getAllSameElements(parent, "Object",
-				new String[] { "type" },
+		Element[] appmodeList = getAllSameElements(parent, "Object", new String[] { "type" },
 				new String[] { IOilXMLLabels.OBJ_NETWORKMESSAGE });
 
 		// aggregate instances of the same mutex
@@ -1441,8 +1314,7 @@ public class SimpleTransform implements IOilTransform {
 					unamedAppmode.add(appmodeList[i]);
 				} else {
 					if (namedAppmodeKeys.containsKey(tmp)) {
-						namedAppmodeKeys.get(tmp)
-								.add(appmodeList[i]);
+						namedAppmodeKeys.get(tmp).add(appmodeList[i]);
 					} else {
 						ArrayList<Element> ar = new ArrayList<Element>();
 						ar.add(appmodeList[i]);
@@ -1455,15 +1327,15 @@ public class SimpleTransform implements IOilTransform {
 
 		// first the mutex without a name (set id to null)
 		// it isn't possible in a oil file !!
-//		if (unamedAppmode.size() > 0) {
-//			frameNamePath[2] = null;
-//			IVarTreePointer curr = makePath(vtp, frameNamePath, frameTypePath);
-//			/*
-//			 * for (int ut=0; ut <unamedAppmode.size(); ut++) {
-//			 * 
-//			 * storeInsideAOilVar(curr, (Element) unamedAppmode.get(ut), id); }
-//			 */
-//		}
+		// if (unamedAppmode.size() > 0) {
+		// frameNamePath[2] = null;
+		// IVarTreePointer curr = vtp.clone().makePath(frameNamePath, frameTypePath);
+		// /*
+		// * for (int ut=0; ut <unamedAppmode.size(); ut++) {
+		// *
+		// * storeInsideAOilVar(curr, (Element) unamedAppmode.get(ut), id); }
+		// */
+		// }
 
 		// parse all mutexs. If there're more than one instance for the same
 		// mutex, that mutex is parsed more than one time
@@ -1471,22 +1343,18 @@ public class SimpleTransform implements IOilTransform {
 			ArrayList<Element> ar = iter.next();
 
 			frameNamePath[2] = getAttribute(ar.get(0), "Name");
-			IVarTreePointer curr = makePath(vtp, frameNamePath, frameTypePath);
+			IVarTreePointer curr = vtp.clone().makePath(frameNamePath, frameTypePath);
 			String s = null;
-			size_search: 
-			for (int i=0; i <ar.size(); i++) {
-				for (Element msg_prop : getAllSameElements(ar.get(i), "parameter",
-						new String[] { "Name" },
+			size_search: for (int i = 0; i < ar.size(); i++) {
+				for (Element msg_prop : getAllSameElements(ar.get(i), "parameter", new String[] { "Name" },
 						new String[] { "MESSAGEPROPERTY" })) {
-					
-					for (Element msg_prop_static : getAllSameElements(msg_prop, "enumerator",
-							new String[] { "Name" },
+
+					for (Element msg_prop_static : getAllSameElements(msg_prop, "enumerator", new String[] { "Name" },
 							new String[] { "STATIC" })) {
-						
+
 						for (Element msg_prop_static_size : getAllSameElements(msg_prop_static, "parameter",
-								new String[] { "Name" },
-								new String[] { "SIZEINBITS" })) {
-							
+								new String[] { "Name" }, new String[] { "SIZEINBITS" })) {
+
 							s = getAttribute(msg_prop_static_size, "CurrValue");
 							if (s != null) {
 								break size_search;
@@ -1494,18 +1362,17 @@ public class SimpleTransform implements IOilTransform {
 						}
 
 					}
-					
+
 				}
 			}
 			if (s != null) {
 				storeAVar(curr, DPKG.getFrame_Length().getName(), s);
 			}
-			
-			
-//			for (int i=0; i <ar.size(); i++) {
-//				storeInsideAOilVar(curr, (Element) ar.get(i), id);
-//			}
-			
+
+			// for (int i=0; i <ar.size(); i++) {
+			// storeInsideAOilVar(curr, (Element) ar.get(i), id);
+			// }
+
 		}
 	}
 
@@ -1529,33 +1396,26 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeOthers(IVarTreePointer vtp, Element parent,
-			String rtosName, OilImplID id) throws OilTransformException {
+	protected void storeOthers(IVarTreePointer vtp, Element parent, String rtosName, OilImplID id)
+			throws OilTransformException {
 		if (rtosNamePath == null) {
 			throw new Error("First call storeOs than storeOthers");
 		}
 
 		for (int typeId = 0; typeId < otherObjectsTypes.length; typeId++) {
 			// prepare where store all data
-			Element[] objList = getAllSameElements(parent, "Object",
-					new String[] { "type" },
+			Element[] objList = getAllSameElements(parent, "Object", new String[] { "type" },
 					new String[] { otherObjectsTypes[typeId] });
 			if (objList.length > 0) {
 
 				// set the HW model
-				IVarTreePointer curr = makePath(vtp, new String[] {
-						rtosNamePath[0], rtosNamePath[1], rtosNamePath[2],
-						rtosNamePath[3], rtosNamePath[4] }, new String[] {
-						rtosTypePath[0], rtosTypePath[1], rtosTypePath[2],
-						rtosTypePath[3], rtosTypePath[4] });
+				IVarTreePointer curr = vtp.clone().makePath(new String[] { rtosNamePath[0], rtosNamePath[1], rtosNamePath[2],
+						rtosNamePath[3], rtosNamePath[4] }, new String[] { rtosTypePath[0], rtosTypePath[1],
+						rtosTypePath[2], rtosTypePath[3], rtosTypePath[4] });
 				storeAVar(curr, DPKG.getCpu_Model().getName(), id.getHW());
 
-				curr = makePath(curr, new String[] { rtosNamePath[5] },
-						new String[] { rtosTypePath[5] });
+				curr.makePath(new String[] { rtosNamePath[5] }, new String[] { rtosTypePath[5] });
 				storeAVar(curr, DPKG.getRtos_Name().getName(), rtosName);
-
-				curr = makePath(curr, new String[] { rtosNamePath[6] },
-						new String[] { rtosTypePath[6] });
 
 				// store all instance of OS object from Oil tree
 				for (int i = 0; i < objList.length; i++) {
@@ -1565,12 +1425,13 @@ public class SimpleTransform implements IOilTransform {
 					IVariable var = curr.getVar();
 					if (var == null) {
 						var = curr.getNewVar(null);
-						if (var == null) { /*DEBUG*/			throw new Error("Try to get a not null var");		}
+						if (var == null) { /* DEBUG */
+							throw new Error("Try to get a not null var");
+						}
 					}
-					//checkTrue(var instanceof OilVar, "Required an OilVar");
+					// checkTrue(var instanceof OilVar, "Required an OilVar");
 
-					curr.setVar(storeInsideAOilVar(/*(OilVar)*/ var, parent, id,
-							name, true));
+					storeInsideAOilVar(curr, parent, id, name, true);
 
 				} // end for(osList[0] ... osList[n])
 			}
@@ -1580,7 +1441,6 @@ public class SimpleTransform implements IOilTransform {
 	/*
 	 * 
 	 * UTILITIES
-	 *  
 	 */
 
 	/**
@@ -1597,16 +1457,12 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeInsideAOilVar(IVarTreePointer vtp, Element parent,
-			OilImplID id) throws OilTransformException {
-		IVariable var = vtp.getVar();
-		if (var == null) {
-			var = vtp.getNewVar(null);
-			if (var == null) { /*DEBUG*/			throw new Error("Try to get a not null var");		}
+	protected void storeInsideAOilVar(IVarTreePointer vtp, Element parent, OilImplID id) throws OilTransformException {
+		try {
+			storeInsideAOilVar(vtp, parent, id, null, false);
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
-		//checkTrue(var instanceof OilVar, "Required an OilVar");
-
-		vtp.setVar(storeInsideAOilVar(/*(OilVar)*/ var, parent, id, null, false));
 
 	}
 
@@ -1626,42 +1482,23 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected IVariable storeInsideAOilVar(IVariable old, Element parent,
-			OilImplID id, String name, boolean addName)
+	protected void  storeInsideAOilVar(IVarTreePointer vtp, Element parent, OilImplID id, String name, boolean addName)
 			throws OilTransformException {
-		IVariable answer = (IVariable) old.clone();
 
-//		if (answer instanceof OilVarMP) {
-//			ISubVarTreePointer svtp = ((OilVarMP) answer).getPointer(vt);
-//
-//			String objType = getAttribute(parent, IOilXMLLabels.ATTR_TYPE);
-//
-//			svtp = makePath(svtp, makeOilVarPrefix(addName, name, objType, id),
-//					new String[] { OAPKG.getRoot().getName(),
-//							OAPKG.getRoot_HwList().getName(),
-//							OAPKG.getHW().getName(),
-//							OAPKG.getHW_RtosList().getName(),
-//							OAPKG.getRTOS().getName() });
-//
-//			ArrayList<String> typePath = new ArrayList<String>();
-//
-//			typePath.add(objType);
-//			NodeList children = parent.getChildNodes();
-//			for (int i = 0; i < children.getLength(); i++) {
-//				Node node = children.item(i);
-//				if (node instanceof Element) {
-//					storeInsideAOilVar(svtp, (Element) node, typePath);
-//				}
-//			}
-//		} else {
-//			String text = "";
-//			if (old.get() != null) {
-//				text += old;
-//			}
-//			text += parent;
-//			answer.set(text);
-//		}
-		return answer;
+		String objType = getAttribute(parent, IOilXMLLabels.ATTR_TYPE);
+		String[] tpath = makeOilVarPrefix(addName, name, objType, id);
+		vtp = vtp.clone().makePath(tpath, tpath);
+
+		ArrayList<String> typePath = new ArrayList<String>();
+
+		typePath.add(objType);
+		NodeList children = parent.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			Node node = children.item(i);
+			if (node instanceof Element) {
+				storeInsideAOilVar(vtp, (Element) node, typePath);
+			}
+		}
 	}
 
 	/**
@@ -1680,11 +1517,11 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-//	protected void storeInsideAOilVar(ISubVarTreePointer svtp, Element current,
-//			ArrayList<String> typePath) throws OilTransformException {
+	protected void storeInsideAOilVar(IVarTreePointer svtp, Element current, ArrayList<String> typePath)
+			throws OilTransformException {
 //		svtp = (ISubVarTreePointer) svtp.clone();
 //
-//		//        System.out.println(current);
+//		// System.out.println(current);
 //		String elemType = current.getNodeName();
 //		typePath.add(0, getAttribute(current, IOilXMLLabels.ATTR_NAME));
 //
@@ -1698,10 +1535,10 @@ public class SimpleTransform implements IOilTransform {
 //				if (OAPKG.getRTOS().getName().equals(svtpType)) {
 //					st.push(OAPKG.getRTOS_ParameterList().getName());
 //				} else { // default
-//					//if (OAPKG.getEnumerator().getName().equals(svtpType)) {
+//					// if (OAPKG.getEnumerator().getName().equals(svtpType)) {
 //					st.push(OAPKG.getEnumerator_ParameterList().getName());
-//					//} else {
-//					//    checkTrue(false, "Unexpected node type: " + svtpType);
+//					// } else {
+//					// checkTrue(false, "Unexpected node type: " + svtpType);
 //				}
 //				svtp.makeSteps(st);
 //			}
@@ -1716,8 +1553,8 @@ public class SimpleTransform implements IOilTransform {
 //			IOilImplElementDescr curr = oip.getCurrentDescr();
 //			switch (curr.getType()) {
 //			case IOilImplPointer.REFERENCE:
-//			// the same of ATTRIBUTE
-//			// break;
+//				// the same of ATTRIBUTE
+//				// break;
 //			case IOilImplPointer.ATTRIBUTE: {
 //				String value = null;
 //				String type;
@@ -1730,35 +1567,27 @@ public class SimpleTransform implements IOilTransform {
 //						NodeList children = current.getChildNodes();
 //						for (int i = 0; i < children.getLength(); i++) {
 //							Node node = children.item(i);
-//							if (node instanceof Element
-//									&& IOilXMLLabels.ELEM_ENUM_VALUE.equals(node
-//											.getNodeName())) {
-//								value = getAttribute((Element) node,
-//										IOilXMLLabels.ATTR_NAME);
+//							if (node instanceof Element && IOilXMLLabels.ELEM_ENUM_VALUE.equals(node.getNodeName())) {
+//								value = getAttribute((Element) node, IOilXMLLabels.ATTR_NAME);
 //								break;
 //							}
 //						}
 //					}
 //
-//					type = curr.getAttributes()
-//							.getProperty(IOilXMLLabels.ATTR_OBJ_REF_TYPE);
+//					type = curr.getAttributes().getProperty(IOilXMLLabels.ATTR_OBJ_REF_TYPE);
 //				}
-//				//boolean auto = "true".equalsIgnoreCase(getAttribute(current,
+//				// boolean auto = "true".equalsIgnoreCase(getAttribute(current,
 //				// OilXMLLabels.ATTR_AUTO));
 //				boolean defaultValuesUsed = false;
 //				{
 //					Stack<String> stackPath = new Stack<String>();
 //					stackPath.push(OAPKG.getValue_Values().getName());
-//					stackPath
-//							.push(getAttribute(current, IOilXMLLabels.ATTR_NAME));
+//					stackPath.push(getAttribute(current, IOilXMLLabels.ATTR_NAME));
 //
-//					defaultValuesUsed = ((ISubVarTreePointer) svtp.clone())
-//							.makeSteps(stackPath) == ISubVarTreePointer.ERROR;
+//					defaultValuesUsed = ((ISubVarTreePointer) svtp.clone()).makeSteps(stackPath) == ISubVarTreePointer.ERROR;
 //				}
-//				svtp = makePath(svtp, new String[] {
-//						getAttribute(current, IOilXMLLabels.ATTR_NAME),
-//						OAPKG.getValue_Values().getName() }, new String[] {
-//						type, OAPKG.getValue_Values().getName() });
+//				svtp = makePath(svtp, new String[] { getAttribute(current, IOilXMLLabels.ATTR_NAME),
+//						OAPKG.getValue_Values().getName() }, new String[] { type, OAPKG.getValue_Values().getName() });
 //
 //				IVariable var = svtp.getVar();
 //				if (!defaultValuesUsed && var != null && var.get() != null) {
@@ -1770,9 +1599,8 @@ public class SimpleTransform implements IOilTransform {
 //					} else {
 //						checkTrue(checkStrings(var.toString(), value),
 //								"Try to overwrite an already existent variable with a different value."
-//								+"\n\tElement   = "+ getAttribute(current, IOilXMLLabels.ATTR_NAME)
-//								+"\n\tOld value = "+var.toString() 
-//								+"\n\tNew value = "+value);
+//										+ "\n\tElement   = " + getAttribute(current, IOilXMLLabels.ATTR_NAME)
+//										+ "\n\tOld value = " + var.toString() + "\n\tNew value = " + value);
 //
 //					}
 //				} else {
@@ -1782,11 +1610,12 @@ public class SimpleTransform implements IOilTransform {
 //			}
 //				break;
 //			case IOilImplPointer.VARIANT: {
-//				String name = getAttribute(current,IOilXMLLabels.ATTR_NAME);
-//				svtp = makePath(svtp, new String[] { name }, new String[] { name });
+//				String name = getAttribute(current, IOilXMLLabels.ATTR_NAME);
+//				svtp.makePath(new String[] { name }, new String[] { name });
 //
-//				final boolean multiValues = "true".equalsIgnoreCase(curr.getAttributes().getProperty(IOilXMLLabels.ATTR_MULTIPLE_VALUES, "false"));
-//				
+//				final boolean multiValues = "true".equalsIgnoreCase(curr.getAttributes().getProperty(
+//						IOilXMLLabels.ATTR_MULTIPLE_VALUES, "false"));
+//
 //				{ // Multi Values
 //					ISubVarTreePointer tsvtp = (ISubVarTreePointer) svtp.clone();
 //					Stack<String> st = new Stack<String>();
@@ -1794,67 +1623,63 @@ public class SimpleTransform implements IOilTransform {
 //					if (tsvtp.makeSteps(st) != ISubVarTreePointer.OK) {
 //						throw new RuntimeException("Unnaspected error");
 //					}
-//					
+//
 //					IVariable var = tsvtp.getVar();
-//					//if (true || var == null) {
-//						// always set the value
-//						var = tsvtp.getNewVar("" + multiValues);
-//						tsvtp.setVar(var);
-//					//} else { }
+//					// if (true || var == null) {
+//					// always set the value
+//					var = tsvtp.getNewVar("" + multiValues);
+//					tsvtp.setVar(var);
+//					// } else { }
 //				}
 //
-//								
 //				IOilImplElementDescr[] currChildren = oip.getChildrenDescr();
-//				String validValues = currChildren.length >1 ? "one of ": "";
-//				for (int cc=0; cc<currChildren.length; cc++) {
-//					validValues += (cc>0 ? ", " : "") + currChildren[cc].getName();
+//				String validValues = currChildren.length > 1 ? "one of " : "";
+//				for (int cc = 0; cc < currChildren.length; cc++) {
+//					validValues += (cc > 0 ? ", " : "") + currChildren[cc].getName();
 //				}
-//				
+//
 //				// cicle all children
 //				NodeList children = current.getChildNodes();
 //				for (int i = 0; i < children.getLength(); i++) {
 //					Node node = children.item(i);
 //					if (node instanceof Element) {
-//						String childName = getAttribute((Element) node,IOilXMLLabels.ATTR_NAME);
-//						
+//						String childName = getAttribute((Element) node, IOilXMLLabels.ATTR_NAME);
+//
 //						// check if is a valid children
-//						boolean found = false; 
-//						for (int cc=0; cc<currChildren.length && !found; cc++) {
-//							found = currChildren[cc].getName().equals( childName );
+//						boolean found = false;
+//						for (int cc = 0; cc < currChildren.length && !found; cc++) {
+//							found = currChildren[cc].getName().equals(childName);
 //						}
-//						
-//						checkTrue(found, childName + " is an illegal value for " + name + "."
-//								+ " Expected "+ validValues + ".");
-//						
+//
+//						checkTrue(found, childName + " is an illegal value for " + name + "." + " Expected "
+//								+ validValues + ".");
+//
 //						storeInsideAOilVar(svtp, (Element) node, typePath);
 //					}
 //				}
-//				
+//
 //				if (!multiValues) {
-//					
+//
 //					ISubVarTreePointer tsvtp = (ISubVarTreePointer) svtp.clone();
 //					Stack<String> st = new Stack<String>();
 //					st.push(OAPKG.getVariant_EnumeratorList().getName());
 //					if (tsvtp.makeSteps(st) != ISubVarTreePointer.OK) {
 //						throw new RuntimeException("Unnaspected error");
 //					}
-//					if (tsvtp.getChildrenNumber() >1) {
-//						throw new RuntimeException(svtp.getName() 
-//								+ " contains more than one value (expected only " + validValues + ")");
+//					if (tsvtp.getChildrenNumber() > 1) {
+//						throw new RuntimeException(svtp.getName() + " contains more than one value (expected only "
+//								+ validValues + ")");
 //					}
 //				}
 //
 //				if (children.getLength() == 0) {
 //					String value = getAttribute(current, IOilXMLLabels.ATTR_CURR_VALUE);
-//					
-//					checkTrue(value!=null, value + " is an illegal value for " + name + "."
-//							+ " Expected "+ validValues + ", not strings or numbers.");
-//					// else
-//					checkTrue(value==null, "Illegal value for " + name + "."
-//							+ " Expected "+ validValues + ".");
-//				}
 //
-//				
+//					checkTrue(value != null, value + " is an illegal value for " + name + "." + " Expected "
+//							+ validValues + ", not strings or numbers.");
+//					// else
+//					checkTrue(value == null, "Illegal value for " + name + "." + " Expected " + validValues + ".");
+//				}
 //
 //			}
 //				break;
@@ -1869,11 +1694,11 @@ public class SimpleTransform implements IOilTransform {
 //		 * Store an Enumerator
 //		 **********************************************************************/
 //		else if (IOilXMLLabels.ELEM_ENUM_VALUE.equals(elemType)) {
-//			svtp = makePath(svtp, new String[] {
-//					OAPKG.getVariant_EnumeratorList().getName(),
-//					getAttribute(current, IOilXMLLabels.ATTR_NAME) },
+//			svtp = makePath(
+//					svtp,
 //					new String[] { OAPKG.getVariant_EnumeratorList().getName(),
-//							OAPKG.getEnumerator().getName() });
+//							getAttribute(current, IOilXMLLabels.ATTR_NAME) }, new String[] {
+//							OAPKG.getVariant_EnumeratorList().getName(), OAPKG.getEnumerator().getName() });
 //
 //			// cicle all children
 //			NodeList children = current.getChildNodes();
@@ -1889,57 +1714,17 @@ public class SimpleTransform implements IOilTransform {
 //		 **********************************************************************/
 //		else if (IOilXMLLabels.ELEM_DESCRIPTION.equals(elemType)) {
 //			// TODO : finire
-////			checkTrue(false, "Finire la gestione delle descrizioni");
+//			// checkTrue(false, "Finire la gestione delle descrizioni");
 //
 //		}
 //		typePath.remove(0);
-//	}
-
-	/**
-	 * Checks if given node contains the var <code>varName</code> and, if
-	 * true, checks if the var's value is the given one. If the node doesn't
-	 * contains the var or if the value is null, this method creates a new var
-	 * with the given value and adds it to <code>parent</code> node.
-	 * 
-	 * @param parent
-	 *            the node that contains the node with the required var
-	 * @param varName
-	 *            identifies the variable
-	 * @param value
-	 *            the required value
-	 * 
-	 * @throws OilTransformException
-	 *             if the <code>parent</code> node already contains the
-	 *             variable but with another not null value.
-	 */
-	protected void storeAVar(IVarTreePointer parent, String varName, String value)
-			throws OilTransformException {
-
-		IVarTreePointer curr = (IVarTreePointer) parent.clone();
-		if (!curr.go(varName)) {
-			curr.add(varName, new StringVar(value));
-		} else {
-			IVariable var = curr.getVar();
-			if (var != null && var.get() != null) {
-				if (var instanceof IMultiValues) {
-					if (value != null) {
-						((IMultiValues) var).appendValue(value);
-					}
-				} else {
-					checkTrue(checkStrings(var.toString(), value),
-							"Try to overwrite an already existent variable with a different value.");
-				}
-			} else {
-				IVariable tmpVar = curr.getNewVar(value);
-				curr.setVar(tmpVar);
-			}
-		}
 	}
+
 
 	/**
 	 * Search all siblings with the same id: Element.Name and a list of
-	 * (attribute name, attribute value).
-	 * If type is null, it checks all elements.
+	 * (attribute name, attribute value). If type is null, it checks all
+	 * elements.
 	 * 
 	 * @param parent
 	 *            the parent node
@@ -1950,8 +1735,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @param attrValue
 	 *            the value of each attribute. Cannot be null.
 	 */
-	protected Element[] getAllSameElements(Element parent, String type,
-			String[] attrType, String[] attrValue) {
+	protected Element[] getAllSameElements(Element parent, String type, String[] attrType, String[] attrValue) {
 		// if parent, attrType or attrValue is null it will throw an
 		// NullPointerException; If the code is correct, it will never throw
 		// that exception.
@@ -1964,8 +1748,7 @@ public class SimpleTransform implements IOilTransform {
 
 			// is an Element of the right type
 			Node ch = allChildren.item(i);
-			if (ch instanceof Element
-					&& (type == null ? true : type.equalsIgnoreCase(ch.getNodeName()))) {
+			if (ch instanceof Element && (type == null ? true : type.equalsIgnoreCase(ch.getNodeName()))) {
 
 				NamedNodeMap attrs = ch.getAttributes();
 				boolean ok = true;
@@ -1975,10 +1758,8 @@ public class SimpleTransform implements IOilTransform {
 					boolean search = true;
 					// search
 					for (int a2 = 0; search && a2 < attrs.getLength(); a2++) {
-						if (attrType[a].equalsIgnoreCase(attrs.item(a2)
-								.getNodeName())) {
-							ok = attrValue[a].equals(attrs.item(a2)
-									.getNodeValue());
+						if (attrType[a].equalsIgnoreCase(attrs.item(a2).getNodeName())) {
+							ok = attrValue[a].equals(attrs.item(a2).getNodeValue());
 							search = false;
 						}
 					}
@@ -2005,130 +1786,6 @@ public class SimpleTransform implements IOilTransform {
 	}
 
 	/**
-	 * This method ensure that a path exist; infact if one or more elements
-	 * doesn't exist, it creates them; Throws an OilTransformException if there
-	 * are some problems. <br>
-	 * Returns a different IVarTreePointer that points to the new node, at the
-	 * end of given path.
-	 * 
-	 * @param vtp
-	 *            where store the path
-	 * @param names
-	 *            names of each step (without slashes)
-	 * @param types
-	 *            the type of each step
-	 * 
-	 * @throws OilTransformException
-	 *             if the system doesn't already exist and this method cannot
-	 *             add a new System
-	 */
-	protected IVarTreePointer makePath(IVarTreePointer vtp, String[] names,
-			String[] types) throws OilTransformException {
-		// if vtp, names or types is null it will throw an NullPointerException;
-		// If the code is correct, it will never throw that exception.
-		// Otherwise I need to add a check for array's lengths
-		Assert.isLegal(names.length == types.length);
-
-		//System.out.println("Path");
-		//for (int i=0; i< names.length; i++) {
-		//	System.out.println("\t" +names[i] + "-" + types[i]);
-		//}
-		// use a copy !
-		vtp = (IVarTreePointer) vtp.clone();
-
-		for (int i = 0; i < names.length; i++) {
-			// try to go into the required node
-			if (!vtp.go(DataPath.addSlash(names[i]))) {
-
-				// try to add it
-				try {
-					vtp.add(names[i], types[i]);
-				} catch (RuntimeException e) {
-					throw new OilTransformException("(" + vtp.getName() + " - "
-							+ vtp.getType() + ") " + e.getMessage(), e);
-				}
-				// try again to go in the new node
-				checkTrue(vtp.go(DataPath.addSlash(names[i])),
-						"Error when try to add a node :\n\t" + "name = "
-								+ names[i] + " ,type = " + types[i]);
-			}
-		}
-		return vtp;
-	}
-
-//	/**
-//	 * This method ensure that a path exist; infact if one or more elements
-//	 * doesn't exist, it creates them; Throws an OilTransformException if there
-//	 * are some problems. <br>
-//	 * Returns a different ISubVarTreePointer that points to the new node, at the
-//	 * end of given path.
-//	 * 
-//	 * @param vtp
-//	 *            where store the path
-//	 * @param names
-//	 *            names of each step (without slashes)
-//	 * @param types
-//	 *            the type of each step
-//	 * 
-//	 * @throws OilTransformException
-//	 *             if the system doesn't already exist and this method cannot
-//	 *             add a new System
-//	 */
-//	protected ISubVarTreePointer makePath(ISubVarTreePointer svtp,
-//			String[] names, String[] types) throws OilTransformException {
-//		// if svtp, names or types is null it will throw an
-//		// NullPointerException;
-//		// If the code is correct, it will never throw that exception.
-//		// Otherwise I need to add a check for array's lengths
-//		Assert.isLegal(names.length == types.length);
-//
-//		/*
-//		 * System.err.println("Nomi = "); for (int i=0; i <names.length; i++)
-//		 * System.err.println("\t"+ names[i]); System.err.println("Tipi = ");
-//		 * for (int i=0; i <types.length; i++) System.err.println("\t = " +
-//		 * types[i]);
-//		 */
-//		// use a copy !
-//		svtp = (ISubVarTreePointer) svtp.clone();
-//		Stack<String> path = new Stack<String>();
-//
-//		for (int i = 0; i < names.length; i++) {
-//			// try to go into the required node
-//			path.push(DataPath.addSlash(names[i]));
-//			switch (svtp.makeSteps(path)) {
-//
-//			case ISubVarTreePointer.OK:
-//				// next step
-//				break;
-//			case ISubVarTreePointer.ERROR:
-//			// try to add a new child
-//			{
-//				String newName;
-//				try {
-//					newName = svtp.add(names[i], types[i]);
-//				} catch (RuntimeException e) {
-//					throw new OilTransformException(e.getMessage(), e);
-//				}
-//
-//				// TODO: controllare se necessita di protezioni aggiuntive
-//				path.push(newName);
-//
-//				checkTrue(svtp.makeSteps(path) == ISubVarTreePointer.OK,
-//						"Error when try to add a node :\n\t" + "name = "
-//								+ names[i] + "\n\ttype = " + types[i]);
-//				break;
-//			}
-//			case ISubVarTreePointer.BACK_TO_PARENT: { // not valid value !!!
-//				checkTrue(false, "Not valid child name:\n\t" + "name = "
-//						+ names[i] + " ,type = " + types[i]);
-//				break;
-//			}
-//			}
-//		}
-//		return svtp;
-//	}
-
-	/**
 	 * Searchs an attribute, ingoring case
 	 */
 	protected String getAttribute(Element elem, String attrName) {
@@ -2137,8 +1794,9 @@ public class SimpleTransform implements IOilTransform {
 
 		// search
 		for (int i = 0; i < attrs.getLength(); i++) {
-			if (attrName.equalsIgnoreCase(attrs.item(i).getNodeName())) {
-				return attrs.item(i).getNodeValue();
+			final Node item = attrs.item(i);
+			if (attrName.equalsIgnoreCase(item.getNodeName())) {
+				return item.getNodeValue();
 			}
 		}
 		return null;
@@ -2169,8 +1827,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if value is false
 	 */
-	protected void checkTrue(boolean value, String msg)
-			throws OilTransformException {
+	protected void checkTrue(boolean value, String msg) throws OilTransformException {
 		if (!value) {
 			throw new OilTransformException(msg);
 		}
@@ -2187,7 +1844,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @return the element or null if it wasn't found
 	 */
 	protected IVarTreePointer extract(IVarTreePointer vtp, String path) {
-		vtp = (IVarTreePointer) vtp.clone();
+		vtp = vtp.clone();
 		if (vtp.go(path)) {
 			return vtp;
 		}
@@ -2197,7 +1854,7 @@ public class SimpleTransform implements IOilTransform {
 	/***************************************************************************
 	 * 
 	 * OIL WRITER
-	 *  
+	 * 
 	 **************************************************************************/
 
 	/**
@@ -2216,28 +1873,24 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public String write(IVarTree vt, IOilImplID iid, String rtosPath)
-			throws OilTransformException {
+	public String write(IVarTree vt, IOilImplID iid, String rtosPath) throws OilTransformException {
 
 		OilImplID id = (OilImplID) iid;
-		
+
 		// init
 		this.vt = vt;
 
 		if (rtosPath == null) {
 			throw new NullPointerException("required a not null path");
 		}
-		if (!vt.newTreeInterface().exist(rtosPath,
-				DataPackage.eINSTANCE.getRtos().getName())) {
-			throw new IllegalArgumentException(
-					"The specified rtos path isn't valid.\n\t" + "path = "
-							+ rtosPath);
+		if (!vt.newTreeInterface().exist(rtosPath, DataPackage.eINSTANCE.getRtos().getName())) {
+			throw new IllegalArgumentException("The specified rtos path isn't valid.\n\t" + "path = " + rtosPath);
 		}
 
 		StringBuffer buffer = new StringBuffer();
 		if (writeImplementation) {
 			buffer.append("OIL_VERSION = \"2.4\";\n\n");
-	
+
 			// write
 			writeImplementation(buffer, id);
 		}
@@ -2245,7 +1898,7 @@ public class SimpleTransform implements IOilTransform {
 		writeApplication(buffer, id, rtosPath);
 		return buffer.toString();
 	}
-	
+
 	/**
 	 * Take all data from the given VarTree and write the rigth Oil File. It
 	 * requireds also the id of HW and RT-OS.
@@ -2262,8 +1915,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public String write(IVarTree vt, IOilImplID id, String[] rtosPaths)
-			throws OilTransformException {
+	public String write(IVarTree vt, IOilImplID id, String[] rtosPaths) throws OilTransformException {
 		throw new UnsupportedOperationException(
 				"Default Oil Transformer doesn't support export from more than one rtos");
 	}
@@ -2277,7 +1929,7 @@ public class SimpleTransform implements IOilTransform {
 	public boolean isWriteImplementation() {
 		return writeImplementation;
 	}
-	
+
 	/**
 	 * Set if is required to write the implementation section in the output Oil
 	 * File
@@ -2288,7 +1940,6 @@ public class SimpleTransform implements IOilTransform {
 	public void setWriteImplementation(boolean writeImplementation) {
 		this.writeImplementation = writeImplementation;
 	}
-	
 
 	/**
 	 * Write the implementation section
@@ -2315,44 +1966,40 @@ public class SimpleTransform implements IOilTransform {
 	 * @param rtosPath
 	 *            identifies the current rtos
 	 */
-	protected void writeApplication(StringBuffer buffer, OilImplID id,
-			String rtosPath) {
+	protected void writeApplication(StringBuffer buffer, OilImplID id, String rtosPath) {
 
 		String[] splittedPath = DataPath.splitPath(rtosPath);
 
 		String cpuName = splittedPath[5];
 		String oilVarPrefix = null;
-//		S
-//				+ OilApplPackage.eINSTANCE.getRoot_HwList().getName() + S
-//				+ DataPath.makeSlashedId(id.getHW()) + S
-//				+ OilApplPackage.eINSTANCE.getHW_RtosList().getName() + S
-//				+ DataPath.makeSlashedId(id.getRtos()) + S
-//				+ OilApplPackage.eINSTANCE.getRTOS_ParameterList().getName()
-//				+ S;
+		// S
+		// + OilApplPackage.eINSTANCE.getRoot_HwList().getName() + S
+		// + DataPath.makeSlashedId(id.getHW()) + S
+		// + OilApplPackage.eINSTANCE.getHW_RtosList().getName() + S
+		// + DataPath.makeSlashedId(id.getRtos()) + S
+		// + OilApplPackage.eINSTANCE.getRTOS_ParameterList().getName()
+		// + S;
 
-		//header
+		// header
 		buffer.append("CPU " + cpuName + " {\n");
 
-		IOilObjectList ool = extractApplicationObjects(new String[] {rtosPath});
+		IOilObjectList ool = extractApplicationObjects(new String[] { rtosPath });
 
-		int order[] = { IOilObjectList.OS, IOilObjectList.OSAPPLICATION, IOilObjectList.TASK,
-				IOilObjectList.COUNTER, IOilObjectList.ALARM,
-				IOilObjectList.RESOURCE, IOilObjectList.EVENT, IOilObjectList.ISR,
-				IOilObjectList.MESSAGE, IOilObjectList.NETWORKMESSAGE,
-				IOilObjectList.COM, IOilObjectList.NM, IOilObjectList.APPMODE,
-				IOilObjectList.IPDU };
+		int order[] = { IOilObjectList.OS, IOilObjectList.OSAPPLICATION, IOilObjectList.TASK, IOilObjectList.COUNTER,
+				IOilObjectList.ALARM, IOilObjectList.RESOURCE, IOilObjectList.EVENT, IOilObjectList.ISR,
+				IOilObjectList.MESSAGE, IOilObjectList.NETWORKMESSAGE, IOilObjectList.COM, IOilObjectList.NM,
+				IOilObjectList.APPMODE, IOilObjectList.IPDU };
 
 		for (int oolId = 0; oolId < order.length; oolId++) {
 
-			List olist = ool.getList(order[oolId]);
-			for (Iterator iter = olist.iterator(); iter.hasNext();) {
-				writeApplicationObject(buffer, oilVarPrefix,
-						(ISimpleGenRes) iter.next(), order[oolId], rtosPath);
+			List<ISimpleGenRes> olist = ool.getList(order[oolId]);
+			for (Iterator<ISimpleGenRes> iter = olist.iterator(); iter.hasNext();) {
+				writeApplicationObject(buffer, oilVarPrefix, iter.next(), order[oolId], rtosPath);
 			}
 
 		}
 
-		//end
+		// end
 		buffer.append("};\n\n");
 
 	}
@@ -2374,63 +2021,53 @@ public class SimpleTransform implements IOilTransform {
 			case IOilObjectList.OS: {
 
 				objects = new SimpleGenRes[rtos.length];
-				for (int i=0; i<rtos.length; i++) {
-					String name = ""
-							+ vt.newTreeInterface().getValue(
-									rtos[i] + S + DPKG.getRtos_Name().getName());
+				for (int i = 0; i < rtos.length; i++) {
+					String name = "" + vt.newTreeInterface().getValue(rtos[i] + S + DPKG.getRtos_Name().getName());
 					objects[i] = new SimpleGenRes(name, rtos[i]);
-					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE,
-							IOilXMLLabels.OBJ_OS);
-					
-					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH,
-							rtos[i]);
+					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_OS);
+
+					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[i]);
 				}
 			}
 				break;
 			case IOilObjectList.OSAPPLICATION: {
 
 				ArrayList<SimpleGenRes> tempList = new ArrayList<SimpleGenRes>();
-				
-				
+
 				for (String rtosPath : rtos) {
-					
+
 					String[] split = DataPath.splitPath(rtosPath);
-					if (split == null || split.length <7) {
+					if (split == null || split.length < 7) {
 						continue;
 					}
-					
-					String path = DataPath.makePath(new String[] {
-							split[0], // sys 
+
+					String path = DataPath.makePath(new String[] { split[0], // sys
 							split[1], // arch
 							split[2], // arch_eculist
 							split[3], // ecu
 							split[4], // cpu_list
 							split[5], // cpu
-							DPKG.getCpu_OsApplication().getName()
-					});
-					
+							DPKG.getCpu_OsApplication().getName() });
+
 					String[] applNames = vt.newTreeInterface().getAllName(path, DPKG.getOsApplication().getName());
-					
-					for (String name: applNames) {
-						SimpleGenRes s = new SimpleGenRes(name, path+S+ name);
-						s.setProperty(IOilXMLLabels.ATTR_TYPE,
-								IOilXMLLabels.OBJ_OSAPPLICATION);
-						s.setProperty(ISimpleGenResKeywords.RTOS_PATH,
-								rtosPath);
+
+					for (String name : applNames) {
+						SimpleGenRes s = new SimpleGenRes(name, path + S + name);
+						s.setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_OSAPPLICATION);
+						s.setProperty(ISimpleGenResKeywords.RTOS_PATH, rtosPath);
 						tempList.add(s);
 					}
 				}
-					
+
 				objects = tempList.toArray(new SimpleGenRes[tempList.size()]);
 			}
 				break;
 			case IOilObjectList.TASK: {
-				
 
 				/*******************************************************************
 				 * Search tasks
 				 ******************************************************************/
-				
+
 				// use class TaskSet to search all tasks mapped to current rtos
 				TaskSet ts = new TaskSet(vt, sysName);
 				ts.setProperty(Task.STR_TASK_TYPE, "", false);
@@ -2439,162 +2076,153 @@ public class SimpleTransform implements IOilTransform {
 				ts.setProperty(Task.STR_RESOURCE_LIST, "", false);
 
 				ArrayList<ISimpleGenRes> objList = new ArrayList<ISimpleGenRes>();
-	
+
 				for (int i = 0; i < ts.getPrefixNumber(); i++) {
-					for (int ri=0; ri<rtos.length; ri++) {
+					for (int ri = 0; ri < rtos.length; ri++) {
 						String rtosName = ""
-							+ vt.newTreeInterface().getValue(
-									rtos[ri] + S + DPKG.getRtos_Name().getName());
-						
+								+ vt.newTreeInterface().getValue(rtos[ri] + S + DPKG.getRtos_Name().getName());
+
 						if (rtosName != null && rtosName.equals(ts.getPrefix(i))) {
-	
-//							objects = new SimpleGenRes[ts.getSize(i)];
+
+							// objects = new SimpleGenRes[ts.getSize(i)];
 							for (int h = 0; h < ts.getSize(i); h++) {
 								GenRes current = ts.getItem(i, h);
 								if (!"task".equalsIgnoreCase(current.getString(Task.STR_TASK_TYPE))) {
 									continue; // this element is not a task
 								}
 
-								ISimpleGenRes object = new SimpleGenRes(
-										current.getName(), current.getPath());
+								ISimpleGenRes object = new SimpleGenRes(current.getName(), current.getPath());
 								objList.add(object);
-								
-								object.setProperty(IOilXMLLabels.ATTR_TYPE,
-										IOilXMLLabels.OBJ_TASK);
-	
+
+								object.setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_TASK);
+
 								// take also ....
-								
+
 								// ----------- PRIORITY ------------
 								if (current.existProperty(Task.STR_PRIORITY)) {
 									Object ttt = current.getProperty(Task.STR_PRIORITY);
-									if (ttt!=null && (ttt.toString()).length()>0) {
+									if (ttt != null && (ttt.toString()).length() > 0) {
 										object.setProperty(ISimpleGenResKeywords.TASK_PRIORITY, "" + ttt);
 									}
 								}
 								// ----------- ACTIVATION ------------
 								if (current.existProperty(Task.STR_ACT_NUMBER)) {
 									Object ttt = current.getProperty(Task.STR_ACT_NUMBER);
-									if (ttt!=null && (ttt.toString()).length()>0) {
+									if (ttt != null && (ttt.toString()).length() > 0) {
 										object.setProperty(ISimpleGenResKeywords.TASK_ACTIVATION, "" + ttt);
 									}
 								}
 								// ----------- RESOURCE ------------
 								if (current.existProperty(Task.STR_RESOURCE_LIST)) {
 									Object ttt = current.getCollection(Task.STR_RESOURCE_LIST);
-									if (ttt!=null && (ttt.toString()).length()>0) {
+									if (ttt != null && (ttt.toString()).length() > 0) {
 										object.setObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST, ttt);
 									}
 								}
 								// ----------- MAPPING ------------
 								{
-									String rtos_name = ts.getCpuItem(i) != null ?  ts.getCpuItem(i).getName() : null;
-									if (rtos_name!=null && rtos_name.length()>0) {
+									String rtos_name = ts.getCpuItem(i) != null ? ts.getCpuItem(i).getName() : null;
+									if (rtos_name != null && rtos_name.length() > 0) {
 										object.setProperty(TASK_MAPPING, "" + rtos_name);
 									}
 								}
-								
-								object.setProperty(ISimpleGenResKeywords.RTOS_PATH,
-										rtos[ri]);
+
+								object.setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[ri]);
 							}
 							break;
 						}
-						
+
 					} // end "for (int ri=0; ri<rtos.length; ri++)"
 				} // end "for (int i = 0; i < ts.getPrefixNumber(); i++)"
 
 				objects = objList.toArray((new SimpleGenRes[objList.size()]));
-				
-				/*
-				
-				String prefix = path[0] + S + path[1] + S
-						+ DPKG.getArchitectural_TaskList().getName() + S;
-				String[] names = vt.newTreeInterface().getAllName(prefix,
-						DPKG.getTask().getName());
 
-				objects = new SimpleGenRes[names.length];
-				for (int i = 0; i < names.length; i++) {
-					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
-					objects[i].setProperty(OilXMLLabels.ATTR_TYPE,
-							OilXMLLabels.OBJ_TASK);
-					
-					
-				}
-				*/
+				/*
+				 * 
+				 * String prefix = path[0] + S + path[1] + S +
+				 * DPKG.getArchitectural_TaskList().getName() + S; String[]
+				 * names = vt.newTreeInterface().getAllName(prefix,
+				 * DPKG.getTask().getName());
+				 * 
+				 * objects = new SimpleGenRes[names.length]; for (int i = 0; i <
+				 * names.length; i++) { objects[i] = new SimpleGenRes(names[i],
+				 * prefix + names[i]);
+				 * objects[i].setProperty(OilXMLLabels.ATTR_TYPE,
+				 * OilXMLLabels.OBJ_TASK);
+				 * 
+				 * 
+				 * }
+				 */
 			}
 				break;
 			case IOilObjectList.ISR: {
-				
 
 				/*******************************************************************
 				 * Search isr
 				 ******************************************************************/
-				
+
 				// use class TaskSet to search all tasks mapped to current rtos
 				TaskSet ts = new TaskSet(vt, sysName);
 				ts.setProperty(Task.STR_TASK_TYPE, "", false);
 				ts.setProperty(Task.STR_RESOURCE_LIST, "", false);
 
 				ArrayList<ISimpleGenRes> objList = new ArrayList<ISimpleGenRes>();
-	
+
 				for (int i = 0; i < ts.getPrefixNumber(); i++) {
-					for (int ri=0; ri<rtos.length; ri++) {
+					for (int ri = 0; ri < rtos.length; ri++) {
 						String rtosName = ""
-							+ vt.newTreeInterface().getValue(
-									rtos[ri] + S + DPKG.getRtos_Name().getName());
-						
+								+ vt.newTreeInterface().getValue(rtos[ri] + S + DPKG.getRtos_Name().getName());
+
 						if (rtosName != null && rtosName.equals(ts.getPrefix(i))) {
-	
-//							objects = new SimpleGenRes[ts.getSize(i)];
+
+							// objects = new SimpleGenRes[ts.getSize(i)];
 							for (int h = 0; h < ts.getSize(i); h++) {
 								GenRes current = ts.getItem(i, h);
 								if (!"isr".equalsIgnoreCase(current.getString(Task.STR_TASK_TYPE))) {
 									continue; // this element is not a task
 								}
 
-								ISimpleGenRes object = new SimpleGenRes(
-										current.getName(), current.getPath());
+								ISimpleGenRes object = new SimpleGenRes(current.getName(), current.getPath());
 								objList.add(object);
-								
-								object.setProperty(IOilXMLLabels.ATTR_TYPE,
-										IOilXMLLabels.OBJ_ISR);
-	
+
+								object.setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_ISR);
+
 								// take also ....
 
 								// ----------- RESOURCE ------------
 								if (current.existProperty(Task.STR_RESOURCE_LIST)) {
 									Object ttt = current.getCollection(Task.STR_RESOURCE_LIST);
-									if (ttt!=null && (ttt.toString()).length()>0) {
+									if (ttt != null && (ttt.toString()).length() > 0) {
 										object.setObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST, ttt);
 									}
 								}
-								
-								object.setProperty(ISimpleGenResKeywords.RTOS_PATH,
-										rtos[ri]);
+
+								object.setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[ri]);
 							}
 							break;
 						}
-						
+
 					} // end "for (int ri=0; ri<rtos.length; ri++)"
 				} // end "for (int i = 0; i < ts.getPrefixNumber(); i++)"
 
 				objects = objList.toArray((new SimpleGenRes[objList.size()]));
-				
-				/*
-				
-				String prefix = path[0] + S + path[1] + S
-						+ DPKG.getArchitectural_TaskList().getName() + S;
-				String[] names = vt.newTreeInterface().getAllName(prefix,
-						DPKG.getTask().getName());
 
-				objects = new SimpleGenRes[names.length];
-				for (int i = 0; i < names.length; i++) {
-					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
-					objects[i].setProperty(OilXMLLabels.ATTR_TYPE,
-							OilXMLLabels.OBJ_TASK);
-					
-					
-				}
-				*/
+				/*
+				 * 
+				 * String prefix = path[0] + S + path[1] + S +
+				 * DPKG.getArchitectural_TaskList().getName() + S; String[]
+				 * names = vt.newTreeInterface().getAllName(prefix,
+				 * DPKG.getTask().getName());
+				 * 
+				 * objects = new SimpleGenRes[names.length]; for (int i = 0; i <
+				 * names.length; i++) { objects[i] = new SimpleGenRes(names[i],
+				 * prefix + names[i]);
+				 * objects[i].setProperty(OilXMLLabels.ATTR_TYPE,
+				 * OilXMLLabels.OBJ_TASK);
+				 * 
+				 * 
+				 * }
+				 */
 			}
 				break;
 			case IOilObjectList.EVENT:
@@ -2615,91 +2243,71 @@ public class SimpleTransform implements IOilTransform {
 				ITreeInterface ti = vt.newTreeInterface();
 				String prefix = sysName + S + DPKG.getArchitectural().getName() + S
 						+ DPKG.getArchitectural_SignalList().getName() + S;
-				String[] names = ti.getAllName(prefix, DPKG.getSignal()
-						.getName());
+				String[] names = ti.getAllName(prefix, DPKG.getSignal().getName());
 
 				ArrayList<ISimpleGenRes> objList = new ArrayList<ISimpleGenRes>();
 				for (int i = 0; i < names.length; i++) {
 
-					IVariable var = ti.getValue(prefix + S + names[i] + S
-							+ DPKG.getSignal_Type().getName());
+					IVariable var = ti.getValue(prefix + S + names[i] + S + DPKG.getSignal_Type().getName());
 					if (var != null && type.equals(var.toString())) {
 
-						ISimpleGenRes tmp = new SimpleGenRes(names[i], prefix
-								+ names[i]);
+						ISimpleGenRes tmp = new SimpleGenRes(names[i], prefix + names[i]);
 						tmp.setProperty(IOilXMLLabels.ATTR_TYPE, type);
-						tmp.setProperty(ISimpleGenResKeywords.RTOS_PATH,
-								rtos[0]);
+						tmp.setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
 						objList.add(tmp);
 					}
 
 				}
-				objects = objList
-						.toArray(new SimpleGenRes[objList.size()]);
+				objects = objList.toArray(new SimpleGenRes[objList.size()]);
 			}
 				break;
 			case IOilObjectList.RESOURCE: {
 				String prefix = sysName + S + DPKG.getArchitectural().getName() + S
 						+ DPKG.getArchitectural_MutexList().getName() + S;
-				String[] names = vt.newTreeInterface().getAllName(prefix,
-						DPKG.getMutex().getName());
+				String[] names = vt.newTreeInterface().getAllName(prefix, DPKG.getMutex().getName());
 
 				objects = new SimpleGenRes[names.length];
 				for (int i = 0; i < names.length; i++) {
 					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
-					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE,
-							IOilXMLLabels.OBJ_RESOURCE);
-					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH,
-							rtos[0]);
+					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_RESOURCE);
+					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
 				}
 			}
 				break;
 			case IOilObjectList.APPMODE: {
-				String prefix = sysName + S + DPKG.getModes().getName() + S
-						+ DPKG.getModes_ModeList().getName() + S;
-				String[] names = vt.newTreeInterface().getAllName(prefix,
-						DPKG.getMode().getName());
+				String prefix = sysName + S + DPKG.getModes().getName() + S + DPKG.getModes_ModeList().getName() + S;
+				String[] names = vt.newTreeInterface().getAllName(prefix, DPKG.getMode().getName());
 
 				objects = new SimpleGenRes[names.length];
 				for (int i = 0; i < names.length; i++) {
 					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
-					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE,
-							IOilXMLLabels.OBJ_APPMODE);
-					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH,
-							rtos[0]);
+					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_APPMODE);
+					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
 				}
 			}
 				break;
 			case IOilObjectList.NETWORKMESSAGE: {
-				final String sizeType = S+ DPKG.getFrame_Length().getName();
+				final String sizeType = S + DPKG.getFrame_Length().getName();
 				final String prefix = sysName + S + DPKG.getArchitectural().getName() + S
 						+ DPKG.getArchitectural_FrameList().getName() + S;
 				ITreeInterface ti = vt.newTreeInterface();
-				final String[] names = ti.getAllName(prefix,
-						DPKG.getFrame().getName());
-				
+				final String[] names = ti.getAllName(prefix, DPKG.getFrame().getName());
 
 				objects = new SimpleGenRes[names.length];
 				for (int i = 0; i < names.length; i++) {
 					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
-					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE,
-							IOilXMLLabels.OBJ_NETWORKMESSAGE);
-					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH,
-							rtos[0]);
-					
-					
+					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_NETWORKMESSAGE);
+					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
+
 					try {
-							IVariable size =  ti.getValue(prefix+ names[i]+sizeType);
-							if (size != null && size.toString() != null) {
-								objects[i].setProperty(ISimpleGenResKeywords.N_MESSAGE_LENGHT,
-										size.toString());
-							}
+						IVariable size = ti.getValue(prefix + names[i] + sizeType);
+						if (size != null && size.toString() != null) {
+							objects[i].setProperty(ISimpleGenResKeywords.N_MESSAGE_LENGHT, size.toString());
+						}
 					} catch (Exception e) {
 						// nothing
 					}
-					
-					
-					
+
 				}
 			}
 				break;
@@ -2725,12 +2333,11 @@ public class SimpleTransform implements IOilTransform {
 	 * @param id
 	 *            identifies the Application
 	 */
-	protected void writeApplicationObject(StringBuffer buffer,
-			String oilVarPrefix, ISimpleGenRes object, int objType, String rtosPath) {
+	protected void writeApplicationObject(StringBuffer buffer, String oilVarPrefix, ISimpleGenRes object, int objType,
+			String rtosPath) {
 
 		// header
-		buffer.append(INDENT + object.getString(IOilXMLLabels.ATTR_TYPE) + " "
-				+ object.getName() + " {\n");
+		buffer.append(INDENT + object.getString(IOilXMLLabels.ATTR_TYPE) + " " + object.getName() + " {\n");
 
 		IVarTreePointer vtp = vt.newVarTreePointer();
 		vtp.goAbsolute(object.getPath());
@@ -2740,49 +2347,36 @@ public class SimpleTransform implements IOilTransform {
 		switch (objType) {
 		case IOilObjectList.OS: {
 
-			path = DPKG.getRtos_OilVar().getName() + S
-					+ object.getString(IOilXMLLabels.ATTR_TYPE) + S
-					+ oilVarPrefix;
+			path = DPKG.getRtos_OilVar().getName() + S + object.getString(IOilXMLLabels.ATTR_TYPE) + S + oilVarPrefix;
 		}
 			break;
 		case IOilObjectList.OSAPPLICATION: {
-			path = DPKG.getOsApplication_OilVar().getName() + S
-					+ object.getString(IOilXMLLabels.ATTR_TYPE) + S
+			path = DPKG.getOsApplication_OilVar().getName() + S + object.getString(IOilXMLLabels.ATTR_TYPE) + S
 					+ oilVarPrefix;
 		}
 		case IOilObjectList.ISR:
 		case IOilObjectList.TASK: {
-			path = DPKG.getTask_OilVar().getName() + S
-					+ object.getString(IOilXMLLabels.ATTR_TYPE) + S
-					+ oilVarPrefix;
+			path = DPKG.getTask_OilVar().getName() + S + object.getString(IOilXMLLabels.ATTR_TYPE) + S + oilVarPrefix;
 		}
 			break;
 		case IOilObjectList.ALARM:
 		case IOilObjectList.COUNTER:
 		case IOilObjectList.EVENT: {
-			path = DPKG.getRtos_OilVar().getName() + S
-				+ object.getString(IOilXMLLabels.ATTR_TYPE) + S
-				+ oilVarPrefix;
+			path = DPKG.getRtos_OilVar().getName() + S + object.getString(IOilXMLLabels.ATTR_TYPE) + S + oilVarPrefix;
 		}
 			break;
 		case IOilObjectList.RESOURCE: {
-			path = DPKG.getMutex_OilVar().getName() + S
-				+ IOilXMLLabels.OBJ_RESOURCE+ S
-				+ oilVarPrefix;
+			path = DPKG.getMutex_OilVar().getName() + S + IOilXMLLabels.OBJ_RESOURCE + S + oilVarPrefix;
 		}
 			break;
 		case IOilObjectList.APPMODE: {
-			path = DPKG.getRtos_OilVar().getName() + S
-				+ IOilXMLLabels.OBJ_APPMODE + S
-				+ oilVarPrefix;
+			path = DPKG.getRtos_OilVar().getName() + S + IOilXMLLabels.OBJ_APPMODE + S + oilVarPrefix;
 		}
 			break;
 		case IOilObjectList.NETWORKMESSAGE: {
-			
+
 			// NOTE: This path doesn't exist
-			path = DPKG.getMutex_OilVar().getName() + S
-				+ IOilXMLLabels.OBJ_RESOURCE+ S
-				+ oilVarPrefix;
+			path = DPKG.getMutex_OilVar().getName() + S + IOilXMLLabels.OBJ_RESOURCE + S + oilVarPrefix;
 		}
 			break;
 		case IOilObjectList.MESSAGE:
@@ -2791,84 +2385,78 @@ public class SimpleTransform implements IOilTransform {
 		case IOilObjectList.IPDU:
 		default:
 			vtp.goAbsolute(rtosPath);
-			path = DPKG.getRtos_OilVar().getName() + S
-				+ object.getString(IOilXMLLabels.ATTR_TYPE) + S
-				+ oilVarPrefix;
+			path = DPKG.getRtos_OilVar().getName() + S + object.getString(IOilXMLLabels.ATTR_TYPE) + S + oilVarPrefix;
 			break;
 		}
 
 		// add properties
-		writeApplicationObjectProperties(buffer, INDENT + INDENT,
-				object, objType, rtosPath);
-		
+		writeApplicationObjectProperties(buffer, INDENT + INDENT, object, objType, rtosPath);
+
 		// children
 		if (vtp.go(path)) {
 			for (boolean ok = vtp.goFirstChild(); ok; ok = vtp.goNextSibling()) {
-				writeApplicationObject(buffer, INDENT + INDENT,
-						(IVarTreePointer) vtp.clone());
+				writeApplicationObject(buffer, INDENT + INDENT, (IVarTreePointer) vtp.clone());
 			}
 		}
 
 		// end
 		buffer.append(INDENT + "};\n");
 	}
-	
-	protected void writeApplicationObjectProperties(StringBuffer buffer, String indent,
-			ISimpleGenRes object, int objType, String rtosPath) {
-		
+
+	protected void writeApplicationObjectProperties(StringBuffer buffer, String indent, ISimpleGenRes object,
+			int objType, String rtosPath) {
+
 		switch (objType) {
-			case IOilObjectList.TASK: {
-				// add PRIORITY
-				if (object.containsProperty(ISimpleGenResKeywords.TASK_PRIORITY)) {
-					buffer.append(indent + "PRIORITY = "
-							+ object.getObject(ISimpleGenResKeywords.TASK_PRIORITY) + ";\n");
-					
-				}
-				
-				// add RESOURCES
-				if (object.containsProperty(ISimpleGenResKeywords.TASK_RESOURCE_LIST)) {
-					Collection  res = (Collection) object.getObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST);
-					
-					for (Iterator iter = res.iterator(); iter.hasNext(); ) {
-						
-						buffer.append(indent + "RESOURCE = " + iter.next() + ";\n");
-					}
-				}
-				
-				// add APPNUMBER
-				if (object.containsProperty(ISimpleGenResKeywords.TASK_ACTIVATION)) {
-					buffer.append(indent + "ACTIVATION = "
-							+ object.getObject(ISimpleGenResKeywords.TASK_ACTIVATION) + ";\n");
-					
+		case IOilObjectList.TASK: {
+			// add PRIORITY
+			if (object.containsProperty(ISimpleGenResKeywords.TASK_PRIORITY)) {
+				buffer.append(indent + "PRIORITY = " + object.getObject(ISimpleGenResKeywords.TASK_PRIORITY) + ";\n");
+
+			}
+
+			// add RESOURCES
+			if (object.containsProperty(ISimpleGenResKeywords.TASK_RESOURCE_LIST)) {
+				Collection<?> res = (Collection<?>) object.getObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST);
+
+				for (Iterator<?> iter = res.iterator(); iter.hasNext();) {
+
+					buffer.append(indent + "RESOURCE = " + iter.next() + ";\n");
 				}
 			}
+
+			// add APPNUMBER
+			if (object.containsProperty(ISimpleGenResKeywords.TASK_ACTIVATION)) {
+				buffer.append(indent + "ACTIVATION = " + object.getObject(ISimpleGenResKeywords.TASK_ACTIVATION)
+						+ ";\n");
+
+			}
+		}
 			break;
-			
-			case IOilObjectList.ISR: {
-				
-				// add RESOURCES
-				if (object.containsProperty(ISimpleGenResKeywords.TASK_RESOURCE_LIST)) {
-					Collection  res = (Collection) object.getObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST);
-					
-					for (Iterator iter = res.iterator(); iter.hasNext(); ) {
-						
-						buffer.append(indent + "RESOURCE = " + iter.next() + ";\n");
-					}
+
+		case IOilObjectList.ISR: {
+
+			// add RESOURCES
+			if (object.containsProperty(ISimpleGenResKeywords.TASK_RESOURCE_LIST)) {
+				Collection<?> res = (Collection<?>) object.getObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST);
+
+				for (Iterator<?> iter = res.iterator(); iter.hasNext();) {
+
+					buffer.append(indent + "RESOURCE = " + iter.next() + ";\n");
 				}
 			}
-				break;
-			case IOilObjectList.NETWORKMESSAGE: {
-				// add RESOURCES
-				if (object.containsProperty(ISimpleGenResKeywords.N_MESSAGE_LENGHT)) {
-					String  res = object.getString(ISimpleGenResKeywords.N_MESSAGE_LENGHT);
-					
-					buffer.append(indent + "MESSAGEPROPERTY = STATIC {\n" +
-							indent+indent+"SIZEINBITS = " + res + ";\n" +
-							indent+"};\n");
-					
-				}
+		}
+			break;
+		case IOilObjectList.NETWORKMESSAGE: {
+			// add RESOURCES
+			if (object.containsProperty(ISimpleGenResKeywords.N_MESSAGE_LENGHT)) {
+				String res = object.getString(ISimpleGenResKeywords.N_MESSAGE_LENGHT);
+
+				buffer.append(indent + "MESSAGEPROPERTY = STATIC {\n" + indent + indent + "SIZEINBITS = " + res + ";\n"
+						+ indent + "};\n");
+
 			}
-				break;
+		}
+			break;
 		}
 
 	}
@@ -2882,24 +2470,23 @@ public class SimpleTransform implements IOilTransform {
 	 * @param id
 	 *            identifies the Application
 	 */
-	protected void writeApplicationObject(StringBuffer buffer, String indent,
-			IVarTreePointer vtp) {
+	protected void writeApplicationObject(StringBuffer buffer, String indent, IVarTreePointer vtp) {
 
 		String name = vtp.getName();
 
-		if (vtp.exist(null /*OAPKG.getValue_Values().getName()*/)) {
+		if (vtp.exist(null /* OAPKG.getValue_Values().getName() */)) {
 			// ------------- A VARIABLE -----------------
 			String type = null;
 			{
 				IVarTreePointer tvtp = (IVarTreePointer) vtp.clone();
-				tvtp.go(null /*OAPKG.getParameter_Type().getName()*/);
+				tvtp.go(null /* OAPKG.getParameter_Type().getName() */);
 				IVariable var = tvtp.getVar();
 
 				type = "" + var;
 			}
 
 			String quote = "STRING".equalsIgnoreCase(type) ? "\"" : "";
-			vtp.go(null/*OAPKG.getValue_Values().getName()*/);
+			vtp.go(null/* OAPKG.getValue_Values().getName() */);
 
 			IVariable var = vtp.getVar();
 			if (var instanceof IMultiValues) {
@@ -2909,54 +2496,50 @@ public class SimpleTransform implements IOilTransform {
 				}
 
 				for (int i = 0; i < values.length; i++) {
-					buffer.append(indent + name + " = " + quote + values[i]
-							+ quote + ";\n");
+					buffer.append(indent + name + " = " + quote + values[i] + quote + ";\n");
 				}
 			} else {
-				if (!"null".equals("" + vtp.getVar())){
-					buffer.append(indent + name + " = " + quote + vtp.getVar()
-							+ quote + ";\n");
+				if (!"null".equals("" + vtp.getVar())) {
+					buffer.append(indent + name + " = " + quote + vtp.getVar() + quote + ";\n");
 				}
 			}
 
 			return;
 
-		} else if (vtp.go(null /*(OAPKG.getVariant_EnumeratorList().getName())*/)) {
+		} else if (vtp.go(null /* (OAPKG.getVariant_EnumeratorList().getName()) */)) {
 			// ------------- A VARIANT -----------------
 
 			for (boolean ok = vtp.goFirstChild(); ok; ok = vtp.goNextSibling()) {
 				buffer.append(indent + name + " = ");
-				writeApplicationObject(buffer, indent, (IVarTreePointer) vtp
-						.clone());
+				writeApplicationObject(buffer, indent, (IVarTreePointer) vtp.clone());
 				buffer.append(";\n");
 			}
 
 			return;
 
 		}
-		if (vtp.exist(null /*(OAPKG.getEnumerator_Value().getName())*/)) {
+		if (vtp.exist(null /* (OAPKG.getEnumerator_Value().getName()) */)) {
 			// ------------- A SINGLE ENUM -----------------
 
 			{
 				IVarTreePointer tvtp = (IVarTreePointer) vtp.clone();
-//				tvtp.go(OAPKG.getEnumerator_Value().getName());
+				// tvtp.go(OAPKG.getEnumerator_Value().getName());
 				IVariable var = tvtp.getVar();
 
 				buffer.append("" + var);
 			}
 
-			boolean ok = false; //vtp.go(OAPKG.getEnumerator_ParameterList().getName());
+			boolean ok = false; // vtp.go(OAPKG.getEnumerator_ParameterList().getName());
 			ok &= vtp.goFirstChild();
 			if (ok) {
 				buffer.append(" {\n");
 
 				for (; ok; ok = vtp.goNextSibling()) {
-					writeApplicationObject(buffer, indent + INDENT,
-							(IVarTreePointer) vtp.clone());
+					writeApplicationObject(buffer, indent + INDENT, (IVarTreePointer) vtp.clone());
 				}
 				buffer.append(indent + "}");
 			} else {
-				//buffer.append(";\n");
+				// buffer.append(";\n");
 			}
 
 			return;
@@ -2965,20 +2548,16 @@ public class SimpleTransform implements IOilTransform {
 		return;
 	}
 
-	
 	// ------------------------------
-	
+
 	protected String typePathToString(ArrayList<String> typePath) {
 		StringBuffer tmp = new StringBuffer();
 
-		for (int i=typePath.size()-1; i>-1; i--) {
-			tmp.append(
-					typePath.get(i).toString()
-					+ (i!=0 ? "/" : "")
-			);
+		for (int i = typePath.size() - 1; i > -1; i--) {
+			tmp.append(typePath.get(i).toString() + (i != 0 ? "/" : ""));
 		}
-		
+
 		return tmp.toString();
-		
+
 	}
 }

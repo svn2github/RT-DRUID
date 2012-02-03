@@ -1,10 +1,12 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 
 public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 	
 	
-	public void testConf_bcc1() {
+	@Test public void testConf_bcc1() {
 	    final String text = "CPU test_application {\n" +
 	    		"\n" +
 	    		"	OS EE {\n" +
@@ -77,7 +79,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 	    		"};";
 		commonWriterTest(text, 1);
 	}
-	public void testConf_bcc2() {
+	@Test public void testConf_bcc2() {
 	    final String text = "CPU test_application {\n" +
 				"\n" +
 				"	OS EE {\n" +
@@ -130,7 +132,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"};";
 		commonWriterTest(text, 1);
 	}
-	public void testConf_ecc1() {
+	@Test public void testConf_ecc1() {
 	    final String text = "CPU test_application {\n" +
 				"\n" +
 				"	OS EE {\n" +
@@ -212,7 +214,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"};";
 		commonWriterTest(text, 1);
 	}
-	public void testConf_ecc2() {
+	@Test public void testConf_ecc2() {
 	    final String text = "CPU test_application {\n" +
 				"\n" +
 				"	OS EE {\n" +
@@ -288,7 +290,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"};";
 		commonWriterTest(text, 1);
 	}
-	public void testConf_fp() {
+	@Test public void testConf_fp() {
 	    final String text = "CPU test_application {\n" +
 				"\n" +
 				"	OS EE {\n" +
@@ -351,7 +353,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"};";
 		commonWriterTest(text, 1);
 	}
-	public void testConf_mp_bcc1() {
+	@Test public void testConf_mp_bcc1() {
 	    final String text = "CPU test_application {\n" +
 				"\n" +
 				"	OS EE {\n" +

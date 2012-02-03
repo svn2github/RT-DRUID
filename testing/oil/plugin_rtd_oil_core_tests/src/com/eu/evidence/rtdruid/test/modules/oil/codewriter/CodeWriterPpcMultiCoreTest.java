@@ -1,5 +1,7 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 
@@ -9,7 +11,7 @@ import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 	
 
-	public void testMulticore1() {
+	@Test public void testMulticore1() {
 	    final String text = "CPU test_application {\n" +
 	    "\n" +
 	    "	OS EE {\n" +
@@ -72,7 +74,7 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 	    System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
 	}
 
-	public void testOsSectionsMerge() {
+	@Test public void testOsSectionsMerge() {
 	    final String text = "CPU test_application {\n" +
 	    "\n" +
 	    "	OS EE {\n" +
@@ -134,7 +136,7 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 	    System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
 	}
 	
-	public void testRemoteNotification() {
+	@Test public void testRemoteNotification() {
 	    final String text = 	
 			"CPU test_application {\n" +
 			"\n" +

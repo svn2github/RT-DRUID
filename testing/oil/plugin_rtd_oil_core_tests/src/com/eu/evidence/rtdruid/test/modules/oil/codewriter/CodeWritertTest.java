@@ -15,6 +15,7 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.service.datalocation.Location;
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
@@ -52,7 +53,7 @@ public class CodeWritertTest extends AbstractCodeWriterTest {
 //		super.tearDown();
 //	}
 	
-	public void testEclipseBasePath() {
+	@Test public void testEclipseBasePath() {
 		Location path = Platform.getInstallLocation();
 		URL url = path.getURL();
 		System.err.println("URL eclipse = " + url);
@@ -105,7 +106,7 @@ public class CodeWritertTest extends AbstractCodeWriterTest {
 	}
 
 	/** Try to load an oil file and write all configuration files */
-	public void testStartRtos() {
+	@Test public void testStartRtos() {
 
 	/*	RtosFactory rf = RtosFactory.INSTANCE;
 
@@ -182,7 +183,7 @@ public class CodeWritertTest extends AbstractCodeWriterTest {
 		DEFAULT_EE_IMPLEMENTATION = tmp;
 	}
 	
-	public void testMask() {
+	@Test public void testMask() {
 		long mask = 1;
 		System.out.println("Search ZERO using mask<<i:\n");
 
@@ -238,7 +239,7 @@ public class CodeWritertTest extends AbstractCodeWriterTest {
 	+ "    };\n"
 	+ "};\n";
 
-	public void testDefaultValue() {
+	@Test public void testDefaultValue() {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(
 				OIL_TEST_DEFAULT_VALUE.getBytes()), vt);

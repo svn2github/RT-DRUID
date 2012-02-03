@@ -7,12 +7,10 @@ package com.eu.evidence.rtdruid.test.vartree;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.junit.Test;
 
-import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
@@ -47,19 +45,13 @@ public class VarTreeTest {
         // cannot get a VTP if there isn't any resource
         assertEquals(vt.getResourceSet().getResources().size(), 1);
         assertNotNull(vt.newVarTreePointer());
-        
+	}
+    
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void testEmptyResource() {
+        IVarTree vt = VarTreeUtil.newVarTree();
         vt.getResourceSet().getResources().clear();
-        assertEquals(vt.getResourceSet().getResources().size(), 0);        
-        boolean ok = false;
-        try {
-        	assertTrue(vt.newVarTreePointer() == null);
-        } catch (IndexOutOfBoundsException e) {
-        	ok = true;
-        }
-        assertTrue(ok);
-
-        vt.getResourceSet().getResources().add(new RTD_XMI_Factory().createResource());
-        assertNotNull(vt.newVarTreePointer());
+        vt.newVarTreePointer();
     }
 
 }

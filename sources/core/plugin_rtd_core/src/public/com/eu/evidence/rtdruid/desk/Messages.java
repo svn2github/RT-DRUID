@@ -267,7 +267,7 @@ public abstract class Messages {
 
 class Console extends Messages {
 	
-	private static boolean DETAILED = false;//true;
+	private final static boolean DETAILED = false;//true;
 		
 	/** Sends a custom message.
 	 * 

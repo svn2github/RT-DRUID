@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
@@ -23,6 +22,7 @@ import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplPointer;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.implementation.OilEcoreCreator;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 public class OilEcoreCreatorImpl extends OilEcoreCreator {
 	
@@ -500,23 +500,40 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 	private EClassifier computeEType(String type) {
 		if (EMF_TYPES == null) {
 			EMF_TYPES = new HashMap<String, EClassifier>();
-			EMF_TYPES.put("UINT32", EcorePackage.Literals.EINT);
-			EMF_TYPES.put("INT32", EcorePackage.Literals.EINT);
-			EMF_TYPES.put("UINT64", EcorePackage.Literals.ELONG);
-			EMF_TYPES.put("INT64", EcorePackage.Literals.ELONG);
-			EMF_TYPES.put("FLOAT", EcorePackage.Literals.EFLOAT);
-			EMF_TYPES.put("DOUBLE", EcorePackage.Literals.EDOUBLE);
-			EMF_TYPES.put("STRING", EcorePackage.Literals.ESTRING);
 			
-			EList<EClassifier> types = ePackage.getEClassifiers();
-			types.add(EcoreUtil.copy(EcorePackage.Literals.EINT));
-			types.add(EcoreUtil.copy(EcorePackage.Literals.ELONG));
-			types.add(EcoreUtil.copy(EcorePackage.Literals.EFLOAT));
-			types.add(EcoreUtil.copy(EcorePackage.Literals.EDOUBLE));
-			types.add(EcoreUtil.copy(EcorePackage.Literals.ESTRING));
+			addType(DataPackage.Literals.INTEGER_VAR, "UINT32", "INT32");
+			addType(DataPackage.Literals.LONG_VAR, "UINT64", "INT64");
+			addType(DataPackage.Literals.FLOAT_VAR, "FLOAT");
+			addType(DataPackage.Literals.DOUBLE_VAR, "DOUBLE");
+			addType(DataPackage.Literals.STRING_VAR, "STRING");
+			
+			
+//			EMF_TYPES.put("UINT32", EcorePackage.Literals.EINT);
+//			EMF_TYPES.put("INT32", EcorePackage.Literals.EINT);
+//			EMF_TYPES.put("UINT64", EcorePackage.Literals.ELONG);
+//			EMF_TYPES.put("INT64", EcorePackage.Literals.ELONG);
+//			EMF_TYPES.put("FLOAT", EcorePackage.Literals.EFLOAT);
+//			EMF_TYPES.put("DOUBLE", EcorePackage.Literals.EDOUBLE);
+//			EMF_TYPES.put("STRING", EcorePackage.Literals.ESTRING);
+//			
+//			EList<EClassifier> types = ePackage.getEClassifiers();
+//			types.add(EcoreUtil.copy(EcorePackage.Literals.EINT));
+//			types.add(EcoreUtil.copy(EcorePackage.Literals.ELONG));
+//			types.add(EcoreUtil.copy(EcorePackage.Literals.EFLOAT));
+//			types.add(EcoreUtil.copy(EcorePackage.Literals.EDOUBLE));
+//			types.add(EcoreUtil.copy(EcorePackage.Literals.ESTRING));
 		}
 		return EMF_TYPES.get(type);
 	}
+	
+	private void addType(EDataType type, String ... ids) {
+		type = EcoreUtil.copy(type);
+		ePackage.getEClassifiers().add(type);
+		for (String id : ids) {
+			EMF_TYPES.put(id, type);
+		}
+	}
+	
 	
 	/* This method should be moved on a public utility function */
 	private static void addAnnotation(String key, String value, EModelElement obj) {

@@ -1,5 +1,7 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 
@@ -7,7 +9,7 @@ import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 public class CodeWriterMultiPic30Test extends AbstractCodeWriterTest {
 	
-	public void testMulti_PIC30() {
+	@Test public void testMulti_PIC30() {
 		final String text = "CPU mySystem {\n" + 
 		"\n" + 
 		"   OS myOs {\n" + 

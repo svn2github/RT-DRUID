@@ -7,6 +7,8 @@ package com.eu.evidence.rtdruid.test.modules.jscan.cachecost;
 
 
 
+import java.io.IOException;
+
 import com.eu.evidence.rtdruid.internal.modules.jscan.AbstractCompleteTest;
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScanImplTest;
@@ -431,7 +433,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 		""	};
 
 
-	public void testPrepareData() {
+	public void testPrepareData() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
 //		System.out.println(Utility.varTreeToStringRtd(vt));
@@ -468,7 +470,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 	}
 
 	
-	public void test1() {
+	public void test1() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -491,7 +493,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 	}
 	
 
-	public void test1Compare() {
+	public void test1Compare() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -509,7 +511,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 	
 	
 	
-	public void test2() {
+	public void test2() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example2[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];
@@ -532,7 +534,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 	}
 	
 
-	public void test2Compare() {
+	public void test2Compare() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example2[0]);
 		
 		String system = (vt.newTreeInterface()).getAllName(null, "System")[0];

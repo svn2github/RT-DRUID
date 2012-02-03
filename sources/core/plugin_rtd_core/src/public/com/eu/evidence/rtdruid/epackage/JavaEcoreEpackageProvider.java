@@ -52,9 +52,8 @@ class JavaEcoreEpackageProvider extends EcoreEpackageProvider {
 	 *            found
 	 */
 	public JavaEcoreEpackageProvider(String fileName, Class<?> loader) {
-		this.path = "/" + loader.getPackage().getName().replace('.', '/') + "/"
-				+ fileName;
-		this.loader = loader.getClassLoader();
+		this("/" + loader.getPackage().getName().replace('.', '/') + "/"
+				+ fileName, loader.getClassLoader());
 	}
 
 	/*

@@ -16,11 +16,7 @@ import com.eu.evidence.rtdruid.epackage.RTDEPackageBuildException;
  */
 public class FillVtUtilDynamicPackageTest extends FillVtUtilTest {
 	
-	protected EPackage getEPackage() {
-		try {
-			return EPackageFactory.instance.getEPackage();
-		} catch (RTDEPackageBuildException e) {
-			throw new RuntimeException(e);
-		}
+	protected EPackage getEPackage() throws RTDEPackageBuildException {
+		return EPackageFactory.instance.getEPackage();
 	}
 }

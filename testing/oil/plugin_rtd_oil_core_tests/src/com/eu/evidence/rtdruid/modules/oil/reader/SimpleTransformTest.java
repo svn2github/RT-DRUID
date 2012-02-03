@@ -53,7 +53,7 @@ public class SimpleTransformTest implements Examples {
 				+ dpkg.getEcu_CpuList().getName() + S + DEFAULT_CPU_NAME + S
 				+ dpkg.getCpu_Rtos().getName();
 		IOilImplID id = otf.getOilId("ee");
-		
+		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(vt)));
 		String answer = otf.getTransform("ee").write(vt, id, prefix);
 
 		assertTrue(answer != null);

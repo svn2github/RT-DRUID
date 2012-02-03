@@ -1,11 +1,13 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 
 
 public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 	
 	
-	public void testHello() {
+	@Test public void testHello() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"	OS myOs {\n" +
@@ -23,7 +25,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	public void testIsr() {
+	@Test public void testIsr() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"	OS myOs {\n" +
@@ -74,7 +76,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 	}
 	
 
-	public void testLed() {
+	@Test public void testLed() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"	OS myOs {\n" +
@@ -111,7 +113,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 	}
 	
 
-	public void testMono() {
+	@Test public void testMono() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"	OS myOs {\n" +
@@ -147,7 +149,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 	}
 	
 
-	public void testMulti() {
+	@Test public void testMulti() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"	OS myOs {\n" +

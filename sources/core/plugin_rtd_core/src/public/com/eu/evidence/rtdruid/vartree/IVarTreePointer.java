@@ -104,6 +104,12 @@ public interface IVarTreePointer {
 	*	@throws IllegalStateException	if current node is a container.
 	*/
 	public IVariable getNewVar(String initialValue);
+
+	/** Returns the default value of a new variable valid for current node.
+	*
+	*	@throws IllegalStateException	if current node is a container.
+	*/
+	public Object getDefaultValue();
 	
 	/** Sets a variable.
 	*
@@ -345,5 +351,28 @@ public interface IVarTreePointer {
 	*/
 //	public String typePath(char separator);
 
+	
+	/**
+	 * This method ensure that a path exist; if one or more elements doesn't
+	 * exist, the method creates them; Throws a RuntimeException if there are
+	 * some problems. <br>
+	 * Current IVarTreePointer is modified and it will point to the last node of
+	 * the given path.
+	 * 
+	 * @param names
+	 *            names of each step (without slashes)
+	 * @param types
+	 *            the type of each step
+	 * 
+	 * @return a reference to this pointer.
+	 * 
+	 * @throws AssertionFailedException if names or types is null.
+	 * 
+	 * @throws IllegalArgumentException if names and types parameters have different size
+	 * 
+	 * @throws RuntimeException
+	 *             if there is a problem adding elements.
+	 */
+	public IVarTreePointer makePath(String[] names, String[] types);
 }
 

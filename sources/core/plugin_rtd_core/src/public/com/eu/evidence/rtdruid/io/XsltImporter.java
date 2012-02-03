@@ -18,6 +18,9 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class XsltImporter implements IRTDImporter {
 
+	/** Enable some debug information */
+	private final static boolean DEBUG = false;
+
 	/** The xslt transformation file */
 	protected URL xsltFile;
 	/** The dtd used to validate the input document */
@@ -43,8 +46,29 @@ public class XsltImporter implements IRTDImporter {
 			Map<?, ?> options) throws IOException {
 
 		PipedInputStream inPipe = new PipedInputStream();
-		PipedOutputStream outPipe = new PipedOutputStream(inPipe);
-		// PipedOutputStream outPipe = new DebugPipedOutputStream(inPipe);
+		final PipedOutputStream outPipe;
+		if (DEBUG) {
+			/**
+			 * A class used to debug purposes.
+			 * 
+			 * @author Nicola Serreli
+			 */
+			outPipe = new PipedOutputStream(inPipe) {
+				public void write(int b) throws IOException {
+					System.out.print((char) b);
+					super.write(b);
+				}
+		
+				public void write(byte[] b, int off, int len) throws IOException {
+					for (int i = off; i < b.length && (i - off < len); i++) {
+						System.out.print(b[i]);
+					}
+					super.write(b, off, len);
+				}
+			};
+		} else {
+			outPipe = new PipedOutputStream(inPipe);
+		}
 
 		XsltTransformThread tt = new XsltTransformThread(input, outPipe,
 				xsltFile, true, dtdFile);
@@ -52,33 +76,6 @@ public class XsltImporter implements IRTDImporter {
 
 		IRTDImporter parent = (IRTDImporter) options.get(OPT_PARENT_IMPORTER);
 		return parent.load(inPipe, options);
-
-		/*
-		 * if (tt.isAlive()) {
-		 * System.err.println("Transformation Thread already alive !!!"); }
-		 */
 	}
 
-	/**
-	 * A class used to debug purposes.
-	 * 
-	 * @author Nicola Serreli
-	 */
-	protected static class DebugPipedOutStream extends PipedOutputStream {
-		public DebugPipedOutStream(PipedInputStream snk) throws IOException {
-			super(snk);
-		}
-
-		public void write(int b) throws IOException {
-			System.out.print((char) b);
-			super.write(b);
-		}
-
-		public void write(byte[] b, int off, int len) throws IOException {
-			for (int i = off; i < b.length && (i - off < len); i++) {
-				System.out.print(b[i]);
-			}
-			super.write(b, off, len);
-		}
-	};
 }

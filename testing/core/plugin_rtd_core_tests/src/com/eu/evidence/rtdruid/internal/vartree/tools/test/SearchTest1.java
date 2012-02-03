@@ -10,6 +10,8 @@ package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -304,7 +306,7 @@ public class SearchTest1 {
 	}
 	
 	@Test 
-	public void testARtos() {
+	public void testARtos() throws IOException {
 		String source = 
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
 		"<SYSTEM Name=\"defaultSystem\">" +
@@ -378,7 +380,7 @@ public class SearchTest1 {
 	}
 	
 	@Test 
-	public void testAEvent() {
+	public void testAEvent() throws IOException {
 		String source = 
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
 		"<SYSTEM Name=\"defaultSystem\">" +

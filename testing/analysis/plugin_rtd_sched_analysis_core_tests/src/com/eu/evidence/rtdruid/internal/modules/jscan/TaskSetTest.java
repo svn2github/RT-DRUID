@@ -7,6 +7,8 @@
 package com.eu.evidence.rtdruid.internal.modules.jscan;
 
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
@@ -23,7 +25,7 @@ public class TaskSetTest extends TestCase {
 
 	//----------------------------------------
 
-	public void testExample1() {
+	public void testExample1() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 		
 		TaskSet ts = new TaskSet(vt, "DefaultSystem");
@@ -49,7 +51,7 @@ public class TaskSetTest extends TestCase {
 		
 	}
 	
-	public void testExample2() {
+	public void testExample2() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 		
 		TaskSet ts = new TaskSet(vt, DataPath.makeSlashedId("Root/"));

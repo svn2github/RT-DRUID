@@ -204,7 +204,7 @@ public final class RTDResourceManagerFactory {
 	 */
 	@SuppressWarnings("unchecked")
 	private static ResImporter parseImport(IConfigurationElement element) {
-	    Assert.isLegal(element != null);
+	    Assert.isNotNull(element);
 
 	    ResImporter answer = null;
 
@@ -215,7 +215,7 @@ public final class RTDResourceManagerFactory {
 	    if (S_IMPORTER_ELEM.equalsIgnoreCase(chName)) {
 	        String type = element.getAttribute(S_ATTR_TYPE);
 	        String className = element.getAttribute(S_ATTR_CLASS);
-	        boolean caseSensitive = "true".equalsIgnoreCase(element.getAttribute(S_ATTR_CASE)) ? true : false;
+	        boolean caseSensitive = "true".equalsIgnoreCase(element.getAttribute(S_ATTR_CASE)); // ? true : false;
 	        String description = element.getAttribute(S_ATTR_DESCR);
 
 	        // load directly the factory's class doen't wark always then
@@ -254,7 +254,7 @@ public final class RTDResourceManagerFactory {
 	 */
 	@SuppressWarnings("unchecked")
 	private static ResExporter parseExport(IConfigurationElement element) {
-	    Assert.isLegal(element != null);
+	    Assert.isNotNull(element);
 
 	    ResExporter answer = null;
 
@@ -265,7 +265,7 @@ public final class RTDResourceManagerFactory {
 	    if (S_EXPORTER_ELEM.equalsIgnoreCase(chName)) {
 	        String type = element.getAttribute(S_ATTR_TYPE);
 	        String className = element.getAttribute(S_ATTR_CLASS);
-	        boolean caseSensitive = "true".equalsIgnoreCase(element.getAttribute(S_ATTR_CASE)) ? true : false;
+	        boolean caseSensitive = "true".equalsIgnoreCase(element.getAttribute(S_ATTR_CASE)); // ? true : false;
 	        String description = element.getAttribute(S_ATTR_DESCR);
 
 	        // load directly the factory's class doen't wark always then

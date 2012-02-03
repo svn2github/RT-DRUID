@@ -1,5 +1,7 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 
@@ -8,7 +10,7 @@ import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	
 	
-	public void testMpc567_bug88() {
+	@Test public void testMpc567_bug88() {
 	    final String text = "CPU test_application {\n"+
 			"\n"+
 			"	OS EE {\n"+
@@ -117,7 +119,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	}
 
 
-	public void testMpc567_multi_stack() {
+	@Test public void testMpc567_multi_stack() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {		\n" +
@@ -175,7 +177,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	}
 
 
-	public void testMpc567_multi_stack_orit() {
+	@Test public void testMpc567_multi_stack_orit() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {		\n" +
@@ -238,7 +240,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMpc567_os_application() {
+	@Test public void testMpc567_os_application() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {		\n" +
@@ -335,7 +337,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMpc567_bug_86() {
+	@Test public void testMpc567_bug_86() {
 	    final String text = "CPU PerfTestApp {\n"+
 	    		"	OS EE {\n"+
 	    		"		CFLAGS = \"-I../inc\";\n"+
@@ -449,7 +451,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	}
 
 
-	public void testMpc567_full_os_application() {
+	@Test public void testMpc567_full_os_application() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {		\n" +
@@ -605,7 +607,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testMpc567_bug90_stack() {
+	@Test public void testMpc567_bug90_stack() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {\n" +
@@ -700,7 +702,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 2);
 	}
 	
-	public void testMpc567_bug90_events() {
+	@Test public void testMpc567_bug90_events() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {\n" +
@@ -801,7 +803,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testMpc567_bug106() {
+	@Test public void testMpc567_bug106() {
 	    final String text = "CPU PerfTestApp {\n" +
 				"	OS EE {\n" +
 				"		CFLAGS = \"-Xsmall-data=0\";\n" +
@@ -991,7 +993,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMpc567_isr2_orti() {
+	@Test public void testMpc567_isr2_orti() {
 	    final String text =
 				"CPU test_application {\n" +
 				"	OS EE {\n" +

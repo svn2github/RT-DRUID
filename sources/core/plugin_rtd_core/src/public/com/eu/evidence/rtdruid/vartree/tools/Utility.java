@@ -35,7 +35,7 @@ public class Utility {
 	public static String chooseModeRef(ITreeInterface ti, String path, String[] idList, int modeIndex, String modeName) {
 		if (modeName != null) {
 			idList[modeIndex] = pathToEvidence(modeName);
-			String tmp = path + S + makeSlashedId(idList);
+			String tmp = path + S + DataPath.makeSlashedId(idList);
 			if (ti.exist(tmp, null)
 				) {
 				return tmp;
@@ -44,53 +44,13 @@ public class Utility {
 		}
 		
 		idList[modeIndex] = null;
-		String tmp = path + S + makeSlashedId(idList);
+		String tmp = path + S + DataPath.makeSlashedId(idList);
 		if (ti.exist(tmp, null)) {
 			return tmp;
 		}
 		//rtdruid.desk.Messages.sendDebug("Default mode doesn't exist in given path");
 		
 		return null;
-	}
-	
-	// ------------------------------------------------------------------- //	
-	
-	/** Makes an "ID" from a value.
-	 * @deprecated
-	 * */
-	public static String makeId(String value) {
-		return DataPath.makeId( value );
-	}
-
-	/** Makes an "ID" from a list of values and protects it with "Slash" (see {@link rtdruid.vartree.IVarTree#addSlash rtdruid.vartree.VarTree.addSlash}).
-	 * @deprecated
-	 * */
-	public static String makeSlashedId(String[] value) {
-		return DataPath.makeSlashedId( value );
-	}
-
-	/** Makes an "ID" from a value and protects it with "Slash" (see {@link rtdruid.vartree.IVarTree#addSlash rtdruid.vartree.VarTree.addSlash}).
-	 * @deprecated
-	 * */
-	public static String makeSlashedId(String value) {
-		return DataPath.makeSlashedId( value );
-	}
-
-
-	/** Returns the list of values used to make given 'ID'.
-	 * 
-	 * @param values the id (without protection, see {@link rtdruid.vartree.IVarTree#addSlash rtdruid.vartree.VarTree.addSlash()})
-	 * @deprecated
-	 * */
-	public static String[] resolveId(String values) {
-		return DataPath.resolveId(values);
-	}
-
-	/** Makes an "ID" from a list of values.
-	 * @deprecated
-	 * */
-	public static String makeId(String[] values) {
-		return DataPath.makeId(values);
 	}
 	
 	// -------------------- convert from / to evidence_reference_path - varTree_path

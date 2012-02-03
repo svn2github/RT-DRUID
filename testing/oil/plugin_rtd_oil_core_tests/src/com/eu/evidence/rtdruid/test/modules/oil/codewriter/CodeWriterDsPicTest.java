@@ -1,5 +1,7 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 
@@ -7,7 +9,7 @@ import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 	
 
-	public void testDS_PIC30_splitted() {
+	@Test public void testDS_PIC30_splitted() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -104,7 +106,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC30_1() {
+	@Test public void testDS_PIC30_1() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -192,7 +194,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC30_2() {
+	@Test public void testDS_PIC30_2() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -258,7 +260,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC24HJ64GP502() {
+	@Test public void testDS_PIC24HJ64GP502() {
 	    final String text =
 		"CPU test_application {" + 
 		"" + 
@@ -308,7 +310,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC33FJ64MC802() {
+	@Test public void testDS_PIC33FJ64MC802() {
 	    final String text =
 		"CPU test_application {" + 
 		"" + 
@@ -359,7 +361,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testDS_PIC30_BCC1() {
+	@Test public void testDS_PIC30_BCC1() {
 	    final String text =
 		"CPU test_application {" + 
 		"" + 
@@ -415,7 +417,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC30_LIB() {
+	@Test public void testDS_PIC30_LIB() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -457,7 +459,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testDS_PIC30_LIB_multi() {
+	@Test public void testDS_PIC30_LIB_multi() {
 	    final String text =
 				"CPU mySystem {\n" + 
 				"\n" + 
@@ -501,7 +503,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	public void testEmptyPIC30() {
+	@Test public void testEmptyPIC30() {
 		final String text = 
 			
 			"CPU mySystem {\n" +
@@ -515,7 +517,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 	}
 	
 
-	public void testEDF() {
+	@Test public void testEDF() {
 		final String text = 
 			
 			"CPU mySystem {\n" +
@@ -547,7 +549,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testEDF_ram() {
+	@Test public void testEDF_ram() {
 		final String text = 
 			
 			"CPU mySystem {\n" +
@@ -579,7 +581,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	public void testEDF_rom() {
+	@Test public void testEDF_rom() {
 		final String text = 
 			
 			"CPU mySystem {\n" +
@@ -611,7 +613,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-//	public void testEDFWrong_1() {
+//	@Test public void testEDFWrong_1() {
 //		final String text = 
 //			
 //			"CPU mySystem {\n" +
@@ -635,7 +637,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 //		commonWriterTest(text, 1);
 //	}
 
-	public void testEDF_PIC() {
+	@Test public void testEDF_PIC() {
 		final String text = 
 			"	CPU mySystem {\n" +
 			"		OS myOs {\n" +
@@ -668,7 +670,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testEDF_PIC2() {
+	@Test public void testEDF_PIC2() {
 		final String text = 
 			"CPU mySystem {\n" +
 			"	OS myOs {\n" +
@@ -710,7 +712,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 	}
 
 
-	public void testFP_PIC2() {
+	@Test public void testFP_PIC2() {
 		final String text = 
 			"CPU mySystem {\n" +
 			"	OS myOs {\n" +
@@ -760,7 +762,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 	}
 
 	
-//	public void testIRIS_PIC() {
+//	@Test public void testIRIS_PIC() {
 //		final String text = 
 //			"CPU mySystem {\n" +
 //			"	OS myOs {\n" +
@@ -871,7 +873,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 
 	
 	
-	public void testFRSH_PIC() {
+	@Test public void testFRSH_PIC() {
 		final String text = 
 			"CPU mySystem {\n" +
 			"	OS myOs {\n" +
@@ -981,7 +983,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 	}
 
 
-	public void testMINIFLEX_PIC() {
+	@Test public void testMINIFLEX_PIC() {
 		final String text = 
 			"CPU test_application {\n"+
 			"\n"+
@@ -1046,7 +1048,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	public void testOO_RES_PIC() {
+	@Test public void testOO_RES_PIC() {
 		final String text = 
 			"CPU test_application {\n"+
 			"\n"+

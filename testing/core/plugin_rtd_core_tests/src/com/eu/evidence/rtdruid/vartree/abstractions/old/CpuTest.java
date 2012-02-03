@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -14,7 +16,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 public class CpuTest {
 
 	@Test
-	public void testGetPathString() {
+	public void testGetPathString() throws IOException {
 
 		String xmlInput1 =
 			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -81,7 +83,7 @@ public class CpuTest {
 	
 
 	@Test
-	public void testDoStore() {
+	public void testDoStore() throws IOException {
 		String xmlInput1 =
 			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 			"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">\n" +
@@ -190,7 +192,7 @@ public class CpuTest {
 	}
 
 	@Test
-	public void testDoStoreAll() {
+	public void testDoStoreAll() throws IOException {
 		String xmlInput1 =
 			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 			"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">\n" +

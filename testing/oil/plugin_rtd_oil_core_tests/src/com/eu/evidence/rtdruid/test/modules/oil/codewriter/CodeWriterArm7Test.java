@@ -1,11 +1,13 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 
 
 public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 	
 
-	public void testCodeWrite1() {
+	@Test public void testCodeWrite1() {
 		final String OIL_TEST_1 = "CPU EE {\n" + "    OS EE {\n"
 		+ "        EE_OPT = \"__ASSERT__\";\n"
 		+ "        EE_OPT = \"__OSEKOS_NO_ALARMS__\";\n"
@@ -76,7 +78,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 	 * test 2 (from modistarc task 1)
 	 **************************************************************************/
 
-	public void testCodeWrite2() {
+	@Test public void testCodeWrite2() {
 		final String OIL_TEST_MODISTARC_TASK_1 = "CPU test_application {\n"
 			+ "\n"
 			+ "    OS EE {\n"
@@ -145,7 +147,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 		commonWriterTest(OIL_TEST_MODISTARC_TASK_1, 1);
 	}
 
-	public void testCodeWrite_FP1() {
+	@Test public void testCodeWrite_FP1() {
 		final String text = "CPU test_application {\n" + "\n" + "    OS EE {\n"
 				+ "		EE_OPT = \"__OSEKOS_STARTOS_WITHOUT_IDLELOOP__\";\n"
 				+ "        EE_OPT = \"__ASSERT__\";\n"
@@ -201,7 +203,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testARM7WithAppmode() {
+	@Test public void testARM7WithAppmode() {
 		final String text = "CPU test_application {" + ""
 				+ "    OS EE {"
 				+ "  EE_OPT = \"__OSEKOS_STARTOS_WITHOUT_IDLELOOP__\";"
@@ -241,7 +243,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testARM7_1stack() {
+	@Test public void testARM7_1stack() {
 	    final String text =
 			"CPU mySystem {\n" + 
 			"\n" + 
@@ -326,7 +328,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 	}
 	
 
-	public void testArm7Orti() {
+	@Test public void testArm7Orti() {
 		final String text = 
 			"CPU test_application {\n" +
 			"OS EE {\n" +
@@ -405,7 +407,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testCodeWrite_BOARD_eval7t() {
+	@Test public void testCodeWrite_BOARD_eval7t() {
 		final String text = "CPU test_application {\n" + "\n" + "    OS EE {\n"
 				+ "		CPU_DATA = ARM7 {\n" 
 				+ "			MULTI_STACK = TRUE {\n"
@@ -448,7 +450,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testCodeWriteWithManyEvents() {
+	@Test public void testCodeWriteWithManyEvents() {
 		final String text =
 			"CPU EE {\n"
 			+ "    OS EE {\n"
@@ -520,7 +522,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 
 // with alarms/counters
 
-	public void testCodeWriteAlarmAndCounter() {
+	@Test public void testCodeWriteAlarmAndCounter() {
 		final String text = "CPU EE {\n"
 			+ "    OS EE {\n"+
 			
@@ -594,7 +596,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testCodeWriteAlarmAutostart() {
+	@Test public void testCodeWriteAlarmAutostart() {
 		final String text = "CPU EE {\n"
 			+ "    OS EE {\n"+
 			
@@ -683,7 +685,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 
 // with RESOURCES
 
-	public void testCodeWriteWithoutResources() {
+	@Test public void testCodeWriteWithoutResources() {
 		final String text = "CPU EE {\n"
 			+ "    OS EE {\n"+
 			
@@ -747,7 +749,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 
 // with RESOURCES
 
-	public void testCodeWriteResources() {
+	@Test public void testCodeWriteResources() {
 		final String text = "CPU EE {\n"
 			+ "    OS EE {\n"+
 			
@@ -838,7 +840,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 
 // with Many Tasks
 
-	public void testCodeWriteWithManyTasks() {
+	@Test public void testCodeWriteWithManyTasks() {
 		final String text = "CPU EE {\n"
 			+ "    OS EE {\n"+
 			

@@ -1,5 +1,7 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 
 
 public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
@@ -7,7 +9,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 
 	
 	
-	public void testTaskAutostart() {
+	@Test public void testTaskAutostart() {
 	    final String text = 
 			"	    CPU test_application {\n" +
 			"\n" +
@@ -78,7 +80,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	public void testOrtiIRQ_STACK() {
+	@Test public void testOrtiIRQ_STACK() {
 	    final String text ="CPU test_application {\n" +
 			"	OS EE {\n" +
 			"		CFLAGS = \"-DALT_DEBUG -O0 -g\";\n" +
@@ -152,7 +154,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 	
 	
 
-	public void testOrti1() {
+	@Test public void testOrti1() {
 		final String text = "CPU EE {\n"
 			+ "    OS EE {\n"
 			+ "        EE_OPT = \"__ASSERT__\";\n"
@@ -257,7 +259,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 
 	
 
-	public void testFRSH_multiNiosII() {
+	@Test public void testFRSH_multiNiosII() {
 		String test = "CPU mySystem {" +
 		"	OS myOs {" +
 		"" 
@@ -441,7 +443,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testFRSH_multiNiosII_2() {
+	@Test public void testFRSH_multiNiosII_2() {
 		String test = "CPU test_application {\n" +
 		"\n" +
 		"	OS EE {\n" +
@@ -755,7 +757,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 
 	
 	
-	public void testFRSH_multiNiosII_3() {
+	@Test public void testFRSH_multiNiosII_3() {
 		String test = "CPU test_application {\n" +
 		"\n" +
 		"	OS EE {\n" +

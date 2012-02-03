@@ -52,7 +52,28 @@ public class XsltExporter implements IRTDExporter {
 
 		OutputStream out = outputStream;
 		if (DEBUG) {
-			out = new DebugBufferedOutputStream(out);
+			/**
+			 * An BufferedOutputStream useful for debug purposes
+			 * 
+			 * @author Nicola Serreli
+			 */
+			out = new BufferedOutputStream(out) {
+				public void write(int b) throws IOException {
+					System.out.print((char) b);
+					super.write(b);
+				}
+
+				public void write(byte[] b) throws IOException {
+					write(b, 0, b.length);
+				}
+
+				public void write(byte[] b, int off, int len) throws IOException {
+					for (int i = off; i < b.length && (i - off < len); i++) {
+						System.out.print(b[i]);
+					}
+					super.write(b, off, len);
+				}
+			};
 		}
 
 		class EMFThread extends Thread {
@@ -107,45 +128,11 @@ public class XsltExporter implements IRTDExporter {
 		try {
 			tt2.join();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			if (DEBUG) {
+				e.printStackTrace();
+			}
 		}
 
 
 	}
-
-	/**
-	 * An BufferedOutputStream useful for debug purposes
-	 * 
-	 * @author Nicola Serreli
-	 */
-	protected class DebugBufferedOutputStream extends BufferedOutputStream {
-		public DebugBufferedOutputStream(OutputStream output) {
-			super(output);
-		}
-
-		public void write(int b) throws IOException {
-			System.out.print((char) b);
-			super.write(b);
-		}
-
-		public void write(byte[] b) throws IOException {
-			write(b, 0, b.length);
-		}
-
-		public void write(byte[] b, int off, int len) throws IOException {
-			for (int i = off; i < b.length && (i - off < len); i++) {
-				System.out.print(b[i]);
-			}
-			super.write(b, off, len);
-		}
-
-		public void close() throws IOException {
-			super.close();
-		}
-
-		public void flush() throws IOException {
-			super.flush();
-		}
-	};
-
 }

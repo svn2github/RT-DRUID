@@ -27,14 +27,12 @@
   </extension>
 
 
-<!--
-	
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.evidence.eu.com/rtdruid/data"
-            class="com.eu.evidence.rtdruid.vartree.data.DataPackage"/>
+            class="com.eu.evidence.rtdruid.epackage.RtdEPackage"/>
    </extension>
--->
+
 
 <!--
 	EMF Factories

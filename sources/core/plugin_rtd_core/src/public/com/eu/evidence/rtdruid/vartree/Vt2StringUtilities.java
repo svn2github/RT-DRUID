@@ -30,8 +30,9 @@ public class Vt2StringUtilities {
 	 * 
 	 * @param input a string that contains all data
 	 * @return 
+	 * @throws IOException 
 	 */ 
-	public static IVarTree loadString(String input) {
+	public static IVarTree loadString(String input) throws IOException {
 		return loadString(input, "rtd");
 	}
 	
@@ -40,8 +41,9 @@ public class Vt2StringUtilities {
 	 * 
 	 * @param input a string that contains all data
 	 * @return 
+	 * @throws IOException 
 	 */ 
-	public static IVarTree loadString(String input, String format) {
+	public static IVarTree loadString(String input, String format) throws IOException {
 		
 		IVarTree vt = VarTreeUtil.newVarTree(); //prepare also Data Factory
 		
@@ -49,11 +51,8 @@ public class Vt2StringUtilities {
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, format);
 		
 		Resource res = (Resource) vt.getResourceSet().getResources().get(0);
-		try {
-			res.load(new ByteArrayInputStream(input.getBytes()), map);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		res.load(new ByteArrayInputStream(input.getBytes()), map);
+		
 		return vt;
 	}
 	

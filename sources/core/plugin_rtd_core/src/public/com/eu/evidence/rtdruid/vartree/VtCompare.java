@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import com.eu.evidence.rtdruid.Rtd_corePlugin;
@@ -193,14 +194,16 @@ class VtCompare {
 		//assertTrue (attrList1.size() == attrList2.size());
 		for (int i = 0; i < attrList1.size(); i++) {
 			EAttribute at1 = (EAttribute) attrList1.get(i);
-			//EAttribute at2 = (EAttribute) attrList2.get(i);
-	
-			//assertTrue(at1.isMany() == at2.isMany());
+			EAttribute at2;
+			{
+				EStructuralFeature sf = second.eClass().getEStructuralFeature(at1.getName());
+				assertTrue("Second node does not contain the attribute " + at1.getName(), sf != null && sf instanceof EAttribute, first, second);
+				at2 = (EAttribute) sf;
+			}
 	
 			if (at1.isMany()) {
 				EList<?> el1 = (EList<?>) first.eGet(at1);
-				EList<?> el2 = (EList<?>) second.eGet(at1);
-				//EList el2 = (EList) first.eGet(at2);
+				EList<?> el2 = (EList<?>) second.eGet(at2);
 	
 				assertTrue(el1.size() == el2.size(), first, second);
 				for (int j = 0; j < el1.size(); j++) {
@@ -212,7 +215,6 @@ class VtCompare {
 						assertTrue(o2 != null, first, second);
 	
 						assertTrue(o1.getClass() == o2.getClass(), first, second);
-						//assertTrue(o1.getClass().getName().equals(o2.getClass().getName()));
 	
 						if (o1 instanceof IVariable) {
 							
@@ -231,8 +233,7 @@ class VtCompare {
 	
 			} else {
 				Object o1 = first.eGet(at1);
-				Object o2 = second.eGet(at1);
-				//Object o2 = second.eGet(at2);
+				Object o2 = second.eGet(at2);
 				if (o1 == null) {
 					assertTrue(o2 == null, first, second);
 				} else {

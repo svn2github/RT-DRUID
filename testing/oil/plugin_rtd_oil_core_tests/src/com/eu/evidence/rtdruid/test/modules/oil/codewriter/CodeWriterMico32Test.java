@@ -1,5 +1,7 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 
@@ -7,7 +9,7 @@ import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 	
 	
-	public void testMICO_32_mono_stack() {
+	@Test public void testMICO_32_mono_stack() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -58,7 +60,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMICO_32_multi_stack() {
+	@Test public void testMICO_32_multi_stack() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {		\n" +
@@ -119,7 +121,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMICO_32_OSEK_multi_stack() {
+	@Test public void testMICO_32_OSEK_multi_stack() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {		\n" +
@@ -181,7 +183,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testMICO_32_FP_multi_stack_IRQ() {
+	@Test public void testMICO_32_FP_multi_stack_IRQ() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {		\n" +
@@ -247,7 +249,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testMICO_32_FP_multi_stack_IRQ_2() {
+	@Test public void testMICO_32_FP_multi_stack_IRQ_2() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {		\n" +
@@ -331,7 +333,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 	}
 	
 	
-	public void testMICO_32_ISR() {
+	@Test public void testMICO_32_ISR() {
     final String text = "CPU test_application {\n" +
 			"\n" +
 			"	OS EE {		\n" +
@@ -410,7 +412,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 	}
 
 	
-	public void testMICO_32_mcu_only() {
+	@Test public void testMICO_32_mcu_only() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -496,7 +498,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 	}
 
 
-	public void testMICO_32_board_only_bee() {
+	@Test public void testMICO_32_board_only_bee() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -565,7 +567,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMICO_32_board_only_bee_bis() {
+	@Test public void testMICO_32_board_only_bee_bis() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -635,7 +637,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMICO_32_board_only_eth() {
+	@Test public void testMICO_32_board_only_eth() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -704,7 +706,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMICO_32_board_only_eth_bis() {
+	@Test public void testMICO_32_board_only_eth_bis() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -775,7 +777,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMICO_32_mcu_board() {
+	@Test public void testMICO_32_mcu_board() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -878,13 +880,13 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-//	public void testMICO_32_1() {
+//	@Test public void testMICO_32_1() {
 //	    final String text ="";
 //		commonWriterTest(text, 1);
 //	}
 
 
-	public void testMICO_32_mcu_gpio() {
+	@Test public void testMICO_32_mcu_gpio() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -974,7 +976,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 	}
 
 
-	public void testMICO_32_board_only_lcd_gpio() {
+	@Test public void testMICO_32_board_only_lcd_gpio() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -1030,7 +1032,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 	}
 
 
-	public void testMICO_32_board_only_lcd_gpio_() {
+	@Test public void testMICO_32_board_only_lcd_gpio_() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -1088,7 +1090,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMICO_32_board_misc_gpio_() {
+	@Test public void testMICO_32_board_misc_gpio_() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
@@ -1148,7 +1150,7 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	public void testMICO_32_evboard() {
+	@Test public void testMICO_32_evboard() {
 	    final String text ="CPU test_application {\n"+
 			"\n"+
 			"	OS EE {		\n"+
