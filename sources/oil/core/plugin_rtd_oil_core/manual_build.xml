@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="com.eu.evidence.rtdruid.oil.core" default="build.jars" basedir=".">
 
+	<property file="RT_Druid_configurator_number.properties"/>
 
 
 <!--
@@ -111,18 +112,24 @@
 
 	
 
-	<target name="gather.bin.parts.update.rtd.version" if="rtd.svn.number">
-		<echo >replacing ${destination.temp.folder} </echo>
+	<target name="gather.bin.parts.update.rtd.configurator.number" if="current_configurator_number">
 		<!-- Update RTD version -->
 		<replaceregexp byline="true">
 		  <regexp pattern="0=(.*)"/>
-		  <substitution expression="0=${rtd.svn.number}"/>
+		  <substitution expression="0=${current_configurator_number}"/>
 		  <fileset dir="${destination.temp.folder}">
 		    <include name="about.mappings"/>
 		  </fileset>
 		</replaceregexp>
-		
-		<echo> done </echo>
+	</target>
+	<target name="gather.bin.parts.update.rtd.svn.version" if="rtd.svn.number">
+		<replaceregexp byline="true">
+		  <regexp pattern="1=(.*)"/>
+		  <substitution expression="1=${rtd.svn.number}"/>
+		  <fileset dir="${destination.temp.folder}">
+		    <include name="about.mappings"/>
+		  </fileset>
+		</replaceregexp>
 	</target>
 	
 	<target name="gather.bin.parts" if="destination.temp.folder">
@@ -147,8 +154,9 @@
 			<reference refid="common_gather_binary"/>
 		</antcall>
 		
-		<echo> RTD Number ${rtd.svn.number} --- ${destination.temp.folder} </echo>
-		<antcall target="gather.bin.parts.update.rtd.version"/>
+		<echo> RTD Number ${current_configurator_number}, svn ${rtd.svn.number} --- ${destination.temp.folder} </echo>
+		<antcall target="gather.bin.parts.update.rtd.configurator.number"/>
+		<antcall target="gather.bin.parts.update.rtd.svn.version"/>
 	</target>
 
 	<!---->
