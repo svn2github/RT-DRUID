@@ -37,7 +37,7 @@ import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 
 /**
- * This writer manages Remote Notifications
+ * This writer manages OS Application
  * 
  * @author Nicola Serreli
  */
@@ -53,7 +53,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 	/** All data */
 	protected final IVarTree vt;
 	
-	public final static String OS_APPLICATION_TRUSTED = "SGR_os_application_trusted";
 	public final static String OS_APPLICATION_MEM_BASE = "SGR_os_application_mem_base";
 	public final static String OS_APPLICATION_MEM_SIZE = "SGR_os_application_mem_size";
 	public final static String OS_APPLICATION_SHARED_SIZE = "SGR_os_application_shared_size";
@@ -165,8 +164,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				
 		String end = "";
 		for (ISimpleGenRes application : applications) {
-			boolean trusted = application.containsProperty(OS_APPLICATION_TRUSTED) 
-						&& "true".equalsIgnoreCase(application.getString(OS_APPLICATION_TRUSTED));
+			boolean trusted = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
+						&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED));
 			final String name = application.getName();
 			String stack_id = application.getString(ISimpleGenResKeywords.OS_APPL_SHARED_STACK_ID);
 			String stack_base_name = application.getString(EEStacks.STACK_BASE_NAME_PREFIX);
@@ -249,7 +248,9 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		final String path_isr      = osApplBasePath+ "ISR";
 		final String path_resource = osApplBasePath+ "RESOURCE";
 		final String path_task     = osApplBasePath+ "TASK";
-		
+
+		final String path_trusted_function = PARAMETER_LIST+ "TRUSTED_FUNCTION";
+
 
 //		final String taskOsApplRefPath = S
 //				+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
@@ -281,10 +282,34 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				
 				
 				appl.setProperty(ISimpleGenResKeywords.OS_APPL_ID, "" +id);
-			
-				String type = CommonUtils.getFirstChildEnumType(vt, appl_path + path_trusted, null);
+				
+				String[] trusted_child = new String[1];
+				String type = CommonUtils.getFirstChildEnumType(vt, appl_path + path_trusted, trusted_child);
 				if ("true".equalsIgnoreCase(type)) {
-					appl.setProperty(OS_APPLICATION_TRUSTED, "true");
+					appl.setProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED, "true");
+					ArrayList<String> childName = new ArrayList<String>();
+					String trusted_func_path = appl_path + path_trusted + VARIANT_ELIST +  trusted_child[0] + path_trusted_function;
+					
+					ArrayList<String> trustedFunctionNames = new ArrayList<String>();
+					
+					ArrayList<String> childTypes = CommonUtils.getAllChildrenEnumType(vt, trusted_func_path, childName);
+					if (childTypes != null) {
+						for (int i=0; i<childTypes.size(); i++) {
+							String ct = childTypes.get(i);
+							if ("TRUE".equalsIgnoreCase(ct)) {
+								String[] name = CommonUtils.getValue(vt, trusted_func_path + VARIANT_ELIST +  childName.get(i) + PARAMETER_LIST + "NAME");
+								if (name != null && name.length>0) {
+									for (String n: name) {
+										trustedFunctionNames.add(n);
+									}
+								}
+							}
+						}
+					}
+					
+					
+					appl.setObject(IEEWriterKeywords.OS_APPLICATION_TRUSTED_FUNCTIONS, trustedFunctionNames);
+					
 				}
 			
 				{

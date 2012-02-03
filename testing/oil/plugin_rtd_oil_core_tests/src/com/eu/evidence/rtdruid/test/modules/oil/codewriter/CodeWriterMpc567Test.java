@@ -800,4 +800,194 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 2);
 	}
 
+	
+	public void testMpc567_bug106() {
+	    final String text = "CPU PerfTestApp {\n" +
+				"	OS EE {\n" +
+				"		CFLAGS = \"-Xsmall-data=0\";\n" +
+				"		MEMORY_PROTECTION = TRUE;\n" +
+				"\n" +
+				"		CPU_DATA = PPCE200ZX {\n" +
+				"			MODEL = E200Z7;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			APP_SRC = \"app1.c\";\n" +
+				"			APP_SRC = \"app2.c\";\n" +
+				"			APP_SRC = \"trusted.c\";\n" +
+				"			MULTI_STACK = TRUE;\n" +
+				"		};\n" +
+				"\n" +
+				"		MCU_DATA = PPCE200ZX {\n" +
+				"			MODEL = MPC5674F;\n" +
+				"		};\n" +
+				"\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"		KERNEL_TYPE = SC4;\n" +
+				"\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"//		ORTI_SECTIONS = ALL;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK MainTask {\n" +
+				"		PRIORITY = 10;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK TrustedTask1 {\n" +
+				"		PRIORITY = 1;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK ErrorTask {\n" +
+				"		PRIORITY = 100;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = NON;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK App1Init {\n" +
+				"		PRIORITY = 2;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK App1Task {\n" +
+				"		PRIORITY = 4;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK App1Ack {\n" +
+				"		PRIORITY = 10;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK App1Bkg {\n" +
+				"		PRIORITY = 1;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 512;\n" +
+				"		};\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK App2Init {\n" +
+				"		PRIORITY = 2;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK App2Task {\n" +
+				"		PRIORITY = 5;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 512;\n" +
+				"		};\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK App2Ack {\n" +
+				"		PRIORITY = 10;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK App2HiPriTask {\n" +
+				"		PRIORITY = 1000;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	ISR TrustedIsr {\n" +
+				"		CATEGORY = 2;\n" +
+				"	};\n" +
+				"\n" +
+				"	ISR App1Isr {\n" +
+				"		CATEGORY = 2;\n" +
+				"	};\n" +
+				"\n" +
+				"	ISR App2Isr {\n" +
+				"		CATEGORY = 2;\n" +
+				"	};\n" +
+				"\n" +
+				"	APPLICATION TrustedApp {\n" +
+				"		TRUSTED = TRUE {\n" +
+				"			TRUSTED_FUNCTION = TRUE {\n" +
+				"				NAME = \"MyTaskTrustedService\";\n" +
+				"			};\n" +
+				"			TRUSTED_FUNCTION = TRUE {\n" +
+				"				NAME = \"MyIsrTrustedService\";\n" +
+				"			};\n" +
+				"			TRUSTED_FUNCTION = TRUE {\n" +
+				"				NAME = \"MyQuickTrustedService\";\n" +
+				"			};\n" +
+				"		};\n" +
+				"		ISR = \"TrustedIsr\";\n" +
+				"		TASK = \"MainTask\";\n" +
+				"		TASK = \"TrustedTask1\";\n" +
+				"		TASK = \"ErrorTask\";\n" +
+				"		MEMORY_BASE = 0x40010000;\n" +
+				"		MEMORY_SIZE = 0x10000;\n" +
+				"		SHARED_STACK_SIZE = 512;\n" +
+				"		IRQ_STACK_SIZE = 512;\n" +
+				"	};\n" +
+				"\n" +
+				"	APPLICATION App1 {\n" +
+				"		TRUSTED = FALSE;\n" +
+				"		ISR = \"App1Isr\";\n" +
+				"		TASK = \"App1Init\";\n" +
+				"		TASK = \"App1Task\";\n" +
+				"		TASK = \"App1Ack\";\n" +
+				"		TASK = \"App1Bkg\";\n" +
+				"		MEMORY_BASE = 0x40020000;\n" +
+				"		MEMORY_SIZE = 0x10000;\n" +
+				"		SHARED_STACK_SIZE = 512;\n" +
+				"		IRQ_STACK_SIZE = 512;\n" +
+				"	};\n" +
+				"\n" +
+				"	APPLICATION App2 {\n" +
+				"		TRUSTED = FALSE;\n" +
+				"		ISR = \"App2Isr\";\n" +
+				"		TASK = \"App2Init\";\n" +
+				"		TASK = \"App2Task\";\n" +
+				"		TASK = \"App2Ack\";\n" +
+				"		TASK = \"App2HiPriTask\";\n" +
+				"		MEMORY_BASE = 0x40030000;\n" +
+				"		MEMORY_SIZE = 0x4000;\n" +
+				"		SHARED_STACK_SIZE = 512;\n" +
+				"		IRQ_STACK_SIZE = 512;\n" +
+				"	};\n" +
+				"};";
+		commonWriterTest(text, 1);
+	}
 }

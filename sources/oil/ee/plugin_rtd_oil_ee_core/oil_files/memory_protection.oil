@@ -9,7 +9,17 @@ IMPLEMENTATION ee {
     	UINT32 CORE;
     	
     
-    	BOOLEAN TRUSTED;
+    	BOOLEAN [
+    		TRUE {
+    			BOOLEAN [
+		    		TRUE {
+		    			STRING NAME;
+		    		},
+		    		FALSE
+		    	] TRUSTED_FUNCTION[];
+    		},
+    		FALSE
+    	] TRUSTED = FALSE;
     	
     	ALARM_TYPE ALARM[];
     	COUNTER_TYPE COUNTER[];

@@ -260,6 +260,10 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	public final static String[] INVALID_SIGNATURE_OPTIONS = {
 			"DEBUG"
 	};
+
+	public final static String OS_APPLICATION_TRUSTED = "SGR_os_application_trusted";
+
+	public final static String OS_APPLICATION_TRUSTED_FUNCTIONS = "SGR_os_application_trusted_functions__String_list";
 	
 
 }

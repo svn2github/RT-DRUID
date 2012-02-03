@@ -147,7 +147,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 
 		StringBuffer ee_c_buffer = answer.get(FILE_EE_CFG_C);
 		ee_c_buffer.append(commentWriterC.writerBanner("System Calls") + 
-				"const EE_ADDR EE_syscall_table[EE_SYSCALL_NR] = {\n");
+				"const EE_FADDR EE_syscall_table[EE_SYSCALL_NR] = {\n");
 				
 		StringBuffer ids = new StringBuffer();
 		StringBuffer shortNames = new StringBuffer();
@@ -162,7 +162,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		// OS Services
 		for (String s: EE_OS_SERVICES_IDs) {
 			ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-			ee_c_buffer.append(indent1+"(EE_ADDR)EE_oo_"+s+",\n");
+			ee_c_buffer.append(indent1+"(EE_FADDR)EE_oo_"+s+",\n");
 			counter ++;
 		}
 		
@@ -178,7 +178,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 			if (isr2_enabled) {
 				for (String s: EE_ISR2_IDs) {
 					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-					ee_c_buffer.append(indent1+"(EE_ADDR)EE_as_"+s+",\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)EE_as_"+s+",\n");
 					counter ++;
 				}	
 			}
@@ -192,7 +192,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 
 			for (String s: EE_RESOURCES_IDs) {
 				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-				ee_c_buffer.append(indent1+"(EE_ADDR)EE_oo_"+s+",\n");
+				ee_c_buffer.append(indent1+"(EE_FADDR)EE_oo_"+s+",\n");
 				counter ++;
 			}
 		}
@@ -203,7 +203,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 
 			for (String s: EE_ALARMS_IDs) {
 				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-				ee_c_buffer.append(indent1+"(EE_ADDR)EE_oo_"+s+",\n");
+				ee_c_buffer.append(indent1+"(EE_FADDR)EE_oo_"+s+",\n");
 				counter ++;
 			}
 		}
@@ -216,7 +216,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	
 				for (String s: EE_ECC1_2_IDs) {
 					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-					ee_c_buffer.append(indent1+"(EE_ADDR)EE_oo_"+s+",\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)EE_oo_"+s+",\n");
 					counter ++;
 				}
 			}
@@ -237,10 +237,35 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 			if (enabled) {
 				for (String s: EE_SEM_IDs) {
 					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-					ee_c_buffer.append(indent1+"(EE_ADDR)EE_oo_"+s+",\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)EE_oo_"+s+",\n");
 					counter ++;
 				}
 			}
+		}
+		
+		// Trusted Functions
+		{
+			List<ISimpleGenRes> os_appls = ool.getList(IOilObjectList.OSAPPLICATION);
+			for (ISimpleGenRes appl: os_appls) {
+				if (appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
+						&& "true".equalsIgnoreCase(appl.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED))) {
+					
+					List<String> functions = appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED_FUNCTIONS) ?
+							(List<String>) appl.getObject(IEEWriterKeywords.OS_APPLICATION_TRUSTED_FUNCTIONS) : new ArrayList<String>();
+					
+					if (functions.size()>0) {
+						ee_c_buffer.insert(0, "#include \"trusted.h\"\n");
+					}
+							
+					for (String s: functions) {
+						ids.append("#define EE_ID_TRUSTED_"+s+ (s.length()<40 ? white_spaces.substring(0,32-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+						ee_c_buffer.append(indent1+"(EE_FADDR)TRUSTED_"+s+",\n");
+						counter ++;
+					}
+					
+				}
+			}
+			
 		}
 
 		int max_sys_serviceId = counter;

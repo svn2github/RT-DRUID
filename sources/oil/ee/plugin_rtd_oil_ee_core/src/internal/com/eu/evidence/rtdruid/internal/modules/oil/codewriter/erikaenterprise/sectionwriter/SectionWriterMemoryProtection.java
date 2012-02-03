@@ -148,8 +148,8 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 				long size = appl.getLong(SectionWriterOsApplication.OS_APPLICATION_MEM_SIZE);
 				int log_size = (int) Math.ceil(Math.log(size) / Math.log(2));
 				
-				boolean trusted = appl.containsProperty(SectionWriterOsApplication.OS_APPLICATION_TRUSTED) 
-						&& "true".equalsIgnoreCase(appl.getString(SectionWriterOsApplication.OS_APPLICATION_TRUSTED));
+				boolean trusted = appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
+						&& "true".equalsIgnoreCase(appl.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED));
 
 				ee_c_buffer.append("," + end +
 						indent2 + "EE_MEMPROT_USER_ENTRY("+
