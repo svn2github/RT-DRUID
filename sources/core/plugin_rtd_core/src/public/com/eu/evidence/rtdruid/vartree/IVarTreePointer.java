@@ -1,7 +1,6 @@
 package com.eu.evidence.rtdruid.vartree;
 
 
-import java.util.LinkedList;
 
 
 
@@ -94,6 +93,12 @@ public interface IVarTreePointer {
 	*/
 	public IVariable getVar();
 
+	/** Returns a new variable valid for current node.
+	*
+	*	@throws IllegalStateException	if current node is a container.
+	*/
+	public IVariable getNewVar();
+	
 	/** Returns a new variable valid for current node.
 	*
 	*	@throws IllegalStateException	if current node is a container.
@@ -327,40 +332,6 @@ public interface IVarTreePointer {
 	 * 
 	 * */
 	public String[][] getNewChildTypes();
-
-// ----------------------    NOTIFICHE && OSSERVATORI  ----------------------
-	
-	/** Sends a notication to all observer of this node.
-	*
-	*	It needs the path for identify the current node in the tree.
-	*
-	*	@param	path	the position in the tree of current node. A null path identifies the root.
-	*/
-	public void handler(String path);
-	
-	/**	Adds an observer
-	*
-	*	@param o	the observer.
-	*
-	*	@throws NullPointerException	if o is null.
-	*/
-	public void addObserver(IObserver o);
-
-	/**	Removes an observer. Do nothing if the given observer doesn't exist or is null.
-	*
-	*	@param o	the observer.
-	*/
-	public void remObserver(IObserver o);
-	
-	/**	Removes all observers
-	*/
-	public void remAllObserver();
-	
-	/**	Gets all observers (one copy of the internal list) 
-	*
-	*	@return	a list of all observers (one copy of the internal list).
-	*/
-	public LinkedList getAllObserver();
 
 // ----------------------    type Path  ----------------------
 

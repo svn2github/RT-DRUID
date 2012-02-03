@@ -9,11 +9,11 @@ package com.eu.evidence.rtdruid.internal.modules.jscan.offset;
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
 import com.eu.evidence.rtdruid.internal.modules.jscan.Schedulability;
 import com.eu.evidence.rtdruid.internal.modules.jscan.common.RMSchedulability;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Cpu;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 
 /**

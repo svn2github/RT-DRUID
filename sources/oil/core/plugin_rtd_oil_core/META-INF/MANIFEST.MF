@@ -8,19 +8,20 @@ Require-Bundle: com.eu.evidence.rtdruid.core,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
  com.eu.evidence.templates.core,
- org.eclipse.emf.ecore.xmi,
- com.eu.evidence.rtdruid.oil.model;bundle-version="2.0.0";visibility:=reexport
+ org.eclipse.emf.ecore.xmi
 Bundle-Vendor: Evidence S.r.l.
 Export-Package: com.eu.evidence.rtdruid.internal.modules.oil.exceptions,
  com.eu.evidence.rtdruid.internal.modules.oil.keywords,
+ com.eu.evidence.rtdruid.internal.modules.oil.reader,
  com.eu.evidence.rtdruid.modules.oil.abstractions,
  com.eu.evidence.rtdruid.modules.oil.codewriter.common,
  com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments,
  com.eu.evidence.rtdruid.modules.oil.codewriter.common.xsltcodegeneration,
  com.eu.evidence.rtdruid.modules.oil.codewriter.options,
+ com.eu.evidence.rtdruid.modules.oil.implementation,
  com.eu.evidence.rtdruid.modules.oil.interfaces,
- com.eu.evidence.rtdruid.modules.oil.transform,
- com.eu.evidence.rtdruid.vartree.data.oil
+ com.eu.evidence.rtdruid.modules.oil.keywords,
+ com.eu.evidence.rtdruid.modules.oil.transform
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: rtdruid_oil_core.jar

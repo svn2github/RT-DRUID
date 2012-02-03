@@ -23,12 +23,12 @@ import com.eu.evidence.rtdruid.internal.modules.jscan.offset.OffsetSchedulabilit
 import com.eu.evidence.rtdruid.internal.modules.jscan.partialorder.PartialOrderData;
 import com.eu.evidence.rtdruid.internal.modules.jscan.partialorder.StandarOutputReporter;
 import com.eu.evidence.rtdruid.internal.modules.jscan.procdeadlines.ProcDeadlineAnalysis;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Cpu;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenResList;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 
 

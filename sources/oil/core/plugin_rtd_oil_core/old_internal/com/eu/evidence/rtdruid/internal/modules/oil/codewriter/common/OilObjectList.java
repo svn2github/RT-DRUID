@@ -1,0 +1,93 @@
+/*
+ * Created on Nov 30, 2004
+ *
+ * $Id: OilObjectList.java,v 1.1 2005/09/28 15:22:30 durin Exp $
+ */
+package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.common;
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+
+
+
+/**
+* This class contains all OSEK objects defined for a specified CPU
+* 
+* @author Nicola Serreli
+*/
+public class OilObjectList implements IOilObjectList {
+
+	/**
+	 * Contains all OSEK objects defined in a specific OS. 
+	 */
+	@SuppressWarnings("unchecked")
+	private List<ISimpleGenRes>[] objectLists = new List[OBJECT_NUMBER];
+
+	// ------------------------------------------------------------------
+	/**
+	 * Stores a list of specific OSEK objects. <br>
+	 * Each Object is identifed by a String (the path of that object in the
+	 * owner VarTree).
+	 * 
+	 * @param id
+	 *            identifies the type of objects
+	 * @param list
+	 *            the objects
+	 * 
+	 * @throws IndexOutOfBoundsException
+	 *             if id isn't a valid identifer (see contants declared above).
+	 */
+	@SuppressWarnings("unchecked")
+	public void setList(int id, ArrayList<? extends ISimpleGenRes> list) {
+		if (list == null) {
+			list = new ArrayList<ISimpleGenRes>();
+		}
+		objectLists[id] = Collections
+				.unmodifiableList((ArrayList<? extends ISimpleGenRes>) list.clone());
+	}
+
+	/**
+	 * Stores a list of specific OSEK objects. <br>
+	 * Each Object is identifed by a String (the path of that object in the
+	 * owner VarTree).
+	 * 
+	 * @param id
+	 *            identifies the type of objects
+	 * @param list
+	 *            the objects
+	 * 
+	 * @throws IndexOutOfBoundsException
+	 *             if id isn't a valid identifer (see contants declared above).
+	 */
+	public void setList(int id, ISimpleGenRes[] list) {
+		if (list == null) {
+			objectLists[id] = Collections
+			.unmodifiableList(new ArrayList<ISimpleGenRes>());
+		}
+		objectLists[id] = Collections
+				.unmodifiableList(Arrays.asList(list));
+	}
+	/**
+	 * Returns an unmodificable list of specific OSEK objects. <br>
+	 * Each Object is identifed by a SimpleGenRes.
+	 * 
+	 * @param id
+	 *            identifies the type of objects
+	 * 
+	 * @return an unmodificable list of specific OSEK objects.
+	 */
+	public List<ISimpleGenRes> getList(int id) {
+		return objectLists[id];
+	}
+	
+	public String toString() {
+		return objectLists == null ? "empty" : Arrays.asList(objectLists).toString();
+	}
+
+}

@@ -10,12 +10,11 @@ package com.eu.evidence.rtdruid.internal.modules.jscan;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.internal.modules.jscan.common.RTASchedulability;
 import com.eu.evidence.rtdruid.internal.modules.jscan.offset.OffSetSchedulability;
 import com.eu.evidence.rtdruid.internal.modules.jscan.offset.OffsetDMSchedulabilityComplete;
 import com.eu.evidence.rtdruid.internal.modules.jscan.offset.OffsetSchedulabilityRTA;
-import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenResList;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
@@ -62,7 +61,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 
 		public MyTaskSet(double[] wcet, double[] period, double[] deadline,
 				double[] offset, double[] blocking, String[][] properties) {
-			super((IVarTree) RTDFactory.get(IVarTree.class), "", "");
+			super(VarTreeUtil.newVarTree(), "", "");
 
 			prefissi = new String[] { "not mapped", "cpu0" };
 			elenco = new ArrayList[] { new ArrayList<GenRes>(), new ArrayList<GenRes>() };
@@ -82,7 +81,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 		}
 		public MyTaskSet(double[] wcet, double[] period, double[] deadline,
 				double[] offset, double[] blocking, String[] type, String[][] properties) {
-			super((IVarTree) RTDFactory.get(IVarTree.class), "", "");
+			super(VarTreeUtil.newVarTree(), "", "");
 
 			prefissi = new String[] { "not mapped", "cpu0" };
 			elenco = new ArrayList[] { new ArrayList<GenRes>(), new ArrayList<GenRes>() };
@@ -108,7 +107,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 
 	public void testWithoutBlocking() {
 		
-		GenResList resources = new GenResList((IVarTree) RTDFactory.get(IVarTree.class), new String[] {""}, "Resources");
+		GenResList resources = new GenResList(VarTreeUtil.newVarTree(), new String[] {""}, "Resources");
 		double[][] period = {
 				{ 8, 12, 16 },
 				{ 8, 12, 16 },
@@ -223,7 +222,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 	}
 
 	public void testWithBlocking() {
-		GenResList resources = new GenResList((IVarTree) RTDFactory.get(IVarTree.class), new String[] {""}, "Resources");
+		GenResList resources = new GenResList(VarTreeUtil.newVarTree(), new String[] {""}, "Resources");
 		
 		ArrayList<double[][]> tests = new ArrayList<double[][]>();
 		
@@ -386,7 +385,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 		}
 		final String P = "periodic";
 		final String S = "sporadic";
-		GenResList resources = new GenResList((IVarTree) RTDFactory.get(IVarTree.class), new String[] {""}, "Resources");
+		GenResList resources = new GenResList(VarTreeUtil.newVarTree(), new String[] {""}, "Resources");
 		
 		ArrayList<Object> tests = new ArrayList<Object>();
 		
@@ -538,7 +537,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 
 	public void testModes() {
 		
-		GenResList resources = new GenResList((IVarTree) RTDFactory.get(IVarTree.class), new String[] {""}, "Resources");
+		GenResList resources = new GenResList(VarTreeUtil.newVarTree(), new String[] {""}, "Resources");
 		double[][] period = {
 				//	15		14	11		10		9		8	7	6	
 				{	 		5, 							5,	20,	65	}, // Mode_0

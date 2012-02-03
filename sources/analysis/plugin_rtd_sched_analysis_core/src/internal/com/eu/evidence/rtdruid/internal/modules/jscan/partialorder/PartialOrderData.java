@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
@@ -13,7 +14,6 @@ import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.tools.Mapping;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 import com.eu.evidence.rtdruid.vartree.tools.Utility;

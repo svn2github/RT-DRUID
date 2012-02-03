@@ -21,11 +21,11 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtil
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 
 /**

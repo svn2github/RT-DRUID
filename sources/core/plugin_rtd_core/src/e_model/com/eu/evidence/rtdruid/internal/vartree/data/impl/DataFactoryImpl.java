@@ -6,6 +6,13 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EFactoryImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
 import com.eu.evidence.rtdruid.vartree.data.Activation;
 import com.eu.evidence.rtdruid.vartree.data.Annotation;
 import com.eu.evidence.rtdruid.vartree.data.Architectural;
@@ -21,7 +28,6 @@ import com.eu.evidence.rtdruid.vartree.data.Ecu;
 import com.eu.evidence.rtdruid.vartree.data.Event;
 import com.eu.evidence.rtdruid.vartree.data.ExecTime;
 import com.eu.evidence.rtdruid.vartree.data.ExecTimeList;
-import com.eu.evidence.rtdruid.vartree.data.ExtendVarManager;
 import com.eu.evidence.rtdruid.vartree.data.Field;
 import com.eu.evidence.rtdruid.vartree.data.Frame;
 import com.eu.evidence.rtdruid.vartree.data.Functional;
@@ -56,7 +62,6 @@ import com.eu.evidence.rtdruid.vartree.data.Trigger;
 import com.eu.evidence.rtdruid.vartree.data.Type;
 import com.eu.evidence.rtdruid.vartree.data.Var;
 import com.eu.evidence.rtdruid.vartree.data.VarMap;
-
 import com.eu.evidence.rtdruid.vartree.variables.BooleanVar;
 import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
 import com.eu.evidence.rtdruid.vartree.variables.FloatVar;
@@ -66,15 +71,6 @@ import com.eu.evidence.rtdruid.vartree.variables.OilVar;
 import com.eu.evidence.rtdruid.vartree.variables.PropertyVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-
-import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc -->
@@ -175,20 +171,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 
 	
 	public Object createFromString(EDataType eDataType, String initialValue) {
-		if (initialValue == null || initialValue.length() == 0) {
-			return null;
-		}
-		return createExtendedVarFromString(eDataType, initialValue);
-	}
-
-	public Object createExtendedVarFromString(EDataType eDataType,
-			String initialValue) {
-
-		if (ExtendVarManager.containsExtention(eDataType)) {
-			return ExtendVarManager.createExtendedVarFromString(eDataType,
-					initialValue);
-		}
-
 		return createFromStringGen(eDataType, initialValue);
 	}
 	
@@ -222,21 +204,12 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 		}
 	}
 
-	
-	public String convertToString(EDataType eDataType, Object instanceValue) {
-		if (ExtendVarManager.containsExtention(eDataType)) {
-			return ExtendVarManager.convertToString(eDataType, instanceValue);
-		}
-
-		return convertToStringGen(eDataType, instanceValue);
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertToStringGen(EDataType eDataType, Object instanceValue) {
+	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
 			case DataPackage.BOOLEAN_VAR:
 				return convertBooleanVarToString(eDataType, instanceValue);

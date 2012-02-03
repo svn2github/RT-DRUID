@@ -21,8 +21,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.IllegalIDException;
 
 public class VarTreeIdHandler {
 	
@@ -89,12 +87,19 @@ public class VarTreeIdHandler {
 
 		List<EStructuralFeature> features = eclass.getEAllStructuralFeatures();
 		List<EAttribute> idFeatures = new ArrayList<EAttribute>();
+		EAttribute nameAttr = null;
 		for (EStructuralFeature esf : features) {
 			if (esf instanceof EAttribute) {
 				if (((EAttribute) esf).isID()) {
 					idFeatures.add((EAttribute) esf);
 				}
+				if ("name".equalsIgnoreCase(((EAttribute) esf).getName())) {
+					nameAttr = (EAttribute) esf;
+				}
 			}
+		}
+		if (idFeatures.size() == 0 && nameAttr != null) {
+			idFeatures.add(nameAttr);
 		}
 
 		idFeatures = Collections.unmodifiableList(idFeatures);

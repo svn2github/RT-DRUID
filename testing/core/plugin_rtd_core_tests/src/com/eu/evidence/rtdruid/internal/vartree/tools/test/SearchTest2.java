@@ -1,21 +1,21 @@
 /*
  * Created on 18-mar-2004
  *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
 // progect package
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 import com.eu.evidence.rtdruid.vartree.tools.Utility;
 
@@ -24,7 +24,7 @@ import com.eu.evidence.rtdruid.vartree.tools.Utility;
 /**
  *  @author  Nicola Serreli
  */
-public class SearchTest2 extends TestCase {
+public class SearchTest2 {
 	/** Abbreviation for VarTree.SEPARATOR */
 	private final static char S = IVarTree.SEPARATOR;
 	
@@ -65,38 +65,29 @@ public class SearchTest2 extends TestCase {
 		"/Behavior/Project_Steer_Control_v06/Control_steer/Control_steer_process_count_A"
 	};
 
-	/**
-	 * Constructor for SearchTest.
-	 * @param arg0
-	 */
-	public SearchTest2(String arg0) {
-		super(arg0);
-	}
-
-	public SearchTest2() {}
-
-	public static Test suite() {
-		return new TestSuite(SearchTest2.class);
-	}
-
+	
 	/*
 	 * @see TestCase#setUp()
 	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-//		ProjectManager.instance().newProject();
+	@Before
+	public void setUp() throws Exception {
 		vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 		ti = vt.newTreeInterface();
 	}
 
+	@Test
+	@Ignore
 	public void testAVar() {
 		// TEST: example 2 non ha var
 	}
 
+	@Test
+	@Ignore
 	public void testALocalVar() {
 		// TEST: example 2 non ha var
 	}
 
+	@Test
 	public void testAProc() {
 		// innesistente
 		assertTrue(Search.aProc(ti, S+"DefaultSystem", "nessuno") == null);
@@ -156,6 +147,7 @@ public class SearchTest2 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test
 	public void testALocalProc() {
 		// innesistente
 		assertTrue(Search.aLocalProc(ti, S+"DefaultSystem", "nessuno") == null);
@@ -212,6 +204,7 @@ public class SearchTest2 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test
 	public void testProcPrefix() {
 		// innesistente
 		assertTrue(Search.procPrefix(ti, S+"DefaultSystem", "nessuno") == null);
@@ -267,6 +260,7 @@ public class SearchTest2 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test
 	public void testARtos() {
 		String source = 
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
@@ -359,6 +353,7 @@ public class SearchTest2 extends TestCase {
 		
 	}
 	
+	@Test
 	public void testAEvent() {
 		String source = 
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
@@ -392,6 +387,7 @@ public class SearchTest2 extends TestCase {
 		
 	}
 	
+	@Test
 	public void testALlProcs() {
 		
 		String[] procs = Search.allProcs(vt);
@@ -405,6 +401,7 @@ public class SearchTest2 extends TestCase {
 	}
 	
 
+	@Test
 	public void testAllTasks() {
 		
 		String[] tasks = Search.allTasks(vt.newTreeInterface());
@@ -417,16 +414,23 @@ public class SearchTest2 extends TestCase {
 		assertTrue(tasks.length == 14);
 	}
 
-/*	public void testAMethod() {
+	@Test
+	@Ignore
+	public void testAMethod() {
 	}
 
+	@Test
+	@Ignore
 	public void testAGlobalMethod() {
 	}
 
+	@Test
+	@Ignore
 	public void testALocalMethod() {
 	}
 
+	@Test
+	@Ignore
 	public void testAMethodRef() {
 	}
-*/
 }

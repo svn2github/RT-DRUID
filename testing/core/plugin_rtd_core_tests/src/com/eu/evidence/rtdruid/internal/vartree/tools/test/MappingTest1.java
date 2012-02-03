@@ -7,18 +7,22 @@
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.tools.IncompleteMappingException;
 import com.eu.evidence.rtdruid.vartree.tools.Mapping;
 import com.eu.evidence.rtdruid.vartree.tools.Utility;
@@ -26,35 +30,20 @@ import com.eu.evidence.rtdruid.vartree.tools.Utility;
 /**
  * @author  Nicola Serreli
  */
-public class MappingTest1 extends TestCase {
+public class MappingTest1 {
 	protected final static char S = IVarTree.SEPARATOR;
 
 	protected IVarTree vt;
-	/**
-	 * Constructor for MappingTest.
-	 * @param arg0
-	 */
-	public MappingTest1(String arg0) {
-		super(arg0);
-	}
-	public MappingTest1() {}
 
-	public static Test suite() {
-		return new TestSuite(MappingTest1.class);
-	}
-
-	/*
-	 * @see TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-//		ProjectManager.instance().newProject();
+	@Before
+	public void setUp() throws Exception {
 		vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 	}
 
 	/*
 	 * Test for void Mapping(String)
 	 */
+	@Test
 	public void testMappingString() {
 		Mapping m = new Mapping(vt, "Nome");
 		assertTrue(m.getSystem().equals("Nome"));
@@ -93,6 +82,7 @@ public class MappingTest1 extends TestCase {
 	/*
 	 * Test for void Mapping(String, String)
 	 */
+	@Test
 	public void testMappingStringString() {
 		Mapping m = new Mapping(vt, "Nome", "Modo");
 		assertTrue(m.getSystem().equals("Nome"));
@@ -131,6 +121,7 @@ public class MappingTest1 extends TestCase {
 
 	}
 
+	@Test
 	public void testSetMode() {
 		Mapping m = new Mapping(vt, "Nome", "Modo");
 		assertTrue(m.getSystem().equals("Nome"));
@@ -161,7 +152,7 @@ public class MappingTest1 extends TestCase {
 		assertTrue(m.getMode().equals("1"));
 	}
 
-
+	@Test
 	public void testProcToTask() {
 		Mapping m = new Mapping(vt, "defaultSystem");
 		try {
@@ -213,6 +204,7 @@ public class MappingTest1 extends TestCase {
 	}
 
 
+	@Test
 	public void testRtosToTask_modify() {
 		// senza indicare il modo
 		
@@ -287,6 +279,7 @@ public class MappingTest1 extends TestCase {
 	}
 
 	
+	@Test
 	public void testTaskToProc() {
 		// senza indicare il modo
 		Mapping m = new Mapping(vt, "defaultSystem");
@@ -377,6 +370,7 @@ public class MappingTest1 extends TestCase {
 
 ///////////////////////////////////////////
 
+	@Test
 	public void testTaskToRTOS() {
 		// senza indicare il modo
 		Mapping m = new Mapping(vt, "defaultSystem");
@@ -410,6 +404,7 @@ public class MappingTest1 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test
 	public void testRtosToTask() {
 		// senza indicare il modo
 		Mapping m = new Mapping(vt, "defaultSystem");
@@ -479,10 +474,13 @@ public class MappingTest1 extends TestCase {
 	
 	
 /////////////////////////////////////////////
-/*
- // TEST: Aggiustare i test di TaskToCpu e CpuToTask
+
  
+	@Test
+	@Ignore
 	public void testTaskToCpu() {
+		/*
+		 // TEST: Aggiustare i test di TaskToCpu e CpuToTask
 		// senza indicare il modo
 		Mapping m = new Mapping("DefaultSystem");
 		assertTrue(m.taskToCpu("Task1").equals("erika"));
@@ -513,9 +511,13 @@ public class MappingTest1 extends TestCase {
 		try {
 			m.taskToCpu(null);
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
+		*/
 	}
 
+	@Test
+	@Ignore
 	public void testCpuToTask() {
+		/*
 		// senza indicare il modo
 		Mapping m = new Mapping("DefaultSystem");
 		String[] risp = m.cpuToTask("erika");
@@ -574,10 +576,12 @@ public class MappingTest1 extends TestCase {
 		try {
 			m.cpuToTask(null);
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
+		*/
 	}
-*/
+
 ////////////////////////////
 
+	@Test
 	public void testVarToMutex() {
 		// senza indicare il modo
 		Mapping m = new Mapping(vt, "defaultSystem");
@@ -611,6 +615,7 @@ public class MappingTest1 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test
 	public void testMutexToVar() {
 		// senza indicare il modo
 		Mapping m = new Mapping(vt, "defaultSystem");

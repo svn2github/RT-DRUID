@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 /** Contains a list of objects with the same prefix and type.
 *	Each object is described by {@link GenRes GenRes}

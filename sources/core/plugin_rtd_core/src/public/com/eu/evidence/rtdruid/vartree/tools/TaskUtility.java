@@ -8,11 +8,11 @@ package com.eu.evidence.rtdruid.vartree.tools;
 import java.util.ArrayList;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 public class TaskUtility implements ITaskUtility {
 	

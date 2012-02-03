@@ -10,13 +10,13 @@ import java.util.LinkedList;
 
 import org.eclipse.core.runtime.Assert;
 
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IMultiValues;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 /**
  * @author Nicola Serreli

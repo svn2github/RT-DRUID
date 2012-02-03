@@ -9,11 +9,11 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import com.eu.evidence.rtdruid.desk.Messages;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IMultiValues;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
 import com.eu.evidence.rtdruid.vartree.variables.FloatVar;
 import com.eu.evidence.rtdruid.vartree.variables.IntegerVar;
@@ -471,7 +471,6 @@ public class GenRes {
 
 				// .. and store in the tree
 				ti.setValue(tmpPath, var);
-				ti.handler(tmpPath);
 			} else {
 				// check if is a TimeVar
 				IVariable var = ti.getValue(tmpPath);
@@ -496,7 +495,6 @@ public class GenRes {
 
 				// .. and store var in the tree
 				ti.setValue(tmpPath, var);
-				ti.handler(tmpPath);
 			}
 		} catch (Exception e) {
 			String txt = "aValue not stored:\n\twhere =" + getPath(key)

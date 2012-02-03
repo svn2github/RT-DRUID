@@ -8,21 +8,23 @@ import java.util.Map;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 
-import com.eu.evidence.rtdruid.vartree.IEPackageProvider;
+import com.eu.evidence.rtdruid.internal.vartree.data.provider.DataItemProviderAdapterFactory;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
+import com.eu.evidence.rtdruid.vartree.VarTreePointerEMF;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
 
 
 /**
@@ -45,7 +47,7 @@ import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
  * character (see {@link com.eu.evidence.rtdruid.vartree.IVarTree#SEPARATOR SEPARATOR});
  * 
  * @author Nicola Serreli
- * @see com.eu.evidence.rtdruid.vartree.data.init.DataPath
+ * @see com.eu.evidence.rtdruid.vartree.DataPath
  */
 final public class VarTree extends AdapterFactoryEditingDomain implements IVarTree {
 
@@ -94,19 +96,19 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
     };
  
     protected void updateResourceFactoryRegistry() {
-    	Registry reg = getResourceSet().getPackageRegistry();
-    	
-    	IEPackageProvider[] epps = RequiredEPackageManager.getEPackages();
-    	for (IEPackageProvider epp: epps) {
-    		EPackage ep = epp.getEPackage(this);
-    		String ns = null;
-    		if (ep != null) {
-    			ns=ep.getNsURI();
-    			if (ns != null) {
-		    		reg.put(ns, ep);
-    			}
-    		}
-    	}
+//    	Registry reg = getResourceSet().getPackageRegistry();
+//    	
+//    	IEPackageProvider[] epps = RequiredEPackageManager.getEPackages();
+//    	for (IEPackageProvider epp: epps) {
+//    		EPackage ep = epp.getEPackage(this);
+//    		String ns = null;
+//    		if (ep != null) {
+//    			ns=ep.getNsURI();
+//    			if (ns != null) {
+//		    		reg.put(ns, ep);
+//    			}
+//    		}
+//    	}
     	
     }
     
@@ -114,8 +116,13 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
      * Makes a new ComposedAdapterFactory
      * */
     protected static ComposedAdapterFactory getFactories() {
-    	return new ComposedAdapterFactory(
-                VarTreeRequiredFactories.getFactories());
+    	return new ComposedAdapterFactory( new AdapterFactory[] {
+    	        	new DataItemProviderAdapterFactory(),
+    	        	new ResourceItemProviderAdapterFactory(),
+    	        	new ReflectiveItemProviderAdapterFactory()
+    	        });
+//    	return new ComposedAdapterFactory(
+//                VarTreeRequiredFactories.getFactories());
     }
 
     /**
@@ -147,8 +154,8 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
     public IVarTreePointer newVarTreePointer() {
         EList<EObject> root = ((Resource) resourceSet.getResources().get(0))
                 .getContents();
-        //return new VarTreePointerEMF(root, this);
-        return new VarTreePointerEMFExtended(root, this);
+        return new VarTreePointerEMF(root, this);
+        //return new VarTreePointerEMFExtended(root, this);
     }
 
     /**
@@ -249,7 +256,7 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
      * @param newRoot
      *            the new tree
      */
-    public void setRoot(ObjectWithID newRoot) {
+    public void setRoot(EObject newRoot) {
         EList<EObject> el1 = ((Resource) resourceSet.getResources().get(0))
                 .getContents();
         if (el1.size() == 0) {

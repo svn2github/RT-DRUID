@@ -1,11 +1,13 @@
 package com.eu.evidence.rtdruid.vartree.abstractions.old;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
@@ -63,7 +65,7 @@ public class CpuTest {
 		String act_path = cpu.getPath(Cpu.SCHED_ACTIVATION_COST);
 		System.out.println(act_path);
 		
-		assertTrue(act_path == null);
+		assertNull(act_path);
 		
 		ts.setCpuProperty(Cpu.SCHED_ACTIVATION_COST, "", false);
 		cpu.setProperty(Cpu.SCHED_ACTIVATION_COST, 1);
@@ -72,7 +74,7 @@ public class CpuTest {
 		act_path = cpu.getPath(Cpu.SCHED_ACTIVATION_COST);
 		System.out.println(act_path);
 		
-		assertTrue(act_path != null);
+		assertNotNull(act_path);
 
 		System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
 	}
@@ -126,19 +128,19 @@ public class CpuTest {
 		{ // write
 			TaskSet ts = new TaskSet(vt, Search.systemName(vt));
 			GenRes cpu = ts.getCpuItem(1);
-			assertTrue( cpu != null);
+			assertNotNull(cpu);
 			assertTrue( cpu instanceof Cpu);
 			
 			assertTrue("mpc5554".equals(cpu.getName()));
 			
 			String act_path = cpu.getPath(Cpu.SCHED_ACTIVATION_COST);
 			
-			assertTrue(act_path == null);
+			assertNull(act_path);
 			
 			ts.setCpuProperty(Cpu.SCHED_ACTIVATION_COST, "", false);
 			
 			act_path = cpu.getPath(Cpu.SCHED_ACTIVATION_COST);
-			assertTrue(act_path == null);
+			assertNull(act_path);
 			
 			
 			
@@ -146,19 +148,19 @@ public class CpuTest {
 			cpu.setSave(true);
 			
 			act_path = cpu.getPath(Cpu.SCHED_ACTIVATION_COST);
-			assertTrue(act_path != null);
+			assertNotNull(act_path);
 		}
 		
 		{ // read
 			TaskSet ts = new TaskSet(vt, Search.systemName(vt));
 			GenRes cpu = ts.getCpuItem(1);
-			assertTrue( cpu != null);
+			assertNotNull(cpu);
 			assertTrue( cpu instanceof Cpu);
 			
 			assertTrue("mpc5554".equals(cpu.getName()));
 			
 			String act_path = cpu.getPath(Cpu.SCHED_ACTIVATION_COST);
-			assertTrue(act_path != null);
+			assertNotNull(act_path);
 			
 			boolean ok = false;
 			try {
@@ -171,13 +173,13 @@ public class CpuTest {
 			ts.setCpuProperty(Cpu.SCHED_ACTIVATION_COST, "", false);
 			
 			act_path = cpu.getPath(Cpu.SCHED_ACTIVATION_COST);
-			assertTrue(act_path != null);
+			assertNotNull(act_path);
 			
 			
 			
 			Object value = cpu.getProperty(Cpu.SCHED_ACTIVATION_COST);
 			System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
-			assertTrue(value != null);
+			assertNotNull(value);
 			TimeVar expected = new TimeVar("1us");
 			expected.setType(Task.COMMON_TIME_TYPE);
 			assertTrue((""+expected.get()).equals("" + value));
@@ -235,22 +237,22 @@ public class CpuTest {
 		{ // write
 			TaskSet ts = new TaskSet(vt, Search.systemName(vt));
 			GenRes cpu = ts.getCpuItem(1);
-			assertTrue( cpu != null);
+			assertNotNull(cpu);
 			assertTrue( cpu instanceof Cpu);
 			
 			assertTrue("mpc5554".equals(cpu.getName()));
 			
-			assertTrue(cpu.getPath(Cpu.SCHED_ACTIVATION_COST) == null);
-			assertTrue(cpu.getPath(Cpu.SCHED_TERMINATION_COST) == null);
-			assertTrue(cpu.getPath(Cpu.SCHED_CONTEXT_SWITCH_COST) == null);
+			assertNull(cpu.getPath(Cpu.SCHED_ACTIVATION_COST));
+			assertNull(cpu.getPath(Cpu.SCHED_TERMINATION_COST));
+			assertNull(cpu.getPath(Cpu.SCHED_CONTEXT_SWITCH_COST));
 			
 			ts.setCpuProperty(Cpu.SCHED_ACTIVATION_COST, "", false);
 			ts.setCpuProperty(Cpu.SCHED_TERMINATION_COST, "", false);
 			ts.setCpuProperty(Cpu.SCHED_CONTEXT_SWITCH_COST, "", false);
 			
-			assertTrue(cpu.getPath(Cpu.SCHED_ACTIVATION_COST) == null);
-			assertTrue(cpu.getPath(Cpu.SCHED_TERMINATION_COST) == null);
-			assertTrue(cpu.getPath(Cpu.SCHED_CONTEXT_SWITCH_COST) == null);
+			assertNull(cpu.getPath(Cpu.SCHED_ACTIVATION_COST));
+			assertNull(cpu.getPath(Cpu.SCHED_TERMINATION_COST));
+			assertNull(cpu.getPath(Cpu.SCHED_CONTEXT_SWITCH_COST));
 			
 			
 			cpu.setSave(true);
@@ -259,22 +261,22 @@ public class CpuTest {
 			cpu.setProperty(Cpu.SCHED_TERMINATION_COST, "2us");
 			cpu.setProperty(Cpu.SCHED_CONTEXT_SWITCH_COST, "3us");
 			
-			assertTrue(cpu.getPath(Cpu.SCHED_ACTIVATION_COST) != null);
-			assertTrue(cpu.getPath(Cpu.SCHED_TERMINATION_COST) != null);
-			assertTrue(cpu.getPath(Cpu.SCHED_CONTEXT_SWITCH_COST) != null);
+			assertNotNull(cpu.getPath(Cpu.SCHED_ACTIVATION_COST));
+			assertNotNull(cpu.getPath(Cpu.SCHED_TERMINATION_COST));
+			assertNotNull(cpu.getPath(Cpu.SCHED_CONTEXT_SWITCH_COST));
 		}
 		
 		{ // read
 			TaskSet ts = new TaskSet(vt, Search.systemName(vt));
 			GenRes cpu = ts.getCpuItem(1);
-			assertTrue( cpu != null);
+			assertNotNull(cpu);
 			assertTrue( cpu instanceof Cpu);
 			
 			assertTrue("mpc5554".equals(cpu.getName()));
 			
-			assertTrue(cpu.getPath(Cpu.SCHED_ACTIVATION_COST) != null);
-			assertTrue(cpu.getPath(Cpu.SCHED_TERMINATION_COST) != null);
-			assertTrue(cpu.getPath(Cpu.SCHED_CONTEXT_SWITCH_COST) != null);
+			assertNotNull(cpu.getPath(Cpu.SCHED_ACTIVATION_COST));
+			assertNotNull(cpu.getPath(Cpu.SCHED_TERMINATION_COST));
+			assertNotNull(cpu.getPath(Cpu.SCHED_CONTEXT_SWITCH_COST));
 			
 			boolean ok = false;
 			try {
@@ -309,7 +311,7 @@ public class CpuTest {
 			{
 				Object value = cpu.getProperty(Cpu.SCHED_ACTIVATION_COST);
 				System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
-				assertTrue(value != null);
+				assertNotNull(value);
 				TimeVar expected = new TimeVar("1us");
 				expected.setType(Task.COMMON_TIME_TYPE);
 				assertTrue((""+expected.get()).equals("" + value));
@@ -317,7 +319,7 @@ public class CpuTest {
 			{
 				Object value = cpu.getProperty(Cpu.SCHED_TERMINATION_COST);
 				System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
-				assertTrue(value != null);
+				assertNotNull(value);
 				TimeVar expected = new TimeVar("2us");
 				expected.setType(Task.COMMON_TIME_TYPE);
 				assertTrue((""+expected.get()).equals("" + value));
@@ -325,7 +327,7 @@ public class CpuTest {
 			{
 				Object value = cpu.getProperty(Cpu.SCHED_CONTEXT_SWITCH_COST);
 				System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
-				assertTrue(value != null);
+				assertNotNull(value);
 				TimeVar expected = new TimeVar("3us");
 				expected.setType(Task.COMMON_TIME_TYPE);
 				assertTrue((""+expected.get()).equals("" + value));

@@ -7,7 +7,6 @@ package com.eu.evidence.rtdruid.modules.mapping.functionalviewer.ui;
 
 
 import java.util.EventObject;
-import java.util.HashMap;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -31,14 +30,14 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPart;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
+import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.mapping.functionalviewer.model.GSystem;
 import com.eu.evidence.rtdruid.modules.mapping.functionalviewer.model.ModelLoader;
 import com.eu.evidence.rtdruid.modules.mapping.functionalviewer.parts.ActivityPartFactory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
 
 /**
  * This class is used to show the Data Flow stored inside a VarTree,
@@ -205,7 +204,7 @@ public class DataFlowViewer extends GraphicalEditor {
 		super.setInput(input);
 		
 		if (vt == null) {
-			vt = (IVarTree) RTDFactory.get(IVarTree.class);
+			vt = VarTreeUtil.newVarTree();
 	
 			// get data
 			IFile file = ((IFileEditorInput) input).getFile();
@@ -216,7 +215,7 @@ public class DataFlowViewer extends GraphicalEditor {
 			// load resource
 			IVTResource res = (IVTResource) new RTD_XMI_Factory().createResource();
 			try {
-				res.load(file.getContents(), new HashMap());
+				res.load(file.getContents(), null);
 			} catch (Exception e) {
 				e.printStackTrace();
 	

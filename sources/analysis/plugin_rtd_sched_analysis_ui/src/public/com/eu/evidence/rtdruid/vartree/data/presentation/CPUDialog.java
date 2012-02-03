@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.eu.evidence.rtdruid.ui.common.Abstract_VT_View;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IMultiValues;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -26,7 +27,6 @@ import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVarTreeProvider;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 /**

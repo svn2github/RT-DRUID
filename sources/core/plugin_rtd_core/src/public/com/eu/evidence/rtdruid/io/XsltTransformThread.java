@@ -156,7 +156,7 @@ class XsltTransformThread extends Thread {
 								String where = (filePath == null ? "an internal file"
 										: filePath);
 								String tmp = "Load " + where + ": \n" + log;
-
+// TODO : far arrivare fuori questa eccezione
 								RtdruidLog.log(new RuntimeException(tmp));
 							}
 
@@ -264,8 +264,6 @@ class XsltTransformThread extends Thread {
 	}
 
 	private synchronized void addException(Throwable e) {
-		RtdruidLog.showDebug(e);
-		// e.printStackTrace();
 		exception = true;
 
 		throw new RuntimeException(e.getMessage());

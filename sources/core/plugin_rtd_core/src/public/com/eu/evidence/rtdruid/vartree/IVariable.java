@@ -1,6 +1,7 @@
 package com.eu.evidence.rtdruid.vartree;
 
 
+
 /**	This interface is used to define class to implement a abstract type for shared variables.
 *
 *	<br><br><b> If a class implements a type and if you want to store it in VariableFactory, this class MUST implement public default constructor.</b><br> 
@@ -62,6 +63,11 @@ public interface IVariable extends Cloneable {
 	*	contained in the given list of valids values.
 	*/
 	public static class NotValidValueException extends RuntimeException {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4533669355508901080L;
+
 		public NotValidValueException(String msg) {
 			super(msg);
 		} 

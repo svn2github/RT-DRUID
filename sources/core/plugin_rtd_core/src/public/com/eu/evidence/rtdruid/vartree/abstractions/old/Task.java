@@ -15,10 +15,10 @@ import java.util.Hashtable;
 
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.tools.CacheMissCostCommon;
 import com.eu.evidence.rtdruid.vartree.tools.Mapping;
 import com.eu.evidence.rtdruid.vartree.tools.Search;

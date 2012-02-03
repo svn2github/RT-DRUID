@@ -5,6 +5,7 @@
  */
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,16 +16,16 @@ import java.net.URL;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.service.datalocation.Location;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 /**
  * 
@@ -238,7 +239,7 @@ public class CodeWritertTest extends AbstractCodeWriterTest {
 	+ "};\n";
 
 	public void testDefaultValue() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(
 				OIL_TEST_DEFAULT_VALUE.getBytes()), vt);
 

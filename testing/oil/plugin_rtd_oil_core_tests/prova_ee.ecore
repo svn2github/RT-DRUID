@@ -2023,6 +2023,122 @@
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0" eSuperTypes="//OS__CPU_1DATA">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="CORTEX_M0">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ID" defaultValueLiteral="default_cpu">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="DEFAULT_VALUE" value="default_cpu"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="APP_SRC" upperBound="-1">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="MULTI_STACK" eType="//OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK" containment="true">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="DEFAULT_VALUE" value="FALSE"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="JLINK" eType="//OS__CPU_1DATA__CORTEX_1M0__JLINK" containment="true">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="DEFAULT_VALUE" value="FALSE"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="COMPILER_TYPE" eType="//OS__CPU_1DATA__CORTEX_1M0__COMPILER_1TYPE" containment="true">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variant_type" lowerBound="1" changeable="false" defaultValueLiteral="BOOLEAN">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE" eSuperTypes="//OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="TRUE">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="IRQ_STACK" eType="//OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK" containment="true">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variant_type" lowerBound="1" changeable="false" defaultValueLiteral="BOOLEAN">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE" eSuperTypes="//OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="TRUE">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="SYS_SIZE">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE" eSuperTypes="//OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="FALSE">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__FALSE" eSuperTypes="//OS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="FALSE">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__JLINK" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variant_type" lowerBound="1" changeable="false" defaultValueLiteral="BOOLEAN">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__JLINK__TRUE" eSuperTypes="//OS__CPU_1DATA__CORTEX_1M0__JLINK">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="TRUE">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__JLINK__FALSE" eSuperTypes="//OS__CPU_1DATA__CORTEX_1M0__JLINK">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="FALSE">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__COMPILER_1TYPE" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variant_type" lowerBound="1" changeable="false" defaultValueLiteral="ENUM">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__CORTEX_1M0__COMPILER_1TYPE__IAR" eSuperTypes="//OS__CPU_1DATA__CORTEX_1M0__COMPILER_1TYPE">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="IAR">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OS__CPU_1DATA__PIC30" eSuperTypes="//OS__CPU_1DATA">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="PIC30">
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -3780,6 +3896,53 @@
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="IRQ_NO_PENDING">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__MCU_1DATA__CORTEX_1M0" eSuperTypes="//OS__MCU_1DATA">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="CORTEX_M0">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="MODEL" eType="//OS__MCU_1DATA__CORTEX_1M0__MODEL" containment="true">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__MCU_1DATA__CORTEX_1M0__MODEL" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variant_type" lowerBound="1" changeable="false" defaultValueLiteral="ENUM">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__MCU_1DATA__CORTEX_1M0__MODEL__CUSTOM" eSuperTypes="//OS__MCU_1DATA__CORTEX_1M0__MODEL">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="CUSTOM">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MODEL">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="LINKERSCRIPT">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="INCLUDE_H">
       <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
         <details key="WITH_AUTO" value="false"/>
       </eAnnotations>
@@ -6176,6 +6339,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OS__ORTI_1SECTIONS__ALARM_1SECTION" eSuperTypes="//OS__ORTI_1SECTIONS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="ALARM_SECTION">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OS__ORTI_1SECTIONS__ISR2_1SECTION" eSuperTypes="//OS__ORTI_1SECTIONS">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="ISR2_SECTION">
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
   </eClassifiers>
@@ -8782,6 +8950,9 @@
       <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
         <details key="AUTO" value="false"/>
       </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="DEFAULT_VALUE" value="FALSE"/>
+      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ALARM" upperBound="-1" eType="//ALARM"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="COUNTER" upperBound="-1" eType="//COUNTER"/>
@@ -8856,6 +9027,35 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="APPLICATION__TRUSTED__TRUE" eSuperTypes="//APPLICATION__TRUSTED">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="TRUE">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TRUSTED_FUNCTION" upperBound="-1" eType="//APPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION" containment="true">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="APPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variant_type" lowerBound="1" changeable="false" defaultValueLiteral="BOOLEAN">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="APPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION__TRUE" eSuperTypes="//APPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="TRUE">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="NAME">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="APPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION__FALSE" eSuperTypes="//APPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" changeable="false" defaultValueLiteral="FALSE">
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
   </eClassifiers>

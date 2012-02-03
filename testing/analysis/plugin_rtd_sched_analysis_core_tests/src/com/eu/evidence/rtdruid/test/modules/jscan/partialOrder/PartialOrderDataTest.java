@@ -11,7 +11,7 @@ import com.eu.evidence.rtdruid.internal.modules.jscan.partialorder.ProcData;
 import com.eu.evidence.rtdruid.internal.modules.jscan.partialorder.StandarOutputReporter;
 import com.eu.evidence.rtdruid.internal.modules.jscan.partialorder.TaskData;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 
 public class PartialOrderDataTest extends TestCase {

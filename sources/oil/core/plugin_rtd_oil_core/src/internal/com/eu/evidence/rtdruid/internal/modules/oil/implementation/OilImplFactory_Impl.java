@@ -16,9 +16,8 @@ import java.util.LinkedList;
 import org.w3c.dom.Document;
 
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
-import com.eu.evidence.rtdruid.modules.oil.implementation.OilImplementation;
-import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
-import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
+import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
+import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplementation;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
 /**
@@ -29,7 +28,7 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
 public class OilImplFactory_Impl extends OilImplFactory {
 	/** The unique instance of this Factory */
 	//public final static OilImplFactory INSTANCE = new OilImplFactory();
-	protected final IVarTree vt;
+	//protected final IVarTree vt;
 
 	// ----------------------------
 
@@ -37,20 +36,26 @@ public class OilImplFactory_Impl extends OilImplFactory {
 	protected LinkedList<IOilImplementation> descrList;
 
 	/** Contruct a new factory */
-	private OilImplFactory_Impl(IVarTree vt) {
+//	private OilImplFactory_Impl(IVarTree vt) {
+	private OilImplFactory_Impl() {
 		descrList = new LinkedList<IOilImplementation>();
-		this.vt = vt;
+//		this.vt = vt;
 	}
 	
 	public static OilImplFactory getAnInstance(IVarTree vt) {
-		HashMap<String, Object> properties = vt.getProperties();
-		
 		final OilImplFactory answer;
-		if (properties.containsKey(VT_IMPLEMENTATION_FACTORY)) {
-			answer = (OilImplFactory) properties.get(VT_IMPLEMENTATION_FACTORY);
+		
+		if (vt != null) {
+			HashMap<String, Object> properties = vt.getProperties();
+			
+			if (properties.containsKey(VT_IMPLEMENTATION_FACTORY)) {
+				answer = (OilImplFactory) properties.get(VT_IMPLEMENTATION_FACTORY);
+			} else {
+				answer = new OilImplFactory_Impl();
+				properties.put(VT_IMPLEMENTATION_FACTORY, answer);
+			}
 		} else {
-			answer = new OilImplFactory_Impl(vt);
-			properties.put(VT_IMPLEMENTATION_FACTORY, answer);
+			answer = new OilImplFactory_Impl();
 		}
 		return answer;
 	}

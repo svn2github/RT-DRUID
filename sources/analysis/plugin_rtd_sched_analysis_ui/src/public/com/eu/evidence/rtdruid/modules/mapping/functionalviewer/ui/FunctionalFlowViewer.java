@@ -31,14 +31,14 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPart;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
+import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.mapping.functionalviewer.model.GSystem;
 import com.eu.evidence.rtdruid.modules.mapping.functionalviewer.model.ModelLoader;
 import com.eu.evidence.rtdruid.modules.mapping.functionalviewer.parts.ActivityPartFactory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
 
 /**
  * 
@@ -202,7 +202,7 @@ public class FunctionalFlowViewer extends GraphicalEditor {
 		super.setInput(input);
 		
 		if (vt == null) {
-			vt = (IVarTree) RTDFactory.get(IVarTree.class);
+			vt = VarTreeUtil.newVarTree();
 	
 			// get data
 			IFile file = ((IFileEditorInput) input).getFile();

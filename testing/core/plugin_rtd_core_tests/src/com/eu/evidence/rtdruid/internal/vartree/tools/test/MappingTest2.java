@@ -8,18 +8,22 @@ package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
 // progect package
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.tools.IncompleteMappingException;
 import com.eu.evidence.rtdruid.vartree.tools.Mapping;
 import com.eu.evidence.rtdruid.vartree.tools.Utility;
@@ -30,7 +34,7 @@ import com.eu.evidence.rtdruid.vartree.tools.Utility;
 /**
  * @author  Nicola Serreli
  */
-public class MappingTest2 extends TestCase {
+public class MappingTest2 {
 	
 	protected final static String S = "" + DataPath.SEPARATOR;
 	protected IVarTree vt;
@@ -148,32 +152,19 @@ public class MappingTest2 extends TestCase {
 13	"<PROCMAP procref=\"/Behavior/Project_Brake_Control_v06/Control_brake/Control_brake_process\" taskref=\"/Architecture/ECU1/OSEK1/Task_10msec\" order=\"0\"/>" +
 */
 
-	/**
-	 * Constructor for MappingTest2.
-	 * @param arg0
-	 */
-	public MappingTest2(String arg0) {
-		super(arg0);
-	}
-
-	public MappingTest2() {	}
-
-	public static Test suite() {
-		return new TestSuite(MappingTest2.class);
-	}
 
 	/*
 	 * @see TestCase#setUp()
 	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-//		ProjectManager.instance().newProject();
+	@Before
+	public void setUp() throws Exception {
 		vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 	}
 
 	/*
 	 * Test for void Mapping(String)
 	 */
+	@Test
 	public void testMappingString() {
 		Mapping m = new Mapping(vt, "Nome/");
 		assertTrue(m.getSystem().equals("Nome/"));
@@ -212,6 +203,7 @@ public class MappingTest2 extends TestCase {
 	/*
 	 * Test for void Mapping(String, String)
 	 */
+	@Test
 	public void testMappingStringString() {
 		Mapping m = new Mapping(vt, "Nome", DataPath.addSlash("modo/"));
 		assertTrue(m.getSystem().equals("Nome"));
@@ -249,6 +241,7 @@ public class MappingTest2 extends TestCase {
 		assertTrue(m.getMode() == null);
 	}
 
+	@Test
 	public void testSetMode() {
 		Mapping m = new Mapping(vt, "Nome", "Modo");
 		assertTrue(m.getSystem().equals("Nome"));
@@ -279,6 +272,7 @@ public class MappingTest2 extends TestCase {
 		assertTrue(m.getMode().equals("1"));
 	}
 
+	@Test
 	public void testProcToTask() {
 		int[] link = {
 			  6,		//	"/Behavior/Project_Car_v06/Plant_steer/Plant_steer_init",
@@ -428,6 +422,7 @@ public class MappingTest2 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test
 	public void testTaskToProc() {
 		int[][] link = {
 			{
@@ -613,6 +608,7 @@ public class MappingTest2 extends TestCase {
 	
 	///////////////////////////////////
 
+	@Test
 	public void testTaskToRTOS() {
 		int[] link = {
 			3,		//		"/Architecture/ECU4/OSEK/Timer10ms",
@@ -690,6 +686,7 @@ public class MappingTest2 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test
 	public void testRtosToTask() {
 		int[][] link = {
 			{
@@ -792,10 +789,13 @@ public class MappingTest2 extends TestCase {
 	}
 	
 	///////////////////////////////////
-/*
-   // TEST: Aggiustare i test di TaskToCpu e CpuToTask
+
  
+	@Test
+	@Ignore
 	public void testTaskToCpu() {
+	/*
+   // TEST: Aggiustare i test di TaskToCpu e CpuToTask
 		int[] link = {
 			3,		//		"/Architecture/ECU4/OSEK/Timer10ms",
 			2,		//		"/Architecture/ECU3/OSEK/Init",
@@ -865,9 +865,13 @@ public class MappingTest2 extends TestCase {
 		try {
 			m.taskToCpu(null);
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
+		*/
 	}
 
+	@Test
+	@Ignore
 	public void testCpuToTask() {
+		/*
 		int[][] link = {
 			{
 				11,		//	"/Architecture/ECU1/OSEK1/Init",
@@ -962,6 +966,6 @@ public class MappingTest2 extends TestCase {
 		try {
 			m.cpuToTask(null);
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
+		*/
 	}
-	*/
 }

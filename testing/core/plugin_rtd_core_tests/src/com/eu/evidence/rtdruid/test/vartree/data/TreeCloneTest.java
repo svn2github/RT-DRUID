@@ -4,34 +4,41 @@
 package com.eu.evidence.rtdruid.test.vartree.data;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import junit.framework.AssertionFailedError;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
-import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
+import com.eu.evidence.rtdruid.io.XMI2XMLlTest;
+import com.eu.evidence.rtdruid.tests.vartree.data.FillVtUtil;
 import com.eu.evidence.rtdruid.vartree.IVariable;
-import com.eu.evidence.rtdruid.vartree.VarTreeCopy;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
 import com.eu.evidence.rtdruid.vartree.data.System;
 import com.eu.evidence.rtdruid.vartree.data.TaskSched;
-import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
-import com.eu.evidence.rtdruid.vartree.data.init.VtCompare;
 import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
 
 
@@ -40,96 +47,127 @@ import com.eu.evidence.rtdruid.vartree.variables.DoubleVar;
  * 
  * @author Nicola Serreli
  */
-public class TreeCloneTest extends TestCase {
-	
-	public TreeCloneTest() {
-		RTDFactory.get(IVarTree.class); // init all EMF Data Factory
-	}
+public class TreeCloneTest {
 
-	public static Test suite() {
-		return new TestSuite(TreeCloneTest.class);
+	/**
+	 * Start the "clone tree" test
+	 * @throws Throwable 
+	 */
+	@Test
+	public void testClone() throws Throwable {
+
+		ObjectWithID root = fill();
+
+		EObject root2 = VarTreeUtil.copy(root);
+
+		assertNotSame(root, root2);
+		compare(root, root2);
 	}
 
 	/**
 	 * Start the "clone tree" test
+	 * @throws Throwable 
 	 */
-	public void testClone() {
-
-		ObjectWithID root = (ObjectWithID) (new FillVtTest()).fill();
-
-		ObjectWithID root2 = VarTreeCopy.copy(root);
-
-		assertTrue(root != root2);
-		String t = (new VtCompare(root, root2)).getText();
-		assertTrue(t, t== null);
-	}
-
-	/**
-	 * Start the "clone tree" test
-	 */
-	public void testClone2() {
-		String t;
-
+	@Test
+	public void testClone2() throws Throwable {
 		ObjectWithID root1 = DataFactory.eINSTANCE.createSystem();
 		root1.setObjectID("a\\b/\\*c");
-		ObjectWithID root2 = VarTreeCopy.copy(root1);
+		EObject root2 = VarTreeUtil.copy(root1);
 		ObjectWithID root3 = DataFactory.eINSTANCE.createSystem();
 		root3.setObjectID(root1.getObjectID());
+			
+		assertNotSame(root1 , root2);
+		assertNotSame(root1 , root3);
+		assertNotSame(root2 , root3);
 
-		assertTrue(root1 != root2);
-		assertTrue(root1 != root3);
-		assertTrue(root2 != root3);
-
-		t = (new VtCompare(root1, root2)).getText(); assertTrue(t, t== null);
-		t = (new VtCompare(root1, root3)).getText(); assertTrue(t, t== null);
-		t = (new VtCompare(root2, root3)).getText(); assertTrue(t, t== null);
+		compare(root1, root2);
+		compare(root1, root3);
+		compare(root2, root3);
 		
 	}
 
 	/**
 	 * Start the "merge tree" test
+	 * @throws Throwable 
 	 */
-	public void testMerge() {
+	@Test
+	public void testMerge() throws Throwable {
+		ObjectWithID root1 = fill();
+		ObjectWithID root2 = fill();
+		
+		// note: root1 and root2 contains the same values
+		compare(root1, root2);
 
-		ObjectWithID root1 = (ObjectWithID) (new FillVtTest()).fill();
-		ObjectWithID root2 = (ObjectWithID) (new FillVtTest()).fill();
+		doTestMerge(root1, root2, DataFactory.eINSTANCE.createSystem());
+	}
+	
+	/**
+	 * Start the "merge tree" test
+	 * @throws Throwable 
+	 */
+	@Test
+	@Ignore
+	public void testMergeDistinct() throws Throwable {
+
+		FillVtUtil f1 = fillFiller();
+		ObjectWithID root1 = (ObjectWithID) f1.getLastRoot();
+		ObjectWithID root2 = (ObjectWithID)fillFiller(f1.getNextID()+1).getLastRoot();
+		assertFalse(VarTreeUtil.compare(root1, root2).isOK());
 
 		ObjectWithID dest = DataFactory.eINSTANCE.createSystem();
-//		MyXMIReaderImpl res = new MyXMIReaderImpl();
-//		res.getContents().add(dest);
+		doTestMerge(root1, root2, dest);
+	}
 
+	/**
+	 * Start the "merge tree" test
+	 * @throws Throwable 
+	 */
+	@Test
+	public void testMergeWithResource() throws Throwable {
+
+		ObjectWithID root1 = fill();
+		ObjectWithID root2 = fill();
+
+		IVTResource res = createResource();
+		ObjectWithID dest = DataFactory.eINSTANCE.createSystem();
+		res.getContents().add(dest);
+		
+		assertNotNull(dest.eResource());
+		doTestMerge(root1, root2, dest);
+	}
+	
+	private void doTestMerge(ObjectWithID root1, ObjectWithID root2, ObjectWithID dest) throws Throwable {
 		// set the same system name for all trees!!!
 		root1.setObjectID("MySystem");
 		root2.setObjectID("MySystem");
 		dest.setObjectID("MySystem");
 
-		VarTreeCopy.merge(dest, root1);
-		assertTrue(dest != root1);
-		String t;
-		t = (new VtCompare(dest, root1)).getText(); assertTrue(t, t== null);
-		t = (new VtCompare(root1, dest)).getText(); assertTrue(t, t== null);
+		VarTreeUtil.merge(dest, root1);
+		
+		assertNotSame(dest , root1);
+		compare(dest, root1);
+		compare(root1, dest);
 
 		boolean ok = false;
-		// anothers two times
-		VarTreeCopy.merge(dest, root1);
-		VarTreeCopy.merge(dest, root1);
-		assertTrue(dest != root1);
+		// two more times
+		VarTreeUtil.merge(dest, root1);
+		VarTreeUtil.merge(dest, root1);
+		assertNotSame(dest , root1);
 		
-
-		assertTrue( !(new VtCompare(dest, root1)).checkTrees());
-		assertTrue( !(new VtCompare(root1, dest)).checkTrees());
+		assertFalse(VarTreeUtil.compare(dest, root1).isOK());
+		assertFalse(VarTreeUtil.compare(root1, dest).isOK());
 
 		// and with the other tree
-		VarTreeCopy.merge(dest, root2);
-		assertTrue(dest != root1);
-		assertTrue(dest != root2);
+		VarTreeUtil.merge(dest, root2);
+		assertNotSame(dest , root1);
+		assertNotSame(dest , root2);
 		checkTrees(dest, new ObjectWithID[] { root1, root1, root1, root2 }, true);
 
 		ok = false;
 		try {
 			checkTrees(dest, new ObjectWithID[] { root1, root1, root1 }, true);
 
-		} catch (AssertionFailedError e) {
+		} catch (AssertionError e) {
 			//e.printStackTrace();
 			ok = true;
 		}
@@ -139,7 +177,7 @@ public class TreeCloneTest extends TestCase {
 		try {
 			checkTrees(dest, new ObjectWithID[] { root1, root1, root2 }, true);
 
-		} catch (AssertionFailedError e) {
+		} catch (AssertionError e) {
 			//e.printStackTrace();
 			ok = true;
 		}
@@ -149,7 +187,7 @@ public class TreeCloneTest extends TestCase {
 		try {
 			checkTrees(dest, new ObjectWithID[] { root1, root1, root1, root2 }, false);
 
-		} catch (AssertionFailedError e) {
+		} catch (AssertionError e) {
 			//e.printStackTrace();
 			ok = true;
 		}
@@ -159,80 +197,7 @@ public class TreeCloneTest extends TestCase {
 		try {
 			checkTrees(dest, new ObjectWithID[] { root1, root1, root1 }, false);
 
-		} catch (AssertionFailedError e) {
-			//e.printStackTrace();
-			ok = true;
-		}
-		assertTrue(ok);
-
-	}
-	
-	/**
-	 * Start the "merge tree" test
-	 */
-	public void testMergeWithResource() {
-
-		ObjectWithID root1 = (ObjectWithID) (new FillVtTest()).fill();
-		ObjectWithID root2 = (ObjectWithID) (new FillVtTest()).fill();
-
-		IVTResource res = createResource();
-		ObjectWithID dest = DataFactory.eINSTANCE.createSystem();
-		res.getContents().add(dest);
-		
-		assertTrue(dest.eResource() != null);
-
-		// set the same system name for all trees!!!
-		root1.setObjectID("MySystem");
-		root2.setObjectID("MySystem");
-		dest.setObjectID("MySystem");
-
-		VarTreeCopy.merge(dest, root1);
-		assertTrue(dest != root1);
-		String t;
-		t = (new VtCompare(dest, root1)).getText(); assertTrue(t, t== null);
-		t = (new VtCompare(root1, dest)).getText(); assertTrue(t, t== null);
-
-		// anothers two times
-		VarTreeCopy.merge(dest, root1);
-		VarTreeCopy.merge(dest, root1);
-		assertTrue(dest != root1);
-		
-		t = (new VtCompare(dest, root1)).getText(); assertTrue(t, t== null);
-		t = (new VtCompare(root1, dest)).getText(); assertTrue(t, t== null);
-
-		// and wit the other tree
-		VarTreeCopy.merge(dest, root2);
-		assertTrue(dest != root1);
-		assertTrue(dest != root2);
-		checkTrees(dest, new ObjectWithID[] { root1, root1, root1, root2 }, false);
-		checkTrees(dest, new ObjectWithID[] { root1, root2 }, false);
-		checkTrees(dest, new ObjectWithID[] { root1, root2 }, true);
-
-		boolean ok = false;
-		try {
-			checkTrees(dest, new ObjectWithID[] { root1, root1, root1 }, false);
-
-		} catch (AssertionFailedError e) {
-			//e.printStackTrace();
-			ok = true;
-		}
-		assertTrue(ok);
-
-		ok = false;
-		try {
-			checkTrees(dest, new ObjectWithID[] { root1, root1, root2 }, true);
-
-		} catch (AssertionFailedError e) {
-			//e.printStackTrace();
-			ok = true;
-		}
-		assertTrue(ok);
-
-		ok = false;
-		try {
-			checkTrees(dest, new ObjectWithID[] { root1 }, true);
-
-		} catch (AssertionFailedError e) {
+		} catch (AssertionError e) {
 			//e.printStackTrace();
 			ok = true;
 		}
@@ -241,9 +206,10 @@ public class TreeCloneTest extends TestCase {
 	}
 	
 	
-	public void testMerge2() {
+
+	@Test
+	public void testMerge2() throws Throwable {
 		String xmlInput1 = 	
-//			"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
 			"<SYSTEM Name=\"hp_test5 (bug 223)\">" +
 			"<SCHEDULABILITY>" +
 			"<SCHEDULINGSCENARIO>" +
@@ -253,7 +219,6 @@ public class TreeCloneTest extends TestCase {
 			"</SCHEDULABILITY>" +
 			"</SYSTEM>";
 		String xmlInput2 =
-//			"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
 			"<SYSTEM Name=\"hp_test5 (bug 223)\">" +
 			"<SCHEDULABILITY>" +
 			"<SCHEDULINGSCENARIO>" +
@@ -263,38 +228,43 @@ public class TreeCloneTest extends TestCase {
 			"</SCHEDULABILITY>" +
 			"</SYSTEM>";
 		
-//		ObjectWithID root1 = (ObjectWithID) XMI2XMLlTest.loadString(xmlInput1).getContents().get(0);
-//		ObjectWithID root2 = (ObjectWithID) XMI2XMLlTest.loadString(xmlInput2).getContents().get(0);
-
 		ObjectWithID root1 = (ObjectWithID) Vt2StringUtilities.loadString(xmlInput1).getResourceSet().getResources().get(0).getContents().get(0);
 		ObjectWithID root2 = (ObjectWithID) Vt2StringUtilities.loadString(xmlInput2).getResourceSet().getResources().get(0).getContents().get(0);
 
-		String t;
-		t = (new VtCompare(root1, root1)).getText(); assertTrue(t, t== null);
-		t = (new VtCompare(root2, root2)).getText(); assertTrue(t, t== null);
+		compare(root1, root1);
+		compare(root2, root2);
 
-		assertTrue( !(new VtCompare(root1, root2)).checkTrees());
+		assertFalse(VarTreeUtil.compare(root1, root2).isOK());
 
 		// without set a resource
-		ObjectWithID root1_bis = VarTreeCopy.copy(root1);
-		VarTreeCopy.merge(root1_bis, root2);
+		EObject root1_bis = VarTreeUtil.copy(root1);
+		VarTreeUtil.merge(root1_bis, root2);
 
 		// after set a resource
 		IVTResource res = createResource();
-		ObjectWithID root1_tris = VarTreeCopy.copy(root1);
+		EObject root1_tris = VarTreeUtil.copy(root1);
 		res.getContents().add(root1_tris);
-		boolean ok = false;
-		try {
-//			root2.merge(root1_bis, "/");
-			VarTreeCopy.merge(root1_tris, root2);
-		} catch (RuntimeException e) { ok = true; } 
-		assertTrue(ok);
+		VarTreeUtil.merge(root1_tris, root2);
+		compare(root1_bis, root1_tris);
 	}
 
 	
-	public void testMerge3() {
-		
+	@Test
+	public void testMerge3() throws Throwable {
+		doTestMerge3(DataFactory.eINSTANCE.createSystem());
+	}
+	
+	@Test
+	public void testMerge3WithResource() throws Throwable {
+	
+		IVTResource res = createResource();
 		System root = DataFactory.eINSTANCE.createSystem();
+		res.getContents().add(root);
+		
+		doTestMerge3(root);
+	}
+		
+	private void doTestMerge3(System root) throws Throwable {
 		root.setObjectID("id");
 		Schedulability sched = DataFactory.eINSTANCE.createSchedulability();
 		root.setSchedulability(sched);
@@ -312,47 +282,10 @@ public class TreeCloneTest extends TestCase {
 			ts.setObjectID("t1");
 			ts.setUtilization(new DoubleVar("0.3"));
 			assertTrue(sScen.getTaskSchedList().add(ts)); // NB
-			assertTrue(!sScen.getTaskSchedList().add(ts)); // NB
+			assertFalse(sScen.getTaskSchedList().add(ts)); // NB
 
 			ts.setObjectID("t2");
-			assertTrue(!sScen.getTaskSchedList().add(ts));
-
-			ts.setObjectID("t1");
-		}
-		
-		System root2 = DataFactory.eINSTANCE.createSystem();
-		root2.setObjectID("id");
-
-		VarTreeCopy.merge(root2, root);
-	}
-	
-	public void testMerge3WithResource() {
-	
-		IVTResource res = createResource();
-		System root = DataFactory.eINSTANCE.createSystem();
-		res.getContents().add(root);
-		
-		root.setObjectID("id");
-		Schedulability sched = DataFactory.eINSTANCE.createSchedulability();
-		root.setSchedulability(sched);
-		SchedulingScenario sScen = DataFactory.eINSTANCE.createSchedulingScenario();
-		sScen.setObjectID("Abc");
-		sched.getSchedulingScenarioList().add(sScen);
-		{
-			TaskSched ts = DataFactory.eINSTANCE.createTaskSched();
-			ts.setObjectID("t1");
-			ts.setUtilization(new DoubleVar("0.1"));
-			assertTrue(sScen.getTaskSchedList().add(ts));
-		}
-		{
-			TaskSched ts = DataFactory.eINSTANCE.createTaskSched();
-			ts.setObjectID("t1");
-			ts.setUtilization(new DoubleVar("0.3"));
-			assertTrue(!sScen.getTaskSchedList().add(ts)); // NB
-			assertTrue(!sScen.getTaskSchedList().add(ts)); // NB
-
-			ts.setObjectID("t2");
-			assertTrue(sScen.getTaskSchedList().add(ts));
+			assertFalse(sScen.getTaskSchedList().add(ts));
 
 			boolean ok = false;
 			try {
@@ -366,10 +299,13 @@ public class TreeCloneTest extends TestCase {
 		System root2 = DataFactory.eINSTANCE.createSystem();
 		root2.setObjectID("id");
 
-		VarTreeCopy.merge(root2, root);
+		VarTreeUtil.merge(root2, root);
+		compare(root2, root);
 	}
 	
-	/*public void testMerge4() {
+	@Test
+	@Ignore
+	public void testMerge4() throws IOException {
 		String xmlInput1 = 	"<SYSTEM Name=\"hp_test5 (bug 223)\">" +
 			"<SCHEDULABILITY>" +
 			"<SCHEDULINGSCENARIO>" +
@@ -386,57 +322,56 @@ public class TreeCloneTest extends TestCase {
 			"</SCHEDULABILITY>" +
 			"</SYSTEM>";
 		
-		ObjectWithID root1 = (ObjectWithID) XMI2XMLlTest.loadString(xmlInput1).getContents().get(0);
-		ObjectWithID root2 = (ObjectWithID) XMI2XMLlTest.loadString(xmlInput2).getContents().get(0);
+		ObjectWithID root1 = (ObjectWithID) XMI2XMLlTest.loadStringRtd(xmlInput1).getContents().get(0);
+		ObjectWithID root2 = (ObjectWithID) XMI2XMLlTest.loadStringRtd(xmlInput2).getContents().get(0);
 		
-		Utility.checkTrees(root1, root1);
+		assertTrue(VarTreeUtil.compare(root1, root1).isOK());
 
-		Utility.checkTrees(root2, root2);
+		assertTrue(VarTreeUtil.compare(root2, root2).isOK());
+		
+		assertFalse(VarTreeUtil.compare(root1, root2).isOK());
 		
 		boolean ok = false;
-		try {
-			Utility.checkTrees(root1, root2);
-		} catch (AssertionFailedError e) { ok = true; } 
-		assertTrue(ok);
-
 		{
-			ObjectWithID root1_bis = (ObjectWithID) root1.clone();
-			root1_bis.merge(root2, "/");
+			EObject root1_bis = VarTreeUtil.copy(root1);
+			VarTreeUtil.merge(root1_bis, root2, "/", false);
 		}
 		{
-			ObjectWithID root2_bis = (ObjectWithID) root2.clone();
+			EObject root2_bis = VarTreeUtil.copy(root2);
 			ok = false;
 			try {
-				root2_bis.merge(root1, "/");
+				VarTreeUtil.merge(root2_bis, root1, "/", false);
 			} catch (RuntimeException e) { ok = true; } 
 			assertTrue(ok);
 		}
-	}*/
+	}
 
 
 	/**
 	 * Check a merged tree against its "parents"
+	 * @throws Throwable 
 	 */
-	private void checkTrees(ObjectWithID dest, ObjectWithID[] sources, boolean multiValue) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void checkTrees(ObjectWithID dest, ObjectWithID[] sources, boolean multiValue) throws Throwable {
 		if (sources.length == 0) {
 			return;
 		}
 		for (int i = 0; i < sources.length; i++) {
 			//assertTrue(dest.getClass().getName().equals(sources[i].getClass().getName()));
-			assertTrue(dest.getClass() == sources[i].getClass());
+			assertSame(dest.getClass() , sources[i].getClass());
 		}
 
-		EList attrList1 = dest.eClass().getEAllAttributes();
+		EList<EAttribute> attrList1 = dest.eClass().getEAllAttributes();
 
 		for (int i = 0; i < attrList1.size(); i++) {
 			EAttribute at1 = (EAttribute) attrList1.get(i);
 
 			if (at1.isMany()) {
-				EList el1 = (EList) dest.eGet(at1);
+				EList<IVariable> el1 = (EList<IVariable>) dest.eGet(at1);
 
-				LinkedList[] el2 = new LinkedList[sources.length];
+				LinkedList<IVariable>[] el2 = new LinkedList[sources.length];
 				for (int h = 0; h < sources.length; h++) {
-					el2[h] = new LinkedList((EList) sources[h].eGet(at1));
+					el2[h] = new LinkedList<IVariable>((EList) sources[h].eGet(at1));
 				}
 
 				for (int j = 0; j < el1.size(); j++) {
@@ -446,7 +381,7 @@ public class TreeCloneTest extends TestCase {
 
 				// check that all parents are empty
 				for (int h = 0; h < sources.length; h++) {
-					assertTrue(el2[h].size() == 0);
+					assertEquals(el2[h].size() , 0);
 				}
 
 			} else {
@@ -454,14 +389,14 @@ public class TreeCloneTest extends TestCase {
 
 				for (int h = 0; h < sources.length; h++) {
 					if (o1 == null) {
-						assertTrue(sources[h].eGet(at1) == null);
+						assertNull(sources[h].eGet(at1));
 					} else {
 						IVariable tv = (IVariable) sources[h].eGet(at1);
 						if (tv != null) {
-							assertTrue(o1.getClass() == tv.getClass());
+							assertSame(o1.getClass() , tv.getClass());
 
 							if (o1.get() == null) {
-								assertTrue(tv.get() == null);
+								assertNull(tv.get());
 							} else {
 								assertTrue(o1.toString().equals(tv.toString()));
 							}
@@ -472,31 +407,31 @@ public class TreeCloneTest extends TestCase {
 			}
 		}
 
-		EList children1 = dest.eClass().getEAllReferences();
+		EList<EReference> children1 = dest.eClass().getEAllReferences();
 
 		for (int i = 0; i < children1.size(); i++) {
 
 			EReference ref1 = (EReference) children1.get(i);
 
 			if (ref1.isMany()) {
-				EList el1 = (EList) dest.eGet(ref1);
+				EList<ObjectWithID> el1 = (EList<ObjectWithID>) dest.eGet(ref1);
 
-				LinkedList[] el2 = new LinkedList[sources.length];
+				LinkedList<ObjectWithID>[] el2 = new LinkedList[sources.length];
 				for (int h = 0; h < sources.length; h++) {
-					el2[h] = new LinkedList((EList) sources[h].eGet(ref1));
+					el2[h] = new LinkedList((EList<ObjectWithID>) sources[h].eGet(ref1));
 				}
 
 				for (int j = 0; j < el1.size(); j++) {
 					ObjectWithID o1 = (ObjectWithID) el1.get(j);
 					ObjectWithID[] next = remove(o1, el2, multiValue);
 
-					if (next.length == 0) {
-						int a=0;
-						a++;
-					}
+//					if (next.length == 0) {
+//						int a=0;
+//						a++;
+//					}
 					assertTrue(next.length > 0);
 					if (next.length == 1) {
-						String t = (new VtCompare(o1, next[0])).getText(); assertTrue(t, t== null);
+						compare(o1, next[0]);
 					} else {
 						checkTrees(o1, next, multiValue);
 					}
@@ -504,13 +439,13 @@ public class TreeCloneTest extends TestCase {
 
 				// check that all parents are empty
 				for (int h = 0; h < sources.length; h++) {
-					assertTrue(el2[h].size() == 0);
+					assertEquals(el2[h].size() , 0);
 				}
 
 			} else {
 				ObjectWithID o1 = (ObjectWithID) dest.eGet(ref1);
 
-				ArrayList next = new ArrayList();
+				ArrayList<ObjectWithID> next = new ArrayList<ObjectWithID>();
 				for (int h = 0; h < sources.length; h++) {
 					ObjectWithID t = (ObjectWithID) sources[h].eGet(ref1);
 					if (t != null) {
@@ -520,7 +455,7 @@ public class TreeCloneTest extends TestCase {
 
 				assertTrue(next.size() > 0);
 				if (next.size() == 1) {
-					String t = (new VtCompare(o1, (EObject) next.get(0))).getText(); assertTrue(t, t== null);
+					compare(o1, (EObject) next.get(0));
 				} else {
 					checkTrees(o1, (ObjectWithID[]) next
 							.toArray(new ObjectWithID[0]), multiValue);
@@ -534,11 +469,11 @@ public class TreeCloneTest extends TestCase {
 	/**
 	 * Check that the given var val appears at least in one parent list
 	 */
-	private void remove(IVariable value, LinkedList[] parents) {
+	private void remove(IVariable value, LinkedList<IVariable>[] parents) {
 		boolean found = false;
 
 		for (int i = 0; i < parents.length; i++) {
-			Iterator iter = parents[i].iterator();
+			Iterator<IVariable> iter = parents[i].iterator();
 
 			boolean go = false;
 			while (!go && iter.hasNext()) {
@@ -568,13 +503,13 @@ public class TreeCloneTest extends TestCase {
 	/**
 	 * Check that the given ObjectWithID appears at least in one parent list
 	 */
-	private ObjectWithID[] remove(ObjectWithID val, LinkedList[] parents, boolean multiValues) {
-		ArrayList answer = new ArrayList();
+	private ObjectWithID[] remove(ObjectWithID val, LinkedList<ObjectWithID>[] parents, boolean multiValues) {
+		ArrayList<ObjectWithID> answer = new ArrayList<ObjectWithID>();
 
 		String curID = val.getObjectID();
 
 		for (int i = 0; i < parents.length; i++) {
-			Iterator iter = parents[i].iterator();
+			Iterator<ObjectWithID> iter = parents[i].iterator();
 
 			boolean go = false;
 			while (!go && iter.hasNext()) {
@@ -595,9 +530,44 @@ public class TreeCloneTest extends TestCase {
 
 		return (ObjectWithID[]) answer.toArray(new ObjectWithID[0]);
 	}
+
+	/**
+	 * @return
+	 * @throws IOException 
+	 */
+	protected ObjectWithID fill() throws IOException {
+		return (ObjectWithID) fillFiller().getLastRoot();
+	}
 	
-	protected IVTResource createResource() {
-		return (IVTResource) new RTD_XMI_Factory().createResource();
+	protected FillVtUtil fillFiller() throws IOException {
+		return fillFiller(1);
+	}
+	
+	protected FillVtUtil fillFiller(int startingValue) throws IOException {
+		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), DataPackage.eINSTANCE, createResource());
+		filler.setNextID(startingValue);
+		ObjectWithID root = DataFactory.eINSTANCE.createSystem();
+		filler.fill(root);
+		return filler;
 	}
 
+	
+	protected IVTResource createResource() {
+		return (IVTResource) RTD_XMI_Factory.instance.createResource();
+	}
+
+
+	/**
+	 * @param dest
+	 * @param root1
+	 * @throws Throwable 
+	 */
+	private boolean compare(EObject dest, EObject root1) throws Throwable {
+		IStatus s = VarTreeUtil.compare(dest, root1);
+		Throwable t = s.getException();
+		if (t != null) {
+			throw t;
+		}
+		return s.isOK();
+	}
 }

@@ -11,11 +11,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 /** This class contains many functions that look for a mapping between two compatible objects
  * 

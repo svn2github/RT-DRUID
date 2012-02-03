@@ -10,15 +10,15 @@ import java.io.ByteArrayInputStream;
 
 import junit.framework.TestCase;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
 
 /**
  * 
@@ -146,7 +146,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "};\n";
 
 	public void testCodeWrite1() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_2_NIOS.getBytes()),
 				vt);
 
@@ -306,7 +306,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "};\n";
 
 	public void testGlobalResources() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_2_NIOS_WITH_GLOBAL_RESOURCES
 				.getBytes()), vt);
 
@@ -464,7 +464,7 @@ public class CodeWritertMPTest extends TestCase {
 	+ "};\n";
 
 	public void testGlobalResourcesBis() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(
 				OIL_TEST_2_NIOS_WITH_GLOBAL_RESOURCES_BIS.getBytes()), vt);
 
@@ -651,7 +651,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "};\n";
 
 	public void test3cpuGlobalResources() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(
 				OIL_TEST_3_NIOS_WITH_GLOBAL_RESOURCES.getBytes()), vt);
 
@@ -805,7 +805,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "};\n";
 
 	public void testFP() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_2_NIOS_FP
 				.getBytes()), vt);
 
@@ -982,7 +982,7 @@ public class CodeWritertMPTest extends TestCase {
 	    "	};\n" +
 		"};\n";
 	public void test4Task2Cpu() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(ALTERA_EXAMPLE
 				.getBytes()), vt);
 
@@ -1160,7 +1160,7 @@ public class CodeWritertMPTest extends TestCase {
 	    "	};\n" +
 		"};\n";
 	public void test4Task2CpuAlwaysRN() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(ALTERA_EXAMPLE_always_rn
 				.getBytes()), vt);
 	
@@ -1338,7 +1338,7 @@ public class CodeWritertMPTest extends TestCase {
 	    "	};\n" +
 		"};\n";
 	public void test4Task2CpuSplitted() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(ALTERA_EXAMPLE_split_tasks
 				.getBytes()), vt);
 	
@@ -1477,7 +1477,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "};\n";
 
 	public void testOrti1() {
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_ORTI_1_NIOS
 				.getBytes()), vt);
 

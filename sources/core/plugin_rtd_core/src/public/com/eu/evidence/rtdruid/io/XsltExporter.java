@@ -54,75 +54,61 @@ public class XsltExporter implements IRTDExporter {
 			out = new DebugBufferedOutputStream(out);
 		}
 
-		if (true) { // eclipse 3.0.1 +
-			class EMFThread extends Thread {
-				IRTDExporter th_res;
-				OutputStream th_output;
-				Map<?, ?> th_options;
+		class EMFThread extends Thread {
+			IRTDExporter th_res;
+			OutputStream th_output;
+			Map<?, ?> th_options;
 
-				public EMFThread(IRTDExporter res, OutputStream output,
-						Map<?, ?> options) {
-					th_res = res;
-					th_output = output;
-					th_options = options;
-				}
-
-				public void run() {
-					try {
-						th_res.export(th_output, data, th_options);
-					} catch (IOException e) {
-						RtdruidLog.log(e);
-					} finally {
-						try {
-							th_output.close();
-						} catch (IOException e) {
-						}
-					}
-				}
+			public EMFThread(IRTDExporter res, OutputStream output,
+					Map<?, ?> options) {
+				th_res = res;
+				th_output = output;
+				th_options = options;
 			}
-			EMFThread tt2 = new EMFThread(parent, outPipe, options);
-			tt2.start();
 
-			if (DEBUG) {
-				StringBuffer buff = new StringBuffer();
+			public void run() {
 				try {
-					int a;
-					while ( (a = inPipe.read()) != -1) {
-						buff.append((char) a);
+					th_res.export(th_output, data, th_options);
+				} catch (IOException e) {
+					RtdruidLog.log(e);
+				} finally {
+					try {
+						th_output.close();
+					} catch (IOException e) {
 					}
-				} catch(IOException e) {
-					buff.append("\nERROR\n"+e.getMessage());
 				}
-				System.err.println(buff);
-				
-				// IMPORTANT !!! 
-				// fill again the input for the next step !!!
-				inPipe = new ByteArrayInputStream(buff.toString().getBytes());
-			}
-	
-			XsltTransformThread tt = new XsltTransformThread(inPipe, out,
-					xsltFile, false, null);
-			tt.run(); // !!!!!
-
-			try {
-				tt2.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-		} else { // eclipse 3.0.0
-			XsltTransformThread tt = new XsltTransformThread(inPipe, out,
-					xsltFile, false, null);
-			tt.start();
-
-			parent.export(outPipe, data, options);
-			outPipe.close();
-			try {
-				tt.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 		}
+		EMFThread tt2 = new EMFThread(parent, outPipe, options);
+		tt2.start();
+
+		if (DEBUG) {
+			StringBuffer buff = new StringBuffer();
+			try {
+				int a;
+				while ( (a = inPipe.read()) != -1) {
+					buff.append((char) a);
+				}
+			} catch(IOException e) {
+				buff.append("\nERROR\n"+e.getMessage());
+			}
+			System.err.println(buff);
+			
+			// IMPORTANT !!! 
+			// fill again the input for the next step !!!
+			inPipe = new ByteArrayInputStream(buff.toString().getBytes());
+		}
+
+		XsltTransformThread tt = new XsltTransformThread(inPipe, out,
+				xsltFile, false, null);
+		tt.run(); // !!!!!
+
+		try {
+			tt2.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 
 	}
 

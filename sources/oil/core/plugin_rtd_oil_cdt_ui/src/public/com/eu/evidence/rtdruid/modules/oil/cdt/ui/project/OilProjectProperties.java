@@ -37,11 +37,11 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.PropertyPage;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.Rtd_oil_cdt_Plugin;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.builder.OilBuilder;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.ui.common.OneResourceSelectionDialog;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
 
 public class OilProjectProperties extends PropertyPage {
 

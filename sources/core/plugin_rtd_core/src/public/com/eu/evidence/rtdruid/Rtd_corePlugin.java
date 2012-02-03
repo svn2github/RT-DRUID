@@ -22,9 +22,11 @@ import com.eu.evidence.rtdruid.desk.RtdruidLog;
  * The main plugin class to be used in the desktop.
  */
 public class Rtd_corePlugin extends Plugin implements ResourceLocator {
-    final static String PLUGIN_ID = "com.eu.evidence.rtdruid";
+    public final static String PLUGIN_ID = "com.eu.evidence.rtdruid.core";
     public final static String TEMPLATES_PATH = "/com/eu/evidence/rtdruid/templates";
-    
+
+    public final static String EPACKAGE_BASE_ID = "RT-Druid Core - Base contribution";
+
     //The shared instance.
 	private static Rtd_corePlugin plugin;
 	//Resource bundle.

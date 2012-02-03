@@ -56,7 +56,6 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog;
 import org.eclipse.ui.dialogs.WizardResourceImportPage;
 
 import com.eu.evidence.rtdruid.desk.Messages;
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
@@ -64,10 +63,11 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilReaderFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
 import com.eu.evidence.rtdruid.modules.oil.ui.Rtd_oil_uiPlugin;
 import com.eu.evidence.rtdruid.ui.common.RTDConsole;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 /**
  * TODO commentare
@@ -239,7 +239,7 @@ public class OilWriterWizard extends Wizard {
 		IFile fPath = ResourcesPlugin.getWorkspace().getRoot()
 		.getFile(new Path(inputFile));
 		
-		vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		vt = VarTreeUtil.newVarTree();
         try {
         	(OilReaderFactory.getAnOilReader()).load(fPath.getContents(), vt);
 

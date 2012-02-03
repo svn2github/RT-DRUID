@@ -60,7 +60,6 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilReaderFactory;
@@ -69,6 +68,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.xsltcodegeneration.
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.xsltcodegeneration.HistoryXsltDebugger.IntermediateOutput;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.DebugErikaEnterpriseXsltWriter;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 /**
  * @author dejan
@@ -518,7 +518,7 @@ public class XsltWriterPage implements IDetailsPage {
 								try {
 									
 									
-									IVarTree vt = RTDFactory.newVarTree();
+									IVarTree vt = VarTreeUtil.newVarTree();
 									OilReaderFactory.getAnOilReader().load(f.getContents(), vt, f.getName(), f.getProjectRelativePath().toString());
 									
 									DebugErikaEnterpriseXsltWriter writer = new DebugErikaEnterpriseXsltWriter("", vt);

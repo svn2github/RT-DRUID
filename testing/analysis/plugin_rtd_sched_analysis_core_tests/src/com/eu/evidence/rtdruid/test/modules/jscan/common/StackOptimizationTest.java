@@ -9,8 +9,8 @@ package com.eu.evidence.rtdruid.test.modules.jscan.common;
 import com.eu.evidence.rtdruid.internal.modules.jscan.AbstractCompleteTest;
 import com.eu.evidence.rtdruid.internal.modules.jscan.common.StackOptimization;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
 
 /**
  * @author mvc

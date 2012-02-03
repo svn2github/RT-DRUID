@@ -25,11 +25,11 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
-import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
-import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
+import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
+import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.ui.Rtd_oil_uiPlugin;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 /**
  * This class show all result of schedulability analysis
@@ -209,7 +209,7 @@ public class OilImplementationView extends ViewPart {
 		
 		try {
 			
-			OilImplFactory factory = OilImplFactory.getAnInstance(RTDFactory.newVarTree());
+			OilImplFactory factory = OilImplFactory.getAnInstance(VarTreeUtil.newVarTree());
 			factory.reloadDefault();
 			IOilImplID[] ids = factory.getImplNames();
 			if (ids.length >0) {

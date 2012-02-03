@@ -1,0 +1,114 @@
+<!--
+ ******************************************************************
+ Formato XML intermedio per memorizzare la struttura oil 2.5
+
+ Copyright Evidence s.r.l. 2004
+
+ Nicola Serreli
+
+ ******************************************************************
+-->
+
+<!--
+	Individua la radice di una descrizione oil e coincide quindi con
+	<implementation_definition>
+-->
+<!ELEMENT OIL_IMPLEMENTATION (FIRST_LEVEL_OBJ*, DESCRIPTION?)>
+<!ATTLIST OIL_IMPLEMENTATION
+ Name CDATA #REQUIRED
+>
+
+<!--
+	I "FIRST_LEVEL_OBJECT" rappresentano gli <object> oil e quindi 
+	l'attributo ObjectType puo' assumere i seguenti valori:
+		OS, TASK, COUNTER, ALARM, RESOURCE, EVENT, ISR, 
+		MESSAGE, COM, NM, APPMODE
+-->
+<!ELEMENT FIRST_LEVEL_OBJ ((ATTRIBUTE | REFERENCE | VARIANT)*, DESCRIPTION?)>
+<!ATTLIST FIRST_LEVEL_OBJ
+ ObjectType (OS|TASK|COUNTER|ALARM|RESOURCE|EVENT|ISR|MESSAGE|COM|NM|APPMODE|IPDU) #REQUIRED
+>
+
+
+<!--
+	Rappresenta un valore numerico o una stringa
+	
+	I primi possono avere un range oppure una lista di valori validi
+	
+	MultipleValue indica se puo' assumere piu' valori. (default = false)
+-->
+<!ELEMENT ATTRIBUTE ((RANGE | (VALUE+))?, DESCRIPTION?)>
+<!ATTLIST ATTRIBUTE
+ Auto CDATA (true|false) "false"
+ DefaultValue CDATA #IMPLIED
+ MultipleValue (true|false) "false"
+ Name CDATA #REQUIRED
+ Type CDATA #REQUIRED
+ WithAuto CDATA (true|false) "false"
+>
+
+<!--
+	Uno dei valori possibili per un attributo
+-->
+<!ELEMENT VALUE EMPTY>
+<!ATTLIST VALUE
+ Value CDATA #REQUIRED
+>
+
+<!--
+	Il range di valori possibili per un attributo
+-->
+<!ELEMENT RANGE EMPTY>
+<!ATTLIST RANGE
+ MinValue CDATA #REQUIRED
+ MaxValue CDATA #REQUIRED
+>
+
+<!--
+	Contiene un riferimento ad un oggetto di primo livello e di conseguenza
+	ObjectRefType puo' contenere soltanto uno dei seguenti valori:
+		OS, TASK, COUNTER, ALARM, RESOURCE, EVENT, ISR, 
+		MESSAGE, COM, NM, APPMODE
+	
+	MultipleValue indica se puo' assumere piu' valori. (default = false)
+-->
+<!ELEMENT REFERENCE (DESCRIPTION?)>
+<!ATTLIST REFERENCE
+ ObjectRefType (OS_TYPE|TASK_TYPE|COUNTER_TYPE|ALARM_TYPE|RESOURCE_TYPE|EVENT_TYPE|ISR_TYPE|MESSAGE_TYPE|COM_TYPE|NM_TYPE|APPMODE_TYPE|IPDU_TYPE) #REQUIRED
+ MultipleValue (true|false) "false"
+ Name CDATA #REQUIRED
+>
+
+<!--
+	Descrive i campi varianti che, a seconda del valore dell'attributo type,
+	possono essere BOOLEAN ed ENUM. La differenza e' semplicemente che
+	il primo puo' assumere soltanto due "valori" (che sono impliciti),
+	mentre il secondo puo' assumere da uno ad infiniti valori 
+	(con identificatori/nomi distinti)
+	
+	MultipleValue indica se puo' assumere piu' valori. (default = false)
+-->
+<!ELEMENT VARIANT (ENUMERATOR+, DESCRIPTION?)>
+<!ATTLIST VARIANT
+ Auto CDATA (true|false) "false"
+ DefaultValue CDATA #IMPLIED
+ MultipleValue (true|false) "false"
+ Name CDATA #REQUIRED
+ Type (BOOLEAN|ENUM) #REQUIRED
+>
+
+<!--
+	Descrive uno dei valori che puo' assumere un campo variante
+	
+	MultipleValue indica se puo' assumere piu' valori. (default = false)
+-->
+<!ELEMENT ENUMERATOR  ((ATTRIBUTE | REFERENCE | VARIANT)*, DESCRIPTION?)>
+<!ATTLIST ENUMERATOR
+ Name CDATA #REQUIRED
+>
+
+<!--
+	Un testo mantiene una o piu' note sull'oggetto a cui e' associato
+-->
+<!ELEMENT DESCRIPTION CDATA>
+

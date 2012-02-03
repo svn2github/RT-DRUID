@@ -11,8 +11,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
-import com.eu.evidence.rtdruid.vartree.data.init.VtCompare;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 /**
  * @author Nicola Serreli
@@ -26,10 +25,10 @@ public abstract class AbstractCompleteTest extends TestCase {
 	}
 	
 	protected void check(IVarTree input, IVarTree expectedResult) {
-		String t = (new VtCompare(
+		String t = VarTreeUtil.compare(
 				(EObject) ((Resource) input.getResourceSet().getResources().get(0)).getContents().get(0),
-				(EObject) ((Resource) expectedResult.getResourceSet().getResources().get(0)).getContents().get(0))
-			).getText(); assertTrue(t, t== null);
+				(EObject) ((Resource) expectedResult.getResourceSet().getResources().get(0)).getContents().get(0)
+			).getMessage(); assertTrue(t, t== null);
 
 	}
 	

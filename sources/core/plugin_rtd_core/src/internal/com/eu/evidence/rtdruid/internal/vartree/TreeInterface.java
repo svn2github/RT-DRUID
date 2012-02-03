@@ -6,13 +6,12 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.core.runtime.Assert;
 
-import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.IVariable.NotValidValueException;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 
 /**	This class give some handy methods for utilize shared variables identified by a path 
@@ -62,19 +61,6 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 		* @return	the variable
 		*/
 		public IVariable getVariable() {	return dato;	}
-		
-		/** Return true if data stored in this node (or in its child) are valid
-		* @return	true if data are valid
-		* @deprecated
-		*/
-		public boolean isValid() {		return dato==null ? false : dato.get() == null;	}
-		
-		/** Return true if this node is defined in Builder Storage
-		* @return	true if this node is defined in Builder Storage
-		* @deprecated
-		*/
-		public boolean isDefined() {	return true;	}
-		
 	}
 // ----------------------    FIELDS  ----------------------
 	
@@ -109,7 +95,6 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 	*	@throws	AddElementException	if there's some problems while trying to add the new shared data
 	*/
 	public String addElement(String name, String type, String where) throws AddElementException {
-//		 TODO : attenzione : gestione delle eccezioni, caso : aggiunta di una foglia, observer
 		if (type == null) {
 			throw new NullPointerException("TreeInterface: addElement with a null type.\n");
 		}		
@@ -130,7 +115,6 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 	*
 	*/
 	public void remElement(String path) {
-//		 TODO : attenzione : gestione delle eccezioni, observer
 		IVarTreePointer vtp = vt.newVarTreePointer();
 		
 		if (vtp.goAbsolute(path)) {
@@ -138,54 +122,6 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 		}
 	}
 	
-	
-// ----------------------    Add && Remove IObserver ----------------------
-
-	/**	Add a observer to a node. In this way, the observer will know all changes about this node and its children.
-	*	If a observer is added more than one time, they're seen like different objects, and if somebody sends a notification,
-	*	this notification'll be sent to this observer the same number of times that it was added (and not dropped).
-	*
-	*	@param	path	identify the shared variable (simple or complex). A null path identify the root Element.
-	*	@param	observer	object to which send the notification of a change about this node and/or its children
-	*/
-	public void addObserver(String path, com.eu.evidence.rtdruid.vartree.IObserver observer) {
-		IVarTreePointer point = vt.newVarTreePointer();
-		
-		// go to the given node ...
-		if ( point.goAbsolute(path)) {
-			// ... and add the observer
-			point.addObserver(observer);
-		}
-	}
-	
-	/**	Remove a observer from a node. In this way, the observer stop to know all changes about this node and its children.
-	*	If the same observer was added more than one time, this method drops only one "copy".
-	*
-	*	@param	path	identify the shared variable (simple or complex).  A null path identify the root Element.
-	*	@param	observer	a object that was add to this node, and don't want to know other changes about this node and its children.
-	*/
-	public void remObserver(String path, com.eu.evidence.rtdruid.vartree.IObserver observer) {
-		IVarTreePointer point = vt.newVarTreePointer();
-		
-		// go to the given node ...
-		if ( point.goAbsolute(path)) {
-			// ... and remove the observer
-			point.remObserver(observer);
-		}
-	}
-
-	
-	/** Send a notification to all observer of the node identify by path.
-	*	If a observer was added more than one time, this notification'll be sent to this observer
-	*	the same number of times that it was added (and not dropped).
-	*
-	*	@param	path	identify the shared variable (simple or complex). A null path identify the root Element.
-	*/
-	public void handler(String path) {
-//		 TODO : gestione observer
-	}
-	
-
 	
 // ----------------------    GET Value ----------------------
 
@@ -277,7 +213,7 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 		// children path
 		String pathChild = tmp.toString();
 		
-		LinkedList risp = new LinkedList();
+		LinkedList<IVariable> risp = new LinkedList<IVariable>();
 		
 		// check if there're any child
 		if (!point.goFirstChild()) 
@@ -333,7 +269,7 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 		// Pointer to visit the tree
 		IVarTreePointer point = vt.newVarTreePointer();
 		
-		LinkedList risp = new LinkedList();
+		LinkedList<String> risp = new LinkedList<String>();
 
 		// go to parent node
 		if ( !point.goAbsolute(path) ) {
@@ -384,64 +320,6 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 		return risp;
 	}
 
-/*	/**	Tell if the data in a simple or complex node is valid or no. Checks all nodes in the path.
-	*
-	*	@param	path	identify the node.
-	*
-	*	@return	true if the data in a simple or complex node is valid, false otherwise.
-	*	@deprecated
-	*/
-/*	public boolean isValid(String path) {
-		boolean risp = true;
-		
-		// split path
-		String[] pathElement = DataPath.splitPath(path);
-		
-		// moving to requested node
-		IVarTreePointer point = vt.newVarTreePointer();
-		
-		for (int i =0; i< pathElement.length; i++) {
-			risp &= point.go(pathElement[i]);	// go to request node
-			risp &= point.isValid();			// take the answer
-			
-			// stop : the answer is false
-			if ( !risp ) 
-				return false;
-		}
-		// the answer
-		return risp;
-	}*/
-	
-/*	/**	Tell if the type of node (simple or complex) is defined in BuilderStorage or no. Checks all nodes in the path.
-	*
-	*	@param	path	identify the node.
-	*
-	*	@return	true if the type of given node is defined in BuilderStorage, false otherwise.
-	*	@deprecated
-	*/
-/*	public boolean isDefined(String path) {
-		boolean risp = true;
-		
-		// split path
-		String[] pathElement = DataPath.splitPath(path);
-		
-		// moving to requested node
-		IVarTreePointer point = vt.newVarTreePointer();
-		
-		for (int i =0; i< pathElement.length; i++) {
-			risp &= point.go(pathElement[i]);	// go to request node
-			risp &= point.isDefined();			// take the answer
-			
-			// stop : the answer is false
-			if ( !risp ) 
-				return false;
-		}
-		// the answer
-		return risp;
-	}*/
-
-	
-	
 	/**	Take all info (name, value, isValid, isDefined) from a group of siblings nodes, in case it's possible to look over only a particular type of node;
 	*	if that nodes are complex, it's possible to select the data from a particular component. Because only leaf node contains
 	*	data (a value), only this nodes have a not null value.
@@ -492,7 +370,7 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 				path);
 		}
 		
-		LinkedList risp = new LinkedList();
+		LinkedList<TiInfo> risp = new LinkedList<TiInfo>();
 		// check if there're any child
 		if (!point.goFirstChild()) 
 			return (TiInfo[]) risp.toArray( new TiInfo[0] );
@@ -689,18 +567,6 @@ import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 		
 	}
 
-/*	/**	Set if the data in a simple or complex node is valid or no. This method doesn't change values of the nodes in the path.
-	*
-	*	@param	path	identify the node.
-	*	@param	value	true if the data in a simple or complex node is valid, false otherwise.
-	* @deprecated
-	*/
-/*	public void setValid(String path, boolean value) {
-		IVarTreePointer point = vt.newVarTreePointer();
-		if ( point.goAbsolute(path) )	// go to given node
-			point.setValid(value);		// if it exist, set "isValid" value
-	}*/
-	
 	/*
 	 * 
 	 */

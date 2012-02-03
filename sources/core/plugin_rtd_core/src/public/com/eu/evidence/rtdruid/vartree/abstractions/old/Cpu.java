@@ -6,9 +6,9 @@ package com.eu.evidence.rtdruid.vartree.abstractions.old;
 // project package
 
 
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 import com.eu.evidence.rtdruid.vartree.tools.SearchObjects;
 

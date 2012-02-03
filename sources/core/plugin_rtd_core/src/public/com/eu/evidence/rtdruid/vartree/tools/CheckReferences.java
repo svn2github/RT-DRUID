@@ -11,11 +11,11 @@ package com.eu.evidence.rtdruid.vartree.tools;
 import java.util.Properties;
 
 import com.eu.evidence.rtdruid.desk.Messages;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 // standard java package
 

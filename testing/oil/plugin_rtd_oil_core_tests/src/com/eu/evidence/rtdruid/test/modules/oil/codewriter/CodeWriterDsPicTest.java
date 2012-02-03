@@ -1,6 +1,6 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 
 

@@ -13,6 +13,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilEPackageProvider;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -22,6 +23,8 @@ public class Rtd_oil_corePlugin extends Plugin {
     	"com.eu.evidence.rtdruid.oil.core";
        //com.eu.evidence.rtdruid.oil.core
     public final static String TEMPLATES_PATH = "/com/eu/evidence/rtdruid/modules/oil/templates/";
+    
+    public final static String EPACKAGE_OIL_CONTRIBUTIONS_ID = OilEPackageProvider.ID;
 
 	//The shared instance.
 	private static Rtd_oil_corePlugin plugin;

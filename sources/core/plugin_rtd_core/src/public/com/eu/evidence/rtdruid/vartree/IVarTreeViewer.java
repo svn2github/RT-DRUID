@@ -6,6 +6,7 @@
  */
 package com.eu.evidence.rtdruid.vartree;
 
+
 /**
  * This interface is used by all objects wants to get a VarTree 
  *

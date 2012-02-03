@@ -7,9 +7,9 @@
 package com.eu.evidence.rtdruid.vartree.tools;
 
 // projects package
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 
 // standard java package

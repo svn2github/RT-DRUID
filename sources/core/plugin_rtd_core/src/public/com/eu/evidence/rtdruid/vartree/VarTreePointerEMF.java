@@ -7,7 +7,6 @@ package com.eu.evidence.rtdruid.vartree;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Stack;
 
@@ -17,10 +16,10 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.CreateChildCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -28,10 +27,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import com.eu.evidence.rtdruid.desk.Messages;
-import com.eu.evidence.rtdruid.internal.vartree.data.impl.DataFactoryImpl;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.variables.BooleanMVar;
 import com.eu.evidence.rtdruid.vartree.variables.BooleanVar;
 import com.eu.evidence.rtdruid.vartree.variables.DoubleMVar;
@@ -43,7 +39,6 @@ import com.eu.evidence.rtdruid.vartree.variables.IntegerVar;
 import com.eu.evidence.rtdruid.vartree.variables.LongMVar;
 import com.eu.evidence.rtdruid.vartree.variables.LongVar;
 import com.eu.evidence.rtdruid.vartree.variables.MultiValues;
-import com.eu.evidence.rtdruid.vartree.variables.OilVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringMVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 import com.eu.evidence.rtdruid.vartree.variables.TimeMVar;
@@ -63,7 +58,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
  * 
  * @author Nicola Serreli
  */
- public abstract class VarTreePointerEMF implements IVarTreePointer {
+ public class VarTreePointerEMF implements IVarTreePointer {
 	public final static String GO_PARENT = DataPath.GO_PARENT; // ..
 	public final static String CURRENT =   DataPath.CURRENT;   // .
 	public final static String NULL_ID =   DataPath.NULL_ID;   // \0
@@ -94,26 +89,23 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 	
 	protected EditingDomain editingDomain;
 	
-	protected EFactory treeFactory;
-	
 	// ----------------------
 	
 	public VarTreePointerEMF(EList<EObject> root, EditingDomain editingDomain) {
 		this.root = root;
 		this.point = new LittlePointer(null, null);
 		this.editingDomain = editingDomain;
-		treeFactory = DataFactory.eINSTANCE;
 	}
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#clone()
 	 */
-	public abstract IVarTreePointer clone();/*{
+	public IVarTreePointer clone() {
 		VarTreePointerEMF answer = new VarTreePointerEMF(root, editingDomain);
 		answer.point = (LittlePointer) this.point.clone();
 		
 		return answer;
-	}*/
+	}
 
 	// -------------------- COMMAND -----------
 	
@@ -257,12 +249,12 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 				throw new IllegalStateException("Try to add more than one system");
 			}
 			
-			ObjectWithID newRoot = ((DataFactory) treeFactory).createSystem();
-			newRoot.setObjectID(nameId);
+			EObject newRoot = DataFactory.eINSTANCE.createSystem();
+			VarTreeIdHandler.setId(newRoot, new String[] {nameId});
 			root.add(newRoot);
 			execFlushCommandStack();
 			
-			return DataPath.addSlash(newRoot.getObjectID());
+			return DataPath.addSlash(VarTreeIdHandler.getId(newRoot));
 		}
 		
 		
@@ -319,14 +311,15 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 											((EObject) cp.getValue()).eClass().getName().equals(type))
 									) {
 									// add new node
-									ObjectWithID newValue = (ObjectWithID) cp.getEValue();
-									if (DataPath.resolveId(newValue.getObjectID()).length > 1) {
+									EObject newValue = cp.getEValue();
+									String newValueId = VarTreeIdHandler.getId(newValue);
+									if (DataPath.resolveId(newValueId).length > 1) {
 										nameId = name; // TODO: correzione temporanea !!!
 									}
 									
-									if (! newValue.setObjectID(nameId)) {
+									if (!VarTreeIdHandler.checkNewID(newValue, nameId)) {
 										Properties prop = new Properties();
-										prop.setProperty("path", "??"); // TODO settare il path
+										prop.setProperty("path", editingDomain.getTreePath(newValue).toString());
 										prop.setProperty("Node", point.pointer.toString());
 										prop.setProperty("new type", "" + type);
 										prop.setProperty("new name", "" + name);
@@ -334,14 +327,15 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
 /***/										throw new IllegalArgumentException("(abc879253) Node = " + point.pointer.toString()
 												+ " new name = " + name + " type = " + type);
-										
 									}
+									VarTreeIdHandler.setId(newValue, nameId);
 
 									{ // check if already exist a node for given Feature. If yes .. they have the same type and Id ?
 										if (point.pointer.eGet(cp.getEStructuralFeature()) != null) {
-											if ( !((ObjectWithID) point.pointer.eGet(cp.getEStructuralFeature())).eClass().getName().equals(type)) {
+											EObject obj = (EObject) point.pointer.eGet(cp.getEStructuralFeature()); 
+											if ( !(obj.eClass().getName().equals(type)) ) {
 												Properties prop = new Properties();
-												prop.setProperty("path", "??"); // TODO settare il path
+												prop.setProperty("path", editingDomain.getTreePath(obj).toString());
 												prop.setProperty("Node", point.pointer.toString());
 												prop.setProperty("new type", "" + type);
 												prop.setProperty("new name", "" + name);
@@ -350,9 +344,9 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 		/***/										throw new IllegalArgumentException("(abc879253) Node = " + point.pointer.toString()
 														+ " new name = " + name + " type = " + type);
 		
-											} else if ( !((ObjectWithID) point.pointer.eGet(cp.getEStructuralFeature())).getObjectID().equals(name)) {
+											} else if ( !VarTreeIdHandler.getId(obj).equals(name)) {
 												Properties prop = new Properties();
-												prop.setProperty("path", "??"); // TODO settare il path
+												prop.setProperty("path", editingDomain.getTreePath(obj).toString());
 												prop.setProperty("Node", point.pointer.toString());
 												prop.setProperty("new type", "" + type);
 												prop.setProperty("new name", "" + name);
@@ -375,7 +369,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 										
 									}
 									
-									return DataPath.addSlash(newValue.getObjectID());
+									return DataPath.addSlash(VarTreeIdHandler.getId(newValue));
 								}
 							} else {
 								Messages.sendDebugNl("Expected a commandParameter !!! why not found ?? " + o);
@@ -413,14 +407,14 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 					) {
 					
 					// correct the ID ? (remove or not the Slash)
-					ObjectWithID newValue = (ObjectWithID) cp.getEValue();
-					if (DataPath.resolveId(newValue.getObjectID()).length > 1) {
+					EObject newValue = cp.getEValue();
+					if (DataPath.resolveId(VarTreeIdHandler.getId(newValue)).length > 1) {
 						nameId = name; // TODO: correzione temporanea !!!
 					}
 					
-					if (! newValue.setObjectID(nameId)) {
+					if (! VarTreeIdHandler.checkNewID(newValue, nameId)) {
 						Properties prop = new Properties();
-						prop.setProperty("path", "??"); // TODO settare il path
+						prop.setProperty("path", editingDomain.getTreePath(newValue).toString());
 						prop.setProperty("Node", point.pointer.toString());
 						prop.setProperty("new type", "" + type);
 						prop.setProperty("new name", "" + name);
@@ -430,21 +424,23 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 								+ " new name = " + name + " type = " + type);
 						
 					}
+					VarTreeIdHandler.setId(newValue, nameId);
 
 					{ // check if already exist a node with given ID
 						EList<?> currentChilds = (EList<?>) point.pointer.eGet( cp.getEStructuralFeature());
 						int pos = currentChilds.indexOf(newValue);
 						if (pos > -1) { // already exist
+							EObject obj = (EObject) currentChilds.get(pos); 
 							
 							// check for type
-							if (((ObjectWithID) currentChilds.get(pos)).eClass().getName().equals(type)) {
+							if (obj.eClass().getName().equals(type)) {
 								Messages.sendDebugNl("try to add an already existent node");
-/**/							return DataPath.addSlash(newValue.getObjectID());
+/**/							return DataPath.addSlash(VarTreeIdHandler.getId(newValue));
 							}
 							
 							
 							Properties prop = new Properties();
-							prop.setProperty("path", "??"); // TODO settare il path
+							prop.setProperty("path", editingDomain.getTreePath(obj).toString());
 							prop.setProperty("Node", point.pointer.toString());
 							prop.setProperty("new type", "" + type);
 							prop.setProperty("new name", "" + name);
@@ -459,7 +455,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 					// add the new node
 					execAddCommand(point.pointer, cp);
 
-					return DataPath.addSlash(newValue.getObjectID());
+					return DataPath.addSlash(VarTreeIdHandler.getId(newValue));
 
 				}
 			} else {
@@ -556,13 +552,13 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 						if (var instanceof MultiValues) {
 							IMultiValues mv = (IMultiValues) var;
 							for (int l=0; l< mv.sizeValues(); l++) {
-								val.add(treeFactory.createFromString(at.getEAttributeType(), mv.getValues(l) ));
+								val.add(EcoreUtil.createFromString(at.getEAttributeType(), mv.getValues(l) ));
 							}
 							
 							
 						} else {
 							if (var.get() != null) {
-								val.add(treeFactory.createFromString(at.getEAttributeType(), var.toString() ));
+								val.add(EcoreUtil.createFromString(at.getEAttributeType(), var.toString() ));
 							}
 							
 						}
@@ -583,7 +579,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 							
 						} else {
 							if (var.get() != null) {
-								tmp = treeFactory.createFromString(at.getEAttributeType(), var.toString() );
+								tmp = EcoreUtil.createFromString(at.getEAttributeType(), var.toString() );
 							}
 							
 						}
@@ -671,9 +667,9 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 		} else if (step == null || NULL_ID.equals(step)) { // try to go to a child with a id == null (unsetted)
 			if (current.pointer == null) {
 				if (root.size() >0) {
-					String txt = ((ObjectWithID) root.get(0)).getObjectID();
+					String txt = VarTreeIdHandler.getId(root.get(0));
 					if (NULL_ID.equals(txt)) {
-						current.pointer = (ObjectWithID) root.get(0);
+						current.pointer = root.get(0);
 						current.attr = null;
 						risp = true;
 					}
@@ -687,8 +683,8 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 					// look for a child with given name
 					EList<?> refList = ((EList<?>) child);
 					for (int i=0; i<refList.size(); i++) {
-						ObjectWithID ref = (ObjectWithID) refList.get(i);
-						if (NULL_ID.equals(ref.getObjectID())) {
+						EObject ref = (EObject) refList.get(i);
+						if (NULL_ID.equals(VarTreeIdHandler.getId(ref))) {
 							current.pointer = ref;
 							current.attr = null;
 							risp = true;
@@ -716,9 +712,9 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
 			if (current.pointer == null) {
 				if (root.size() >0) {
-					String txt = ((ObjectWithID) root.get(0)).getObjectID();
+					String txt = VarTreeIdHandler.getId(root.get(0));
 					if ("".equals(txt)) {
-						current.pointer = (ObjectWithID) root.get(0);
+						current.pointer = root.get(0);
 						current.attr = null;
 						risp = true;
 					}
@@ -732,8 +728,8 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 					// look for a child with given name
 					EList<?> refList = ((EList<?>) child);
 					for (int i=0; i<refList.size(); i++) {
-						ObjectWithID ref = (ObjectWithID) refList.get(i);
-						if ("".equals(ref.getObjectID())) {
+						EObject ref = (EObject) refList.get(i);
+						if ("".equals(VarTreeIdHandler.getId(ref))) {
 							current.pointer = ref;
 							current.attr = null;
 							risp = true;
@@ -761,9 +757,9 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 			
 			if (current.pointer == null) {
 				if (root.size() >0) {
-					String txt = ((ObjectWithID) root.get(0)).getObjectID();
+					String txt = VarTreeIdHandler.getId(root.get(0));
 					if (step.equals(txt)) {
-						current.pointer = (ObjectWithID) root.get(0);
+						current.pointer = root.get(0);
 						current.attr = null;
 						risp = true;
 					}
@@ -787,7 +783,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 							risp = true;
 							
 						} else { // one to one
-							ObjectWithID newObj = (ObjectWithID) current.pointer.eGet(esf);
+							EObject newObj = (EObject) current.pointer.eGet(esf);
 							if (newObj != null) {
 								current.pointer = newObj;
 								current.attr = null;
@@ -820,8 +816,8 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 //					} else 
 					{
 					for (int i=0; i<refList.size(); i++) {
-						ObjectWithID ref = (ObjectWithID) refList.get(i);
-						if (step.equals(ref.getObjectID())) {
+						EObject ref = (EObject) refList.get(i);
+						if (step.equals(VarTreeIdHandler.getId(ref))) {
 							current.pointer = ref;
 							current.attr = null;
 							risp = true;
@@ -961,7 +957,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 						return true;
 					}// else {
 					
-					ObjectWithID newObj = (ObjectWithID) point.pointer.eGet(ref);
+					EObject newObj = (EObject) point.pointer.eGet(ref);
 					if (newObj != null) {
 						point.pointer = newObj;
 						// point.attr = null;
@@ -984,7 +980,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 				if ( ref.isMany() ) {
 					EList<?> newObj = (EList<?>) point.pointer.eGet(ref);
 					if (newObj != null && newObj.size()>0) {
-						point.pointer = (ObjectWithID) newObj.get(0);
+						point.pointer = (EObject) newObj.get(0);
 						point.attr = null;
 						return true;
 					}
@@ -1087,7 +1083,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 					}
 					if (pos +1< newObj.size()) { // pos cannot be <0 !!!!
 						
-						point.pointer = (ObjectWithID) newObj.get(pos +1);	
+						point.pointer = (EObject) newObj.get(pos +1);	
 						// point.attr = null;
 						risp = true;
 					}
@@ -1115,7 +1111,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 								risp = true;
 							} else {
 								
-								ObjectWithID newObj = (ObjectWithID) parent.eGet(ref);
+								EObject newObj = (EObject) parent.eGet(ref);
 								if (newObj != null) {
 									point.pointer = newObj;
 									point.attr = null;
@@ -1152,7 +1148,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 						risp = true;
 					} else {
 						
-						ObjectWithID newObj = (ObjectWithID) point.pointer.eGet(ref);
+						EObject newObj = (EObject) point.pointer.eGet(ref);
 						if (newObj != null) {
 							point.pointer = newObj;
 							point.attr = null;
@@ -1235,11 +1231,11 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
 				if (risp == null) {
 				    
-				    if ( treeFactory instanceof DataFactory) {
-				        risp = (IVariable) ((DataFactoryImpl) treeFactory).createExtendedVarFromString(( (EAttribute) point.attr).getEAttributeType(), null );
-				    } else 
+//				    if ( treeFactory instanceof DataFactory) {
+//				        risp = (IVariable) ((DataFactoryImpl) treeFactory).createExtendedVarFromString(( (EAttribute) point.attr).getEAttributeType(), null );
+//				    } else 
 				    {
-				        risp = (IVariable) treeFactory.createFromString(( (EAttribute) point.attr).getEAttributeType(), null );
+				        risp = (IVariable) EcoreUtil.createFromString(( (EAttribute) point.attr).getEAttributeType(), null );
 				    }
 				} else {
 					risp = (IVariable) risp.clone();
@@ -1252,6 +1248,13 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 		throw new IllegalStateException("try to get a var from a container");
 	}
 
+
+	/* (non-Javadoc)
+	 * @see rtdruid.vartree.IVarTreePointer#getVar()
+	 */
+	public IVariable getNewVar() {
+		return getNewVar(null);
+	}
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.IVarTreePointer#getVar()
 	 */
@@ -1274,11 +1277,12 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 	
 			} else {
 
-				if (treeFactory instanceof DataFactory) {
-					risp = (IVariable) ((DataFactoryImpl) treeFactory)
-							.createExtendedVarFromString(atType, value);
-				} else {
-					risp = (IVariable) treeFactory
+//				if (treeFactory instanceof DataFactory) {
+//					risp = (IVariable) ((DataFactoryImpl) treeFactory)
+//							.createExtendedVarFromString(atType, value);
+//				} else
+				{
+					risp = (IVariable) EcoreUtil
 							.createFromString(atType, value);
 				}
 				
@@ -1307,13 +1311,13 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 					if (var instanceof MultiValues) {
 						IMultiValues mv = (IMultiValues) var;
 						for (int l=0; l< mv.sizeValues(); l++) {
-							val.add(treeFactory.createFromString(at.getEAttributeType(), mv.getValues(l) ));
+							val.add(EcoreUtil.createFromString(at.getEAttributeType(), mv.getValues(l) ));
 						}
 						
 						
 					} else {
 						if (var.get() != null) {
-						    Object o = treeFactory.createFromString(at.getEAttributeType(), var.toString() );
+						    Object o = EcoreUtil.createFromString(at.getEAttributeType(), var.toString() );
 							if (o!= null) {
 							    val.add(o);
 							}
@@ -1342,7 +1346,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 								tmp = var.clone();
 							} else {
 							// check type 
-								tmp = treeFactory.createFromString(at.getEAttributeType(), var.toString() );
+								tmp = EcoreUtil.createFromString(at.getEAttributeType(), var.toString() );
 							}
 						}
 						
@@ -1372,7 +1376,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 			return point.attr.getName();
 		}
 		//return ((ObjectWithID) point.pointer).getObjectID();
-		return DataPath.addSlash(((ObjectWithID) point.pointer).getObjectID());
+		return DataPath.addSlash(VarTreeIdHandler.getId(point.pointer));
 	}
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.IVarTreePointer#getType()
@@ -1455,46 +1459,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 			}
 		}
 	}
-	
-	//-------------------------- OBSERVER -------------------------
-	
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.IVarTreePointer#handler(java.lang.String)
-	 */
-	public void handler(String path) {
-		// TODO Auto-generated method stub
-		//throw new UnsupportedOperationException();
-	}
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.IVarTreePointer#addObserver(rtdruid.vartree.IObserver)
-	 */
-	public void addObserver(IObserver o) {
-		// TODO Auto-generated method stub
-		//throw new UnsupportedOperationException();
-	}
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.IVarTreePointer#remObserver(rtdruid.vartree.IObserver)
-	 */
-	public void remObserver(IObserver o) {
-		// TODO Auto-generated method stub
-		//throw new UnsupportedOperationException();
-	}
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.IVarTreePointer#remAllObserver()
-	 */
-	public void remAllObserver() {
-		// TODO Auto-generated method stub
-		//throw new UnsupportedOperationException();
-	}
-	/* (non-Javadoc)
-	 * @see rtdruid.vartree.IVarTreePointer#getAllObserver()
-	 */
-	public LinkedList<?> getAllObserver() {
-		// TODO Auto-generated method stub
-		//throw new UnsupportedOperationException();
-		return null;
-	}
-	
+
 	// ------------------------------------------
 	
 	public EObject getCurrentEMFObject() {

@@ -14,7 +14,8 @@ Require-Bundle: com.eu.evidence.rtdruid.core,
  org.eclipse.jface.text,
  org.eclipse.emf.common.ui,
  org.eclipse.emf.edit.ui,
- org.eclipse.emf.ecore.xmi
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.core.variables
 Bundle-Vendor: Evidence S.r.l.
 Export-Package: com.eu.evidence.rtdruid.ui,
  com.eu.evidence.rtdruid.ui.common,

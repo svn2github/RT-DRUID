@@ -1,9 +1,9 @@
 package com.eu.evidence.rtdruid.internal.modules.jscan.common;
 
 
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Cpu;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 
 

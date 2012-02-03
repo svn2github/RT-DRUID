@@ -23,12 +23,12 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.TextOperationAction;
 
 import com.eu.evidence.rtdruid.desk.Messages;
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilReaderFactory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreeProvider;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 /**
  * This class is a text editor for oil files
@@ -165,7 +165,7 @@ public class OilTextEditor extends TextEditor implements IVarTreeProvider {
     		return null;
     	}
     	
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
         try {
         	IEditorInput input= getEditorInput();
         	

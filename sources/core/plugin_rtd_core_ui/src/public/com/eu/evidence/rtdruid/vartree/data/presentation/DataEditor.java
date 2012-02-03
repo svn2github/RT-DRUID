@@ -125,13 +125,17 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.eu.evidence.rtdruid.desk.Messages;
-import com.eu.evidence.rtdruid.desk.RTDFactory;
+
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.ui.Rtd_core_uiPlugin;
 import com.eu.evidence.rtdruid.ui.common.ShowLogo;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreeProvider;
-import com.eu.evidence.rtdruid.vartree.PublicObjectWithIDItemProvider;
+import com.eu.evidence.rtdruid.vartree.IllegalIDException;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.Activation;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCostList;
 import com.eu.evidence.rtdruid.vartree.data.CpuSched;
@@ -146,10 +150,6 @@ import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
 import com.eu.evidence.rtdruid.vartree.data.TaskSched;
 import com.eu.evidence.rtdruid.vartree.data.TimeConst;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.IllegalIDException;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 
@@ -620,15 +620,16 @@ public class DataEditor
 		      		 */
 			      	AdapterFactory af = editingDomain.getAdapterFactory();
 			      	Adapter a = af.adapt(dest, dest);
-			      	if (!(a instanceof PublicObjectWithIDItemProvider)) {
-				      	sendMessage("Not valid past from Clipboard");
-						
-				        mostRecentCommand = null;
-				        command.dispose();
-				        return;
-			      	}
-			      	
-			      	PublicObjectWithIDItemProvider owiip = (PublicObjectWithIDItemProvider) a;
+//			      	if (!(a instanceof ObjectWithIDItemProvider)) {
+//				      	sendMessage("Not valid past from Clipboard");
+//						
+//				        mostRecentCommand = null;
+//				        command.dispose();
+//				        return;
+//			      	}
+//			      	
+//			      	ObjectWithIDItemProvider owiip = (ObjectWithIDItemProvider) a;
+			      	Adapter owiip = a;
 			      	boolean next = false;
 			      	Iterator iter = source.iterator();
 			      	while(iter.hasNext()) {
@@ -641,7 +642,7 @@ public class DataEditor
 					        return;
 			      		}
 				      	
-			      		EStructuralFeature ref = owiip.getChildFeatureContainer(dest, o);
+			      		EStructuralFeature ref = null; //owiip.getChildFeatureContainer(dest, o);
 			      		if ( ref == null || !(ref instanceof EReference)) {
 			      			next = true;
 			      			break;
@@ -655,12 +656,12 @@ public class DataEditor
 			      		next = false || (dest ==null);
 
 				      	if (!next) {
-				      		owiip = (PublicObjectWithIDItemProvider) af.adapt(dest, dest);
+				      		owiip = /*(PublicObjectWithIDItemProvider)*/ af.adapt(dest, dest);
 				      	}
 				      	iter = source.iterator();
 				      	while(iter.hasNext() && !next) {
 				      		ObjectWithID o1 = (ObjectWithID) iter.next();
-				      		EStructuralFeature ref = owiip.getChildFeatureContainer(dest, o1);
+				      		EStructuralFeature ref = null; // owiip.getChildFeatureContainer(dest, o1);
 				      		if ( ref == null || !(ref instanceof EReference)) {
 				      			next = true;
 				      		}
@@ -1064,9 +1065,7 @@ public class DataEditor
 		//
 //		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack);
 		
-		editingDomain = (IVarTree) RTDFactory.get(IVarTree.class, new Class[] {
-			CommandStack.class//commandStack.getClass()
-			}, new Object[] {commandStack});
+		editingDomain = VarTreeUtil.newVarTree(commandStack);
 		
 		adapterFactory = (ComposedAdapterFactory) editingDomain.getAdapterFactory();
 	}

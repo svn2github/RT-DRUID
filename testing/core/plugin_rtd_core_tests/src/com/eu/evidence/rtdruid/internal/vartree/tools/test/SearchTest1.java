@@ -8,14 +8,16 @@ package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
 // progect package
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 
 // exceptions
@@ -23,7 +25,7 @@ import com.eu.evidence.rtdruid.vartree.tools.Search;
 /**
  *  @author  Nicola Serreli
  */
-public class SearchTest1 extends TestCase {
+public class SearchTest1 {
 	/** Abbreviation for VarTree.SEPARATOR */
 	private final static char S = IVarTree.SEPARATOR;
 	
@@ -32,30 +34,17 @@ public class SearchTest1 extends TestCase {
 	private IVarTree vt;
 	private ITreeInterface ti;
 
-	/**
-	 * Constructor for SearchTest.
-	 * @param arg0
-	 */
-	public SearchTest1(String arg0) {
-		super(arg0);
-	}
-
-	public SearchTest1() {}
-
-	public static Test suite() {
-		return new TestSuite(SearchTest1.class);
-	}
 
 	/*
 	 * @see TestCase#setUp()
 	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-//		ProjectManager.instance().newProject();
+	@Before
+	public void setUp() throws Exception {
 		vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 		ti = vt.newTreeInterface();
 	}
 
+	@Test 
 	public void testAVar() {
 		// innesistente
 		assertTrue(Search.aVar(ti, SYSTEM_PATH, "nessuna") == null);
@@ -110,6 +99,7 @@ public class SearchTest1 extends TestCase {
 		
 	}
 
+	@Test 
 	public void testALocalVar() {
 		// innesistente
 		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "nessuna") == null);
@@ -161,6 +151,7 @@ public class SearchTest1 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test 
 	public void testAProc() {
 		// innesistente
 		assertTrue(Search.aProc(ti, SYSTEM_PATH, "nessuno") == null);
@@ -208,6 +199,7 @@ public class SearchTest1 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test 
 	public void testALocalProc() {
 		// innesistente
 		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH, "nessuno") == null);
@@ -262,6 +254,7 @@ public class SearchTest1 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 
+	@Test 
 	public void testProcPrefix() {
 		// innesistente
 		assertTrue(Search.procPrefix(ti, SYSTEM_PATH, "nessuno") == null);
@@ -310,6 +303,7 @@ public class SearchTest1 extends TestCase {
 		} catch (NullPointerException e) { ok = true; } assertTrue(ok);
 	}
 	
+	@Test 
 	public void testARtos() {
 		String source = 
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
@@ -383,6 +377,7 @@ public class SearchTest1 extends TestCase {
 		}
 	}
 	
+	@Test 
 	public void testAEvent() {
 		String source = 
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
@@ -416,6 +411,7 @@ public class SearchTest1 extends TestCase {
 
 
 
+	@Test 
 	public void testAllProcs() {
 		
 		String[] procs = Search.allProcs(vt);
@@ -428,6 +424,7 @@ public class SearchTest1 extends TestCase {
 		assertTrue(procs.length == 5);
 	}
 
+	@Test 
 	public void testAllTasks() {
 		
 		String[] tasks = Search.allTasks(vt.newTreeInterface());
@@ -440,16 +437,24 @@ public class SearchTest1 extends TestCase {
 		assertTrue(tasks.length == 4);
 	}
 
-/*	public void testAMethod() {
+	@Test
+	@Ignore
+	public void testAMethod() {
 	}
 
+	@Test
+	@Ignore
 	public void testAGlobalMethod() {
 	}
 
+	@Test
+	@Ignore
 	public void testALocalMethod() {
 	}
 
+	@Test
+	@Ignore
 	public void testAMethodRef() {
 	}
-*/
+
 }

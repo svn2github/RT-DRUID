@@ -26,10 +26,10 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.ResourceUtil;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreeProvider;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 public class Common {
 
@@ -102,7 +102,7 @@ public class Common {
 				answer.editor = ep ;
 			} else {
 				URI fileURI = URI.createPlatformResourceURI(workspacePath);
-				answer.vt = (IVarTree) RTDFactory.get(IVarTree.class);
+				answer.vt = VarTreeUtil.newVarTree();
 				Resource res = new RTD_XMI_Factory()
 						.createResource(fileURI);
 				try {

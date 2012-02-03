@@ -13,11 +13,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.CommandParameter;
@@ -25,6 +22,8 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.vartree.data.provider.DataItemProviderAdapterFactory;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
@@ -37,17 +36,18 @@ import com.eu.evidence.rtdruid.vartree.data.System;
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class DataTest extends TestCase {
+public class DataTest {
 	
 	private AdapterFactoryEditingDomain editingDomain;
 
 	private ComposedAdapterFactory adapterFactory;
 
-	public DataTest() {
+	@Before
+	public void setup() {
 
 		// Create an adapter factory that yields item providers.
 		//
-		List factories = new ArrayList();
+		List<AdapterFactory> factories = new ArrayList<AdapterFactory>();
 		factories.add(new ResourceItemProviderAdapterFactory());
 		factories.add(new DataItemProviderAdapterFactory());
 		factories.add(new ReflectiveItemProviderAdapterFactory());
@@ -66,29 +66,25 @@ public class DataTest extends TestCase {
 
 	}
 	
-	public static Test suite() {
-        return new TestSuite(DataTest.class);
-    }
-
-
 	/**
 	 * Check that all classes extends ObjectWithID
 	 */ 
+	@Test
 	public void testObjectWithID() {
 		System root = DataFactory.eINSTANCE.createSystem();
 		
-		checkObjectWithID(root, new ArrayList());
+		checkObjectWithID(root, new ArrayList<Class<?>>());
 	}
 	
-	private void checkObjectWithID(EObject current, ArrayList path) {
+	private void checkObjectWithID(EObject current, ArrayList<Class<?>> path) {
 		if (path.contains(current.getClass())) return;
 		path.add(current.getClass());
 		
 		
-		Collection children = editingDomain.getNewChildDescriptors(current,
+		Collection<?> children = editingDomain.getNewChildDescriptors(current,
 				null);
 
-		Iterator it = children.iterator();
+		Iterator<?> it = children.iterator();
 		while (it.hasNext()) {
 			Object o = it.next();
 
@@ -102,7 +98,8 @@ public class DataTest extends TestCase {
 					current.eSet(cp.getEStructuralFeature(), newValue);
 					checkObjectWithID(newValue, path);
 				} else {
-					EList newChildren = (EList) current.eGet(cp
+					@SuppressWarnings("unchecked")
+					EList<EObject> newChildren = (EList<EObject>) current.eGet(cp
 							.getEStructuralFeature());
 
 					// add new node
@@ -142,6 +139,14 @@ public class DataTest extends TestCase {
 			}
 		}
 		*/
+	}
+
+	/**
+	 * @param b
+	 */
+	private void assertTrue(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	//	TODO: controllare che tutte le "structuralFeatures" siano ordinate in modo alfabetico (anche se questo non viene garantito) 

@@ -10,11 +10,11 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import com.eu.evidence.rtdruid.desk.ResourceUtility;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.Rtd_oil_cdt_Plugin;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.RTDOilProjectNature;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
+import com.eu.evidence.rtdruid.ui.common.ResourceUtility;
 
 public class MyMakeBuilder {
 	

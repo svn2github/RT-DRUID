@@ -7,7 +7,7 @@ package com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 
 /**
  * Some keywords and constants used by Erika Enterprise writer

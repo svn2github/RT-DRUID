@@ -5,24 +5,27 @@
  */
 package com.eu.evidence.rtdruid.test.vartree.data;
 
-import java.io.ByteArrayInputStream;
-import java.util.HashMap;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.HashMap;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.junit.Before;
+import org.junit.Test;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.io.IRTDImporter;
+import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
-import com.eu.evidence.rtdruid.vartree.data.init.VtCompare;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 
 /**
@@ -31,55 +34,22 @@ import com.eu.evidence.rtdruid.vartree.data.init.VtCompare;
  * Tests about load and store with
  * {@link com.eu.evidence.rtdruid.internal.vartree.data.init.MyXMIReaderImpl MyXMIReaderImpl}.
  */
-public class VTLoadTest extends TestCase {
+public class VTLoadTest {
 	
 	private IVarTree correct = null;
 
-	public VTLoadTest(String name) {
-		super(name);
-//		System.err.println("Start free = " + Runtime.getRuntime().freeMemory()
-//				+ "\t" + Runtime.getRuntime().totalMemory()
-//				+ "\t" + Runtime.getRuntime().maxMemory());
-	}
-
-	public static Test suite() {
-		TestSuite tests = new TestSuite(VTLoadTest.class);
-		//		tests.addTest(new TestSuite(TreeCloneTest.class));
-		return tests;
-	}
 	
 	
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();		
-		System.err.flush();
-		System.out.println("/*****************************************************\n" +
-				           " *  " + this.getClass().getName() + " -> " + getName() + "\n" +
-				           " ****************************************************" +
-				           "" +
-				           "/\n");
-		System.out.flush();
+	@Before
+	public void setUp() throws Exception {
 		
-		correct = (IVarTree) RTDFactory.get(IVarTree.class); //prepare also Data Factory
+		correct = VarTreeUtil.newVarTree(); //prepare also Data Factory
 		
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
 		
 		Resource res = (Resource) correct.getResourceSet().getResources().get(0);
-		try {
-			res.load(new ByteArrayInputStream(ertd_version.getBytes()), map);
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-		
-	}
-
-	protected void tearDown() throws Exception {
-		correct = null;
-		super.tearDown();
-		System.err.flush();
-		System.out.flush();
+		res.load(new ByteArrayInputStream(ertd_version.getBytes()), map);
 	}
 	
 	private final static String ertd_version = 
@@ -126,95 +96,154 @@ public class VTLoadTest extends TestCase {
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.4.dtd\">" +
 		common;
 
-	public void testNew() {
+	@Test
+	public void testNewResource() {
 	    /*
 	     * IMPORTANT If this test fails, ususaly means that some Required file was not found (LAST_DTD, xsl files) 
 	     */
-	    try {
-	    	//IVTResource reader = 
-	    		createResource();
-	    } catch (NoClassDefFoundError e) {
-	        e.printStackTrace();
-	        assertTrue(false);
-	    } catch (Error e) {
-	        e.printStackTrace();
-	        assertTrue(false);
-	    }
-		
-	    try {
-	    	//IVarTree vt = (IVarTree) 
-	    	RTDFactory.get(IVarTree.class);
-	    } catch (NoClassDefFoundError e) {
-	        e.printStackTrace();
-	        assertTrue(false);
-	    } catch (Error e) {
-	        e.printStackTrace();
-	        assertTrue(false);
-	    }
+   		createResource();
 	}
 
+	@Test
+	public void testNewVarTree() {
+	    /*
+	     * IMPORTANT If this test fails, ususaly means that some Required file was not found (LAST_DTD, xsl files) 
+	     */
+    	VarTreeUtil.newVarTree();
+	}
+
+	@Test
 	public void testLoad_utility_1() {
 		
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput1);
 //		System.out.println(xmlInput1 + "\n\n" + Utility.varTreeToString(vt));
-		String t = (new VtCompare(vt, correct)).getText(); assertTrue(t, t== null);
+		String t = VarTreeUtil.compare(vt, correct).getMessage(); assertNull(t, t);
 	}
 
 	
-	public void testLoad_null_null_1() {
+	@Test(expected=IOException.class)
+	public void testLoad_null_null_1() throws IOException {
 		loadString(xmlInput1, null, null, false);
 	}
+	@Test(expected=IOException.class)
+	public void testLoad_null_ertd_1() throws IOException {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+		
+		loadString(xmlInput1, null, map, true);
+	}
+	@Test
+	public void testLoad_null_null_ertd_1() throws IOException {
+		String msg_null = null;
+		try {
+			loadString(xmlInput1, null, null, false);
+		} catch (IOException e) {
+			msg_null = e.getMessage();
+		}
 
-	public void testLoad_null_rtd_1() {
+		String msg_ertd = null;
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+			
+			loadString(xmlInput1, null, map, false);
+		} catch (IOException e) {
+			msg_ertd = e.getMessage();
+		}
+
+		assertNotNull(msg_null);
+		assertNotNull(msg_ertd);
+		assertTrue(msg_null.equals(msg_ertd));
+	}
+
+	@Test
+	public void testLoad_null_rtd_1() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput1, null, map, true);
 	}
 	
-	public void testLoad_rtd_rtd_1() {
+	@Test
+	public void testLoad_rtd_rtd_1() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput1, "file.rtd", map, true);
 	}
 	
-	public void testLoad_rtd_null_1() {
+	@Test
+	public void testLoad_rtd_null_1() throws IOException {
 		loadString(xmlInput1, "file.rtd", null, true);
 	}
 	
 	
 	
 	
+	@Test
 	public void testLoad_utility_2() {
 		
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput2);
 //		System.out.println(Utility.varTreeToString(vt));
-		String t = (new VtCompare(vt, correct)).getText(); assertTrue(t, t== null);
+		String t = VarTreeUtil.compare(vt, correct).getMessage(); assertNull(t, t);
 	}
 
 	
-	public void testLoad_null_null_2() {
+	@Test(expected=IOException.class)
+	public void testLoad_null_null_2() throws IOException {
 		loadString(xmlInput2, null, null, false);
 	}
+	@Test(expected=IOException.class)
+	public void testLoad_null_ertd_2() throws IOException {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+		
+		loadString(xmlInput2, null, map, true);
+	}
+	@Test
+	public void testLoad_null_null_ertd_2() throws IOException {
+		String msg_null = null;
+		try {
+			loadString(xmlInput2, null, null, false);
+		} catch (IOException e) {
+			msg_null = e.getMessage();
+		}
 
-	public void testLoad_null_rtd_2() {
+		String msg_ertd = null;
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+			
+			loadString(xmlInput2, null, map, false);
+		} catch (IOException e) {
+			msg_ertd = e.getMessage();
+		}
+
+		assertNotNull(msg_null);
+		assertNotNull(msg_ertd);
+		assertTrue(msg_null.equals(msg_ertd));
+	}
+
+	@Test
+	public void testLoad_null_rtd_2() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput2, null, map, true);
 	}
 	
-	public void testLoad_rtd_rtd_2() {
+	@Test
+	public void testLoad_rtd_rtd_2() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput2, "file.rtd", map, true);
 	}
 	
-	public void testLoad_rtd_null_2() {
+	@Test
+	public void testLoad_rtd_null_2() throws IOException {
 		loadString(xmlInput2, "file.rtd", null, true);
 	}
 	
@@ -222,104 +251,210 @@ public class VTLoadTest extends TestCase {
 	
 	
 	
+	@Test
 	public void testLoad_utility_3() {
 		
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput3);
 //		System.out.println(Utility.varTreeToString(vt));
-		String t = (new VtCompare(vt, correct)).getText(); assertTrue(t, t== null);
+		String t = VarTreeUtil.compare(vt, correct).getMessage(); assertNull(t, t);
 	}
 
 	
-	public void testLoad_null_null_3() {
+	@Test(expected=IOException.class)
+	public void testLoad_null_null_3() throws IOException {
 		loadString(xmlInput3, null, null, false);
 	}
+	@Test(expected=IOException.class)
+	public void testLoad_null_ertd_3() throws IOException {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+		
+		loadString(xmlInput3, null, map, true);
+	}
+	@Test
+	public void testLoad_null_null_ertd_3() throws IOException {
+		String msg_null = null;
+		try {
+			loadString(xmlInput3, null, null, false);
+		} catch (IOException e) {
+			msg_null = e.getMessage();
+		}
 
-	public void testLoad_null_rtd_3() {
+		String msg_ertd = null;
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+			
+			loadString(xmlInput3, null, map, false);
+		} catch (IOException e) {
+			msg_ertd = e.getMessage();
+		}
+
+		assertNotNull(msg_null);
+		assertNotNull(msg_ertd);
+		assertTrue(msg_null.equals(msg_ertd));
+	}
+
+	@Test
+	public void testLoad_null_rtd_3() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput3, null, map, true);
 	}
 	
-	public void testLoad_rtd_rtd_3() {
+	@Test
+	public void testLoad_rtd_rtd_3() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput3, "file.rtd", map, true);
 	}
 	
-	public void testLoad_rtd_null_3() {
+	@Test
+	public void testLoad_rtd_null_3() throws IOException {
 		loadString(xmlInput3, "file.rtd", null, true);
 	}	
 	
 	
 	
+	@Test
 	public void testLoad_utility_4() {
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput4);
 //		System.out.println(Utility.varTreeToString(vt));
-		String t = (new VtCompare(vt, correct)).getText(); assertTrue(t, t== null);
+		String t = VarTreeUtil.compare(vt, correct).getMessage(); assertNull(t, t);
 	}
 
 	
-	public void testLoad_null_null_4() {
+	@Test(expected=IOException.class)
+	public void testLoad_null_null_4() throws IOException {
 		loadString(xmlInput4, null, null, false);
 	}
+	@Test(expected=IOException.class)
+	public void testLoad_null_ertd_4() throws IOException {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+		
+		loadString(xmlInput4, null, map, true);
+	}
+	@Test
+	public void testLoad_null_null_ertd_4() throws IOException {
+		String msg_null = null;
+		try {
+			loadString(xmlInput4, null, null, false);
+		} catch (IOException e) {
+			msg_null = e.getMessage();
+		}
 
-	public void testLoad_null_rtd_4() {
+		String msg_ertd = null;
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+			
+			loadString(xmlInput4, null, map, false);
+		} catch (IOException e) {
+			msg_ertd = e.getMessage();
+		}
+
+		assertNotNull(msg_null);
+		assertNotNull(msg_ertd);
+		assertTrue(msg_null.equals(msg_ertd));
+	}
+
+	@Test
+	public void testLoad_null_rtd_4() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput4, null, map, true);
 	}
 	
-	public void testLoad_rtd_rtd_4() {
+	@Test
+	public void testLoad_rtd_rtd_4() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput4, "file.rtd", map, true);
 	}
 	
-	public void testLoad_rtd_null_4() {
+	@Test
+	public void testLoad_rtd_null_4() throws IOException {
 		loadString(xmlInput4, "file.rtd", null, true);
 	}
 	
 	
 	
+	@Test
 	public void testLoad_utility_5() {
 		
 		IVarTree vt = 
 			Vt2StringUtilities.loadString(xmlInput5);
 //		System.out.println(xmlInput1 + "\n\n" + Utility.varTreeToString(vt));
-		String t = (new VtCompare(vt, correct)).getText(); assertTrue(t, t== null);
+		String t = VarTreeUtil.compare(vt, correct).getMessage(); assertNull(t, t);
 	}
 
 	
-	public void testLoad_null_null_5() {
+	@Test(expected=IOException.class)
+	public void testLoad_null_null_5() throws IOException {
 		loadString(xmlInput5, null, null, false);
 	}
+	@Test(expected=IOException.class)
+	public void testLoad_null_ertd_5() throws IOException {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+		
+		loadString(xmlInput5, null, map, true);
+	}
+	@Test
+	public void testLoad_null_null_ertd_5() throws IOException {
+		String msg_null = null;
+		try {
+			loadString(xmlInput5, null, null, false);
+		} catch (IOException e) {
+			msg_null = e.getMessage();
+		}
 
-	public void testLoad_null_rtd_5() {
+		String msg_ertd = null;
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+			
+			loadString(xmlInput5, null, map, false);
+		} catch (IOException e) {
+			msg_ertd = e.getMessage();
+		}
+
+		assertNotNull(msg_null);
+		assertNotNull(msg_ertd);
+		assertTrue(msg_null.equals(msg_ertd));
+	}
+
+	@Test
+	public void testLoad_null_rtd_5() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput5, null, map, true);
 	}
 	
-	public void testLoad_rtd_rtd_5() {
+	@Test
+	public void testLoad_rtd_rtd_5() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput5, "file.rtd", map, true);
 	}
 	
-	public void testLoad_rtd_null_5() {
+	@Test
+	public void testLoad_rtd_null_5() throws IOException {
 		loadString(xmlInput5, "file.rtd", null, true);
 	}
 	
-	/***/
-	protected Resource loadString(String input, String path, HashMap<Object, Object> options, boolean expectedFail) {
+	/**
+	 * @throws IOException */
+	protected Resource loadString(String input, String path, HashMap<Object, Object> options, boolean expectedFail) throws IOException {
 		if (options == null) {
 			options = new HashMap<Object, Object>();
 		}
@@ -328,24 +463,19 @@ public class VTLoadTest extends TestCase {
 		}
 		
 		Resource res = (new RTD_XMI_Factory()).createResource(URI.createFileURI(path));
-		try {
-			res.load(new ByteArrayInputStream(input.getBytes()), options);
-		} catch (Exception e) {
-			e.printStackTrace();
-			assertTrue(false);
-		}
+		res.load(new ByteArrayInputStream(input.getBytes()), options);
 
 		
 		boolean contains_res = res.getContents().size() > 0;
-		assertTrue(expectedFail == contains_res);
+		assertEquals(expectedFail, contains_res);
 		if (contains_res) {
 			boolean contains_eobjects = res.getContents().get(0).eContents().size() > 0;
-			assertTrue(expectedFail == contains_eobjects);
+			assertEquals(expectedFail, contains_eobjects);
 			
 			if (contains_eobjects) {
 				EObject croot = correct.getResourceSet().getResources().get(0).getContents().get(0);
 				EObject testroot = res.getContents().get(0);
-				String t = (new VtCompare(testroot, croot)).getText(); assertTrue(t, t== null);
+				String t = VarTreeUtil.compare(testroot, croot).getMessage(); assertNull(t, t);
 			}
 		}
 		

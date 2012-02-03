@@ -1,5 +1,8 @@
 package com.eu.evidence.rtdruid.vartree.variables;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,22 +18,22 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
 
-public class PropertyVarTest extends TestCase {
+public class PropertyVarTest {
 
+	@Test
 	public void testHashWriteLoad() {
 		
 		Properties p = new Properties();
@@ -50,6 +53,7 @@ public class PropertyVarTest extends TestCase {
 	}
 	
 	
+	@Test
 	public void testPropertyVar() {
 		
 		PropertyVar var = new PropertyVar();
@@ -67,6 +71,7 @@ public class PropertyVarTest extends TestCase {
 		assertTrue(var2.toString().equals(t));
 	}
 	
+	@Test
 	public void testXmlPropertyVar() {
 		PropertyVar var = new PropertyVar();
 		var.set("P1", "v1");
@@ -117,9 +122,10 @@ public class PropertyVarTest extends TestCase {
 	}
 	
 	
+	@Test
 	public void testVtProperty() {
 		
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		
 		IVarTreePointer vtp = vt.newVarTreePointer();
 		assertTrue("System".equals(vtp.add("System", DataPackage.eINSTANCE.getSystem().getName())));

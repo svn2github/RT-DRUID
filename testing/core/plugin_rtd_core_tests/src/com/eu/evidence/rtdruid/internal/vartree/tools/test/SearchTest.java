@@ -5,43 +5,22 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
-//import rtdruid.vartree.VarTree;
-//import rtdruid.vartree.data.ObjectWithID;
-//import rtdruid.vartree.data.init.DataPath;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
-import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 
 /**
  *  @author  Nicola Serreli
  */
-public class SearchTest extends TestCase {
+public class SearchTest {
 
-	/**
-	 * Constructor for MappingTest.
-	 * @param arg0
-	 */
-	public SearchTest(String arg0) {
-		super(arg0);
-	}
-
-	public static Test suite() {
-		TestSuite tests = new TestSuite("Evidence Search Test Suite");
-
-		tests.addTest( new TestSuite(SearchTest1.class) );
-		tests.addTest( new TestSuite(SearchTest2.class) );
-
-		tests.addTest( new TestSuite(SearchTest.class) );
-		
-		return tests;
-	}
-
-	
+	@Test
 	public void testARtos() {
 		
 		boolean ok = false;
@@ -53,7 +32,7 @@ public class SearchTest extends TestCase {
 		assertTrue(ok);
 		
 		{
-			ITreeInterface ti = ((IVarTree) RTDFactory.get(IVarTree.class)).newTreeInterface();
+			ITreeInterface ti = (VarTreeUtil.newVarTree()).newTreeInterface();
 			ok =true;
 			try {
 				Search.aRtos(ti, "a", null);
@@ -64,7 +43,7 @@ public class SearchTest extends TestCase {
 		}
 
 		{
-			ITreeInterface ti = ((IVarTree) RTDFactory.get(IVarTree.class)).newTreeInterface();
+			ITreeInterface ti = (VarTreeUtil.newVarTree()).newTreeInterface();
 			ok =true;
 			try {
 				Search.aRtos(ti, null, "a");
@@ -75,10 +54,13 @@ public class SearchTest extends TestCase {
 		}
 	}
 
+	@Test
+	@Ignore
 	public void testAEventForMethod() {
 		fail("test not implemented");
 	}
 	
+	@Test
 	public void testAEvent() {
 		
 		boolean ok = false;
@@ -90,7 +72,7 @@ public class SearchTest extends TestCase {
 		assertTrue(ok);
 		
 		{
-			ITreeInterface ti = ((IVarTree) RTDFactory.get(IVarTree.class)).newTreeInterface();
+			ITreeInterface ti = (VarTreeUtil.newVarTree()).newTreeInterface();
 			ok =true;
 			try {
 				Search.anEvent(ti, "a", null);
@@ -101,7 +83,7 @@ public class SearchTest extends TestCase {
 		}
 
 		{
-			ITreeInterface ti = ((IVarTree) RTDFactory.get(IVarTree.class)).newTreeInterface();
+			ITreeInterface ti = (VarTreeUtil.newVarTree()).newTreeInterface();
 			ok =true;
 			try {
 				Search.anEvent(ti, null, "a");
@@ -112,6 +94,8 @@ public class SearchTest extends TestCase {
 		}
 	}
 	
+	@Test
+	@Ignore
 	public void testAllTriggersForAMethod() {
 		fail("test not implemented");
 	}

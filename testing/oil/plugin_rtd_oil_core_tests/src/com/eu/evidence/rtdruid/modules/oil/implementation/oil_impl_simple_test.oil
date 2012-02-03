@@ -1,0 +1,131 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        STRING EE_OPT[];
+        
+                
+        // -------------------------------------
+        ENUM [STANDARD, EXTENDED] STATUS = STANDARD;
+
+        BOOLEAN STARTUPHOOK = FALSE;
+        BOOLEAN USERESSCHEDULER = TRUE;
+		STRING MASTER_CPU = "default_cpu";
+        
+        ENUM [
+          ARM7 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                STRING THUMB_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                    //UINT32 IRQ_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                    //UINT32 IRQ_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                UINT32 STACK_TOP;
+                UINT32 STACK_BOTTOM;
+                UINT32 SYS_SIZE;    // available space for all user stacks
+                UINT32 IRQ_SIZE;    // available space for all irq stacks
+                UINT32 SVC_SIZE;
+                UINT32 FIQ_SIZE;
+                UINT32 ABT_SIZE;
+                UINT32 UND_SIZE;
+                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+
+            },
+            PIC30 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                        },
+                        FALSE
+                ] MULTI_STACK = FALSE;
+                
+                BOOLEAN ICD2 = FALSE;
+                BOOLEAN ENABLE_SPLIM = TRUE;
+				
+            }
+        ] CPU_DATA[];
+
+
+        // -------------------------------------
+
+        ENUM [
+            FP {
+                BOOLEAN NESTED_IRQ;
+            },
+			BCC1,
+			BCC2,
+			ECC1,
+			ECC2
+        ] KERNEL_TYPE;
+    };
+
+    APPMODE {
+    };
+
+    TASK {
+        BOOLEAN [
+            TRUE {
+                APPMODE_TYPE APPMODE[];
+            },
+            FALSE
+        ] AUTOSTART;
+ 
+        UINT32 PRIORITY;
+        UINT32 ACTIVATION = 1;
+    };
+
+    RESOURCE {
+        ENUM [
+            STANDARD  {
+		        STRING APP_SRC[];        
+            },
+            LINKED {
+                RESOURCE_TYPE LINKEDRESOURCE;
+            },
+            INTERNAL
+        ] RESOURCEPROPERTY;
+    };
+
+    EVENT {
+        UINT32 WITH_AUTO MASK = AUTO;
+    };
+
+    COUNTER {
+        UINT32 MINCYCLE;
+        UINT32 MAXALLOWEDVALUE;
+        UINT32 TICKSPERBASE;
+        
+        STRING CPU_ID = "default_cpu";
+    };
+
+    ALARM {
+        COUNTER_TYPE COUNTER;
+    };
+};

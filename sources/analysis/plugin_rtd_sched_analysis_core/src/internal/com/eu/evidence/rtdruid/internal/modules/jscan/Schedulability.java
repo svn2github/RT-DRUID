@@ -6,12 +6,12 @@ package com.eu.evidence.rtdruid.internal.modules.jscan;
 import java.util.ArrayList;
 
 import com.eu.evidence.rtdruid.desk.Messages;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenResList;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 // exceptions
 

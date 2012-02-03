@@ -5,10 +5,15 @@
 package com.eu.evidence.rtdruid.test.vartree;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -20,13 +25,15 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.vartree.data.provider.DataItemProviderAdapterFactory;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.VarTreePointerEMF;
 import com.eu.evidence.rtdruid.vartree.IVariable.NotValidValueException;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 import com.eu.evidence.rtdruid.vartree.variables.StringMVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
@@ -34,7 +41,7 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 /**
  * @author Nicola Serreli
  */
-public class VarTreePointerEMFTest extends TestCase {
+public class VarTreePointerEMFTest {
 	private final static String S = "" + IVarTree.SEPARATOR;
 
 	private AdapterFactoryEditingDomain editingDomain;
@@ -55,7 +62,8 @@ public class VarTreePointerEMFTest extends TestCase {
 	};
 	
 
-	public VarTreePointerEMFTest() {
+	@Before
+	public void setup() {
 	
 		// Create an adapter factory that yields item providers.
 		//
@@ -105,10 +113,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		return vtp;
 	}
 
-//	public void testMyVTPEMF() {}
-	/*
-	 * Class to test for Object clone()
-	 */
+	@Test
 	public void testClone() {
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 
@@ -120,10 +125,10 @@ public class VarTreePointerEMFTest extends TestCase {
 
 		IVarTreePointer vtp2 = (IVarTreePointer) vtp.clone();
 		assertTrue(vtp.go("Architectural"));
-		assertTrue(!vtp.go("Architectural2"));
-		assertTrue(!vtp.go("Modes"));
+		assertFalse(vtp.go("Architectural2"));
+		assertFalse(vtp.go("Modes"));
 
-		assertTrue(!vtp.go("Task"));
+		assertFalse(vtp.go("Task"));
 		assertTrue(vtp.go("TaskList"));
 
 		assertTrue("MySystem".equals(vtp2.getName()));
@@ -133,13 +138,14 @@ public class VarTreePointerEMFTest extends TestCase {
 	/*
 	 * Class to test for String add(String, String)
 	 */
+	@Test
 	public void testAddStringString() {
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 
 		assertTrue("MySystem".equals(vtp.add("MySystem","System")));
 		assertTrue(vtp.go("MySystem"));
 		
-		assertTrue(!vtp.go("Functional"));
+		assertFalse(vtp.go("Functional"));
 
 		String[][] elems = {
 			{"Architectural", "Architectural"},
@@ -178,6 +184,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.go(DataPath.makeSlashedId(tceId)));
 	}
 	
+	@Test
 	public void testAddLeaf() {
 		
 		IVarTreePointer vtp = populate1();
@@ -192,30 +199,29 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.go("Functional" +S+ "Implementation" +S+ "myProc"));
 		
 		StringMVar smv = new StringMVar();
-		try {
 			smv.appendValue("a");
 			smv.appendValue("b");
 			smv.appendValue("c");
-		} catch (NotValidValueException e) { assertTrue(false); }
 		assertTrue("Methods".equals(vtp.add("Methods", smv)));
 	}
 
+	@Test
 	public void testGoAbsolute() {
 		MyVTPEMF vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 
 		assertTrue("MySystem".equals(vtp.add("MySystem","System")));
 		assertTrue(vtp.go("MySystem"));
 
-		assertTrue(!vtp.go("Architectural"));
-		assertTrue(!vtp.go("Architectural2"));
-		assertTrue(!vtp.go("Modes"));
+		assertFalse(vtp.go("Architectural"));
+		assertFalse(vtp.go("Architectural2"));
+		assertFalse(vtp.go("Modes"));
 
 		assertTrue("Architectural".equals(vtp.add("Architectural","Architectural")));
 		assertTrue("Modes".equals(vtp.add("Modes","Modes")));
 
 		assertTrue(vtp.go("Architectural"));
-		assertTrue(!vtp.go("Architectural2"));
-		assertTrue(!vtp.go("Modes"));
+		assertFalse(vtp.go("Architectural2"));
+		assertFalse(vtp.go("Modes"));
 
 		assertTrue(vtp.go("TaskList"));
 
@@ -234,14 +240,15 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue("TaskList".equals(vtp.getName()));
 	}
 	
+	@Test
 	public void testGo() {		
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
-		assertTrue(!vtp.go("Architectural"));
+		assertFalse(vtp.go("Architectural"));
 
 		vtp = populate1();
 
-		assertTrue(!vtp.go("Architectural2"));
-		assertTrue(!vtp.go("Modes"));
+		assertFalse(vtp.go("Architectural2"));
+		assertFalse(vtp.go("Modes"));
 
 		assertTrue(vtp.go("MySystem"));
 		assertTrue("MySystem".equals(vtp.getName()));
@@ -249,7 +256,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.go("Architectural"));
 		assertTrue("Architectural".equals(vtp.getName()));
 
-		assertTrue(!vtp.go("task2"));
+		assertFalse(vtp.go("task2"));
 		assertTrue("Architectural".equals(vtp.getName()));
 		assertTrue("Architectural".equals(vtp.getType()));
 
@@ -263,13 +270,14 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.go("myTask"));
 	}
 	
+	@Test
 	public void testExistAbsolute() {
 		IVarTreePointer vtp = populate1();
 
-		assertTrue(!vtp.existAbsolute(S+"MySystem" +S+ "Architectural2"));
+		assertFalse(vtp.existAbsolute(S+"MySystem" +S+ "Architectural2"));
 
 		assertTrue(vtp.existAbsolute(S+"MySystem" +S+ "Architectural"));
-		assertTrue(vtp.getName() == null);
+		assertNull(vtp.getName());
 		assertTrue("root_Node's_Type".equals(vtp.getType()));
 
 		assertTrue(vtp.go("MySystem"));
@@ -278,19 +286,20 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue("MySystem".equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 
-		assertTrue(!vtp.go("Task"));
+		assertFalse(vtp.go("Task"));
 		assertTrue(vtp.existAbsolute(S+"MySystem"+S+"Architectural" +S+ "TaskList" +S+ "myTask"));
 		assertTrue("MySystem".equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 	}
 	
+	@Test
 	public void testExist() {
 		IVarTreePointer vtp = populate1();
 
-		assertTrue(!vtp.exist("Architectural2"));
+		assertFalse(vtp.exist("Architectural2"));
 
-		assertTrue(!vtp.exist("Architectural"));
-		assertTrue(vtp.getName() == null);
+		assertFalse(vtp.exist("Architectural"));
+		assertNull(vtp.getName());
 		assertTrue("root_Node's_Type".equals(vtp.getType()));
 
 		assertTrue(vtp.go("MySystem"));
@@ -311,6 +320,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue("Functional".equals(vtp.getType()));
 	}
 	
+	@Test
 	public void testGoFirstChild() {
 		IVarTreePointer vtp = populate1();
 		
@@ -321,6 +331,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		
 		assertTrue(vtp.goFirstChild());
 		{ // architectural
+			
 			assertTrue("Architectural".equals(vtp.getName()));
 			assertTrue("Architectural".equals(vtp.getType()));
 
@@ -351,32 +362,34 @@ public class VarTreePointerEMFTest extends TestCase {
 			
 		}
 	}
+	@Test
 	public void testGetChildrenNumber() {
 		IVarTreePointer vtp = populate1();
 
-		assertTrue(vtp.getChildrenNumber() == 1);
+		assertEquals(vtp.getChildrenNumber(), 1);
 		assertTrue(vtp.go("MySystem"));
 
-		assertTrue(vtp.getChildrenNumber() == 6);
+		assertEquals(vtp.getChildrenNumber(), 6);
 		
 		assertTrue(vtp.go("Mapping"));
-		assertTrue(vtp.getChildrenNumber() == 5); // taskMap, procMap, varMap, FastTaskToProcMap
+		assertEquals(vtp.getChildrenNumber(), 5); // taskMap, procMap, varMap, FastTaskToProcMap
 
 		assertTrue(vtp.goAbsolute(S+"MySystem"+S+"Name"));
-		assertTrue(vtp.getChildrenNumber() == 0); // variable
+		assertEquals(vtp.getChildrenNumber(), 0); // variable
 		
 		assertTrue(vtp.goAbsolute(S+"MySystem"+S+"Architectural" +S+ "TaskList" +S+ "myTask"));
-		assertTrue(vtp.getChildrenNumber() == 7); // variable
+		assertEquals(vtp.getChildrenNumber(), 7); // variable
 
 		assertTrue(vtp.goAbsolute(S+"MySystem"+S+"Functional"));
-		assertTrue(vtp.getChildrenNumber() == 5); // variable
+		assertEquals(vtp.getChildrenNumber(), 5); // variable
 	}
 	
+	@Test
 	public void testGoNextSibling() {
 		IVarTreePointer vtp = populate1();
 		
 		assertTrue(vtp.goFirstChild());
-		assertTrue(!vtp.goNextSibling());
+		assertFalse(vtp.goNextSibling());
 		// system
 		assertTrue(vtp.goFirstChild());
 		{ // architectural
@@ -408,18 +421,18 @@ public class VarTreePointerEMFTest extends TestCase {
 			assertTrue("XTC_Cookie".equals(vtp.getName()));
 			assertTrue("StringVar[]".equals(vtp.getType()));
 
-			assertTrue(!vtp.goNextSibling());
+			assertFalse(vtp.goNextSibling());
 		}
 
 		
 		assertTrue(vtp.goAbsolute(S+"MySystem"+S+ "Architectural" +S+ "TaskList"));
-		assertTrue(vtp.getChildrenNumber() == 1);
+		assertEquals(vtp.getChildrenNumber(), 1);
 
 		assertTrue("aaa".equals(vtp.add("aaa","Task")));
-		assertTrue(vtp.getChildrenNumber() == 2);
+		assertEquals(vtp.getChildrenNumber(), 2);
 
 		assertTrue("zzz".equals(vtp.add("zzz","Task")));
-		assertTrue(vtp.getChildrenNumber() == 3);
+		assertEquals(vtp.getChildrenNumber(), 3);
 
 		
 		{ // task
@@ -444,14 +457,14 @@ public class VarTreePointerEMFTest extends TestCase {
 				assertTrue("zzz".equals(vtp.getName()));
 				assertTrue("Task".equals(vtp.getType()));
 				
-				assertTrue(!vtp.goNextSibling());
+				assertFalse(vtp.goNextSibling());
 			}
 			
 		}
 		
 		
 		assertTrue(vtp.goAbsolute(S+"MySystem"+S+ "Functional"));
-		assertTrue(vtp.getChildrenNumber() == 4);
+		assertEquals(vtp.getChildrenNumber(), 4);
 		{
 
 			assertTrue(vtp.goFirstChild());
@@ -478,13 +491,14 @@ public class VarTreePointerEMFTest extends TestCase {
 				assertTrue("TimeConstList".equals(vtp.getName()));
 				assertTrue("TimeConstList".equals(vtp.getType()));
 
-				assertTrue(!vtp.goNextSibling());
+				assertFalse(vtp.goNextSibling());
 			}
 
 		}
 
 	}
 	
+	@Test
 	public void testGoParent() {
 		IVarTreePointer vtp = populate1();
 		
@@ -505,9 +519,10 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue("System".equals(vtp.getType()));
 
 		assertTrue(vtp.goParent());
-		assertTrue(!vtp.goParent());
+		assertFalse(vtp.goParent());
 	}
 	
+	@Test
 	public void testGetVar() {
 		IVarTreePointer vtp = populate1();
 		
@@ -516,33 +531,33 @@ public class VarTreePointerEMFTest extends TestCase {
 		vtp.add("Name", sv);
 		assertTrue(vtp.go("Name"));
 		StringVar svr = (StringVar) vtp.getVar();
-		assertTrue(svr != sv);
+		assertNotSame(svr, sv);
 		assertTrue("Nome".equals(svr.get()));
-		assertTrue("Nome" == svr.get()); // NB !!!
+		assertSame("Nome", svr.get()); // NB !!!
 		
 		sv.set("Ciao");
 		StringVar svr2 = (StringVar) vtp.getVar();
-		assertTrue(svr2 != sv);
+		assertNotSame(svr2, sv);
 		assertTrue("Nome".equals(svr.get()));
-		assertTrue("Nome" == svr.get()); // NB !!!
+		assertSame("Nome", svr.get()); // NB !!!
 		assertTrue("Nome".equals(svr2.get()));
-		assertTrue("Nome" == svr2.get()); // NB !!!
+		assertSame("Nome", svr2.get()); // NB !!!
 		
 		//---------
 		
 		assertTrue(vtp.goAbsolute(S+"Nome"+S+ "Functional" +S+ "Implementation" +S+ "myProc"));
 		StringMVar smv = new StringMVar();
-		try {
+		{
 			smv.appendValue("a");
 			smv.appendValue("b");
 			smv.appendValue("c");
 			smv.appendValue("a");
 			smv.appendValue("b");
 			smv.appendValue("c");
-		} catch (NotValidValueException e) { assertTrue(false); }
+		} 
 
 		{
-			assertTrue(smv.sizeValues() == 6);
+			assertEquals(smv.sizeValues(), 6);
 			String[] val = smv.getValues();
 			assertTrue("a".equals(val[0]));
 			assertTrue("b".equals(val[1]));
@@ -556,13 +571,13 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.go("Methods"));
 		
 		StringMVar smvr = (StringMVar) vtp.getVar();
-		assertTrue(smv != smvr);
+		assertNotSame(smv, smvr);
 
 		for (int i=0; i<2; i++) {
 			smvr = (StringMVar) vtp.getVar();
 			
 			// NB! proc.getMethods use Unique Data Type 
-			assertTrue(smvr.sizeValues() == 3);
+			assertEquals(smvr.sizeValues(), 3);
 			String[] val = smvr.getValues();
 			assertTrue("a".equals(val[0]));
 			assertTrue("b".equals(val[1]));
@@ -579,6 +594,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		//assertTrue(type.get() == null);
 	}
 
+	@Test
 	public void testSetVar() {
 		IVarTreePointer vtp = populate1();
 		
@@ -586,19 +602,19 @@ public class VarTreePointerEMFTest extends TestCase {
 		StringVar sv = new StringVar("Nome");
 		vtp.setVar(sv);
 
-		assertTrue(!vtp.exist("MySystem"));
-		assertTrue(!vtp.exist("MySystem" +S+  "Name"));
+		assertFalse(vtp.exist("MySystem"));
+		assertFalse(vtp.exist("MySystem" +S+  "Name"));
 
 		StringVar svr = (StringVar) vtp.getVar();
-		assertTrue(svr != sv);
+		assertNotSame(svr, sv);
 		assertTrue("Nome".equals(svr.get()));
-		assertTrue("Nome" == svr.get()); // NB !!!
+		assertSame("Nome", svr.get()); // NB !!!
 		
 		sv.set("Ciao");
 		StringVar svr2 = (StringVar) vtp.getVar();
-		assertTrue(svr2 != sv);
+		assertNotSame(svr2, sv);
 		assertTrue("Nome".equals(svr.get()));
-		assertTrue("Nome" == svr.get()); // NB !!!
+		assertSame("Nome", svr.get()); // NB !!!
 		
 		//---------
 		
@@ -615,13 +631,13 @@ public class VarTreePointerEMFTest extends TestCase {
 		vtp.setVar(smv);
 		
 		StringMVar smvr = (StringMVar) vtp.getVar();
-		assertTrue(smv != smvr);
+		assertNotSame(smv, smvr);
 
 		for (int i=0; i<2; i++) {
 			smvr = (StringMVar) vtp.getVar();
 
 			// NB! proc.getMethods use Unique Data Type 
-			assertTrue(smvr.sizeValues() == 3);
+			assertEquals(smvr.sizeValues(), 3);
 			String[] val = smvr.getValues();
 			assertTrue("a".equals(val[0]));
 			assertTrue("b".equals(val[1]));
@@ -638,13 +654,14 @@ public class VarTreePointerEMFTest extends TestCase {
 	// checked in all functions
 	// public void testGetType() {}
 
+	@Test
 	public void testIsContainer() {
 		IVarTreePointer vtp = populate1();
 	
 		assertTrue(vtp.isContainer());
 		
 		assertTrue(vtp.go("MySystem"+S+"Name"));
-		assertTrue(!vtp.isContainer());
+		assertFalse(vtp.isContainer());
 
 		assertTrue(vtp.goAbsolute(S+ "MySystem"+S+"Architectural"));
 		assertTrue(vtp.isContainer());
@@ -656,9 +673,10 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.isContainer());
 		
 		assertTrue(vtp.go("Type"));
-		assertTrue(!vtp.isContainer());
+		assertFalse(vtp.isContainer());
 	}
 
+	@Test
 	public void testDestroy() {
 		IVarTreePointer vtp = populate1();
 		
@@ -666,8 +684,6 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue("MySystem".equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 		
-		assertTrue(vtp.getChildrenNumber() == 5);
-
 		assertTrue(vtp.go("Architectural"));
 		vtp.destroy();
 
@@ -676,25 +692,25 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.go("TimeConstList"));
 		assertTrue("abc".equals(vtp.add("abc", "TimeConst")));
 		assertTrue("efg".equals(vtp.add("efg", "TimeConst")));
-		assertTrue(vtp.getChildrenNumber() == 2);
+		assertEquals(vtp.getChildrenNumber(), 2);
 		vtp.destroy();
 		assertTrue(vtp.exist("TimeConstList")); // !!!!!
 		assertTrue(vtp.go("TimeConstList"));
-		assertTrue(vtp.getChildrenNumber() == 0);
-		assertTrue(!vtp.exist("abc"));
-		assertTrue(!vtp.exist("efg"));
+		assertEquals(vtp.getChildrenNumber(), 0);
+		assertFalse(vtp.exist("abc"));
+		assertFalse(vtp.exist("efg"));
 		vtp.destroy();
 		vtp.goParent();
 		
 		assertTrue("MySystem".equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 		
-		assertTrue(!vtp.go("Architectural"));
-		assertTrue(vtp.getChildrenNumber() == 4);
+		assertFalse(vtp.go("Architectural"));
+		assertEquals(vtp.getChildrenNumber(), 4);
 
 		// -------
 		assertTrue("Name".equals(vtp.add("Name", new StringVar("Ciao"))));
-		assertTrue(vtp.getChildrenNumber() == 4);
+		assertEquals(vtp.getChildrenNumber(), 4);
 		assertTrue("Ciao".equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 		
@@ -704,18 +720,18 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(DataPath.makeSlashedId((String) null).equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 		
-		assertTrue(!vtp.go("Architectural"));
-		assertTrue(vtp.getChildrenNumber() == 4);
+		assertFalse(vtp.go("Architectural"));
+		assertEquals(vtp.getChildrenNumber(), 4);
 		
 		// -------
 		vtp.destroy();
-		assertTrue(null == vtp.getName());
+		assertNull(vtp.getName());
 		assertTrue("root_Node's_Type".equals(vtp.getType()));
 		
-		assertTrue(vtp.getChildrenNumber() == 0);
-		assertTrue(!vtp.go("Architectural"));
-		assertTrue(!vtp.go("Functional"));
-		assertTrue(!vtp.go("Mapping"));
+		assertEquals(vtp.getChildrenNumber(), 0);
+		assertFalse(vtp.go("Architectural"));
+		assertFalse(vtp.go("Functional"));
+		assertFalse(vtp.go("Mapping"));
 		
 	}
 /*
@@ -802,6 +818,7 @@ public class VarTreePointerEMFTest extends TestCase {
 	/*
 	 * Class to test for Object clone()
 	 */
+	@Test
 	public void testCloneSlash() {
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 
@@ -813,10 +830,10 @@ public class VarTreePointerEMFTest extends TestCase {
 
 		IVarTreePointer vtp2 = (IVarTreePointer) vtp.clone();
 		assertTrue(vtp.go("Architectural"));
-		assertTrue(!vtp.go("Architectural2"));
-		assertTrue(!vtp.go("Modes"));
+		assertFalse(vtp.go("Architectural2"));
+		assertFalse(vtp.go("Modes"));
 
-		assertTrue(!vtp.go("Task"));
+		assertFalse(vtp.go("Task"));
 		assertTrue(vtp.go("TaskList"));
 
 		assertTrue(sh_system_path.equals(vtp2.getName()));
@@ -826,6 +843,7 @@ public class VarTreePointerEMFTest extends TestCase {
 	/*
 	 * Class to test for String add(String, String)
 	 */
+	@Test
 	public void testAddStringStringSlash() {
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 
@@ -869,6 +887,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		
 	}
 	
+	@Test
 	public void testAddLeafSlash() {
 		
 		IVarTreePointer vtp = populate2();
@@ -893,21 +912,22 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue("Methods".equals(vtp.add("Methods", smv)));
 	}
 
+	@Test
 	public void testGoAbsoluteSlash() {
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 
-		assertTrue(!vtp.goAbsolute(S+ sh_system_path));
+		assertFalse(vtp.goAbsolute(S+ sh_system_path));
 
-		assertTrue(!vtp.goAbsolute(S+ sh_system_path +S+ "Architectural"));
-		assertTrue(!vtp.goAbsolute(S+ sh_system_path +S+ "Architectural2"));
-		assertTrue(!vtp.goAbsolute(S+ sh_system_path +S+ "Modes"));
+		assertFalse(vtp.goAbsolute(S+ sh_system_path +S+ "Architectural"));
+		assertFalse(vtp.goAbsolute(S+ sh_system_path +S+ "Architectural2"));
+		assertFalse(vtp.goAbsolute(S+ sh_system_path +S+ "Modes"));
 
 		vtp = populate2();
 		
 		assertTrue(vtp.goAbsolute(S +sh_system_path));
 		assertTrue(sh_system_path.equals(vtp.getName()));
 
-		assertTrue(!vtp.goAbsolute(S +sh_system_path +S+ "Modes"));
+		assertFalse(vtp.goAbsolute(S +sh_system_path +S+ "Modes"));
 		assertTrue(sh_system_path.equals(vtp.getName()));
 
 		assertTrue(vtp.goAbsolute(S + sh_system_path +S+ "Architectural" +S+ "TaskList" +S+ sh_task_path));
@@ -917,14 +937,15 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue("TaskList".equals(vtp.getName()));
 	}
 	
+	@Test
 	public void testGoSlash() {		
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
-		assertTrue(!vtp.go("Architectural"));
+		assertFalse(vtp.go("Architectural"));
 
 		vtp = populate2();
 
-		assertTrue(!vtp.go("Architectural2"));
-		assertTrue(!vtp.go("Modes"));
+		assertFalse(vtp.go("Architectural2"));
+		assertFalse(vtp.go("Modes"));
 
 		assertTrue(vtp.go(sh_system_path));
 		assertTrue(sh_system_path.equals(vtp.getName()));
@@ -932,7 +953,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.go("Architectural"));
 		assertTrue("Architectural".equals(vtp.getName()));
 
-		assertTrue(!vtp.go("task2"));
+		assertFalse(vtp.go("task2"));
 		assertTrue("Architectural".equals(vtp.getName()));
 		assertTrue("Architectural".equals(vtp.getType()));
 
@@ -946,13 +967,14 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.go(DataPath.makeSlashedId("m*yTask2")));
 	}
 	
+	@Test
 	public void testExistAbsoluteSlash() {
 		IVarTreePointer vtp = populate2();
 
-		assertTrue(!vtp.existAbsolute(S+ sh_system_path +S+ "Architectural2"));
+		assertFalse(vtp.existAbsolute(S+ sh_system_path +S+ "Architectural2"));
 
 		assertTrue(vtp.existAbsolute(S+sh_system_path +S+ "Architectural"));
-		assertTrue(vtp.getName() == null);
+		assertNull(vtp.getName());
 		assertTrue("root_Node's_Type".equals(vtp.getType()));
 
 		assertTrue(vtp.go(sh_system_path));
@@ -961,20 +983,21 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(sh_system_path.equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 
-		assertTrue(!vtp.go("Task"));
+		assertFalse(vtp.go("Task"));
 		assertTrue(vtp.existAbsolute(S+sh_system_path+S+"Architectural" +S+ "TaskList" +S+ sh_task_path));
 		assertTrue(sh_system_path.equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 	}
 	
+	@Test
 	public void testExistSlash() {
 		IVarTreePointer vtp = populate2();
 
-		assertTrue(!vtp.exist("Architectural2"));
+		assertFalse(vtp.exist("Architectural2"));
 
-		assertTrue(!vtp.exist("Architectural"));
+		assertFalse(vtp.exist("Architectural"));
 		assertTrue(vtp.exist(sh_system_path));
-		assertTrue(vtp.getName() == null);
+		assertNull(vtp.getName());
 		assertTrue("root_Node's_Type".equals(vtp.getType()));
 
 		assertTrue(vtp.go(sh_system_path));
@@ -997,6 +1020,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue("Functional".equals(vtp.getType()));
 	}
 	
+	@Test
 	public void testGoFirstChildSlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1037,32 +1061,34 @@ public class VarTreePointerEMFTest extends TestCase {
 			
 		}
 	}
+	@Test
 	public void testGetChildrenNumberSlash() {
 		IVarTreePointer vtp = populate2();
 
-		assertTrue(vtp.getChildrenNumber() == 1);
+		assertEquals(vtp.getChildrenNumber(), 1);
 		assertTrue(vtp.go(sh_system_path));
 
-		assertTrue(vtp.getChildrenNumber() == 5);
+		assertEquals(vtp.getChildrenNumber(), 5);
 		
 		assertTrue(vtp.go("Mapping"));
-		assertTrue(vtp.getChildrenNumber() == 4); // taskMap, procMap, varMap, FastTaskToProcMap
+		assertEquals(vtp.getChildrenNumber(), 4); // taskMap, procMap, varMap, FastTaskToProcMap
 
 		assertTrue(vtp.goAbsolute(S+sh_system_path+S+"Name"));
-		assertTrue(vtp.getChildrenNumber() == 0); // variable
+		assertEquals(vtp.getChildrenNumber(), 0); // variable
 		
 		assertTrue(vtp.goAbsolute(S+sh_system_path+S+"Architectural" +S+ "TaskList" +S+ sh_task_path));
-		assertTrue(vtp.getChildrenNumber() == 6); // variable
+		assertEquals(vtp.getChildrenNumber(), 6); // variable
 
 		assertTrue(vtp.goAbsolute(S+sh_system_path+S+"Functional"));
-		assertTrue(vtp.getChildrenNumber() == 4); // variable
+		assertEquals(vtp.getChildrenNumber(), 4); // variable
 	}
 	
+	@Test
 	public void testGoNextSiblingSlash() {
 		IVarTreePointer vtp = populate2();
 		
 		assertTrue(vtp.goFirstChild());
-		assertTrue(!vtp.goNextSibling());
+		assertFalse(vtp.goNextSibling());
 		// system
 		assertTrue(vtp.goFirstChild());
 		{ // architectural
@@ -1094,18 +1120,18 @@ public class VarTreePointerEMFTest extends TestCase {
 			assertTrue("XTC_Cookie".equals(vtp.getName()));
 			assertTrue("StringVar[]".equals(vtp.getType()));
 
-			assertTrue(!vtp.goNextSibling());
+			assertFalse(vtp.goNextSibling());
 		}
 
 		
 		assertTrue(vtp.goAbsolute(S+sh_system_path+S+ "Architectural" +S+ "TaskList"));
-		assertTrue(vtp.getChildrenNumber() == 1);
+		assertEquals(vtp.getChildrenNumber(), 1);
 
 		assertTrue("aaa".equals(vtp.add("aaa","Task")));
-		assertTrue(vtp.getChildrenNumber() == 2);
+		assertEquals(vtp.getChildrenNumber(), 2);
 
 		assertTrue("zzz".equals(vtp.add("zzz","Task")));
-		assertTrue(vtp.getChildrenNumber() == 3);
+		assertEquals(vtp.getChildrenNumber(), 3);
 
 		
 		{ // task
@@ -1130,14 +1156,14 @@ public class VarTreePointerEMFTest extends TestCase {
 				assertTrue("zzz".equals(vtp.getName()));
 				assertTrue("Task".equals(vtp.getType()));
 				
-				assertTrue(!vtp.goNextSibling());
+				assertFalse(vtp.goNextSibling());
 			}
 			
 		}
 		
 		
 		assertTrue(vtp.goAbsolute(S+sh_system_path+S+ "Functional"));
-		assertTrue(vtp.getChildrenNumber() == 4);
+		assertEquals(vtp.getChildrenNumber(), 4);
 		{
 
 			assertTrue(vtp.goFirstChild());
@@ -1164,13 +1190,14 @@ public class VarTreePointerEMFTest extends TestCase {
 				assertTrue("TimeConstList".equals(vtp.getName()));
 				assertTrue("TimeConstList".equals(vtp.getType()));
 
-				assertTrue(!vtp.goNextSibling());
+				assertFalse(vtp.goNextSibling());
 			}
 
 		}
 
 	}
 	
+	@Test
 	public void testGoParentSlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1191,9 +1218,10 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue("System".equals(vtp.getType()));
 
 		assertTrue(vtp.goParent());
-		assertTrue(!vtp.goParent());
+		assertFalse(vtp.goParent());
 	}
 	
+	@Test
 	public void testGetVarSlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1202,17 +1230,17 @@ public class VarTreePointerEMFTest extends TestCase {
 		vtp.add("Name", sv);
 		assertTrue(vtp.go("Name"));
 		StringVar svr = (StringVar) vtp.getVar();
-		assertTrue(svr != sv);
+		assertNotSame(svr, sv);
 		assertTrue("N*ome".equals(svr.get()));
-		assertTrue("N*ome" == svr.get()); // NB !!!
+		assertSame("N*ome", svr.get()); // NB !!!
 		
 		sv.set("Ciao");
 		StringVar svr2 = (StringVar) vtp.getVar();
-		assertTrue(svr2 != sv);
+		assertNotSame(svr2, sv);
 		assertTrue("N*ome".equals(svr.get()));
-		assertTrue("N*ome" == svr.get()); // NB !!!
+		assertSame("N*ome", svr.get()); // NB !!!
 		assertTrue("N*ome".equals(svr2.get()));
-		assertTrue("N*ome" == svr2.get()); // NB !!!
+		assertSame("N*ome", svr2.get()); // NB !!!
 		
 		//---------
 		
@@ -1230,13 +1258,13 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.go("Methods"));
 		
 		StringMVar smvr = (StringMVar) vtp.getVar();
-		assertTrue(smv != smvr);
+		assertNotSame(smv, smvr);
 
 		for (int i=0; i<2; i++) {
 			smvr = (StringMVar) vtp.getVar();
 
 			// NB! proc.getMethods use Unique Data Type 
-			assertTrue(smvr.sizeValues() == 3);
+			assertEquals(smvr.sizeValues(), 3);
 			String[] val = smvr.getValues();
 			assertTrue("a".equals(val[0]));
 			assertTrue("b".equals(val[1]));
@@ -1253,6 +1281,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		//assertTrue(type.get() == null);
 	}
 
+	@Test
 	public void testSetVarSlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1260,19 +1289,19 @@ public class VarTreePointerEMFTest extends TestCase {
 		StringVar sv = new StringVar("N*ome");
 		vtp.setVar(sv);
 
-		assertTrue(!vtp.existAbsolute(sh_system_path));
-		assertTrue(!vtp.exist(sh_system_path +S+  "Name"));
+		assertFalse(vtp.existAbsolute(sh_system_path));
+		assertFalse(vtp.exist(sh_system_path +S+  "Name"));
 
 		StringVar svr = (StringVar) vtp.getVar();
-		assertTrue(svr != sv);
+		assertNotSame(svr, sv);
 		assertTrue("N*ome".equals(svr.get()));
-		assertTrue("N*ome" == svr.get()); // NB !!!
+		assertSame("N*ome", svr.get()); // NB !!!
 		
 		sv.set("Ciao");
 		StringVar svr2 = (StringVar) vtp.getVar();
-		assertTrue(svr2 != sv);
+		assertNotSame(svr2, sv);
 		assertTrue("N*ome".equals(svr.get()));
-		assertTrue("N*ome" == svr.get()); // NB !!!
+		assertSame("N*ome", svr.get()); // NB !!!
 		
 		//---------
 		
@@ -1289,13 +1318,13 @@ public class VarTreePointerEMFTest extends TestCase {
 		vtp.setVar(smv);
 		
 		StringMVar smvr = (StringMVar) vtp.getVar();
-		assertTrue(smv != smvr);
+		assertNotSame(smv, smvr);
 
 		for (int i=0; i<2; i++) {
 			smvr = (StringMVar) vtp.getVar();
 
 			// NB! proc.getMethods use Unique Data Type 
-			assertTrue(smvr.sizeValues() == 3);
+			assertEquals(smvr.sizeValues(), 3);
 			String[] val = smvr.getValues();
 			assertTrue("a".equals(val[0]));
 			assertTrue("b".equals(val[1]));
@@ -1312,13 +1341,14 @@ public class VarTreePointerEMFTest extends TestCase {
 	// checked in all functions
 	// public void testGetType() {}
 
+	@Test
 	public void testIsContainerSlash() {
 		IVarTreePointer vtp = populate2();
 	
 		assertTrue(vtp.isContainer());
 		
 		assertTrue(vtp.go(sh_system_path+S+"Name"));
-		assertTrue(!vtp.isContainer());
+		assertFalse(vtp.isContainer());
 
 		assertTrue(vtp.goAbsolute(S+ sh_system_path+S+"Architectural"));
 		assertTrue(vtp.isContainer());
@@ -1330,9 +1360,10 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(vtp.isContainer());
 		
 		assertTrue(vtp.go("Type"));
-		assertTrue(!vtp.isContainer());
+		assertFalse(vtp.isContainer());
 	}
 
+	@Test
 	public void testDestroySlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1340,7 +1371,7 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(sh_system_path.equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 		
-		assertTrue(vtp.getChildrenNumber() == 5);
+		assertEquals(vtp.getChildrenNumber(), 5);
 
 		assertTrue(vtp.go("Architectural"));
 		vtp.destroy();
@@ -1348,12 +1379,12 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(sh_system_path.equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 		
-		assertTrue(!vtp.go("Architectural"));
-		assertTrue(vtp.getChildrenNumber() == 4);
+		assertFalse(vtp.go("Architectural"));
+		assertEquals(vtp.getChildrenNumber(), 4);
 
 		// -------
 		assertTrue("Name".equals(vtp.add("Name", new StringVar("Ciao"))));
-		assertTrue(vtp.getChildrenNumber() == 4);
+		assertEquals(vtp.getChildrenNumber(), 4);
 		assertTrue("Ciao".equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 		
@@ -1363,18 +1394,18 @@ public class VarTreePointerEMFTest extends TestCase {
 		assertTrue(DataPath.makeSlashedId((String) null).equals(vtp.getName()));
 		assertTrue("System".equals(vtp.getType()));
 		
-		assertTrue(!vtp.go("Architectural"));
-		assertTrue(vtp.getChildrenNumber() == 4);
+		assertFalse(vtp.go("Architectural"));
+		assertEquals(vtp.getChildrenNumber(), 4);
 		
 		// -------
 		vtp.destroy();
-		assertTrue(null == vtp.getName());
+		assertSame(null, vtp.getName());
 		assertTrue("root_Node's_Type".equals(vtp.getType()));
 		
-		assertTrue(vtp.getChildrenNumber() == 0);
-		assertTrue(!vtp.go("Architectural"));
-		assertTrue(!vtp.go("Functional"));
-		assertTrue(!vtp.go("Mapping"));
+		assertEquals(vtp.getChildrenNumber(), 0);
+		assertFalse(vtp.go("Architectural"));
+		assertFalse(vtp.go("Functional"));
+		assertFalse(vtp.go("Mapping"));
 		
 	}
 

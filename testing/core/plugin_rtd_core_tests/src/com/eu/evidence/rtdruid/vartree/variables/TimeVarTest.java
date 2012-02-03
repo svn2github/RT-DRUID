@@ -5,49 +5,43 @@
  */
 package com.eu.evidence.rtdruid.vartree.variables;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
-public class TimeVarTest extends TestCase {
+import org.junit.Test;
+
+public class TimeVarTest {
 	
+	@Test
 	public void testRatio() {
 		TimeVar a = new TimeVar("1h");
 		a.setType(TimeVar.MINUTE);
-		System.err.println(val(a));
-		assertTrue(60 == val(a));
+		assertEquals(60, val(a), 0.0001);
 		
 		a.set("3600s");
 		a.setType(TimeVar.HOUR);
-		System.err.println(val(a));
-		assertTrue(1 == val(a));
+		assertEquals(1, val(a), 0.0001);
 		
 	}
 
+	@Test
 	public void testCompare() {
 		TimeVar a = new TimeVar("1h");
 		TimeVar b = new TimeVar("3600s");
 		TimeVar c = new TimeVar("3599s");
-		assertTrue(a.compareTo(a) == 0);
-		assertTrue(b.compareTo(b) == 0);
-		assertTrue(c.compareTo(c) == 0);
+		assertEquals(a.compareTo(a), 0);
+		assertEquals(b.compareTo(b), 0);
+		assertEquals(c.compareTo(c), 0);
 		
 		
-		assertTrue(a.compareTo(b) == 0);
+		assertEquals(a.compareTo(b), 0);
 		assertTrue(a.compareTo(c) > 0);
 		assertTrue(b.compareTo(c) > 0);
 
-		assertTrue(b.compareTo(a) == 0);
+		assertEquals(b.compareTo(a), 0);
 		assertTrue(c.compareTo(a) < 0);
 		assertTrue(c.compareTo(b) < 0);
 	}
-
-	
-	public void testShift() {
-		for (int i=0; i<70; i++) {
-			long timerSize =  1l<<i;
-			System.err.println("i=" + i +"\t" +  timerSize);
-		}
-	}
-	
 	
 	protected double val(TimeVar v) {
 		return ((Double) v.get()).doubleValue();

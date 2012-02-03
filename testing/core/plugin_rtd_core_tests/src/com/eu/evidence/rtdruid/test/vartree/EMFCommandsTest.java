@@ -6,25 +6,24 @@
 package com.eu.evidence.rtdruid.test.vartree;
 
 
-import java.util.Collection;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Collection;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CopyToClipboardCommand;
+import org.junit.Before;
+import org.junit.Test;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
-import com.eu.evidence.rtdruid.internal.vartree.data.init.RTDResourceManager;
+import com.eu.evidence.rtdruid.internal.io.RTDResourceManager;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.Architectural;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.Task;
-import com.eu.evidence.rtdruid.vartree.data.init.VtCompare;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 
@@ -32,24 +31,16 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  * @author Nicola Serreli
  *
  */
-public class EMFCommandsTest extends TestCase {
+public class EMFCommandsTest {
 	
 	IVarTree vt;
 
-	/**
-	 * Constructor for UtilityTest.
-	 * @param arg0
-	 */
-	public EMFCommandsTest(String arg0) {
-		super(arg0);
-		
-		vt = RTDFactory.newVarTree();
+	@Before
+	public void setUp() {
+		vt = VarTreeUtil.newVarTree();
 	}
 
-	public static Test suite() {
-		return new TestSuite(EMFCommandsTest.class) ;
-	}
-	
+	@Test
 	public void testCopyCommand() {
 		
 		Architectural arch = DataFactory.eINSTANCE.createArchitectural();
@@ -81,7 +72,7 @@ public class EMFCommandsTest extends TestCase {
 		
 		Object result = col.toArray()[0];
 		assertTrue(result instanceof Task);
-		String t = (new VtCompare(task, (Task) result)).getText(); assertTrue(t, t== null);
+		String t = VarTreeUtil.compare(task, (Task) result).getMessage(); assertTrue(t, t== null);
 
 //		for (Object o : ((EObjectContainmentUniqueEList) ((Task) result).getSchedulingList()).getFastSearch().entrySet()) {
 //			System.out.println(o);
@@ -107,6 +98,7 @@ public class EMFCommandsTest extends TestCase {
 		
 	}
 
+	@Test
 	public void testCopyCommandWithResource() {
 		
 		RTDResourceManager xmiri = new RTDResourceManager(); 
@@ -145,7 +137,7 @@ public class EMFCommandsTest extends TestCase {
 		
 		Object result = col.toArray()[0];
 		assertTrue(result instanceof Task);
-		String t = (new VtCompare(task, (Task) result)).getText(); assertTrue(t, t== null);
+		String t = VarTreeUtil.compare(task, (Task) result).getMessage(); assertTrue(t, t== null);
 		assertTrue(EcoreUtil.equals(task, (Task) result));
 	}
 

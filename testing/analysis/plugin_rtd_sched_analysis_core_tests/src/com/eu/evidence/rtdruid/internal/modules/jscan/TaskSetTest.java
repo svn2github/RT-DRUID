@@ -12,11 +12,11 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
 
 /**
  * @author Nicola Serreli

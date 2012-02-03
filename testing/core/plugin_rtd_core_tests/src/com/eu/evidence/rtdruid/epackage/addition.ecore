@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rtdruid"
+    nsURI="http://www.evidence.eu.com/rtdruid/data" nsPrefix="com.eu.evidence.rtdruid.data">
+  <eClassifiers xsi:type="ecore:EClass" name="System" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Architectural" eType="#//Architectural"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectWithID" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Architectural" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TaskList" lowerBound="1"
+        upperBound="-1" eType="#//Task" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Task" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="TaskAdd" lowerBound="1"
+        eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="StringVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.StringVar"/>
+</ecore:EPackage>

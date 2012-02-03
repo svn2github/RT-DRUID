@@ -39,9 +39,9 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTE
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.location.EEPaths;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.ISectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 /**
  * This class prepares all Configuration Files for Erika Enterprise RT-OS.

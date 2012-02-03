@@ -9,20 +9,6 @@
    <extension-point id="xsltWriterStep" name="A single transformation used to compose a Xslt Section Writer" schema="schema/xsltWriterStep.exsd"/>
 
 
-<!--
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://rtdruid.vartree.data.oil" 
-       class = "com.eu.evidence.rtdruid.vartree.data.oil.OilDataPackage" />
-  </extension>
--->
-   <extension
-         point="com.eu.evidence.rtdruid.core.requiredAdapterFactoriesID">
-      <adapterFactory
-            class="com.eu.evidence.rtdruid.vartree.data.oil.OilApplItemProviderAdapterFactory"/>
-   </extension>
-
-
    <!-- Tasks -->
    <extension
          point="org.eclipse.ant.core.antTasks">
@@ -116,16 +102,12 @@
     </templatePathProvider>
  </extension>
  <extension
-       point="com.eu.evidence.rtdruid.core.requiredAdapterFactoriesID">
+       point="com.eu.evidence.rtdruid.core.rtdruidEPackages">
     <loader
-          class="com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilECoreFactoryLoader">
+          auto_contribute="true"
+          class="com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilEPackageProvider"
+          pkg_id="RT-Druid Oil - Oil implementations">
     </loader>
  </extension>
- <extension
-       point="com.eu.evidence.rtdruid.core.requiredEPackageID">
-    <loader
-          class="com.eu.evidence.rtdruid.internal.vartree.data.oil.OilEPackageLoader">
-    </loader>
- </extension> 
-
+ 
 </plugin>

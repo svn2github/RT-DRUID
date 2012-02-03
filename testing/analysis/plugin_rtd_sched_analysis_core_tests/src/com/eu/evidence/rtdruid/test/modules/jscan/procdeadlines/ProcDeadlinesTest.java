@@ -6,10 +6,10 @@ import junit.framework.TestCase;
 
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
 import com.eu.evidence.rtdruid.internal.modules.jscan.common.JScanImpl;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 
 public class ProcDeadlinesTest extends TestCase {

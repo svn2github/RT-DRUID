@@ -12,9 +12,8 @@ import org.w3c.dom.Document;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilInfo;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilParser;
-import com.eu.evidence.rtdruid.modules.oil.implementation.OilImplementation;
-import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplID;
-import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilImplementation;
+import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
+import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.transform.OilTransformFactory;
 
 /**
@@ -65,7 +64,7 @@ public class OilImplCollector {
 						assert(bundle != null);
 						x[i] = new InputNamedStream(fileName, FileLocator.openStream(bundle, new Path(fileName), false));
 					}
-					catch (Exception e) {
+					catch (Throwable e) {
 						RtdruidLog.log(OilImplCollector.class.getName() + ": " +
 			            		"Unable to get oil implementation InputStream.", e);
 					}

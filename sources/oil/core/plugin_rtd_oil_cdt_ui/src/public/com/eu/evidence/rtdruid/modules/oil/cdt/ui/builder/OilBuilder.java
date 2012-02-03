@@ -38,12 +38,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import com.eu.evidence.rtdruid.desk.Messages;
-import com.eu.evidence.rtdruid.desk.RTDFactory;
-import com.eu.evidence.rtdruid.desk.ResourceUtility;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
+import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
@@ -56,12 +56,12 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.options.OptionsManager;
 import com.eu.evidence.rtdruid.modules.oil.ee.ui.location.ErikaEnterpriseLocationProjectHandler;
 import com.eu.evidence.rtdruid.ui.common.RTDConsole;
+import com.eu.evidence.rtdruid.ui.common.ResourceUtility;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.tools.Mapping;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 
@@ -1017,7 +1017,7 @@ class ProjectBuilder implements IProjectBuilder {
 		}
 
 		
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
 		vt.setRoot(res);
 		
 //		
@@ -1065,7 +1065,7 @@ class ProjectBuilder implements IProjectBuilder {
 		IFile fPath = ResourcesPlugin.getWorkspace().getRoot()
 			.getFile(inputFile);
 		
-		IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		IVarTree vt = VarTreeUtil.newVarTree();
         try {
         	String inputPath = null;
         	IPath lPath = fPath.getLocation();

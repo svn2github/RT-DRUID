@@ -1,0 +1,73 @@
+<!--
+ ******************************************************************
+ Formato XML intermedio per memorizzare i dati oil 2.5
+
+ Copyright Evidence s.r.l. 2004
+
+ Nicola Serreli
+
+ $Id: application.dtd,v 1.1 2005/09/28 15:22:30 durin Exp $
+
+ ******************************************************************
+-->
+
+<!--
+	Individua la radice della sezione <application_definition>
+	di un file oil
+	
+-->
+<!ELEMENT OIL_DATA (FIRST_LEVEL_OBJ*, DESCRIPTION?)>
+<!ATTLIST OIL_DATA
+ Name CDATA #REQUIRED
+>
+
+<!--
+	I "FIRST_LEVEL_OBJECT" rappresentano gli <object> oil e quindi 
+	l'attributo ObjectType puo' assumere i seguenti valori:
+		OS, TASK, COUNTER, ALARM, RESOURCE, EVENT, ISR, 
+		MESSAGE, COM, NM, APPMODE
+-->
+<!ELEMENT FIRST_LEVEL_OBJ ( (PARAMETER)*, DESCRIPTION?)>
+<!ATTLIST FIRST_LEVEL_OBJ
+ Name CDATA #REQUIRED
+ ObjectType (OS|TASK|COUNTER|ALARM|RESOURCE|EVENT|ISR|MESSAGE|COM|NM|APPMODE|IPDU) #REQUIRED
+>
+
+
+<!--
+	Contiene un attributo di un oggetto di primo livello o di un enumeratore.
+	Non e' presente il campo tipo, in quanto va ricavato dalla parte di implementazione, come pure
+	il campo multivalore, considerando anche il fatto che piu' "valori" dello stesso campo
+	vengono indicati in "PARAMETER" distinti.
+
+	Questo elemento rappresenta sia campi numerici/stringhe che enumerati in quanto non sempre e'
+	possibile decidere il loro tipo senza andare ad esaminare la parte di implementazione.
+	
+	Normalmente esiste un solo figlio enumerator, per lo stesso motivo per cui esiste solo un 
+	attributo CurrValue.
+	
+	E' lecito specificare sia AUTO che dei valori?
+	Oil non dice nulla a riguardo
+-->
+<!ELEMENT PARAMETER ( ENUMERATOR*, DESCRIPTION? )>
+<!ATTLIST PARAMETER
+ Auto (true|false) "false"
+ CurrValue CDATA #IMPLIED
+ Name CDATA #REQUIRED
+>
+
+<!--
+	Uno dei valori assunti da un attributo composto.
+	Ee' possibile specificare dei sottoattributi utilizzando 
+	elementi di tipo PARAMETER
+-->
+<!ELEMENT ENUMERATOR ( PARAMETER*, DESCRIPTION?)>
+<!ATTLIST VALUE
+ Value CDATA #REQUIRED
+>
+
+<!--
+	Un testo che mantiene una o piu' note sull'oggetto a cui e' associato
+-->
+<!ELEMENT DESCRIPTION (#PCDATA)>
+

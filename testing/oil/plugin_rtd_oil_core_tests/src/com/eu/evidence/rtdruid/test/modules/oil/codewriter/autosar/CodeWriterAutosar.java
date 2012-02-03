@@ -1,24 +1,27 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
 import com.eu.evidence.rtdruid.io.IRTDExporter;
 import com.eu.evidence.rtdruid.io.IRTDImporter;
+import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.AbstractCodeWriterTest;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 public class CodeWriterAutosar extends AbstractCodeWriterTest {
 
@@ -279,7 +282,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 		String autosarFormat;
 		{
 			// LOAD AS OIL
-			IVarTree oil_vt = (IVarTree) RTDFactory.get(IVarTree.class);
+			IVarTree oil_vt = VarTreeUtil.newVarTree();
 			(new OilReader()).load(new ByteArrayInputStream(oil_text.getBytes()), oil_vt, null, null);
 
 			
@@ -302,7 +305,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 		IVarTree autosar_vt;
 		{
 			// LOAD AS OIL
-			autosar_vt = (IVarTree) RTDFactory.get(IVarTree.class);
+			autosar_vt = VarTreeUtil.newVarTree();
 
 			try {
 			    IVTResource res = (IVTResource) new RTD_XMI_Factory().createResource();

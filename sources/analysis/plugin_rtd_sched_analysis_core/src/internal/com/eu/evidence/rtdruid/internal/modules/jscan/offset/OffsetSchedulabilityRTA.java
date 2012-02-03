@@ -13,7 +13,7 @@
 package com.eu.evidence.rtdruid.internal.modules.jscan.offset;
 
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 
 
 public class OffsetSchedulabilityRTA extends OffSetSchedulability {

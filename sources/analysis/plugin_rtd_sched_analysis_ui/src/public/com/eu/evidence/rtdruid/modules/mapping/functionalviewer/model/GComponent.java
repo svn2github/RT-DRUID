@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.tools.Utility;
 
 /**

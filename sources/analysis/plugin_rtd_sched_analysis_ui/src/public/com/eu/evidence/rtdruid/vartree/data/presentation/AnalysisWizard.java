@@ -62,22 +62,22 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 
 import com.eu.evidence.rtdruid.desk.Messages;
-import com.eu.evidence.rtdruid.desk.RTDFactory;
+
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
 import com.eu.evidence.rtdruid.internal.modules.jscan.ValueNotFoundException;
+import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.jscan.ui.rtd_jscan_ui.Rtd_jscan_uiPlugin;
 import com.eu.evidence.rtdruid.ui.common.RTDConsole;
 import com.eu.evidence.rtdruid.ui.common.ShowLogo;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.VarTreeCopy;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.tools.CheckReferences;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
@@ -558,7 +558,7 @@ public class AnalysisWizard extends Wizard {
 		
 		de = null;
 		taskSet = null;
-		vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		vt = VarTreeUtil.newVarTree();
 		/*
 		ObjectWithID[] roots = new ObjectWithID[resources.length];
 		for (int i = 0; i < resources.length; i++) {
@@ -661,7 +661,7 @@ public class AnalysisWizard extends Wizard {
 			root = (ObjectWithID) res.getContents().get(0);
 
 		} else {
-			root = VarTreeCopy.copy(root);
+			root = (ObjectWithID) VarTreeUtil.copy(root);
 		}
 		
 		

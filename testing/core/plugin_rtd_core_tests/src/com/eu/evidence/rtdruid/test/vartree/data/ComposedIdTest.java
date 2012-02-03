@@ -3,12 +3,14 @@
  */
 package com.eu.evidence.rtdruid.test.vartree.data;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
+import com.eu.evidence.rtdruid.io.IVTResource;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.ExecTime;
 import com.eu.evidence.rtdruid.vartree.data.ExecTimeList;
@@ -20,28 +22,24 @@ import com.eu.evidence.rtdruid.vartree.data.TaskMap;
 import com.eu.evidence.rtdruid.vartree.data.TimeConst;
 import com.eu.evidence.rtdruid.vartree.data.TimeConstElement;
 import com.eu.evidence.rtdruid.vartree.data.VarMap;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
-import com.eu.evidence.rtdruid.vartree.data.init.IVTResource;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
 
 /**
  * This class thes if "clone tree" and "merge tree" work well
  * 
  * @author Nicola Serreli
  */
-public class ComposedIdTest extends TestCase {
+public class ComposedIdTest {
 	
 	IVarTree vt;
 
-	public ComposedIdTest() {
+	@Before
+	public void setup() {
 		
-		vt = (IVarTree) RTDFactory.get(IVarTree.class);
+		vt = VarTreeUtil.newVarTree();
 	}
 
-	public static Test suite() {
-		return new TestSuite(ComposedIdTest.class);
-	}
 
+	@Test
 	public void testExecTime() {
 
 		{
@@ -141,6 +139,7 @@ public class ComposedIdTest extends TestCase {
 	}
 
 
+	@Test
 	public void testOrder() {
 
 		{
@@ -235,6 +234,7 @@ public class ComposedIdTest extends TestCase {
 		}
 	}
 	
+	@Test
 	public void testProcMap() {
 		{
 			Mapping etl = DataFactory.eINSTANCE.createMapping();
@@ -328,6 +328,7 @@ public class ComposedIdTest extends TestCase {
 		}
 	}
 	
+	@Test
 	public void testTaskMap() {
 		{
 			Mapping etl = DataFactory.eINSTANCE.createMapping();
@@ -421,6 +422,7 @@ public class ComposedIdTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testTimeConsElement() {
 		{
 			TimeConst etl = DataFactory.eINSTANCE.createTimeConst();
@@ -558,6 +560,7 @@ public class ComposedIdTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testVarMap() {
 		{
 			Mapping etl = DataFactory.eINSTANCE.createMapping();
@@ -651,6 +654,15 @@ public class ComposedIdTest extends TestCase {
 			assertTrue(ok);
 		}
 	}
+
+	/**
+	 * @param ok
+	 */
+	private void assertTrue(boolean ok) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	protected IVTResource createResource() {
 		return (IVTResource) new RTD_XMI_Factory().createResource();

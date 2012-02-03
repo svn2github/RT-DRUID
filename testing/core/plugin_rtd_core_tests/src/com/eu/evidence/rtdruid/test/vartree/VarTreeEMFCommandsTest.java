@@ -5,33 +5,33 @@
  */
 package com.eu.evidence.rtdruid.test.vartree;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertNotSame;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.junit.Before;
+import org.junit.Test;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 /**
  * @author Nicola Serreli
  */
-public class VarTreeEMFCommandsTest extends TestCase {
+public class VarTreeEMFCommandsTest {
 	private final static String S = "" + IVarTree.SEPARATOR;
 	
 	private IVarTree vt;
 
-	public VarTreeEMFCommandsTest() {
-	}
-	
-	/*
-	 * @see TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-
-		vt = RTDFactory.newVarTree();
+	@Before
+	public void setUp() throws Exception {
+		vt = VarTreeUtil.newVarTree();
 	}
 
 	/**
@@ -52,15 +52,16 @@ public class VarTreeEMFCommandsTest extends TestCase {
 		////
 	}
 	
+	@Test
 	public void testRemoveNode() {
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == null);
+		assertNull(vt.getCommandStack().getMostRecentCommand());
 		populate();
-		assertTrue(vt.getCommandStack().getMostRecentCommand() != null);
+		assertNotNull(vt.getCommandStack().getMostRecentCommand());
 		Command c1 = vt.getCommandStack().getMostRecentCommand();
 		
-		assertTrue( vt.getCurrentTransaction() == null );
+		assertNull( vt.getCurrentTransaction());
 		vt.beginTransaction();
-		assertTrue( vt.getCurrentTransaction() != null);
+		assertNotNull(vt.getCurrentTransaction());
 		
 		IVarTreePointer vtp = vt.newVarTreePointer();
 		assertTrue(vtp.go("MySystem"));
@@ -70,22 +71,23 @@ public class VarTreeEMFCommandsTest extends TestCase {
 		
 		vtp.destroy();
 		assertTrue("TaskList".equals(vtp.getName()));
-		assertTrue(!vtp.exist("myTask"));
+		assertFalse(vtp.exist("myTask"));
 		
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == c1);
-		assertTrue( vt.getCurrentTransaction() != null);
+		assertSame(vt.getCommandStack().getMostRecentCommand() , c1);
+		assertNotNull(vt.getCurrentTransaction());
 		CompoundCommand com = vt.getCurrentTransaction();
 
 		vt.commitTransaction();
-		assertTrue( vt.getCurrentTransaction() == null);
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == com);
+		assertNull(vt.getCurrentTransaction());
+		assertSame(vt.getCommandStack().getMostRecentCommand() , com);
 
 		assertTrue("TaskList".equals(vtp.getName()));
-		assertTrue(!vtp.exist("myTask"));
+		assertFalse(vtp.exist("myTask"));
 	}
 
+	@Test
 	public void testChain() {
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == null);
+		assertNull(vt.getCommandStack().getMostRecentCommand());
 		vt.beginTransaction();
 		CompoundCommand preCom = vt.getCurrentTransaction();
 
@@ -93,17 +95,18 @@ public class VarTreeEMFCommandsTest extends TestCase {
 		CompoundCommand com = vt.getCurrentTransaction();
 		
 //		 NB : populate() set the root and this operation flush all old command and restart the compound
-		assertTrue(com != preCom);	 
+		assertNotSame(com, preCom);	 
 
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == null);
+		assertNull(vt.getCommandStack().getMostRecentCommand());
 
 		vt.commitTransaction();
-		assertTrue( vt.getCurrentTransaction() == null);
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == com);
+		assertNull(vt.getCurrentTransaction());
+		assertSame(vt.getCommandStack().getMostRecentCommand() , com);
 	}
 
+	@Test
 	public void testChainUndo1() {
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == null);
+		assertNull(vt.getCommandStack().getMostRecentCommand());
 		vt.beginTransaction();
 		CompoundCommand preCom = vt.getCurrentTransaction();
 
@@ -111,27 +114,27 @@ public class VarTreeEMFCommandsTest extends TestCase {
 		CompoundCommand com = vt.getCurrentTransaction();
 		
 //		 NB : populate() set the root and this operation flush all old command and restart the compound
-		assertTrue(com != preCom);	 
+		assertNotSame(com, preCom);	 
 
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == null);
-		assertTrue(vt.getCommandStack().getUndoCommand() == null);
-		assertTrue(vt.getCommandStack().getRedoCommand() == null);
+		assertNull(vt.getCommandStack().getMostRecentCommand());
+		assertNull(vt.getCommandStack().getUndoCommand());
+		assertNull(vt.getCommandStack().getRedoCommand());
 
 		vt.commitTransaction();
-		assertTrue( vt.getCurrentTransaction() == null);
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == com);
-		assertTrue(vt.getCommandStack().getUndoCommand() == com);
-		assertTrue(vt.getCommandStack().getRedoCommand() == null);
+		assertNull(vt.getCurrentTransaction());
+		assertSame(vt.getCommandStack().getMostRecentCommand() , com);
+		assertSame(vt.getCommandStack().getUndoCommand() , com);
+		assertNull(vt.getCommandStack().getRedoCommand());
 		
 		// try to undo
 		assertTrue(vt.getCommandStack().canUndo());
 		vt.getCommandStack().undo();
 		
-		assertTrue(vt.getCommandStack().getMostRecentCommand() == com);
-		assertTrue(vt.getCommandStack().getUndoCommand() == null);
-		assertTrue(vt.getCommandStack().getRedoCommand() == com);
+		assertSame(vt.getCommandStack().getMostRecentCommand() , com);
+		assertNull(vt.getCommandStack().getUndoCommand());
+		assertSame(vt.getCommandStack().getRedoCommand() , com);
 		IVarTreePointer vtp = vt.newVarTreePointer();
 		assertTrue(vtp.exist("MySystem")); // NB : add and remove system is undoable !!
-		assertTrue(!vtp.exist("MySystem" +S+ "Architectural"));
+		assertFalse(vtp.exist("MySystem" +S+ "Architectural"));
 	}
 }

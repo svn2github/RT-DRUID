@@ -303,7 +303,7 @@ public class SimpleExamples {
 	/**	test : try to load an example
 	*/
 	public static String testLoadExample2() {
-		String testo = "" +
+		String testo = 
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 		"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
 		"<SYSTEM Name=\"Root/\">" +

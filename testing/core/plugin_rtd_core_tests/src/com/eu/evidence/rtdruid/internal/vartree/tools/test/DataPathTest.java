@@ -5,16 +5,16 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertTrue;
 
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
+import org.junit.Test;
+
+import com.eu.evidence.rtdruid.vartree.DataPath;
 
 /**
  *  @author  Nicola Serreli
  */
-public class DataPathTest extends TestCase {
+public class DataPathTest {
 	final static char P = DataPath.PROTECTOR;
 	final static char S = DataPath.SEPARATOR;
 
@@ -24,21 +24,11 @@ public class DataPathTest extends TestCase {
 	final static String NULL_ID = DataPath.NULL_ID;
 	
 
-	/**
-	 * Constructor for UtilityTest.
-	 * @param arg0
-	 */
-	public DataPathTest(String arg0) {
-		super(arg0);
-	}
-
-	public static Test suite() {
-		return new TestSuite(DataPathTest.class) ;
-	}
 
 	/**
 	 * Test for String makeId(String)
 	 */
+	@Test
 	public void testMakeIdString() {
 		assertTrue( NULL_ID.equals(DataPath.makeId( (String) null )) );
 		
@@ -50,6 +40,7 @@ public class DataPathTest extends TestCase {
 	/*
 	 * Test for String makeId(String[])
 	 */
+	@Test
 	public void testMakeIdStringArray() {
 		boolean ok = false;
 		try {
@@ -77,6 +68,7 @@ public class DataPathTest extends TestCase {
 	/*
 	 * Test for String makeSlashedId(String)
 	 */
+	@Test
 	public void testMakeSlashedIdString() {
 		assertTrue( (DataPath.addSlash(NULL_ID)).equals(DataPath.makeSlashedId( (String) null )) );
 		
@@ -89,6 +81,7 @@ public class DataPathTest extends TestCase {
 	/*
 	 * Test for String makeSlashedId(String[])
 	 */
+	@Test
 	public void testMakeSlashedIdStringArray() {
 		boolean ok = false;
 		try {
@@ -119,6 +112,7 @@ public class DataPathTest extends TestCase {
 	/*
 	 * 
 	 */
+	@Test
 	public void testResolveId() {
 		// makeId(String)	
 		{ 

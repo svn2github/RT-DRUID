@@ -5,56 +5,57 @@
  */
 package com.eu.evidence.rtdruid.test.vartree;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.common.command.CommandStack;
+import org.junit.Test;
 
-import com.eu.evidence.rtdruid.desk.RTDFactory;
+import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.RTD_XMI_Factory;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 /**
- * 
- * TODO : Commentare && Tradurre
- * 
  * @author Nicola Serreli
  */
-public class VarTreeTest extends TestCase {
+public class VarTreeTest {
 
     /*
      * Class under test for void VarTree()
      */
-    public void testVarTree() {
+	@Test
+	public void testVarTree() {
         
-        IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class);
-        assertTrue(vt != null);
+        IVarTree vt = VarTreeUtil.newVarTree();
+        assertNotNull(vt);
         
-        assertTrue(vt.newTreeInterface() != null);
-        assertTrue(vt.newVarTreePointer() != null);
+        assertNotNull(vt.newTreeInterface());
+        assertNotNull(vt.newVarTreePointer());
     }
 
     /*
      * Class under test for void VarTree()
      */
-    public void testVarTreeWithParameters() {
-        class MyClass extends BasicCommandStack {
-            public MyClass() {}
-        };
-        IVarTree vt = (IVarTree) RTDFactory.get(IVarTree.class, new Class[] {CommandStack.class}, new Object[] { new MyClass() });
-        assertTrue(vt != null);
+	@Test
+	public void testVarTreeWithParameters() {
+        IVarTree vt = VarTreeUtil.newVarTree( new BasicCommandStack() );
+        assertNotNull(vt);
         
-        assertTrue(vt.newTreeInterface() != null);
+        assertNotNull(vt.newTreeInterface());
+        
+        // cannot get a VTP if there isn't any resource
+        assertEquals(vt.getResourceSet().getResources().size(), 0);        
         boolean ok = false;
         try {
         	assertTrue(vt.newVarTreePointer() == null);
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException e) {
         	ok = true;
         }
         assertTrue(ok);
 
         vt.getResourceSet().getResources().add(new RTD_XMI_Factory().createResource());
-        assertTrue(vt.newVarTreePointer() != null);
+        assertNotNull(vt.newVarTreePointer());
     }
 
 }

@@ -32,19 +32,6 @@ import com.eu.evidence.rtdruid.vartree.IVariable.NotValidValueException;
 		* @return	the variable
 		*/
 		public IVariable getVariable();
-		
-		/** Return true if data stored in this node (or in its child) are valid
-		* @return	true if data are valid
-		* @deprecated
-		*/
-		public boolean isValid();
-		
-		/** Return true if this node is defined in Builder Storage
-		* @return	true if this node is defined in Builder Storage
-		* @deprecated
-		*/
-		public boolean isDefined();
-		
 	}
 // ----------------------    FIELDS  ----------------------
 	/** This special character is used in {@link com.eu.evidence.rtdruid.vartree.ITreeInterface#getAll getAll method},
@@ -84,34 +71,6 @@ import com.eu.evidence.rtdruid.vartree.IVariable.NotValidValueException;
 	*
 	*/
 	public void remElement(String path);
-	
-	
-// ----------------------    Add && Remove IObserver ----------------------
-
-	/**	Add a observer to a node. In this way, the observer will know all changes about this node and its children.
-	*	If a observer is added more than one time, they're seen like different objects, and if somebody sends a notification,
-	*	this notification'll be sent to this observer the same number of times that it was added (and not dropped).
-	*
-	*	@param	path	identify the shared variable (simple or complex). A null path identify the root Element.
-	*	@param	observer	object to which send the notification of a change about this node and/or its children
-	*/
-	public void addObserver(String path, com.eu.evidence.rtdruid.vartree.IObserver observer);
-	
-	/**	Remove a observer from a node. In this way, the observer stop to know all changes about this node and its children.
-	*	If the same observer was added more than one time, this method drops only one "copy".
-	*
-	*	@param	path	identify the shared variable (simple or complex).  A null path identify the root Element.
-	*	@param	observer	a object that was add to this node, and don't want to know other changes about this node and its children.
-	*/
-	public void remObserver(String path, com.eu.evidence.rtdruid.vartree.IObserver observer);
-	
-	/** Send a notification to all observer of the node identify by path.
-	*	If a observer was added more than one time, this notification'll be sent to this observer
-	*	the same number of times that it was added (and not dropped).
-	*
-	*	@param	path	identify the shared variable (simple or complex). A null path identify the root Element.
-	*/
-	public void handler(String path);
 	
 // ----------------------    GET Value ----------------------
 
@@ -241,6 +200,11 @@ import com.eu.evidence.rtdruid.vartree.IVariable.NotValidValueException;
 	 * @author Nicola Serreli 
 	 */
 	static public class AddElementException extends Exception {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6291660748519317034L;
+
 		public AddElementException(String msg) {
 			super(msg);
 		} 

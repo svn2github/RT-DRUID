@@ -5,21 +5,25 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.Vt2StringUtilities;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.tools.IData;
 import com.eu.evidence.rtdruid.vartree.tools.IProcData;
 import com.eu.evidence.rtdruid.vartree.tools.SearchObjects;
 
-public class SearchObjectsTest extends TestCase {
+public class SearchObjectsTest {
 
+	@Test
 	public void testGetAllProcs1() {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 
@@ -36,6 +40,7 @@ public class SearchObjectsTest extends TestCase {
 
 	}
 
+	@Test
 	public void testGetAllProcs2() {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 
@@ -51,6 +56,7 @@ public class SearchObjectsTest extends TestCase {
 
 	}
 
+	@Test
 	public void testGetAllTasks1() {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 
@@ -67,6 +73,7 @@ public class SearchObjectsTest extends TestCase {
 
 	}
 
+	@Test
 	public void testGetAllTasks2() {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 
@@ -84,6 +91,7 @@ public class SearchObjectsTest extends TestCase {
 
 	// SORT
 
+	@Test
 	public void testSortAll1() {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 
@@ -109,6 +117,7 @@ public class SearchObjectsTest extends TestCase {
 
 	}
 
+	@Test
 	public void testSortAll2() {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 
@@ -136,6 +145,7 @@ public class SearchObjectsTest extends TestCase {
 
 	// SEARCH
 
+	@Test
 	public void testSearchAll1() {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 
@@ -185,6 +195,7 @@ public class SearchObjectsTest extends TestCase {
 
 	}
 
+	@Test
 	public void testSearchAll2() {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 

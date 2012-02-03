@@ -9,11 +9,14 @@ package com.eu.evidence.rtdruid.vartree;
 import java.util.HashMap;
 
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.vartree.IAdapterFactoryEditingDomain;
+import com.eu.evidence.rtdruid.vartree.ITreeInterface;
+import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 /**
  * This interface is the used to contain every data.
@@ -26,7 +29,7 @@ public interface IVarTree extends IAdapterFactoryEditingDomain {
     // ---------------------- COSTANTI ----------------------
 
     /**
-     * This class is a fast way to build an trasaction
+     * This class is a fast way to build an transaction
      */
     public abstract class AbstractTransaction {
         
@@ -144,7 +147,7 @@ public interface IVarTree extends IAdapterFactoryEditingDomain {
     public CompoundCommand getCurrentTransaction();
 
     //  ---------------------- ROOT ----------------------
-    public void setRoot(ObjectWithID newRoot);
+    public void setRoot(EObject newRoot);
     /**
 	 * Replace the old tree with the new one.
 	 * 

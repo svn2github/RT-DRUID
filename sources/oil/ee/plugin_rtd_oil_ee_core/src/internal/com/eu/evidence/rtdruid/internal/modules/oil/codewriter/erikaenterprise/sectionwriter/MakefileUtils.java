@@ -11,8 +11,8 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.init.DataPath;
 
 class MakefileUtils {
 	
