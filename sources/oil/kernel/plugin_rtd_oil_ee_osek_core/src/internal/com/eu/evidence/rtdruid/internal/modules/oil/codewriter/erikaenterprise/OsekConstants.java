@@ -54,7 +54,4 @@ class OsekConstants {
 	/** Enable orti's res-locked option */
 	//public final static String DEF__OSEK_ORTI_RESLOCKED__ = "__OO_ORTI_RESLOCKED__";
 	
-	public final static String SGR_OS_MAX_NESTING_LEVEL = "sgr_os_max_nesting_level";
-
-
 }

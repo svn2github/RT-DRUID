@@ -12,21 +12,26 @@ import java.util.List;
 import com.eu.evidence.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants;
 import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
+import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.AutoOptions;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This writer manages Remote Notifications
@@ -35,8 +40,11 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
  */
 public class SectionWriterMemoryProtection extends SectionWriter implements
 		IEEWriterKeywords, IRemoteNotificationsConstants,
-		IGetEEOPTExtentions,
+		IGetEEOPTExtentions, IExtractObjectsExtentions,
 		IExtractKeywordsExtentions {
+
+	public final static String SGR_OS_MAX_NESTING_LEVEL = "sgr_os_max_nesting_level";
+
 
 	
 	public final static String EE_OPT_MEMORY_PROTECTION = "__EE_MEMORY_PROTECTION__";
@@ -156,11 +164,101 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 						
 			}
 			
-			ee_c_buffer.append(end + "};\n\n");
+			ee_c_buffer.append(end + indent1 + "};\n\n");
+			
+			
+			writeIsr(ool, answer[currentRtosId]);
+
 		}
 		return answer;
 	}
 	
+	
+	protected void writeIsr(IOilObjectList ool, IOilWriterBuffer answer) {
+		List<ISimpleGenRes> isrList = ool.getList(IOilObjectList.ISR);
+		
+		if (isrList.size() == 0) {
+			return;
+		}
+		
+		final String indent1 = IWritersKeywords.INDENT;
+		final String indent2 = indent1 + IWritersKeywords.INDENT;
+
+		List<ISimpleGenRes> osApplications = ool.getList(IOilObjectList.OSAPPLICATION);
+		ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
+
+		StringBuffer ee_h_buffer = answer.get(FILE_EE_CFG_H);
+		final ICommentWriter commentWriterH = getCommentWriter(os, FileTypes.H);
+
+		StringBuffer ee_c_buffer = answer.get(FILE_EE_CFG_C);
+		final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
+		
+
+		int max_level = CpuHwDescription.DEFAULT_MAX_NESTING_LEVEL;
+		
+		if (os.containsProperty(SGR_OS_MAX_NESTING_LEVEL)) {
+			max_level = os.getInt(SGR_OS_MAX_NESTING_LEVEL);
+		} else if (os.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
+			max_level = ((CpuHwDescription) os.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)).getMaxNestedInts();
+		}
+
+		// ee_cfg.h
+		ee_h_buffer.append(
+				commentWriterH.writerBanner("ISR definition") +
+				indent1 + "#define EE_MAX_NESTING_LEVEL     "+max_level+"\n" +
+				indent1 + "#define EE_MAX_ISR               " + (isrList.size()) +"\n\n"); 				
+
+		// ee_cfg.c
+		ee_c_buffer.append(
+				commentWriterC.writerBanner("ISR definition") +
+				indent1 + "EE_as_ISR_RAM_type EE_as_ISR_stack[EE_MAX_NESTING_LEVEL];\n\n" +
+				indent1 + "const EE_as_ISR_ROM_type EE_as_ISR_ROM[EE_MAX_ISR] = {\n");
+				
+		StringBuffer appl_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR to Application mapping"));
+		StringBuffer isr_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR id"));
+
+		String pre = "";
+		String post = "";
+		for (ISimpleGenRes isr : isrList) {
+			String name = isr.getName();
+			
+			int aid = isr.containsProperty(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME) ? 
+					1+ getOsApplicationIndex(isr.getString(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME), osApplications)
+					: 0;
+			int iid = isr.getInt(ISimpleGenResKeywords.ISR_ID);
+			appl_id.append(indent1 + "#define ISR2_APP_"+name+"\t" + aid + "\n");
+			isr_id.append(indent1 + "#define ISR2_ID_"+name+"\t" + iid + "\n");
+			
+			ee_c_buffer.append(pre + post + indent2 + "{ "+aid+" }");
+			pre = ",";
+			post = commentWriterC.writerSingleLineComment(name);
+		}
+
+		ee_h_buffer.append(appl_id + "\n" + isr_id + "\n");
+		
+		ee_c_buffer.append(" " + post+indent1+"};\n\n");
+
+	}
+
+
+	/**
+	 * 
+	 * @param osAppl
+	 *            os application name
+	 * @param osApplicationList
+	 *            all os applications
+	 * @return the position in the array of specified os application
+	 */
+	private int getOsApplicationIndex(String osAppl, List<ISimpleGenRes> osApplicationList) {
+		if (osAppl != null) {
+			for (int i=0; i<osApplicationList.size(); i++) {
+				if (osAppl.equals(osApplicationList.get(i).getName())) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
 		
 	/* (non-Javadoc)
 	 * @see com.eu.evidence.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions#getEEOpt(int)
@@ -203,5 +301,41 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 				keywords.add(IWritersKeywords.KERNEL_OS_APPLICATION);
 			}
 		}
-	}	
+	}
+	
+	@Override
+	public void updateObjects() throws OilCodeWriterException {
+		final IVarTree vt = parent.getVt();
+
+		final String osNestingLevelPath = S
+					+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
+					+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MAX_NESTING_LEVEL";
+
+		final IOilObjectList[] oilObjects = parent.getOilObjects();	
+		for (IOilObjectList ool : oilObjects) {
+
+			
+			{ // nesting level
+				ISimpleGenRes os = ool.getList(IOilObjectList.OS).get(0);
+				String[] value = CommonUtils.getValue(vt, os.getPath() + osNestingLevelPath);
+				if (value != null && value.length>0 && value[0] != null && value[0].length()>0) {
+					os.setProperty(SGR_OS_MAX_NESTING_LEVEL, value[0]);
+				}
+			}
+
+			
+			// isr
+			List<ISimpleGenRes> isrs = ool.getList(IOilObjectList.ISR);
+			int isr_id = 0;
+			for (ISimpleGenRes isr : isrs) {
+				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_ID)) {
+					isr.setProperty(ISimpleGenResKeywords.ISR_ID, ""+isr_id);
+					isr_id ++;
+				}
+
+			}
+
+		}
+	}
+
 }

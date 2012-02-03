@@ -48,7 +48,7 @@ import com.eu.evidence.rtdruid.vartree.data.DataPackage;
  * @author Nicola Serreli
  */
 public class SectionWriterKernelOsek extends SectionWriter implements
-		IEEWriterKeywords, IExtractKeywordsExtentions, IExtractObjectsExtentions, IGetEEOPTExtentions {
+		IEEWriterKeywords, IExtractKeywordsExtentions, IGetEEOPTExtentions {
 	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -1358,96 +1358,12 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		
 			// add a new line
 			buffer.append("\n");
-		
-			
-			
-			writeIsr(ool, answer[rtosId]);
 		}
 		
 		return answer;
 	}
 	
 	
-
-	
-	protected void writeIsr(IOilObjectList ool, IOilWriterBuffer answer) {
-		final String indent1 = IWritersKeywords.INDENT;
-		final String indent2 = indent1 + IWritersKeywords.INDENT;
-
-		List<ISimpleGenRes> isrList = ool.getList(IOilObjectList.ISR);
-		List<ISimpleGenRes> osApplications = ool.getList(IOilObjectList.OSAPPLICATION);
-		ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-
-		StringBuffer ee_h_buffer = answer.get(FILE_EE_CFG_H);
-		final ICommentWriter commentWriterH = getCommentWriter(os, FileTypes.H);
-
-		StringBuffer ee_c_buffer = answer.get(FILE_EE_CFG_C);
-		final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
-		
-
-		int max_level = CpuHwDescription.DEFAULT_MAX_NESTING_LEVEL;
-		
-		if (os.containsProperty(OsekConstants.SGR_OS_MAX_NESTING_LEVEL)) {
-			max_level = os.getInt(OsekConstants.SGR_OS_MAX_NESTING_LEVEL);
-		} else if (os.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
-			max_level = ((CpuHwDescription) os.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)).getMaxNestedInts();
-		}
-
-		// ee_cfg.h
-		ee_h_buffer.append(
-				commentWriterH.writerBanner("ISR definition") +
-				indent1 + "#define EE_MAX_NESTING_LEVEL     "+max_level+"\n" +
-				indent1 + "#define EE_MAX_ISR               " + (isrList.size()) +"\n\n"); 				
-
-		// ee_cfg.c
-		ee_c_buffer.append(
-				commentWriterC.writerBanner("ISR definition") +
-				indent1 + "EE_as_ISR_RAM_type EE_as_ISR_stack[EE_MAX_NESTING_LEVEL];\n\n" +
-				indent1 + "const EE_as_ISR_ROM_type EE_as_ISR_ROM[EE_MAX_ISR] = {\n");
-				
-		StringBuffer appl_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR to Application mapping"));
-		StringBuffer isr_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR id"));
-
-		String pre = "";
-		for (ISimpleGenRes isr : isrList) {
-			String name = isr.getName();
-			
-			int aid = isr.containsProperty(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME) ? 
-					1+ getOsApplicationIndex(isr.getString(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME), osApplications)
-					: 0;
-			int iid = isr.getInt(ISimpleGenResKeywords.ISR_ID);
-			appl_id.append(indent1 + "#define ISR2_APP_"+name+"\t" + aid + "\n");
-			isr_id.append(indent1 + "#define ISR2_ID_"+name+"\t" + iid + "\n");
-			
-			ee_c_buffer.append(pre + indent2 + "{ "+aid+" }");
-			pre = ",\n";
-		}
-
-		ee_h_buffer.append(appl_id + "\n" + isr_id + "\n");
-		
-		ee_c_buffer.append("\n"+indent1+"};\n\n");
-
-	}
-	
-
-	/**
-	 * 
-	 * @param osAppl
-	 *            os application name
-	 * @param osApplicationList
-	 *            all os applications
-	 * @return the position in the array of specified os application
-	 */
-	protected int getOsApplicationIndex(String osAppl, List<ISimpleGenRes> osApplicationList) {
-		if (osAppl != null) {
-			for (int i=0; i<osApplicationList.size(); i++) {
-				if (osAppl.equals(osApplicationList.get(i).getName())) {
-					return i;
-				}
-			}
-		}
-		return -1;
-	}
 	
 	
 
@@ -1510,40 +1426,6 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 	
 	
 	
-	@Override
-	public void updateObjects() throws OilCodeWriterException {
-		final IVarTree vt = parent.getVt();
-
-		final String osNestingLevelPath = S
-					+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MAX_NESTING_LEVEL";
-
-		final IOilObjectList[] oilObjects = parent.getOilObjects();	
-		for (IOilObjectList ool : oilObjects) {
-
-			
-			{ // nesting level
-				ISimpleGenRes os = ool.getList(IOilObjectList.OS).get(0);
-				String[] value = CommonUtils.getValue(vt, os.getPath() + osNestingLevelPath);
-				if (value != null && value.length>0 && value[0] != null && value[0].length()>0) {
-					os.setProperty(OsekConstants.SGR_OS_MAX_NESTING_LEVEL, value[0]);
-				}
-			}
-
-			
-			// isr
-			List<ISimpleGenRes> isrs = ool.getList(IOilObjectList.ISR);
-			int isr_id = 0;
-			for (ISimpleGenRes isr : isrs) {
-				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_ID)) {
-					isr.setProperty(ISimpleGenResKeywords.ISR_ID, ""+isr_id);
-					isr_id ++;
-				}
-
-			}
-
-		}
-	}
 
 
 	
