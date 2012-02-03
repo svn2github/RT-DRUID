@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeSrc">
+      <extSourceDistribution
+            sources="c:\">
+      </extSourceDistribution>
+      <extSourceDistribution
+            sources="${eclipse_home}/features">
+      </extSourceDistribution>
+      <extSourceDistribution
+            sources=".">
+      </extSourceDistribution>
+   </extension>
+
+</fragment>

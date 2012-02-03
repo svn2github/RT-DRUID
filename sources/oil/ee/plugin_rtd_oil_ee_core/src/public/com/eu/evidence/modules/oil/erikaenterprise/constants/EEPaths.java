@@ -2,15 +2,20 @@ package com.eu.evidence.modules.oil.erikaenterprise.constants;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.variables.IStringVariableManager;
+import org.eclipse.core.variables.VariablesPlugin;
 import org.osgi.framework.Bundle;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.options.PreferenceStorage;
 
 
 /**
@@ -20,6 +25,9 @@ import com.eu.evidence.rtdruid.desk.RtdruidLog;
  * @author Nicola Serreli
  */
 public final class EEPaths {
+	
+	final static String CONFIG_FILE___EE_BASE = "eebase";
+	
 	
 //	protected static String evidence_base = null;
 //	protected static String ee_base = null;
@@ -31,6 +39,10 @@ public final class EEPaths {
 		return null;
 	}
 
+	public static List<EE_src_distr> getAllEe_base() {
+		return Collections.unmodifiableList(eeSrcPaths);
+	}
+	
 	/** @deprecated no more supported */
 	private static String getEvidence_base() {
 		if (eviPaths.size() > 0) {
@@ -107,11 +119,101 @@ public final class EEPaths {
 	}
 
 	
-	@SuppressWarnings("unchecked")
-	static ArrayList<EE_src_distr> parseAllEEsrcExtensions() {
-StringBuffer buffer = new StringBuffer();
-		ArrayList<EE_src_distr> answer = new ArrayList<EE_src_distr>();
 
+	static ArrayList<EE_src_distr> parseAllEEsrcExtensions() {
+		ArrayList<EE_src_distr> answer = new ArrayList<EE_src_distr>();
+		
+		checkConfigurationOptions(answer);
+		parseExtSourceDistribution(answer);
+		parseSourceDistribution(answer);
+		
+		return answer;
+	}		
+
+	@SuppressWarnings("unchecked")
+	static void parseExtSourceDistribution(ArrayList<EE_src_distr> answer) {
+	
+StringBuffer buffer = new StringBuffer();
+		IConfigurationElement[] config = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor(
+					"com.eu.evidence.rtdruid.oil.ee.core.eeSrc");
+		assert (config != null);
+		int l = config.length;
+
+buffer.append("Config.length = " + config.length + "\n");
+		for (int i = 0; i < l; i++) {
+buffer.append("\n__" + i + " = " + config[i].getName() + "  " + config[i] +"\n");
+			if ("extSourceDistribution".equals(config[i].getName())) {
+				String bundleName = "";
+				String srcAttr = "";
+				String contribs = "";
+				try {
+					srcAttr = config[i].getAttribute("sources");
+					String version = config[i].getAttribute("VersionFile");
+					contribs = config[i].getAttribute("contribs");
+					
+buffer.append("_____Src " + " = " + srcAttr +"\n");
+buffer.append("_____Vrs " + " = " + version +"\n");
+buffer.append("_____cntr" + " = " + contribs +"\n");
+					
+					if (srcAttr == null && contribs == null) {
+						continue;
+					}
+					
+					
+					IStringVariableManager isvm = VariablesPlugin.getDefault().getStringVariableManager();
+					if (isvm != null) {
+						if (srcAttr != null) {
+							try {
+								srcAttr = isvm.performStringSubstitution(srcAttr, true);
+							} catch (Exception e) {
+								RtdruidLog.log(e);
+							}
+						}
+						if (contribs != null) {
+							try {
+								contribs = isvm.performStringSubstitution(contribs, true);
+							} catch (Exception e) {
+								RtdruidLog.log(e);
+							}
+						}
+					}
+					
+					
+					String srcBase = null;
+					if (srcAttr != null) {
+						File base = new File(srcAttr);
+						if (base.exists() && base.isDirectory() && base.canRead()) {
+							srcBase = base.getCanonicalPath();
+						}
+buffer.append("_____Src path = "+srcBase +"\n");
+					}
+					
+					String contrBase = null;
+					if (contribs != null) {
+						File base = new File(contribs);
+						if (base.exists() && base.isDirectory() && base.canRead()) {
+							contrBase = base.getCanonicalPath();
+buffer.append("_____Contr path = "+contrBase +"\n");
+						}
+					}
+										
+					answer.add(new EE_src_distr(version, srcBase, contrBase));
+					
+				} catch (Exception e) {
+					RtdruidLog.log("Unable to get the specified source/contribution directory:\n bundle= " + 
+							bundleName + "\n source= " + srcAttr + "\n contribs= " + contribs,
+							e);
+				}
+			}
+		}
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	static void parseSourceDistribution(ArrayList<EE_src_distr> answer) {
+	
+StringBuffer buffer = new StringBuffer();
 		IConfigurationElement[] config = Platform.getExtensionRegistry()
 				.getConfigurationElementsFor(
 					"com.eu.evidence.rtdruid.oil.ee.core.eeSrc");
@@ -188,10 +290,33 @@ buffer.append("_____Contr path = "+contrBase +"\n");
 				}
 			}
 		}
-//buffer.append("\n Res = "+answer +"\n");
-//RtdruidLog.log(buffer.toString());
-//System.out.println(buffer.toString());
-		return answer;
+	}
+	private static void checkConfigurationOptions(ArrayList<EE_src_distr> answer) {
+		PreferenceStorage prefs = PreferenceStorage.getCommonIstance();
+		String base = prefs.getValue(CONFIG_FILE___EE_BASE);
+		if (base != null) {
+			IStringVariableManager isvm = VariablesPlugin.getDefault().getStringVariableManager();
+			if (isvm != null) {
+				if (base != null) {
+					try {
+						base = isvm.performStringSubstitution(base, true);
+						
+						File file = new File(base);
+						if (file.exists() && file.isDirectory() && file.canRead()) {
+							base = file.getCanonicalPath();
+						} else {
+							base = null;
+						}
+					} catch (Exception e) {
+						RtdruidLog.log(e);
+					}
+				}
+			}			
+			if (base != null) {
+				answer.add(new EE_src_distr("", base, null));
+			}
+		}
+		
 	}
 
 	

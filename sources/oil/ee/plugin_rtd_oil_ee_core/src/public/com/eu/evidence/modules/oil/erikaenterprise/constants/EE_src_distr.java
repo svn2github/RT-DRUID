@@ -11,4 +11,9 @@ public class EE_src_distr {
 		this.contribPath = contrib;
 		this.srcPath = src;
 	}
+	
+	@Override
+	public String toString() {
+		return "Ver. (" + version + "); src ("+srcPath+"); contrib ("+contribPath+")";
+	}
 }

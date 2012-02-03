@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -40,9 +41,10 @@ public class PreferenceStorage {
 		return common;
 	}
 	
-	protected final Properties values = new Properties();;
+	protected final Properties values = new Properties();
 	
 	protected File currentFile = null;
+	protected boolean loaded = false;
 	
 	public PreferenceStorage() {
 		
@@ -66,6 +68,30 @@ public class PreferenceStorage {
 	}
 	
 	
+	public void load(InputStream input) {
+		if (input == null) {
+			// nothing to load
+			RtdruidLog.log("Called 'load preferences' method without an input");
+			return;
+		}
+		
+		// clear old values
+		values.clear();
+		
+		try {
+			values.load(input);
+			currentFile = null;
+			loaded = true;
+		} catch (FileNotFoundException e) {
+			// cannot be
+			RtdruidLog.log(e);
+		} catch (IOException e) {
+			// some problems reading the file
+			RtdruidLog.log(e);
+		}
+	}
+	
+	
 	
 	public void load() {
 		if (currentFile == null) {
@@ -80,6 +106,7 @@ public class PreferenceStorage {
 		if (currentFile.exists() && currentFile.isFile() && currentFile.canRead()) {
 			try {
 				values.load(new FileInputStream(currentFile));
+				loaded = true;
 			} catch (FileNotFoundException e) {
 				// cannot be
 				RtdruidLog.log(e);
@@ -126,6 +153,7 @@ public class PreferenceStorage {
 					try {
 						tmp.load(new FileInputStream(file));
 						currentFile = file;
+						loaded = true;
 						dbg += " ... done ";
 					} catch (FileNotFoundException e) {
 						// cannot be
@@ -172,6 +200,7 @@ public class PreferenceStorage {
 						try {
 							tmp.load(new FileInputStream(file));
 							currentFile = file;
+							loaded = true;
 							dbg += " ... done ";
 						} catch (FileNotFoundException e) {
 							// cannot be
@@ -193,9 +222,12 @@ public class PreferenceStorage {
 	}
 
 	/**
-	 * @return all values handled set in this Preference Storage
+	 * @return a copy of all values handled set in this Preference Storage
 	 */
 	public HashMap<String, String> getAllValue() {
+		if (loaded == false && currentFile != null) {
+			load();
+		}
 		HashMap<String, String> answer = new HashMap<String, String>();
 		for (Enumeration<String> keys = (Enumeration<String>) values.propertyNames();
 			keys.hasMoreElements(); ) {
@@ -207,7 +239,13 @@ public class PreferenceStorage {
 
 	
 	public String getValue(String ID) {
-		throw new UnsupportedOperationException();
+		if (loaded == false && currentFile != null) {
+			load();
+		}
+		if (values.containsKey(ID)) {
+			return values.getProperty(ID);
+		}
+		return null;
 	}
 	
 	public void setValue(String ID, String value) {
