@@ -24,7 +24,6 @@ import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.VarTreePointerEMF;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 
 
 /**
@@ -53,7 +52,7 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
 
     // ---------------------- COSTANTI ----------------------
 
-    protected HashMap<String, Object> properties = new HashMap<String, Object>();
+    protected final HashMap<String, Object> properties = new HashMap<String, Object>();
 
     /**
      * Create an instance from the adapter factory, and the specialized command
@@ -137,7 +136,7 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
     protected void finalize() {
         //System.err.println("VarTree eliminata");
         properties.clear();
-        properties = null;
+        properties.clear();
         commandStack.flush();
         adapterFactory = null;
         resourceSet.getResources().clear();
@@ -334,7 +333,8 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
          * @throws RuntimeException
          *             if try to unlock a not locked thread
          */
-        synchronized public void unlock() {
+        @SuppressWarnings("deprecation")
+		synchronized public void unlock() {
             //			System.err.println("unlock " + System.currentTimeMillis());
             Thread newThread = Thread.currentThread();
 
@@ -351,7 +351,8 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
             }
         }
 
-        synchronized public void kill(Thread newThread) {
+        @SuppressWarnings("deprecation")
+		synchronized public void kill(Thread newThread) {
             if (threads.contains(newThread)) {
                 waitForKill.add(newThread);
             } else {
@@ -361,9 +362,12 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
 
     }
 
-    protected ThreadMonitor thMonitor = new ThreadMonitor();
+    private ThreadMonitor thMonitor;
 
     public IThreadMonitor getThreadMonitor() {
+    	if (thMonitor == null) {
+    		thMonitor = new ThreadMonitor();
+    	}
         return thMonitor;
     }
 }

@@ -5,9 +5,10 @@
     editDirectory="/plugin_rtd_core/src/e_edit" editorDirectory="" modelPluginID="com.eu.evidence.rtdruid.core"
     redirection="" modelName="Data" modelPluginClass="com.eu.evidence.rtdruid.Rtd_coreModelPlugin"
     editPluginClass="com.eu.evidence.rtdruid.Rtd_coreModelPlugin" editorPluginClass="rtdruid.vartree.data.presentation.DataEditorPlugin"
-    updateClasspath="false" rootImplementsInterface="" featureMapWrapperClass="" testsDirectory=""
+    updateClasspath="false" rootImplementsInterface="" featureMapWrapperClass="" testsDirectory="/plugin_rtd_core_model_test/src"
     complianceLevel="5.0" editPluginID="com.eu.evidence.rtdruid.core" editorPluginID="rtdruid.vartree.data.editor"
-    language="" interfaceNamePattern="" classNamePattern="">
+    testsPluginID="com.eu.evidence.rtdruid.core.modeltest" language="" interfaceNamePattern=""
+    classNamePattern="">
   <foreignModel>rtdruid_merge.ecore</foreignModel>
   <genPackages prefix="Data" basePackage="com.eu.evidence" interfacePackageSuffix="vartree.data"
       metaDataPackageSuffix="vartree.data" classPackageSuffix="internal.vartree.data.impl"
@@ -22,6 +23,11 @@
     <genDataTypes ecoreDataType="rtdruid_merge.ecore#//StringVar"/>
     <genDataTypes ecoreDataType="rtdruid_merge.ecore#//TimeVar"/>
     <genDataTypes ecoreDataType="rtdruid_merge.ecore#//PropertyVar"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//EInt"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//ELong"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//EFloat"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//EDouble"/>
+    <genDataTypes ecoreDataType="rtdruid_merge.ecore#//EString"/>
     <genClasses ecoreClass="rtdruid_merge.ecore#//System">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//System/Annotation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//System/Architectural"/>
@@ -47,6 +53,7 @@
     </genClasses>
     <genClasses ecoreClass="rtdruid_merge.ecore#//Mode">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Mode/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Mode/APPMODE_OIL_EXT"/>
     </genClasses>
     <genClasses ecoreClass="rtdruid_merge.ecore#//Functional">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Functional/EventList"/>
@@ -143,6 +150,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Task/ResourceRefList"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Task/SchedulingList"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Task/Type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Task/TASK_OIL_EXT"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Task/ISR_OIL_EXT"/>
     </genClasses>
     <genClasses ecoreClass="rtdruid_merge.ecore#//Resource">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Resource/Methods"/>
@@ -166,11 +175,15 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Signal/Name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Signal/OilVar"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Signal/Type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Signal/EVENT_OIL_EXT"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Signal/COUNTER_OIL_EXT"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Signal/ALARM_OIL_EXT"/>
     </genClasses>
     <genClasses ecoreClass="rtdruid_merge.ecore#//Mutex">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Mutex/Name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Mutex/OilVar"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Mutex/Policy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Mutex/MUTEX_OIL_EXT"/>
     </genClasses>
     <genClasses ecoreClass="rtdruid_merge.ecore#//Cpu">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Cpu/Name"/>
@@ -186,6 +199,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Rtos/OilVar"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Rtos/Type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Rtos/Methods"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//Rtos/RTOS_OIL_EXT"/>
     </genClasses>
     <genClasses ecoreClass="rtdruid_merge.ecore#//Scheduling">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//Scheduling/ModeRef"/>
@@ -298,6 +312,1669 @@
     <genClasses ecoreClass="rtdruid_merge.ecore#//OsApplication">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OsApplication/Name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OsApplication/OilVar"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OsApplication/OS_APPLICATION_OIL_EXT"/>
     </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/CPU_DATA"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/MCU_DATA"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/BOARD_DATA"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/LIB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/EE_OPT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/CFLAGS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/ASFLAGS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/LDFLAGS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/LDDEPS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/LIBS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/STARTUPHOOK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/ERRORHOOK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/SHUTDOWNHOOK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/PRETASKHOOK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/POSTTASKHOOK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/STATUS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/USEGETSERVICEID"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/USEPARAMETERACCESS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/USERESSCHEDULER"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/STACKMONITORING"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/PROTECTIONHOOK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/STARTUPSYNC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/USEREMOTETASK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/USEREMOTEEVENT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/MP_SHARED_RAM"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/MP_SHARED_ROM"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/MASTER_CPU"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/KERNEL_TYPE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/MEMORY_PROTECTION"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/ORTI_SECTIONS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/NIOS2_MUTEX_BASE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/IPIC_GLOBAL_NAME"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/NIOS2_SYS_CONFIG"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/NIOS2_APP_CONFIG"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS/NIOS2_DO_MAKE_OBJDUMP"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/NIOS2_JAM_FILE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/NIOS2_PTF_FILE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS/MAX_NESTING_LEVEL"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/APP_SRC"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/THUMB_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/MULTI_STACK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/STACK_TOP"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/STACK_BOTTOM"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/SYS_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/IRQ_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/SVC_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/FIQ_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/ABT_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/UND_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7/SHARED_MIN_SYS_SIZE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE/IRQ_STACK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE/DUMMY_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE__DUMMY_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE__DUMMY_1STACK__SHARED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE__DUMMY_1STACK__PRIVATE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__TRUE__DUMMY_1STACK__PRIVATE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ARM7__MULTI_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/MULTI_STACK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/STACK_BOTTOM"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/SYS_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/SHARED_MIN_SYS_SIZE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/TIMER0"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/TIMER1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/TIMER2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/TIMER3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_IRQ0"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_IRQ1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_IRQ2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_IRQ3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_IRQ4"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_IRQ5"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_IRQ6"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_IRQ7"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T0_MATCH"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T0_OVERFLW"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T1_EVENT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T1_MATCH_A"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T1_MATCH_B"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T1_MATCH_C"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T1_OVERFLW"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T2_MATCH"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T2_OVERFLW"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T3_EVENT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T3_MATCH_A"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T3_MATCH_B"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T3_MATCH_C"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_T3_OVERFLW"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_SPI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_US0_RX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_US0_EMPTY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_US0_TX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_US1_RX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_US1_EMPTY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_US1_TX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_ADC"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_EEPROM"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_ANALOG_COMP"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_2WSI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER_SPM_READY"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15/HANDLER"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE/IRQ_STACK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE/DUMMY_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE__DUMMY_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE__DUMMY_1STACK__SHARED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE__DUMMY_1STACK__PRIVATE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__TRUE__DUMMY_1STACK__PRIVATE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__MULTI_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER0"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER0__STOP"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER0__DIV1"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER0__DIV8"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER0__DIV32"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER0__DIV64"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER0__DIV256"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER0__DIV1024"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER1"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER1__STOP"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER1__DIV1"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER1__DIV8"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER1__DIV64"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER1__DIV256"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER1__DIV1024"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER2"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER2__STOP"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER2__DIV1"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER2__DIV8"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER2__DIV64"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER2__DIV256"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER2__DIV1024"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER3"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER3__STOP"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER3__DIV1"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER3__DIV8"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER3__DIV64"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER3__DIV256"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__TIMER3__DIV1024"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ0">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ0/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ0/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ1">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ1/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ1/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ2">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ2/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ2/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ3">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ3/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ3/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ4">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ4/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ4/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ5">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ5/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ5/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ6">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ6/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ6/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ7">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ7/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1IRQ7/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T0_1MATCH">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T0_1MATCH/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T0_1MATCH/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T0_1OVERFLW">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T0_1OVERFLW/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T0_1OVERFLW/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1EVENT">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1EVENT/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1EVENT/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1MATCH_1A">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1MATCH_1A/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1MATCH_1A/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1MATCH_1B">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1MATCH_1B/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1MATCH_1B/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1MATCH_1C">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1MATCH_1C/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1MATCH_1C/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1OVERFLW">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1OVERFLW/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T1_1OVERFLW/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T2_1MATCH">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T2_1MATCH/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T2_1MATCH/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T2_1OVERFLW">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T2_1OVERFLW/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T2_1OVERFLW/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1EVENT">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1EVENT/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1EVENT/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1MATCH_1A">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1MATCH_1A/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1MATCH_1A/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1MATCH_1B">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1MATCH_1B/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1MATCH_1B/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1MATCH_1C">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1MATCH_1C/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1MATCH_1C/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1OVERFLW">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1OVERFLW/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1T3_1OVERFLW/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1SPI">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1SPI/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1SPI/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US0_1RX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US0_1RX/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US0_1RX/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US0_1EMPTY">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US0_1EMPTY/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US0_1EMPTY/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US0_1TX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US0_1TX/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US0_1TX/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US1_1RX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US1_1RX/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US1_1RX/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US1_1EMPTY">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US1_1EMPTY/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US1_1EMPTY/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US1_1TX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US1_1TX/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1US1_1TX/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1ADC">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1ADC/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1ADC/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1EEPROM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1EEPROM/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1EEPROM/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1ANALOG_1COMP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1ANALOG_1COMP/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1ANALOG_1COMP/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_12WSI">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_12WSI/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_12WSI/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1SPM_1READY">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1SPM_1READY/FUNCTION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__AVR_15__HANDLER__HANDLER_1SPM_1READY/TYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0/MULTI_STACK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0/JLINK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0/COMPILER_TYPE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE/IRQ_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__MULTI_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__JLINK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__JLINK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__JLINK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__COMPILER_1TYPE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__CORTEX_1M0__COMPILER_1TYPE__IAR"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30/MULTI_STACK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30/ICD2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30/ENABLE_SPLIM"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__MULTI_1STACK__TRUE/IRQ_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__MULTI_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__ICD2"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__ICD2__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__ICD2__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__ENABLE_1SPLIM"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__ENABLE_1SPLIM__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC30__ENABLE_1SPLIM__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32/MULTI_STACK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32/ICD2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32/ENABLE_SPLIM"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__MULTI_1STACK__TRUE/IRQ_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__MULTI_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__ICD2"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__ICD2__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__ICD2__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__ENABLE_1SPLIM"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__ENABLE_1SPLIM__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PIC32__ENABLE_1SPLIM__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC/MULTI_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC__MULTI_1STACK__TRUE/IRQ_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__ESI_1RISC__MULTI_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/TIMER_FREERUNNING"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/FRSH_TIMERS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/MULTI_STACK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/STACK_TOP"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/SYS_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/SHARED_MIN_SYS_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/SYSTEM_LIBRARY_NAME"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/SYSTEM_LIBRARY_PATH"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII/IPIC_LOCAL_NAME"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__FRSH_1TIMERS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__FRSH_1TIMERS__SINGLE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__FRSH_1TIMERS__SINGLE/TIMER_IRQ"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__FRSH_1TIMERS__MULTIPLE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__FRSH_1TIMERS__MULTIPLE/TIMER_IRQ_BUDGET"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__FRSH_1TIMERS__MULTIPLE/TIMER_IRQ_RECHARGE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__FRSH_1TIMERS__MULTIPLE/TIMER_IRQ_DLCHECK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__FRSH_1TIMERS__MULTIPLE/TIMER_IRQ_SEM"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE/IRQ_STACK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE/DUMMY_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE__DUMMY_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE__DUMMY_1STACK__SHARED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE__DUMMY_1STACK__PRIVATE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__TRUE__DUMMY_1STACK__PRIVATE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__NIOSII__MULTI_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32/MULTI_STACK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32/USESTANDALONEPRINTF"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32/USESMALLC"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__MULTI_1STACK__TRUE/IRQ_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__MULTI_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__USESTANDALONEPRINTF"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__USESTANDALONEPRINTF__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__USESTANDALONEPRINTF__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__USESMALLC"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__USESMALLC__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__LM32__USESMALLC__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430/MULTI_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430__MULTI_1STACK__TRUE/IRQ_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MSP430__MULTI_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/MULTI_STACK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/STACK_BOTTOM"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/SYS_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/SHARED_MIN_SYS_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_IRQ0"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_LVL0"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_IRQ1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_LVL1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_IRQ2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_LVL2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_IRQ3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_LVL3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_IRQ4"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_LVL4"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_IRQ5"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_LVL5"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_IRQ6"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_LVL6"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_IRQ7"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5/HANDLER_LVL7"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE/IRQ_STACK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE/DUMMY_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE__DUMMY_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE__DUMMY_1STACK__SHARED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE__DUMMY_1STACK__PRIVATE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__TRUE__DUMMY_1STACK__PRIVATE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MPC5__MULTI_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX/MULTI_STACK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX/SYS_STACK_SIZE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX/MODEL"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX/VLE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MULTI_1STACK__TRUE/IRQ_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MULTI_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MODEL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MODEL__E200Z0"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MODEL__E200Z6"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__MODEL__E200Z7"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__VLE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__VLE__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__PPCE200ZX__VLE__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS/MULTI_STACK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS/ICD"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__MULTI_1STACK__TRUE/IRQ_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__MULTI_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__ICD"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__ICD__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__MC9S12XS__ICD__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1/APP_SRC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1/MULTI_STACK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1/MODEL"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1__MULTI_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1__MULTI_1STACK__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1__MULTI_1STACK__TRUE/IRQ_STACK"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1__MULTI_1STACK__TRUE__IRQ_1STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1__MULTI_1STACK__TRUE__IRQ_1STACK__TRUE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1__MULTI_1STACK__TRUE__IRQ_1STACK__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__CPU_1DATA__TRICORE1__MULTI_1STACK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_EXT0"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_EXT1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_EXT2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_EXT3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_UART0TX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_UART0RX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_UART1TX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_UART1RX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_GDMA0"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_GDMA1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_TIMER0"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_TIMER1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_HDLCATX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_HDLCARX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_HDLCBTX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_HDLCBRX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_ETHBDMATX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_ETHBDMARX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_ETHMACTX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_ETHMACRX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_I2C"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__SAMSUNG_1KS32C50100/IRQ_NO_PENDING"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_EXT0"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_EXT1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_EXT2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_EXT3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_UART0TX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_UART0RX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_UART1TX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_UART1RX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_GDMA0"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_GDMA1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_TIMER0"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_TIMER1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_HDLCATX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_HDLCARX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_HDLCBTX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_HDLCBRX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_ETHBDMATX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_ETHBDMARX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_ETHMACTX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_ETHMACRX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_I2C"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__unibo_1mparm/IRQ_NO_PENDING"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__CORTEX_1M0">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__CORTEX_1M0/MODEL"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__CORTEX_1M0__MODEL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__CORTEX_1M0__MODEL__CUSTOM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__CORTEX_1M0__MODEL__CUSTOM/MODEL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__CORTEX_1M0__MODEL__CUSTOM/LINKERSCRIPT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__CORTEX_1M0__MODEL__CUSTOM/INCLUDE_H"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30/MODEL"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__CUSTOM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__CUSTOM/MODEL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__CUSTOM/LINKERSCRIPT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__CUSTOM/DEV_LIB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__CUSTOM/INCLUDE_C"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__CUSTOM/INCLUDE_S"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ128GA006"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ128GA008"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ128GA010"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ32GA002"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ32GA004"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ64GA002"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ64GA004"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ64GA006"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ64GA008"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ64GA010"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ96GA006"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ96GA008"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24FJ96GA010"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ64GP502"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ128GP206"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ128GP210"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ128GP306"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ128GP310"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ128GP506"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ128GP510"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ256GP206"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ256GP210"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ256GP610"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ64GP206"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ64GP210"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ64GP506"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC24HJ64GP510"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F1010"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F2010"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F2011"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F2012"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F2020"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F2021"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F2022"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F2023"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F3010"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F3011"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F3012"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F3013"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F3014"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F4011"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F4012"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F4013"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F5011"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F5013"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F5015"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F5016"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6010"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6010A"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6011"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6011A"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6012"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6012A"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6013"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6013A"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6014"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6014A"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC30F6015"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128GP206"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128GP306"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128GP310"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128GP706"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128GP708"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128GP710"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128MC506"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128MC510"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128MC706"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128MC708"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ128MC710"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ256GP506"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ256GP510"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ256GP710"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ256MC510"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ256MC710"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64GP206"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64GP306"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64GP310"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64GP706"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64GP708"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64GP710"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64MC506"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64MC508"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64MC510"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64MC706"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64MC710"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC30__MODEL__PIC33FJ64MC802"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32/MODEL"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32__MODEL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32__MODEL__CUSTOM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32__MODEL__CUSTOM/MODEL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32__MODEL__CUSTOM/DEV_LIB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32__MODEL__CUSTOM/INCLUDE_C"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32__MODEL__CUSTOM/INCLUDE_S"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32__MODEL__PIC32MX360F512L"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PIC32__MODEL__PIC32MX795F512L"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__ESI_1RISC">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__ESI_1RISC/MODEL"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__ESI_1RISC__MODEL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__ESI_1RISC__MODEL__CUSTOM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__ESI_1RISC__MODEL__CUSTOM/MODEL"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM/MODEL"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM/DEVICE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__MODEL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__MODEL__LIBRARY">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__MODEL__LIBRARY/PLATFORM_LIB_PATH"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__MODEL__LIBRARY/PLATFORM_NAME"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__MODEL__LIBRARY/PLATFORM_BLD_CFG"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__UART">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__UART/NAME"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__UART/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__UART__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__UART__OPTIONS__UART_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__UART__OPTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__SPI">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__SPI/NAME"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__SPI/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__SPI__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__SPI__OPTIONS__SPI_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__SPI__OPTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__TIMER">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__TIMER/NAME"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__TIMER/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__TIMER__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__TIMER__OPTIONS__TIMER_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__TIMER__OPTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__I2C">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__I2C/NAME"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__I2C/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__I2C__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__I2C__OPTIONS__I2C_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__I2C__OPTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__GPIO">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__GPIO/NAME"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__GPIO/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__GPIO__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__GPIO__OPTIONS__GPIO_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__LATTICE_1PLATFORM__DEVICE__GPIO__OPTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__MSP430">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__MSP430/MODEL"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__MSP430__MODEL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__MSP430__MODEL__CUSTOM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__MSP430__MODEL__CUSTOM/MODEL"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PPCE200ZX">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__PPCE200ZX/MODEL"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PPCE200ZX__MODEL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PPCE200ZX__MODEL__MPC5668G"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__PPCE200ZX__MODEL__MPC5674F"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS/SERIAL"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS/TIMER"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS/MODEL"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__SERIAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__SERIAL__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__SERIAL__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__TIMER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__TIMER__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__TIMER__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__MODEL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__MODEL__CUSTOM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__MODEL__CUSTOM/MODEL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__MODEL__CUSTOM/LINKERSCRIPT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__MODEL__CUSTOM/INCLUDE_H"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__MODEL__CUSTOM/INCLUDE_C"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__MODEL__CUSTOM/INCLUDE_S"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MCU_1DATA__S12XS__MODEL__MC9S12XS128"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EVALUATOR7T"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__ATMEGA_1STK50X"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XBOW_1MIB5X0"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX/USELEDS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX/USELCD"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX/TYPE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__USELEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__USELEDS__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__USELEDS__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__USELCD"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__USELCD__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__USELCD__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__ACCELEROMETER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__ADC_1IN"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__BUTTONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__BUZZER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__DAC"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__ENCODER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__IR"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__LCD"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__LEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__PWM_1OUT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__PWM_1MOTOR"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__SENSORS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__TRIMMER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__USB"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__ZIGBEE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__DEMO__OPTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__MULTI">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__MULTI/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__MULTI__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__MULTI__OPTIONS__ETHERNET"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__MULTI__OPTIONS__EIB"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__MULTI__OPTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__STANDARD">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__STANDARD/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__STANDARD__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__STANDARD__OPTIONS__LEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__STANDARD__OPTIONS__LCD"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1FLEX__TYPE__STANDARD__OPTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16/USELEDS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16/USELEDD10"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16/USEBUTTONS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16/USELCD"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16/USEANALOG"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USELEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USELEDS__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USELEDS__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USELEDD10"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USELEDD10__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USELEDD10__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USEBUTTONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USEBUTTONS__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USEBUTTONS__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USELCD"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USELCD__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USELCD__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USEANALOG"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USEANALOG__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1EXPLORER16__USEANALOG__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS/USELEDS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS/USELCD"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS/USEBUTTONS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS/USEAUDIO"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS/USEANALOG"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USELEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USELEDS__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USELEDS__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USELCD"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USELCD__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USELCD__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USEBUTTONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USEBUTTONS__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USEBUTTONS__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USEAUDIO"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USEAUDIO__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USEAUDIO__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USEANALOG"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USEANALOG__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__MICROCHIP_1DSPICDEM11PLUS__USEANALOG__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX/USELEDS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX/USEE2PROM"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX/USEBATTERYMONITOR"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX/USETEMPERATURE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX/USEALL"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX/TYPE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USELEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USELEDS__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USELEDS__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USEE2PROM"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USEE2PROM__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USEE2PROM__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USEBATTERYMONITOR"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USEBATTERYMONITOR__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USEBATTERYMONITOR__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USETEMPERATURE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USETEMPERATURE__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USETEMPERATURE__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USEALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USEALL__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__USEALL__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__TYPE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__TYPE__DEMO">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__TYPE__DEMO/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__TYPE__DEMO__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__TYPE__DEMO__OPTIONS__BUZZER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__TYPE__DEMO__OPTIONS__ACCELEROMETER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__TYPE__DEMO__OPTIONS__LIGHT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__TYPE__DEMO__OPTIONS__RTC"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__EE_1MINIFLEX__TYPE__DEMO__OPTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__NO_1BOARD"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__LEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__TRANSISTORS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__SWITCHES"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__LIGHTSENSOR"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__RS232"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__RS232_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__CAMERA"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__CAMERA_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__RTCLOCK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__RTCLOCK_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__EXTSPI"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__EXTSPI_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__ZIGBEE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__ZIGBEE_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__ETHERNET"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__ETHERNET_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__ALL_1ZIGBEE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__XP2_1CAMERA_1BOARD__OPTIONS__ALL_1ETHERNET"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__LEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__TRANSISTORS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__SWITCHES"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__LIGHTSENSOR"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__RS232"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__RS232_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__CAMERA"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__CAMERA_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__RTCLOCK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__RTCLOCK_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__EXTSPI"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__EXTSPI_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__ZIGBEE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__ZIGBEE_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__ETHERNET"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__ETHERNET_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__ALL_1ZIGBEE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__FPG_1EYE__OPTIONS__ALL_1ETHERNET"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__LATTICE_1XP2_1EV_1BOARD">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__LATTICE_1XP2_1EV_1BOARD/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__LATTICE_1XP2_1EV_1BOARD__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__LATTICE_1XP2_1EV_1BOARD__OPTIONS__LEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__LATTICE_1XP2_1EV_1BOARD__OPTIONS__RS232"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__LATTICE_1XP2_1EV_1BOARD__OPTIONS__RS232_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__LATTICE_1XP2_1EV_1BOARD__OPTIONS__CAMERA"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__LATTICE_1XP2_1EV_1BOARD__OPTIONS__CAMERA_1IRQ_1SUPPORT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__DEMO9S12XSFAME">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__BOARD_1DATA__DEMO9S12XSFAME/OPTIONS"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__DEMO9S12XSFAME__OPTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__DEMO9S12XSFAME__OPTIONS__POTENTIOMETEER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__DEMO9S12XSFAME__OPTIONS__ADC"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__DEMO9S12XSFAME__OPTIONS__BUTTONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__DEMO9S12XSFAME__OPTIONS__LEDS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__DEMO9S12XSFAME__OPTIONS__LIGHT_1SENSOR"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__BOARD_1DATA__DEMO9S12XSFAME__OPTIONS__ALL"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__LIB"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__LIB__ENABLE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__LIB__ENABLE/NAME"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__STARTUPHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__STARTUPHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__STARTUPHOOK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__ERRORHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ERRORHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ERRORHOOK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__SHUTDOWNHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__SHUTDOWNHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__SHUTDOWNHOOK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__PRETASKHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__PRETASKHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__PRETASKHOOK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__POSTTASKHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__POSTTASKHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__POSTTASKHOOK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__STATUS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__STATUS__STANDARD"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__STATUS__EXTENDED"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__USEGETSERVICEID"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USEGETSERVICEID__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USEGETSERVICEID__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__USEPARAMETERACCESS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USEPARAMETERACCESS__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USEPARAMETERACCESS__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__USERESSCHEDULER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USERESSCHEDULER__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USERESSCHEDULER__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__STACKMONITORING"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__STACKMONITORING__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__STACKMONITORING__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__PROTECTIONHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__PROTECTIONHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__PROTECTIONHOOK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__STARTUPSYNC"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__STARTUPSYNC__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__STARTUPSYNC__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__USEREMOTETASK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USEREMOTETASK__ALWAYS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USEREMOTETASK__IFREQUIRED"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__USEREMOTEEVENT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USEREMOTEEVENT__ALWAYS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__USEREMOTEEVENT__IFREQUIRED"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FP">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FP/NESTED_IRQ"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FP__NESTED_1IRQ"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FP__NESTED_1IRQ__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FP__NESTED_1IRQ__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF/TICK_TIME"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF/NESTED_IRQ"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF/REL_DEADLINES_IN_RAM"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF__NESTED_1IRQ"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF__NESTED_1IRQ__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF__NESTED_1IRQ__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF__REL_1DEADLINES_1IN_1RAM"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF__REL_1DEADLINES_1IN_1RAM__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF__REL_1DEADLINES_1IN_1RAM__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH/CONTRACTS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH/USE_SYNC_OBJ"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH/TICK_TIME"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH__CONTRACTS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH__CONTRACTS__CONTRACT">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH__CONTRACTS__CONTRACT/NAME"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH__CONTRACTS__CONTRACT/BUDGET"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH__CONTRACTS__CONTRACT/PERIOD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH__CONTRACTS__CONTRACT/CPU_ID"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH__USE_1SYNC_1OBJ"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH__USE_1SYNC_1OBJ__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH__USE_1SYNC_1OBJ__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__BCC1"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__BCC2"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__ECC1"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__ECC2"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__SC1"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__SC2"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__SC3"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__SC4"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__MEMORY_1PROTECTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MEMORY_1PROTECTION__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__MEMORY_1PROTECTION__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__ORTI_1SECTIONS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ORTI_1SECTIONS__NONE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ORTI_1SECTIONS__ALL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ORTI_1SECTIONS__OS_1SECTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ORTI_1SECTIONS__TASK_1SECTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ORTI_1SECTIONS__RESOURCE_1SECTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ORTI_1SECTIONS__STACK_1SECTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ORTI_1SECTIONS__ALARM_1SECTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__ORTI_1SECTIONS__ISR2_1SECTION"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__NIOS2_1DO_1MAKE_1OBJDUMP"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__NIOS2_1DO_1MAKE_1OBJDUMP__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__NIOS2_1DO_1MAKE_1OBJDUMP__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPMODE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILAPPMODE/name"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILTASK">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILTASK/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILTASK/AUTOSTART"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILTASK/ACTIVATION"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILTASK/EVENT"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILTASK/RESOURCE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILTASK/STACK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILTASK/CPU_ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILTASK/APP_SRC"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILTASK/LINKED"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILTASK/PRIORITY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILTASK/REL_DEADLINE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILTASK/CONTRACT"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILTASK/SCHEDULE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILTASK__AUTOSTART"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILTASK__AUTOSTART__TRUE">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILTASK__AUTOSTART__TRUE/APPMODE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILTASK__AUTOSTART__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILTASK__STACK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILTASK__STACK__SHARED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILTASK__STACK__PRIVATE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILTASK__STACK__PRIVATE/SYS_SIZE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILTASK__SCHEDULE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILTASK__SCHEDULE__NON"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILTASK__SCHEDULE__FULL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILRESOURCE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILRESOURCE/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILRESOURCE/RESOURCEPROPERTY"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILRESOURCE__RESOURCEPROPERTY"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILRESOURCE__RESOURCEPROPERTY__STANDARD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILRESOURCE__RESOURCEPROPERTY__STANDARD/APP_SRC"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILRESOURCE__RESOURCEPROPERTY__LINKED">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILRESOURCE__RESOURCEPROPERTY__LINKED/LINKEDRESOURCE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILRESOURCE__RESOURCEPROPERTY__INTERNAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILEVENT">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILEVENT/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILEVENT/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILISR">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILISR/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILISR/CATEGORY"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILISR/RESOURCE"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILISR/MESSAGE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILISR/LEVEL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILISR/HANDLER"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOUNTER">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOUNTER/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOUNTER/MINCYCLE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOUNTER/MAXALLOWEDVALUE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOUNTER/TICKSPERBASE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILCOUNTER/TYPE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOUNTER/SECONDSPERTICK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOUNTER/CPU_ID"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILCOUNTER__TYPE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOUNTER__TYPE__HARDWARE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOUNTER__TYPE__SOFTWARE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILALARM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILALARM/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILALARM/COUNTER"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILALARM/ACTION"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILALARM/AUTOSTART"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILALARM__ACTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILALARM__ACTION__ACTIVATETASK">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILALARM__ACTION__ACTIVATETASK/TASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILALARM__ACTION__SETEVENT">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILALARM__ACTION__SETEVENT/TASK"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILALARM__ACTION__SETEVENT/EVENT"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILALARM__ACTION__ALARMCALLBACK">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILALARM__ACTION__ALARMCALLBACK/ALARMCALLBACKNAME"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILALARM__AUTOSTART"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILALARM__AUTOSTART__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILALARM__AUTOSTART__TRUE/ALARMTIME"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILALARM__AUTOSTART__TRUE/CYCLETIME"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILALARM__AUTOSTART__TRUE/APPMODE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILALARM__AUTOSTART__FALSE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILALARM__AUTOSTART__FALSE/ALARMTIME"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILALARM__AUTOSTART__FALSE/CYCLETIME"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE/MESSAGEPROPERTY"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE/NOTIFICATION"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE/NOTIFICATIONERROR"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1INTERNAL">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1INTERNAL/CDATATYPE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL/CDATATYPE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL/TRANSFERPROPERTY"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL/FILTER"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL/NETWORKORDERCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL/CPUORDERCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL/INITIALVALUE"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL/NETWORKMESSAGE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__TRANSFERPROPERTY"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__TRANSFERPROPERTY__TRIGGERED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__TRANSFERPROPERTY__PENDING"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__ALWAYS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEVER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWEQUALSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWEQUALSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWEQUALSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWDIFFERSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWDIFFERSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWDIFFERSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISEQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISDIFFERENT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISWITHIN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISWITHIN/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISWITHIN/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISOUTSIDE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISOUTSIDE/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISOUTSIDE/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISGREATER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISLESSOREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISLESS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__NEWISGREATEROREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__ONEEVERYN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__ONEEVERYN/PERIOD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1STATIC_1EXTERNAL__FILTER__ONEEVERYN/OFFSET"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1DYNAMIC_1EXTERNAL">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1DYNAMIC_1EXTERNAL/TRANSFERPROPERTY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1DYNAMIC_1EXTERNAL/NETWORKORDERCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1DYNAMIC_1EXTERNAL/CPUORDERCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1DYNAMIC_1EXTERNAL/INITIALVALUE"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1DYNAMIC_1EXTERNAL/NETWORKMESSAGE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1DYNAMIC_1EXTERNAL__TRANSFERPROPERTY"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1DYNAMIC_1EXTERNAL__TRANSFERPROPERTY__TRIGGERED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1DYNAMIC_1EXTERNAL__TRANSFERPROPERTY__PENDING"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1ZERO_1INTERNAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1ZERO_1EXTERNAL">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1ZERO_1EXTERNAL/NETWORKORDERCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1ZERO_1EXTERNAL/CPUORDERCALLOUT"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__SEND_1ZERO_1EXTERNAL/NETWORKMESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1ZERO_1INTERNAL">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1ZERO_1INTERNAL/SENDINGMESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1ZERO_1EXTERNAL">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1ZERO_1EXTERNAL/NETWORKORDERCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1ZERO_1EXTERNAL/CPUORDERCALLOUT"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1ZERO_1EXTERNAL/NETWORKMESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL/SENDINGMESSAGE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL/FILTER"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL/INITIALVALUE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__ALWAYS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEVER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISEQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISDIFFERENT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISWITHIN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISWITHIN/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISWITHIN/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISOUTSIDE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISOUTSIDE/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISOUTSIDE/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISGREATER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISLESSOREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISLESS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__NEWISGREATEROREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__ONEEVERYN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__ONEEVERYN/PERIOD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1INTERNAL__FILTER__ONEEVERYN/OFFSET"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL/SENDINGMESSAGE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL/FILTER"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL/INITIALVALUE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL/QUEUESIZE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__ALWAYS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEVER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISEQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISDIFFERENT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISWITHIN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISWITHIN/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISWITHIN/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISOUTSIDE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISOUTSIDE/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISOUTSIDE/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISGREATER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISLESSOREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISLESS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__NEWISGREATEROREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__ONEEVERYN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__ONEEVERYN/PERIOD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1INTERNAL__FILTER__ONEEVERYN/OFFSET"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL/CDATATYPE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL/FILTER"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL/LINK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL/INITIALVALUE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__ALWAYS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEVER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISEQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISDIFFERENT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISWITHIN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISWITHIN/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISWITHIN/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISOUTSIDE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISOUTSIDE/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISOUTSIDE/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISGREATER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISLESSOREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISLESS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__NEWISGREATEROREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__ONEEVERYN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__ONEEVERYN/PERIOD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__FILTER__ONEEVERYN/OFFSET"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__LINK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__LINK__TRUE">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__LINK__TRUE/RECEIVEMESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__LINK__FALSE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__LINK__FALSE/NETWORKORDERCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__LINK__FALSE/CPUORDERCALLOUT"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1UNQUEUED_1EXTERNAL__LINK__FALSE/NETWORKMESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL/CDATATYPE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL/QUEUESIZE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL/FILTER"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL/LINK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL/INITIALVALUE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__ALWAYS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEVER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSX/MASK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSX/X"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISEQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISDIFFERENT"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWEQUALSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__MASKEDNEWDIFFERSMASKEDOLD/MASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISWITHIN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISWITHIN/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISWITHIN/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISOUTSIDE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISOUTSIDE/MIN"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISOUTSIDE/MAX"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISGREATER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISLESSOREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISLESS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__NEWISGREATEROREQUAL"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__ONEEVERYN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__ONEEVERYN/PERIOD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__FILTER__ONEEVERYN/OFFSET"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__LINK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__LINK__TRUE">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__LINK__TRUE/RECEIVEMESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__LINK__FALSE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__LINK__FALSE/NETWORKORDERCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__LINK__FALSE/CPUORDERCALLOUT"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1QUEUED_1EXTERNAL__LINK__FALSE/NETWORKMESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL/LINK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL/INITIALVALUE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL__LINK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL__LINK__TRUE">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL__LINK__TRUE/RECEIVEMESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL__LINK__FALSE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL__LINK__FALSE/NETWORKORDERCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL__LINK__FALSE/CPUORDERCALLOUT"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1DYNAMIC_1EXTERNAL__LINK__FALSE/NETWORKMESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1ZERO_1SENDERS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1ZERO_1SENDERS/CDATATYPE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__MESSAGEPROPERTY__RECEIVE_1ZERO_1SENDERS/INITIALVALUE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__NONE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__ACTIVATETASK">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__ACTIVATETASK/TASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__SETEVENT">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__SETEVENT/TASK"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__SETEVENT/EVENT"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__COMCALLBACK">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__COMCALLBACK/CALLBACKROUTINENAME"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__COMCALLBACK/MESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__FLAG">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__FLAG/FLAGNAME"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__INMCALLBACK">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__INMCALLBACK/CALLBACKROUTINENAME"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATION__INMCALLBACK/MONITOREDIPDU"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__NONE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__ACTIVATETASK">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__ACTIVATETASK/TASK"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__SETEVENT">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__SETEVENT/TASK"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__SETEVENT/EVENT"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__COMCALLBACK">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__COMCALLBACK/CALLBACKROUTINENAME"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__COMCALLBACK/MESSAGE"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__FLAG">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__FLAG/FLAGNAME"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__INMCALLBACK">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__INMCALLBACK/CALLBACKROUTINENAME"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILMESSAGE__NOTIFICATIONERROR__INMCALLBACK/MONITOREDIPDU"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILNETWORKMESSAGE/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILNETWORKMESSAGE/MESSAGEPROPERTY"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC/SIZEINBITS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC/BITORDERING"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC/BITPOSITION"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC/DATAINTERPRETATION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC/INITIALVALUE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC/DIRECTION"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__BITORDERING"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__BITORDERING__LITTLEENDIAN"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__BITORDERING__BIGENDIAN"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DATAINTERPRETATION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DATAINTERPRETATION__UNSIGNEDINTEGER"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DATAINTERPRETATION__BYTEARRAY"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DIRECTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DIRECTION__SENT">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DIRECTION__SENT/TRANSFERPROPERTY"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DIRECTION__SENT__TRANSFERPROPERTY"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DIRECTION__SENT__TRANSFERPROPERTY__TRIGGERED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DIRECTION__SENT__TRANSFERPROPERTY__PENDING"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__STATIC__DIRECTION__RECEIVE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC/MAXIMUMSIZEINBITS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC/BITORDERING"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC/BITPOSITION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC/INITIALVALUE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC/DIRECTION"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__BITORDERING"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__BITORDERING__LITTLEENDIAN"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__BITORDERING__BIGENDIAN"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__DIRECTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__DIRECTION__SENT">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__DIRECTION__SENT/TRANSFERPROPERTY"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__DIRECTION__SENT__TRANSFERPROPERTY"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__DIRECTION__SENT__TRANSFERPROPERTY__TRIGGERED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__DIRECTION__SENT__TRANSFERPROPERTY__PENDING"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__DYNAMIC__DIRECTION__RECEIVE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNETWORKMESSAGE__MESSAGEPROPERTY__ZERO"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOM/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOM/COMTIMEBASE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILCOM/COMERRORHOOK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILCOM/COMUSEGETSERVICEID"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILCOM/COMUSEPARAMETERACCESS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILCOM/COMSTARTCOMEXTENSION"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOM/COMAPPMODE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILCOM/COMSTATUS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILCOM/USE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILCOM__COMERRORHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMERRORHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMERRORHOOK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILCOM__COMUSEGETSERVICEID"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMUSEGETSERVICEID__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMUSEGETSERVICEID__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILCOM__COMUSEPARAMETERACCESS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMUSEPARAMETERACCESS__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMUSEPARAMETERACCESS__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILCOM__COMSTARTCOMEXTENSION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMSTARTCOMEXTENSION__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMSTARTCOMEXTENSION__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILCOM__COMSTATUS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMSTATUS__COMSTANDARD"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILCOM__COMSTATUS__COMEXTENDED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILIPDU">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU/SIZEINBITS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILIPDU/IPDUPROPERTY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU/IPDUCALLOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU/LAYERUSED"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT/TRANSMISSIONMODE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT/TIMEOUT"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE__DIRECT">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE__DIRECT/MINIMUMDELAYTIME"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE__PERIODIC">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE__PERIODIC/TIMEPERIOD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE__PERIODIC/TIMEOFFSET"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE__MIXED">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE__MIXED/TIMEPERIOD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE__MIXED/TIMEOFFSET"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__SENT__TRANSMISSIONMODE__MIXED/MINIMUMDELAYTIME"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__RECEIVED">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__RECEIVED/TIMEOUT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILIPDU__IPDUPROPERTY__RECEIVED/FIRSTTIMEOUT"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILNM">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILNM/name"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILAPPLICATION/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILAPPLICATION/CORE"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION/TRUSTED"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION/ALARM"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION/COUNTER"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION/ISR"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION/RESOURCE"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION/TASK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION/STARTUPHOOK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION/ERRORHOOK"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION/SHUTDOWNHOOK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILAPPLICATION/MEMORY_BASE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILAPPLICATION/MEMORY_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILAPPLICATION/SHARED_STACK_SIZE"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILAPPLICATION/IRQ_STACK_SIZE"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__TRUSTED"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__TRUSTED__TRUE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILAPPLICATION__TRUSTED__TRUE/TRUSTED_FUNCTION"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION__TRUE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILAPPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION__TRUE/NAME"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__TRUSTED__TRUE__TRUSTED_1FUNCTION__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__TRUSTED__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__STARTUPHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__STARTUPHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__STARTUPHOOK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__ERRORHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__ERRORHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__ERRORHOOK__FALSE"/>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__SHUTDOWNHOOK"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__SHUTDOWNHOOK__TRUE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILAPPLICATION__SHUTDOWNHOOK__FALSE"/>
   </genPackages>
 </genmodel:GenModel>

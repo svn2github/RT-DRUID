@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import com.eu.evidence.rtdruid.Rtd_corePlugin;
 
 /**
- * @author ni
+ * @author Nicola Serreli
  * 
  * This class is usefull to create a new filled tree and to compare two distinct
  * trees
@@ -184,7 +184,7 @@ class VtCompare {
 	 */
 	private void checkTrees(EObject first, EObject second) throws CheckFailed {
 	
-		//System.err.println("-- " + first + " #### " + second);
+		//REMOVE.err.println("-- " + first + " #### " + second);
 	
 		//assertTrue(first.getClass().getName().equals(second.getClass().getName()));
 		assertTrue(first.getClass() == second.getClass(), first, second);
@@ -214,11 +214,16 @@ class VtCompare {
 						assertTrue(o1.getClass() == o2.getClass(), first, second);
 						//assertTrue(o1.getClass().getName().equals(o2.getClass().getName()));
 	
-						if (((IVariable) o1).get() == null) {
-							assertTrue(((IVariable) o2).get() == null, first, second);
+						if (o1 instanceof IVariable) {
+							
+							if (((IVariable) o1).get() == null) {
+								assertTrue(((IVariable) o2).get() == null, first, second);
+							} else {
+								assertTrue(((IVariable) o1).toString().equals(
+										((IVariable) o2).toString()), first, second);
+							}
 						} else {
-							assertTrue(((IVariable) o1).toString().equals(
-									((IVariable) o2).toString()), first, second);
+							assertTrue(o1.equals(o2), first, second);
 						}
 	
 					}
@@ -234,26 +239,20 @@ class VtCompare {
 					assertTrue(o2 != null, first, second);
 					assertTrue(o1.getClass() == o2.getClass(), first, second);
 	
-					if (!(o1 instanceof IVariable)) {
-						System.err.println(o1 + " - " + o1.getClass() + " - "
-								+ at1);
-					}
-					if (((IVariable) o1).get() == null) {
-						assertTrue(((IVariable) o2).get() == null, first, second);
-					} else {
-//							int at1_id = at1.getEAttributeType().getClassifierID();
-//						if (!(at1_id == DataPackage.FAST_TASK_TO_PROC_MAP_VAR )) {
-
-							if (! ((IVariable) o1).toString().equals(
-									((IVariable) o2).toString()) ) {
-								System.err.println(first.getClass().getName() + " " + at1.getName());
-							}
-							
-							assertTrue(((IVariable) o1).toString().equals(
-									((IVariable) o2).toString()), first, second);
-//						}
-					}
+					if (o1 instanceof IVariable) {
+						if (((IVariable) o1).get() == null) {
+							assertTrue(((IVariable) o2).get() == null, first, second);
+						} else {
+	//							int at1_id = at1.getEAttributeType().getClassifierID();
+	//						if (!(at1_id == DataPackage.FAST_TASK_TO_PROC_MAP_VAR )) {
 	
+								assertTrue("fail at " + at1.getName(), ((IVariable) o1).toString().equals(
+										((IVariable) o2).toString()), first, second);
+	//						}
+						}
+					} else {
+						assertTrue(o1.equals(o2), first, second);
+					}
 				}
 			}
 		}
@@ -275,17 +274,18 @@ class VtCompare {
 				EList<EObject> el2 = (EList<EObject>) second.eGet(ref2);
 	
 				if (el1.size() != el2.size()) {
-					System.err.println("First node children:");
+					StringBuffer buff = new StringBuffer();
+					buff.append("First node children:\n");
 					for (int l = 0; l < el1.size(); l++) {
-						System.err.println("\t" + el1.get(l));
+						buff.append("\t" + el1.get(l) + "\n");
 					}
 	
-					System.err.println("Second node children:");
+					buff.append("Second node children:\n");
 					for (int l = 0; l < el2.size(); l++) {
-						System.err.println("\t" + el2.get(l));
+						buff.append("\t" + el2.get(l) + "\n");
 					}
 	
-					assertTrue(false, first, second);
+					assertTrue(buff.toString(), false, first, second);
 				}
 	
 				ArrayList<EObject> sort1 = sorted(el1);

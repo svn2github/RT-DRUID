@@ -13,11 +13,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import com.eu.evidence.rtdruid.internal.vartree.VarTree;
-import com.eu.evidence.rtdruid.internal.vartree.data.impl.ObjectWithIDImpl;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
-import com.eu.evidence.rtdruid.vartree.data.Type;
-import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 public abstract class VarTreeUtil {
 
@@ -45,6 +40,16 @@ public abstract class VarTreeUtil {
 		}
 
 		return EcoreUtil.copy(original);
+	}
+	
+	/** Makes a new Instance of this object */
+	public static EObject newInstance(EObject obj) {
+		return  newInstance(obj.eClass());
+	}
+	
+	/** Makes a new Instance of this object */
+	public static EObject newInstance(EClass objClass) {
+		return  objClass.getEPackage().getEFactoryInstance().create(objClass);
 	}
 	
 	/**
@@ -99,13 +104,6 @@ public abstract class VarTreeUtil {
 			throw new IllegalArgumentException("Try to merge two not compatible objects: one " + destination.getClass()
 					+ " and one " + addition.getClass() + "\n\tpath = " + path);
 		}
-		// if (this.eResource() == null) {
-		// throw new
-		// RuntimeException("Expected a not null resource. Perhaps it's a Bug!!!");
-		// }
-if (destination instanceof Type) {
-	System.out.println(destination);
-}
 		{
 			String curID = VarTreeIdHandler.getId(destination);
 			String sourceID = VarTreeIdHandler.getId(addition);
@@ -125,65 +123,44 @@ if (destination instanceof Type) {
 				// do nothing
 			} else if (attr.isMany()) {
 				@SuppressWarnings("unchecked")
-				EList<IVariable> children = (EList<IVariable>) destination.eGet(attr);
-				@SuppressWarnings("unchecked")
-				EList<IVariable> newChildren = (EList<IVariable>) addition.eGet(attr);
+				EList<Object> children = (EList<Object>) destination.eGet(attr);
+				EList<?> newChildren = (EList<?>) addition.eGet(attr);
 
-				LinkedList<IVariable> tmpChildren = new LinkedList<IVariable>(children);
+				LinkedList<?> tmpChildren = new LinkedList<Object>(children);
 				for (int j = 0; j < newChildren.size(); j++) {
 
-					IVariable var = (IVariable) newChildren.get(j);
+					Object var = newChildren.get(j);
 					if (var != null) {
 						if (!searchVar(tmpChildren, var)) {
-							children.add((IVariable) var.clone());
+							if (var instanceof IVariable) {
+								children.add(((IVariable) var).clone()); 
+							} else {
+								children.add(EcoreUtil.createFromString(attr.getEAttributeType(), var.toString()));
+							}
 						}
 					}
 				}
 
 			} else {
-				IVariable var = (IVariable) destination.eGet(attr);
-				IVariable newVar = (IVariable) addition.eGet(attr);
-				if (var != null && newVar != null) {
-					Object v1 = var.get();
-					Object v2 = newVar.get();
-
-					boolean eq = (v1 == null ? v2 == null :
-					// v1.toString().equals(v2.toString())); // not work with
-					// TimeVar (var=1ms, newVar=1us)
-							var.toString().equals(newVar.toString()));
-					// if (var.getClass() != newVar.getClass() || !eq) { // if
-					// current and source are the same type, also two vars are
-					// the same type
-					if (!eq) {
-						if (overwrite) {
+				Object var = destination.eGet(attr);
+				Object newVar = addition.eGet(attr);
+				if (!compare(var, newVar)) {
+					
+					if (overwrite) {
+						destination.eSet(attr, newVar);
+					} else {
+					
+						// check if it was the default value
+						Object def = attr.getDefaultValue();
+						if (compare(var, def)) {
 							destination.eSet(attr, newVar);
-						} else {
-
-							// check if it was the default value
-							addition.eUnset(attr);
-							IVariable defaultValue = (IVariable) destination.eGet(attr);
-							Object def = defaultValue.get();
-							boolean eq2 = (v1 == null ? def == null :
-							// v1.toString().equals(v2.toString())); // not work
-							// with TimeVar (var=1ms, newVar=1us)
-									var.toString().equals(defaultValue.toString()));
-
-							if (eq2) {
-								destination.eSet(attr, newVar);
-							} else {
-								throw new IllegalArgumentException(
-										"Try to change the vaule of an already set attribute (mono value). "
-												+ "path = " + path + DataPath.SEPARATOR + attr.getName());
-							}
+						} else if (!compare(newVar, def)) {
+							throw new IllegalArgumentException(
+									"Try to change the vaule of an already set attribute (mono value). "
+											+ "path = " + path + DataPath.SEPARATOR + attr.getName());
 						}
 					}
-
-				} else {
-					if (newVar != null) {
-						destination.eSet(attr, newVar.clone());
-					}
 				}
-
 			}
 		}
 
@@ -199,35 +176,35 @@ if (destination instanceof Type) {
 
 				for (int j = 0; j < newChildren.size(); j++) {
 
-					ObjectWithIDImpl newChild = (ObjectWithIDImpl) newChildren.get(j);
+					EObject newChild =  newChildren.get(j);
 					if (newChild != null) {
 						int pos = children.indexOf(newChild);
 						if (pos < 0) {
-							ObjectWithID child = (ObjectWithID) DataFactory.eINSTANCE.create(newChild.eClass());
-							child.setObjectID(newChild.getObjectID());
+							EObject child = newInstance(newChild.eClass());
+							VarTreeIdHandler.setId(child, VarTreeIdHandler.getId(newChild));
 
 							children.add(child);
 
 							// check the new child.
 							// Note: set overwrite to true, because the new
 							// child may have default values
-							merge((ObjectWithIDImpl) child, newChild, path, true);
+							merge(child, newChild, path, true);
 
 						} else {
 							// check the old child
-							merge((ObjectWithIDImpl) children.get(pos), newChild, path, overwrite);
+							merge(children.get(pos), newChild, path, overwrite);
 						}
 					}
 				}
 
 			} else {
 
-				ObjectWithIDImpl child = (ObjectWithIDImpl) destination.eGet(ref);
-				ObjectWithID newChild = (ObjectWithID) addition.eGet(ref);
+				EObject child = (EObject) destination.eGet(ref);
+				EObject newChild = (EObject) addition.eGet(ref);
 				if (newChild != null) {
 					if (child == null) {
-						child = (ObjectWithIDImpl) DataFactory.eINSTANCE.create(newChild.eClass());
-						child.setObjectID(newChild.getObjectID());
+						child = newInstance(newChild.eClass());
+						VarTreeIdHandler.setId(child, VarTreeIdHandler.getId(newChild));
 
 						destination.eSet(ref, child);
 						// Note: set overwrite to true, because the new
@@ -241,41 +218,41 @@ if (destination instanceof Type) {
 		}
 	}
 
-	private static boolean searchVar(LinkedList<IVariable> vars, IVariable value) {
+	private static boolean searchVar(LinkedList<?> vars, Object value) {
 		boolean risp = false;
 
-		Iterator<IVariable> iter = vars.iterator();
+		Iterator<?> iter = vars.iterator();
 		while (!risp && iter.hasNext()) {
-			IVariable v = (IVariable) iter.next();
-			if (v == null && value == null) {
+			Object v = iter.next();
+			if (compare(v,value)) {
 				iter.remove();
-				risp = true;
-
-			} else if (value != null && v != null) {
-				Object v1 = v.get();
-				Object v2 = value.get();
-				boolean eq = (v1 == null ? v2 == null : v1.toString().equals(v2.toString()));
-				if (eq) {
-					iter.remove();
-					risp = true;
-				}
 			}
 		}
 
 		return risp;
 	}
-
-	protected StringVar varToUpperCase(StringVar value) {
-		StringVar answer = null;
-		if (value != null && value.get() != null) {
-			answer = new StringVar(value.toString().toUpperCase());
+	
+	private static boolean compare(Object o1, Object o2) {
+		boolean answer = false;
+		if (o1 == null && o2 == null) {
+			answer = true;
+		} else if (o1 != null && o2 != null) {
+			
+			if (o1.getClass() == o2.getClass()) {
+				final Object v1;
+				final Object v2;
+				if (o1 instanceof IVariable) {
+					v1 = ((IVariable) o1).get();
+					v2 = ((IVariable) o2).get();
+				} else {
+					v1 = o1;
+					v2 = o2;
+				}
+				
+				answer = (v1 == null ? v2 == null : 
+						( v2 != null && v1.toString().equals(v2.toString())));
+			}
 		}
 		return answer;
 	}
-
-	/** Makes a new Instance of this object */
-	protected ObjectWithID newInstance(EClass objClass) {
-		return (ObjectWithID) DataFactory.eINSTANCE.create(objClass);
-	}
-
 }

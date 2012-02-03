@@ -15,15 +15,15 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 
 public class VarTreeIdHandler {
-	
+
 	protected static DataPackage dpkg = DataPackage.eINSTANCE;
 
 	private static HashMap<EClass, List<EAttribute>> idMap = new HashMap<EClass, List<EAttribute>>();
@@ -245,9 +245,8 @@ public class VarTreeIdHandler {
 
 		for (int i = 0; i < s.length; i++) {
 			EAttribute attr = idFeatures.get(i);
-			obj.eSet(attr, DataFactory.eINSTANCE.createFromString(attr.getEAttributeType(), s[i]));
+			obj.eSet(attr, EcoreUtil
+					.createFromString(attr.getEAttributeType(), s[i]));
 		}
 	}
-
-
 }

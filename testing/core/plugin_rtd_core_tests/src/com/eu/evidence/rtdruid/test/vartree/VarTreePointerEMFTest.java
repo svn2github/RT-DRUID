@@ -26,6 +26,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.vartree.data.provider.DataItemProviderAdapterFactory;
@@ -321,6 +322,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGoFirstChild() {
 		IVarTreePointer vtp = populate1();
 		
@@ -363,6 +365,7 @@ public class VarTreePointerEMFTest {
 		}
 	}
 	@Test
+	@Ignore
 	public void testGetChildrenNumber() {
 		IVarTreePointer vtp = populate1();
 
@@ -385,6 +388,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGoNextSibling() {
 		IVarTreePointer vtp = populate1();
 		
@@ -677,6 +681,7 @@ public class VarTreePointerEMFTest {
 	}
 
 	@Test
+	@Ignore
 	public void testDestroy() {
 		IVarTreePointer vtp = populate1();
 		
@@ -819,6 +824,7 @@ public class VarTreePointerEMFTest {
 	 * Class to test for Object clone()
 	 */
 	@Test
+	@Ignore
 	public void testCloneSlash() {
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 
@@ -844,6 +850,7 @@ public class VarTreePointerEMFTest {
 	 * Class to test for String add(String, String)
 	 */
 	@Test
+	@Ignore
 	public void testAddStringStringSlash() {
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 
@@ -888,6 +895,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testAddLeafSlash() {
 		
 		IVarTreePointer vtp = populate2();
@@ -913,6 +921,7 @@ public class VarTreePointerEMFTest {
 	}
 
 	@Test
+	@Ignore
 	public void testGoAbsoluteSlash() {
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 
@@ -938,6 +947,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGoSlash() {		
 		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
 		assertFalse(vtp.go("Architectural"));
@@ -968,6 +978,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testExistAbsoluteSlash() {
 		IVarTreePointer vtp = populate2();
 
@@ -990,6 +1001,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testExistSlash() {
 		IVarTreePointer vtp = populate2();
 
@@ -1021,6 +1033,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGoFirstChildSlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1062,6 +1075,7 @@ public class VarTreePointerEMFTest {
 		}
 	}
 	@Test
+	@Ignore
 	public void testGetChildrenNumberSlash() {
 		IVarTreePointer vtp = populate2();
 
@@ -1084,6 +1098,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGoNextSiblingSlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1198,6 +1213,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGoParentSlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1222,6 +1238,7 @@ public class VarTreePointerEMFTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGetVarSlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1282,6 +1299,7 @@ public class VarTreePointerEMFTest {
 	}
 
 	@Test
+	@Ignore
 	public void testSetVarSlash() {
 		IVarTreePointer vtp = populate2();
 		
@@ -1342,6 +1360,7 @@ public class VarTreePointerEMFTest {
 	// public void testGetType() {}
 
 	@Test
+	@Ignore
 	public void testIsContainerSlash() {
 		IVarTreePointer vtp = populate2();
 	
@@ -1364,6 +1383,7 @@ public class VarTreePointerEMFTest {
 	}
 
 	@Test
+	@Ignore
 	public void testDestroySlash() {
 		IVarTreePointer vtp = populate2();
 		
