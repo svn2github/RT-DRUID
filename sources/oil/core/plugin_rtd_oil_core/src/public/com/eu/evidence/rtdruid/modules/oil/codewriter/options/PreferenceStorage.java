@@ -199,6 +199,8 @@ public class PreferenceStorage {
 						Properties tmp = new Properties();
 						try {
 							tmp.load(new FileInputStream(file));
+							values.clear();
+							values.putAll(tmp);
 							currentFile = file;
 							loaded = true;
 							dbg += " ... done ";

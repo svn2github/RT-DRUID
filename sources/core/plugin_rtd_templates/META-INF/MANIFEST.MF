@@ -9,5 +9,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.junit;resolution:=optional
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: com.eu.evidence.rtdruid.internal.modules.project.templates
+Export-Package: com.eu.evidence.rtdruid.internal.modules.project.templates,
+ com.eu.evidence.templates.interfaces
 Bundle-Vendor: Evidence S.r.l.

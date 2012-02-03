@@ -42,6 +42,11 @@
             library="rtdruid_oil_ant.jar"
             name="rtdruid.Oil.Examples"
             class="com.eu.evidence.rtdruid.modules.oil.ant.OilExamplesWriter"/>
+      <antTask
+            class="com.eu.evidence.rtdruid.modules.oil.ant.AddTemplatePath"
+            library="rtdruid_oil_ant.jar"
+            name="rtdruid.templates.path.add">
+      </antTask>
    </extension>
    <!-- Extra Classpath -->
    <extension
@@ -100,6 +105,15 @@
           class="com.eu.evidence.rtdruid.modules.oil.transform.OilIO"
           type="oil">
     </exporter>
+ </extension>
+ <extension
+       point="com.eu.evidence.templates.core.template">
+    <templatePathProvider
+          provider="com.eu.evidence.rtdruid.internal.modules.oil.templates.ConfigurationTemplateProvider">
+    </templatePathProvider>
+    <templatePathProvider
+          provider="com.eu.evidence.rtdruid.internal.modules.oil.templates.DynamicTemplateProvider">
+    </templatePathProvider>
  </extension> 
 
 </plugin>

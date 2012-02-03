@@ -44,17 +44,6 @@ public class SearchTemplates {
 	/** The default name of a "Evidence Template configuration file" */
 	public final static String DEFAULT_CONFIG_NAME = "template.xml";
 
-	/** The default path where look for "Evidence Template configuration file"s */
-	public final static String DEFAULT_PATH;
-
-	
-	static {
-		// compute the deafult Path
-		final String evidencePath = TemplatesCommonPaths.getEVIDENCE_BASE();
-
-		DEFAULT_PATH = evidencePath + File.separatorChar + "Examples";
-		
-	}
 	/**
 	 * This metod searches and parses all configFiles inside every subdirectory
 	 * of specified root directory. The name of configuration files is the one
@@ -70,13 +59,10 @@ public class SearchTemplates {
 	 */
 	public static ExampleTemplate[] getConfigTemplates() {
 		
-		ExtTemplItem[] exp_paths = ExpTemplateCollector.getTemplates();
+		ITemplatesFolder[] exp_paths = ExpTemplateCollector.getTemplates();
 		String[] paths = new String[exp_paths.length];
 		for (int i = 0; i<exp_paths.length; i++) {
-			paths[i] = exp_paths[i].bundlePath + File.separatorChar + exp_paths[i].root; 
-		}
-		if (paths.length == 0) {
-			paths = new String[] {DEFAULT_PATH};
+			paths[i] = exp_paths[i].getPath(); 
 		}
 		return getConfigTemplates(paths, DEFAULT_CONFIG_NAME);
 	}

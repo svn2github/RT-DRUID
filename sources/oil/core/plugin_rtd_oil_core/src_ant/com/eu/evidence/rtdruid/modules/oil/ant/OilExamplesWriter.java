@@ -6,12 +6,10 @@
 package com.eu.evidence.rtdruid.modules.oil.ant;
 
 import java.io.File;
-import java.util.HashMap;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
-import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.Logger;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.OilWorkerException;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerExampleWriter;
@@ -49,7 +47,7 @@ public class OilExamplesWriter extends Task {
 	protected String outputDirectory = null;
 	
 	/** One or more options for Code Generator */
-	protected HashMap options = new HashMap();
+//	protected HashMap options = new HashMap();
 
 	/** True if is required to run the configurator on each template. defualt= false */
 	protected boolean runConf = false;
@@ -114,7 +112,7 @@ public class OilExamplesWriter extends Task {
 				wOilConf.execute();
 			}
 		} catch (OilWorkerException e) {
-			RtdruidLog.showDebug(e);
+//			RtdruidLog.showDebug(e);
 			throw new BuildException(e.getMessage());
 		}
 		

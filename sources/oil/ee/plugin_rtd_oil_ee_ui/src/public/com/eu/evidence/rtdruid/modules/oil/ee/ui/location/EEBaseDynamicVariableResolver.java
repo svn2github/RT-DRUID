@@ -1,8 +1,5 @@
 package com.eu.evidence.rtdruid.modules.oil.ee.ui.location;
 
-import java.io.File;
-import java.net.URI;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
