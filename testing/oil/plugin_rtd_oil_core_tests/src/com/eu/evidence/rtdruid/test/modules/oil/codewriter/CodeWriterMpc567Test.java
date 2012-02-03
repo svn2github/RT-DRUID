@@ -833,7 +833,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"		KERNEL_TYPE = SC4;\n" +
 				"\n" +
 				"		EE_OPT = \"DEBUG\";\n" +
-				"//		ORTI_SECTIONS = ALL;\n" +
+				"		ORTI_SECTIONS = ALL;\n" +
 				"	};\n" +
 				"\n" +
 				"	TASK MainTask {\n" +
