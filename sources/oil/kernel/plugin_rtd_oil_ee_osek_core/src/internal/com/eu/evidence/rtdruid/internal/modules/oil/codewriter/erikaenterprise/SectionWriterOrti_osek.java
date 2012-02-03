@@ -162,6 +162,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			StringBuffer all_priorities = new StringBuffer("            \"Not Running (0)\" = 0");
 			StringBuffer all_appmodes_id = new StringBuffer();
 			StringBuffer all_stack_id = new StringBuffer();
+			StringBuffer all_isr2 = new StringBuffer();
 			
 			{ // priorities and task ID
 				BitSet priorities = new BitSet();
@@ -224,6 +225,22 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					all_stack_id.append("            \"Stack"+i+"\" : Stack"+i+" = "+i+",\n");
 				}
 			}
+			
+			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_ISR2) != 0) {
+				all_isr2.append("        ENUM \"void *\" [\n" +
+						"            \"NO_ISR2\" = 0");
+				
+				List<ISimpleGenRes> isrList = ool.getList(IOilObjectList.ISR);
+				for (ISimpleGenRes isr: isrList) {
+					if (isr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) && "2".equals(isr.getString(ISimpleGenResKeywords.ISR_CATEGORY))) {
+						all_isr2.append(",\n            \""+isr.getName()+"\" = \""+isr.getName()+"\"");
+					}
+				}
+				
+				all_isr2.append("\n        ] RUNNINGISR2, \"Running ISR2\";\n\n");
+			}
+			
+
 			
 			eeortiBuffer.append(
 					commentWriter.writerBanner("ORTI: Declaration Section ( CPU " + rtosId + " )")+
@@ -300,6 +317,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				all_appmodes_id + 
 				"        ] CURRENTAPPMODE, \"Current application mode\";\n" + 
 				"\n" + 
+				all_isr2 +
 				"        /* EE specific data structures */\n" + 
 				"        CTYPE \"unsigned int\" vs_EE_SYSCEILING, \"EE system ceiling\";\n" + 
 				"    }, \"OS\";\n\n" + 
@@ -379,7 +397,10 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					"    RUNNINGTASKPRIORITY = \"(EE_stkfirst == -1) ? 0 : " +
 						((EE_ORTI_current & OrtiConstants.EE_ORTI_TASK) != 0 && ool.getList(IOilObjectList.TASK).size()>0 ?
 								"EE_ORTI_th_priority[EE_stkfirst]" : "0") + "\";\n" + 
-//					"    RUNNINGISR2 = \"EE_ORTI_runningisr2\";\n" + 
+
+					((EE_ORTI_current & OrtiConstants.EE_ORTI_ISR2) != 0 ?
+								"    RUNNINGISR2 = \"EE_ORTI_ISR2_magic\";\n" : "") +
+
 					"    SERVICETRACE = \"EE_ORTI_servicetrace\";\n" + 
 					"    LASTERROR = \"EE_ORTI_lasterror\";\n" + 
 					"    CURRENTAPPMODE = \"EE_ApplicationMode\";\n" + 
@@ -606,6 +627,9 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 						} else if ("TASK_SECTION".equals(value.get(i))) {
 							EE_ORTI_current |= OrtiConstants.EE_ORTI_TASK;
 							
+						} else if ("ISR2_SECTION".equals(value.get(i))) {
+							EE_ORTI_current |= OrtiConstants.EE_ORTI_ISR2;
+							
 						} else if ("RESOURCE_SECTION".equals(value.get(i))) {
 							EE_ORTI_current |= OrtiConstants.EE_ORTI_RESOURCE;
 							
@@ -678,6 +702,9 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				}
 				if ((EE_ORTI_current & OrtiConstants.EE_ORTI_ALARM) != 0) {
 					array.add("__OO_ORTI_ALARMTIME__");
+				}
+				if ((EE_ORTI_current & OrtiConstants.EE_ORTI_ISR2) != 0) {
+					array.add("__OO_ORTI_ISR2__");
 				}
 
 				

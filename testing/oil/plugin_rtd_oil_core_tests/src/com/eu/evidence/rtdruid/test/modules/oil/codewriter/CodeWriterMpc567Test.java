@@ -990,4 +990,76 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"};";
 		commonWriterTest(text, 1);
 	}
+
+	public void testMpc567_isr2_orti() {
+	    final String text =
+				"CPU test_application {\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"		EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n" +
+				"//		EE_OPT = \"__CODEWARRIOR__\";\n" +
+				"\n" +
+				"		CFLAGS = \"\";\n" +
+				"		ASFLAGS = \"\";\n" +
+				"		LDFLAGS = \"\";\n" +
+				"\n" +
+				"		CPU_DATA = PPCE200ZX {\n" +
+				"			MODEL = E200Z7;\n" +
+				"			APP_SRC = \"main.c\";\n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"			VLE = TRUE;\n" +
+				"			SYS_STACK_SIZE = 2048;\n" +
+				"		};\n" +
+				"\n" +
+				"		MCU_DATA = PPCE200ZX {\n" +
+				"			MODEL = MPC5674F;\n" +
+				"		};\n" +
+				"		\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"		\n" +
+				"		ORTI_SECTIONS = ALL;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK Task0 {\n" +
+				"		PRIORITY = 1;   /* Lowest priority */\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};	\n" +
+				"	\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 2;   /* Low priority */\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};	\n" +
+				"	\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 10;   /* High priority */\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"\n" +
+				"	ISR DecrIsr {\n" +
+				"		CATEGORY = 2;\n" +
+				"	};\n" +
+				"\n" +
+				"	ISR FixedIntvIsr {\n" +
+				"		CATEGORY = 2;\n" +
+				"	};\n" +
+				"\n" +
+				" 	OS EE { KERNEL_TYPE = BCC1; }; \n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
 }

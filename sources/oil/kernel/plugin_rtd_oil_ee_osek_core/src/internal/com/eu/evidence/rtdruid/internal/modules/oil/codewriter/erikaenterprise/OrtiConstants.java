@@ -12,6 +12,7 @@ class OrtiConstants {
 	public final static int EE_ORTI_RESOURCE = 1<<3;
 	public final static int EE_ORTI_STACK = 1<<4;
 	public final static int EE_ORTI_ALARM = 1<<5;
+	public final static int EE_ORTI_ISR2 = 1<<6;
 	public final static int EE_ORTI_ALL = 0xFF;
 
 	
