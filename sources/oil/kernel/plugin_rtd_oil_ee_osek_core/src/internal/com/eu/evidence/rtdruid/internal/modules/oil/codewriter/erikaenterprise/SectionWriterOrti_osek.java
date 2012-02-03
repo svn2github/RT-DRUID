@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.eu.evidence.rtdruid.desk.Messages;
-import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
@@ -26,6 +25,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
@@ -40,17 +40,46 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
 public class SectionWriterOrti_osek extends SectionWriter implements
 		IEEWriterKeywords, IExtractKeywordsExtentions, IExtractObjectsExtentions {
 	
+	private enum SectionTypes {
+		NONE("NONE", 0), 
+		ALL("ALL", OrtiConstants.EE_ORTI_ALL),
+		OS("OS_SECTION", OrtiConstants.EE_ORTI_OS),
+		TASK("TASK_SECTION", OrtiConstants.EE_ORTI_TASK),
+		ISR2("ISR2_SECTION", OrtiConstants.EE_ORTI_ISR2),
+		RESOURCE("RESOURCE_SECTION", OrtiConstants.EE_ORTI_RESOURCE),
+		STACK("STACK_SECTION", OrtiConstants.EE_ORTI_STACK),
+		ALARM("ALARM_SECTION", OrtiConstants.EE_ORTI_ALARM);
+		
+		private final String text;
+		private final int mask;
+		
+		private SectionTypes(String text, int mask) {
+			this.text = text;
+			this.mask = mask;
+		}
+
+		public static SectionTypes getType(String s) {
+			for (SectionTypes t: values()) {
+				if (t.getText().equals(s)) {
+					return t;
+				}	
+			}
+			return null;
+		}
+		
+		public String getText() {
+			return text;
+		}
+		public int getMask() {
+			return mask;
+		}
+	};
+	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
 
 	/** All data */
 	protected final IVarTree vt;
-	
-	/** Current orti options (enabled by keyword ENABLE_ORTI) : a bits field 
-	 *
-	 * @deprecated attenzione: potrebbe venir persa tra una chiamata ed un'altra?
-	 */
-	protected int EE_ORTI_current = 0;
 
 	public SectionWriterOrti_osek() {
 		this(null);
@@ -132,6 +161,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 		 **********************************************************************/
 		for (int rtosId = 0; rtosId < rtosNumber; rtosId++) {
 
+			
 			// ------------------ common data ------------------
 
 			// all objects for current os
@@ -140,7 +170,11 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(
 					0);
 //			List<Integer> requiredOilObjects = (List<Integer>) os.getObject(SGRK__FORCE_ARRAYS_LIST__);
-			
+
+			final int EE_ORTI_current = os.containsProperty(OrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS)?
+					(Integer)os.getObject(OrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS) : 0;
+
+
 			ICommentWriter commentWriter = getCommentWriter(os, FileTypes.ORTI);
 
 			
@@ -600,7 +634,8 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 	
 	public void updateKeywords(ArrayList<String> keywords, String[] rtosPrefix)
 			throws OilCodeWriterException {
-
+		int EE_ORTI_current = 0;
+		boolean none = false;
 		for (int rtodId=0; rtodId<rtosPrefix.length; rtodId++) {
 
 			final String currentRtosPrefix = parent.computeOilRtosPrefix(rtosPrefix[rtodId]);
@@ -608,63 +643,78 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			/***********************************************************************
 		     * ORTI
 		     **********************************************************************/
-			{
-				ArrayList<String> value = CommonUtils.getAllChildrenEnumType(vt,
-						currentRtosPrefix + "ORTI_SECTIONS", null);
-		
-				if (value != null) {
-					boolean none = false;
-					for (int i=0; i<value.size(); i++) {
-						if ("NONE".equals(value.get(i))) {
+			ArrayList<String> value = CommonUtils.getAllChildrenEnumType(vt,
+					currentRtosPrefix + "ORTI_SECTIONS", null);
+	
+			if (value != null) {
+				for (int i=0; i<value.size(); i++) {
+					SectionTypes t = SectionTypes.getType(value.get(i));
+					if (t != null) {
+						if (t == SectionTypes.NONE) {
 							none = true;
-							break;
-						} else if ("ALL".equals(value.get(i))) {
-							EE_ORTI_current = OrtiConstants.EE_ORTI_ALL;
-							break;
-						} else if ("OS_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_OS;
-							
-						} else if ("TASK_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_TASK;
-							
-						} else if ("ISR2_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_ISR2;
-							
-						} else if ("RESOURCE_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_RESOURCE;
-							
-						} else if ("STACK_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_STACK;
-							
-						} else if ("ALARM_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_ALARM;
-							
 						} else {
-							Messages.sendWarningNl("Unknow ORTI type : " + value.get(i), null, "qoiwueqwoiueqwe", null); 
+							EE_ORTI_current |= t.getMask();
 						}
-					}
-					
-					if (EE_ORTI_current != 0 && none) {
-						throw new OilCodeWriterException("ORTI options contains NONE but, at the same time, it tries to enable some sections.");
-					}
-					if (EE_ORTI_current != 0 && !keywords.contains(IWritersKeywords.ENABLE_ORTI)) {
-						keywords.add(IWritersKeywords.ENABLE_ORTI);
+					} else {
+						Messages.sendWarningNl("Unknow ORTI type : " + value.get(i), null, "qoiwueqwoiueqwe", null); 
 					}
 				}
-			}
-
-		}		
+			}	
+		}
+		if (EE_ORTI_current != 0 && none) {
+			throw new OilCodeWriterException("ORTI options contains NONE but, at the same time, it tries to enable some sections.");
+		}
+		if (EE_ORTI_current != 0 && !keywords.contains(IWritersKeywords.ENABLE_ORTI)) {
+			keywords.add(IWritersKeywords.ENABLE_ORTI);
+		}
 	}	
-	
-	
+
 	public void updateObjects() throws OilCodeWriterException {
 		
 		/* Do nothing, if ORTI is not enabled */
 		if (!parent.checkKeyword(IWritersKeywords.ENABLE_ORTI)) 
 			return;
 
+		int EE_ORTI_current = 0;
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
+
+		boolean supportISR2 = false;
+		boolean requiredISR2 = false;
+		for (int currentRtosId = 0; currentRtosId<oilObjects.length; currentRtosId++) { 
+			final IOilObjectList ool = oilObjects[currentRtosId];
+			final ISimpleGenRes sgrOs = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
+
+			final String currentRtosPrefix = parent.computeOilRtosPrefix(sgrOs.getPath());
+			ArrayList<String> value = CommonUtils.getAllChildrenEnumType(vt,
+					currentRtosPrefix + "ORTI_SECTIONS", null);
+	
+			if (value != null) {
+				for (int i=0; i<value.size(); i++) {
+					SectionTypes t = SectionTypes.getType(value.get(i));
+					if (t != null) {
+						EE_ORTI_current |= t.getMask();
+						if (t == SectionTypes.ISR2) {
+							requiredISR2 = true;
+						}
+					}
+				}
+			}
+			
+			if (sgrOs.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
+				CpuHwDescription currentStackDescription = (CpuHwDescription) sgrOs.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
+				supportISR2 |= currentStackDescription.isSupportOrtiISR2();
+			}
+		}
+		if (requiredISR2 && !supportISR2) {
+			throw new OilCodeWriterException("This architecture does not support ORTI ISR2 section");
+		}
+		
+		if (!supportISR2) {
+			EE_ORTI_current = EE_ORTI_current & (~OrtiConstants.EE_ORTI_ISR2);
+		}
+
+		
 		
 		for (int currentRtosId = 0; currentRtosId<oilObjects.length; currentRtosId++) { 
 			final IOilObjectList ool = oilObjects[currentRtosId];

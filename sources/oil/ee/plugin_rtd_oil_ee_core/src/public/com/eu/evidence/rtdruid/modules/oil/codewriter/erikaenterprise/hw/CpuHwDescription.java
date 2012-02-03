@@ -64,6 +64,11 @@ public class CpuHwDescription {
 	 */
 	public final CommentsManager commentManager;
 
+	/**
+	 * Suports Orti ISR2 section
+	 */
+	protected boolean supportOrtiISR2 = false;
+	
 	
 	/**
 	 * Able to handle empty vectors
@@ -147,4 +152,7 @@ public class CpuHwDescription {
 		return maxNestedInts;
 	}
 	
+	public boolean isSupportOrtiISR2() {
+		return supportOrtiISR2;
+	}
 }
