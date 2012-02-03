@@ -584,11 +584,10 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		    }
 
 		    // check if is required the default value
-			if (value == null) {
-            	Messages.sendWarningNl("Not found any value for MASTER_CPU. Using default value.", null, "al;uyshdga;iosdu", null);
-    		    // TODO : default value
+			if (value == null && rtosPrefix.length >1) {
+					Messages.sendWarningNl("Not found any value for MASTER_CPU. Using default value.", null, "al;uyshdga;iosdu", null);
 				value = IWritersKeywords.DEFAULT_CPU_NAME;
-			}
+			} // else, if we have exactly one cpu, we set the master cpu to this cpu (in the next loop)
 			
 			
 			// check if the specified cpu exist
@@ -599,8 +598,13 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 
 				ISimpleGenRes[] osList = super.extractObject(IOilObjectList.OS, rtosPrefix[ri]);
 		    	
-		    	if (osList != null && osList.length>0 && osList[0].getName()!= null) {
+		    	if (osList != null && osList.length>0 && getOSName(osList[0])!= null) {
 		    		name = getOSName(osList[0]);
+		    	}
+		    	
+		    	if (value == null) {
+		    		// set master cpu as the first one (and it should be also the only one)
+		    		value = name; // note: name cannot be null !!		    		
 		    	}
 		    	
 		    	if (value.equals(name)) {
