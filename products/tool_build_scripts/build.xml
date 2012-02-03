@@ -253,6 +253,10 @@ Also there are few important variables:
 	* destination      = where put the result of "zip.distribution"
 	                         Default value = current directory
 	* outputFile       = the name of "web site" zip file
+			
+	* ee.svn.number    = is used to set a valid version number for EE source plugin
+	* rtd.svn.number   = is used to set a valid version number for RT-Druid plugins (like Oil Configuration plugin)
+	
 
 To enable a sub set of RT-Druid plugin you should enable one or more of these variables	
 		enable_oil_core_features

@@ -74,6 +74,17 @@
 				<param name="jar_name" value="ee_core"/>
 			</antcall>
 		</target>
+	
+		<target name="gather.bin.parts.update.ee.version" if="ee.svn.number">
+			<!-- Update EE version -->
+			<replaceregexp byline="true">
+			  <regexp pattern="0=(.*)"/>
+			  <substitution expression="0=${ee.svn.number}"/>
+			  <fileset dir="${destination.temp.folder}">
+			    <include name="about.mappings"/>
+			  </fileset>
+			</replaceregexp>
+		</target>
 
 		<target name="gather.bin.parts" if="destination.temp.folder">
 			
@@ -89,6 +100,8 @@
 				<include name="plugin.xml"/>
 				<include name="rtdruid.png"/>
 				<include name="about.ini"/>
+				<include name="about.properties"/>
+				<include name="about.mappings"/>
 			</fileset>
 
 			<antcall target="common_gather.bin.parts">
@@ -97,6 +110,9 @@
 				<param name="jar_name" value="ee_core"/>
 				<reference refid="common_gather_binary"/>
 			</antcall>
+			
+			<!-- Update EE version -->
+			<antcall target="gather.bin.parts.update.ee.version"/>
 		</target>
 
 		<!---->

@@ -22,6 +22,7 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtdruidConfiguratorNumber;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
@@ -132,6 +133,16 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 			final StringBuffer buffer_c = answer[rtosId].get(FILE_EE_CFG_C);
 
 			final StringBuffer buffer = answer[rtosId].get(FILE_EE_CFG_H);
+			
+			// ---------------- Configurator Number ----------------
+			
+			{
+				String confNumber = RtdruidConfiguratorNumber.getRTDruidConfiguratorNumber();
+				if (confNumber != null && confNumber.length()>0) {
+					buffer.append("\n#define RTDRUID_CONFIGURATOR_NUMBER "+confNumber+"\n\n");
+				}
+			}
+			
 			buffer.append(commentWriterH.writerBanner("Common defines ( CPU "
 					+ rtosId + " )"));
 

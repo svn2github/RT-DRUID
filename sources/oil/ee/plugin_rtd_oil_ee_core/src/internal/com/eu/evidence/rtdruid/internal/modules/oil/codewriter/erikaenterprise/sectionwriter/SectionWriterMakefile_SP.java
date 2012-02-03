@@ -26,6 +26,7 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtdruidConfiguratorNumber;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
@@ -157,6 +158,14 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 							+ "# \n"
 							+ "# EEOPT =\n\n");
 
+			
+			{
+				String confNumber = RtdruidConfiguratorNumber.getRTDruidConfiguratorNumber();
+				if (confNumber != null && confNumber.length()>0) {
+					sbMakefile.append("\nRTDRUID_CONFIGURATOR_NUMBER:="+confNumber+"\n\n");
+				}
+			}
+			
 			if (useBinaryDistr) {
 				// UPDRTD eliminare o spostare
 				

@@ -24,6 +24,7 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtdruidConfiguratorNumber;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
@@ -172,6 +173,15 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
 	        		IWritersKeywords.INDENT + "EEBASE  := "+wrapper.wrapPath(eeBasePath)+"\n" +
 	                "endif\n"
 	        );
+			
+			// ---------------- Configurator Number ----------------
+			
+			{
+				String confNumber = RtdruidConfiguratorNumber.getRTDruidConfiguratorNumber();
+				if (confNumber != null && confNumber.length()>0) {
+					sbCommon_mk.append("\nRTDRUID_CONFIGURATOR_NUMBER:="+confNumber+"\n\n");
+				}
+			}
 
 		}		
 		
