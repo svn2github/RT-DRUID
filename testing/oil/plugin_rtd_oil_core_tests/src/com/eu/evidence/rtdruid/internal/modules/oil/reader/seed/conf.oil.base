@@ -1,0 +1,9 @@
+		LDFLAGS = "-Wl,--defsym,_min_heap_size=8192";
+		LDFLAGS = "-Wl,--report-mem";
+		
+		KERNEL_TYPE = FP;
+		
+		//EE_OPT = "__USE_EE_CORETIMER_ALARM__";
+		EE_OPT = "__ADD_LIBS__";
+		LIB = ENABLE { NAME = "MEMORY"; };
+		LIB = ENABLE { NAME = "MISC"; };

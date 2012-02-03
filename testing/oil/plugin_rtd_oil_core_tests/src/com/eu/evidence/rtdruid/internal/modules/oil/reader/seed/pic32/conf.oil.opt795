@@ -1,0 +1,7 @@
+		EE_OPT = "__USE_UART_PORT1B__";
+		EE_OPT = "__USE_EE_TIMER_1__";
+		EE_OPT = "__IPERMOB_BOARD_V2__";
+		EE_OPT = "__USE_IPERMOB_BOARD_V2__";
+		EE_OPT = "CONSOLE_SERIAL_NUMBER=6";
+		
+		

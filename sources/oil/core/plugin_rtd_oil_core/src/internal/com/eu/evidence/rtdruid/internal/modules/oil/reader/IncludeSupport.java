@@ -113,7 +113,9 @@ public class IncludeSupport {
 	 */
 	public String compose(InputStream input, String fileName, String filePath)
 			throws IOException {
-		return parse(new Stack<String>(), input, fileName, filePath).toString();
+		Stack<String> st = new Stack<String>();
+		st.push(filePath+File.separatorChar+fileName);
+		return parse(st, input, fileName, filePath).toString();
 	}
 
 	/**
@@ -143,7 +145,6 @@ public class IncludeSupport {
 	protected StringBuffer compose(Stack<String> parsedFiles,
 			String parentPath, String fileName, boolean useLibPath)
 			throws IOException {
-
 		IPath p;
 		if (useLibPath) {
 			p = searchLib(fileName);
@@ -182,6 +183,12 @@ public class IncludeSupport {
 		final String localPath;
 		{
 			File tmp = f.getParentFile();
+			
+			if (tmp == null && absPath != null){
+				File absFile = new File(absPath);
+				tmp = absFile.getParentFile();
+			}
+			
 			if (tmp != null) {
 				localPath = tmp.getAbsolutePath();
 			} else {
@@ -218,7 +225,6 @@ public class IncludeSupport {
 	 */
 	protected StringBuffer parse(Stack<String> parsedFiles, InputStream input,
 			String fileName, String filePath) throws IOException {
-
 		StringBuffer result = new StringBuffer();
 
 		try {

@@ -1,0 +1,6 @@
+	OS myOs {
+		EE_OPT = "__ADD_LIBS__";
+		LIB = ENABLE { NAME = "CONSOLE"; };	
+		EE_OPT = "USE_CONSOLE";
+		EE_OPT = "USE_CONSOLE_SERIAL";
+	};

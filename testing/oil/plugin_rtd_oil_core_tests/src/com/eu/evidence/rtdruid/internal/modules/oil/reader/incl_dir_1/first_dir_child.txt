@@ -1,0 +1,7 @@
+1a
+#include "../incl_dir_2/second_dir_child.txt"
+2b
+3_#Include<lib_1.txt>_4
+5
+6
+#include "subdir/subdir_child.txt"

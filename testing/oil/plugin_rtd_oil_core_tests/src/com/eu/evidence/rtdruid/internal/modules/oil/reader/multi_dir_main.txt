@@ -1,0 +1,9 @@
+aa
+bb
+cc
+#include "incl_dir_1/first_dir_child.txt"
+dd
+ee
+ff
+
+--#include "incl_dir_1/first_dir_child.txt"--

@@ -1,0 +1,6 @@
+		EE_OPT = "DEBUG";
+		EE_OPT = "__USE_LEDS__";
+		EE_OPT = "__USE_SPI__";
+		EE_OPT = "__USE_UART__";
+		EE_OPT = "__USE_TIMER__";
+		EE_OPT = "__STDIO_COMPILER_BUG__";

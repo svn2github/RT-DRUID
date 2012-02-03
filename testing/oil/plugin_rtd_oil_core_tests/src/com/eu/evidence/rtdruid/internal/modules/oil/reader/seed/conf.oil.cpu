@@ -1,0 +1,9 @@
+/* SOURCES */
+		CPU_DATA = PIC32 {
+			APP_SRC = "main.c";
+			APP_SRC = "ethernet_mtcpip.c";
+            APP_SRC = "fpga.c";
+			MULTI_STACK = FALSE;
+			ICD2 = TRUE;
+		};
+			

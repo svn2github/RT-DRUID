@@ -1,0 +1,39 @@
+	OS myOs {
+		LIB = ENABLE { NAME = "TCPIP"; };
+		EE_OPT = "MTCPIP_UDP";
+		EE_OPT = "__USE_MCHP_TCPIP_520__";
+		EE_OPT = "__PIC32MX__";
+		EE_OPT = "__C32__";
+		EE_OPT = "__USE_EE_TIMER_2__";
+        EE_OPT = "__USE_PHY_SMSC8720__";
+	};
+	
+	/* -------------------------------------------------------------------- 
+	|                 	 --  TCP/IP OIL Section  --                        |
+	|                                                                      |
+	|  - 1 Global Task counter                                             |
+	|  - 1 Main Task 													   |
+	|  - 1 Resource (Main Task protection)                                 |
+	 -------------------------------------------------------------------- */
+	
+	TASK MTCPIP_STACK_TASK {
+		PRIORITY = 10;
+		//ACTIVATION = 1;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		RESOURCE = "MTCPIP_STACK_TASK_MUTEX";
+	};
+	
+	COUNTER MTCPIP_STACK_TASK_COUNTER;
+	
+	RESOURCE MTCPIP_STACK_TASK_MUTEX { RESOURCEPROPERTY = STANDARD; };
+	
+	ALARM MTCPIP_STACK_TASK_ALARM {
+		COUNTER = "MTCPIP_STACK_TASK_COUNTER";
+	    ACTION = ACTIVATETASK { TASK = "MTCPIP_STACK_TASK"; };
+	};
+	
+	
+	
+	
+

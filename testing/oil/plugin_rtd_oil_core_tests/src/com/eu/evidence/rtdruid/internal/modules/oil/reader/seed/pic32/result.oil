@@ -1,0 +1,261 @@
+/*
+ * Evidence Srl
+ */
+
+CPU mySystem {
+
+	OS myOs {
+        EE_OPT = "TEST_EXCLUSION";
+        
+				LDFLAGS = "-Wl,--defsym,_min_heap_size=8192";
+		LDFLAGS = "-Wl,--report-mem";
+		
+		KERNEL_TYPE = FP;
+		
+		//EE_OPT = "__USE_EE_CORETIMER_ALARM__";
+		EE_OPT = "__ADD_LIBS__";
+		LIB = ENABLE { NAME = "MEMORY"; };
+		LIB = ENABLE { NAME = "MISC"; };
+		/* SOURCES */
+		CPU_DATA = PIC32 {
+			APP_SRC = "main.c";
+			APP_SRC = "ethernet_mtcpip.c";
+            APP_SRC = "fpga.c";
+			MULTI_STACK = FALSE;
+			ICD2 = TRUE;
+		};
+			
+				MCU_DATA = PIC32 {
+			MODEL = PIC32MX795F512L;
+		};
+		EE_OPT = "__PIC32_FEATURE_SET__=795";
+
+				EE_OPT = "DEBUG";
+		EE_OPT = "__USE_LEDS__";
+		EE_OPT = "__USE_SPI__";
+		EE_OPT = "__USE_UART__";
+		EE_OPT = "__USE_TIMER__";
+		EE_OPT = "__STDIO_COMPILER_BUG__";
+				EE_OPT = "__USE_UART_PORT1B__";
+		EE_OPT = "__USE_EE_TIMER_1__";
+		EE_OPT = "__IPERMOB_BOARD_V2__";
+		EE_OPT = "__USE_IPERMOB_BOARD_V2__";
+		EE_OPT = "CONSOLE_SERIAL_NUMBER=6";
+		
+		
+	};
+		OS myOs {
+		/* use transceiver MRF24J40 */
+		EE_OPT = "__ADD_LIBS__";
+		LIB = ENABLE { NAME = "MRF24J40"; };
+		EE_OPT = "USE_MRF24J40";
+		/*
+		EE_OPT = "MRF24J40_DEBUG";
+		*/
+		EE_OPT = "MRF24J40MB";
+		EE_OPT = "ADD_RSSI_AND_LQI_TO_PACKET";
+		EE_OPT = "MRF24J40_DISABLE_AUTOMATIC_ACK";
+		EE_OPT = "MRF24J40_DISABLE_CSMA";
+		EE_OPT = "MRF24J40_ZERO_MIN_BE";
+		EE_OPT = "MRF24J40_PROMISCUOUS_MODE";
+		EE_OPT = "MRF24J40_ACCEPT_WRONG_CRC_PKT";
+		EE_OPT = "MRF24J40_UWL_MODE";
+	};
+		OS myOs {
+        EE_OPT = "__USE_SPI_PORT3A__";
+		EE_OPT = "EE_SPI_PORT3A_DMA_CHANNEL=3";
+		EE_OPT = "UWL_USE_SPI_PORT_3A";
+
+		EE_OPT = "__ADD_LIBS__";
+		LIB = ENABLE { NAME = "UWIRELESS"; };
+		EE_OPT = "EE_TYPETICK=EE_INT32"; /* Mandatory! */
+		EE_OPT = "UWL_USE_SIMPLE_802154";
+		EE_OPT = "UWL_GTS_MANIPULATION"; /* Makes sense if Coord. */
+		EE_OPT = "UWL_NO_DYN_ASS";
+		EE_OPT = "UWL_SUPERFRAME_CALLBACKS"; 
+		EE_OPT = "UWL_MAC_TICKS_BEFORE_TIMESLOT=20";
+		//EE_OPT = "UWL_HAL_EXTERNAL_TIMER";
+//		EE_OPT = "UWL_DEBUG";
+		//EE_OPT = "UWL_DEBUG_TIME";
+	//	EE_OPT = "UWL_DEBUG_LOG";
+		//EE_OPT = "UWL_DEBUG_LOG_SERIAL";
+	//	EE_OPT = "UWL_DEBUG_LOG_SERIAL_PORT=CONSOLE_SERIAL_PORT_2";
+	//	EE_OPT = "UWL_DEBUG_LOG_HAS_PRINT";
+
+		EE_OPT = "UWL_MAC_CAP_QUEUE_SIZE=10";
+		EE_OPT = "UWL_MAC_GTS_QUEUE_SIZE=10";
+		EE_OPT = "UWL_MAC_IND_LIST_SIZE=10";
+		EE_OPT = "UWF_USE_FEC";
+	};
+		
+		
+	/* -------------------------------------------------------------------- 
+	|                  --  uWireless OIL Section  --                       |
+	|                                                                      |
+	|  - 1 Global Task counter                                             |
+	|  - 1 PHY Task (read from radio)                                      |
+	|  - 7 MAC Tasks (superframe management)                               |
+	 -------------------------------------------------------------------- */
+
+	COUNTER UWL_EE_TASK_COUNTER;
+	
+	TASK UWL_EE_TASK_PHY_READ_DISPATCHER {
+		PRIORITY = 30;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		RESOURCE = "UWL_EE_RESOURCE_MAC_RX_BEACON_MUTEX";
+		RESOURCE = "UWL_EE_RESOURCE_MAC_RX_DATA_MUTEX";
+		RESOURCE = "UWL_EE_RESOURCE_MAC_RX_COMMAND_MUTEX";
+		RESOURCE = "UWL_EE_RESOURCE_MAC_SEND_MUTEX";
+	};
+
+	TASK UWL_EE_TASK_MAC_PROCESS_RX_BEACON {
+		PRIORITY = 25;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		RESOURCE = "UWL_EE_RESOURCE_MAC_RX_BEACON_MUTEX";
+	};
+
+	TASK UWL_EE_TASK_MAC_PROCESS_RX_DATA {
+		PRIORITY = 20;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		RESOURCE = "UWL_EE_RESOURCE_MAC_RX_DATA_MUTEX";
+	};
+
+	TASK UWL_EE_TASK_MAC_PROCESS_RX_COMMAND {
+		PRIORITY = 20;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		RESOURCE = "UWL_EE_RESOURCE_MAC_RX_COMMAND_MUTEX";
+		RESOURCE = "UWL_EE_RESOURCE_MAC_SEND_MUTEX";
+	};
+
+	TASK UWL_EE_TASK_MAC_TIMESLOT {
+		PRIORITY = 20;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		RESOURCE = "UWL_EE_RESOURCE_MAC_MUTEX";
+		RESOURCE = "UWL_EE_RESOURCE_MAC_GTS_SEND_MUTEX";
+	};
+	ALARM UWL_EE_ALARM_MAC_TIMESLOT {
+		COUNTER = "UWL_EE_TASK_COUNTER";
+		ACTION = ACTIVATETASK {TASK="UWL_EE_TASK_MAC_TIMESLOT";};
+	};
+
+	TASK UWL_EE_TASK_MAC_BEFORE_TIMESLOT {
+		PRIORITY = 20;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+//-		RESOURCE = "UWL_EE_RESOURCE_MAC_MUTEX";
+	};
+	ALARM UWL_EE_ALARM_MAC_BEFORE_TIMESLOT {
+		COUNTER = "UWL_EE_TASK_COUNTER";
+		ACTION = ACTIVATETASK {TASK="UWL_EE_TASK_MAC_BEFORE_TIMESLOT";};
+	};
+
+	TASK UWL_EE_TASK_MAC_BACKOFF_PERIOD {
+		PRIORITY = 20;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		RESOURCE = "UWL_EE_RESOURCE_MAC_SEND_MUTEX";
+	};
+	ALARM UWL_EE_ALARM_MAC_BACKOFF_PERIOD {
+		COUNTER = "UWL_EE_TASK_COUNTER";
+		ACTION = ACTIVATETASK {TASK="UWL_EE_TASK_MAC_BACKOFF_PERIOD";};
+	};
+
+	TASK UWL_EE_TASK_MAC_GTS_SEND {
+		PRIORITY = 15;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		RESOURCE = "UWL_EE_RESOURCE_MAC_GTS_SEND_MUTEX";
+	};
+	ALARM UWL_EE_ALARM_MAC_GTS_SEND {
+		COUNTER = "UWL_EE_TASK_COUNTER";
+		ACTION = ACTIVATETASK {TASK="UWL_EE_TASK_MAC_GTS_SEND";};
+	};
+
+	
+	/* ****************************************************************** */
+	/*                    Resources Declaration                           */
+	/* ****************************************************************** */
+	RESOURCE UWL_EE_RESOURCE_MAC_MUTEX { 
+		RESOURCEPROPERTY = STANDARD; 
+	};
+	RESOURCE UWL_EE_RESOURCE_MAC_GTS_SEND_MUTEX { 
+		RESOURCEPROPERTY = STANDARD; 
+	};
+	RESOURCE UWL_EE_RESOURCE_MAC_RX_BEACON_MUTEX { 
+		RESOURCEPROPERTY = STANDARD; 
+	};
+	RESOURCE UWL_EE_RESOURCE_MAC_RX_DATA_MUTEX { 
+		RESOURCEPROPERTY = STANDARD; 
+	};
+	RESOURCE UWL_EE_RESOURCE_MAC_RX_COMMAND_MUTEX { 
+		RESOURCEPROPERTY = STANDARD; 
+	};
+	RESOURCE UWL_EE_RESOURCE_MAC_SEND_MUTEX { 
+		RESOURCEPROPERTY = STANDARD; 
+	};
+		OS myOs {
+		EE_OPT = "__ADD_LIBS__";
+		LIB = ENABLE { NAME = "CONSOLE"; };	
+		EE_OPT = "USE_CONSOLE";
+		EE_OPT = "USE_CONSOLE_SERIAL";
+	};
+		/* Include Microchip TCPIP stack */
+		OS myOs {
+		LIB = ENABLE { NAME = "TCPIP"; };
+		EE_OPT = "MTCPIP_UDP";
+		EE_OPT = "__USE_MCHP_TCPIP_520__";
+		EE_OPT = "__PIC32MX__";
+		EE_OPT = "__C32__";
+		EE_OPT = "__USE_EE_TIMER_2__";
+        EE_OPT = "__USE_PHY_SMSC8720__";
+	};
+	
+	/* -------------------------------------------------------------------- 
+	|                 	 --  TCP/IP OIL Section  --                        |
+	|                                                                      |
+	|  - 1 Global Task counter                                             |
+	|  - 1 Main Task 													   |
+	|  - 1 Resource (Main Task protection)                                 |
+	 -------------------------------------------------------------------- */
+	
+	TASK MTCPIP_STACK_TASK {
+		PRIORITY = 10;
+		//ACTIVATION = 1;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		RESOURCE = "MTCPIP_STACK_TASK_MUTEX";
+	};
+	
+	COUNTER MTCPIP_STACK_TASK_COUNTER;
+	
+	RESOURCE MTCPIP_STACK_TASK_MUTEX { RESOURCEPROPERTY = STANDARD; };
+	
+	ALARM MTCPIP_STACK_TASK_ALARM {
+		COUNTER = "MTCPIP_STACK_TASK_COUNTER";
+	    ACTION = ACTIVATETASK { TASK = "MTCPIP_STACK_TASK"; };
+	};
+	
+	
+	
+	
+
+
+	
+	/* Include LWIP stack */
+	//include "conf.oil.lwip"
+	
+	
+	/* ****************************************************************** */
+	/*                      Application TASKs                             */
+	/* ****************************************************************** */
+	TASK Task_test {
+		PRIORITY = 2;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+	};
+};

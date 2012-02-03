@@ -1,0 +1,25 @@
+/*
+ * Evidence Srl
+ */
+
+CPU mySystem {
+
+	OS myOs {
+        EE_OPT = "TEST_OSC";
+		#include "../conf.oil.base"
+		#include "../conf.oil.cpu"
+		#include "conf.oil.mcu795"
+		#include "../conf.oil.opt"
+		#include "conf.oil.opt795"
+	};
+	#include "../conf.oil.console"
+	
+	/* ****************************************************************** */
+	/*                      Application TASKs                             */
+	/* ****************************************************************** */
+	TASK Task_test {
+		PRIORITY = 2;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+	};
+};
