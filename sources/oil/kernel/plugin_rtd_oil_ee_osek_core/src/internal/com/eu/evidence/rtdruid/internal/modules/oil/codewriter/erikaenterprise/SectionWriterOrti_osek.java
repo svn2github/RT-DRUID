@@ -333,7 +333,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					"            \"SUSPENDED\"=3\n" + 
 					"        ] STATE, \"Task State\";\n" + 
 
-					(	(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0 && parent.checkKeyword(DEF__MULTI_STACK__)?
+					(	(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0 && all_stack_id.length()>0 ? //parent.checkKeyword(DEF__MULTI_STACK__)?
 						"        ENUM \"unsigned int\" [\n" +
 						all_stack_id + 
 						"        ] STACK, \"Task Stack\";\n" : ""
@@ -440,8 +440,11 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 								indent1+"STATE = \"(EE_th_status["+id+"])\";\n" + 
 								indent1+"CURRENTACTIVATIONS = \"("+act+" - EE_th_rnact["+id+"])\";  /* "+act+" = max activations */\n" + 
 								(
-										(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0  && parent.checkKeyword(DEF__MULTI_STACK__) ? 
-										indent1+"STACK = \"("+stack_vector_name+"["+stackID+"])\";\n" : "") + 
+										(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0  && all_stack_id.length()>0 ? 
+												(parent.checkKeyword(DEF__MULTI_STACK__) ? 
+														indent1+"STACK = \"("+stack_vector_name+"["+stackID+"])\";\n" :
+														indent1+"STACK = Stack0;\n"  
+												): "") + 
 								"};\n");		
 					
 					}			

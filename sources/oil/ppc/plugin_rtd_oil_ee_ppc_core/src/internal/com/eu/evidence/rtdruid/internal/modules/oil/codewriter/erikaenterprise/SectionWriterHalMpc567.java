@@ -72,6 +72,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 	static final String SGR_OS_MCU_MODEL = "sgr__os_cpu__mcu_model";
 
 	static final String STACK_BASE_NAME = "EE_stack_";
+	private static final long DEFAULT_SYS_STACK_SIZE = 4096;
 	/**
 	 * 
 	 */
@@ -322,10 +323,13 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			/***********************************************************************
 			 * SYSTEM STACK SIZE
 			 **********************************************************************/
-			if (sgrCpu.containsProperty(SGR_OS_CPU_SYS_STACK_SIZE)) {
-				sbInithal_h.append(indent1 + getCommentWriter(sgrCpu, FileTypes.H).writerSingleLineComment("System stack size") + 
-						indent1 + "#define EE_SYS_STACK_SIZE     " + sgrCpu.getString(SGR_OS_CPU_SYS_STACK_SIZE)+ "\n\n");
-			}
+			sbInithal_h.append(indent1 + getCommentWriter(sgrCpu, FileTypes.H).writerSingleLineComment("System stack size") + 
+						indent1 + "#define EE_SYS_STACK_SIZE     " + 
+							( sgrCpu.containsProperty(SGR_OS_CPU_SYS_STACK_SIZE) ? 
+									sgrCpu.getString(SGR_OS_CPU_SYS_STACK_SIZE) :
+									DEFAULT_SYS_STACK_SIZE)
+						+ "\n\n");
+			
 			
 			/***********************************************************************
 			 * OTHER STACKs
@@ -373,6 +377,12 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		String pre = "";
 		String post = "";
 		final String indent = IWritersKeywords.INDENT;
+		
+		EEStackData sys_stack = new EEStackData(0,
+				new long[] { sgrCpu.containsProperty(SGR_OS_CPU_SYS_STACK_SIZE) ? 
+						sgrCpu.getLong(SGR_OS_CPU_SYS_STACK_SIZE) : DEFAULT_SYS_STACK_SIZE},
+				new long[] {0},
+				new String[] {" (int)&EE_e200zx_sys_stack "}, true);
 
 		
 		/***********************************************************************
@@ -592,8 +602,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 
 				
 				// USED BY ORTI
-				stackTmp.add(new EEStackData(0, new long[] {512}, new long[] {0},
-						new String[] {" (int)&EE_e200zx_sys_stack "}, true));
+				stackTmp.add(sys_stack);
 				
 
 //				 DECLARE STACK SIZE && STACK (ARRAY)
@@ -684,6 +693,8 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			        sbStack
 //			        +stackPatternFill
 			        );
+		} else {
+			sgrCpu.setObject(SGRK_OS_STACK_LIST, new EEStackData[] {sys_stack});
 		}
 
 		return sbInithal_c;
