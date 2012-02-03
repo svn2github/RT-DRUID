@@ -242,7 +242,9 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 				}
 			}
 		}
-		
+
+		int max_sys_serviceId = counter;
+
 		// Trusted Functions
 		{
 			List<ISimpleGenRes> os_appls = ool.getList(IOilObjectList.OSAPPLICATION);
@@ -268,11 +270,6 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 			
 		}
 
-		int max_sys_serviceId = counter;
-		
-		
-		
-		
 		
 		final StringBuffer ee_buffer = answer.get(FILE_EE_CFG_H);
 		ee_buffer.append(commentWriterH.writerBanner("System Calls")
