@@ -249,7 +249,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 			}
 			
 			EObject newRoot = VarTreeUtil.newVarTreeRoot(editingDomain);
-			VarTreeIdHandler.setId(newRoot, new String[] {nameId});
+			VarTreeIdHandler.setId(newRoot, nameId);//new String[] {nameId});
 			root.add(newRoot);
 			execFlushCommandStack();
 			

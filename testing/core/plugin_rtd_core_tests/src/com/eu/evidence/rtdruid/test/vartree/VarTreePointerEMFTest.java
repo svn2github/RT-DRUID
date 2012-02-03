@@ -12,29 +12,20 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import com.eu.evidence.rtdruid.internal.vartree.data.provider.DataItemProviderAdapterFactory;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable.NotValidValueException;
 import com.eu.evidence.rtdruid.vartree.VarTreePointerEMF;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.variables.StringMVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
@@ -42,97 +33,139 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 /**
  * @author Nicola Serreli
  */
-public class VarTreePointerEMFTest {
+public abstract class VarTreePointerEMFTest {
+
+	
 	private final static String S = "" + IVarTree.SEPARATOR;
 
-	private AdapterFactoryEditingDomain editingDomain;
-	private ComposedAdapterFactory adapterFactory;
+	private EditingDomain editingDomain;
 	
-	private class MyVTPEMF extends VarTreePointerEMF {
-		
-		public MyVTPEMF(EList<EObject> root, EditingDomain editingDomain) {
-			super(root, editingDomain);
-		}
-		
-		public IVarTreePointer clone() {
-			MyVTPEMF answer = new MyVTPEMF(root, editingDomain);
-			answer.point = (LittlePointer) this.point.clone();
-			
-			return answer;
-		}
-	};
+	private Map<String, Integer> nodeChildren = new HashMap<String, Integer>();
+
+	/* Values set by the effective class */
+	protected String NAME_SYSTEM;
+	protected String NAME_TASK;
+	protected String NAME_PROC;
+	protected String NAME_VAR;
+	protected String NAME_TIME_CONST_ELEMENT;
+	protected String[] tceId;
+
+	protected String VALUE_NEW_NAME;
+
+	/* Shared Values */
+	private String RNAME_SYSTEM;
+	private String RNAME_TASK;
+	private String RNAME_PROC;
+	private String RNAME_VAR;
+	private String RNAME_TIME_CONST_ELEMENT;
+
+	private final static String NAME_NAME = "Name";
+	private final static String NAME_PROPERTIES = "properties";
+	private final static String NAME_ANNOTATION = "Annotation";
+	private final static String NAME_ARCHITECTURAL = "Architectural";
+	private final static String NAME_FUNCTIONAL = "Functional";
+	private final static String NAME_IMPLEMENTATION = "Implementation";
+	private final static String NAME_MAPPING = "Mapping";
+	private final static String NAME_MODES = "Modes";
+	private final static String NAME_TASK_LIST = "TaskList";
+	private final static String NAME_SCHEDULABILITY = "Schedulability";
+	private final static String NAME_TIME_CONST_LIST = "TimeConstList";
+	private final static String NAME_TIME_CONST_ELEMENT_LIST = "TimeConstElementList";
+
+	private final static String TYPE_SYSTEM = "System";
+	private final static String TYPE_ANNOTATION = NAME_ANNOTATION;
+	private final static String TYPE_ARCHITECTURAL = NAME_ARCHITECTURAL;
+	private final static String TYPE_FUNCTIONAL = NAME_FUNCTIONAL;
+	private final static String TYPE_IMPLEMENTATION = NAME_IMPLEMENTATION;
+	private final static String TYPE_PROC = "Proc";
+	private final static String TYPE_VAR = "Var";
+	private final static String TYPE_MAPPING = NAME_MAPPING;
+	private final static String TYPE_MODES = NAME_MODES;
+	private final static String TYPE_TASK = "Task";
+	private final static String TYPE_TASK_LIST = NAME_TASK_LIST;
+	private final static String TYPE_SCHEDULABILITY = NAME_SCHEDULABILITY;
+	private final static String TYPE_TIME_CONST_LIST = NAME_TIME_CONST_LIST;
+	private final static String TYPE_TIME_CONST = "TimeConst";
 	
-
-	@Before
-	public void setup() {
 	
-		// Create an adapter factory that yields item providers.
-		//
-		List<AdapterFactory> factories = new ArrayList<AdapterFactory>();
-		factories.add(new ResourceItemProviderAdapterFactory());
-		factories.add(new DataItemProviderAdapterFactory());
-		factories.add(new ReflectiveItemProviderAdapterFactory());
-
-		adapterFactory = new ComposedAdapterFactory(factories);
-
-		// Create the command stack that will notify this editor as commands are executed.
-		//
-		BasicCommandStack commandStack = new BasicCommandStack();
-
-		// Create the editing domain with a special command stack.
-		//
-		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack);
-
+	protected void completePaths() {
+		RNAME_SYSTEM = DataPath.makeSlashedId(NAME_SYSTEM);
+		RNAME_TASK = DataPath.makeSlashedId(NAME_TASK);
+		RNAME_PROC = DataPath.makeSlashedId(NAME_PROC);
+		RNAME_VAR = DataPath.makeSlashedId(NAME_VAR);
+		RNAME_TIME_CONST_ELEMENT = DataPath.makeSlashedId(NAME_TIME_CONST_ELEMENT);
 		
+		editingDomain = VarTreeUtil.newVarTree();
 	}
-
+	
+	private void initExpectedChildrenNumber(String type, int value) {
+		nodeChildren.put(type, new Integer(value));
+	}
+	
+	protected int expectedChildrenNumber(String type) {
+		assertTrue(nodeChildren.containsKey(type));
+		return nodeChildren.get(type).intValue();
+	}
+	
+	
 	/**
 	 */
-	private IVarTreePointer populate1() {
-		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
+	private IVarTreePointer populate() {
+		IVarTreePointer vtp = new VarTreePointerEMF(new BasicEList<EObject>(), editingDomain);
 
-		assertTrue("MySystem".equals(vtp.add("MySystem","System")));
-		assertTrue(vtp.go("MySystem"));
+		assertEquals(RNAME_SYSTEM, vtp.add(NAME_SYSTEM, TYPE_SYSTEM));
+		assertTrue(vtp.go(RNAME_SYSTEM));
 
-		assertTrue("Architectural".equals(vtp.add("Architectural","Architectural")));
-		assertTrue("Mapping".equals(vtp.add("Mapping","Mapping")));
-		assertTrue("Functional".equals(vtp.add("Functional","Functional")));
+		assertEquals(NAME_ARCHITECTURAL, vtp.add(NAME_ARCHITECTURAL, TYPE_ARCHITECTURAL));
+		assertEquals(NAME_MAPPING, vtp.add(NAME_MAPPING,TYPE_MAPPING));
+		assertEquals(NAME_FUNCTIONAL, vtp.add(NAME_FUNCTIONAL,TYPE_FUNCTIONAL));
 
-		assertTrue(vtp.go("Architectural"));
-		assertTrue(vtp.go("TaskList"));
+		assertTrue(vtp.go(NAME_ARCHITECTURAL));
+		assertTrue(vtp.go(NAME_TASK_LIST));
 
-		assertTrue("myTask".equals(vtp.add("myTask","Task")));
+		assertEquals(RNAME_TASK, vtp.add(NAME_TASK,TYPE_TASK));
 		
-		assertTrue(vtp.goAbsolute(S + "MySystem" + S + "Functional"));
-		assertTrue(vtp.go("Implementation"));
+		assertTrue(vtp.goAbsolute(S + RNAME_SYSTEM + S + NAME_FUNCTIONAL));
+		assertTrue(vtp.go(NAME_IMPLEMENTATION));
 
-		assertTrue("myProc".equals(vtp.add("myProc","Proc")));
-		assertTrue("myVar".equals(vtp.add("myVar","Var")));
+		assertEquals(RNAME_PROC, vtp.add(NAME_PROC,TYPE_PROC));
+		assertEquals(RNAME_VAR, vtp.add(NAME_VAR,TYPE_VAR));
 
 		assertTrue(vtp.goAbsolute(null));
+
+
+		nodeChildren.clear();
+		initExpectedChildrenNumber(TYPE_SYSTEM, 6); // 3 attributes + 3 references
+		initExpectedChildrenNumber(TYPE_ARCHITECTURAL, 5); 
+		initExpectedChildrenNumber(TYPE_TASK_LIST, 1); // 1 Task
+		
+		initExpectedChildrenNumber(TYPE_MAPPING, 4); // taskMap, procMap, varMap, FastTaskToProcMap
+		initExpectedChildrenNumber(TYPE_FUNCTIONAL, 6); // 1 Task
+		initExpectedChildrenNumber(TYPE_TASK, 7); 
+		
 
 		return vtp;
 	}
 
 	@Test
 	public void testClone() {
-		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
+		IVarTreePointer vtp = new VarTreePointerEMF(new BasicEList<EObject>(), editingDomain);
 
-		assertTrue("MySystem".equals(vtp.add("MySystem","System")));
-		assertTrue(vtp.go("MySystem"));
+		assertEquals(RNAME_SYSTEM, vtp.add(NAME_SYSTEM, TYPE_SYSTEM));
+		assertTrue(vtp.go(RNAME_SYSTEM));
 
-		assertTrue("Architectural".equals(vtp.add("Architectural","Architectural")));
-		assertTrue("Modes".equals(vtp.add("Modes","Modes")));
+		assertEquals(NAME_ARCHITECTURAL, vtp.add(NAME_ARCHITECTURAL, TYPE_ARCHITECTURAL));
+		assertEquals(NAME_MODES, vtp.add(NAME_MODES,TYPE_MODES));
 
 		IVarTreePointer vtp2 = (IVarTreePointer) vtp.clone();
-		assertTrue(vtp.go("Architectural"));
+		assertTrue(vtp.go(NAME_ARCHITECTURAL));
 		assertFalse(vtp.go("Architectural2"));
-		assertFalse(vtp.go("Modes"));
+		assertFalse(vtp.go(NAME_MODES));
 
-		assertFalse(vtp.go("Task"));
-		assertTrue(vtp.go("TaskList"));
+		assertFalse(vtp.go(TYPE_TASK));
+		assertTrue(vtp.go(NAME_TASK_LIST));
 
-		assertTrue("MySystem".equals(vtp2.getName()));
+		assertEquals(RNAME_SYSTEM, vtp2.getName());
 		
 	}
 	
@@ -141,223 +174,239 @@ public class VarTreePointerEMFTest {
 	 */
 	@Test
 	public void testAddStringString() {
-		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
+		IVarTreePointer vtp = new VarTreePointerEMF(new BasicEList<EObject>(), editingDomain);
 
-		assertTrue("MySystem".equals(vtp.add("MySystem","System")));
-		assertTrue(vtp.go("MySystem"));
-		
-		assertFalse(vtp.go("Functional"));
+		assertEquals(RNAME_SYSTEM, vtp.add(NAME_SYSTEM, TYPE_SYSTEM));
+		assertTrue(vtp.go(RNAME_SYSTEM));
+		assertFalse(vtp.go(NAME_FUNCTIONAL));
 
 		String[][] elems = {
-			{"Architectural", "Architectural"},
-			{"Functional", "Functional"},
-			{"Modes", "Modes"},
-			{"Annotation", "Annotation"},
-			{"Mapping", "Mapping"},
-			{"Schedulability", "Schedulability"}
+			{NAME_ARCHITECTURAL, TYPE_ARCHITECTURAL},
+			{NAME_FUNCTIONAL, TYPE_FUNCTIONAL},
+			{NAME_MODES, TYPE_MODES},
+			{NAME_ANNOTATION, TYPE_ANNOTATION},
+			{NAME_MAPPING, TYPE_MAPPING},
+			{NAME_SCHEDULABILITY, TYPE_SCHEDULABILITY}
 		};
 		
 		for (int i=0; i< elems.length; i++) {
-			assertTrue(elems[i][0].equals(vtp.add(elems[i][0],elems[i][1])));
+			assertEquals(elems[i][0], vtp.add(elems[i][0],elems[i][1]));
 		}
 		for (int i=0; i< elems.length; i++) {
-			assertTrue(elems[i][0].equals(vtp.add(elems[i][0],elems[i][1])));
+			assertEquals(elems[i][0], vtp.add(elems[i][0],elems[i][1]));
 		}
 		
 		boolean risp = false;
 		try {
-       		vtp.add("Name","Modes");
+       		vtp.add(NAME_NAME,TYPE_MODES);
 		} catch (RuntimeException e) { risp = true; } assertTrue(risp);
 		
 
 		// add a node with an composed ID
-		assertTrue(vtp.go("Functional"));
-		assertTrue("TimeConstList".equals(vtp.add("TimeConstList","TimeConstList")));
-		assertTrue(vtp.go("TimeConstList"));
-		assertTrue("abc".equals(vtp.add("abc", "TimeConst")));
-		assertTrue(vtp.go("abc"));
-		assertTrue(vtp.go("TimeConstElementList"));
+		assertTrue(vtp.go(NAME_FUNCTIONAL));
+		assertEquals(NAME_TIME_CONST_LIST, vtp.add(NAME_TIME_CONST_LIST,TYPE_TIME_CONST_LIST));
+		assertTrue(vtp.go(NAME_TIME_CONST_LIST));
+		assertEquals(RNAME_TIME_CONST_ELEMENT, vtp.add(NAME_TIME_CONST_ELEMENT, TYPE_TIME_CONST));
+		assertTrue(vtp.go(DataPath.makeSlashedId(NAME_TIME_CONST_ELEMENT)));
+		assertTrue(vtp.go(NAME_TIME_CONST_ELEMENT_LIST));
 		
-		String[] tceId = {
-				"a", "b" , "c"
-		};
-		assertTrue(DataPath.makeSlashedId(tceId).equals(vtp.add(DataPath.makeId(tceId), "TimeConstElement")));
+		
+		assertEquals(DataPath.makeSlashedId(tceId), vtp.add(DataPath.makeId(tceId), "TimeConstElement"));
 		assertTrue(vtp.go(DataPath.makeSlashedId(tceId)));
 	}
 	
 	@Test
 	public void testAddLeaf() {
 		
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 		
-		vtp.goAbsolute(S + "MySystem");
-		vtp.add("Name", new StringVar("Nome"));
-		assertTrue("Nome".equals(vtp.getName()));
-		assertTrue(vtp.go("Name"));
-		assertTrue("Nome".equals(vtp.getVar().get()));
+		assertTrue(vtp.goAbsolute(S + RNAME_SYSTEM));
+		assertEquals(NAME_NAME, vtp.add(NAME_NAME, new StringVar(VALUE_NEW_NAME)));
+		assertEquals(DataPath.makeSlashedId(VALUE_NEW_NAME), vtp.getName());
+		assertTrue(vtp.go(NAME_NAME));
+		assertEquals(VALUE_NEW_NAME, vtp.getVar().get());
 		assertTrue(vtp.goParent());
+		assertTrue(vtp.go(NAME_FUNCTIONAL +S+ NAME_IMPLEMENTATION +S+ RNAME_PROC));
 		
-		assertTrue(vtp.go("Functional" +S+ "Implementation" +S+ "myProc"));
+		assertTrue(vtp.goAbsolute(S + DataPath.makeSlashedId(VALUE_NEW_NAME)));
+		
+		assertTrue(vtp.go(NAME_FUNCTIONAL +S+ NAME_IMPLEMENTATION +S+ RNAME_PROC));
 		
 		StringMVar smv = new StringMVar();
+//		try {
 			smv.appendValue("a");
 			smv.appendValue("b");
 			smv.appendValue("c");
-		assertTrue("Methods".equals(vtp.add("Methods", smv)));
+//		} catch (NotValidValueException e) { assertTrue(false); }
+		assertEquals("Methods", vtp.add("Methods", smv));
 	}
 
 	@Test
 	public void testGoAbsolute() {
-		MyVTPEMF vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
+		IVarTreePointer vtp = new VarTreePointerEMF(new BasicEList<EObject>(), editingDomain);
 
-		assertTrue("MySystem".equals(vtp.add("MySystem","System")));
-		assertTrue(vtp.go("MySystem"));
+		assertFalse(vtp.goAbsolute(S+ RNAME_SYSTEM));
 
-		assertFalse(vtp.go("Architectural"));
-		assertFalse(vtp.go("Architectural2"));
-		assertFalse(vtp.go("Modes"));
+		assertFalse(vtp.goAbsolute(S+ RNAME_SYSTEM +S+ NAME_ARCHITECTURAL));
+		assertFalse(vtp.goAbsolute(S+ RNAME_SYSTEM +S+ "Architectural2"));
+		assertFalse(vtp.goAbsolute(S+ RNAME_SYSTEM +S+ NAME_MODES));
 
-		assertTrue("Architectural".equals(vtp.add("Architectural","Architectural")));
-		assertTrue("Modes".equals(vtp.add("Modes","Modes")));
-
-		assertTrue(vtp.go("Architectural"));
-		assertFalse(vtp.go("Architectural2"));
-		assertFalse(vtp.go("Modes"));
-
-		assertTrue(vtp.go("TaskList"));
-
-		assertTrue("myTask".equals(vtp.add("myTask","Task")));
-		assertTrue("myTask".equals(vtp.add("myTask","Task")));
+		vtp = populate();
 		
-		assertTrue(vtp.go("myTask"));
-		
-		assertTrue(vtp.goAbsolute(S +"MySystem" +S+ "Modes"));
-		assertTrue("Modes".equals(vtp.getName()));
+		assertTrue(vtp.goAbsolute(S +RNAME_SYSTEM));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
 
-		assertTrue(vtp.goAbsolute(S + "MySystem" +S+ "Architectural" +S+ "TaskList" +S+ "myTask"));
-		assertTrue("myTask".equals(vtp.getName()));
+		assertFalse(vtp.goAbsolute(S +RNAME_SYSTEM +S+ NAME_MODES));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
+
+		assertTrue(vtp.goAbsolute(S +RNAME_SYSTEM));
+		assertEquals(NAME_MODES, vtp.add(NAME_MODES,TYPE_MODES));
+		assertTrue(vtp.goAbsolute(S +RNAME_SYSTEM +S+ NAME_MODES));
+		assertEquals(NAME_MODES, vtp.getName());
+
+		assertTrue(vtp.goAbsolute(S + RNAME_SYSTEM +S+ NAME_ARCHITECTURAL +S+ NAME_TASK_LIST +S+ RNAME_TASK));
+		assertEquals(RNAME_TASK, vtp.getName());
 		
-		assertTrue(vtp.goAbsolute(S + "MySystem" +S+ "Architectural" +S+S+ "TaskList"));
-		assertTrue("TaskList".equals(vtp.getName()));
+		assertTrue(vtp.goAbsolute(S + RNAME_SYSTEM +S+ NAME_ARCHITECTURAL +S+S+ NAME_TASK_LIST));
+		assertEquals(NAME_TASK_LIST, vtp.getName());
 	}
 	
 	@Test
 	public void testGo() {		
-		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
-		assertFalse(vtp.go("Architectural"));
+		IVarTreePointer vtp = new VarTreePointerEMF(new BasicEList<EObject>(), editingDomain);
 
-		vtp = populate1();
+		assertFalse(vtp.go(S+ RNAME_SYSTEM));
+		assertFalse(vtp.go(RNAME_SYSTEM));
+		assertFalse(vtp.go(NAME_ARCHITECTURAL));
+
+		assertEquals(RNAME_SYSTEM, vtp.add(NAME_SYSTEM, TYPE_SYSTEM));
+		assertTrue(vtp.go(RNAME_SYSTEM));
+
+		assertFalse(vtp.go(NAME_ARCHITECTURAL));
+		assertFalse(vtp.go("Architectural2"));
+		assertFalse(vtp.go(NAME_MODES));
+
+		assertEquals(NAME_ARCHITECTURAL, vtp.add(NAME_ARCHITECTURAL, TYPE_ARCHITECTURAL));
+		assertTrue(vtp.go(NAME_ARCHITECTURAL));
+
+		vtp = populate();
 
 		assertFalse(vtp.go("Architectural2"));
-		assertFalse(vtp.go("Modes"));
+		assertFalse(vtp.go(NAME_MODES));
 
-		assertTrue(vtp.go("MySystem"));
-		assertTrue("MySystem".equals(vtp.getName()));
+		assertTrue(vtp.go(RNAME_SYSTEM));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
 		
-		assertTrue(vtp.go("Architectural"));
-		assertTrue("Architectural".equals(vtp.getName()));
+		assertTrue(vtp.go(NAME_ARCHITECTURAL));
+		assertEquals(NAME_ARCHITECTURAL, vtp.getName());
 
 		assertFalse(vtp.go("task2"));
-		assertTrue("Architectural".equals(vtp.getName()));
-		assertTrue("Architectural".equals(vtp.getType()));
+		assertEquals(NAME_ARCHITECTURAL, vtp.getName());
+		assertEquals(NAME_ARCHITECTURAL, vtp.getType());
 
-		assertTrue(vtp.go("TaskList"));
-		assertTrue("TaskList".equals(vtp.getName()));
-		assertTrue("TaskList".equals(vtp.getType()));
+		assertTrue(vtp.go(NAME_TASK_LIST));
+		assertEquals(NAME_TASK_LIST, vtp.getName());
+		assertEquals(TYPE_TASK_LIST, vtp.getType());
 
-		assertTrue("myTask".equals(vtp.add("myTask","Task")));
-		assertTrue("myTask".equals(vtp.add("myTask","Task")));
+		assertEquals(RNAME_TASK, vtp.add(NAME_TASK,TYPE_TASK));
+		assertEquals(RNAME_TASK, vtp.add(NAME_TASK,TYPE_TASK));
 		
-		assertTrue(vtp.go("myTask"));
+		assertTrue(vtp.go(RNAME_TASK));
 	}
 	
 	@Test
 	public void testExistAbsolute() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 
-		assertFalse(vtp.existAbsolute(S+"MySystem" +S+ "Architectural2"));
+		assertFalse(vtp.existAbsolute(S+RNAME_SYSTEM +S+ "Architectural2"));
 
-		assertTrue(vtp.existAbsolute(S+"MySystem" +S+ "Architectural"));
+		assertTrue(vtp.existAbsolute(S+RNAME_SYSTEM +S+ NAME_ARCHITECTURAL));
 		assertNull(vtp.getName());
-		assertTrue("root_Node's_Type".equals(vtp.getType()));
+		assertEquals("root_Node's_Type", vtp.getType());
 
-		assertTrue(vtp.go("MySystem"));
+		assertTrue(vtp.go(RNAME_SYSTEM));
 		
 		assertTrue(vtp.existAbsolute(null));
-		assertTrue("MySystem".equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
+		assertEquals( TYPE_SYSTEM, vtp.getType());
 
-		assertFalse(vtp.go("Task"));
-		assertTrue(vtp.existAbsolute(S+"MySystem"+S+"Architectural" +S+ "TaskList" +S+ "myTask"));
-		assertTrue("MySystem".equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
+		assertFalse(vtp.go(TYPE_TASK));
+		assertTrue(vtp.existAbsolute(S+RNAME_SYSTEM+S+NAME_ARCHITECTURAL +S+ NAME_TASK_LIST +S+ RNAME_TASK));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
+		assertEquals( TYPE_SYSTEM, vtp.getType());
 	}
 	
 	@Test
 	public void testExist() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 
 		assertFalse(vtp.exist("Architectural2"));
 
-		assertFalse(vtp.exist("Architectural"));
+		assertFalse(vtp.exist(NAME_ARCHITECTURAL));
+		assertTrue(vtp.exist(RNAME_SYSTEM));
 		assertNull(vtp.getName());
-		assertTrue("root_Node's_Type".equals(vtp.getType()));
+		assertEquals("root_Node's_Type", vtp.getType());
 
-		assertTrue(vtp.go("MySystem"));
+		assertTrue(vtp.go(RNAME_SYSTEM));
 		
-		assertTrue(vtp.exist("Architectural"));
-		assertTrue(vtp.exist("Mapping"));
-		assertTrue("MySystem".equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
+		assertTrue(vtp.exist(NAME_ARCHITECTURAL));
+		assertTrue(vtp.exist(NAME_MAPPING));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
+		assertEquals( TYPE_SYSTEM, vtp.getType());
 
-		assertTrue(vtp.go("Functional"));
-		assertTrue("Functional".equals(vtp.getName()));
-		assertTrue("Functional".equals(vtp.getType()));
+		assertTrue(vtp.exist(NAME_FUNCTIONAL +S+ NAME_IMPLEMENTATION));
 
-		assertTrue(vtp.exist("Implementation"));
+		assertTrue(vtp.go(NAME_FUNCTIONAL));
+		assertEquals(NAME_FUNCTIONAL, vtp.getName());
+		assertEquals(TYPE_FUNCTIONAL, vtp.getType());
+
+		assertTrue(vtp.exist(NAME_IMPLEMENTATION));
 		assertTrue(vtp.exist("EventList"));
-		assertTrue(vtp.exist("Implementation"));
-		assertTrue("Functional".equals(vtp.getName()));
-		assertTrue("Functional".equals(vtp.getType()));
+		assertTrue(vtp.exist(NAME_IMPLEMENTATION));
+		assertEquals(NAME_FUNCTIONAL, vtp.getName());
+		assertEquals(TYPE_FUNCTIONAL, vtp.getType());
 	}
 	
-	@Test
-	@Ignore
+	@Test	
 	public void testGoFirstChild() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 		
 		// system
 		assertTrue(vtp.goFirstChild());
-		assertTrue("MySystem".equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
+		assertEquals(TYPE_SYSTEM, vtp.getType());
 		
 		assertTrue(vtp.goFirstChild());
+		assertEquals(vtp.getName(), NAME_PROPERTIES, vtp.getName());
+		
+		assertTrue(vtp.goParent());
+		
 		{ // architectural
-			
-			assertTrue("Architectural".equals(vtp.getName()));
-			assertTrue("Architectural".equals(vtp.getType()));
+			assertTrue(vtp.go(NAME_ARCHITECTURAL));
+			assertEquals(vtp.getName(), NAME_ARCHITECTURAL, vtp.getName());
+			assertEquals(NAME_ARCHITECTURAL, vtp.getType());
 
 			assertTrue(vtp.goFirstChild());
 			{ // bus
-				assertTrue("BusList".equals(vtp.getName()));
-				assertTrue("BusList".equals(vtp.getType()));
+				assertEquals(NAME_PROPERTIES, vtp.getName());
+				//assertEquals("BusList", vtp.getType());
 			
 				assertTrue(vtp.goParent());
 			}
 			
 			// architectural
-			assertTrue(vtp.go("TaskList"));
+			assertTrue(vtp.go(NAME_TASK_LIST));
 			
 			
 			{ // task
-				assertTrue("TaskList".equals(vtp.getName()));
-				assertTrue("TaskList".equals(vtp.getType()));
+				assertEquals(NAME_TASK_LIST, vtp.getName());
+				assertEquals(TYPE_TASK_LIST, vtp.getType());
 			
 				assertTrue(vtp.goFirstChild());
 				
 				{ // myTask
-					assertTrue("myTask".equals(vtp.getName()));
-					assertTrue("Task".equals(vtp.getType()));
+					assertEquals(RNAME_TASK, vtp.getName());
+					assertEquals(TYPE_TASK, vtp.getType());
 				}
 				
 			}
@@ -365,101 +414,105 @@ public class VarTreePointerEMFTest {
 		}
 	}
 	@Test
-	@Ignore
 	public void testGetChildrenNumber() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 
-		assertEquals(vtp.getChildrenNumber(), 1);
-		assertTrue(vtp.go("MySystem"));
+		assertEquals(1, vtp.getChildrenNumber());
+		assertTrue(vtp.go(RNAME_SYSTEM));
 
-		assertEquals(vtp.getChildrenNumber(), 6);
+		assertEquals(expectedChildrenNumber(TYPE_SYSTEM), vtp.getChildrenNumber());
 		
-		assertTrue(vtp.go("Mapping"));
-		assertEquals(vtp.getChildrenNumber(), 5); // taskMap, procMap, varMap, FastTaskToProcMap
+		assertTrue(vtp.go(NAME_MAPPING));
+		assertEquals(expectedChildrenNumber(NAME_MAPPING), vtp.getChildrenNumber()); // taskMap, procMap, varMap, FastTaskToProcMap
 
-		assertTrue(vtp.goAbsolute(S+"MySystem"+S+"Name"));
-		assertEquals(vtp.getChildrenNumber(), 0); // variable
+		assertTrue(vtp.goAbsolute(S+RNAME_SYSTEM+S+NAME_NAME));
+		assertEquals(0, vtp.getChildrenNumber()); // variable
 		
-		assertTrue(vtp.goAbsolute(S+"MySystem"+S+"Architectural" +S+ "TaskList" +S+ "myTask"));
-		assertEquals(vtp.getChildrenNumber(), 7); // variable
+		assertTrue(vtp.goAbsolute(S+RNAME_SYSTEM+S+NAME_ARCHITECTURAL +S+ NAME_TASK_LIST +S+ RNAME_TASK));
+		assertEquals(expectedChildrenNumber(TYPE_TASK), vtp.getChildrenNumber()); // variable
 
-		assertTrue(vtp.goAbsolute(S+"MySystem"+S+"Functional"));
-		assertEquals(vtp.getChildrenNumber(), 5); // variable
+		assertTrue(vtp.goAbsolute(S+RNAME_SYSTEM+S+NAME_FUNCTIONAL));
+		assertEquals(expectedChildrenNumber(TYPE_FUNCTIONAL), vtp.getChildrenNumber()); // variable
 	}
 	
 	@Test
-	@Ignore
 	public void testGoNextSibling() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 		
 		assertTrue(vtp.goFirstChild());
 		assertFalse(vtp.goNextSibling());
 		// system
 		assertTrue(vtp.goFirstChild());
+		{ // properties
+			assertEquals(NAME_PROPERTIES, vtp.getName());
+
+			assertTrue(vtp.goNextSibling());
+		}
+
 		{ // architectural
-			assertTrue("Architectural".equals(vtp.getName()));
-			assertTrue("Architectural".equals(vtp.getType()));
+			assertEquals(NAME_ARCHITECTURAL, vtp.getName());
+			assertEquals(TYPE_ARCHITECTURAL, vtp.getType());
 
 			assertTrue(vtp.goNextSibling());
 		}
 		
 		{ // functional
-			assertTrue("Functional".equals(vtp.getName()));
-			assertTrue("Functional".equals(vtp.getType()));
+			assertEquals(NAME_FUNCTIONAL, vtp.getName());
+			assertEquals(TYPE_FUNCTIONAL, vtp.getType());
 
 			assertTrue(vtp.goNextSibling());
 		}
 		{ // mapping
-			assertTrue("Mapping".equals(vtp.getName()));
-			assertTrue("Mapping".equals(vtp.getType()));
+			assertEquals(NAME_MAPPING, vtp.getName());
+			assertEquals(TYPE_MAPPING, vtp.getType());
 
 			assertTrue(vtp.goNextSibling());
 		}
 		{ // name
-			assertTrue("Name".equals(vtp.getName()));
-			assertTrue("StringVar".equals(vtp.getType()));
+			assertEquals(NAME_NAME, vtp.getName());
+			assertEquals("StringVar", vtp.getType());
 
 			assertTrue(vtp.goNextSibling());
 		}
 		{ // xtc
-			assertTrue("XTC_Cookie".equals(vtp.getName()));
-			assertTrue("StringVar[]".equals(vtp.getType()));
+			assertEquals("XTC_Cookie", vtp.getName());
+			assertEquals("StringVar[]", vtp.getType());
 
 			assertFalse(vtp.goNextSibling());
 		}
 
 		
-		assertTrue(vtp.goAbsolute(S+"MySystem"+S+ "Architectural" +S+ "TaskList"));
+		assertTrue(vtp.goAbsolute(S+RNAME_SYSTEM+S+ NAME_ARCHITECTURAL +S+ NAME_TASK_LIST));
 		assertEquals(vtp.getChildrenNumber(), 1);
 
-		assertTrue("aaa".equals(vtp.add("aaa","Task")));
+		assertEquals("aaa", vtp.add("aaa",TYPE_TASK));
 		assertEquals(vtp.getChildrenNumber(), 2);
 
-		assertTrue("zzz".equals(vtp.add("zzz","Task")));
+		assertEquals("zzz", vtp.add("zzz",TYPE_TASK));
 		assertEquals(vtp.getChildrenNumber(), 3);
 
 		
 		{ // task
-			assertTrue("TaskList".equals(vtp.getName()));
-			assertTrue("TaskList".equals(vtp.getType()));
+			assertEquals(NAME_TASK_LIST, vtp.getName());
+			assertEquals(TYPE_TASK_LIST, vtp.getType());
 		
 			assertTrue(vtp.goFirstChild());
 			
 			{ // myTask
-				assertTrue("myTask".equals(vtp.getName()));
-				assertTrue("Task".equals(vtp.getType()));
+				assertEquals(RNAME_TASK, vtp.getName());
+				assertEquals(TYPE_TASK, vtp.getType());
 				
 				assertTrue(vtp.goNextSibling());
 			}
 			{ // aaa
-				assertTrue("aaa".equals(vtp.getName()));
-				assertTrue("Task".equals(vtp.getType()));
+				assertEquals("aaa", vtp.getName());
+				assertEquals(TYPE_TASK, vtp.getType());
 				
 				assertTrue(vtp.goNextSibling());
 			}
 			{ // zzz
-				assertTrue("zzz".equals(vtp.getName()));
-				assertTrue("Task".equals(vtp.getType()));
+				assertEquals("zzz", vtp.getName());
+				assertEquals(TYPE_TASK, vtp.getType());
 				
 				assertFalse(vtp.goNextSibling());
 			}
@@ -467,33 +520,44 @@ public class VarTreePointerEMFTest {
 		}
 		
 		
-		assertTrue(vtp.goAbsolute(S+"MySystem"+S+ "Functional"));
-		assertEquals(vtp.getChildrenNumber(), 4);
+		assertTrue(vtp.goAbsolute(S+RNAME_SYSTEM+S+ NAME_FUNCTIONAL));
+		assertEquals(expectedChildrenNumber(TYPE_FUNCTIONAL), vtp.getChildrenNumber());
 		{
 
 			assertTrue(vtp.goFirstChild());
-			
+			{ // properties
+				assertEquals(NAME_PROPERTIES, vtp.getName());
+
+				assertTrue(vtp.goNextSibling());
+			}
+
 			{ // eventList
-				assertTrue("EventList".equals(vtp.getName()));
-				assertTrue("EventList".equals(vtp.getType()));
+				assertEquals("EventList", vtp.getName());
+				assertEquals("EventList", vtp.getType());
 				
 				assertTrue(vtp.goNextSibling());
 			}
 			{ // partialOrderList
-				assertTrue("PartialOrderList".equals(vtp.getName()));
-				assertTrue("PartialOrderList".equals(vtp.getType()));
+				assertEquals("PartialOrderList", vtp.getName());
+				assertEquals("PartialOrderList", vtp.getType());
 				
 				assertTrue(vtp.goNextSibling());
 			}
 			{ // systemImplementation
-				assertTrue("Implementation".equals(vtp.getName()));
-				assertTrue("Implementation".equals(vtp.getType()));
+				assertEquals(NAME_IMPLEMENTATION, vtp.getName());
+				assertEquals(TYPE_IMPLEMENTATION, vtp.getType());
 				
 				assertTrue(vtp.goNextSibling());
 			}
 			{ // timeConstList
-				assertTrue("TimeConstList".equals(vtp.getName()));
-				assertTrue("TimeConstList".equals(vtp.getType()));
+				assertEquals(NAME_TIME_CONST_LIST, vtp.getName());
+				assertEquals(TYPE_TIME_CONST_LIST, vtp.getType());
+
+				assertTrue(vtp.goNextSibling());
+			}
+			{ // timeConstList
+				assertEquals(vtp.getName(), "TypeList", vtp.getName());
+				assertEquals("TypeList", vtp.getType());
 
 				assertFalse(vtp.goNextSibling());
 			}
@@ -504,23 +568,23 @@ public class VarTreePointerEMFTest {
 	
 	@Test
 	public void testGoParent() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 		
-		assertTrue(vtp.goAbsolute(S+"MySystem"+S+ "Architectural" +S+ "TaskList" +S+ "myTask"));
-		assertTrue("myTask".equals(vtp.getName()));
-		assertTrue("Task".equals(vtp.getType()));
+		assertTrue(vtp.goAbsolute(S+RNAME_SYSTEM+S+ NAME_ARCHITECTURAL +S+ NAME_TASK_LIST +S+ RNAME_TASK));
+		assertEquals(RNAME_TASK, vtp.getName());
+		assertEquals(TYPE_TASK, vtp.getType());
 		
 		assertTrue(vtp.goParent());
-		assertTrue("TaskList".equals(vtp.getName()));
-		assertTrue("TaskList".equals(vtp.getType()));
+		assertEquals(NAME_TASK_LIST, vtp.getName());
+		assertEquals(TYPE_TASK_LIST, vtp.getType());
 
 		assertTrue(vtp.goParent());
-		assertTrue("Architectural".equals(vtp.getName()));
-		assertTrue("Architectural".equals(vtp.getType()));
+		assertEquals(NAME_ARCHITECTURAL, vtp.getName());
+		assertEquals(TYPE_ARCHITECTURAL, vtp.getType());
 
 		assertTrue(vtp.goParent());
-		assertTrue("MySystem".equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
+		assertEquals( TYPE_SYSTEM, vtp.getType());
 
 		assertTrue(vtp.goParent());
 		assertFalse(vtp.goParent());
@@ -528,28 +592,28 @@ public class VarTreePointerEMFTest {
 	
 	@Test
 	public void testGetVar() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 		
-		assertTrue(vtp.go("MySystem"));
-		StringVar sv = new StringVar("Nome");
-		vtp.add("Name", sv);
-		assertTrue(vtp.go("Name"));
+		assertTrue(vtp.go(RNAME_SYSTEM));
+		StringVar sv = new StringVar(VALUE_NEW_NAME);
+		vtp.add(NAME_NAME, sv);
+		assertTrue(vtp.go(NAME_NAME));
 		StringVar svr = (StringVar) vtp.getVar();
 		assertNotSame(svr, sv);
-		assertTrue("Nome".equals(svr.get()));
-		assertSame("Nome", svr.get()); // NB !!!
+		assertEquals(VALUE_NEW_NAME, svr.get());
+		assertSame(VALUE_NEW_NAME, svr.get()); // NB !!!
 		
 		sv.set("Ciao");
 		StringVar svr2 = (StringVar) vtp.getVar();
 		assertNotSame(svr2, sv);
-		assertTrue("Nome".equals(svr.get()));
-		assertSame("Nome", svr.get()); // NB !!!
-		assertTrue("Nome".equals(svr2.get()));
-		assertSame("Nome", svr2.get()); // NB !!!
+		assertEquals(VALUE_NEW_NAME, svr.get());
+		assertSame(VALUE_NEW_NAME, svr.get()); // NB !!!
+		assertEquals(VALUE_NEW_NAME, svr2.get());
+		assertSame(VALUE_NEW_NAME, svr2.get()); // NB !!!
 		
 		//---------
 		
-		assertTrue(vtp.goAbsolute(S+"Nome"+S+ "Functional" +S+ "Implementation" +S+ "myProc"));
+		assertTrue(vtp.goAbsolute(S+DataPath.makeSlashedId(VALUE_NEW_NAME)+S+ NAME_FUNCTIONAL +S+ NAME_IMPLEMENTATION +S+ RNAME_PROC));
 		StringMVar smv = new StringMVar();
 		{
 			smv.appendValue("a");
@@ -563,15 +627,15 @@ public class VarTreePointerEMFTest {
 		{
 			assertEquals(smv.sizeValues(), 6);
 			String[] val = smv.getValues();
-			assertTrue("a".equals(val[0]));
-			assertTrue("b".equals(val[1]));
-			assertTrue("c".equals(val[2]));
-			assertTrue("a".equals(val[3]));
-			assertTrue("b".equals(val[4]));
-			assertTrue("c".equals(val[5]));
+			assertEquals("a", val[0]);
+			assertEquals("b", val[1]);
+			assertEquals("c", val[2]);
+			assertEquals("a", val[3]);
+			assertEquals("b", val[4]);
+			assertEquals("c", val[5]);
 		}
 		
-		assertTrue("Methods".equals(vtp.add("Methods", smv)));
+		assertEquals("Methods", vtp.add("Methods", smv));
 		assertTrue(vtp.go("Methods"));
 		
 		StringMVar smvr = (StringMVar) vtp.getVar();
@@ -583,16 +647,16 @@ public class VarTreePointerEMFTest {
 			// NB! proc.getMethods use Unique Data Type 
 			assertEquals(smvr.sizeValues(), 3);
 			String[] val = smvr.getValues();
-			assertTrue("a".equals(val[0]));
-			assertTrue("b".equals(val[1]));
-			assertTrue("c".equals(val[2]));
+			assertEquals("a", val[0]);
+			assertEquals("b", val[1]);
+			assertEquals("c", val[2]);
 			
 			smv.clearValues();
 		}
 
 		// -------------
 		
-		assertTrue(vtp.goAbsolute(S+ "Nome" +S+ "Architectural" +S+ "TaskList" +S+ "myTask" +S+ "Type"));
+		assertTrue(vtp.goAbsolute(S+ DataPath.makeSlashedId(VALUE_NEW_NAME) +S+ NAME_ARCHITECTURAL +S+ NAME_TASK_LIST +S+ RNAME_TASK +S+ "Type"));
 		StringVar type = (StringVar) vtp.getVar();
 		assertTrue(type == null || type.get() == null );
 		//assertTrue(type.get() == null);
@@ -600,29 +664,29 @@ public class VarTreePointerEMFTest {
 
 	@Test
 	public void testSetVar() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 		
-		assertTrue(vtp.go("MySystem" +S+  "Name"));
-		StringVar sv = new StringVar("Nome");
+		assertTrue(vtp.go(RNAME_SYSTEM +S+  NAME_NAME));
+		StringVar sv = new StringVar(VALUE_NEW_NAME);
 		vtp.setVar(sv);
 
-		assertFalse(vtp.exist("MySystem"));
-		assertFalse(vtp.exist("MySystem" +S+  "Name"));
+		assertFalse(vtp.existAbsolute(RNAME_SYSTEM));
+		assertFalse(vtp.exist(RNAME_SYSTEM +S+  NAME_NAME));
 
 		StringVar svr = (StringVar) vtp.getVar();
 		assertNotSame(svr, sv);
-		assertTrue("Nome".equals(svr.get()));
-		assertSame("Nome", svr.get()); // NB !!!
+		assertEquals(VALUE_NEW_NAME, svr.get());
+		assertSame(VALUE_NEW_NAME, svr.get()); // NB !!!
 		
 		sv.set("Ciao");
 		StringVar svr2 = (StringVar) vtp.getVar();
 		assertNotSame(svr2, sv);
-		assertTrue("Nome".equals(svr.get()));
-		assertSame("Nome", svr.get()); // NB !!!
+		assertEquals(VALUE_NEW_NAME, svr.get());
+		assertSame(VALUE_NEW_NAME, svr.get()); // NB !!!
 		
 		//---------
 		
-		assertTrue(vtp.goAbsolute(S+ "Nome" +S+ "Functional" +S+ "Implementation" +S+ "myProc" +S+ "Methods"));
+		assertTrue(vtp.goAbsolute(S+ DataPath.makeSlashedId(VALUE_NEW_NAME) +S+ NAME_FUNCTIONAL +S+ NAME_IMPLEMENTATION +S+ RNAME_PROC +S+ "Methods"));
 		StringMVar smv = new StringMVar();
 		try {
 			smv.appendValue("a");
@@ -643,9 +707,9 @@ public class VarTreePointerEMFTest {
 			// NB! proc.getMethods use Unique Data Type 
 			assertEquals(smvr.sizeValues(), 3);
 			String[] val = smvr.getValues();
-			assertTrue("a".equals(val[0]));
-			assertTrue("b".equals(val[1]));
-			assertTrue("c".equals(val[2]));
+			assertEquals("a", val[0]);
+			assertEquals("b", val[1]);
+			assertEquals("c", val[2]);
 			
 			smv.clearValues();
 		}
@@ -660,20 +724,20 @@ public class VarTreePointerEMFTest {
 
 	@Test
 	public void testIsContainer() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 	
 		assertTrue(vtp.isContainer());
 		
-		assertTrue(vtp.go("MySystem"+S+"Name"));
+		assertTrue(vtp.go(RNAME_SYSTEM+S+NAME_NAME));
 		assertFalse(vtp.isContainer());
 
-		assertTrue(vtp.goAbsolute(S+ "MySystem"+S+"Architectural"));
+		assertTrue(vtp.goAbsolute(S+ RNAME_SYSTEM+S+NAME_ARCHITECTURAL));
 		assertTrue(vtp.isContainer());
 
-		assertTrue(vtp.go("TaskList"));
+		assertTrue(vtp.go(NAME_TASK_LIST));
 		assertTrue(vtp.isContainer());
 		
-		assertTrue(vtp.go("myTask"));
+		assertTrue(vtp.go(RNAME_TASK));
 		assertTrue(vtp.isContainer());
 		
 		assertTrue(vtp.go("Type"));
@@ -681,752 +745,61 @@ public class VarTreePointerEMFTest {
 	}
 
 	@Test
-	@Ignore
 	public void testDestroy() {
-		IVarTreePointer vtp = populate1();
+		IVarTreePointer vtp = populate();
 		
-		assertTrue(vtp.go("MySystem"));
-		assertTrue("MySystem".equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
+		assertTrue(vtp.go(RNAME_SYSTEM));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
+		assertEquals( TYPE_SYSTEM, vtp.getType());
 		
-		assertTrue(vtp.go("Architectural"));
+		assertTrue(vtp.go(NAME_ARCHITECTURAL));
 		vtp.destroy();
 
-		assertTrue(vtp.go("Functional"));
-		assertTrue("TimeConstList".equals(vtp.add("TimeConstList","TimeConstList")));
-		assertTrue(vtp.go("TimeConstList"));
-		assertTrue("abc".equals(vtp.add("abc", "TimeConst")));
-		assertTrue("efg".equals(vtp.add("efg", "TimeConst")));
+		assertTrue(vtp.go(NAME_FUNCTIONAL));
+		assertEquals(NAME_TIME_CONST_LIST, vtp.add(NAME_TIME_CONST_LIST,TYPE_TIME_CONST_LIST));
+		assertTrue(vtp.go(NAME_TIME_CONST_LIST));
+		assertEquals("abc", vtp.add("abc", "TimeConst"));
+		assertEquals("efg", vtp.add("efg", "TimeConst"));
 		assertEquals(vtp.getChildrenNumber(), 2);
 		vtp.destroy();
-		assertTrue(vtp.exist("TimeConstList")); // !!!!!
-		assertTrue(vtp.go("TimeConstList"));
+		assertTrue(vtp.exist(NAME_TIME_CONST_LIST)); // !!!!!
+		assertTrue(vtp.go(NAME_TIME_CONST_LIST));
 		assertEquals(vtp.getChildrenNumber(), 0);
 		assertFalse(vtp.exist("abc"));
 		assertFalse(vtp.exist("efg"));
 		vtp.destroy();
 		vtp.goParent();
 		
-		assertTrue("MySystem".equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
+		assertEquals(RNAME_SYSTEM, vtp.getName());
+		assertEquals( TYPE_SYSTEM, vtp.getType());
 		
-		assertFalse(vtp.go("Architectural"));
-		assertEquals(vtp.getChildrenNumber(), 4);
+		assertFalse(vtp.go(NAME_ARCHITECTURAL));
+		assertEquals(expectedChildrenNumber(TYPE_SYSTEM)-1, vtp.getChildrenNumber());
 
 		// -------
-		assertTrue("Name".equals(vtp.add("Name", new StringVar("Ciao"))));
-		assertEquals(vtp.getChildrenNumber(), 4);
-		assertTrue("Ciao".equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
+		assertEquals(NAME_NAME, vtp.add(NAME_NAME, new StringVar("Ciao")));
+		assertEquals(expectedChildrenNumber(TYPE_SYSTEM)-1, vtp.getChildrenNumber());
+		assertEquals("Ciao", vtp.getName());
+		assertEquals(TYPE_SYSTEM, vtp.getType());
 		
-		assertTrue(vtp.go("Name"));
+		assertTrue(vtp.go(NAME_NAME));
 		vtp.destroy();
 
-		assertTrue(DataPath.makeSlashedId((String) null).equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
+		assertEquals(DataPath.makeSlashedId((String) null), vtp.getName());
+		assertEquals( TYPE_SYSTEM, vtp.getType());
 		
-		assertFalse(vtp.go("Architectural"));
-		assertEquals(vtp.getChildrenNumber(), 4);
+		assertFalse(vtp.go(NAME_ARCHITECTURAL));
+		assertEquals(expectedChildrenNumber(TYPE_SYSTEM)-1, vtp.getChildrenNumber());
 		
 		// -------
 		vtp.destroy();
 		assertNull(vtp.getName());
-		assertTrue("root_Node's_Type".equals(vtp.getType()));
+		assertEquals("root_Node's_Type", vtp.getType());
 		
 		assertEquals(vtp.getChildrenNumber(), 0);
-		assertFalse(vtp.go("Architectural"));
-		assertFalse(vtp.go("Functional"));
-		assertFalse(vtp.go("Mapping"));
+		assertFalse(vtp.go(NAME_ARCHITECTURAL));
+		assertFalse(vtp.go(NAME_FUNCTIONAL));
+		assertFalse(vtp.go(NAME_MAPPING));
 		
 	}
-/*
-	public void testTypePath() {
-	}
-
-
-	public void testHandler() {
-	}
-	public void testAddObserver() {
-	}
-	public void testRemObserver() {
-	}
-	public void testRemAllObserver() {
-	}
-	public void testGetAllObserver() {
-	}
-	*/
-	/*
-	 * Deprecated
-	 * 
-	 *
-
-	public void testAddList() {}
-	public void testAddReference() {}
-	public void testAddStringStringVariableString() {}
-	public void testAddStringStringString() {}
-	public void testIsList() {}
-	public void testIsReference() {}
-	public void testSetDefined() {}
-	public void testSetValid() {}
-	public void testIsDefined() {}
-	public void testIsValid() {}
-	public void testSetWithAuto() {}
-	public void testGetWithAuto() {}
-	public void testGetMultipleValuesList() {}
-	public void testGetSerialNumber() {}
-	public void testExtractChild() {}
-	public void testAttachChild() {}
-	public void testGetDescription() {}
-	public void testSetDescr() {}
-
-	 */
-	
-	
-/*
- * Test with slash
- */
-	private String sh_system = "My\\S/y\\/\\st**em";
-	private String sh_system_path = DataPath.makeSlashedId(sh_system);
-	private String sh_task_path = DataPath.makeSlashedId("m*/*\\yTask");
-	private String sh_proc_path = DataPath.makeSlashedId("m\\yPro/c*");
-	private String sh_var_path = DataPath.makeSlashedId("m*yV/ar");
-	
-	/**
-	 */
-	private IVarTreePointer populate2() {
-		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
-
-		assertTrue(sh_system_path.equals(vtp.add("My\\S/y\\/\\st**em","System")));
-		assertTrue(vtp.go(sh_system_path));
-
-		assertTrue("Architectural".equals(vtp.add("Architectural","Architectural")));
-		assertTrue("Mapping".equals(vtp.add("Mapping","Mapping")));
-		assertTrue("Functional".equals(vtp.add("Functional","Functional")));
-
-		assertTrue(vtp.go("Architectural"));
-		assertTrue(vtp.go("TaskList"));
-
-		assertTrue(sh_task_path.equals(vtp.add("m*/*\\yTask","Task")));
-		
-		assertTrue(vtp.goAbsolute(S + sh_system_path + S + "Functional"));
-		assertTrue(vtp.go("Implementation"));
-
-		assertTrue(sh_proc_path.equals(vtp.add("m\\yPro/c*","Proc")));
-		assertTrue(sh_var_path.equals(vtp.add("m*yV/ar","Var")));
-
-		assertTrue(vtp.goAbsolute(null));
-
-		return vtp;
-	}
-
-//	public void testMyVTPEMF() {}
-	/*
-	 * Class to test for Object clone()
-	 */
-	@Test
-	@Ignore
-	public void testCloneSlash() {
-		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
-
-		assertTrue(sh_system_path.equals(vtp.add(sh_system,"System")));
-		assertTrue(vtp.go(sh_system_path));
-
-		assertTrue("Architectural".equals(vtp.add("Architectural","Architectural")));
-		assertTrue("Modes".equals(vtp.add("Modes","Modes")));
-
-		IVarTreePointer vtp2 = (IVarTreePointer) vtp.clone();
-		assertTrue(vtp.go("Architectural"));
-		assertFalse(vtp.go("Architectural2"));
-		assertFalse(vtp.go("Modes"));
-
-		assertFalse(vtp.go("Task"));
-		assertTrue(vtp.go("TaskList"));
-
-		assertTrue(sh_system_path.equals(vtp2.getName()));
-		
-	}
-	
-	/*
-	 * Class to test for String add(String, String)
-	 */
-	@Test
-	@Ignore
-	public void testAddStringStringSlash() {
-		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
-
-		assertTrue(sh_system_path.equals(vtp.add(sh_system,"System")));
-		assertTrue(vtp.go(sh_system_path));
-		
-		String[][] elems = {
-			{"Architectural", "Architectural"},
-			{"Functional", "Functional"},
-			{"Modes", "Modes"},
-			{"Annotation", "Annotation"},
-			{"Mapping", "Mapping"},
-			{"Schedulability", "Schedulability"}
-		};
-		
-		for (int i=0; i< elems.length; i++) {
-			assertTrue(elems[i][0].equals(vtp.add(elems[i][0],elems[i][1])));
-		}
-		for (int i=0; i< elems.length; i++) {
-			assertTrue(elems[i][0].equals(vtp.add(elems[i][0],elems[i][1])));
-		}
-		
-		boolean risp = false;
-		try {
-       		vtp.add("Name","Modes");
-		} catch (RuntimeException e) { risp = true; } assertTrue(risp);
-		
-
-		// add a node with an composed ID
-		assertTrue(vtp.go("Functional"));
-		assertTrue(vtp.go("TimeConstList"));
-		assertTrue(DataPath.makeSlashedId("a/b*c").equals(vtp.add("a/b*c", "TimeConst")));
-		assertTrue(vtp.go(DataPath.makeSlashedId("a/b*c")));
-		assertTrue(vtp.go("TimeConstElementList"));
-		
-		String[] tceId = {
-				"a/", "b\\" , "****c****"
-		};
-		assertTrue(DataPath.makeSlashedId(tceId).equals(vtp.add(DataPath.makeId(tceId), "TimeConstElement")));
-		assertTrue(vtp.go(DataPath.makeSlashedId(tceId)));
-		
-	}
-	
-	@Test
-	@Ignore
-	public void testAddLeafSlash() {
-		
-		IVarTreePointer vtp = populate2();
-		
-		assertTrue(vtp.goAbsolute(S + sh_system_path));
-		assertTrue("Name".equals(vtp.add("Name", new StringVar("N*ome"))));
-		assertTrue(DataPath.makeSlashedId("N*ome").equals(vtp.getName()));
-		assertTrue(vtp.go("Name"));
-		assertTrue("N*ome".equals(vtp.getVar().get()));
-		assertTrue(vtp.goParent());
-		
-		assertTrue(vtp.goAbsolute(S + DataPath.makeSlashedId("N*ome")));
-
-		assertTrue(vtp.go("Functional" +S+ "Implementation" +S+ sh_proc_path));
-		
-		StringMVar smv = new StringMVar();
-		try {
-			smv.appendValue("a");
-			smv.appendValue("b");
-			smv.appendValue("c");
-		} catch (NotValidValueException e) { assertTrue(false); }
-		assertTrue("Methods".equals(vtp.add("Methods", smv)));
-	}
-
-	@Test
-	@Ignore
-	public void testGoAbsoluteSlash() {
-		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
-
-		assertFalse(vtp.goAbsolute(S+ sh_system_path));
-
-		assertFalse(vtp.goAbsolute(S+ sh_system_path +S+ "Architectural"));
-		assertFalse(vtp.goAbsolute(S+ sh_system_path +S+ "Architectural2"));
-		assertFalse(vtp.goAbsolute(S+ sh_system_path +S+ "Modes"));
-
-		vtp = populate2();
-		
-		assertTrue(vtp.goAbsolute(S +sh_system_path));
-		assertTrue(sh_system_path.equals(vtp.getName()));
-
-		assertFalse(vtp.goAbsolute(S +sh_system_path +S+ "Modes"));
-		assertTrue(sh_system_path.equals(vtp.getName()));
-
-		assertTrue(vtp.goAbsolute(S + sh_system_path +S+ "Architectural" +S+ "TaskList" +S+ sh_task_path));
-		assertTrue(sh_task_path.equals(vtp.getName()));
-		
-		assertTrue(vtp.goAbsolute(S + sh_system_path +S+ "Architectural" +S+S+ "TaskList"));
-		assertTrue("TaskList".equals(vtp.getName()));
-	}
-	
-	@Test
-	@Ignore
-	public void testGoSlash() {		
-		IVarTreePointer vtp = new MyVTPEMF(new BasicEList<EObject>(), editingDomain);
-		assertFalse(vtp.go("Architectural"));
-
-		vtp = populate2();
-
-		assertFalse(vtp.go("Architectural2"));
-		assertFalse(vtp.go("Modes"));
-
-		assertTrue(vtp.go(sh_system_path));
-		assertTrue(sh_system_path.equals(vtp.getName()));
-		
-		assertTrue(vtp.go("Architectural"));
-		assertTrue("Architectural".equals(vtp.getName()));
-
-		assertFalse(vtp.go("task2"));
-		assertTrue("Architectural".equals(vtp.getName()));
-		assertTrue("Architectural".equals(vtp.getType()));
-
-		assertTrue(vtp.go("TaskList"));
-		assertTrue("TaskList".equals(vtp.getName()));
-		assertTrue("TaskList".equals(vtp.getType()));
-
-		assertTrue(DataPath.makeSlashedId("m*yTask2").equals(vtp.add("m*yTask2","Task")));
-		assertTrue(DataPath.makeSlashedId("m*yTask2").equals(vtp.add("m*yTask2","Task")));
-		
-		assertTrue(vtp.go(DataPath.makeSlashedId("m*yTask2")));
-	}
-	
-	@Test
-	@Ignore
-	public void testExistAbsoluteSlash() {
-		IVarTreePointer vtp = populate2();
-
-		assertFalse(vtp.existAbsolute(S+ sh_system_path +S+ "Architectural2"));
-
-		assertTrue(vtp.existAbsolute(S+sh_system_path +S+ "Architectural"));
-		assertNull(vtp.getName());
-		assertTrue("root_Node's_Type".equals(vtp.getType()));
-
-		assertTrue(vtp.go(sh_system_path));
-		
-		assertTrue(vtp.existAbsolute(null));
-		assertTrue(sh_system_path.equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
-
-		assertFalse(vtp.go("Task"));
-		assertTrue(vtp.existAbsolute(S+sh_system_path+S+"Architectural" +S+ "TaskList" +S+ sh_task_path));
-		assertTrue(sh_system_path.equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
-	}
-	
-	@Test
-	@Ignore
-	public void testExistSlash() {
-		IVarTreePointer vtp = populate2();
-
-		assertFalse(vtp.exist("Architectural2"));
-
-		assertFalse(vtp.exist("Architectural"));
-		assertTrue(vtp.exist(sh_system_path));
-		assertNull(vtp.getName());
-		assertTrue("root_Node's_Type".equals(vtp.getType()));
-
-		assertTrue(vtp.go(sh_system_path));
-		
-		assertTrue(vtp.exist("Architectural"));
-		assertTrue(vtp.exist("Mapping"));
-		assertTrue(sh_system_path.equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
-
-		assertTrue(vtp.exist("Functional" +S+ "Implementation"));
-
-		assertTrue(vtp.go("Functional"));
-		assertTrue("Functional".equals(vtp.getName()));
-		assertTrue("Functional".equals(vtp.getType()));
-
-		assertTrue(vtp.exist("Implementation"));
-		assertTrue(vtp.exist("EventList"));
-		assertTrue(vtp.exist("Implementation"));
-		assertTrue("Functional".equals(vtp.getName()));
-		assertTrue("Functional".equals(vtp.getType()));
-	}
-	
-	@Test
-	@Ignore
-	public void testGoFirstChildSlash() {
-		IVarTreePointer vtp = populate2();
-		
-		// system
-		assertTrue(vtp.goFirstChild());
-		assertTrue(sh_system_path.equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
-		
-		assertTrue(vtp.goFirstChild());
-		{ // architectural
-			assertTrue("Architectural".equals(vtp.getName()));
-			assertTrue("Architectural".equals(vtp.getType()));
-
-			assertTrue(vtp.goFirstChild());
-			{ // bus
-				assertTrue("BusList".equals(vtp.getName()));
-				assertTrue("BusList".equals(vtp.getType()));
-			
-				assertTrue(vtp.goParent());
-			}
-			
-			// architectural
-			assertTrue(vtp.go("TaskList"));
-			
-			
-			{ // task
-				assertTrue("TaskList".equals(vtp.getName()));
-				assertTrue("TaskList".equals(vtp.getType()));
-			
-				assertTrue(vtp.goFirstChild());
-				
-				{ // myTask
-					assertTrue(sh_task_path.equals(vtp.getName()));
-					assertTrue("Task".equals(vtp.getType()));
-				}
-				
-			}
-			
-		}
-	}
-	@Test
-	@Ignore
-	public void testGetChildrenNumberSlash() {
-		IVarTreePointer vtp = populate2();
-
-		assertEquals(vtp.getChildrenNumber(), 1);
-		assertTrue(vtp.go(sh_system_path));
-
-		assertEquals(vtp.getChildrenNumber(), 5);
-		
-		assertTrue(vtp.go("Mapping"));
-		assertEquals(vtp.getChildrenNumber(), 4); // taskMap, procMap, varMap, FastTaskToProcMap
-
-		assertTrue(vtp.goAbsolute(S+sh_system_path+S+"Name"));
-		assertEquals(vtp.getChildrenNumber(), 0); // variable
-		
-		assertTrue(vtp.goAbsolute(S+sh_system_path+S+"Architectural" +S+ "TaskList" +S+ sh_task_path));
-		assertEquals(vtp.getChildrenNumber(), 6); // variable
-
-		assertTrue(vtp.goAbsolute(S+sh_system_path+S+"Functional"));
-		assertEquals(vtp.getChildrenNumber(), 4); // variable
-	}
-	
-	@Test
-	@Ignore
-	public void testGoNextSiblingSlash() {
-		IVarTreePointer vtp = populate2();
-		
-		assertTrue(vtp.goFirstChild());
-		assertFalse(vtp.goNextSibling());
-		// system
-		assertTrue(vtp.goFirstChild());
-		{ // architectural
-			assertTrue("Architectural".equals(vtp.getName()));
-			assertTrue("Architectural".equals(vtp.getType()));
-
-			assertTrue(vtp.goNextSibling());
-		}
-		
-		{ // functional
-			assertTrue("Functional".equals(vtp.getName()));
-			assertTrue("Functional".equals(vtp.getType()));
-
-			assertTrue(vtp.goNextSibling());
-		}
-		{ // mapping
-			assertTrue("Mapping".equals(vtp.getName()));
-			assertTrue("Mapping".equals(vtp.getType()));
-
-			assertTrue(vtp.goNextSibling());
-		}
-		{ // name
-			assertTrue("Name".equals(vtp.getName()));
-			assertTrue("StringVar".equals(vtp.getType()));
-
-			assertTrue(vtp.goNextSibling());
-		}
-		{ // xtc
-			assertTrue("XTC_Cookie".equals(vtp.getName()));
-			assertTrue("StringVar[]".equals(vtp.getType()));
-
-			assertFalse(vtp.goNextSibling());
-		}
-
-		
-		assertTrue(vtp.goAbsolute(S+sh_system_path+S+ "Architectural" +S+ "TaskList"));
-		assertEquals(vtp.getChildrenNumber(), 1);
-
-		assertTrue("aaa".equals(vtp.add("aaa","Task")));
-		assertEquals(vtp.getChildrenNumber(), 2);
-
-		assertTrue("zzz".equals(vtp.add("zzz","Task")));
-		assertEquals(vtp.getChildrenNumber(), 3);
-
-		
-		{ // task
-			assertTrue("TaskList".equals(vtp.getName()));
-			assertTrue("TaskList".equals(vtp.getType()));
-		
-			assertTrue(vtp.goFirstChild());
-			
-			{ // myTask
-				assertTrue(sh_task_path.equals(vtp.getName()));
-				assertTrue("Task".equals(vtp.getType()));
-				
-				assertTrue(vtp.goNextSibling());
-			}
-			{ // aaa
-				assertTrue("aaa".equals(vtp.getName()));
-				assertTrue("Task".equals(vtp.getType()));
-				
-				assertTrue(vtp.goNextSibling());
-			}
-			{ // zzz
-				assertTrue("zzz".equals(vtp.getName()));
-				assertTrue("Task".equals(vtp.getType()));
-				
-				assertFalse(vtp.goNextSibling());
-			}
-			
-		}
-		
-		
-		assertTrue(vtp.goAbsolute(S+sh_system_path+S+ "Functional"));
-		assertEquals(vtp.getChildrenNumber(), 4);
-		{
-
-			assertTrue(vtp.goFirstChild());
-			
-			{ // eventList
-				assertTrue("EventList".equals(vtp.getName()));
-				assertTrue("EventList".equals(vtp.getType()));
-				
-				assertTrue(vtp.goNextSibling());
-			}
-			{ // partialOrderList
-				assertTrue("PartialOrderList".equals(vtp.getName()));
-				assertTrue("PartialOrderList".equals(vtp.getType()));
-				
-				assertTrue(vtp.goNextSibling());
-			}
-			{ // systemImplementation
-				assertTrue("Implementation".equals(vtp.getName()));
-				assertTrue("Implementation".equals(vtp.getType()));
-				
-				assertTrue(vtp.goNextSibling());
-			}
-			{ // timeConstList
-				assertTrue("TimeConstList".equals(vtp.getName()));
-				assertTrue("TimeConstList".equals(vtp.getType()));
-
-				assertFalse(vtp.goNextSibling());
-			}
-
-		}
-
-	}
-	
-	@Test
-	@Ignore
-	public void testGoParentSlash() {
-		IVarTreePointer vtp = populate2();
-		
-		assertTrue(vtp.goAbsolute(S+sh_system_path+S+ "Architectural" +S+ "TaskList" +S+ sh_task_path));
-		assertTrue(sh_task_path.equals(vtp.getName()));
-		assertTrue("Task".equals(vtp.getType()));
-		
-		assertTrue(vtp.goParent());
-		assertTrue("TaskList".equals(vtp.getName()));
-		assertTrue("TaskList".equals(vtp.getType()));
-
-		assertTrue(vtp.goParent());
-		assertTrue("Architectural".equals(vtp.getName()));
-		assertTrue("Architectural".equals(vtp.getType()));
-
-		assertTrue(vtp.goParent());
-		assertTrue(sh_system_path.equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
-
-		assertTrue(vtp.goParent());
-		assertFalse(vtp.goParent());
-	}
-	
-	@Test
-	@Ignore
-	public void testGetVarSlash() {
-		IVarTreePointer vtp = populate2();
-		
-		assertTrue(vtp.go(sh_system_path));
-		StringVar sv = new StringVar("N*ome");
-		vtp.add("Name", sv);
-		assertTrue(vtp.go("Name"));
-		StringVar svr = (StringVar) vtp.getVar();
-		assertNotSame(svr, sv);
-		assertTrue("N*ome".equals(svr.get()));
-		assertSame("N*ome", svr.get()); // NB !!!
-		
-		sv.set("Ciao");
-		StringVar svr2 = (StringVar) vtp.getVar();
-		assertNotSame(svr2, sv);
-		assertTrue("N*ome".equals(svr.get()));
-		assertSame("N*ome", svr.get()); // NB !!!
-		assertTrue("N*ome".equals(svr2.get()));
-		assertSame("N*ome", svr2.get()); // NB !!!
-		
-		//---------
-		
-		assertTrue(vtp.goAbsolute(S+DataPath.makeSlashedId("N*ome")+S+ "Functional" +S+ "Implementation" +S+ sh_proc_path));
-		StringMVar smv = new StringMVar();
-		try {
-			smv.appendValue("a");
-			smv.appendValue("b");
-			smv.appendValue("c");
-			smv.appendValue("a");
-			smv.appendValue("b");
-			smv.appendValue("c");
-		} catch (NotValidValueException e) { assertTrue(false); }
-		assertTrue("Methods".equals(vtp.add("Methods", smv)));
-		assertTrue(vtp.go("Methods"));
-		
-		StringMVar smvr = (StringMVar) vtp.getVar();
-		assertNotSame(smv, smvr);
-
-		for (int i=0; i<2; i++) {
-			smvr = (StringMVar) vtp.getVar();
-
-			// NB! proc.getMethods use Unique Data Type 
-			assertEquals(smvr.sizeValues(), 3);
-			String[] val = smvr.getValues();
-			assertTrue("a".equals(val[0]));
-			assertTrue("b".equals(val[1]));
-			assertTrue("c".equals(val[2]));
-			
-			smv.clearValues();
-		}
-
-		// -------------
-		
-		assertTrue(vtp.goAbsolute(S+ DataPath.makeSlashedId("N*ome") +S+ "Architectural" +S+ "TaskList" +S+ sh_task_path +S+ "Type"));
-		StringVar type = (StringVar) vtp.getVar();
-		assertTrue(type == null || type.get() == null );
-		//assertTrue(type.get() == null);
-	}
-
-	@Test
-	@Ignore
-	public void testSetVarSlash() {
-		IVarTreePointer vtp = populate2();
-		
-		assertTrue(vtp.go(sh_system_path +S+  "Name"));
-		StringVar sv = new StringVar("N*ome");
-		vtp.setVar(sv);
-
-		assertFalse(vtp.existAbsolute(sh_system_path));
-		assertFalse(vtp.exist(sh_system_path +S+  "Name"));
-
-		StringVar svr = (StringVar) vtp.getVar();
-		assertNotSame(svr, sv);
-		assertTrue("N*ome".equals(svr.get()));
-		assertSame("N*ome", svr.get()); // NB !!!
-		
-		sv.set("Ciao");
-		StringVar svr2 = (StringVar) vtp.getVar();
-		assertNotSame(svr2, sv);
-		assertTrue("N*ome".equals(svr.get()));
-		assertSame("N*ome", svr.get()); // NB !!!
-		
-		//---------
-		
-		assertTrue(vtp.goAbsolute(S+ DataPath.makeSlashedId("N*ome") +S+ "Functional" +S+ "Implementation" +S+ sh_proc_path +S+ "Methods"));
-		StringMVar smv = new StringMVar();
-		try {
-			smv.appendValue("a");
-			smv.appendValue("b");
-			smv.appendValue("c");
-			smv.appendValue("a");
-			smv.appendValue("b");
-			smv.appendValue("c");
-		} catch (NotValidValueException e) { assertTrue(false); }
-		vtp.setVar(smv);
-		
-		StringMVar smvr = (StringMVar) vtp.getVar();
-		assertNotSame(smv, smvr);
-
-		for (int i=0; i<2; i++) {
-			smvr = (StringMVar) vtp.getVar();
-
-			// NB! proc.getMethods use Unique Data Type 
-			assertEquals(smvr.sizeValues(), 3);
-			String[] val = smvr.getValues();
-			assertTrue("a".equals(val[0]));
-			assertTrue("b".equals(val[1]));
-			assertTrue("c".equals(val[2]));
-			
-			smv.clearValues();
-		}
-
-	}
-
-	// checked in all functions
-	//public void testGetName() {}
-
-	// checked in all functions
-	// public void testGetType() {}
-
-	@Test
-	@Ignore
-	public void testIsContainerSlash() {
-		IVarTreePointer vtp = populate2();
-	
-		assertTrue(vtp.isContainer());
-		
-		assertTrue(vtp.go(sh_system_path+S+"Name"));
-		assertFalse(vtp.isContainer());
-
-		assertTrue(vtp.goAbsolute(S+ sh_system_path+S+"Architectural"));
-		assertTrue(vtp.isContainer());
-
-		assertTrue(vtp.go("TaskList"));
-		assertTrue(vtp.isContainer());
-		
-		assertTrue(vtp.go(sh_task_path));
-		assertTrue(vtp.isContainer());
-		
-		assertTrue(vtp.go("Type"));
-		assertFalse(vtp.isContainer());
-	}
-
-	@Test
-	@Ignore
-	public void testDestroySlash() {
-		IVarTreePointer vtp = populate2();
-		
-		assertTrue(vtp.go(sh_system_path));
-		assertTrue(sh_system_path.equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
-		
-		assertEquals(vtp.getChildrenNumber(), 5);
-
-		assertTrue(vtp.go("Architectural"));
-		vtp.destroy();
-		
-		assertTrue(sh_system_path.equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
-		
-		assertFalse(vtp.go("Architectural"));
-		assertEquals(vtp.getChildrenNumber(), 4);
-
-		// -------
-		assertTrue("Name".equals(vtp.add("Name", new StringVar("Ciao"))));
-		assertEquals(vtp.getChildrenNumber(), 4);
-		assertTrue("Ciao".equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
-		
-		assertTrue(vtp.go("Name"));
-		vtp.destroy();
-
-		assertTrue(DataPath.makeSlashedId((String) null).equals(vtp.getName()));
-		assertTrue("System".equals(vtp.getType()));
-		
-		assertFalse(vtp.go("Architectural"));
-		assertEquals(vtp.getChildrenNumber(), 4);
-		
-		// -------
-		vtp.destroy();
-		assertSame(null, vtp.getName());
-		assertTrue("root_Node's_Type".equals(vtp.getType()));
-		
-		assertEquals(vtp.getChildrenNumber(), 0);
-		assertFalse(vtp.go("Architectural"));
-		assertFalse(vtp.go("Functional"));
-		assertFalse(vtp.go("Mapping"));
-		
-	}
-
 }
