@@ -259,78 +259,10 @@ public class SectionWriterHalMpc567 extends SectionWriter
 						}
 						
 					}
-					
-	//				SYS_STACK_SIZE = nnnn
-	//				che produca in eecfg.h
-	//				  #define EE_SYS_STACK_SIZE     nnnn
-	
+
 				}
 			}
 			
-			/***********************************************************************
-			 * 
-			 * Get ISR LEVEL and HANDLER
-			 *  
-			 **********************************************************************/
-	//		{ STILL NOT IMPLEMENTED IN EE
-	//			final String oilHwRtosPrefix = parent.getOilHwRtosPrefix();
-	//			List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.ISR);
-	//			for (Iterator<ISimpleGenRes> iter = tasks.iterator(); iter.hasNext();) {
-	//
-	//				ISimpleGenRes currIsr = (ISimpleGenRes) iter.next();
-	//				
-	//				{ // Check category
-	//					String category = currIsr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ?
-	//							currIsr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
-	//					if (!"2".equals(category)) {
-	//						throw new OilCodeWriterException("Mico32 supports only category 2 ISR (check "+currIsr.getName()+")." );
-	//					}
-	//					
-	//					
-	//				}
-	//				
-	//				
-	//
-	//				String oilVarPrefix = DataPackage.eINSTANCE.getRtos_OilVar()
-	//						.getName()
-	//						+ S + IOilXMLLabels.OBJ_ISR + oilHwRtosPrefix;
-	//
-	//	
-	//				{ // LEVEL
-	//					String deadLinePath = currIsr.getPath() + S + oilVarPrefix + S
-	//							+ "LEVEL" ;
-	//	
-	//					String[] values = CommonUtils.getValue(vt, deadLinePath);
-	//	
-	//					String var = null;
-	//					if (values != null && values.length >0) {
-	//						var = values[0];
-	//					} else {
-	//						throw new OilCodeWriterException("Required a LEVEL for the isr "+currIsr.getName()+".");
-	//					}
-	//					
-	//					currIsr.setObject(Mico32Constants.SGRK__ISR_LEVEL__, var);
-	//				}
-	//				
-	//				{ // HANDLER
-	//					String deadLinePath = currIsr.getPath() + S + oilVarPrefix + S
-	//							+ "HANDLER" ;
-	//	
-	//					String[] values = CommonUtils.getValue(vt, deadLinePath);
-	//	
-	//					String var = null;
-	//					if (values != null && values.length >0) {
-	//						var = values[0];
-	//					} else {
-	//						throw new OilCodeWriterException("The HANDLER for the isr "+currIsr.getName()+" is missing or incorrect.");
-	//					}
-	//					
-	//					currIsr.setObject(Mico32Constants.SGRK__ISR_HANDLER__, var);
-	//				}
-	//			}
-	//
-	//		}		
-	
 		}
 		
 		checkMcu(tmp_common_eeopts); // note that mcu must done after board 
@@ -361,64 +293,56 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			throws OilCodeWriterException {
 
 		final IOilObjectList[] oilObjects = parent.getOilObjects();		
-		
-		IOilWriterBuffer answer = new OilWriterBuffer();
-		final int currentRtosId = 0;
+		IOilWriterBuffer[] answer = new IOilWriterBuffer[oilObjects.length];
 
-
-		// ------------- Requirement --------------------
-		StringBuffer sbInithal_c = answer.get(FILE_EE_CFG_C);
-		StringBuffer sbInithal_h = answer.get(FILE_EE_CFG_H);
-		
-		final IOilObjectList ool = oilObjects[currentRtosId];
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-
-
-		// ------------- Compute --------------------
-
-		sbInithal_c.append("\n#include \"ee.h\"\n");
-
-//		/***********************************************************************
-//         * 
-//         * EE OPTS
-//         *  
-//         **********************************************************************/
-//	    final boolean splim;
-//	    {
-//	    	boolean found = false;
-//        	String[] old = (String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS);
-//        	for (int i=0; i<old.length && !found; i++) {
-//        		found = __EE_OPT_PIC30_SPLIM__.equals(old[i]);
-//        	}
-//        	splim = found;
-//        }
+		final int rtosNumber = oilObjects.length;
 
 
 		/***********************************************************************
-		 * SYSTEM STACK SIZE
+		 * prepare and write buffers for All OS
 		 **********************************************************************/
-		if (sgrCpu.containsProperty(SGR_OS_CPU_SYS_STACK_SIZE)) {
-			sbInithal_h.append(indent1 + getCommentWriter(sgrCpu, FileTypes.H).writerSingleLineComment("System stack size") + 
-					indent1 + "#define EE_SYS_STACK_SIZE     " + sgrCpu.getString(SGR_OS_CPU_SYS_STACK_SIZE)+ "\n\n");
+		for (int currentRtosId = 0; currentRtosId < rtosNumber; currentRtosId++) {
+		
+			IOilWriterBuffer cpuBuffs = new OilWriterBuffer();
+			answer[currentRtosId] = cpuBuffs;
+	
+	
+			// ------------- Requirement --------------------
+			StringBuffer sbInithal_c = cpuBuffs.get(FILE_EE_CFG_C);
+			StringBuffer sbInithal_h = cpuBuffs.get(FILE_EE_CFG_H);
+			
+			final IOilObjectList ool = oilObjects[currentRtosId];
+			final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
+	
+	
+			// ------------- Compute --------------------
+	
+			sbInithal_c.append("\n#include \"ee.h\"\n");
+	
+			/***********************************************************************
+			 * SYSTEM STACK SIZE
+			 **********************************************************************/
+			if (sgrCpu.containsProperty(SGR_OS_CPU_SYS_STACK_SIZE)) {
+				sbInithal_h.append(indent1 + getCommentWriter(sgrCpu, FileTypes.H).writerSingleLineComment("System stack size") + 
+						indent1 + "#define EE_SYS_STACK_SIZE     " + sgrCpu.getString(SGR_OS_CPU_SYS_STACK_SIZE)+ "\n\n");
+			}
+			
+			/***********************************************************************
+			 * OTHER STACKs
+			 **********************************************************************/
+			sbInithal_c.append(handleStacks(ool));
+			
+	
+			
+			//  ------------- MORE FILES ---------------
+			
+			
+			// makefile
+			prepareMakeFile(sgrCpu);
+		
 		}
 		
-		/***********************************************************************
-		 * OTHER STACKs
-		 **********************************************************************/
-		sbInithal_c.append(handleStacks(ool));
-		
-
-		
-		//  ------------- MORE FILES ---------------
-		
-		
-		// makefile
-		prepareMakeFile(sgrCpu);
-		
-		// add asm file
-		//(new SectionWriterKernelSystemCalls()).addSysCalls(ool, answer);
-
-		return new IOilWriterBuffer[] { answer };
+		return answer;
 	}
 
 

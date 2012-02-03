@@ -604,4 +604,99 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(result.vt)));
 	}
 
+	
+	public void testMpc567_bug90_stack() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {\n" +
+			"		EE_OPT = \"__ASSERT__\";\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\";\n" +
+			"\n" +
+			"		EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n" +
+			"\n" +
+			"		MASTER_CPU = \"master\";\n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			ID = \"master\";\n" +
+			"			MODEL = E200Z6;\n" +
+			"			APP_SRC = \"master.c\";\n" +
+			"			APP_SRC = \"shared.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" +
+			"				IRQ_STACK = FALSE;\n" +
+			"			};\n" +
+			"			VLE = TRUE;\n" +
+			"			SYS_STACK_SIZE = 4096;\n" +
+			"		};\n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			MODEL = E200Z0;\n" +
+			"			ID = \"slave\";\n" +
+			"			APP_SRC = \"slave.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" +
+			"				IRQ_STACK = FALSE;\n" +
+			"			};\n" +
+			"			VLE = TRUE;\n" +
+			"			SYS_STACK_SIZE = 2048;\n" +
+			"		};\n" +
+			"\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5668G;\n" +
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"\n" +
+			"		USEREMOTETASK = ALWAYS;\n" +
+			"		USEREMOTEEVENT = ALWAYS;\n" +
+			"		ORTI_SECTIONS = ALL;\n" +
+			"\n" +
+			"		KERNEL_TYPE = ECC1;\n" +
+			"	};\n" +
+			"\n" +
+			"	TASK TaskZ6 {\n" +
+			"		CPU_ID = \"master\";\n" +
+			"		PRIORITY = 1;\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;\n" +
+			"		SCHEDULE = FULL;\n" +
+			"	};\n" +
+			"\n" +
+			"\n" +
+			"	TASK TaskZ0Main {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		PRIORITY = 5;\n" +
+			"		AUTOSTART = TRUE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;\n" +
+			"		SCHEDULE = FULL;\n" +
+			"		EVENT = \"Event1\";\n" +
+			"		EVENT = \"Event2\";\n" +
+			"	};\n" +
+			"\n" +
+			"	TASK TaskZ0Bkg {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		PRIORITY = 1;\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;\n" +
+			"		SCHEDULE = FULL;\n" +
+			"	};\n" +
+			"\n" +
+			"	EVENT Event1 { MASK = AUTO; };\n" +
+			"	EVENT Event2 { MASK = AUTO; };\n" +
+			"};";
+		DefaultTestResult result = commonWriterTest(text, 2);
+	}
 }
