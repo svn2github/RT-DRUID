@@ -30,4 +30,4 @@ case "`uname -s`" in
 #  export ECLIPSE_HOME="/home/abc/programs/eclipse3.4"
 	;;
 esac
-exec java -jar "$LAUNCHER_JAR"  -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile "$2" --outputDir "$3"
+exec java -jar "$LAUNCHER_JAR" -data "$3/workspace" -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile "$2" --outputDir "$3"

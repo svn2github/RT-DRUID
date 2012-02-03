@@ -33,5 +33,24 @@ case "`uname -s`" in
 #  export ECLIPSE_HOME="/home/abc/programs/eclipse3.4"
 	;;
 esac
-exec java -jar "$LAUNCHER_JAR" -application org.eclipse.ant.core.antRunner "$@" 
+WSOPT=""
+WSOPT_set=""
+for a in "$@"; do
+    if [ "$a" == "-data" ]; then
+        WSOPT_set="true"
+    fi
+
+    if [ "${a#-Dconf_output_dir=}" != "$a" ]; then
+        WSOPT="-data ${a#-Dconf_output_dir=}/workspace"
+    fi
+done
+
+echo abc $WSOPT_set abc
+
+if [ "$WSOPT_set" == "true" ]; then
+        WSOPT=""
+fi
+
+exec java -jar "$LAUNCHER_JAR" $WSOPT -application org.eclipse.ant.core.antRunner "$@"
+
 
