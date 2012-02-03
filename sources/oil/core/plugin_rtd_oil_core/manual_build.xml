@@ -64,6 +64,43 @@
 		</antcall>
 	</target>
 
+	<target name="rtdruid_oil_core_ant.jar" unless="rtdruid_oil_core_ant.jar" description="Create jars: ${bundleId} rtdruid_oil_core.jar.">
+		<path id="common_build_classpath">
+			<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
+			
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core.jar"/>
+			<pathelement path="${plugin.temp.folder}/*/rtdruid_core.jar"/>
+
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core_ant.jar"/>
+			<pathelement path="${plugin.temp.folder}/*/rtdruid_core_ant.jar"/>
+
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_${rtd_templates_v}.${build_number}/"/>
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.templates.core_*/"/>
+			
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.core_${rtd_oil_core_v}.${build_number}/rtdruid_oil_core.jar"/>
+			<pathelement path="${plugin.temp.folder}/*/rtdruid_oil_core.jar"/>
+
+		</path>
+		<resources id="common_build_binary_files">
+			<fileset dir="src_ant" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+		</resources>	
+
+		<antcall target="common_build.jar">
+			<param name="plugin_id" value="${bundleId}"/>
+			<param name="plugin_vers" value="${bundleVersion}"/>
+			<param name="jar_name" value="rtdruid_oil_ant"/>
+			<param name="common_build_sources" value="src_ant/"/>
+			<reference refid="common_build_classpath"/>
+			<reference refid="common_build_binary_files"/>
+		</antcall>
+	</target>
+
+	
 	<target name="publish.bin.parts">
 		<antcall target="common_publish.bin.parts">
 			<param name="plugin_id" value="${bundleId}"/>
@@ -98,6 +135,8 @@
 		<delete file="${compilation.problem.marker}" quiet="true"/>
 		<available property="rtdruid_oil_core.jar" file="${build.result.folder}/rtdruid_oil_core.jar"/>
 		<antcall target="rtdruid_oil_core.jar"/>
+		<available property="rtdruid_oil_core_ant.jar" file="${build.result.folder}/rtdruid_oil_core_ant.jar"/>
+		<antcall target="rtdruid_oil_core_ant.jar"/>		
 	</target>
 
 </project>

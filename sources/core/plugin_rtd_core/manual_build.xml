@@ -56,6 +56,32 @@
 		</antcall>
 	</target>
 
+	<target name="rtdruid_core_ant.jar" unless="rtdruid_core_ant.jar" description="Create jars: ${bundleId} rtdruid_core.jar.">
+		<path id="common_build_classpath">
+			<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
+
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core.jar"/>
+			<pathelement path="${plugin.temp.folder}/*/rtdruid_core.jar"/>
+		</path>
+		<resources id="common_build_binary_files">
+			<fileset dir="src_ant_task" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+		</resources>	
+
+		<antcall target="common_build.jar">
+			<param name="plugin_id" value="${bundleId}"/>
+			<param name="plugin_vers" value="${bundleVersion}"/>
+			<param name="jar_name" value="rtdruid_core_ant"/>
+			<param name="common_build_sources" value="src_ant_task/"/>
+			<reference refid="common_build_classpath"/>
+			<reference refid="common_build_binary_files"/>
+		</antcall>
+	</target>
+
 	<target name="publish.bin.parts">
 		<antcall target="common_publish.bin.parts">
 			<param name="plugin_id" value="${bundleId}"/>
@@ -93,6 +119,8 @@
 		<delete file="${compilation.problem.marker}" quiet="true"/>
 		<available property="rtdruid_core.jar" file="${build.result.folder}/rtdruid_core.jar"/>
 		<antcall target="rtdruid_core.jar"/>
+		<available property="rtdruid_core_ant.jar" file="${build.result.folder}/rtdruid_core_ant.jar"/>
+		<antcall target="rtdruid_core_ant.jar"/>
 	</target>
 
 </project>
