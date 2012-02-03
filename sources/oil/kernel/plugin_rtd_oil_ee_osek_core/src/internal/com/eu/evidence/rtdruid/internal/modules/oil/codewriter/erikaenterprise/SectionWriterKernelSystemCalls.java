@@ -76,7 +76,8 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		"GetAlarm",
 		"SetRelAlarm",
 		"SetAbsAlarm",
-		"CancelAlarm"
+		"CancelAlarm",
+		"counter_tick"
 	};
 
 	
