@@ -936,6 +936,9 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 							write = !(INVALID_SIGNATURE_OPTIONS[oo].equals(tmp));
 						}
 					}
+					
+					check_valid_eeopt(tmp);
+					
 					if (write) {
 						answer.add(tmp);
 					}
@@ -1044,6 +1047,23 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		
 		
 	    return (String[]) answer.toArray(new String[answer.size()]);
+	}
+
+	private void check_valid_eeopt(String tmp) {
+		boolean valid = tmp != null && tmp.length()>0 && tmp.length()<63;
+		
+		if (valid) {
+			
+			valid &= Character.isLetter(tmp.charAt(0)) || tmp.charAt(0) == '_';
+			
+			for (int i=1; i<tmp.length() && valid; i++) {
+				valid &= Character.isLetterOrDigit(tmp.charAt(i)) || tmp.charAt(i) == '_';
+			}
+		}
+		
+		if (!valid) {
+			throw new RuntimeException("The ee_opt " + tmp + " is not valid (see C99 identifier)");
+		}
 	}
 
 	/**
