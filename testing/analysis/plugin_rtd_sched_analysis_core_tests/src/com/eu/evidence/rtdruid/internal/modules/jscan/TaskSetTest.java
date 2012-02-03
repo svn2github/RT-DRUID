@@ -7,9 +7,7 @@
 package com.eu.evidence.rtdruid.internal.modules.jscan;
 
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
 import com.eu.evidence.rtdruid.vartree.DataPath;
@@ -22,21 +20,6 @@ import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
  * @author Nicola Serreli
  */
 public class TaskSetTest extends TestCase {
-
-	/**
-	 * Constructor for TaskSetTest.
-	 */
-	public TaskSetTest(String name) {
-		super(name);
-	}
-
-	/*
-	 * @see TestCase#setUp()
-	 */
-	
-	public static Test suite() {
-		return new TestSuite(TaskSetTest.class);
-	}
 
 	//----------------------------------------
 

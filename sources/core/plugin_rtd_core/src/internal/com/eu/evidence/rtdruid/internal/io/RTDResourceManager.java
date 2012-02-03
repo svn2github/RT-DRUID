@@ -149,7 +149,12 @@ public class RTDResourceManager extends XMIResourceImpl implements IVTResource {
 				inputStream.reset();
 		
 				if (emptyFile) { // is empty .. then add the first one element
-					EObject root = VarTreeUtil.newVarTreeRoot();
+					final EObject root;
+					if (resourceSet == null) {
+						root = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
+					} else {
+						root = VarTreeUtil.newVarTreeRoot(resourceSet.getPackageRegistry());
+					}
 					VarTreeIdHandler.setId(root, "default system");
 					getContents().add(root);
 					return;

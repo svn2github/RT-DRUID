@@ -25,84 +25,114 @@ public class VarTreeIdHandler {
 
 	protected static DataPackage dpkg = DataPackage.eINSTANCE;
 
-	private static HashMap<EClass, List<EAttribute>> idMap = new HashMap<EClass, List<EAttribute>>();
+	private static HashMap<EClass, List<EAttribute>> eattrMap = new HashMap<EClass, List<EAttribute>>();
+	private static HashMap<String, List<String>> idMap = new HashMap<String, List<String>>();
 
 	static {
-		setMap(dpkg.getTimeConstElement(),
-				Arrays.asList(new EAttribute[] {
-						dpkg.getTimeConstElement_FirstEvent(),
-						dpkg.getTimeConstElement_SecondEvent(),
-						dpkg.getTimeConstElement_BoundType()
+		setMap(dpkg.getTimeConstElement().getName(),
+				Arrays.asList(new String[] {
+						dpkg.getTimeConstElement_FirstEvent().getName(),
+						dpkg.getTimeConstElement_SecondEvent().getName(),
+						dpkg.getTimeConstElement_BoundType().getName()
 				}));
-		setMap(dpkg.getOrder(),
-				Arrays.asList(new EAttribute[] {
-						dpkg.getOrder_FirstEvent(),
-						dpkg.getOrder_SecondEvent()
+		setMap(dpkg.getOrder().getName(),
+				Arrays.asList(new String[] {
+						dpkg.getOrder_FirstEvent().getName(),
+						dpkg.getOrder_SecondEvent().getName()
 				}));
-		setMap(dpkg.getCacheMissCost(),
-				Arrays.asList(new EAttribute[] {
-						dpkg.getCacheMissCost_Ref(),
-						dpkg.getCacheMissCost_Type()
+		setMap(dpkg.getCacheMissCost().getName(),
+				Arrays.asList(new String[] {
+						dpkg.getCacheMissCost_Ref().getName(),
+						dpkg.getCacheMissCost_Type().getName()
 				}));
-		setMap(dpkg.getExecTime(),
-				Arrays.asList(new EAttribute[] {
-						dpkg.getExecTime_Ref(),
-						dpkg.getExecTime_Type()
+		setMap(dpkg.getExecTime().getName(),
+				Arrays.asList(new String[] {
+						dpkg.getExecTime_Ref().getName(),
+						dpkg.getExecTime_Type().getName()
 				}));
-		setMap(dpkg.getProcMap(),
-				Arrays.asList(new EAttribute[] {
-						dpkg.getProcMap_ModeRef(),
-						dpkg.getProcMap_ProcRef()
+		setMap(dpkg.getProcMap().getName(),
+				Arrays.asList(new String[] {
+						dpkg.getProcMap_ModeRef().getName(),
+						dpkg.getProcMap_ProcRef().getName()
 				}));
-		setMap(dpkg.getTaskMap(),
-				Arrays.asList(new EAttribute[] {
-						dpkg.getTaskMap_ModeRef(),
-						dpkg.getTaskMap_TaskRef()
+		setMap(dpkg.getTaskMap().getName(),
+				Arrays.asList(new String[] {
+						dpkg.getTaskMap_ModeRef().getName(),
+						dpkg.getTaskMap_TaskRef().getName()
 				}));
-		setMap(dpkg.getVarMap(),
-				Arrays.asList(new EAttribute[] {
-						dpkg.getVarMap_ModeRef(),
-						dpkg.getVarMap_VarRef()
+		setMap(dpkg.getVarMap().getName(),
+				Arrays.asList(new String[] {
+						dpkg.getVarMap_ModeRef().getName(),
+						dpkg.getVarMap_VarRef().getName()
 				}));
 
 	}
 	
 	
-	public static void setMap(EClass obj, List<EAttribute> idAttrs) {
-		if (obj != null) {
+	//public static void setMap(EClass obj, List<EAttribute> idAttrs) {
+	public static void setMap(String objId, List<String> idAttrs) {
+		if (objId != null) {
 			if (idAttrs == null) {
-				idMap.remove(obj);
+				idMap.remove(objId);
 			} else {
-				idMap.put(obj, Collections.unmodifiableList(new ArrayList<EAttribute>(idAttrs)));
-			}			
+				idMap.put(objId, Collections.unmodifiableList(new ArrayList<String>(idAttrs)));
+			}
+			
+			//remove all elemenent that are related to the changed id
+			for (Iterator<EClass> key = eattrMap.keySet().iterator(); key.hasNext(); ) {
+				EClass ec = key.next();
+				if (objId.equals(ec.getName())) {
+					key.remove();
+				}
+			}
 		}
 	}
 	
 	
 	private static List<EAttribute> getMap(EClass eclass) {
-		if (idMap.containsKey(eclass)) {
-			return idMap.get(eclass);
+		if (eattrMap.containsKey(eclass)) {
+			return eattrMap.get(eclass);
 		}
-
+		
 		List<EStructuralFeature> features = eclass.getEAllStructuralFeatures();
 		List<EAttribute> idFeatures = new ArrayList<EAttribute>();
-		EAttribute nameAttr = null;
-		for (EStructuralFeature esf : features) {
-			if (esf instanceof EAttribute) {
-				if (((EAttribute) esf).isID()) {
-					idFeatures.add((EAttribute) esf);
-				}
-				if ("name".equalsIgnoreCase(((EAttribute) esf).getName())) {
-					nameAttr = (EAttribute) esf;
+		if (idMap.containsKey(eclass.getName())) {
+			List<String> knonwIdIfeatures = idMap.get(eclass.getName());
+
+			
+			for (EStructuralFeature esf : features) {
+				if (esf instanceof EAttribute) {
+					if (knonwIdIfeatures.contains(((EAttribute) esf).getName())) {
+						idFeatures.add((EAttribute) esf);
+					}
 				}
 			}
-		}
-		if (idFeatures.size() == 0 && nameAttr != null) {
-			idFeatures.add(nameAttr);
+			
+		} else {
+			List<String> knonwIdIfeatures = new ArrayList<String>();
+			
+			EAttribute nameAttr = null;
+			for (EStructuralFeature esf : features) {
+				if (esf instanceof EAttribute) {
+					if (((EAttribute) esf).isID()) {
+						idFeatures.add((EAttribute) esf);
+						knonwIdIfeatures.add(((EAttribute) esf).getName());
+					}
+					if ("name".equalsIgnoreCase(((EAttribute) esf).getName())) {
+						nameAttr = (EAttribute) esf;
+					}
+				}
+			}
+			if (idFeatures.size() == 0 && nameAttr != null) {
+				idFeatures.add(nameAttr);
+				knonwIdIfeatures.add(nameAttr.getName());
+			}
+			idMap.put(eclass.getName(), knonwIdIfeatures);
 		}
 
+
 		idFeatures = Collections.unmodifiableList(idFeatures);
-		idMap.put(eclass, idFeatures);
+		eattrMap.put(eclass, idFeatures);
 
 		return idFeatures;
 	}

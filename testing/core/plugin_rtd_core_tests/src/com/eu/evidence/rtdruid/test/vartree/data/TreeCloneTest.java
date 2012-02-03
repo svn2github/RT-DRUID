@@ -69,10 +69,10 @@ public class TreeCloneTest {
 	 */
 	@Test
 	public void testClone2() throws Throwable {
-		EObject root1 = VarTreeUtil.newVarTreeRoot();
+		EObject root1 = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
 		VarTreeIdHandler.setId(root1, "a\\b/\\*c");
 		EObject root2 = VarTreeUtil.copy(root1);
-		EObject root3 = VarTreeUtil.newVarTreeRoot();
+		EObject root3 = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
 		VarTreeIdHandler.setId(root3, VarTreeIdHandler.getId(root1));
 			
 		assertNotSame(root1 , root2);
@@ -97,7 +97,7 @@ public class TreeCloneTest {
 		// note: root1 and root2 contains the same values
 		compare(root1, root2);
 
-		doTestMerge(root1, root2, VarTreeUtil.newVarTreeRoot());
+		doTestMerge(root1, root2, VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree()));
 	}
 	
 	/**
@@ -113,7 +113,7 @@ public class TreeCloneTest {
 		EObject root2 = fillFiller(f1.getNextID()+1).getLastRoot();
 		assertFalse(VarTreeUtil.compare(root1, root2).isOK());
 
-		EObject dest = VarTreeUtil.newVarTreeRoot();
+		EObject dest = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
 		doTestMerge(root1, root2, dest);
 	}
 
@@ -128,7 +128,7 @@ public class TreeCloneTest {
 		EObject root2 = fill();
 
 		IVTResource res = createResource();
-		EObject dest = VarTreeUtil.newVarTreeRoot();
+		EObject dest = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
 		res.getContents().add(dest);
 		
 		assertNotNull(dest.eResource());
@@ -250,14 +250,14 @@ public class TreeCloneTest {
 	
 	@Test
 	public void testMerge3() throws Throwable {
-		doTestMerge3(VarTreeUtil.newVarTreeRoot());
+		doTestMerge3(VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree()));
 	}
 	
 	@Test
 	public void testMerge3WithResource() throws Throwable {
 	
 		IVTResource res = createResource();
-		EObject root = VarTreeUtil.newVarTreeRoot();
+		EObject root = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
 		res.getContents().add(root);
 		
 		doTestMerge3(root);
@@ -296,7 +296,7 @@ public class TreeCloneTest {
 //			assertTrue(ok);
 		}
 		
-		EObject root2 = VarTreeUtil.newVarTreeRoot();
+		EObject root2 = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
 		VarTreeIdHandler.setId(root2, "id");
 
 		VarTreeUtil.merge(root2, root);
@@ -544,9 +544,9 @@ public class TreeCloneTest {
 	}
 	
 	protected FillVtUtil fillFiller(int startingValue) throws IOException {
-		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), DataPackage.eINSTANCE, createResource());
+		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), createResource());
 		filler.setNextID(startingValue);
-		EObject root = VarTreeUtil.newVarTreeRoot();
+		EObject root = VarTreeUtil.newVarTreeRoot(filler.getEditingDomain());
 		filler.fill(root);
 		return filler;
 	}

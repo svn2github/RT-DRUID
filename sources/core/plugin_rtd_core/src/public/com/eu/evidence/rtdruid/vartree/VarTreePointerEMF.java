@@ -248,7 +248,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 				throw new IllegalStateException("Try to add more than one system");
 			}
 			
-			EObject newRoot = VarTreeUtil.newVarTreeRoot();
+			EObject newRoot = VarTreeUtil.newVarTreeRoot(editingDomain);
 			VarTreeIdHandler.setId(newRoot, new String[] {nameId});
 			root.add(newRoot);
 			execFlushCommandStack();

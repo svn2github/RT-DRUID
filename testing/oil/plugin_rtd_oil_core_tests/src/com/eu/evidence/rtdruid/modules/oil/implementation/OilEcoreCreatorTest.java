@@ -193,7 +193,7 @@ public class OilEcoreCreatorTest {
 		assertNotNull(result.getEFactoryInstance());
 		EObject root = result.getEFactoryInstance().create((EClass)sys);
 
-		FillVtUtil filler = new FillVtUtil(result);
+		FillVtUtil filler = new FillVtUtil();
 		filler.fill(root);
 		System.out.println(Vt2StringUtilities.varTreeToString(filler.getEditingDomain()));
 

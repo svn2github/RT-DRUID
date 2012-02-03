@@ -3,7 +3,6 @@ package com.eu.evidence.rtdruid.internal.vartree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
@@ -12,7 +11,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -60,56 +58,44 @@ final public class VarTree extends AdapterFactoryEditingDomain implements IVarTr
      */
     public VarTree(CommandStack commandStack) {
         super(getFactories(), commandStack);
-        updateResourceFactoryRegistry();
     }
 
     /**
-     * Create an instance from the adapter factory, the specialized command
-     * stack, and the map used to maintain read only state.
+     * Create an instance from the adapter factory, and the specialized command
+     * stack.
      */
-    public VarTree(CommandStack commandStack, Map<Resource, Boolean> resourceToReadOnlyMap) {
-        super(getFactories(), commandStack, resourceToReadOnlyMap);
-        updateResourceFactoryRegistry();
+    public VarTree(CommandStack commandStack, AdapterFactory adapterFactory) {
+        super(adapterFactory, commandStack);
     }
 
-    /**
-     * Create an instance from the adapter factory, the specialized command
-     * stack, and the specialized resource set. If the resource set's context is
-     * null, one will be created here; otherwize, the existing context should
-     * implement {@link org.eclipse.emf.edit.domain.IEditingDomainProvider}.
-     */
-    public VarTree(CommandStack commandStack,
-            ResourceSet resourceSet) {
-        super(getFactories(), commandStack, resourceSet);
-    }
+//    /**
+//     * Create an instance from the adapter factory, the specialized command
+//     * stack, and the map used to maintain read only state.
+//     */
+//    public VarTree(CommandStack commandStack, Map<Resource, Boolean> resourceToReadOnlyMap) {
+//        super(getFactories(), commandStack, resourceToReadOnlyMap);
+//    }
+//
+//    /**
+//     * Create an instance from the adapter factory, the specialized command
+//     * stack, and the specialized resource set. If the resource set's context is
+//     * null, one will be created here; otherwize, the existing context should
+//     * implement {@link org.eclipse.emf.edit.domain.IEditingDomainProvider}.
+//     */
+//    public VarTree(CommandStack commandStack,
+//            ResourceSet resourceSet) {
+//        super(getFactories(), commandStack, resourceSet);
+//    }
 
     /**
      * Makes a new tree with deafult values
      */
     public VarTree() {
         super(getFactories(), new BasicCommandStack());
-
-        updateResourceFactoryRegistry();
         resourceSet.getResources().add(
                 (new RTD_XMI_Factory()).createResource());
     };
  
-    protected void updateResourceFactoryRegistry() {
-//    	Registry reg = getResourceSet().getPackageRegistry();
-//    	
-//    	IEPackageProvider[] epps = RequiredEPackageManager.getEPackages();
-//    	for (IEPackageProvider epp: epps) {
-//    		EPackage ep = epp.getEPackage(this);
-//    		String ns = null;
-//    		if (ep != null) {
-//    			ns=ep.getNsURI();
-//    			if (ns != null) {
-//		    		reg.put(ns, ep);
-//    			}
-//    		}
-//    	}
-    	
-    }
     
     /**
      * Makes a new ComposedAdapterFactory

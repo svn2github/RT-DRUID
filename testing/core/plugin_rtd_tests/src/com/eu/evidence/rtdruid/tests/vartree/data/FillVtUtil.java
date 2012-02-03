@@ -15,9 +15,8 @@ import java.util.Properties;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
@@ -39,15 +38,13 @@ public class FillVtUtil {
 	private int maxLevel = MAX_LEVEL;
 	private int maxSiblings = MAX_SIBLINGS;
 	private final EditingDomain ed;
-	private final EPackage ePkg;
-	private final EFactory eFactory;
+//	private final EPackAGE EPKG;
+//	PRIVATE FINAL EFACTory eFactory;
 	private final Resource res;
 	private EObject lastRoot = null;
-
-	public FillVtUtil(EditingDomain editingDomain, EPackage ePkg, Resource res) {
+	
+	public FillVtUtil(EditingDomain editingDomain, Resource res) {
 		this.ed = editingDomain;
-		this.ePkg = ePkg;
-		this.eFactory = this.ePkg.getEFactoryInstance();
 		if (res == null) {
 			if (ed.getResourceSet().getResources().size() >0) {
 				res = ed.getResourceSet().getResources().get(0);
@@ -58,8 +55,8 @@ public class FillVtUtil {
 		this.res = res;
 	}
 	
-	public FillVtUtil(EPackage ePkg) {
-		this(new AdapterFactoryEditingDomain(new ReflectiveItemProviderAdapterFactory(),  new BasicCommandStack()), ePkg, new XMLResourceImpl());
+	public FillVtUtil() {
+		this(new AdapterFactoryEditingDomain(new ReflectiveItemProviderAdapterFactory(),  new BasicCommandStack()), new XMLResourceImpl());
 	}
 
 	/**
@@ -157,18 +154,27 @@ public class FillVtUtil {
 					for (int l = 0; l < maxSiblings; l++) {
 						//	System.out.println(spazi + "attr = " + at.getName() + "
 						// val = " + nextID);
-						val.add(EcoreUtil.createFromString(at
-								.getEAttributeType(), "" + nextID));
-						nextID++;
+						EDataType edt = at.getEAttributeType();
+						if (edt.getName().toLowerCase().contains("boolean")) {
+							val.add(EcoreUtil.createFromString(edt, "true"));
+						} else {
+							val.add(EcoreUtil.createFromString(edt, "" + nextID));
+							nextID++;
+						}
 					}
 					current.eSet(at, val);
 	
 				} else {
 					//	System.out.println(spazi + "attr = " + at.getName() + " val =
 					// " + nextID);
-					Object tmp = EcoreUtil.createFromString(at
-							.getEAttributeType(), "" + nextID);
-					nextID++;
+					Object tmp;
+					EDataType edt = at.getEAttributeType();
+					if (edt.getName().toLowerCase().contains("boolean")) {
+						tmp = EcoreUtil.createFromString(edt, "true");
+					} else {
+						tmp =EcoreUtil.createFromString(edt, "" + nextID);
+						nextID++;
+					}
 					current.eSet(at, tmp);
 				}
 			}
@@ -201,8 +207,7 @@ public class FillVtUtil {
 
 					for (int i = 0; i < maxSiblings; i++) {
 						// add new node
-						EObject newValue = eFactory.create(cp
-								.getEValue().eClass());
+						EObject newValue = EcoreUtil.create(cp.getEValue().eClass());
 
 						newChildren.add(newValue);
 						fill(newValue, level);

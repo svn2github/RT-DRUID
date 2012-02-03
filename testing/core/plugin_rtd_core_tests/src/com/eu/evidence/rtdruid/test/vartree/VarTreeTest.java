@@ -45,6 +45,10 @@ public class VarTreeTest {
         assertNotNull(vt.newTreeInterface());
         
         // cannot get a VTP if there isn't any resource
+        assertEquals(vt.getResourceSet().getResources().size(), 1);
+        assertNotNull(vt.newVarTreePointer());
+        
+        vt.getResourceSet().getResources().clear();
         assertEquals(vt.getResourceSet().getResources().size(), 0);        
         boolean ok = false;
         try {

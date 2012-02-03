@@ -71,7 +71,7 @@ public class DataTest {
 	 */ 
 	@Test
 	public void testObjectWithID() {
-		EObject root = VarTreeUtil.newVarTreeRoot();
+		EObject root = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
 		
 		checkObjectWithID(root, new ArrayList<Class<?>>());
 	}

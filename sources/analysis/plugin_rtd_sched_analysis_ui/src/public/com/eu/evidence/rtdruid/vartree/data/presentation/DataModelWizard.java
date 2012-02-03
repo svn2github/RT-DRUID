@@ -137,7 +137,7 @@ public class DataModelWizard extends Wizard implements INewWizard {
 	EObject createInitialModel() {
 //		EClass eClass = (EClass)dataPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
 //		EObject rootObject = dataFactory.create(eClass);
-		EObject rootObject = VarTreeUtil.newVarTreeRoot();
+		EObject rootObject = VarTreeUtil.newVarTreeRoot(VarTreeUtil.newVarTree());
 		VarTreeIdHandler.setId(rootObject, "default system");
 		return rootObject;
 	}

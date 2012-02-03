@@ -3,7 +3,6 @@
 	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" output="bin_ant" path="src_ant"/>
 	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" path="src/internal"/>
 	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" path="src/public"/>
-	<classpathentry kind="src" path="src/model_internal"/>
 	<classpathentry kind="src" path="old_internal"/>
 	<classpathentry kind="src" path="old_public"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>

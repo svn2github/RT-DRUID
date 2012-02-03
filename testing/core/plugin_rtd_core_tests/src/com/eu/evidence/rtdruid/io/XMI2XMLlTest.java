@@ -28,8 +28,6 @@ import com.eu.evidence.rtdruid.tests.vartree.data.FillVtUtil;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
-import com.eu.evidence.rtdruid.vartree.data.DataFactory;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
 import com.eu.evidence.rtdruid.vartree.data.TaskSched;
 
@@ -357,15 +355,15 @@ public class XMI2XMLlTest {
 
 
 	private static IVTResource prepareXMIReader() throws IOException {
-		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), DataPackage.eINSTANCE, null);
-		filler.fill(VarTreeUtil.newVarTreeRoot());
+		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(),  null);
+		filler.fill(VarTreeUtil.newVarTreeRoot(filler.getEditingDomain()));
 
 		return (IVTResource) filler.getResource();
 	}
 	
 	private static IVarTree prepareTree() throws IOException {
-		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), DataPackage.eINSTANCE, null);
-		filler.fill(VarTreeUtil.newVarTreeRoot());
+		FillVtUtil filler = new FillVtUtil(VarTreeUtil.newVarTree(), null);
+		filler.fill(VarTreeUtil.newVarTreeRoot(filler.getEditingDomain()));
 
 		return (IVarTree) filler.getEditingDomain();
 	}
