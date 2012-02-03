@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" output="bin_ant" path="src_ant_task"/>
+	<classpathentry kind="src" path="src/e_edit"/>
+	<classpathentry kind="src" path="src/e_model"/>
 	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" path="src/internal"/>
 	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" path="src/public"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>

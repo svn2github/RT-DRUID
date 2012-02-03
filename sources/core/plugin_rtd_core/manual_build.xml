@@ -32,6 +32,18 @@
 			<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
 		</path>
 		<resources id="common_build_binary_files">
+			<fileset dir="src/e_model" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+			<fileset dir="src/e_core" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
 			<fileset dir="src/internal" >
 				<include name="**/*"/>
 				<exclude name="**/.svn/"/>
@@ -50,7 +62,7 @@
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
 			<param name="jar_name" value="rtdruid_core"/>
-			<param name="common_build_sources" value="src/internal/:src/public/"/>
+			<param name="common_build_sources" value="src/internal/:src/public/:src/e_core/:src/e_model/"/>
 			<reference refid="common_build_classpath"/>
 			<reference refid="common_build_binary_files"/>
 		</antcall>
