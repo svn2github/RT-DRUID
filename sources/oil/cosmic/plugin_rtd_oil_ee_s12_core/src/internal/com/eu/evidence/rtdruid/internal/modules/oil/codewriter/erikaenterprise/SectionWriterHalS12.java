@@ -592,8 +592,12 @@ public class SectionWriterHalS12 extends SectionWriter
 		                "endif\n" +
 		                "APPBASE := " + appBase + "\n" +
 		                "OUTBASE := " + outputDir + "\n\n" + 
+		                "ifndef COSMIC_ASMDIR\n" +
 		                "COSMIC_ASMDIR := "+asm+"\n" +
-		                "COSMIC_CCDIR := "+gcc+"\n"
+		                "endif\n" +
+		                "ifndef COSMIC_CCDIR\n" +
+		                "COSMIC_CCDIR := "+gcc+"\n" +
+		                "endif\n"
 		        );
 //		        if (useEEgcc_deps) {
 //			        sbMakefile.append("COSMIC_S12_USE_EEGCC_DEPS := Y\n");

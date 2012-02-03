@@ -477,35 +477,35 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				
 				StringBuffer buff = new StringBuffer();
 				if (not_map_alarm.size()>0) {
-					buff.append("Alarm not mapped to any OsApplication:");
+					buff.append("Alarm not assigned to any OsApplication:");
 					for (String s: not_map_alarm) {
 						buff.append(" " + s );
 					}
 					buff.append("\n");
 				}
 				if (not_map_counter.size()>0) {
-					buff.append("Counter not mapped to any OsApplication:");
+					buff.append("Counter not assigned to any OsApplication:");
 					for (String s: not_map_counter) {
 						buff.append(" " + s );
 					}
 					buff.append("\n");
 				}
 				if (not_map_isr.size()>0) {
-					buff.append("Isr not mapped to any OsApplication:");
+					buff.append("Isr not assigned to any OsApplication:");
 					for (String s: not_map_isr) {
 						buff.append(" " + s );
 					}
 					buff.append("\n");
 				}
 				if (not_map_resource.size()>0) {
-					buff.append("Resource not mapped to any OsApplication:");
+					buff.append("Resource not assigned to any OsApplication:");
 					for (String s: not_map_resource) {
 						buff.append(" " + s );
 					}
 					buff.append("\n");
 				}
 				if (not_map_task.size()>0) {
-					buff.append("Task not mapped to any OsApplication:");
+					buff.append("Task not assigned to any OsApplication:");
 					for (String s: not_map_task) {
 						buff.append(" " + s );
 					}
@@ -529,7 +529,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		}
 		if (sgr.containsProperty(pName)) {
 			if (!os_appl_name.equals(sgr.getObject(pName))) {
-				throw new OilCodeWriterException(sgr.getName() + " is mapped to two distinct os applications ("
+				throw new OilCodeWriterException(sgr.getName() + " is assigned to two distinct os applications ("
 							+ os_appl_name + " and " + sgr.getObject(pName) +")");
 			}
 			return false;
