@@ -178,7 +178,7 @@
 	<target name="zip.plugin" depends="import" description="Make all zip files">
 		<property name="outputFile" value="rtdruid_tux_website_${build_number}"/>
 		<zip
-				zipfile="${output.folder}/${outputFile}.zip"
+				destfile="${output.folder}/${outputFile}.zip"
 				basedir="${site.output}"
 				filesonly="true"
 				whenempty="skip"

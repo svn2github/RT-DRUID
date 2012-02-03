@@ -77,7 +77,7 @@
 			roaming="true" 
 			metadataRepository="file://${prebuild.rtdruid.site}" 
 			artifactRepository="file://${prebuild.rtdruid.site}" 
-			destination="${TEMP_DIR}/${archivePrefix}" 
+			destination="${TEMP_DIR}/zip/${archivePrefix}" 
 			>
 			<iu id="${required.iu}"/>
 		</p2.director>
@@ -94,32 +94,40 @@
 		<property name="TEMP_DIR" value="complete.build.temp.dir"/>
 		
 		<delete dir="${TEMP_DIR}"/>
-		<mkdir dir="${TEMP_DIR}"/>
-		<unzip dest="${TEMP_DIR}" src="${input.file}"/>
+		<mkdir dir="${TEMP_DIR}/zip"/>
+		<unzip dest="${TEMP_DIR}/zip" src="${input.file}"/>
 		
 		<antcall target="saveSpace_compl"/>
 		<antcall target="-install.iu"/>
 		
-		<mkdir dir="${TEMP_DIR}/${archivePrefix}/evidence"/>
-		<copy todir="${TEMP_DIR}/${archivePrefix}/evidence">
+		<mkdir dir="${TEMP_DIR}/scripts"/>
+		<copy todir="${TEMP_DIR}/scripts">
 			<fileset refId="scripts"/>
 		</copy>
 		
-		<fixcrlf srcdir="${TEMP_DIR}/${archivePrefix}/evidence"
+		<fixcrlf srcdir="${TEMP_DIR}/scripts"
 		         includes="**/*.bat" eol="crlf" eof="asis" />
-		<fixcrlf srcdir="${TEMP_DIR}/${archivePrefix}/evidence"
+		<fixcrlf srcdir="${TEMP_DIR}/scripts"
 				         includes="**/*.sh" eol="lf" eof="remove" />
 		
-		<!-- note this command works only on unix systems ! -->
-		<chmod dir="${TEMP_DIR}/${archivePrefix}/evidence" perm="ugo+rx" 
-		       includes="**/*.sh"/>
-		
+		<!-- note this command works only on unix systems ! 
+		<chmod dir="${TEMP_DIR}/scripts" perm="ugo+rx" 
+		       includes="**/*.sh"/> -->
+
 		<zip
-			zipfile="${output.file}"
-			basedir="${TEMP_DIR}"
+			destfile="${output.file}"
+			basedir="${TEMP_DIR}/zip"
 			filesonly="true"
 			whenempty="skip"
-			update="false"/>
+			update="false"
+		>
+			<zipfileset dir="${TEMP_DIR}/scripts" includes="**/*" prefix="${archivePrefix}/evidence">
+				<exclude name="**/*.sh"/>
+				<exclude name="**/*.bat"/>
+			</zipfileset>
+			<zipfileset dir="${TEMP_DIR}/scripts" includes="**/*.sh" prefix="${archivePrefix}/evidence" filemode="755"/>
+			<zipfileset dir="${TEMP_DIR}/scripts" includes="**/*.bat" prefix="${archivePrefix}/evidence" filemode="755"/>
+		</zip>
 
 		<delete dir="${TEMP_DIR}"/>
 	</target>
@@ -159,6 +167,15 @@
 		</antcall>
 		<antcall target="complete_one">
 			<param name="input.file.name" value="${buildId}-linux.gtk.x86_64.zip"/>
+			<reference refid="linux_scripts" torefid="scripts"/>
+		</antcall>
+		
+		<antcall target="complete_one">
+			<param name="input.file.name" value="${buildId}-macosx.cocoa.x86.zip"/>
+			<reference refid="linux_scripts" torefid="scripts"/>
+		</antcall>
+		<antcall target="complete_one">
+			<param name="input.file.name" value="${buildId}-macosx.cocoa.x86_64.zip"/>
 			<reference refid="linux_scripts" torefid="scripts"/>
 		</antcall>
 	</target>
