@@ -105,6 +105,15 @@
 			<fileset refId="scripts"/>
 		</copy>
 		
+		<fixcrlf srcdir="${TEMP_DIR}/${archivePrefix}/evidence"
+		         includes="**/*.bat" eol="crlf" eof="asis" />
+		<fixcrlf srcdir="${TEMP_DIR}/${archivePrefix}/evidence"
+				         includes="**/*.sh" eol="lf" eof="remove" />
+		
+		<!-- note this command works only on unix systems ! -->
+		<chmod dir="${TEMP_DIR}/${archivePrefix}/evidence" perm="ugo+rx" 
+		       includes="**/*.sh"/>
+		
 		<zip
 			zipfile="${output.file}"
 			basedir="${TEMP_DIR}"
