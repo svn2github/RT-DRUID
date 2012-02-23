@@ -38,7 +38,7 @@
 					<exclude name="**/*.java"/>
 				<exclude name="**/package.htm*"/>
 			</fileset>
-			<fileset dir="src/e_core" >
+			<fileset dir="src/e_edit" >
 				<include name="**/*"/>
 				<exclude name="**/.svn/"/>
 					<exclude name="**/*.java"/>
@@ -62,7 +62,7 @@
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
 			<param name="jar_name" value="rtdruid_core"/>
-			<param name="common_build_sources" value="src/internal/:src/public/:src/e_core/:src/e_model/"/>
+			<param name="common_build_sources" value="src/internal/:src/public/:src/e_edit/:src/e_model/"/>
 			<reference refid="common_build_classpath"/>
 			<reference refid="common_build_binary_files"/>
 		</antcall>
@@ -109,11 +109,12 @@
 			<include name="plugin.xml"/>
 			<include name="schema/"/>
 			<include name="icons/"/>
+			<include name="emf_model/"/>
 			<include name="objectdetails.xml"/>
 			<include name="plugin.properties"/>
 			<include name="about.ini"/>
 			<include name="rtdruid.png"/>
-			<include name="about.html"/>
+			<include name="about.html"/>			
 			<include name="rtdruid_core.jar"/>
 			<include name="rtdruid_core_ant.jar"/>
 		</fileset>

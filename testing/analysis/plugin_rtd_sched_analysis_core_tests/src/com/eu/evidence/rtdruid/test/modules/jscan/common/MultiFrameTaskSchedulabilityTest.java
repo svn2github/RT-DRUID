@@ -1,4 +1,4 @@
-package com.eu.evidence.rtdruid.test.modules.jscan.multiframe;
+package com.eu.evidence.rtdruid.test.modules.jscan.common;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;

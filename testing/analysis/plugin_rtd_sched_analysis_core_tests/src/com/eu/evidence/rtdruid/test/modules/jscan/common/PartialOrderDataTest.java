@@ -1,4 +1,4 @@
-package com.eu.evidence.rtdruid.test.modules.jscan.partialOrder;
+package com.eu.evidence.rtdruid.test.modules.jscan.common;
 
 import java.io.IOException;
 import java.util.List;

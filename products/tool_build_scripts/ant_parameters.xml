@@ -125,6 +125,8 @@
 	<property name="rtd_autosar_core_v"      value="1.6.0"/>
 	<property name="rtd_autosar_ui_v"        value="1.6.0"/>
 
+	<property name="frtd_tests_v"		    value="1.6.0"/>
+	<property name="rtd_tests_v"      		value="1.6.0"/>
 	
 
 <!--
@@ -174,7 +176,7 @@
 *******************************
 -->
 	<defaultexcludes add="**/*.jj"/>
-	<defaultexcludes add="**/*.ecore"/>
+<!--	<defaultexcludes add="**/*.ecore"/>-->
 	<defaultexcludes add="**/*.genmodel"/>
 	<defaultexcludes add="**/*.ecd"/>
 	<defaultexcludes add="**/*.orig"/>

@@ -3,7 +3,7 @@
  *
  * $ID$
  */
-package com.eu.evidence.rtdruid.test.modules.jscan.multiframe;
+package com.eu.evidence.rtdruid.test.modules.jscan.common;
 
 
 

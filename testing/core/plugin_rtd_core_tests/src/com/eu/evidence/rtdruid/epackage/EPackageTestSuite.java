@@ -19,7 +19,6 @@ import org.junit.runners.Suite.SuiteClasses;
 	EcoreEpackageProviderTest.class,
 	EPackageEmfMergeTest.class,
 	EPackageProviderExceptionTest.class,
-	EPackageTestUtility.class,
 	EPackageXmlMergeTest.class,
 	RTDEPackageBuildExceptionTest.class
 })

@@ -53,13 +53,25 @@
 					<exclude name="**/*.java"/>
 				<exclude name="**/package.htm*"/>
 			</fileset>
+			<fileset dir="old_internal" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+			<fileset dir="old_public" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
 		</resources>	
 
 		<antcall target="common_build.jar">
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
 			<param name="jar_name" value="rtdruid_oil_core"/>
-			<param name="common_build_sources" value="src/internal/:src/public/"/>
+			<param name="common_build_sources" value="src/internal/:src/public/:old_internal/:old_public/"/>
 			<reference refid="common_build_classpath"/>
 			<reference refid="common_build_binary_files"/>
 		</antcall>

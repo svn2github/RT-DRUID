@@ -50,6 +50,10 @@
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/analysis/feature_rtd_sched_analysis"/>
 	</target>
 
+	<target name="rtdruid_tests.features" if="enable_tests_features">
+		<ant antfile="manual_build.xml" target="${target}" dir="../../testing/core/feature_rtd_tests"/>
+	</target>
+
 	<target name="all.features">
 		<!-- Check if we have to enable all features-->
 		<condition property="enable_all_rtdruid_features" value="true">
@@ -59,6 +63,7 @@
 				<not><isset property="enable_oil_core_features"/></not>
 				<not><isset property="enable_oil_ee_features"/></not>
 				<not><isset property="enable_sched_analysis_features"/></not>
+				<not><isset property="enable_tests_features"/></not>
 			</and>
 		</condition>
 		<condition property="enable_oil_core_features" value="true">
@@ -76,6 +81,7 @@
 		<antcall target="oil_core.features"/>
 		<antcall target="oil_ee.features"/>
 		<antcall target="sched_analysis.features"/>
+		<antcall target="rtdruid_tests.features"/>
 	</target>
 			
 <!--
