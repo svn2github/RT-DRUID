@@ -65,21 +65,35 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 	public final static String NULL_ID =   DataPath.NULL_ID;   // \0
 	public final static String VOID_ID =   DataPath.VOID_ID;   // \_
 	
-	protected class LittlePointer {
-		public EObject pointer;
-		public EStructuralFeature attr;
+	protected static class LittlePointer implements EmfPoint {
+		protected EObject pointer;
+		protected EStructuralFeature attr;
 		
 		public LittlePointer() {}
 		public LittlePointer(EObject pointer, EStructuralFeature attr) {
 			this.pointer = pointer;
 			this.attr = attr;	
 		}
-		public Object clone() {
+		public LittlePointer clone() {
 			return new LittlePointer(pointer, attr);
 		}
 		
 		public String toString() {
 			return "(Node " + pointer + " & attr "+ attr +")";
+		}
+		/* (non-Javadoc)
+		 * @see com.eu.evidence.rtdruid.vartree.IVarTreePointer.EmfPoint#getCurrentFeature()
+		 */
+		@Override
+		public EStructuralFeature getCurrentFeature() {
+			return attr;
+		}
+		/* (non-Javadoc)
+		 * @see com.eu.evidence.rtdruid.vartree.IVarTreePointer.EmfPoint#getEObject()
+		 */
+		@Override
+		public EObject getEObject() {
+			return pointer;
 		}
 	}
 	
@@ -1215,6 +1229,15 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 		return risp;
 	}
 	
+	/* (non-Javadoc)
+	 * @see rtdruid.vartree.IVarTreePointer#getVar()
+	 */
+	public boolean isVarSet() {
+		if (point.attr != null && point.attr instanceof EAttribute) {
+			return point.pointer.eIsSet(point.attr);  
+		}
+		throw new IllegalStateException("try to get a var from a container");
+	}
 
 	/* (non-Javadoc)
 	 * @see rtdruid.vartree.IVarTreePointer#getVar()
@@ -1476,9 +1499,14 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
 	// ------------------------------------------
 	
-	public EObject getCurrentEMFObject() {
-		return point.pointer;
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.vartree.IVarTreePointer#getEPoint()
+	 */
+	@Override
+	public EmfPoint getEPoint() {
+		return point.clone();
 	}
+	
 	
 	// ------------------------------------------
 	

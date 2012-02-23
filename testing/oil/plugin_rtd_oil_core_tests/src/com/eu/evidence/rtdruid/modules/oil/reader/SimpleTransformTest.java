@@ -6,6 +6,8 @@
 package com.eu.evidence.rtdruid.modules.oil.reader;
 
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -16,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.junit.Test;
 
-import com.eu.evidence.rtdruid.epackage.EPackageUtility;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
@@ -49,7 +50,7 @@ public class SimpleTransformTest implements Examples {
 		OilTransformFactory otf = OilTransformFactory.INSTANCE;
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_ARM7.getBytes()),
 				vt, null, null);
-		System.out.println(EPackageUtility.instance.modelToString(VarTreeUtil.getRtDruidEPackage(vt)));
+//		System.out.println(EPackageUtility.instance.modelToString(VarTreeUtil.getRtDruidEPackage(vt)));
 		DataPackage dpkg = DataPackage.eINSTANCE;
 		String prefix = "EE" + S + dpkg.getSystem_Architectural().getName() + S
 				+ dpkg.getArchitectural_EcuList().getName() + S + "EE" + S
@@ -60,7 +61,7 @@ public class SimpleTransformTest implements Examples {
 		System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
 		String answer = otf.getTransform("ee").write(vt, id, prefix);
 
-		assertTrue(answer != null);
+		assertNotNull(answer);
 		System.out.println(answer);
 
 		// --------------------
@@ -75,7 +76,7 @@ public class SimpleTransformTest implements Examples {
 		String t = VarTreeUtil.compare(
 				(EObject) ((Resource) vt.getResourceSet().getResources().get(0)).getContents().get(0),
 				(EObject) ((Resource) vt2.getResourceSet().getResources().get(0)).getContents().get(0)
-		).getMessage(); assertTrue(t, t== null);
+		).getMessage(); assertNull(t, t);
 
 	}
 
@@ -100,7 +101,7 @@ public class SimpleTransformTest implements Examples {
 		
 		String answer = otf.getTransform("ee").write(vt, id, prefix);
 
-		assertTrue(answer != null);
+		assertNotNull(answer);
 		System.out.println(answer);
 
 		// --------------------
@@ -139,7 +140,7 @@ public class SimpleTransformTest implements Examples {
 
 		String answer = otf.getTransform("ee").write(vt, id, prefix);
 		
-		assertTrue(answer != null);
+		assertNotNull(answer);
 		System.out.println(answer);
 		
 		// --------------------
@@ -184,7 +185,7 @@ public class SimpleTransformTest implements Examples {
 
 		String answer = otf.getTransform("ee").write(vt, id, new String[] {prefix1, prefix2});
 		
-		assertTrue(answer != null);
+		assertNotNull(answer);
 		System.out.println(answer);
 		
 		// --------------------
@@ -292,7 +293,7 @@ public class SimpleTransformTest implements Examples {
 
 		String answer = otf.getTransform("ee").write(vt, id, prefix[0]);
 		
-		assertTrue(answer != null);
+		assertNotNull(answer);
 		System.out.println(answer);
 		
 		// --------------------
@@ -389,7 +390,7 @@ public class SimpleTransformTest implements Examples {
 
 		String answer = otf.getTransform("ee").write(vt, id, prefix[0]);
 		
-		assertTrue(answer != null);
+		assertNotNull(answer);
 		System.out.println(answer);
 		
 		// --------------------

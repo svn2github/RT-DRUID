@@ -26,6 +26,7 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
+import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform;
 import com.eu.evidence.rtdruid.vartree.DataPath;
@@ -64,8 +65,9 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
+	@Override
 	protected String storeOS(IVarTreePointer vtp, Element parent,
-			String sysName, OilImplID id) throws OilTransformException {
+			String sysName, IOilImplID id) throws OilTransformException {
 		String rtosName = null;
 		rtosNamePath = new String[] {//
 				DPKG.getSystem_Architectural().getName(),//
@@ -261,12 +263,12 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 					currCpuName }, new String[] { rtosTypePath[0],
 					rtosTypePath[1], rtosTypePath[2], rtosTypePath[3],
 					rtosTypePath[4] });
-			storeAVar(curr, DPKG.getCpu_Model().getName(), id.getHW());
+			storeAVar(curr, DPKG.getCpu_Model().getName(), ((OilImplID)id).getHW());
 
 			curr.makePath(new String[] { rtosNamePath[5] },
 					new String[] { rtosTypePath[5] });
 			storeAVar(curr, DPKG.getRtos_Name().getName(), makeRtosId(currCpuName, rtosName));
-			storeAVar(curr, DPKG.getRtos_Type().getName(), id.getRtos());
+			storeAVar(curr, DPKG.getRtos_Type().getName(), ((OilImplID)id).getRtos());
 
 
 			storeInsideAOilVar(curr, current.os, id);
@@ -278,7 +280,8 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 	/* (non-Javadoc)
 	 * @see rtdruid.modules.oil.transform.SimpleTransform#storeTasks(rtdruid.vartree.IVarTreePointer, org.w3c.dom.Element, rtdruid.modules.oil.vtextensions.OilImplID, java.lang.String)
 	 */
-	protected void storeTasks(IVarTreePointer vtp, Element parent, OilImplID id,
+	@Override
+	protected void storeTasks(IVarTreePointer vtp, Element parent, IOilImplID id,
 			String rtos) throws OilTransformException {
 
 		// get only the name of rtos without cpu
@@ -394,7 +397,8 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 	 * @param rtosPath
 	 *            identifies the current rtos
 	 */
-	protected void writeApplication(StringBuffer buffer, OilImplID id,
+	@Override
+	protected void writeApplication(StringBuffer buffer, IOilImplID id,
 			String rtosPath) {
 		
 		writeApplication(buffer, id, new String[] { rtosPath} );
@@ -409,7 +413,7 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 	 * @param rtosPath
 	 *            identifies the current rtos
 	 */
-	protected void writeApplication(StringBuffer buffer, OilImplID id,
+	protected void writeApplication(StringBuffer buffer, IOilImplID id,
 			String[] rtosPath) {
 
 		String sysName = DataPath.splitPath(rtosPath[0])[0];
@@ -439,7 +443,7 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 
 			List<ISimpleGenRes> olist = ool.getList(order[oolId]);
 			for (Iterator<ISimpleGenRes> iter = olist.iterator(); iter.hasNext();) {
-				ISimpleGenRes curr = (ISimpleGenRes) iter.next(); 
+				ISimpleGenRes curr = iter.next(); 
 				writeApplicationObject(buffer, oilVarPrefix,
 						curr, order[oolId], curr.getString(ISimpleGenResKeywords.RTOS_PATH));
 			}
@@ -468,7 +472,8 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public String write(IVarTree vt, OilImplID id, String[] rtosPaths)
+	@Override
+	public String write(IVarTree vt, IOilImplID id, String[] rtosPaths)
 			throws OilTransformException {
 		
 		// init
@@ -507,7 +512,7 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 	 * @param id
 	 *            identifies the Application
 	 */
-	@SuppressWarnings("unchecked")
+	@Override
 	protected void writeApplicationObject(StringBuffer buffer,
 			String oilVarPrefix, ISimpleGenRes object, int objType, String rtosPath) {
 		
@@ -518,8 +523,8 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 						object.getPath());
 			
 			// fare la copia dell'oggetto !!!
-			HashMap properties = object.getAllProperties();
-			for (Iterator iter = properties.keySet().iterator(); iter.hasNext(); ) {
+			HashMap<String, ? extends Object> properties = object.getAllProperties();
+			for (Iterator<String> iter = properties.keySet().iterator(); iter.hasNext(); ) {
 				String key = (String) iter.next();
 				tmp.setObject(key, properties.get(key));
 			}
@@ -548,6 +553,11 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 		super.writeApplicationObject(buffer, oilVarPrefix, object, objType, rtosPath);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform#writeApplicationObjectProperties(java.lang.StringBuffer, java.lang.String, com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes, int, java.lang.String)
+	 */
+	@Override
 	protected void writeApplicationObjectProperties(StringBuffer buffer, String indent,
 			ISimpleGenRes object, int objType, String rtosPath) {
 		super.writeApplicationObjectProperties(buffer, indent,
@@ -560,9 +570,9 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 			if (object.containsProperty(TASK_FORCE_MAPPING) 
 					&& "TRUE".equalsIgnoreCase(object.getString(TASK_FORCE_MAPPING))
 					&& object.containsProperty(TASK_MAPPING)) {
-				String rtos_name = extractRtosName(object.getString(TASK_MAPPING));
+				String cpu_name = extractCpuName(object.getString(TASK_MAPPING));
 				
-				buffer.append(indent + "CPU_ID = \"" + rtos_name + "\"; // auto value\n");
+				buffer.append(indent + "CPU_ID = \"" + cpu_name + "\"; // auto value\n");
 			}
 			
 		}
@@ -573,6 +583,16 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 		
 	private String makeRtosId(String cpu, String rtos) {
 		return DataPath.makeSlashedId(new String[] {cpu, rtos});
+	}
+	private String extractCpuName(String rtosAndCpu) {
+		if (rtosAndCpu == null) return null;
+
+		String answer = rtosAndCpu;
+		String[] tmp = DataPath.resolveId(DataPath.removeSlash(rtosAndCpu));
+		if (tmp.length == 2) {
+			answer = tmp[0];
+		}
+		return answer;
 	}
 	private String extractRtosName(String rtosAndCpu) {
 		if (rtosAndCpu == null) return null;

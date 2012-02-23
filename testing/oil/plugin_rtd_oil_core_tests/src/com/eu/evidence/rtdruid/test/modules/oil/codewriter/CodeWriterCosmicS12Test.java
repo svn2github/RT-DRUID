@@ -47,7 +47,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	    	"		USERESSCHEDULER = FALSE;\n" +
 	    	"		\n" +
 	    	"//		ORTI_SECTIONS = ALL;\n" +
-	    	"    };\n" +
+	    	"    KERNEL_TYPE = BCC1; };\n" +
 	    	"\n" +
 	    	"	/* this is the OIL part for the first task */\n" +
 	    	"    TASK Task1 {\n" +
@@ -65,7 +65,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	    	"		STACK = SHARED;\n" +
 	    	"    };\n" +
 	    	"\n" +
-	    	"    OS EE { KERNEL_TYPE = BCC1; }; \n" +
+//	    	"    OS EE { KERNEL_TYPE = BCC1; }; \n" +
 	    	"	TASK Task1 { SCHEDULE = FULL; };\n" +
 	    	"	TASK Task2 { ACTIVATION = 1; };\n" +
 	    	"		\n" +

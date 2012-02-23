@@ -2,9 +2,15 @@ package com.eu.evidence.rtdruid.modules.oil.implementation;
 
 import java.util.ArrayList;
 
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilEcoreCreatorImpl;
+import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 
 /**
 *
@@ -13,6 +19,20 @@ import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilEcoreCreat
 *
 */
 public abstract class OilEcoreCreator {
+	/**
+	 * 
+	 */
+	protected static final String RTDRUID_ANNOTATIONS_SOURCE = "http:///com/eu/evidence/rtdruid/annotations";
+	/**
+	 * 
+	 */
+	protected static final String ANNOTATION_ENUM_TYPE = "enumerator_type";
+
+	/**
+	 * 
+	 */
+	protected static final String ANNOTATION_VARIANT_TYPE = "variant_type";
+	protected static final String ANNOTATION_OIL_ATTR = "oil_attribute";
 
 	protected OilEcoreCreator() {
 		super();
@@ -118,5 +138,80 @@ public abstract class OilEcoreCreator {
 		return answer.toString();
 	}
 
+	public static boolean isOilAttribute(IVarTreePointer vtp) {
+		IVarTreePointer.EmfPoint epoint = vtp.getEPoint();
+		EStructuralFeature esf = epoint.getCurrentFeature();
+		if (esf != null) {			
+			EMap<String, String> map = getAnnotation(esf);
+			if (map != null) {
+				return map.containsKey(ANNOTATION_OIL_ATTR);
+			}
+		}
+		
+		return false;
+	}
+	public static boolean isOilEnum(IVarTreePointer vtp) {
+		EMap<String, String> map = getAnnotation(vtp);
+		if (map != null) {
+			return map.containsKey(ANNOTATION_ENUM_TYPE);
+		}
 	
+		
+		return false;
+	}
+	public static boolean isOilVariant(IVarTreePointer vtp) {
+		EMap<String, String> map = getAnnotation(vtp);
+		if (map != null) {
+			return map.containsKey(ANNOTATION_VARIANT_TYPE);
+		}
+		
+		return false;
+	}
+
+	public static String getOilEnumType(IVarTreePointer vtp) {
+		EMap<String, String> map = getAnnotation(vtp);
+		if (map != null) {
+			if (map.containsKey(ANNOTATION_ENUM_TYPE)) {
+				return map.get(ANNOTATION_ENUM_TYPE);
+			}
+		}
+		
+		return null;
+	}
+
+	public static String getOilVariantType(IVarTreePointer vtp) {
+		EMap<String, String> map = getAnnotation(vtp);
+		if (map != null) {
+			if (map.containsKey(ANNOTATION_VARIANT_TYPE)) {
+				return map.get(ANNOTATION_VARIANT_TYPE);
+			}
+		}
+			
+		return null;
+	}
+
+	protected static EMap<String, String> getAnnotation(IVarTreePointer vtp) {
+		IVarTreePointer.EmfPoint epoint = vtp.getEPoint();
+		EStructuralFeature esf = epoint.getCurrentFeature();
+		if (esf == null) {
+			EObject eobj = epoint.getEObject();
+			if (eobj == null) {
+				return null;
+			}
+			return  getAnnotation(eobj.eClass());
+		} else {
+			return  getAnnotation(esf.getEType());
+		}
+	}
+
+	
+	protected static EMap<String, String> getAnnotation(EModelElement classifier) {
+		if (classifier != null) {
+			EAnnotation annotation = classifier.getEAnnotation(RTDRUID_ANNOTATIONS_SOURCE);
+			if (annotation != null) {
+				return annotation.getDetails();
+			}
+		}
+		return null;
+	}
 }

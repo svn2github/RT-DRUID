@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.emf.ecore.EObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -86,8 +87,8 @@ public class SimpleTransform implements IOilTransform {
 			};
 
 	/** All types of Oil Object that are stored inside the OS's OilVar * */
-	protected String[] otherObjectsTypes = { IOilXMLLabels.OBJ_APPMODE, IOilXMLLabels.OBJ_COM, IOilXMLLabels.OBJ_IPDU,
-			IOilXMLLabels.OBJ_MESSAGE, // IOilXMLLabels.OBJ_NETWORKMESSAGE,
+	protected String[] otherObjectsTypes = { IOilXMLLabels.OBJ_COM, IOilXMLLabels.OBJ_IPDU,
+			IOilXMLLabels.OBJ_MESSAGE, // IOilXMLLabels.OBJ_NETWORKMESSAGE, IOilXMLLabels.OBJ_APPMODE, 
 			IOilXMLLabels.OBJ_NM };
 	
 	// -------------------------------
@@ -100,7 +101,7 @@ public class SimpleTransform implements IOilTransform {
 	 * 
 	 * 
 	 */
-	public static String[][] makeOilVarPrefix(boolean addName, String name, String objType, OilImplID id) {
+	public static String[][] makeOilVarPrefix(boolean addName, String name, String objType, IOilImplID id) {
 
 		String objId = (addName ? DataPath.makeSlashedId(new String[] { objType, name }) : objType);
 		
@@ -145,12 +146,10 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public void load(IVarTree lvt, Document appl, IOilImplID iid) throws OilTransformException {
+	public void load(IVarTree lvt, Document appl, IOilImplID id) throws OilTransformException {
 		Assert.isNotNull(lvt, "Expected a not null VarTree");
 		Assert.isNotNull(appl, "Expected a not null Document");
-		Assert.isNotNull(iid, "Expected a not null OilImplID");
-
-		OilImplID id = (OilImplID) iid;
+		Assert.isNotNull(id, "Expected a not null OilImplID");
 
 		vt = lvt;
 		oilImpl = OilImplFactory.getAnInstance(vt).getImpl(id);
@@ -263,7 +262,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected String storeOS(IVarTreePointer vtp, Element parent, String sysName, OilImplID id)
+	protected String storeOS(IVarTreePointer vtp, Element parent, String sysName, IOilImplID id)
 			throws OilTransformException {
 		String rtosName = null;
 		rtosNamePath = new String[] { DPKG.getSystem_Architectural().getName(),
@@ -282,11 +281,11 @@ public class SimpleTransform implements IOilTransform {
 			IVarTreePointer curr = vtp.clone().makePath(new String[] { rtosNamePath[0], rtosNamePath[1], rtosNamePath[2],
 					rtosNamePath[3], rtosNamePath[4] }, new String[] { rtosTypePath[0], rtosTypePath[1],
 					rtosTypePath[2], rtosTypePath[3], rtosTypePath[4] });
-			storeAVar(curr, DPKG.getCpu_Model().getName(), id.getHW());
+			storeAVar(curr, DPKG.getCpu_Model().getName(), ((OilImplID)id).getHW());
 
 			curr.makePath(new String[] { rtosNamePath[5] }, new String[] { rtosTypePath[5] });
 			storeAVar(curr, DPKG.getRtos_Name().getName(), rtosName);
-			storeAVar(curr, DPKG.getRtos_Type().getName(), id.getRtos());
+			storeAVar(curr, DPKG.getRtos_Type().getName(), ((OilImplID)id).getRtos());
 
 			//curr.makePath(new String[] { rtosNamePath[6] }, new String[] { rtosTypePath[6] });
 
@@ -323,7 +322,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeOsApplication(IVarTreePointer vtp, Element parent, String sysName, OilImplID id)
+	protected void storeOsApplication(IVarTreePointer vtp, Element parent, String sysName, IOilImplID id)
 			throws OilTransformException {
 		String[] basePath = new String[] { DPKG.getSystem_Architectural().getName(), // 0
 				DPKG.getArchitectural_EcuList().getName(), // 1
@@ -428,7 +427,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeTasks(IVarTreePointer vtp, Element parent, OilImplID id, String rtos)
+	protected void storeTasks(IVarTreePointer vtp, Element parent, IOilImplID id, String rtos)
 			throws OilTransformException {
 
 		// prepare where store all data
@@ -500,7 +499,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeIsr(IVarTreePointer vtp, Element parent, OilImplID id, String rtos)
+	protected void storeIsr(IVarTreePointer vtp, Element parent, IOilImplID id, String rtos)
 			throws OilTransformException {
 
 		// prepare where store all data
@@ -567,7 +566,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeATask(IVarTreePointer vtp, ArrayList<Element> ar, OilImplID id) {
+	protected void storeATask(IVarTreePointer vtp, ArrayList<Element> ar, IOilImplID id) {
 		final String[] taskNamePath = { DPKG.getSystem_Architectural().getName(),
 				DPKG.getArchitectural_TaskList().getName(), //
 				null // task name ... from oil
@@ -581,6 +580,7 @@ public class SimpleTransform implements IOilTransform {
 		taskNamePath[2] = taskName;
 		IVarTreePointer curr = vtp.clone().makePath(taskNamePath, taskTypePath);
 
+//____ System.out.println("\n#############START TASK\n");
 		storeAVar(curr, DPKG.getTask_Type().getName(), "task");
 
 		// store all instance of this TASK object inside the VarTree
@@ -588,7 +588,9 @@ public class SimpleTransform implements IOilTransform {
 
 			storeInsideAOilVar(curr, ar.get(i), id);
 		}
-
+//____ System.out.println("\n#############END TASK\n");
+		
+		
 		{ // move vars outside OilVar
 			IVarTreePointer oilVtp = (IVarTreePointer) curr.clone();
 			IVarTreePointer taskVtp = (IVarTreePointer) curr.clone();
@@ -605,7 +607,7 @@ public class SimpleTransform implements IOilTransform {
 
 				path = tmpPath.toString()+S;
 			}
-
+//____ System.out.println("\n\n1--------" + Vt2StringUtilities.varTreeToStringErtd(vt) + "\n-----\n\n");	
 			{ // ----------- TYPE = task ------------
 				String[] pNames = { DPKG.getTask_ActivationList().getName(), null, DPKG.getActivation_Type().getName() };
 				String[] pTypes = { DPKG.getTask_ActivationList().getName(), DPKG.getActivation().getName(),
@@ -616,7 +618,7 @@ public class SimpleTransform implements IOilTransform {
 				IVarTreePointer lvtp = taskVtp.clone().makePath(pNames, pTypes);
 				lvtp.setVar(var);
 			}
-
+//____ System.out.println("\n\n2--------" + Vt2StringUtilities.varTreeToStringErtd(vt) + "\n-----\n\n");	
 			{ // ----------- PRIORITY ------------
 				IVarTreePointer lvtp = extract(oilVtp, path +"PRIORITY");
 				if (lvtp != null) {
@@ -626,15 +628,16 @@ public class SimpleTransform implements IOilTransform {
 							DPKG.getScheduling_Priority().getName() };
 
 					IVariable var = lvtp.getVar();
+					lvtp.setVar(null);
 					// remove data
-					lvtp.goParent();
-					lvtp.destroy();
+//					lvtp.goParent();
+//					lvtp.destroy();
 
 					lvtp = taskVtp.clone().makePath(pNames, pTypes);
 					lvtp.setVar(var);
 				}
 			}
-
+//____ System.out.println("\n\n3--------" + Vt2StringUtilities.varTreeToStringErtd(vt) + "\n-----\n\n");	
 			{ // ----------- ACTIVATION ------------
 				IVarTreePointer lvtp = extract(oilVtp, path +"ACTIVATION");
 				if (lvtp != null) {
@@ -644,23 +647,25 @@ public class SimpleTransform implements IOilTransform {
 							DPKG.getActivation_ActNumber().getName() };
 
 					IVariable var = lvtp.getVar();
+					lvtp.setVar(null);
 					// remove data
-					lvtp.goParent();
-					lvtp.destroy();
+//					lvtp.goParent();
+//					lvtp.destroy();
 
 					lvtp = taskVtp.clone().makePath(pNames, pTypes);
 					lvtp.setVar(var);
 				}
 			}
-
+//____ System.out.println("\n\n4--------" + Vt2StringUtilities.varTreeToStringErtd(vt) + "\n-----\n\n");	
 			{ // ----------- RESOURCES ------------
 				IVarTreePointer lvtp = extract(oilVtp, path+"RESOURCE");
 				if (lvtp != null) {
 
 					IVariable var = lvtp.getVar();
+					lvtp.setVar(null);
 					// remove data
-					lvtp.goParent();
-					lvtp.destroy();
+//					lvtp.goParent();
+//					lvtp.destroy();
 
 					if (var != null) {
 
@@ -740,7 +745,7 @@ public class SimpleTransform implements IOilTransform {
 				}
 			}
 		}
-
+//____ System.out.println("\n\n5--------" + Vt2StringUtilities.varTreeToStringErtd(vt) + "\n-----\n\n");	
 	}
 
 	private void updateVar(IVarTreePointer lvtp, final String value) {
@@ -769,7 +774,7 @@ public class SimpleTransform implements IOilTransform {
 	 *             if there are some problems
 	 */
 	@SuppressWarnings("unused")
-	protected void storeAnIsr(IVarTreePointer vtp, ArrayList<Element> ar, OilImplID id) {
+	protected void storeAnIsr(IVarTreePointer vtp, ArrayList<Element> ar, IOilImplID id) {
 		final String[] isrNamePath = { DPKG.getSystem_Architectural().getName(),
 				DPKG.getArchitectural_TaskList().getName(), //
 				null // task name ... from oil
@@ -1019,7 +1024,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeMutex(IVarTreePointer vtp, Element parent, OilImplID id) throws OilTransformException {
+	protected void storeMutex(IVarTreePointer vtp, Element parent, IOilImplID id) throws OilTransformException {
 
 		String[] mutexNamePath = { DPKG.getSystem_Architectural().getName(),
 				DPKG.getArchitectural_MutexList().getName(), null, // mutex name
@@ -1101,7 +1106,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeSignals(IVarTreePointer vtp, Element parent, OilImplID id) throws OilTransformException {
+	protected void storeSignals(IVarTreePointer vtp, Element parent, IOilImplID id) throws OilTransformException {
 
 		String[] signalNamePath = { DPKG.getSystem_Architectural().getName(),
 				DPKG.getArchitectural_SignalList().getName(), null // element
@@ -1391,7 +1396,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeOthers(IVarTreePointer vtp, Element parent, String rtosName, OilImplID id)
+	protected void storeOthers(IVarTreePointer vtp, Element parent, String rtosName, IOilImplID id)
 			throws OilTransformException {
 		if (rtosNamePath == null) {
 			throw new Error("First call storeOs than storeOthers");
@@ -1407,7 +1412,7 @@ public class SimpleTransform implements IOilTransform {
 				IVarTreePointer curr = vtp.clone().makePath(new String[] { rtosNamePath[0], rtosNamePath[1], rtosNamePath[2],
 						rtosNamePath[3], rtosNamePath[4] }, new String[] { rtosTypePath[0], rtosTypePath[1],
 						rtosTypePath[2], rtosTypePath[3], rtosTypePath[4] });
-				storeAVar(curr, DPKG.getCpu_Model().getName(), id.getHW());
+				storeAVar(curr, DPKG.getCpu_Model().getName(), ((OilImplID)id).getHW());
 
 				curr.makePath(new String[] { rtosNamePath[5] }, new String[] { rtosTypePath[5] });
 				storeAVar(curr, DPKG.getRtos_Name().getName(), rtosName);
@@ -1417,16 +1422,16 @@ public class SimpleTransform implements IOilTransform {
 
 					String name = getAttribute(objList[i], IOilXMLLabels.ATTR_NAME);
 
-					IVariable var = curr.getVar();
-					if (var == null) {
-						var = curr.getNewVar(null);
-						if (var == null) { /* DEBUG */
-							throw new Error("Try to get a not null var");
-						}
-					}
+//					IVariable var = curr.getVar();
+//					if (var == null) {
+//						var = curr.getNewVar(null);
+//						if (var == null) { /* DEBUG */
+//							throw new Error("Try to get a not null var");
+//						}
+//					}
 					// checkTrue(var instanceof OilVar, "Required an OilVar");
 
-					storeInsideAOilVar(curr, parent, id, name, true);
+					storeInsideAOilVar(curr, objList[i], id, name, true);
 
 				} // end for(osList[0] ... osList[n])
 			}
@@ -1452,7 +1457,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeInsideAOilVar(IVarTreePointer vtp, Element parent, OilImplID id) throws OilTransformException {
+	protected void storeInsideAOilVar(IVarTreePointer vtp, Element parent, IOilImplID id) throws OilTransformException {
 		try {
 			storeInsideAOilVar(vtp, parent, id, null, false);
 		} catch (Throwable e) {
@@ -1477,7 +1482,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void  storeInsideAOilVar(IVarTreePointer vtp, Element parent, OilImplID id, String name, boolean addName)
+	protected void  storeInsideAOilVar(IVarTreePointer vtp, Element parent, IOilImplID id, String name, boolean addName)
 			throws OilTransformException {
 
 		String objType = getAttribute(parent, IOilXMLLabels.ATTR_TYPE);
@@ -1590,6 +1595,7 @@ public class SimpleTransform implements IOilTransform {
 //				}
 				if (value != null) {
 					storeAVar(svtp, elemName, value);
+//____ System.out.println("\n\n--------" + Vt2StringUtilities.varTreeToStringErtd(vt) + "\n-----\n\n");				
 				}
 			}
 				break;
@@ -1848,9 +1854,9 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	public String write(IVarTree vt, IOilImplID iid, String rtosPath) throws OilTransformException {
+	public String write(IVarTree vt, IOilImplID id, String rtosPath) throws OilTransformException {
 
-		OilImplID id = (OilImplID) iid;
+//		IOilImplID id = (OilImplID) iid;
 
 		// init
 		this.vt = vt;
@@ -1891,6 +1897,11 @@ public class SimpleTransform implements IOilTransform {
 	 *             if there are some problems
 	 */
 	public String write(IVarTree vt, IOilImplID id, String[] rtosPaths) throws OilTransformException {
+		
+		if (rtosPaths.length == 1) {
+			return write(vt, id, rtosPaths[0]);
+		}
+		
 		throw new UnsupportedOperationException(
 				"Default Oil Transformer doesn't support export from more than one rtos");
 	}
@@ -1941,7 +1952,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @param rtosPath
 	 *            identifies the current rtos
 	 */
-	protected void writeApplication(StringBuffer buffer, OilImplID id, String rtosPath) {
+	protected void writeApplication(StringBuffer buffer, IOilImplID id, String rtosPath) {
 
 		String[] splittedPath = DataPath.splitPath(rtosPath);
 
@@ -2453,9 +2464,8 @@ public class SimpleTransform implements IOilTransform {
 		String name = vtp.getName();
 
 		if (vtp.isContainer()) {
-			if (vtp.go(null /* (OAPKG.getVariant_EnumeratorList().getName()) */)) {
+			if (OilEcoreCreator.isOilVariant(vtp)) {
 				// ------------- A VARIANT -----------------
-	
 				for (boolean ok = vtp.goFirstChild(); ok; ok = vtp.goNextSibling()) {
 					buffer.append(indent + name + " = ");
 					writeApplicationObject(buffer, indent, (IVarTreePointer) vtp.clone());
@@ -2465,19 +2475,29 @@ public class SimpleTransform implements IOilTransform {
 				return;
 	
 			}
-			if (vtp.exist(null /* (OAPKG.getEnumerator_Value().getName()) */)) {
-				// ------------- A SINGLE ENUM -----------------
-	
+			if (OilEcoreCreator.isOilEnum(vtp)) {
+				boolean addEnd = false;
 				{
-					IVarTreePointer tvtp = (IVarTreePointer) vtp.clone();
-					// tvtp.go(OAPKG.getEnumerator_Value().getName());
-					IVariable var = tvtp.getVar();
-	
-					buffer.append("" + var);
+					IVarTreePointer.EmfPoint epoint = vtp.getEPoint();
+					if (epoint.getCurrentFeature() == null) {
+						EObject eobj = epoint.getEObject();
+						if (!eobj.eContainmentFeature().isMany()) {
+							buffer.append(indent + eobj.eContainmentFeature().getName() + " = ");
+							addEnd = true;
+						}
+
+					}
+				}
+				
+				
+				
+				// ------------- A SINGLE ENUM -----------------
+				{
+					String type = OilEcoreCreator.getOilEnumType(vtp);
+					buffer.append("" + type);
 				}
 	
-				boolean ok = false; // vtp.go(OAPKG.getEnumerator_ParameterList().getName());
-				ok &= vtp.goFirstChild();
+				boolean ok = vtp.goFirstChild();
 				if (ok) {
 					buffer.append(" {\n");
 	
@@ -2485,43 +2505,44 @@ public class SimpleTransform implements IOilTransform {
 						writeApplicationObject(buffer, indent + INDENT, (IVarTreePointer) vtp.clone());
 					}
 					buffer.append(indent + "}");
-				} else {
-					// buffer.append(";\n");
+				}
+				
+				if (addEnd) {
+					buffer.append(";\n");
 				}
 	
 				return;
 			}
 		} else {
-//			if (vtp.exist(null /* OAPKG.getValue_Values().getName() */)) {
-				// ------------- A VARIABLE -----------------
-//				String type = vtp.getType();
-				// TODO check IOilImplementationPointer
+			if (OilEcoreCreator.isOilAttribute(vtp)) {
 
-				//String quote = "STRING".equalsIgnoreCase(type) ? "\"" : "";
-//				vtp.go(null/* OAPKG.getValue_Values().getName() */);
-
-				IVariable var = vtp.getVar();
-				String quote = var instanceof StringVar || var instanceof StringMVar ? "\"" : "";
-				
-				if (var instanceof IMultiValues) {
-					String values[] = ((IMultiValues) var).getValues();
-					if (values == null) {
-						return;
-					}
-
-					for (int i = 0; i < values.length; i++) {
-						buffer.append(indent + name + " = " + quote + values[i] + quote + ";\n");
-					}
-				} else {
-					String txt = "" + vtp.getVar();
-					if (!"null".equals(txt) && !txt.isEmpty()) {
-						buffer.append(indent + name + " = " + quote + vtp.getVar() + quote + ";\n");
+				if ("CPU_ID".equals(name)) {
+//					buffer.append("WriteApplicationObj Attribute " + name+"\n");			// DEBUG	
+				}
+				if (vtp.isVarSet()) {
+					IVariable var = vtp.getVar();
+					String quote = var instanceof StringVar || var instanceof StringMVar ? "\"" : "";
+					
+					if (var instanceof IMultiValues) {
+						String values[] = ((IMultiValues) var).getValues();
+						if (values == null) {
+							return;
+						}
+	
+						for (int i = 0; i < values.length; i++) {
+							buffer.append(indent + name + " = " + quote + values[i] + quote + ";\n");
+						}
+					} else {
+						String txt = "" + vtp.getVar();
+						if (!"null".equals(txt) && !txt.isEmpty()) {
+							buffer.append(indent + name + " = " + quote + vtp.getVar() + quote + ";\n");
+						}
 					}
 				}
 
 				return;
 
-//			} 
+			} 
 		}
 		
 

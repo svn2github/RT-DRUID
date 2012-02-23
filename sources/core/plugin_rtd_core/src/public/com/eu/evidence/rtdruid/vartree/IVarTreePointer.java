@@ -1,5 +1,9 @@
 package com.eu.evidence.rtdruid.vartree;
 
+import org.eclipse.core.runtime.AssertionFailedException;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 
 
 
@@ -86,6 +90,11 @@ public interface IVarTreePointer {
 	
 	// ----------------------    READ & WRITE  ----------------------
 	
+	/** Returns true if there is a variable stored on this node.
+	*
+	*	@throws IllegalStateException	if current node is a container.
+	*/
+	public boolean isVarSet();
 
 	/** Returns the variable stored on this node.
 	*
@@ -374,5 +383,13 @@ public interface IVarTreePointer {
 	 *             if there is a problem adding elements.
 	 */
 	public IVarTreePointer makePath(String[] names, String[] types);
+	
+	
+	interface EmfPoint {
+		public EObject getEObject();
+		public EStructuralFeature getCurrentFeature();
+	}
+
+	public EmfPoint getEPoint();
 }
 

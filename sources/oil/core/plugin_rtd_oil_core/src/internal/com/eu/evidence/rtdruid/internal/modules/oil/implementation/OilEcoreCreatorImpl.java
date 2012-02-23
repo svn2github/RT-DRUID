@@ -25,7 +25,7 @@ import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 public class OilEcoreCreatorImpl extends OilEcoreCreator {
-	
+
 	/**
 	 * If set to true, the code uses EMF references to store Oil references,
 	 * otherwise it saves the reference as string
@@ -231,6 +231,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				if (default_value != null && default_value.length()>0) {
 					addAnnotation("DEFAULT_VALUE", default_value, attribute);
 				}
+				addAnnotation(ANNOTATION_OIL_ATTR, "true", attribute);
 
 
 				parent_class.getEStructuralFeatures().add(attribute);
@@ -293,7 +294,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				current_eclass.setAbstract(true);
 				
 				{
-					addAnnotation("variant_type", "" + type, current_eclass);
+					addAnnotation(ANNOTATION_VARIANT_TYPE, "" + type, current_eclass);
 //					EAttribute eattr_type = eCoreFactory.createEAttribute();
 //					eattr_type.setName("variant_type");
 //					eattr_type.setEType(computeEType("STRING"));
@@ -337,7 +338,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				current_eclass.getESuperTypes().add(parent_class);
 				
 				{
-					addAnnotation("type", "" + name, current_eclass);
+					addAnnotation(ANNOTATION_ENUM_TYPE, "" + name, current_eclass);
 //					EAttribute eattr_type = eCoreFactory.createEAttribute();
 //					eattr_type.setName("type");
 //					eattr_type.setEType(computeEType("STRING"));
@@ -513,10 +514,13 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 	/* This method should be moved on a public utility function */
 	private static void addAnnotation(String key, String value, EModelElement obj) {
 		
-		EAnnotation annotation = eCoreFactory.createEAnnotation();
-		annotation.setSource("htt:///com/eu/evidence/rtdruid/annotations");
-		annotation.getDetails().put(key, value);
-		obj.getEAnnotations().add(annotation);
+		EAnnotation annotation = obj.getEAnnotation(RTDRUID_ANNOTATIONS_SOURCE);
+		if (annotation == null) {
+			annotation = eCoreFactory.createEAnnotation();
+			annotation.setSource(RTDRUID_ANNOTATIONS_SOURCE);
+			obj.getEAnnotations().add(annotation);
+		}
 		
+		annotation.getDetails().put(key, value);
 	}
 }

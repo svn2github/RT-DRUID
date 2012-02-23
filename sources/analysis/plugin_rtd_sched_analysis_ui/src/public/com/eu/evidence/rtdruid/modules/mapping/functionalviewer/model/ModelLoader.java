@@ -1060,7 +1060,7 @@ public class ModelLoader {
 	 */
 	protected EObject getEObject(IVarTreePointer vtp) {
 		if (vtp != null && vtp instanceof VarTreePointerEMF) {
-			return ((VarTreePointerEMF) vtp).getCurrentEMFObject();
+			return ((VarTreePointerEMF) vtp).getEPoint().getEObject();
 		}
 
 		return null;

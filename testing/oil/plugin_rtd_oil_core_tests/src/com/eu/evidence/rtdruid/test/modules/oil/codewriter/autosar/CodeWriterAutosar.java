@@ -124,7 +124,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 				"};\n";
 	    
 	    
-		writerTest(text, 1);
+	    writerAutosarTest(text, 1);
 	}
 	
 	
@@ -245,13 +245,13 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 			"	};\n" +
 			"};\n";
   
-		writerTest(text, 1);
+	    writerAutosarTest(text, 1);
 	}
 	
 	
 	// ------------------------------
 
-	public DefaultTestResult[] writerTest(String oil_text, int expected_cpu) {
+	public DefaultTestResult[] writerAutosarTest(String oil_text, int expected_cpu) {
 		DefaultTestResult[] answer = new DefaultTestResult[2];
 		
 		answer[0] = commonWriterTest(oil_text, expected_cpu);
