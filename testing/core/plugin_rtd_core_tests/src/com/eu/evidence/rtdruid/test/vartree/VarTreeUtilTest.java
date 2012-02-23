@@ -1,7 +1,7 @@
 /**
  * 13/gen/2012
  */
-package com.eu.evidence.rtdruid.vartree;
+package com.eu.evidence.rtdruid.test.vartree;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,6 +20,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.junit.Test;
 
+import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil.VarTreeCreator;
 
 /**
