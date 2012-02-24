@@ -146,7 +146,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 				answer[rtosId] = new OilWriterBuffer();
 			}
 
-			StringBuffer eeortiBuffer = answer[rtosId].get(OrtiConstants.FILE_EE_ORTI);
+			StringBuffer eeortiBuffer = answer[rtosId].get(FrshOrtiConstants.FILE_EE_ORTI);
 			
 //			StringBuffer eecfgBuffer = answer[rtosId].get(FILE_EE_CFG_C);
 			
@@ -352,7 +352,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 //				"        ] CURRENTAPPMODE, \"Current application mode\";\n" + 
 				"    }, \"OS\";\n\n" + 
 
-				(	(EE_ORTI_current & OrtiConstants.EE_ORTI_TASK) != 0 ?
+				(	(EE_ORTI_current & FrshOrtiConstants.EE_ORTI_TASK) != 0 ?
 					"    TASK {\n" + 
 //					"        ENUM \"int\" [\n" +
 //					all_priorities +
@@ -402,7 +402,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 					"        CTYPE \"int\" NACT,    \"NACT\";\n\n" + 
 					
 
-					(	(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0 && parent.checkKeyword(DEF__MULTI_STACK__)?
+					(	(EE_ORTI_current & FrshOrtiConstants.EE_ORTI_STACK) != 0 && parent.checkKeyword(DEF__MULTI_STACK__)?
 						"        ENUM \"unsigned int\" [\n" +
 						all_stack_id + 
 						"        ] STACK, \"Task Stack\";\n" : ""
@@ -411,7 +411,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 //					"        CTYPE \"int\" CURRENTACTIVATIONS, \"Current activations\";\n" + 
 					"    }, \"Tasks\";\n\n" : ""
 				) + 
-				(	(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0 ?
+				(	(EE_ORTI_current & FrshOrtiConstants.EE_ORTI_STACK) != 0 ?
 					"    STACK {\n" + 
 					"        CTYPE SIZE, \"Stack Size (Byte)\";\n" + 
 					"        CTYPE \"unsigned int *\" BASEADDRESS, \"Base Address\";\n" + 
@@ -448,7 +448,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 					"    }, \"Contracts and Virtual Resources\";\n\n" 
 				) +
 				
-				(	(EE_ORTI_current & OrtiConstants.EE_ORTI_ALARM) != 0 ?
+				(	(EE_ORTI_current & FrshOrtiConstants.EE_ORTI_ALARM) != 0 ?
 					"    ALARM {\n" + 
 					"        CTYPE \"unsigned int\" ALARMTIME, \"Alarm Time\"; /* EE_TYPETICK */\n" + 
 					"        CTYPE \"unsigned int\" CYCLETIME, \"Cycle Time\"; /* EE_TYPETICK */\n" + 
@@ -462,7 +462,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 					"    }, \"Alarms\";\n\n" : ""
 				) +
 
-				(	(EE_ORTI_current & OrtiConstants.EE_ORTI_RESOURCE) != 0 ?
+				(	(EE_ORTI_current & FrshOrtiConstants.EE_ORTI_RESOURCE) != 0 ?
 					"    RESOURCE {\n" + 
 					"        ENUM \"unsigned char\" [\n" + 
 					"            \"UNLOCKED\" = 0,\n" + 
@@ -498,7 +498,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 			
 
 			
-			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_TASK) != 0 && ool.getList(IOilObjectList.TASK).size()>0) {
+			if ((EE_ORTI_current & FrshOrtiConstants.EE_ORTI_TASK) != 0 && ool.getList(IOilObjectList.TASK).size()>0) {
 				/***************************************************************
 				 * TASK
 				 **************************************************************/
@@ -536,7 +536,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 								indent1+"WASSTACKED   = \"(EE_th["+id+"].status & 0x80) ? 1 : 0\";\n" +
 								
 								(
-										(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0  && parent.checkKeyword(DEF__MULTI_STACK__) ? 
+										(EE_ORTI_current & FrshOrtiConstants.EE_ORTI_STACK) != 0  && parent.checkKeyword(DEF__MULTI_STACK__) ? 
 										indent1+"STACK        = \""+stack_vector_name+"["+stackID+"]\";\n" : ""
 								) + 
 								indent1+"NACT         = \"EE_th["+id+"].nact\";\n" + 
@@ -600,7 +600,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 				}
 			}
 			
-			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0 && os.containsProperty(SGRK_OS_STACK_LIST)) {
+			if ((EE_ORTI_current & FrshOrtiConstants.EE_ORTI_STACK) != 0 && os.containsProperty(SGRK_OS_STACK_LIST)) {
 				/***************************************************************
 				 * STACK
 				 **************************************************************/
@@ -626,7 +626,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 				}
 			}			
 			
-			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_ALARM) != 0) {
+			if ((EE_ORTI_current & FrshOrtiConstants.EE_ORTI_ALARM) != 0) {
 				/***************************************************************
 				 * ALARMS
 				 **************************************************************/
@@ -708,7 +708,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 //				        		"\n");
 			}
 
-			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_RESOURCE) != 0) {
+			if ((EE_ORTI_current & FrshOrtiConstants.EE_ORTI_RESOURCE) != 0) {
 				/***************************************************************
 				 * RESOURCES
 				 **************************************************************/
@@ -778,22 +778,22 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 							none = true;
 							break;
 						} else if ("ALL".equals(value.get(i))) {
-							EE_ORTI_current = OrtiConstants.EE_ORTI_ALL;
+							EE_ORTI_current = FrshOrtiConstants.EE_ORTI_ALL;
 							break;
 						} else if ("OS_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_OS;
+							EE_ORTI_current |= FrshOrtiConstants.EE_ORTI_OS;
 							
 						} else if ("TASK_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_TASK;
+							EE_ORTI_current |= FrshOrtiConstants.EE_ORTI_TASK;
 							
 						} else if ("RESOURCE_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_RESOURCE;
+							EE_ORTI_current |= FrshOrtiConstants.EE_ORTI_RESOURCE;
 							
 						} else if ("STACK_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_STACK;
+							EE_ORTI_current |= FrshOrtiConstants.EE_ORTI_STACK;
 							
 						} else if ("ALARM_SECTION".equals(value.get(i))) {
-							EE_ORTI_current |= OrtiConstants.EE_ORTI_ALARM;
+							EE_ORTI_current |= FrshOrtiConstants.EE_ORTI_ALARM;
 							
 						} else {
 							Messages.sendWarningNl("Unknow ORTI type : " + value.get(i), null, "qoiwueqwoiueqwe", null); 
@@ -830,7 +830,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 			 * Add sections  
 			 */
 			{
-				sgrOs.setObject(OrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS, new Integer(EE_ORTI_current));
+				sgrOs.setObject(FrshOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS, new Integer(EE_ORTI_current));
 			}
 		}
 		

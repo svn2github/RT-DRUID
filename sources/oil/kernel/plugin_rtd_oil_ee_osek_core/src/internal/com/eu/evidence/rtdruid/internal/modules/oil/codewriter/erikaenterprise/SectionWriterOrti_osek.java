@@ -42,13 +42,13 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 	
 	private enum SectionTypes {
 		NONE("NONE", 0), 
-		ALL("ALL", OrtiConstants.EE_ORTI_ALL),
-		OS("OS_SECTION", OrtiConstants.EE_ORTI_OS),
-		TASK("TASK_SECTION", OrtiConstants.EE_ORTI_TASK),
-		ISR2("ISR2_SECTION", OrtiConstants.EE_ORTI_ISR2),
-		RESOURCE("RESOURCE_SECTION", OrtiConstants.EE_ORTI_RESOURCE),
-		STACK("STACK_SECTION", OrtiConstants.EE_ORTI_STACK),
-		ALARM("ALARM_SECTION", OrtiConstants.EE_ORTI_ALARM);
+		ALL("ALL", OsekOrtiConstants.EE_ORTI_ALL),
+		OS("OS_SECTION", OsekOrtiConstants.EE_ORTI_OS),
+		TASK("TASK_SECTION", OsekOrtiConstants.EE_ORTI_TASK),
+		ISR2("ISR2_SECTION", OsekOrtiConstants.EE_ORTI_ISR2),
+		RESOURCE("RESOURCE_SECTION", OsekOrtiConstants.EE_ORTI_RESOURCE),
+		STACK("STACK_SECTION", OsekOrtiConstants.EE_ORTI_STACK),
+		ALARM("ALARM_SECTION", OsekOrtiConstants.EE_ORTI_ALARM);
 		
 		private final String text;
 		private final int mask;
@@ -171,8 +171,8 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					0);
 //			List<Integer> requiredOilObjects = (List<Integer>) os.getObject(SGRK__FORCE_ARRAYS_LIST__);
 
-			final int EE_ORTI_current = os.containsProperty(OrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS)?
-					(Integer)os.getObject(OrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS) : 0;
+			final int EE_ORTI_current = os.containsProperty(OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS)?
+					(Integer)os.getObject(OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS) : 0;
 
 
 			ICommentWriter commentWriter = getCommentWriter(os, FileTypes.ORTI);
@@ -182,7 +182,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				answer[rtosId] = new OilWriterBuffer();
 			}
 
-			StringBuffer eeortiBuffer = answer[rtosId].get(OrtiConstants.FILE_EE_ORTI);
+			StringBuffer eeortiBuffer = answer[rtosId].get(OsekOrtiConstants.FILE_EE_ORTI);
 			
 //			StringBuffer eecfgBuffer = answer[rtosId].get(FILE_EE_CFG_C);
 			
@@ -261,7 +261,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				}
 			}
 			
-			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_ISR2) != 0) {
+			if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ISR2) != 0) {
 				all_isr2.append("        ENUM \"void *\" [\n" +
 						"            \"NO_ISR2\" = 0");
 				
@@ -366,7 +366,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				"        CTYPE \"unsigned int\" vs_EE_SYSCEILING, \"EE system ceiling\";\n" + 
 				"    }, \"OS\";\n\n" + 
 
-				(	(EE_ORTI_current & OrtiConstants.EE_ORTI_TASK) != 0 ?
+				(	(EE_ORTI_current & OsekOrtiConstants.EE_ORTI_TASK) != 0 ?
 					"    TASK {\n" + 
 					"        ENUM \"int\" [\n" +
 					all_priorities +
@@ -379,7 +379,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					"            \"SUSPENDED\"=3\n" + 
 					"        ] STATE, \"Task State\";\n" + 
 
-					(	(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0 && all_stack_id.length()>0 ? //parent.checkKeyword(DEF__MULTI_STACK__)?
+					(	(EE_ORTI_current & OsekOrtiConstants.EE_ORTI_STACK) != 0 && all_stack_id.length()>0 ? //parent.checkKeyword(DEF__MULTI_STACK__)?
 						"        ENUM \"unsigned int\" [\n" +
 						all_stack_id + 
 						"        ] STACK, \"Task Stack\";\n" : ""
@@ -388,7 +388,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					"        CTYPE \"int\" CURRENTACTIVATIONS, \"Current activations\";\n" + 
 					"    }, \"Tasks\";\n\n" : ""
 				) + 
-				(	(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0 ?
+				(	(EE_ORTI_current & OsekOrtiConstants.EE_ORTI_STACK) != 0 ?
 					"    STACK {\n" + 
 					"        CTYPE SIZE, \"Stack Size (Byte)\";\n" + 
 					"        CTYPE \"unsigned int *\" BASEADDRESS, \"Base Address\";\n" + 
@@ -396,7 +396,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					"        CTYPE \"unsigned int\" FILLPATTERN, \"Stack Fill Pattern\";\n" + 
 					"    }, \"Stacks\";\n\n" : ""
 				) + 
-				(	(EE_ORTI_current & OrtiConstants.EE_ORTI_ALARM) != 0 ?
+				(	(EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ALARM) != 0 ?
 					"    ALARM {\n" + 
 					"        CTYPE \"unsigned int\" ALARMTIME, \"Alarm Time\"; /* EE_TYPETICK */\n" + 
 					"        CTYPE \"unsigned int\" CYCLETIME, \"Cycle Time\"; /* EE_TYPETICK */\n" + 
@@ -410,7 +410,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					"    }, \"Alarms\";\n\n" : ""
 				) +
 
-				(	(EE_ORTI_current & OrtiConstants.EE_ORTI_RESOURCE) != 0 ?
+				(	(EE_ORTI_current & OsekOrtiConstants.EE_ORTI_RESOURCE) != 0 ?
 					"    RESOURCE {\n" + 
 					"        ENUM \"unsigned char\" [\n" + 
 					"            \"UNLOCKED\" = 0,\n" + 
@@ -439,10 +439,10 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					"OS EE_arch {\n" + 
 					"    RUNNINGTASK = \"EE_stkfirst\";\n" + 
 					"    RUNNINGTASKPRIORITY = \"(EE_stkfirst == -1) ? 0 : " +
-						((EE_ORTI_current & OrtiConstants.EE_ORTI_TASK) != 0 && ool.getList(IOilObjectList.TASK).size()>0 ?
+						((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_TASK) != 0 && ool.getList(IOilObjectList.TASK).size()>0 ?
 								"EE_ORTI_th_priority[EE_stkfirst]" : "0") + "\";\n" + 
 
-					((EE_ORTI_current & OrtiConstants.EE_ORTI_ISR2) != 0 ?
+					((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ISR2) != 0 ?
 								"    RUNNINGISR2 = \"EE_ORTI_ISR2_magic\";\n" : "") +
 
 					"    SERVICETRACE = \"EE_ORTI_servicetrace\";\n" + 
@@ -453,7 +453,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			
 
 			
-			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_TASK) != 0 && ool.getList(IOilObjectList.TASK).size()>0) {
+			if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_TASK) != 0 && ool.getList(IOilObjectList.TASK).size()>0) {
 				/***************************************************************
 				 * TASK
 				 **************************************************************/
@@ -489,7 +489,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 								indent1+"STATE = \"(EE_th_status["+id+"])\";\n" + 
 								indent1+"CURRENTACTIVATIONS = \"("+act+" - EE_th_rnact["+id+"])\";  /* "+act+" = max activations */\n" + 
 								(
-										(EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0  && all_stack_id.length()>0 ? 
+										(EE_ORTI_current & OsekOrtiConstants.EE_ORTI_STACK) != 0  && all_stack_id.length()>0 ? 
 												(parent.checkKeyword(DEF__MULTI_STACK__) ? 
 														indent1+"STACK = \"("+stack_vector_name+"["+stackID+"])\";\n" :
 														indent1+"STACK = Stack0;\n"  
@@ -503,7 +503,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			}
 
 			
-			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0 && os.containsProperty(SGRK_OS_STACK_LIST)) {
+			if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_STACK) != 0 && os.containsProperty(SGRK_OS_STACK_LIST)) {
 				/***************************************************************
 				 * STACK
 				 **************************************************************/
@@ -529,7 +529,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				}
 			}			
 			
-			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_ALARM) != 0 && ool.getList(IOilObjectList.ALARM).size() >0) {
+			if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ALARM) != 0 && ool.getList(IOilObjectList.ALARM).size() >0) {
 				/***************************************************************
 				 * ALARMS
 				 **************************************************************/
@@ -600,7 +600,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				}
 			}
 
-			if ((EE_ORTI_current & OrtiConstants.EE_ORTI_RESOURCE) != 0 && ool.getList(IOilObjectList.RESOURCE).size() >0) {
+			if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_RESOURCE) != 0 && ool.getList(IOilObjectList.RESOURCE).size() >0) {
 				/***************************************************************
 				 * RESOURCES
 				 **************************************************************/
@@ -721,7 +721,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 		}
 		
 		if (!supportISR2) {
-			EE_ORTI_current = EE_ORTI_current & (~OrtiConstants.EE_ORTI_ISR2);
+			EE_ORTI_current = EE_ORTI_current & (~OsekOrtiConstants.EE_ORTI_ISR2);
 		}
 
 		
@@ -741,29 +741,29 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				ArrayList<String> array = new ArrayList<String>(Arrays.asList(lista));
 				
 
-				if ((EE_ORTI_current & OrtiConstants.EE_ORTI_OS) != 0) {
+				if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_OS) != 0) {
 					array.add("__OO_ORTI_LASTERROR__");
 					array.add("__OO_ORTI_SERVICETRACE__");
 				}
-				if ((EE_ORTI_current & OrtiConstants.EE_ORTI_TASK) != 0) {
+				if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_TASK) != 0) {
 					array.add("__OO_ORTI_PRIORITY__");
 				    
 				    // the resource functions keep
 		            // trace of the locker task.
 					array.add("__OO_ORTI_RES_LOCKER_TASK__");
 				}
-				if ((EE_ORTI_current & OrtiConstants.EE_ORTI_RESOURCE) != 0) {
+				if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_RESOURCE) != 0) {
 				    // the resource functions keep trace
 		            // of the fact that a resource is locked or not
 					array.add("__OO_ORTI_RES_ISLOCKED__");
 				}
-				if ((EE_ORTI_current & OrtiConstants.EE_ORTI_STACK) != 0) {
+				if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_STACK) != 0) {
 					array.add("__OO_ORTI_STACK__");
 				}
-				if ((EE_ORTI_current & OrtiConstants.EE_ORTI_ALARM) != 0) {
+				if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ALARM) != 0) {
 					array.add("__OO_ORTI_ALARMTIME__");
 				}
-				if ((EE_ORTI_current & OrtiConstants.EE_ORTI_ISR2) != 0) {
+				if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ISR2) != 0) {
 					array.add("__OO_ORTI_ISR2__");
 				}
 
@@ -775,7 +775,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			 * Add  
 			 */
 			{
-				sgrOs.setObject(OrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS, new Integer(EE_ORTI_current));
+				sgrOs.setObject(OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS, new Integer(EE_ORTI_current));
 			}
 		}
 		

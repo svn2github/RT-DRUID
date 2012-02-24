@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Testing utilities
 Bundle-SymbolicName: com.eu.evidence.rtdruid.tests
 Bundle-Version: 1.6.0.qualifier
-Bundle-Activator: com.eu.evidence.rtdruid.tests.Activator
+Bundle-Activator: com.eu.evidence.rtdruid.tests.TestsActivator
 Require-Bundle: org.eclipse.core.runtime,
  org.junit4;bundle-version="4.3.0";visibility:=reexport,
  org.eclipse.emf.edit;bundle-version="2.7.0",

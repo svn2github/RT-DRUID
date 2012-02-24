@@ -820,11 +820,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						int current_orti = 0;
 					
 						if (parent.checkKeyword(IWritersKeywords.ENABLE_ORTI) &&
-								os.containsProperty(OrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS)) 
-							current_orti = ((Integer) os.getObject(OrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS));
+								os.containsProperty(OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS)) 
+							current_orti = ((Integer) os.getObject(OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS));
 					
 						if (parent.checkKeyword(OsekConstants.DEF__OSEKOS_EXTENDED_STATUS__)
-								|| (current_orti & OrtiConstants.EE_ORTI_RESOURCE) != 0) {
+								|| (current_orti & OsekOrtiConstants.EE_ORTI_RESOURCE) != 0) {
 			
 							buffer
 									.append(commentWriterC.writerMultiLineComment(indent1,
