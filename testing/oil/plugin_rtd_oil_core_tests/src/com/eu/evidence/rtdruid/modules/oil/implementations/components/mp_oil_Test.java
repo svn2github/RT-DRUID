@@ -36,7 +36,7 @@ public class mp_oil_Test implements FilenameFilter {
 
 	@Test
 	public void test_list_load() throws IOException {
-		String base_path = getClass().getPackage().getName().replace('.', '/'); //"com/eu/evidence/rtdruid/modules/oil/implementation/components/";
+		String base_path = "/"+getClass().getPackage().getName().replace('.', '/')+"/"; //"com/eu/evidence/rtdruid/modules/oil/implementation/components/";
 		//String base = null;
 		 //File file = new File(base + base_path);
          //String[] file_list = file.list(this);
@@ -73,7 +73,7 @@ public class mp_oil_Test implements FilenameFilter {
 		IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
 		assertNotNull(oids);
 	    assertEquals(oids.length, 0);
-		final String filename = "com/eu/evidence/rtdruid/modules/oil/templates/ee_appl.oil";
+		final String filename = "/com/eu/evidence/rtdruid/modules/oil/templates/ee_appl.oil";
 
 		{
 	    	InputStream instream = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -156,15 +156,15 @@ public class mp_oil_Test implements FilenameFilter {
 	
 	
 	@Test
-	public void test_merge() {
+	public void test_merge() throws IOException {
 		IVarTree vt_orig = VarTreeUtil.newVarTree();
 		IVarTree vt_merge = VarTreeUtil.newVarTree();
 
 		final String filename_arm = "com/eu/evidence/rtdruid/modules/oil/templates/arm7.oil";
 		final String filename_witout_arm = "com/eu/evidence/rtdruid/modules/oil/templates/ee_appl_senza_arm7.oil";
-		final String filename_all = "com/eu/evidence/rtdruid/modules/oil/templates/ee_appl.oil";
+		final String filename_all = "/com/eu/evidence/rtdruid/modules/oil/templates/ee_appl.oil";
 
-		 try {
+		{
 			ClassLoader loader = this.getClass().getClassLoader();
 			InputStream reader = null;
 
@@ -182,9 +182,6 @@ public class mp_oil_Test implements FilenameFilter {
 	    	reader = loader.getResourceAsStream(filename_all);
 	    	(new OilReader()).load(reader, vt_orig);
 	    	reader.close();
-	    	
-		} catch (Exception e) {
-			System.out.println("opening/parsing file failed");
 		}
 		OilImplFactory oif_m = OilImplFactory_Impl.getAnInstance(vt_merge);
 		OilImplFactory oif_o = OilImplFactory_Impl.getAnInstance(vt_orig);
