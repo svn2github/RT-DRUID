@@ -11,9 +11,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.osgi.framework.Bundle;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 
@@ -27,6 +29,21 @@ public class Rtd_corePlugin extends Plugin implements ResourceLocator {
 
     public final static String EPACKAGE_BASE_ID = "RT-Druid Core - Base contribution";
 
+    
+    
+	public static final boolean IS_RESOURCES_BUNDLE_ACTIVE;
+	static {
+		boolean result = false;
+		try {
+			Bundle resourcesBundle = Platform.getBundle("org.eclipse.core.resources");
+			result = resourcesBundle != null
+					&& (resourcesBundle.getState() & (Bundle.ACTIVE | Bundle.STARTING )) != 0;
+		} catch (Throwable exception) {
+			// Assume that it's not available.
+		}
+		IS_RESOURCES_BUNDLE_ACTIVE = result;
+	}    
+    
     //The shared instance.
 	private static Rtd_corePlugin plugin;
 	//Resource bundle.
