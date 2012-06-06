@@ -39,9 +39,9 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStack
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
 /**
@@ -987,7 +987,6 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 		final IVarTree vt = parent.getVt();
 //		final int currentRtosId = 0;
 //		final IOilObjectList ool = oilObjects[currentRtosId];
-		final String oilHwRtosPrefix = parent.getOilHwRtosPrefix();
 //		final ISimpleGenRes sgrOs = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 		Boolean use_sync_objs = null;
 
@@ -1382,8 +1381,7 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 
 				for (Iterator<ISimpleGenRes> iter = tasks.iterator(); iter.hasNext();) { //foreach task
 					final ISimpleGenRes currTask = (ISimpleGenRes)iter.next();
-					final String oilVarPrefix = DataPackage.eINSTANCE.getRtos_OilVar().getName()
-							+ S + IOilXMLLabels.OBJ_TASK + oilHwRtosPrefix;
+					final String oilVarPrefix = (new OilPath(OilObjectType.TASK, null)).getPath();
 					final String contractPath = currTask.getPath() + S + oilVarPrefix + S
 							+ "CONTRACT";
 					final String[] _contracts = CommonUtils.getValue(vt, contractPath);

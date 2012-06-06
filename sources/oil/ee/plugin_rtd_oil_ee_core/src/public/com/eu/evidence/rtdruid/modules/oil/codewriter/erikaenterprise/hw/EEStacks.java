@@ -10,10 +10,11 @@ import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtos
 import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils.addToAllStrings;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
@@ -23,10 +24,9 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
-import com.eu.evidence.rtdruid.vartree.ITreeInterface;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This class store all data about stacks, and check for theirs consistency.
@@ -209,25 +209,32 @@ public final class EEStacks implements IEEWriterKeywords {
 		taskList = new ArrayList<EEStacks.Tasks>();
 		stackList = new ArrayList<EEStacks.StackDescr>();
 
-		ITreeInterface ti = vt.newTreeInterface();
-
 		// check if single or multi stack
-		String[] tmps = new String[0];
-		String defaultMultiStackPrefix = null;
-		for (String cpuPrefix: currentCpuDataPrefixes) {
-			defaultMultiStackPrefix = cpuPrefix + S + "MULTI_STACK"
-					+ VARIANT_ELIST;
-			 tmps = ti.getAllName(defaultMultiStackPrefix, null);
-			if (tmps.length>0) {
-				break;
+		Set<String> types = new HashSet<String>();
+		final String defaultMultiStackPrefix;
+		{
+			String tmpPrefix = null;
+			for (String cpuPrefix: currentCpuDataPrefixes) {
+				String tpath = cpuPrefix + S + "MULTI_STACK";
+				 
+				ArrayList<String> child = new ArrayList<String>();
+				ArrayList<String> tmps = CommonUtils.getAllChildrenEnumType(vt, tpath, child);
+				if (tmps != null && tmps.size() > 0) {
+					types.addAll(tmps);
+					if (tmpPrefix == null) {
+						tmpPrefix = tpath + child.get(0);
+					}
+					break;
+				}
 			}
+			defaultMultiStackPrefix = tmpPrefix;
 		}
 		
 		// if not one string -> send an exception
-		if (tmps.length != 1)
+		if (types.size() != 1)
 			throw new RuntimeException(
 					"Stacks : Expected one and only one setting for OS/MULTI_STACK (found \n"
-							+ Arrays.asList(tmps) + ")");
+							+ types + ")");
 
 		// take the maximum size of the sum of all stack's sizes
 		int[] max_sizes =  new int[currentStackDescription.stackNames.size()];
@@ -312,8 +319,6 @@ public final class EEStacks implements IEEWriterKeywords {
 
 		}
 
-		defaultMultiStackPrefix += S + tmps[0] + PARAMETER_LIST;
-
 		int autoId = 0;
 
 		{	
@@ -352,8 +357,8 @@ public final class EEStacks implements IEEWriterKeywords {
 				for (Iterator<String> iter=currentStackDescription.stackNames.iterator(); iter.hasNext(); ) {
 					
 					String what = (String) iter.next();
-					String tmp2 = ""
-							+ ti.getValue(dummyPrefix + S + what + VALUE_VALUE);
+					String[] val = CommonUtils.getValue(vt, dummyPrefix + S + what);
+					String tmp2 = val != null && val.length>0 ? val[0] : "";
 
 					try {
 						values[pos] = (Integer.decode(tmp2)).intValue();
@@ -403,11 +408,8 @@ public final class EEStacks implements IEEWriterKeywords {
 		/*******************************************************************
 		 * stack for all OS APPLICATIONS
 		 ******************************************************************/
-		final String oilHwRtosPrefix = parent.getOilHwRtosPrefix();
-
 		{
-			String oilVarPrefix = DataPackage.eINSTANCE.getOsApplication_OilVar().getName()
-					+ S + IOilXMLLabels.OBJ_OSAPPLICATION + oilHwRtosPrefix;
+			String oilVarPrefix = (new OilPath(OilObjectType.OSAPPLICATION, null)).getPath();
 
 			List<ISimpleGenRes> appls = ool.getList(IOilObjectList.OSAPPLICATION);
 			for (ISimpleGenRes currAppl : appls) {
@@ -528,9 +530,7 @@ public final class EEStacks implements IEEWriterKeywords {
 
 			String idSt; // store User and System task's id
 
-			String oilVarPrefix = DataPackage.eINSTANCE.getRtos_OilVar()
-					.getName()
-					+ S + IOilXMLLabels.OBJ_TASK + oilHwRtosPrefix;
+			String oilVarPrefix = (new OilPath(OilObjectType.TASK, null)).getPath();
 
 			String threadStack = currTask.getPath() + S + oilVarPrefix + S
 					+ "STACK" ;
@@ -549,7 +549,7 @@ public final class EEStacks implements IEEWriterKeywords {
 									+ "; task name = " + currTask.getName());
 				} else {
 					type = (String) tmpType.get(0);
-					threadStack += VARIANT_ELIST + child.get(0)+ PARAMETER_LIST;
+//					threadStack += VARIANT_ELIST + child.get(0)+ PARAMETER_LIST;
 				}
 				
 			}
@@ -581,13 +581,12 @@ public final class EEStacks implements IEEWriterKeywords {
 			} else if (type.equalsIgnoreCase(currentStackDescription.privateId)) {
 
 				int[] values = new int[currentStackDescription.stackNames.size()];
-				
 				int pos =0;
 				for (Iterator<String> iter2=currentStackDescription.stackNames.iterator(); iter2.hasNext(); ) {
 					
 					String what = (String) iter2.next();
-					String tmp2 = ""
-							+ ti.getValue(threadStack + S + what + VALUE_VALUE);
+					String[] val = CommonUtils.getValue(vt, threadStack + S + what);
+					String tmp2 = val != null && val.length>0 ? val[0] : "";
 
 					try {
 						values[pos] = (Integer.decode(tmp2)).intValue();

@@ -234,6 +234,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 				"		SCHEDULE = FULL;\n" + 
 				"		RESOURCE = \"MUTEX_sync\";\n" + 
 				"	};\n" + 
+				"    RESOURCE MUTEX_sync { RESOURCEPROPERTY = STANDARD; };\n" + 
 				"};\n";
 		commonWriterTest(text, 1);
 	}
@@ -276,6 +277,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 				"		SCHEDULE = FULL;\n" + 
 				"		RESOURCE = \"MUTEX_sync\";\n" + 
 				"	};\n" + 
+				"    RESOURCE MUTEX_sync { RESOURCEPROPERTY = STANDARD; };\n" + 
 				"};\n";
 		commonWriterTest(text, 1);
 	}
@@ -322,6 +324,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 			"	STACK = SHARED;\n" +
 			"	ACTIVATION = 1;\n" +
 			"};\n" +
+			"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" + 
 			"};\n";
 		commonWriterTest(text, 1);
 	}
@@ -354,6 +357,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 			"	STACK = SHARED;\n" +
 			"	ACTIVATION = 1;\n" +
 			"};\n" +
+			"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" + 
 			"};\n";
 		commonWriterTest(text, 1);
 	}
@@ -386,6 +390,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 			"	STACK = SHARED;\n" +
 			"	ACTIVATION = 1;\n" +
 			"};\n" +
+			"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" + 
 			"};\n";
 		commonWriterTest(text, 1);
 	}

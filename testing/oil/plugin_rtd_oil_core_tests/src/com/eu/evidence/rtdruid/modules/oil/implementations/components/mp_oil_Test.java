@@ -73,7 +73,7 @@ public class mp_oil_Test implements FilenameFilter {
 		IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
 		assertNotNull(oids);
 	    assertEquals(oids.length, 0);
-		final String filename = "/com/eu/evidence/rtdruid/modules/oil/templates/ee_appl.oil";
+		final String filename = "/ee_appl.oil";
 
 		{
 	    	InputStream instream = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -162,7 +162,7 @@ public class mp_oil_Test implements FilenameFilter {
 
 		final String filename_arm = "com/eu/evidence/rtdruid/modules/oil/templates/arm7.oil";
 		final String filename_witout_arm = "com/eu/evidence/rtdruid/modules/oil/templates/ee_appl_senza_arm7.oil";
-		final String filename_all = "/com/eu/evidence/rtdruid/modules/oil/templates/ee_appl.oil";
+		final String filename_all = "/ee_appl.oil";
 
 		{
 			ClassLoader loader = this.getClass().getClassLoader();

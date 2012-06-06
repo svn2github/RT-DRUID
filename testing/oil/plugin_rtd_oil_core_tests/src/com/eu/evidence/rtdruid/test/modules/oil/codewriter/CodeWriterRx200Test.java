@@ -1,10 +1,12 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 
 
 public class CodeWriterRx200Test extends AbstractCodeWriterTest {
 	
-	
+	@Test
 	public void testPorting4() {
 	    final String text = "CPU mySystem {\n" +
 	    		"\n" +
@@ -62,6 +64,7 @@ public class CodeWriterRx200Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
+	@Test
 	public void testStack1() {
 	    final String text = "CPU mySystem {\n" +
 	    		"\n" +

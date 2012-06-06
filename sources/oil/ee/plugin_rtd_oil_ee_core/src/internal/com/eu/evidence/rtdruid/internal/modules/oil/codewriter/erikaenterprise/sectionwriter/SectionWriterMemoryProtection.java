@@ -30,9 +30,9 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNoti
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This writer manages Remote Notifications
@@ -312,8 +312,8 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 		final IVarTree vt = parent.getVt();
 
 		final String osNestingLevelPath = S
-					+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MAX_NESTING_LEVEL";
+				+ (new OilPath(OilObjectType.OS, null)).getPath()
+				+ "MAX_NESTING_LEVEL";
 
 		final IOilObjectList[] oilObjects = parent.getOilObjects();	
 		for (IOilObjectList ool : oilObjects) {

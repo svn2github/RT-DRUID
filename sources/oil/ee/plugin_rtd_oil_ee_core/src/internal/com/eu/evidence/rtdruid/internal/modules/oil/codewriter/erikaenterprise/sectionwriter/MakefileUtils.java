@@ -66,8 +66,8 @@ class MakefileUtils {
 		for (ISimpleGenRes sgrCpu: ool.getList(IOilObjectList.OS)){
 			src_files.addAll(Arrays.asList(CpuUtility.getSources(sgrCpu)));
 		
-		if (sgrCpu.containsProperty(IEEWriterKeywords.SGRK_OS_CPU_DATA_PREFIX)) { // cpu's sources (common)
-			final String currentCpuPrefix = sgrCpu.getString(IEEWriterKeywords.SGRK_OS_CPU_DATA_PREFIX);
+		final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, IEEWriterKeywords.SGRK_OS_CPU_DATA_PREFIX);
+		for (String currentCpuPrefix: currentCpuPrefixes) {
 
 			String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
 					+ DataPath.SEPARATOR + "APP_SRC");

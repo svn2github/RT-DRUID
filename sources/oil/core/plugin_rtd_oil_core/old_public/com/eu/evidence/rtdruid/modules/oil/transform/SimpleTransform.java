@@ -39,6 +39,8 @@ import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplPointer;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.implementation.OilEcoreCreator;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IMultiValues;
@@ -72,6 +74,8 @@ public class SimpleTransform implements IOilTransform {
 	protected static final String TASK_MAPPING = "sgrk_task_mapping";
 	protected static final String TASK_FORCE_MAPPING = "sgrk_task_add_mapping";
 
+	private static final boolean DEBUG = true;
+
 	protected IVarTree vt;
 
 	/** If true, is required to write the implementation section */
@@ -93,39 +97,6 @@ public class SimpleTransform implements IOilTransform {
 	
 	// -------------------------------
 	protected IOilImplementation oilImpl;
-
-	// -------------------------------
-
-	/**
-	 * Prepare the prefix for all data that will be stored inside the OilVar.
-	 * 
-	 * 
-	 */
-	public static String[][] makeOilVarPrefix(boolean addName, String name, String objType, IOilImplID id) {
-
-		String objId = (addName ? DataPath.makeSlashedId(new String[] { objType, name }) : objType);
-		
-		final String ext = objType + "_OIL_EXT";
-		final String type = OilEcoreCreator.incremental_compute_full_name(null,objType);
-//		if ("os".equalsIgnoreCase(objType)) {
-//			ext = "RTOS";
-//		} else {
-//			ext = objType;
-//		}
-		
-		
-		String[][] answer = new String[3][];
-		answer[0] = new String[] { ext, objId };
-		answer[1] = new String[] { ext, type };
-		answer[2] = new String[] { type };
-
-		return answer;
-		//
-		//
-		// return new String[] { objId, OAPKG.getRoot_HwList().getName(),
-		// DataPath.makeId(id.getHW()), OAPKG.getHW_RtosList().getName(),
-		// DataPath.makeId(id.getRtos()) };
-	}
 
 	// -------------------------------
 
@@ -153,6 +124,7 @@ public class SimpleTransform implements IOilTransform {
 
 		vt = lvt;
 		oilImpl = OilImplFactory.getAnInstance(vt).getImpl(id);
+System.out.println("\n>>>>>>>>>\n"+ oilImpl.toOil() + "\n<<<<<<<<<<<<<<<<\n");
 
 		Element application = appl.getDocumentElement();
 		checkTrue("application".equalsIgnoreCase(application.getNodeName()), "Expected an application node");
@@ -596,17 +568,7 @@ public class SimpleTransform implements IOilTransform {
 			IVarTreePointer taskVtp = (IVarTreePointer) curr.clone();
 			//taskVtp.goParent();
 
-			final String path;
-			{ // prepare path
-				StringBuffer tmpPath = new StringBuffer();
-				String[] el = makeOilVarPrefix(false, null, IOilXMLLabels.OBJ_TASK, id)[0];
-
-				for (int i = 0; i < el.length; i++) {
-					tmpPath.append(el[i] + S);
-				}
-
-				path = tmpPath.toString()+S;
-			}
+			final String path = (new OilPath(OilObjectType.TASK, null)).getPath();
 //____ System.out.println("\n\n1--------" + Vt2StringUtilities.varTreeToStringErtd(vt) + "\n-----\n\n");	
 			{ // ----------- TYPE = task ------------
 				String[] pNames = { DPKG.getTask_ActivationList().getName(), null, DPKG.getActivation_Type().getName() };
@@ -799,18 +761,7 @@ public class SimpleTransform implements IOilTransform {
 		{ // move vars outside OilVar
 			IVarTreePointer isrVtp = (IVarTreePointer) curr.clone();
 
-			final String path;
-			{ // prepare path
-				StringBuffer tmpPath = new StringBuffer();
-				String[] el = makeOilVarPrefix(false, null, IOilXMLLabels.OBJ_ISR, id)[0];
-
-				for (int i = 0; i < el.length; i++) {
-					tmpPath.append(el[i] + S);
-				}
-
-				path = tmpPath.toString()+S;
-			}
-
+			final String path = (new OilPath(OilObjectType.ISR, null)).getPath();
 			{ // ----------- TYPE = isr ------------
 				String[] pNames = { DPKG.getTask_ActivationList().getName(), null, DPKG.getActivation_Type().getName() };
 				String[] pTypes = { DPKG.getTask_ActivationList().getName(), DPKG.getActivation().getName(),
@@ -864,8 +815,9 @@ public class SimpleTransform implements IOilTransform {
 
 					IVariable var = lvtp.getVar();
 					// remove data
-					lvtp.goParent();
-					lvtp.destroy();
+					lvtp.setVar(null);
+//					lvtp.goParent();
+//					lvtp.destroy();
 
 					if (var != null) {
 
@@ -1458,11 +1410,11 @@ public class SimpleTransform implements IOilTransform {
 	 *             if there are some problems
 	 */
 	protected void storeInsideAOilVar(IVarTreePointer vtp, Element parent, IOilImplID id) throws OilTransformException {
-		try {
+//		try {
 			storeInsideAOilVar(vtp, parent, id, null, false);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+//		} catch (Throwable e) {
+//			e.printStackTrace();
+//		}
 
 	}
 
@@ -1486,12 +1438,12 @@ public class SimpleTransform implements IOilTransform {
 			throws OilTransformException {
 
 		String objType = getAttribute(parent, IOilXMLLabels.ATTR_TYPE);
-		String[][] tpath = makeOilVarPrefix(addName, name, objType, id);
-		vtp = vtp.clone().makePath(tpath[0], tpath[1]);
+		OilPath opath = new OilPath(OilObjectType.get(objType), name, addName);
+		vtp = vtp.clone().makePath(opath.getPathElements(), opath.getTypeElements());
 
 		ArrayList<String> typePath = new ArrayList<String>();
 
-		String full_path_type = tpath[2][0];
+		String full_path_type = opath.getType();
 		typePath.add(objType);
 		NodeList children = parent.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
@@ -1521,16 +1473,18 @@ public class SimpleTransform implements IOilTransform {
 	protected void storeInsideAOilVar(IVarTreePointer svtp, Element current, ArrayList<String> typePath, String full_path_type, String parentName)
 			throws OilTransformException {
 		
-		System.err.flush();
-		System.out.flush();
-		System.out.print("-- storeInsideOilVar: " + current.getNodeName() + " " + typePath + "\n\t"
-				+ "attr ");
-		for (int i=0; i<current.getAttributes().getLength(); i++) {
-			System.out.print("(" + current.getAttributes().item(i).getNodeName() +"="+ current.getAttributes().item(i).getNodeValue() + ") ");
+		if (DEBUG) {
+			System.err.flush();
+			System.out.flush();
+			System.out.print("-- storeInsideOilVar: " + current.getNodeName() + " " + typePath + "\n\t"
+					+ "attr ");
+			for (int i=0; i<current.getAttributes().getLength(); i++) {
+				System.out.print("(" + current.getAttributes().item(i).getNodeName() +"="+ current.getAttributes().item(i).getNodeValue() + ") ");
+			}
+			System.out.println();
+			System.out.flush();
+			System.err.flush();
 		}
-		System.out.println();
-		System.out.flush();
-		System.err.flush();
 		
 		
 		svtp = (IVarTreePointer) svtp.clone();
@@ -1538,7 +1492,7 @@ public class SimpleTransform implements IOilTransform {
 		final String elemType = current.getNodeName();
 		final String elemName = getAttribute(current, IOilXMLLabels.ATTR_NAME);
 		typePath.add(elemName);
-		full_path_type = OilEcoreCreator.incremental_compute_full_name(full_path_type, elemName);
+		full_path_type = OilPath.incremental_compute_full_name(full_path_type, elemName);		
 
 		/***********************************************************************
 		 * Store a parameter
@@ -1556,8 +1510,6 @@ public class SimpleTransform implements IOilTransform {
 			switch (curr.getType()) {
 			case IOilImplPointer.REFERENCE: {
 				if (OilEcoreCreatorImpl.REFERENCE_AS_EMF_REF) {
-					// a reference is stored as STRING, then handled in the same way of ATTRIBUTE
-				} else {
 	//				String value = null;
 	//				String type;
 	//				value = getAttribute(current, IOilXMLLabels.ATTR_CURR_VALUE);
@@ -1578,6 +1530,9 @@ public class SimpleTransform implements IOilTransform {
 					// break switch only if the REFERENCE is handled as EMF
 					// reference
 					break;
+					
+				} else {
+					// a reference is stored as STRING, then handled in the same way of ATTRIBUTE
 				}
 			}
 			case IOilImplPointer.ATTRIBUTE: {
@@ -1594,7 +1549,7 @@ public class SimpleTransform implements IOilTransform {
 //					defaultValuesUsed = ((ISubVarTreePointer) svtp.clone()).makeSteps(stackPath) == ISubVarTreePointer.ERROR;
 //				}
 				if (value != null) {
-					storeAVar(svtp, elemName, value);
+					storeAVar(svtp, elemName, value, true);
 //____ System.out.println("\n\n--------" + Vt2StringUtilities.varTreeToStringErtd(vt) + "\n-----\n\n");				
 				}
 			}
@@ -1680,6 +1635,9 @@ public class SimpleTransform implements IOilTransform {
 					new String[] {
 							full_path_type //elemName
 							});
+			if (!(full_path_type.equals(svtp.getType()))) {
+				throw new OilTransformException("Adding two or more distinct values to a single value Enumerator (" + svtp.getType() + " and " + full_path_type +")");
+			}
 
 			// cicle all children
 			NodeList children = current.getChildNodes();
@@ -2002,7 +1960,7 @@ public class SimpleTransform implements IOilTransform {
 
 		for (int objID = 0; objID < IOilObjectList.OBJECT_NUMBER; objID++) {
 
-			SimpleGenRes[] objects = new SimpleGenRes[0];
+			ISimpleGenRes[] objects = new ISimpleGenRes[0];
 			switch (objID) {
 			case IOilObjectList.OS: {
 
@@ -2300,7 +2258,23 @@ public class SimpleTransform implements IOilTransform {
 			case IOilObjectList.MESSAGE:
 			case IOilObjectList.COM:
 			case IOilObjectList.NM:
-			case IOilObjectList.IPDU:
+			case IOilObjectList.IPDU: {
+				OilObjectType oType = OilObjectType.get(objID);
+				String type = OilEcoreCreator.getRtdEClassExtPoint(oType.getText());
+				ArrayList<ISimpleGenRes> tempList = new ArrayList<ISimpleGenRes>();
+				for (String rtosPath : rtos) {
+					String base = rtosPath+S+ type + S;
+					String[] childNames = vt.newTreeInterface().getAllName(base, null);
+					for (String name: childNames) {
+						String[] split = DataPath.resolveId(DataPath.removeSlash(DataPath.removeSlash(name)));
+						ISimpleGenRes current = new SimpleGenRes(split[1], base + name);
+						current.setProperty(IOilXMLLabels.ATTR_TYPE, oType.getText());
+						current.setProperty(ISimpleGenResKeywords.RTOS_PATH, rtosPath);
+						tempList.add(current);
+					}
+				}
+				objects = (ISimpleGenRes[]) tempList.toArray(new ISimpleGenRes[tempList.size()]);
+			}
 				break;
 			}
 
@@ -2358,7 +2332,7 @@ public class SimpleTransform implements IOilTransform {
 		case IOilObjectList.APPMODE: {
 //			path = DPKG.getRtos_OilVar().getName() + S + IOilXMLLabels.OBJ_APPMODE + S + oilVarPrefix;
 			
-			path = DataPath.makePath(makeOilVarPrefix(false, object.getName(), object.getString(IOilXMLLabels.ATTR_TYPE), null)[0]);
+			path = (new OilPath(OilObjectType.get(object.getString(IOilXMLLabels.ATTR_TYPE)), object.getName(), false)).getPath();
 		}
 			break;
 		case IOilObjectList.NETWORKMESSAGE: {
@@ -2374,7 +2348,8 @@ public class SimpleTransform implements IOilTransform {
 		default:
 			vtp.goAbsolute(rtosPath);
 //			path = DPKG.getRtos_OilVar().getName() + S + object.getString(IOilXMLLabels.ATTR_TYPE) + S + oilVarPrefix;
-			path = DataPath.makePath(makeOilVarPrefix(false, object.getName(), object.getString(IOilXMLLabels.ATTR_TYPE), null)[0]);
+			
+			path = (new OilPath(OilObjectType.get(object.getString(IOilXMLLabels.ATTR_TYPE)), object.getName(), true)).getPath();
 			break;
 		}
 
@@ -2514,39 +2489,52 @@ public class SimpleTransform implements IOilTransform {
 				return;
 			}
 		} else {
-			if (OilEcoreCreator.isOilAttribute(vtp)) {
+			boolean asOilAttr = false;
+			if (OilEcoreCreator.isOilReference(vtp)) {
+				if (OilEcoreCreatorImpl.REFERENCE_AS_EMF_REF) {
+					RtdruidLog.showDebug("DA completare il supporto per le REFERENCE "+ vtp.getName());
 
+					return;
+				} else { 
+					asOilAttr = true;
+				}
+			}
+
+			if (asOilAttr || OilEcoreCreator.isOilAttribute(vtp)) {
+				
 				if ("CPU_ID".equals(name)) {
 //					buffer.append("WriteApplicationObj Attribute " + name+"\n");			// DEBUG	
 				}
 				if (vtp.isVarSet()) {
-					IVariable var = vtp.getVar();
-					String quote = var instanceof StringVar || var instanceof StringMVar ? "\"" : "";
-					
-					if (var instanceof IMultiValues) {
-						String values[] = ((IMultiValues) var).getValues();
-						if (values == null) {
-							return;
-						}
-	
-						for (int i = 0; i < values.length; i++) {
-							buffer.append(indent + name + " = " + quote + values[i] + quote + ";\n");
-						}
-					} else {
-						String txt = "" + vtp.getVar();
-						if (!"null".equals(txt) && !txt.isEmpty()) {
-							buffer.append(indent + name + " = " + quote + vtp.getVar() + quote + ";\n");
-						}
-					}
+					writeValue(buffer, indent, vtp, name);
 				}
-
-				return;
-
-			} 
+				
+			}
 		}
 		
 
 		return;
+	}
+
+	private void writeValue(StringBuffer buffer, String indent, IVarTreePointer vtp, String name) {
+		IVariable var = vtp.getVar();
+		String quote = var instanceof StringVar || var instanceof StringMVar ? "\"" : "";
+		
+		if (var instanceof IMultiValues) {
+			String values[] = ((IMultiValues) var).getValues();
+			if (values == null) {
+				return;
+			}
+
+			for (int i = 0; i < values.length; i++) {
+				buffer.append(indent + name + " = " + quote + values[i] + quote + ";\n");
+			}
+		} else {
+			String txt = "" + vtp.getVar();
+			if (!"null".equals(txt) && !txt.isEmpty()) {
+				buffer.append(indent + name + " = " + quote + vtp.getVar() + quote + ";\n");
+			}
+		}
 	}
 
 	// ------------------------------

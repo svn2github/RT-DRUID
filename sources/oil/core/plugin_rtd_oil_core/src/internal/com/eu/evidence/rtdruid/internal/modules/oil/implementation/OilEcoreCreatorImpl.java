@@ -21,6 +21,7 @@ import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplElementDescr;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplPointer;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplementation;
 import com.eu.evidence.rtdruid.modules.oil.implementation.OilEcoreCreator;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
@@ -126,7 +127,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				String type = cd.getAttributes().getProperty(IOilXMLLabels.ATTR_OBJ_TYPE);
 				current_eclass = eCoreFactory.createEClass();
 				path.add(type);
-				current_eclass.setName(compute_full_name(path));
+				current_eclass.setName(OilPath.compute_full_name(path));
 				
 
 				
@@ -135,6 +136,16 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 					eattr_type.setName("name");
 					eattr_type.setEType(computeEType("STRING"));
 					eattr_type.setChangeable(true);
+					eattr_type.setLowerBound(1);
+					eattr_type.setUpperBound(1);
+					current_eclass.getEStructuralFeatures().add(eattr_type);
+				}
+				{
+					EAttribute eattr_type = eCoreFactory.createEAttribute();
+					eattr_type.setName("main_obj_id");
+					eattr_type.setEType(computeEType("STRING"));
+					eattr_type.setChangeable(true);
+					eattr_type.setID(true);
 					eattr_type.setLowerBound(1);
 					eattr_type.setUpperBound(1);
 					current_eclass.getEStructuralFeatures().add(eattr_type);
@@ -253,6 +264,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 					ref.setLowerBound(0);
 					ref.setUpperBound(multiple ? ETypedElement.UNBOUNDED_MULTIPLICITY : 1);
 					ref.setContainment(false);
+					addAnnotation(ANNOTATION_OIL_REF, "true", ref);
 					
 					// use ID as key?
 
@@ -268,6 +280,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 					attr_ref.setUpperBound(multiple ? ETypedElement.UNBOUNDED_MULTIPLICITY : 1);
 
 					addAnnotation("TYPE", type, attr_ref);
+					addAnnotation(ANNOTATION_OIL_REF, "true", attr_ref);
 
 					parent_class.getEStructuralFeatures().add(attr_ref);
 				}
@@ -290,7 +303,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 							
 				current_eclass = eCoreFactory.createEClass();
 				path.add(name);
-				current_eclass.setName(compute_full_name(path));
+				current_eclass.setName(OilPath.compute_full_name(path));
 				current_eclass.setAbstract(true);
 				
 				{
@@ -304,12 +317,22 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 //					eattr_type.setUpperBound(1);
 //					current_eclass.getEStructuralFeatures().add(eattr_type);
 				}
+				if (multiple) {
+					EAttribute eattr_type = eCoreFactory.createEAttribute();
+					eattr_type.setName("variant_id");
+					eattr_type.setID(true);
+					eattr_type.setEType(computeEType("STRING"));
+					eattr_type.setChangeable(true);
+					eattr_type.setLowerBound(0);
+					eattr_type.setUpperBound(1);
+					current_eclass.getEStructuralFeatures().add(eattr_type);
+				}
 				
 				{ // containment reference
 					
 					EReference ref = eCoreFactory.createEReference();
 					ref.setName(name);
-					setRefType(ref, ePackage, compute_full_name(path));
+					setRefType(ref, ePackage, OilPath.compute_full_name(path));
 					ref.setLowerBound(0);
 					ref.setUpperBound(multiple ? ETypedElement.UNBOUNDED_MULTIPLICITY : 1);
 					ref.setContainment(true);
@@ -333,7 +356,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				
 				current_eclass = eCoreFactory.createEClass();
 				path.add(name);
-				current_eclass.setName(compute_full_name(path));
+				current_eclass.setName(OilPath.compute_full_name(path));
 				current_eclass.setAbstract(false);
 				current_eclass.getESuperTypes().add(parent_class);
 				
@@ -411,8 +434,9 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 			} else if (IOilXMLLabels.OBJ_APPMODE.equalsIgnoreCase(type)) {
 				answer.setName("Mode");
 			} else {
-				answer = null;
-				RtdruidLog.showDebug(/*new IllegalArgumentException*/("Unsupported rtd class " + type));
+				answer.setName("Rtos");
+//				answer = null;
+//				RtdruidLog.showDebug(/*new IllegalArgumentException*/("Unsupported rtd class " + type));
 			}
 			
 			if (answer != null) {
@@ -492,7 +516,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 			addType(DataPackage.Literals.FLOAT_VAR, "FLOAT");
 			addType(DataPackage.Literals.DOUBLE_VAR, "DOUBLE");
 			addType(DataPackage.Literals.STRING_VAR, "STRING");
-			
+
 //			addType(EcorePackage.Literals.EINT, "UINT32", "INT32");
 //			addType(EcorePackage.Literals.ELONG, "UINT64", "INT64");
 //			addType(EcorePackage.Literals.EFLOAT, "FLOAT");

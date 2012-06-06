@@ -26,9 +26,9 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWr
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This writer build files for a FP Kernel
@@ -146,8 +146,8 @@ public class SectionWriterMcu_unibo_mparm extends SectionWriter implements IEEWr
 				// prepare the path :
 				// ... the prefix ...
 				String currentMcuPrefix = os.getPath() + S
-						+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-						+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MCU_DATA";
+						+ (new OilPath(OilObjectType.OS, null)).getPath()
+						+ "MCU_DATA";
 				
 				// ... get the node identifier
 				String[] child = new String[1];

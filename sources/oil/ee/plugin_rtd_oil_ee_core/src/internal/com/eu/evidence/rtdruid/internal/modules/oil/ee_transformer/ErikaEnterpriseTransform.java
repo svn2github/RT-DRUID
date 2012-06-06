@@ -27,6 +27,8 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform;
 import com.eu.evidence.rtdruid.vartree.DataPath;
@@ -281,7 +283,8 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 	/* (non-Javadoc)
 	 * @see rtdruid.modules.oil.transform.SimpleTransform#storeTasks(rtdruid.vartree.IVarTreePointer, org.w3c.dom.Element, rtdruid.modules.oil.vtextensions.OilImplID, java.lang.String)
 	 */
-	protected void storeTasks(IVarTreePointer vtp, Element parent, OilImplID id,
+	@Override
+	protected void storeTasks(IVarTreePointer vtp, Element parent, IOilImplID id,
 			String rtos) throws OilTransformException {
 
 		// get only the name of rtos without cpu
@@ -536,9 +539,7 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 		case IOilObjectList.TASK: {
 			
 			// CPU_ID
-						String path = DPKG.getTask_OilVar().getName() + S
-								+ object.getString(IOilXMLLabels.ATTR_TYPE) + S
-								+ oilVarPrefix + "CPU_ID";
+						String path = (new OilPath(OilObjectType.TASK, null)).getPath() + "CPU_ID";
 						IVarTreePointer vtp = vt.newVarTreePointer();
 						vtp.goAbsolute(object.getPath());
 						if (vtp.go(path)) {

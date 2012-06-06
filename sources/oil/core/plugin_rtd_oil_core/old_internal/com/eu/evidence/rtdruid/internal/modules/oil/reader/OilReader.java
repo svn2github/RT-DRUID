@@ -14,6 +14,7 @@ import java.io.InputStream;
 import org.w3c.dom.Document;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.epackage.EPackageFactory;
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplCollector;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
@@ -181,7 +182,14 @@ final public class OilReader implements IOilReader {
 	        oid = OilTransformFactory.INSTANCE.getOilId(parsed.name);
 	
 	        // Add the implemetation part to OilImplFactory
-	        if (!oif.add(oid, parsed.getImpl())) {
+	        if (oif.add(oid, parsed.getImpl())) {
+	        	// compute a new EPackage !!!
+	        	if (vt.newVarTreePointer().goFirstChild()) {
+	        		throw new RuntimeException("Unsupported load of a custom oil file in an already filled tree");
+	        	} else {
+	        		EPackageFactory epkgFactory = EPackageFactory.getFactory();
+	        	}
+	        } else {
 	            throw new RuntimeException("The oil id ("+oid+") is already assigned to a different Oil Implementation: It's impossible to load the given oil data.");
 	        }
         }

@@ -115,7 +115,7 @@ public class VarTreeIdHandler {
 			
 			EAttribute nameAttr = null;
 			for (EStructuralFeature esf : features) {
-				if (esf instanceof EAttribute) {
+				if (esf instanceof EAttribute && !((EAttribute) esf).isMany()) {
 					if (((EAttribute) esf).isID()) {
 						idFeatures.add((EAttribute) esf);
 						knonwIdIfeatures.add(((EAttribute) esf).getName());

@@ -32,9 +32,9 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDe
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 
 /**
@@ -751,7 +751,6 @@ public class SectionWriterKernelEDF extends SectionWriter
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		final IVarTree vt = parent.getVt();
 		final IOilObjectList ool = oilObjects[currentRtosId];
-		final String oilHwRtosPrefix = parent.getOilHwRtosPrefix();
 		
 		final long timerSize_bits;
 		{
@@ -773,8 +772,8 @@ public class SectionWriterKernelEDF extends SectionWriter
 	
 			// check only the first RTOS !!! (as rtos of CPU0)
 			String[] child = new String[1];
-			String oilVarPrefix = currentRtosPrefix + S + DataPackage.eINSTANCE.getRtos_OilVar().getName()
-					+ S + IOilXMLLabels.OBJ_OS + oilHwRtosPrefix +S;
+			String oilVarPrefix = currentRtosPrefix + S 
+					+ (new OilPath(OilObjectType.OS, null)).getPath();
 		
 			String kernel_type = CommonUtils.getFirstChildEnumType(vt,
 					 oilVarPrefix + "KERNEL_TYPE", child);
@@ -850,9 +849,7 @@ public class SectionWriterKernelEDF extends SectionWriter
 
 				ISimpleGenRes currTask = (ISimpleGenRes) iter.next();
 
-				String oilVarPrefix = DataPackage.eINSTANCE.getRtos_OilVar()
-						.getName()
-						+ S + IOilXMLLabels.OBJ_TASK + oilHwRtosPrefix;
+				String oilVarPrefix = (new OilPath(OilObjectType.TASK, null)).getPath();
 
 				String deadLinePath = currTask.getPath() + S + oilVarPrefix + S
 						+ "REL_DEADLINE" ;

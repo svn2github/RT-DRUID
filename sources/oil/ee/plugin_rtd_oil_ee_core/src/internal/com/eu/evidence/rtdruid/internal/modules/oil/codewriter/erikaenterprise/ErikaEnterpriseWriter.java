@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import com.eu.evidence.rtdruid.desk.Messages;
@@ -42,8 +41,9 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKe
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.location.EEPaths;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.ISectionWriter;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
@@ -450,8 +450,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				 * CPU TYPE
 				 ******************************************************************/
 				String currentRtosPrefix = answer[i].getPath() + S
-					+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + oilHwRtosPrefix;
+						+ (new OilPath(OilObjectType.OS, null)).getPath();
 				ArrayList<String> cpu_paths = new ArrayList<String>();
 				ArrayList<String> hw_types = new ArrayList<String>();
 				getOsCpuData(currentRtosPrefix, hw_types, cpu_paths);
@@ -529,8 +528,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				for (int i=0; i<answer.length; i++) {
 					
 					final String path = answer[i].getPath()
-							+S+ DPKG.getTask_OilVar().getName()
-							+S+IOilXMLLabels.OBJ_TASK+oilHwRtosPrefix;
+							+S+ (new OilPath(OilObjectType.TASK, null)).getPath();
 					
 					answer[i].setProperty(ISimpleGenResKeywords.TASK_SYS_ID, "" + i);
 					
@@ -556,8 +554,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				ArrayList<ISimpleGenRes> sw = new ArrayList<ISimpleGenRes>();
 				for (ISimpleGenRes sgr : answer) {
 					final String path = sgr.getPath()
-							+S+ DPKG.getTask_OilVar().getName()
-							+S+IOilXMLLabels.OBJ_COUNTER+oilHwRtosPrefix;
+							+S+ (new OilPath(OilObjectType.COUNTER, null)).getPath();
 
 					{ // get mapping between counter and CPU
 						String[] child = new String[1];
@@ -621,8 +618,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				
 				for (int i=0; i<answer.length; i++) {
 					final String path = answer[i].getPath()
-							+S+ DPKG.getTask_OilVar().getName()
-							+S+IOilXMLLabels.OBJ_COUNTER+oilHwRtosPrefix;
+							+S+ (new OilPath(OilObjectType.COUNTER, null)).getPath();
 
 					answer[i].setProperty(ISimpleGenResKeywords.COUNTER_SYS_ID, "" + i);
 
@@ -684,8 +680,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 			String value = null;
 			
 			final String commonPrefix = S
-				+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-				+ IOilXMLLabels.OBJ_OS + oilHwRtosPrefix;
+					+ (new OilPath(OilObjectType.OS, null)).getPath();
 		    for (int ri=0; ri<rtosPrefix.length; ri++) {
 				String currentRtosPrefix = rtosPrefix[ri] +commonPrefix;
 				
@@ -1213,8 +1208,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	    // check all availables rtos
 	    for (int ri=0; ri<rtosPrefix.length; ri++) {
 			String currentRtosPrefix = rtosPrefix[ri] + S
-					+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + oilHwRtosPrefix;
+					+ (new OilPath(OilObjectType.OS, null)).getPath();
 			
 			// search all attribute inside current rtos
 			for (int i=0; i<keys.length; i++) { 
@@ -1258,8 +1252,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	    // check all availables rtos
 	    for (int ri=0; ri<rtosPrefix.length; ri++) {
 			String currentRtosPrefix = rtosPrefix[ri] + S
-					+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + oilHwRtosPrefix;
+					+ (new OilPath(OilObjectType.OS, null)).getPath();
 			
 			// search attribute inside current rtos
 			
@@ -1310,8 +1303,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	    // check all availables rtos
 	    for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)) {
 			String currentRtosPrefix = os.getPath() + S
-					+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + oilHwRtosPrefix;
+					+ (new OilPath(OilObjectType.OS, null)).getPath();
 			
 			// search attribute inside current rtos
 			String basePath = currentRtosPrefix + S + key;
@@ -1322,7 +1314,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	            for (int j=0; j<tmp.size(); j++) {
 	            	final String nValue = tmp.get(j);
 	            	if (child != null) {
-		            	final String cpath = basePath+ VARIANT_ELIST+tmpC.get(j);
+		            	final String cpath = basePath + VARIANT_ELIST+tmpC.get(j);
 	            		if (!child.contains(cpath)) {
 	            			answer.add( nValue );
 		            		child.add(cpath);
@@ -1356,8 +1348,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	    // check all availables rtos
 	    for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)) {
 			String currentRtosPrefix = os.getPath() + S
-					+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + oilHwRtosPrefix;
+					+ (new OilPath(OilObjectType.OS, null)).getPath();
 				
 	        String[] tmp = CommonUtils.getValue(vt, currentRtosPrefix
 				                              						+ S + keys);
@@ -1648,8 +1639,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 						// search if current task is linked to another one, and, if
 						// that task is on another cpu, set it as remote 
 						String path = curr.getPath() + S
-								+ DataPackage.eINSTANCE.getTask_OilVar() + S
-								+ IOilXMLLabels.OBJ_TASK + oilHwRtosPrefix;
+								+ (new OilPath(OilObjectType.TASK, null)).getPath();
 						String[] values = CommonUtils.getValue(vt, path + "LINKED");
 						if (values != null && values.length > 0) {
 	
@@ -2081,8 +2071,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	public String computeOilRtosPrefix(String rtosPrefix) {
 		
 		return rtosPrefix + S
-				+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-				+ IOilXMLLabels.OBJ_OS + oilHwRtosPrefix;
+				+ (new OilPath(OilObjectType.OS, null)).getPath();
 
 	}
 

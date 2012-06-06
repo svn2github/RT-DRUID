@@ -109,7 +109,7 @@
 		
 		<antcall target="saveSpace_compl"/>
 		<antcall target="-install.iu"/>
-		<antcall target="-remove_launchers"/>
+<!--		<antcall target="-remove_launchers"/>-->
 		
 		<mkdir dir="${TEMP_DIR}/scripts"/>
 		<copy todir="${TEMP_DIR}/scripts">

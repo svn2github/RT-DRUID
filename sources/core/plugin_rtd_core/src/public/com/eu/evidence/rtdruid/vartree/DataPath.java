@@ -5,6 +5,7 @@
  */
 package com.eu.evidence.rtdruid.vartree;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 /**
@@ -203,7 +204,23 @@ public final class DataPath {
 		return (String[]) risp.toArray(new String[0]);
 	}
 
-	
+
+	/** Makes a path from some elements.
+	*
+	*	See above for the complete definition of "path".
+	*	Drops all separator character in the end of the given path.  
+	*
+	*	@param	elements	each string identifies an Element in the tree.
+	* 
+	*	@return the corresponding path
+	*/
+	public static String makePath(Collection<String> elements) {
+		return makePath(
+				elements == null ?
+						(String[]) null :
+						(String[])elements.toArray(new String[elements.size()])); 
+	}
+
 	/** Makes a path from some elements.
 	*
 	*	See above for the complete definition of "path".

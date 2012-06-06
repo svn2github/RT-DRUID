@@ -21,7 +21,8 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -358,8 +359,8 @@ public class ResourceList {
 			ResourceTmp[] rTemp = new ResourceTmp[resName.length];
 			int resNumb = resName.length;
 			for (int i = 0; i < resNumb; i++) {
-	
-				String currPrefix = tmpPref + resName[i]+S+dpkg.getMutex_OilVar().getName() +S+IOilXMLLabels.OBJ_RESOURCE+ oilPrefix;
+				String currPrefix = tmpPref + resName[i]+S
+						+(new OilPath(OilObjectType.RESOURCE, resName[i])).getPath();
 				
 				String[] newName = new String[1];
 				// if the function returns a null type, it's always different from AutoOption 

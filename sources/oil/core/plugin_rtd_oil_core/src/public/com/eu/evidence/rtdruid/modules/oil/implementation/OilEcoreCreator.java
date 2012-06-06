@@ -1,6 +1,5 @@
 package com.eu.evidence.rtdruid.modules.oil.implementation;
 
-import java.util.ArrayList;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -33,6 +32,7 @@ public abstract class OilEcoreCreator {
 	 */
 	protected static final String ANNOTATION_VARIANT_TYPE = "variant_type";
 	protected static final String ANNOTATION_OIL_ATTR = "oil_attribute";
+	protected static final String ANNOTATION_OIL_REF = "oil_reference";
 
 	protected OilEcoreCreator() {
 		super();
@@ -70,74 +70,6 @@ public abstract class OilEcoreCreator {
 //		return answer == null ? null : answer+"_OIL_EXT";
 	}
 	
-
-	/**
-	 * Creates a Emf type identifier corresponding to an Oil type path
-	 * 
-	 * @param path
-	 * @return
-	 */
-	public static String compute_full_name(ArrayList<String> path) {
-		StringBuffer answer = new StringBuffer();
-		
-		for (String elem : path) {
-			incremental_compute_full_name(answer, elem);
-		}
-		
-		return answer.toString();
-	}
-
-	/**
-	 * Creates a Emf type identifier corresponding to an Oil type path
-	 * 
-	 * @param path
-	 * @return
-	 */
-	public static String incremental_compute_full_name(String base, String newElement) {
-		return incremental_compute_full_name(new StringBuffer(base == null ? "" :base), newElement);
-	}
-
-	/**
-	 * Creates a Emf type identifier corresponding to an Oil type path
-	 * 
-	 * @param base the 
-	 * @param newElement
-	 * @return
-	 */
-	private static String incremental_compute_full_name(StringBuffer base, String newElement) {
-		StringBuffer answer = base;
-
-		final String sep;
-		if (answer.length() == 0) {
-			sep = "";
-			newElement = "OIL"+newElement;
-		} else {
-			 sep = "__";
-		}
-		answer.append(sep);
-
-		// this loop searches all sequences of _ and replace them with _counter
-		// where the counter is the number of consecutive _ (max 9)
-		int counter = 0;
-		for (byte c: newElement.getBytes()) {
-			if (((char)c) == '_') {
-				counter++;
-				if (counter==9) {
-					answer.append("_9");
-					counter = 0;
-				}
-			} else {
-				if (counter >0) {
-					answer.append("_"+counter);
-					counter = 0;
-				}
-				answer.append((char)c);
-			}
-		}
-		
-		return answer.toString();
-	}
-
 	public static boolean isOilAttribute(IVarTreePointer vtp) {
 		IVarTreePointer.EmfPoint epoint = vtp.getEPoint();
 		EStructuralFeature esf = epoint.getCurrentFeature();
@@ -145,6 +77,19 @@ public abstract class OilEcoreCreator {
 			EMap<String, String> map = getAnnotation(esf);
 			if (map != null) {
 				return map.containsKey(ANNOTATION_OIL_ATTR);
+			}
+		}
+		
+		return false;
+	}
+
+	public static boolean isOilReference(IVarTreePointer vtp) {
+		IVarTreePointer.EmfPoint epoint = vtp.getEPoint();
+		EStructuralFeature esf = epoint.getCurrentFeature();
+		if (esf != null) {			
+			EMap<String, String> map = getAnnotation(esf);
+			if (map != null) {
+				return map.containsKey(ANNOTATION_OIL_REF);
 			}
 		}
 		

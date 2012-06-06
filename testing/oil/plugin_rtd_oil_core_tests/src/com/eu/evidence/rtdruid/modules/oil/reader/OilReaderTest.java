@@ -31,6 +31,7 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.w3c.dom.Document;
 
+import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilTransformException;
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplFactory_Impl;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
@@ -256,7 +257,7 @@ public class OilReaderTest implements Examples {
     }
     
     @Test(expected=RuntimeException.class)
-    public void testLoad_test_enumWrong() throws RuntimeException {
+    public void testLoad_test_enumWrong() throws OilTransformException {
         IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(VarTreeUtil.newVarTree()).getImplNames();
         assertNotNull(oids);
         assertEquals(oids.length, 0);

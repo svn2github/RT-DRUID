@@ -6,6 +6,7 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter;
 
 import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils.addToAllStrings;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,9 +33,9 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNoti
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 
 /**
@@ -235,8 +236,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		final IVarTree vt = parent.getVt();
 		
 		final String osApplBasePath = S
-				+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
-				+ IOilXMLLabels.OBJ_OSAPPLICATION + parent.getOilHwRtosPrefix();
+				+ (new OilPath(OilObjectType.OSAPPLICATION, null)).getPath();
 
 		final String path_trusted = osApplBasePath+ "TRUSTED";
 		final String path_mem_base = osApplBasePath+ "MEMORY_BASE";

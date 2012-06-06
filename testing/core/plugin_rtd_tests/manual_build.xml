@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="com.eu.evidence.rtdruid.core.tests" default="build.jars" basedir=".">
+<project name="com.eu.evidence.rtdruid.tests" default="build.jars" basedir=".">
 
 
 <!--
@@ -27,11 +27,11 @@
 		</antcall>
 	</target>
 
-	<target name="rtdruid_core_tests.jar" unless="rtdruid_core_tests.jar" description="Create jars: ${bundleId} rtdruid_core.jar.">
+	<target name="rtdruid_tests.jar" unless="rtdruid_tests.jar" description="Create jars: ${bundleId} rtdruid_core.jar.">
 		<path id="common_build_classpath">
 			<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
 			
-			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core.jar"/>
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.${rtd_v}.${build_number}/rtdruid_core.jar"/>
 			<pathelement path="${plugin.temp.folder}/*/rtdruid_core.jar"/>
 
 		</path>
@@ -47,7 +47,7 @@
 		<antcall target="common_build.dir">
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
-			<param name="jar_name" value="rtdruid_core_tests"/>
+			<param name="jar_name" value="rtdruid_tests"/>
 			<param name="common_build_sources" value="src/"/>
 			<reference refid="common_build_classpath"/>
 			<reference refid="common_build_binary_files"/>
@@ -58,7 +58,7 @@
 		<antcall target="common_publish.bin.parts">
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
-			<param name="jar_name" value="rtdruid_core_tests"/>
+			<param name="jar_name" value="rtdruid_tests"/>
 		</antcall>
 	</target>
 
@@ -72,7 +72,7 @@
 		<antcall target="common_gather.bin.parts">
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
-			<param name="jar_name" value="rtdruid_core_tests.jar"/>
+			<param name="jar_name" value="rtdruid_tests.jar"/>
 			<reference refid="common_gather_binary"/>
 		</antcall>
 	</target>
@@ -81,7 +81,7 @@
 	<target name="build.jars" description="Compile classes and build nested jars for the plug-in: ${bundleId}.">
 		<delete file="${compilation.problem.marker}" quiet="true"/>
 <!--		<available property="rtdruid_core.jar" file="${build.result.folder}/rtdruid_core.jar"/>-->
-		<antcall target="rtdruid_core_tests.jar"/>
+		<antcall target="rtdruid_tests.jar"/>
 	</target>
 
 </project>

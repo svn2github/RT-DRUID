@@ -33,7 +33,9 @@
 			
 			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core.jar"/>
 			<pathelement path="${plugin.temp.folder}/*/rtdruid_core.jar"/>
-
+			
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.tests_${rtd_tests_v}.${build_number}/"/>
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.tests_*/"/>
 		</path>
 		<resources id="common_build_binary_files">
 			<fileset dir="src" >

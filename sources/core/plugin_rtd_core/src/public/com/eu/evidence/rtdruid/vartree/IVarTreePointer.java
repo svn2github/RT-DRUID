@@ -1,5 +1,7 @@
 package com.eu.evidence.rtdruid.vartree;
 
+import java.util.Collection;
+
 import org.eclipse.core.runtime.AssertionFailedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -360,6 +362,29 @@ public interface IVarTreePointer {
 	*/
 //	public String typePath(char separator);
 
+	
+	/**
+	 * This method ensure that a path exist; if one or more elements doesn't
+	 * exist, the method creates them; Throws a RuntimeException if there are
+	 * some problems. <br>
+	 * Current IVarTreePointer is modified and it will point to the last node of
+	 * the given path.
+	 * 
+	 * @param names
+	 *            names of each step (without slashes)
+	 * @param types
+	 *            the type of each step
+	 * 
+	 * @return a reference to this pointer.
+	 * 
+	 * @throws AssertionFailedException if names or types is null.
+	 * 
+	 * @throws IllegalArgumentException if names and types parameters have different size
+	 * 
+	 * @throws RuntimeException
+	 *             if there is a problem adding elements.
+	 */
+	public IVarTreePointer makePath(Collection<String> names, Collection<String> types);
 	
 	/**
 	 * This method ensure that a path exist; if one or more elements doesn't

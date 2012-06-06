@@ -23,6 +23,8 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
@@ -109,8 +111,7 @@ public class Mico32McuLattice implements IEEWriterKeywords {
 				// prepare the path :
 				// ... the prefix ...
 				final String currentMcuPrefix = os.getPath() + S
-						+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-						+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MCU_DATA";
+						+ (new OilPath(OilObjectType.OS, null)).getPath() + "MCU_DATA";
 				
 				// ... get the node identifier
 				String[] child = new String[1];

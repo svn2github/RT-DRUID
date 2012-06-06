@@ -455,6 +455,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"		SCHEDULE = FULL;\n" + 
 				"		RESOURCE = \"MUTEX_sync\";\n" + 
 				"	};\n" + 
+				"    RESOURCE MUTEX_sync { RESOURCEPROPERTY = STANDARD; };\n" + 
 				"};\n";
 		commonWriterTest(text, 1);
 	}
@@ -499,6 +500,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"		SCHEDULE = FULL;\n" + 
 				"		RESOURCE = \"MUTEX_sync\";\n" + 
 				"	};\n" + 
+				"    RESOURCE MUTEX_sync { RESOURCEPROPERTY = STANDARD; };\n" + 
 				"};\n";
 		commonWriterTest(text, 1);
 	}
@@ -523,6 +525,8 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"CPU mySystem {\n" +
 			"	OS myOs {\n" +
 			"		EE_OPT = \"some opts\";\n" +
+			"       LIBS = \"some_libs\";\n" +
+			"       LIBS = \"more_libs\";\n" +
 			"		CPU_DATA = PIC30;\n" +
 			"		LIB = ENABLE {NAME=\"abc\"; };\n" +
 			"		KERNEL_TYPE = EDF {TICK_TIME=\"123ms\"; };\n" +
@@ -545,6 +549,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"	STACK = SHARED;\n" +
 			"	ACTIVATION = 1;\n" +
 			"};\n" +
+			"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" + 
 			"};\n";
 		commonWriterTest(text, 1);
 	}
@@ -577,6 +582,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"	STACK = SHARED;\n" +
 			"	ACTIVATION = 1;\n" +
 			"};\n" +
+			"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" + 
 			"};\n";
 		commonWriterTest(text, 1);
 	}
@@ -609,6 +615,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"	STACK = SHARED;\n" +
 			"	ACTIVATION = 1;\n" +
 			"};\n" +
+			"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" + 
 			"};\n";
 		commonWriterTest(text, 1);
 	}
@@ -978,7 +985,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"		COUNTER = \"myCounter\";\n" +
 			"		ACTION = ACTIVATETASK { TASK = \"T1\"; };\n" +
 			"	};\n" +
-			"};\n";			
+			"};\n";
 		commonWriterTest(text, 1);
 	}
 

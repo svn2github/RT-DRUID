@@ -6,9 +6,8 @@ Bundle-Version: 1.6.1.qualifier
 Bundle-Activator: com.eu.evidence.rtdruid.tests.TestsActivator
 Require-Bundle: org.eclipse.core.runtime,
  org.junit4;bundle-version="4.3.0";visibility:=reexport,
- org.eclipse.emf.ecore,
- org.eclipse.emf.ecore.edit,
- org.eclipse.emf.ecore.xmi
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.emf.edit
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.

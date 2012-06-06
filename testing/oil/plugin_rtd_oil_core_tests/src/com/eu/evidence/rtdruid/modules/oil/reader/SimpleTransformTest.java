@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
@@ -82,6 +83,7 @@ public class SimpleTransformTest implements Examples {
 
 
 	@Test
+	@Ignore
 	public void testDefaultValue() {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		OilTransformFactory otf = OilTransformFactory.INSTANCE;
@@ -361,8 +363,8 @@ public class SimpleTransformTest implements Examples {
 		"		LEVEL = \"TIMER_IRQ\";	// Could be also a number\n" +
 		"		HANDLER = \"timer_interrupt\";	// IRQ handler\n" +
 		"	};\n" +
-		"	OSAPPLICATION myApplication;\n" +
-		"	OSAPPLICATION another_application;\n" +
+		"	APPLICATION myApplication;\n" +
+		"	APPLICATION another_application;\n" +
 		"\n" +
 		"	COUNTER MainTimer;\n" +
 		"	\n" +

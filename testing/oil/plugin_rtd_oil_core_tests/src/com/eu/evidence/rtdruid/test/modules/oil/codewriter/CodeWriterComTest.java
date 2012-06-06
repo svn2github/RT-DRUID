@@ -1,9 +1,12 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import org.junit.Test;
+
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 public class CodeWriterComTest extends AbstractCodeWriterTest {
 
+	@Test
 	public void testcortex_com_1() {
 	    final String text =
 		"CPU mySystem {\n" +
@@ -134,10 +137,11 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"};";
 		DefaultTestResult res = commonWriterTest(text, 1);
-		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
+//		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
 	}
 
 	
+	@Test
 	public void testcortex_com_cccb() {
 	    final String text =
 

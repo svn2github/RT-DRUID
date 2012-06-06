@@ -1307,8 +1307,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 //							.createExtendedVarFromString(atType, value);
 //				} else
 				{
-					risp = (IVariable) EcoreUtil
-							.createFromString(atType, value);
+					risp = (IVariable) EcoreUtil.createFromString(atType, value);
 				}
 				
 				if (risp == null) {
@@ -1509,6 +1508,17 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 	
 	
 	// ------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.vartree.IVarTreePointer#makePath(java.util.Collection, java.util.Collection)
+	 */
+	@Override
+	public IVarTreePointer makePath(Collection<String> names, Collection<String> types) {
+		String[] tnames = names == null? null : (String[]) names.toArray(new String[names.size()]);
+		String[] ttypes = types == null? null : (String[]) types.toArray(new String[types.size()]);
+		return makePath(tnames, ttypes);
+	}
+
 	
 	/* (non-Javadoc)
 	 * @see com.eu.evidence.rtdruid.vartree.IVarTreePointer#makePath(java.lang.String[], java.lang.String[])

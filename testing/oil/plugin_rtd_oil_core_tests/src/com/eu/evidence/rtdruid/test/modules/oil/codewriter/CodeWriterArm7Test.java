@@ -393,7 +393,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			"\n" +
 			"COUNTER Counter1 {\n" +
 			"        MINCYCLE = 2;\n" +
-			"        MAXALLOWEDVALUE = 0xFFFFFFFF ;\n" +
+			"        MAXALLOWEDVALUE = -1 ;\n" +
 			"        TICKSPERBASE = 1;\n" +
 			"};\n" +
 			"\n" +

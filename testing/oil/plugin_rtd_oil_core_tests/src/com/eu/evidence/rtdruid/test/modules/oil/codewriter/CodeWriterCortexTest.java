@@ -7,6 +7,84 @@ import org.junit.Test;
 public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 	
 
+	@Test public void testCortexInternalResources() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"\n" + 
+				"	OS myOs {\n" + 
+				"	                \n" + 
+				"		EE_OPT = \"DEBUG\";\n" + 
+				"        STATUS = EXTENDED;\n" + 
+				"\n" + 
+				"        STARTUPHOOK = TRUE;\n" + 
+				"        ERRORHOOK = FALSE;\n" + 
+				"        SHUTDOWNHOOK = FALSE;\n" + 
+				"        PRETASKHOOK = FALSE;\n" + 
+				"        POSTTASKHOOK = FALSE;\n" + 
+				"        USEGETSERVICEID = FALSE;\n" + 
+				"        USEPARAMETERACCESS = FALSE;\n" + 
+				"        USERESSCHEDULER = TRUE;\n" + 
+				"        \n" + 
+				"        CPU_DATA = CORTEX_MX {\n" + 
+				"			MODEL = M0;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			MULTI_STACK = FALSE;\n" + 
+				"		};\n" + 
+				"		KERNEL_TYPE = FP;\n" + 
+				"	};\n" + 
+				"\n" + 
+				"	TASK Task1 {\n"	 +
+				"		SCHEDULE = FULL;\n"	 +
+				"		PRIORITY = 0;\n"	 +
+				"		ACTIVATION = 1;\n"	 +
+				"		AUTOSTART = TRUE {\n"	 +
+				"			APPMODE = OSDEFAULTAPPMODE;\n"	 +
+				"		};\n"	 +
+				"		RESOURCE = INT_Resource2;\n"	 +
+				"	};\n"	 +
+				"	\n"	 +
+				"	TASK Task2 {\n"	 +
+				"		SCHEDULE = FULL;\n"	 +
+				"		PRIORITY = 2;\n"	 +
+				"		ACTIVATION = 1;\n"	 +
+				"		AUTOSTART = FALSE;\n"	 +
+				"		RESOURCE = INT_Resource1;\n"	 +
+				"	};\n"	 +
+				"	\n"	 +
+				"	TASK Task3 {\n"	 +
+				"		SCHEDULE = FULL;\n"	 +
+				"		PRIORITY = 4;\n"	 +
+				"		ACTIVATION = 1;\n"	 +
+				"		AUTOSTART = FALSE;\n"	 +
+				"		RESOURCE = INT_Resource1;\n"	 +
+				"	};\n"	 +
+				"	\n"	 +
+				"	TASK Task4 {\n"	 +
+				"		SCHEDULE = FULL;\n"	 +
+				"		PRIORITY = 6;\n"	 +
+				"		ACTIVATION = 1;\n"	 +
+				"		AUTOSTART = FALSE;\n"	 +
+				"		RESOURCE = INT_Resource1;\n"	 +
+				"	};\n"	 +
+				"	\n"	 +
+				"	TASK Task5 {\n"	 +
+				"		SCHEDULE = FULL;\n"	 +
+				"		PRIORITY = 1;\n"	 +
+				"		ACTIVATION = 1;\n"	 +
+				"		AUTOSTART = FALSE;\n"	 +
+				"		RESOURCE = INT_Resource2;\n"	 +
+				"	};\n"	 +
+				"	\n"	 +
+				"	RESOURCE INT_Resource1 {\n"	 +
+				"		RESOURCEPROPERTY = INTERNAL;\n"	 +
+				"	};\n"	 +
+				"	\n"	 +
+				"	RESOURCE INT_Resource2 {\n"	 +
+				"		RESOURCEPROPERTY = INTERNAL;\n"	 +
+				"	};\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
 
 	@Test public void testCortexDefaultCompiler() {
 	    final String text =

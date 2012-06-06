@@ -31,11 +31,11 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStack
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This writer build files for a Tricore CPU - Board
@@ -214,15 +214,12 @@ public class SectionWriterHalTricore extends SectionWriter
 		 *  
 		 **********************************************************************/
 		{
-			final String oilHwRtosPrefix = parent.getOilHwRtosPrefix();
 			List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.ISR);
 			for (Iterator<ISimpleGenRes> iter = tasks.iterator(); iter.hasNext();) {
 
 				ISimpleGenRes currIsr = (ISimpleGenRes) iter.next();
 				
-				String oilVarPrefix = DataPackage.eINSTANCE.getRtos_OilVar()
-						.getName()
-						+ S + IOilXMLLabels.OBJ_ISR + oilHwRtosPrefix;
+				String oilVarPrefix = (new OilPath(OilObjectType.ISR, null)).getPath();
 
 	
 				{ // LEVEL

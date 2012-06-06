@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Path;
 
 import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilEcoreCreator;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IMultiValues;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
@@ -41,13 +42,16 @@ public final class CommonUtils {
 	/** a short cut to {@link DataPath.SEPARATOR DataPath.SEPARATOR} */
 	protected final static String S = "" + DataPath.SEPARATOR;
 
-	/** a suffix used to take the value list from a Value node inside a OilVar */
+	/** a suffix used to take the value list from a Value node inside a OilVar
+	 * @deprecated 
+	 */
 	public final static String VALUE_VALUE = S
 			;//+ OilApplPackage.eINSTANCE.getValue_Values().getName();
 
 	/**
 	 * a suffix used to take the Enumerator list from a Variant node inside a
 	 * OilVar
+	 * @deprecated 
 	 */
 	public final static String VARIANT_ELIST = S
 			;//+ OilApplPackage.eINSTANCE.getVariant_EnumeratorList().getName()
@@ -56,11 +60,15 @@ public final class CommonUtils {
 	/**
 	 * a suffix used to take the Parameter list from an Enumerator node inside a
 	 * OilVar
+	 * @deprecated 
 	 */
 	public final static String PARAMETER_LIST = S
 			;//+ OilApplPackage.eINSTANCE.getEnumerator_ParameterList().getName()+ S;
 
-	/** a suffix used to take the type of an Enumerator node inside a OilVar */
+	/** a suffix used to take the type of an Enumerator node inside a OilVar
+	 * @deprecated 
+	 */
+
 	public final static String ENUM_TYPE = S
 			;//+ OilApplPackage.eINSTANCE.getEnumerator_Value().getName() + S;
 
@@ -105,28 +113,28 @@ public final class CommonUtils {
 		IVarTreePointer vtp = vt.newVarTreePointer();
 		boolean ok = true;
 		String answer = null;
-		String firstChildName = null;
+		String firstChildName = "";
 
 		// search the node ....
-		ok &= vtp.goAbsolute(path + VARIANT_ELIST);
+		ok &= vtp.goAbsolute(path);
 		
-		ok &= vtp.goFirstChild();
+		//ok &= vtp.goFirstChild();
 		// ... remember the name of First child
-		firstChildName = vtp.getName();
-		ok &= vtp.go(ENUM_TYPE);
-		if (ok && !vtp.isContainer()) {
-			// ok. Node found
-
-			IVariable var = vtp.getVar();
-			if (var != null && var.get() != null) {
-				// there is a not null Type. Store it
-
-				answer = var.toString();
+		
+		if (ok) {
+			IVarTreePointer.EmfPoint p = vtp.getEPoint();
+			if (p.getCurrentFeature() != null) {
+				firstChildName = vtp.getName();
+				ok &= vtp.goFirstChild();
+				p = vtp.getEPoint();
 			}
-
-			// if is required the name of First child ...
-			if (childName != null && childName.length > 0) {
-				childName[0] = firstChildName;
+			if (ok) {
+				answer = OilEcoreCreator.getOilEnumType(vtp);
+				
+//				// if is required the name of First child ...
+				if (childName != null && childName.length > 0) {
+					childName[0] = firstChildName;
+				}
 			}
 		}
 
@@ -159,31 +167,28 @@ public final class CommonUtils {
 			boolean ok = true;
 			String answer = null;
 			String firstChildName = null;
-	
 			
 			// search the node ....
-			ok &= vtp.goAbsolute(path + VARIANT_ELIST);
-			
-			ok &= vtp.goFirstChild();
-			// ... remember the name of First child
-			firstChildName = vtp.getName();
-			ok &= vtp.go(ENUM_TYPE);
-			if (ok && !vtp.isContainer()) {
-				// ok. Node found
-	
-				IVariable var = vtp.getVar();
-				if (var != null && var.get() != null) {
-					// there is a not null Type. Store it
-	
-					answer = var.toString();
+			ok &= vtp.goAbsolute(path);
+
+			if (ok) {
+				IVarTreePointer.EmfPoint p = vtp.getEPoint();
+				String feature = "";
+				if (p.getCurrentFeature() != null) {
+					ok &= vtp.goFirstChild();
+					p = vtp.getEPoint();
+					feature = vtp.getName() + S;
 				}
-	
-				// if is required the name of First child ...
-				if (fullPath != null && fullPath.length > 0) {
-					fullPath[0] = path + VARIANT_ELIST+firstChildName;
+				if (ok) {
+					firstChildName = vtp.getName();
+					answer = OilEcoreCreator.getOilEnumType(vtp);
+					
+					// if is required the name of First child ...
+					if (fullPath != null && fullPath.length > 0) {
+						fullPath[0] = path + feature + firstChildName;
+					}
+					return answer;
 				}
-				
-				return answer;
 			}
 		}
 
@@ -226,37 +231,34 @@ public final class CommonUtils {
 		}
 
 		// search the node ....
-		ok &= vtp.goAbsolute(path + VARIANT_ELIST);
-		if (ok && vtp.getChildrenNumber()>0) {
+		ok &= vtp.goAbsolute(path);
+		if (ok) {
 			answer = new ArrayList<String>();
-		} else {
-			return answer;
-		}
-		
-		ok &= vtp.goFirstChild();
-		do {
-			String name = vtp.getName();
-
-			IVarTreePointer lvtp = (IVarTreePointer) vtp.clone();
-			ok &= lvtp.go(ENUM_TYPE);
-			if (ok && !lvtp.isContainer()) {
-				// ok. Node found
-
-				IVariable var = lvtp.getVar();
-				if (var != null && var.get() != null) {
-					// there is a not null Type. Store it
-
-					answer.add(var.toString());
-				}
-
-				// if is required the name of First child ...
+			IVarTreePointer.EmfPoint p = vtp.getEPoint();
+			if (p.getCurrentFeature() == null) {
+//				String name = vtp.getName();
+				String name = "";
+				String type = OilEcoreCreator.getOilEnumType(vtp);
+				
+				answer.add(type);
 				if (childName != null) {
 					childName.add(name);
 				}
 
+			} else {
+				
+				for (ok = vtp.goFirstChild(); ok; ok = vtp.goNextSibling()) {
+					p = vtp.getEPoint();
+					String name = vtp.getName();
+					String type = OilEcoreCreator.getOilEnumType(vtp);
+					
+					answer.add(type);
+					if (childName != null) {
+						childName.add(name);
+					}
+				}
 			}
-
-		} while (vtp.goNextSibling());
+		}
 		
 		return answer;
 	}
@@ -273,24 +275,40 @@ public final class CommonUtils {
 	 *         found or is unset
 	 */
 	public static String[] getValue(IVarTree vt, String path) {
+		return getValue(vt, path, false);
+	}
+	/**
+	 * This method searchs a Value node and returns all Values stored inside it.
+	 * 
+	 * @param vt
+	 *            contains all data
+	 * @param path
+	 *            identifies the Value node
+	 * 
+	 * @return the all values of specified node. Returns null if that node is not
+	 *         found or is unset
+	 */
+	public static String[] getValue(IVarTree vt, String path, boolean enableDefaultValue) {
 		IVarTreePointer vtp = vt.newVarTreePointer();
 		boolean ok = true;
 		String[] answer = null;
 		// search the node
-		ok &= vtp.goAbsolute(path + VALUE_VALUE);
+		ok &= vtp.goAbsolute(path);
 		if(!ok){
 			ok = true;
 			ok &= vtp.goAbsolute(path + ENUM_TYPE);
 		}
 		if (ok && !vtp.isContainer()) {
-			IVariable var = vtp.getVar(); // take the variable
-
-			if (var != null && var.get() != null) {
-				// store all values
-				if (var instanceof IMultiValues) {
-					answer = ((IMultiValues) var).getValues();
-				} else {
-					answer = new String[] { var.toString() };
+			if (vtp.isVarSet() || enableDefaultValue) {
+				IVariable var = vtp.getVar(); // take the variable
+	
+				if (var != null && var.get() != null) {
+					// store all values
+					if (var instanceof IMultiValues) {
+						answer = ((IMultiValues) var).getValues();
+					} else {
+						answer = new String[] { var.toString() };
+					}
 				}
 			}
 		}
@@ -328,14 +346,16 @@ public final class CommonUtils {
 					ok &= vtp.goAbsolute(path + ENUM_TYPE);
 				}
 				if (ok && !vtp.isContainer()) {
-					IVariable var = vtp.getVar(); // take the variable
-		
-					if (var != null && var.get() != null) {
-						// store all values
-						if (var instanceof IMultiValues) {
-							answer.addAll(Arrays.asList(((IMultiValues) var).getValues()));
-						} else {
-							answer.add(var.toString());
+					if (vtp.isVarSet()) {
+						IVariable var = vtp.getVar(); // take the variable
+			
+						if (var != null && var.get() != null) {
+							// store all values
+							if (var instanceof IMultiValues) {
+								answer.addAll(Arrays.asList(((IMultiValues) var).getValues()));
+							} else {
+								answer.add(var.toString());
+							}
 						}
 					}
 				}

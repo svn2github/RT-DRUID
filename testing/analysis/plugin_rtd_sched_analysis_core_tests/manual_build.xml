@@ -34,8 +34,8 @@
 			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core.jar"/>
 			<pathelement path="${plugin.temp.folder}/*/rtdruid_core.jar"/>
 			
-			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.tests_${rtd_core_v}.${build_number}/"/>
-			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.tests_*/"/>
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.tests_${rtd_tests_v}.${build_number}/"/>
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.tests_*"/>
 
 			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.jscan.core_${rtd_jscan_core_v}.${build_number}/rtdruid_jscan_core.jar"/>
 			<pathelement path="${plugin.temp.folder}/*/rtdruid_jscan_core.jar"/>

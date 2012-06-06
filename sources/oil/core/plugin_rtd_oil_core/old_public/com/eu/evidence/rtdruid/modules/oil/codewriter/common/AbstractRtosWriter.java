@@ -25,6 +25,9 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilEcoreCreator;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.DataPath;
@@ -383,7 +386,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 	 */
 	protected ISimpleGenRes[] extractObject(int type, String rtosPrefix) 
 			throws OilCodeWriterException {
-		SimpleGenRes[] answer = new SimpleGenRes[0];
+		ISimpleGenRes[] answer = new ISimpleGenRes[0];
 		String sysName = DataPath.splitPath(rtosPrefix)[0];
 		final DataPackage DPKG = DataPackage.eINSTANCE;
 
@@ -536,7 +539,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			// 2) if found, store them inside the rigth SimpleGenRes
 			for (int i=0; i< answer.length; i++) {
 				// common data
-				String path = answer[i].getPath() +S+ DPKG.getTask_OilVar().getName() +S+IOilXMLLabels.OBJ_TASK+oilHwRtosPrefix;
+				String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.TASK, null)).getPath();
 				String[] values;
 				String chType;
 				/*
@@ -661,7 +664,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			// 2) if found, store them inside the rigth SimpleGenRes
 			for (int i=0; i< answer.length; i++) {
 				// common data
-				String path = answer[i].getPath() +S+ DPKG.getTask_OilVar().getName() +S+IOilXMLLabels.OBJ_ISR+oilHwRtosPrefix;
+				String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.ISR, null)).getPath();
 				String[] values;
 				
 				{	// ----------- CATEGORY ------------
@@ -758,8 +761,9 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 						};
 						
 						{ // take ALARM ACTION
-							String path = tmpPath+DPKG.getSignal_OilVar().getName() 
-								+S+requiredType+oilHwRtosPrefix+"ACTION";
+							String path = tmpPath
+									+ (new OilPath(OilObjectType.get(requiredType), signalNames[i])).getPath()
+									+"ACTION";
 							
 							final String str_ACTION_ACTIVATE_TASK = "ACTIVATETASK";
 							final String str_ACTION_SET_EVENT = "SETEVENT";
@@ -780,7 +784,6 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 							
 							if (str_ACTION_ACTIVATE_TASK.equalsIgnoreCase(tmpType)) { // ACTIVATE TASK
 								final String taskName;
-								
 								path +=CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
 								
 								// TASK
@@ -879,8 +882,9 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 
 						
 						{ // take ALARM AUTOSTART
-							String path = tmpPath+DPKG.getSignal_OilVar().getName() 
-								+S+requiredType+oilHwRtosPrefix+"AUTOSTART";
+							String path = tmpPath
+									+ (new OilPath(OilObjectType.get(requiredType), signalNames[i])).getPath()
+									+"AUTOSTART";
 							String[] childName = new String[1];
 							String tmpType = CommonUtils.getFirstChildEnumType(vt, path, childName);
 							if ("true".equalsIgnoreCase(tmpType)) {
@@ -959,8 +963,9 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					
 					// ... search proprerties inside the OilVar and store them as properties (if found) ...
 					for (int vi=0; vi<requiredValues.length; vi++) {
-						String tt = tmpPath+DPKG.getSignal_OilVar().getName() 
-								+S+requiredType+oilHwRtosPrefix+requiredValues[vi][0];
+						String tt = tmpPath
+								+ (new OilPath(OilObjectType.get(requiredType), signalNames[i])).getPath()
+								+requiredValues[vi][0];
 						String[] value = CommonUtils.getValue(vt, tt);
 						if (value!=null && value.length>0) {
 							sgr.setProperty(requiredValues[vi][1], value[0]);
@@ -1024,46 +1029,21 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 		case IOilObjectList.IPDU:
 		case IOilObjectList.NM:
 		{
-			String objPath = rtosPrefix + S+ DPKG.getRtos_OilVar().getName();
-
-			// search all Modes ...
-	        String[] modesNames = vt.newTreeInterface().getAllName(objPath, null);
-	        if (modesNames.length>0) {
-	        	final String expectedType;
-	        	switch (type) {
-	    		case IOilObjectList.MESSAGE:
-	    			expectedType = IOilXMLLabels.OBJ_MESSAGE;
-	    			break;
-	    		case IOilObjectList.NETWORKMESSAGE:
-	    			expectedType = IOilXMLLabels.OBJ_NETWORKMESSAGE;
-	    			break;
-	    		case IOilObjectList.COM:
-	    			expectedType = IOilXMLLabels.OBJ_COM;
-	    			break;
-	    		case IOilObjectList.IPDU:
-	    			expectedType = IOilXMLLabels.OBJ_IPDU;
-	    			break;
-	    		case IOilObjectList.NM:
-	    			expectedType = IOilXMLLabels.OBJ_NM;
-	    			break;
-    			default:
-	    			expectedType = "";
-	    			break;
-	        	}
-	        	
-				ArrayList<SimpleGenRes> tmpList = new ArrayList<SimpleGenRes>(); 
-
-				// ... and store as SimpleGenRes 
-		        for (int i=0; i<modesNames.length; i++) {
-		        	
-		        	String[] split = DataPath.resolveId(DataPath.removeSlash(DataPath.removeSlash(modesNames[i])));
-		        	if (split.length == 2 && expectedType.equals(split[0])) {
-						tmpList.add(new SimpleGenRes(
-								split[1], objPath+S+modesNames[i]+S));
-		        	}
-		        }
-		        answer = (SimpleGenRes[]) tmpList.toArray(new SimpleGenRes[tmpList.size()]);
-	        }
+			OilObjectType oType = OilObjectType.get(type);
+			String rtdtype = OilEcoreCreator.getRtdEClassExtPoint(oType.getText());
+			ArrayList<ISimpleGenRes> tempList = new ArrayList<ISimpleGenRes>();
+			{
+				String base = rtosPrefix+S+ rtdtype + S;
+				String[] childNames = vt.newTreeInterface().getAllName(base, null);
+				for (String name: childNames) {
+					String[] split = DataPath.resolveId(DataPath.removeSlash(DataPath.removeSlash(name)));
+					ISimpleGenRes current = new SimpleGenRes(split[1], base + name);
+//					current.setProperty(IOilXMLLabels.ATTR_TYPE, oType.getText());
+//					current.setProperty(ISimpleGenResKeywords.RTOS_PATH, rtosPath);
+					tempList.add(current);
+				}
+			}
+			answer = (ISimpleGenRes[]) tempList.toArray(new ISimpleGenRes[tempList.size()]);
 		}
 			break;
 
