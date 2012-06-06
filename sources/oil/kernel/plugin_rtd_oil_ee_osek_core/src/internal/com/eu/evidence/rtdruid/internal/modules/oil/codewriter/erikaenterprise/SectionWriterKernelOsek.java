@@ -614,14 +614,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					buffer.append(pre2 + "1U");
 					pre2 = ", ";
 				}
-				buffer.append("};\n\n"
-						+ indent1+ "const EE_TYPENACT   EE_th_rnact_max["+MAX_TASK+"] =\n"
-						+ indent2 + "{ ");
-				pre2 = "";
-				for (int i = 0; i < numTask; i++) {
-					buffer.append(pre2 + "1U");
-					pre2 = ", ";
-				}
+				
 				buffer.append("};\n\n");
 		
 				// EE_rq_first

@@ -65,6 +65,7 @@ public class SectionWriterCom extends SectionWriter
 	 * 
 	 */
 	private static final String SGRK_COM_COMTYPE = "SimpleGenResKey_com_comtype";
+	private static final String SGRK_COM_COMSTATUS = "SimpleGenResKey_com_comStatus";
 	private static final String SGRK_COM_COMAPPMODE = "SimpleGenResKey_com_comAPPMODE_stringArray";
 	private static final String SGRK_COM_STARTCOMEXTENSION = "SimpleGenResKey_com_comstartcomeextension";
 	
@@ -256,6 +257,12 @@ public class SectionWriterCom extends SectionWriter
 					String chType = CommonUtils.getFirstChildEnumType(vt, path+"COMSTARTCOMEXTENSION");
 					if ("true".equalsIgnoreCase(chType)) {
 						sgr.setProperty(SGRK_COM_STARTCOMEXTENSION, "true");
+					}
+				}
+				{ // get COM STATUS
+					String chType = CommonUtils.getFirstChildEnumType(vt, path+"COMSTATUS");
+					if (chType != null) {
+						sgr.setProperty(SGRK_COM_COMSTATUS, chType);
 					}
 				}
 				
@@ -875,6 +882,13 @@ public class SectionWriterCom extends SectionWriter
 					String comType = sgr.getString(SGRK_COM_COMTYPE);
 					if (COM_EEOPTS.containsKey(comType)) {
 						answer.add(COM_EEOPTS.get(comType));
+					}
+				}
+				
+				
+				if (sgr.containsProperty(SGRK_COM_COMSTATUS)) {
+					if ("COMEXTENDED".equalsIgnoreCase(sgr.getString(SGRK_COM_COMSTATUS))) {
+						answer.add("__EE_COM_EXTENDED__");
 					}
 				}
 				
