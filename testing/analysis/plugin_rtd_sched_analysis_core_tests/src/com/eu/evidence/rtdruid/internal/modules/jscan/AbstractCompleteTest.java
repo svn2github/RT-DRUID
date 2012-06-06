@@ -5,8 +5,9 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.jscan;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
@@ -20,10 +21,10 @@ import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 public abstract class AbstractCompleteTest extends AbstractNamedTest {
 
 	protected void check(IVarTree input, IVarTree expectedResult) {
-		String t = VarTreeUtil.compare(
+		IStatus st = VarTreeUtil.compare(
 				(EObject) ((Resource) input.getResourceSet().getResources().get(0)).getContents().get(0),
 				(EObject) ((Resource) expectedResult.getResourceSet().getResources().get(0)).getContents().get(0)
-			).getMessage(); assertNull(t, t);
-
+			);
+		assertTrue(st.getMessage(), st.isOK());
 	}
 }

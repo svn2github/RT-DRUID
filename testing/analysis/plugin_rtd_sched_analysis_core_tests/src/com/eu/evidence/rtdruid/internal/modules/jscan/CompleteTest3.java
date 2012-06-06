@@ -17,6 +17,7 @@ import com.eu.evidence.rtdruid.internal.modules.jscan.offset.OffSetSchedulabilit
 import com.eu.evidence.rtdruid.internal.modules.jscan.offset.OffsetDMSchedulabilityComplete;
 import com.eu.evidence.rtdruid.internal.modules.jscan.offset.OffsetSchedulabilityRTA;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.abstractions.old.Cpu;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenResList;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
@@ -68,6 +69,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 
 			prefissi = new String[] { "not mapped", "cpu0" };
 			elenco = new ArrayList[] { new ArrayList<GenRes>(), new ArrayList<GenRes>() };
+			elenco_cpu = new GenRes[] {null, new Cpu(this, prefissi[1], "") };
 
 			parametri = new Properties();
 			for (int i = 0; i < properties.length; i++) {
@@ -89,6 +91,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 
 			prefissi = new String[] { "not mapped", "cpu0" };
 			elenco = new ArrayList[] { new ArrayList<GenRes>(), new ArrayList<GenRes>() };
+			elenco_cpu = new GenRes[] {null, new Cpu(this, prefissi[1], "") };
 
 			parametri = new Properties();
 			for (int i = 0; i < properties.length; i++) {
@@ -332,12 +335,12 @@ public class CompleteTest3 extends AbstractCompleteTest {
 			suff_2.compute();
 			if (suff_3 != null) { suff_3.compute(); }
 			
-			System.err.println("Test " + testId +":\n"
+			System.out.println("Test " + testId +":\n"
 					+ "\t\tTASK,     WCET\t PERIOD\t OFFSET\t RTA\t SUFF1\t SUFF2\t "+(mts_SUFF_3!=null?" SUFF3\t":"")+"EXACT\n");
 			
 			for (int ntask=0; ntask<period.length; ntask++) {
 
-				System.err.println("\t\t" + ntask + "\t"
+				System.out.println("\t\t" + ntask + "\t"
 						+ wcet[ntask] + "\t"
 						+ period[ntask] + "\t "
 						+ offset[ntask] + "\t "
@@ -509,12 +512,12 @@ public class CompleteTest3 extends AbstractCompleteTest {
 			suff_2.compute();
 			if (suff_3 != null) { suff_3.compute(); }
 			
-			System.err.println("Test " + testId +":\n"
+			System.out.println("Test " + testId +":\n"
 					+ "\t\tTASK,     WCET\t PERIOD\t OFFSET\t RTA\t SUFF1\t SUFF2\t "+(mts_SUFF_3!=null?" SUFF3\t":"")+"EXACT\n");
 			
 			for (int ntask=0; ntask<period.length; ntask++) {
 
-				System.err.println("\t\t" + ntask + "\t"
+				System.out.println("\t\t" + ntask + "\t"
 						+ wcet[ntask] + "\t"
 						+ period[ntask] + "\t "
 						+ offset[ntask] + "\t "
@@ -628,12 +631,12 @@ public class CompleteTest3 extends AbstractCompleteTest {
 			suff_1.compute();
 			suff_2.compute();
 			
-			System.err.println("Test " + testId +":\n"
+			System.out.println("Test " + testId +":\n"
 					+ "\t\tTASK,     WCET\t PERIOD\t RTA\t SUFF1\t SUFF2\t EXACT\n");
 			
 			for (int ntask=0; ntask<period[testId].length; ntask++) {
 
-				System.err.println("\t\t" + ntask + "\t"
+				System.out.println("\t\t" + ntask + "\t"
 						+ wcet[testId][ntask] + "\t"
 						+ period[testId][ntask] + "\t "
 						+ mts_RTA.getItem(1,ntask).getDouble("responsetime") + "\t "

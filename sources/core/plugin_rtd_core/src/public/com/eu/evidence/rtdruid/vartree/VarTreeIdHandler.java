@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 public class VarTreeIdHandler {
@@ -102,11 +103,12 @@ public class VarTreeIdHandler {
 			List<String> knonwIdIfeatures = idMap.get(eclass.getName());
 
 			
-			for (EStructuralFeature esf : features) {
-				if (esf instanceof EAttribute) {
-					if (knonwIdIfeatures.contains(((EAttribute) esf).getName())) {
-						idFeatures.add((EAttribute) esf);
-					}
+			for (String featureName : knonwIdIfeatures) {
+				EStructuralFeature esf = eclass.getEStructuralFeature(featureName);
+				if (esf != null && esf instanceof EAttribute ) {
+					idFeatures.add((EAttribute) esf);
+				} else {
+					RtdruidLog.showDebug("EClass " + eclass.getName() + " should contain " + featureName + " to correctly build the object id");
 				}
 			}
 			

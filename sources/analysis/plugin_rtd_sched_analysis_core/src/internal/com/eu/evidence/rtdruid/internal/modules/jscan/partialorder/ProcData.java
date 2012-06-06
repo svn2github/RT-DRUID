@@ -20,6 +20,7 @@ public class ProcData {
 	private TaskData task;
 	
 	private Integer order;
+	private Integer onceEveryK;
 	
 	
 	/**
@@ -115,6 +116,13 @@ public class ProcData {
 		return eventProvider;
 	}
 	
+	/**
+	 * @return the onceEveryK
+	 */
+	public Integer getOnceEveryK() {
+		return onceEveryK;
+	}
+	
 	// -------------------------------------
 
 	/**
@@ -181,6 +189,13 @@ public class ProcData {
 	
 	public void setEventProvider(String eventProvider) {
 		this.eventProvider = eventProvider;
+	}
+	
+	/**
+	 * @param onceEveryK the onceEveryK to set
+	 */
+	public void setOnceEveryK(Integer onceEveryK) {
+		this.onceEveryK = onceEveryK;
 	}
 	// ------------------------------
 	

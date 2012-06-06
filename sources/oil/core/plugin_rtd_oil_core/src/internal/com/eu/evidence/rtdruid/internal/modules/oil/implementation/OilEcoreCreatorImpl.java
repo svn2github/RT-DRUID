@@ -434,6 +434,11 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				answer.setName("Signal");
 			} else if (IOilXMLLabels.OBJ_APPMODE.equalsIgnoreCase(type)) {
 				answer.setName("Mode");
+			} else if (IOilXMLLabels.OBJ_MESSAGE.equalsIgnoreCase(type) ||
+					IOilXMLLabels.OBJ_NETWORKMESSAGE.equalsIgnoreCase(type)) {
+				answer.setName("Frame");
+			} else if (IOilXMLLabels.OBJ_COM.equalsIgnoreCase(type)) {
+				answer.setName("Com");
 			} else {
 				answer.setName("Rtos");
 //				answer = null;

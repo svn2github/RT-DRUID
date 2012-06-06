@@ -71,15 +71,7 @@ public class XsltTransformThreadTest {
 
 		builder.setErrorHandler(meh);
 
-		try {
-			doc = builder.parse(input);
-		} catch (SAXException e) {
-			String log = meh.getLog();
-			if (log.length() > 0) {
-				throw new RuntimeException(log, e);
-			}
-			throw e;
-		}
+		doc = builder.parse(input);
 
 		assertNotNull(doc);
 		assertNotNull(doc.getDocumentElement());
@@ -389,18 +381,12 @@ public class XsltTransformThreadTest {
 
 		builder.setErrorHandler(meh);
 
-		try {
+		{
 			if (validate && dtd != null) {
 				doc = builder.parse(input, dtd.toString());
 			} else {
 				doc = builder.parse(input);
 			}
-		} catch (SAXException e) {
-			String log = meh.getLog();
-			if (log.length() > 0) {
-				throw new RuntimeException(log, e);
-			}
-			throw e;
 		}
 
 
@@ -457,18 +443,12 @@ public class XsltTransformThreadTest {
 
 			builder.setErrorHandler(meh);
 
-			try {
+			{
 				if (validate && dtd != null) {
 					doc = builder.parse(input, dtd.toString());
 				} else {
 					doc = builder.parse(input);
 				}
-			} catch (SAXException e) {
-				String log = meh.getLog();
-				if (log.length() > 0) {
-					throw new RuntimeException(log, e);
-				}
-				throw e;
 			}
 
 

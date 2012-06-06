@@ -117,6 +117,7 @@ public class PartialOrderData {
 					// delegate the construction of each ProcData
 					ProcData pdata = loadProcData(nproc);
 					pdata.setOrder(map.procToTaskOrder(nproc));
+					pdata.setOnceEveryK(map.procToTaskFrequency(nproc));
 					this.procs.add(pdata);
 					this.fastProcs.put(nproc, pdata);
 					tdata.addMapping(pdata);
@@ -197,7 +198,17 @@ public class PartialOrderData {
 				if (proc.getTask() != null) {
 					reporter.warning(proc, "unknown period. Using the one related to the task");
 					
-					proc.setPeriod(proc.getTask().getTaskPeriod());
+					int k = proc.getOnceEveryK() == null ? 1 : proc.getOnceEveryK().intValue();
+					TimeVar period = proc.getTask().getTaskPeriod();
+					if (k>0) {
+						Double d = (Double) period.get();
+						if (d != null) {
+							d = d * k;
+							period.set(d);
+						}
+					}
+					
+					proc.setPeriod(period);
 					proc.setPeriodic(proc.getTask().isPeriodic());
 				} else {
 					reporter.error(proc, "unknown period.");
@@ -675,7 +686,14 @@ public class PartialOrderData {
 							}
 							
 							if (data != null) {
-								allPeriods.put(firstProc, data);
+								if (allPeriods.containsKey(firstProc)) {
+									TempPeriodData old = allPeriods.get(firstProc);
+									if (!(old.period.equals(data))) {
+										reporter.error("Found more than one period lenght for a single element: " + firstProc);
+									}
+								} else {
+									allPeriods.put(firstProc, data);
+								}
 							}
 							
 						}

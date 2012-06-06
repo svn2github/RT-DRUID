@@ -6,7 +6,7 @@
       point = "org.eclipse.ui.preferencePages">
        <page id="com.eu.evidence.rtdruid.preferencePagesID"
             class="com.eu.evidence.rtdruid.ui.preferencepages.EmptyPage"
-            name="Rt-Druid">
+            name="RT-Druid">
        </page>
    </extension>
 

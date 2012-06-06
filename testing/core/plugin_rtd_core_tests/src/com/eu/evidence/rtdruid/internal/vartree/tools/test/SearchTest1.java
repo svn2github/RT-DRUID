@@ -8,6 +8,8 @@ package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
 // progect package
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -49,13 +51,13 @@ public class SearchTest1 {
 	@Test 
 	public void testAVar() {
 		// innesistente
-		assertTrue(Search.aVar(ti, SYSTEM_PATH, "nessuna") == null);
-		assertTrue(Search.aVar(ti, SYSTEM_PATH, "") == null);
+		assertNull(Search.aVar(ti, SYSTEM_PATH, "nessuna") );
+		assertNull(Search.aVar(ti, SYSTEM_PATH, "") );
 
 		// path "errato"
-		assertTrue(Search.aVar(ti, S+"DefaultSystem", "image") == null);
-		assertTrue(Search.aVar(ti, S+"Ciaooooo", "image") == null);
-		assertTrue(Search.aVar(ti, S+"", "image") == null);
+		assertNull(Search.aVar(ti, S+"DefaultSystem", "image") );
+		assertNull(Search.aVar(ti, S+"Ciaooooo", "image") );
+		assertNull(Search.aVar(ti, S+"", "image") );
 
 		// locale
 		// example 1 non ha subsystem
@@ -104,22 +106,22 @@ public class SearchTest1 {
 	@Test 
 	public void testALocalVar() {
 		// innesistente
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "nessuna") == null);
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "") == null);
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "nessuna") );
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "") );
 
 		// path "errato"
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "image") == null);
-		assertTrue(Search.aLocalVar(ti, S+"Ciaooooo", "image") == null);
-		assertTrue(Search.aLocalVar(ti, S+"", "image") == null);
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "image") );
+		assertNull(Search.aLocalVar(ti, S+"Ciaooooo", "image") );
+		assertNull(Search.aLocalVar(ti, S+"", "image") );
 		
 		//globale , quindi innesistenti nel path fornito (manca Functional)
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "image") == null);
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "x") == null);
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "dx") == null);
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "teta") == null);
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "dteta") == null);
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "angle") == null);
-		assertTrue(Search.aLocalVar(ti, SYSTEM_PATH, "f") == null);
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "image") );
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "x") );
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "dx") );
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "teta") );
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "dteta") );
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "angle") );
+		assertNull(Search.aLocalVar(ti, SYSTEM_PATH, "f") );
 
 		//locali (specificando anche "functional", quindi come se fossi dentro un subSystem)
 		final String localPrefix = SYSTEM_PATH + S + "Functional";
@@ -156,13 +158,13 @@ public class SearchTest1 {
 	@Test 
 	public void testAProc() {
 		// innesistente
-		assertTrue(Search.aProc(ti, SYSTEM_PATH, "nessuno") == null);
-		assertTrue(Search.aProc(ti, SYSTEM_PATH, "") == null);
+		assertNull(Search.aProc(ti, SYSTEM_PATH, "nessuno") );
+		assertNull(Search.aProc(ti, SYSTEM_PATH, "") );
 
 		// path "errato"
-		assertTrue(Search.aProc(ti, S+"DefaultSystem", "filter1") == null);
-		assertTrue(Search.aProc(ti, S+"Ciaooooo", "filter1") == null);
-		assertTrue(Search.aProc(ti, S+"", "filter1") == null);
+		assertNull(Search.aProc(ti, S+"DefaultSystem", "filter1") );
+		assertNull(Search.aProc(ti, S+"Ciaooooo", "filter1") );
+		assertNull(Search.aProc(ti, S+"", "filter1") );
 
 		// locale
 		// example 1 non ha subsystem
@@ -204,23 +206,23 @@ public class SearchTest1 {
 	@Test 
 	public void testALocalProc() {
 		// innesistente
-		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH, "nessuno") == null);
-		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH, "") == null);
+		assertNull(Search.aLocalProc(ti, SYSTEM_PATH, "nessuno") );
+		assertNull(Search.aLocalProc(ti, SYSTEM_PATH, "") );
 
 		// path "errato"
-		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH, "filter1") == null);
-		assertTrue(Search.aLocalProc(ti, S+"Ciaooooo", "filter1") == null);
-		assertTrue(Search.aLocalProc(ti, S+"", "filter1") == null);
+		assertNull(Search.aLocalProc(ti, SYSTEM_PATH, "filter1") );
+		assertNull(Search.aLocalProc(ti, S+"Ciaooooo", "filter1") );
+		assertNull(Search.aLocalProc(ti, S+"", "filter1") );
 
 		// locale
 		// example 1 non ha subsystem
 		
 		//path errato (manca Functional), quindi == null
-		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH, "filter1") == null);
-		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH, "filter2") == null);
-		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH, "der1") == null);
-		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH, "der2") == null);
-		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH, "mat") == null);
+		assertNull(Search.aLocalProc(ti, SYSTEM_PATH, "filter1") );
+		assertNull(Search.aLocalProc(ti, SYSTEM_PATH, "filter2") );
+		assertNull(Search.aLocalProc(ti, SYSTEM_PATH, "der1") );
+		assertNull(Search.aLocalProc(ti, SYSTEM_PATH, "der2") );
+		assertNull(Search.aLocalProc(ti, SYSTEM_PATH, "mat") );
 
 		//path corretto
 		assertTrue(Search.aLocalProc(ti, SYSTEM_PATH+S+"Functional", "filter1").equals(
@@ -259,13 +261,13 @@ public class SearchTest1 {
 	@Test 
 	public void testProcPrefix() {
 		// innesistente
-		assertTrue(Search.procPrefix(ti, SYSTEM_PATH, "nessuno") == null);
-		assertTrue(Search.procPrefix(ti, SYSTEM_PATH, "") == null);
+		assertNull(Search.procPrefix(ti, SYSTEM_PATH, "nessuno") );
+		assertNull(Search.procPrefix(ti, SYSTEM_PATH, "") );
 
 		// path "errato"
-		assertTrue(Search.procPrefix(ti, S+"DefaultSystem", "filter1") == null);
-		assertTrue(Search.procPrefix(ti, S+"Ciaooooo", "filter1") == null);
-		assertTrue(Search.procPrefix(ti, S+"", "filter1") == null);
+		assertNull(Search.procPrefix(ti, S+"DefaultSystem", "filter1") );
+		assertNull(Search.procPrefix(ti, S+"Ciaooooo", "filter1") );
+		assertNull(Search.procPrefix(ti, S+"", "filter1") );
 
 		// locale
 		// example 1 non ha subsystem
@@ -418,7 +420,7 @@ public class SearchTest1 {
 		
 		String[] procs = Search.allProcs(vt);
 
-		assertTrue(procs != null);
+		assertNotNull(procs);
 		
 		for (int i=0; i<procs.length; i++) {
 			System.err.println(procs[i]);
@@ -431,7 +433,7 @@ public class SearchTest1 {
 		
 		String[] tasks = Search.allTasks(vt.newTreeInterface());
 
-		assertTrue(tasks != null);
+		assertNotNull(tasks);
 		
 		for (int i=0; i<tasks.length; i++) {
 			System.err.println(tasks[i]);

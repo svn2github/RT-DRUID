@@ -5,13 +5,8 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
-
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
 
 import org.junit.Test;
 

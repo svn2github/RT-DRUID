@@ -8,6 +8,7 @@ package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
 // progect package
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -18,7 +19,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
 
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
 import com.eu.evidence.rtdruid.vartree.DataPath;
@@ -478,7 +478,7 @@ public class MappingTest2 {
 			if (link[i] == null) {
 				assertTrue(risp.length == 0);
 			} else {
-				assertTrue(risp.length == link[i].length);
+				assertEquals(link[i].length, risp.length);
 				List<String> risp2 = Arrays.asList(risp);
 				Collections.sort(risp2);
 				for (int j=0; j<link[i].length; j++) {

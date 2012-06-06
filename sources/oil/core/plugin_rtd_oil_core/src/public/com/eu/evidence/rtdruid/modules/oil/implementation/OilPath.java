@@ -30,7 +30,7 @@ public class OilPath {
 	private final int init_size;
 	
 	private static boolean requiredName(OilObjectType type) {
-		return type == OilObjectType.COM || type == OilObjectType.IPDU || type == OilObjectType.MESSAGE || type == OilObjectType.NM;
+		return type == OilObjectType.IPDU || type == OilObjectType.NM;
 	}
 	
 	/**

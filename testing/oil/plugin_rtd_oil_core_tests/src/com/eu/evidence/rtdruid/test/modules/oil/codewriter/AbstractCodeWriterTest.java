@@ -52,6 +52,7 @@ import com.eu.evidence.rtdruid.modules.oil.transform.OilTransformFactory;
 import com.eu.evidence.rtdruid.tests.AbstractNamedTest;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 /**
  * This class can be use to simplify and standardize a Code Writer test
@@ -227,20 +228,20 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 		assertNotNull(answer);
 //System.err.flush();
 //System.out.flush();
-//System.out.println("\n\n-------------\n" + answer);
+System.out.println("\n\n-------------\n" + answer);
 
 
 		IVarTree vt2 = loadVt(answer);
 //		
-//System.err.flush();
-//System.out.flush();
-//System.out.println("\n\n-------------\n" + Vt2StringUtilities.varTreeToStringErtd(vt));
-//System.err.flush();
-//System.out.flush();
-//
-//System.out.println("\n\n-------------\n" + Vt2StringUtilities.varTreeToStringErtd(vt2));
-//System.err.flush();
-//System.out.flush();
+System.err.flush();
+System.out.flush();
+System.out.println("\n\n-------------\n" + Vt2StringUtilities.varTreeToStringErtd(vt));
+System.err.flush();
+System.out.flush();
+
+System.out.println("\n\n-------------\n" + Vt2StringUtilities.varTreeToStringErtd(vt2));
+System.err.flush();
+System.out.flush();
 //		
 		IStatus st = VarTreeUtil.compare(
 				(EObject) ((Resource) vt.getResourceSet().getResources().get(0)).getContents().get(0),

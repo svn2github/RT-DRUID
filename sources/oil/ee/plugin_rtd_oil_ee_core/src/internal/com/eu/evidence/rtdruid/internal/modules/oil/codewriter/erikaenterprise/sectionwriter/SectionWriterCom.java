@@ -34,6 +34,8 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKe
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
@@ -66,10 +68,14 @@ public class SectionWriterCom extends SectionWriter
 	 */
 	private static final String SGRK_COM_COMTYPE = "SimpleGenResKey_com_comtype";
 	private static final String SGRK_COM_COMSTATUS = "SimpleGenResKey_com_comStatus";
+	private static final String SGRK_COM_COMERRORHOOK = "SimpleGenResKey_com_comErrorHook";
 	private static final String SGRK_COM_COMAPPMODE = "SimpleGenResKey_com_comAPPMODE_stringArray";
 	private static final String SGRK_COM_STARTCOMEXTENSION = "SimpleGenResKey_com_comstartcomeextension";
+	private static final String SGRK_COM_INCLUDES = "SimpleGenResKey_com_include_files";
 	
 	
+	private static final String SGRK_MESSAGE_INIT_VALUE = "SimpleGenResKeyword__message_initial_value";
+
 	private static final String SGRK_MESSAGE_TYPE = "SimpleGenResKeyword__message_type";
 	private static final String MESSAGE_TYPE__SEND_STATIC_INTERNAL = "SEND_STATIC_INTERNAL";
 	private static final String MESSAGE_TYPE__RECEIVE_UNQUEUED_INTERNAL = "RECEIVE_UNQUEUED_INTERNAL";
@@ -79,7 +85,7 @@ public class SectionWriterCom extends SectionWriter
 	private static final String SGRK_MESSAGE_SEND_INTERNAL_DATASIZE = "SimpleGenResKeyword__message_send_internal_datasize";
 
 	private static final String SGRK_MESSAGE_RECEIVE_SENDINGMSG = "SimpleGenResKeyword__message_receive__sending_message";
-	private static final String SGRK_MESSAGE_RECEIVE_UQ_INITVALUE = "SimpleGenResKeyword__message_receive__unqueue_initial_value";
+	private static final String SGRK_MESSAGE_RECEIVE_UQ_INITVALUE = SGRK_MESSAGE_INIT_VALUE;
 	private static final String SGRK_MESSAGE_RECEIVE_Q_QUEUESIZE = "SimpleGenResKeyword__message_receive__queue_size";
 
 	
@@ -227,7 +233,7 @@ public class SectionWriterCom extends SectionWriter
 			
 			for (ISimpleGenRes sgr : ool.getList(IOilObjectList.COM)) {
 //				System.out.println("-- COM -- " + sgr.getName() + " " + sgr.getPath());
-				final String path = sgr.getPath() + S+oilHwRtosPrefix;
+				final String path = sgr.getPath() + S + (new OilPath(OilObjectType.COM, sgr.getName())).getPath() + "/";
 				
 				{ // get COM TYPE
 					String chType = CommonUtils.getFirstChildEnumType(vt, path+"COMTYPE");
@@ -265,6 +271,20 @@ public class SectionWriterCom extends SectionWriter
 						sgr.setProperty(SGRK_COM_COMSTATUS, chType);
 					}
 				}
+				{ // get COM ErrorHook
+					String chType = CommonUtils.getFirstChildEnumType(vt, path+"COMERRORHOOK");
+					if ("true".equalsIgnoreCase(chType)) {
+						sgr.setProperty(SGRK_COM_COMERRORHOOK, "true");
+					}
+				}
+				
+				{ // get INCLUDE files
+					String[] includes = CommonUtils.getValue(vt, path+"INCLUDES");
+					if (includes != null) {
+						sgr.setObject(SGRK_COM_INCLUDES, includes);
+					}
+				}
+				
 				
 				
 //				System.out.println("\t" + sgr);
@@ -273,7 +293,7 @@ public class SectionWriterCom extends SectionWriter
 			for (ISimpleGenRes sgr : ool.getList(IOilObjectList.MESSAGE)) {
 				messagesNumber++;
 				System.out.println("-- MESSAGE -- " + sgr.getName() + " " + sgr.getPath());
-				final String path = sgr.getPath() + S+oilHwRtosPrefix;
+				final String path = sgr.getPath() +S+ (new OilPath(OilObjectType.MESSAGE, sgr.getName())).getPath();
 				
 				boolean sending = false;
 				
@@ -405,9 +425,6 @@ public class SectionWriterCom extends SectionWriter
 							} else {
 								sgr.setProperty(SGRK_MESSAGE_NOTIFICATION_EVENT_TASKNAME, tName);
 							}
-
-
-							sgr.setProperty(SGRK_MESSAGE_NOTIFICATION_TYPE, chType);
 
 							String eName = getReference(ool, tPath+"EVENT", IOilObjectList.EVENT);
 							if (eName == null) {
@@ -604,6 +621,22 @@ public class SectionWriterCom extends SectionWriter
 			buff_c.append("#include \"com/com/inc/ee_cominit.h\"\n");
 			
 			{
+				Set<String> added = new HashSet<String>();
+				for (ISimpleGenRes com: ool.getList(IOilObjectList.COM)) {
+					
+					if (com.containsProperty(SGRK_COM_INCLUDES)) {
+						for (String s: (String[]) com.getObject(SGRK_COM_INCLUDES)) {
+							if (s != null && !added.contains(s)) {
+								added.add(s);
+								buff_c.append("#include \"" + s.replace("\\","/") + "\"\n");
+							}
+						}
+					}
+				}
+			}
+			
+			
+			{
 				StringBuffer messages_define = new StringBuffer(commentWriter.writerBanner("Messages")+
 						"#define EE_COM_N_MSG " + ool.getList(IOilObjectList.MESSAGE).size()+ "U\n\n");
 				int message_id = 0;
@@ -612,6 +645,8 @@ public class SectionWriterCom extends SectionWriter
 						"struct EE_com_msg_RAM_TYPE * EE_com_msg_RAM[EE_COM_N_MSG] = {");
 				StringBuffer messages_rom = new StringBuffer(commentWriter.writerSingleLineComment("Messages (ROM)")+
 						"const struct EE_com_msg_ROM_TYPE * EE_com_msg_ROM[EE_COM_N_MSG] = {");
+				StringBuffer messages_init_rom = new StringBuffer(commentWriter.writerSingleLineComment("Messages initial Value (ROM)")+
+						"const EE_UINT64 EE_com_msg_init_val[EE_COM_N_MSG] = {");
 				
 				// use set to prevent multiple definition of the same id
 				Set<String> callBackIds = new HashSet<String>();
@@ -621,12 +656,18 @@ public class SectionWriterCom extends SectionWriter
 				StringBuffer callBackDecls = new StringBuffer();
 				StringBuffer flagDecls = new StringBuffer();
 				StringBuffer taskDecls = new StringBuffer();
+				TaskEventMap taskEventMap = new TaskEventMap();
 				LinkedHashMap<String, String> sendDecls = new LinkedHashMap<String, String>();
 				LinkedHashMap<String, String> sendSize = new LinkedHashMap<String, String>();
 				LinkedHashMap<String, List<ISimpleGenRes>> receiving = new LinkedHashMap<String, List<ISimpleGenRes>>();
 				
 				String sep = "\n";
 				for (ISimpleGenRes sgr : ool.getList(IOilObjectList.MESSAGE)) {
+					
+					String initValue = "0";
+					if (sgr.containsProperty(SGRK_MESSAGE_INIT_VALUE)) {
+						initValue = sgr.getString(SGRK_MESSAGE_INIT_VALUE);
+					}
 					
 					if (MESSAGE_TYPE__SEND_STATIC_INTERNAL.equals(sgr.getString(SGRK_MESSAGE_TYPE))) {
 						sendDecls.put(sgr.getName(), "EE_COM_DEFINE_INTERNAL_MESSAGE("
@@ -660,6 +701,9 @@ public class SectionWriterCom extends SectionWriter
 								flagDecls.append("EE_COM_DEFINE_FLAG(" + id + ");\n");
 								flagIds.add(id);
 							}
+						} else if (NOTIFICATION__SETEVENT.equals(sgr.getString(SGRK_MESSAGE_NOTIFICATION_TYPE))) {
+							taskEventMap.add(sgr.getString(SGRK_MESSAGE_NOTIFICATION_EVENT_TASKNAME), sgr.getString(SGRK_MESSAGE_NOTIFICATION_EVENT_EVENTNAME));
+							
 						} else if (NOTIFICATION__ACTIVATETASK.equals(sgr.getString(SGRK_MESSAGE_NOTIFICATION_TYPE))) {
 							String id = sgr.getString(SGRK_MESSAGE_NOTIFICATION_TASK_TASKNAME);
 							if (!taskIds.contains(id)) {
@@ -673,12 +717,14 @@ public class SectionWriterCom extends SectionWriter
 					messages_define.append("#define " +sgr.getName() + " " + message_id+ "U\n");
 					messages_ram.append(sep + indent1 + "EE_com_msg_RAM("+sgr.getName()+")");
 					messages_rom.append(sep + indent1 + "EE_com_msg_ROM("+sgr.getName()+")");
+					messages_init_rom.append(sep + indent1 + initValue);
 					
 					message_id++;
 					sep = ",\n";
 				}
 				messages_ram.append("\n};\n\n");
 				messages_rom.append("\n};\n\n");
+				messages_init_rom.append("\n};\n\n");
 
 
 				StringBuffer receiveDecls = new StringBuffer();
@@ -749,7 +795,7 @@ public class SectionWriterCom extends SectionWriter
 								
 							} else if (NOTIFICATION__SETEVENT.equals(chType)) {
 								decl_type = "EE_COM_E_OK";
-								ref = sgr.getString(SGRK_MESSAGE_NOTIFICATION_EVENT_EVENTNAME);
+								ref = "&"+taskEventMap.getStructureName(sgr.getString(SGRK_MESSAGE_NOTIFICATION_EVENT_TASKNAME), sgr.getString(SGRK_MESSAGE_NOTIFICATION_EVENT_EVENTNAME));
 								
 							} else if (NOTIFICATION__COMCALLBACK.equals(chType)) {
 								decl_type = "EE_COM_CB_OK";
@@ -788,6 +834,12 @@ public class SectionWriterCom extends SectionWriter
 							commentWriter.writerSingleLineComment("Flags") +
 							flagDecls + "\n");
 				}
+				if (taskEventMap.size()>0) {
+					// add SetEvents
+					buff_c.append("\n" +
+							commentWriter.writerSingleLineComment("Set Events") +
+							taskEventMap.getInitStructures() + "\n");
+				}
 				
 				
 				buff_c.append("\n" +
@@ -806,7 +858,8 @@ public class SectionWriterCom extends SectionWriter
 				buff_c.append(
 						receiveDecls.toString() + "\n" +
 						messages_ram.toString() + 
-						messages_rom.toString());
+						messages_rom.toString() +
+						messages_init_rom.toString());
 			}
 
 			
@@ -885,6 +938,11 @@ public class SectionWriterCom extends SectionWriter
 					}
 				}
 				
+				if (sgr.containsProperty(SGRK_COM_COMERRORHOOK)) {
+					if ("true".equalsIgnoreCase(sgr.getString(SGRK_COM_COMERRORHOOK))) {
+						answer.add("__COM_HAS_ERRORHOOK__");
+					}
+				}
 				
 				if (sgr.containsProperty(SGRK_COM_COMSTATUS)) {
 					if ("COMEXTENDED".equalsIgnoreCase(sgr.getString(SGRK_COM_COMSTATUS))) {

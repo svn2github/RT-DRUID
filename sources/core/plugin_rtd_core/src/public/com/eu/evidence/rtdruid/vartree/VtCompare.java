@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 
 import com.eu.evidence.rtdruid.Rtd_corePlugin;
 
@@ -155,10 +154,10 @@ class VtCompare {
 	
 	
 	public VtCompare(IVarTree first, IVarTree second) {
-		this.first = (EObject) ((Resource) first.getResourceSet().getResources().get(0)).getContents().get(0);
-		this.second = (EObject) ((Resource) second.getResourceSet().getResources().get(0)).getContents().get(0);
+		this.first = VarTreeUtil.getTreeRoot(first);
+		this.second = VarTreeUtil.getTreeRoot(second);
 	}
-	
+
 	public VtCompare(EObject first, EObject second) {
 		this.first = first;
 		this.second = second;
@@ -350,4 +349,5 @@ class VtCompare {
 
 		return answer;
 	}
+
 }

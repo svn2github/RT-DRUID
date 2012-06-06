@@ -133,15 +133,15 @@ public class CompleteTest2 extends AbstractCompleteTest {
 						"<MUTEX Name=\"Mutex/1\"/>" +
 						"</ARCHITECTURAL>" +
 						"<MAPPING>" +
-						"<PROCMAP ProcRef=\"filt*er\\/1\" TaskRef=\"Task\\\\\\\\1\" Order=\"1\"/>" +
-						"<PROCMAP ProcRef=\"der\\\\1\" TaskRef=\"Task\\\\\\\\1\" Order=\"2\"/>" +
-						"<PROCMAP ProcRef=\"filt*er\\\\2\" TaskRef=\"Task\\/\\/2\" Order=\"1\"/>" +
-						"<PROCMAP ProcRef=\"\\/d\\/e\\/r\\/2\\/\" TaskRef=\"Task\\/\\/2\" Order=\"2\"/>" +
-						"<PROCMAP ProcRef=\"\\\\\\/\\/\\\\mat\" TaskRef=\"Task\\/\\/2\" Order=\"3\"/>" +
-						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task\\\\\\\\1\"/>" +
-						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task\\/\\/2\"/>" +
-						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"\\/Task\\\\\\\\ISR1\\/\"/>" +
-						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task\\/ISR2\"/>" +
+						"<PROCMAP ProcRef=\"filt*er\\/1\" TaskRef=\"Task\\\\1\" Order=\"1\"/>" +
+						"<PROCMAP ProcRef=\"der\\\\1\" TaskRef=\"Task\\\\1\" Order=\"2\"/>" +
+						"<PROCMAP ProcRef=\"filt*er\\\\2\" TaskRef=\"Task//2\" Order=\"1\"/>" +
+						"<PROCMAP ProcRef=\"\\/d\\/e\\/r\\/2\\/\" TaskRef=\"Task//2\" Order=\"2\"/>" +
+						"<PROCMAP ProcRef=\"\\\\\\/\\/\\\\mat\" TaskRef=\"Task//2\" Order=\"3\"/>" +
+						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task\\\\1\"/>" +
+						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task//2\"/>" +
+						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"/Task\\\\ISR1/\"/>" +
+						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task/ISR2\"/>" +
 						"<VARMAP VarRef=\"x\" MutexRef=\"Mutex\\/1\"/>" +
 						"<VARMAP VarRef=\"dx\" MutexRef=\"Mutex\\/1\"/>" +
 						"</MAPPING>" +
@@ -188,16 +188,16 @@ public class CompleteTest2 extends AbstractCompleteTest {
 						"<EXECTIME Type=\"METHOD\" Ref=\"*f/w\\/rit*e\">" +
 						"<WORST Value=\"0.1ms\"/>" +
 						"</EXECTIME>" +
-						"<EXECTIME Type=\"TASK\" Ref=\"Task\\\\\\\\1\">" +
+						"<EXECTIME Type=\"TASK\" Ref=\"Task\\\\1\">" +
 						"<WORST Value=\"12.0ms\"/>" +
 						"</EXECTIME>" +
-						"<EXECTIME Type=\"TASK\" Ref=\"Task\\/\\/2\">" +
+						"<EXECTIME Type=\"TASK\" Ref=\"Task//2\">" +
 						"<WORST Value=\"4.0ms\"/>" +
 						"</EXECTIME>" +
-						"<EXECTIME Type=\"TASK\" Ref=\"\\/Task\\\\\\\\ISR1\\/\">" +
+						"<EXECTIME Type=\"TASK\" Ref=\"/Task\\\\ISR1/\">" +
 						"<WORST Value=\"2.0ms\"/>" +
 						"</EXECTIME>" +
-						"<EXECTIME Type=\"TASK\" Ref=\"Task\\/ISR2\">" +
+						"<EXECTIME Type=\"TASK\" Ref=\"Task/ISR2\">" +
 						"<WORST Value=\"1.0ms\"/>" +
 						"</EXECTIME>" +
 						"</ANNOTATION>" +
@@ -307,15 +307,15 @@ public class CompleteTest2 extends AbstractCompleteTest {
 						"<MUTEX Name=\"Mutex/1\"/>" +
 						"</ARCHITECTURAL>" +
 						"<MAPPING>" +
-						"<PROCMAP ProcRef=\"filt*er\\/1\" TaskRef=\"Task\\\\\\\\1\" Order=\"1\"/>" +
-						"<PROCMAP ProcRef=\"der\\\\1\" TaskRef=\"Task\\\\\\\\1\" Order=\"2\"/>" +
-						"<PROCMAP ProcRef=\"filt*er\\\\2\" TaskRef=\"Task\\/\\/2\" Order=\"1\"/>" +
-						"<PROCMAP ProcRef=\"\\/d\\/e\\/r\\/2\\/\" TaskRef=\"Task\\/\\/2\" Order=\"2\"/>" +
-						"<PROCMAP ProcRef=\"\\\\\\/\\/\\\\mat\" TaskRef=\"Task\\/\\/2\" Order=\"3\"/>" +
-						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task\\\\\\\\1\"/>" +
-						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task\\/\\/2\"/>" +
-						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"\\/Task\\\\\\\\ISR1\\/\"/>" +
-						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task\\/ISR2\"/>" +
+						"<PROCMAP ProcRef=\"filt*er\\/1\" TaskRef=\"Task\\\\1\" Order=\"1\"/>" +
+						"<PROCMAP ProcRef=\"der\\\\1\" TaskRef=\"Task\\\\1\" Order=\"2\"/>" +
+						"<PROCMAP ProcRef=\"filt*er\\\\2\" TaskRef=\"Task//2\" Order=\"1\"/>" +
+						"<PROCMAP ProcRef=\"\\/d\\/e\\/r\\/2\\/\" TaskRef=\"Task//2\" Order=\"2\"/>" +
+						"<PROCMAP ProcRef=\"\\\\\\/\\/\\\\mat\" TaskRef=\"Task//2\" Order=\"3\"/>" +
+						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task\\\\1\"/>" +
+						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task//2\"/>" +
+						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"/Task\\\\ISR1/\"/>" +
+						"<TASKMAP rtosRef=\"CPU/0.erika\" TaskRef=\"Task/ISR2\"/>" +
 						"<VARMAP VarRef=\"x\" MutexRef=\"Mutex\\/1\"/>" +
 						"<VARMAP VarRef=\"dx\" MutexRef=\"Mutex\\/1\"/>" +
 						"</MAPPING>" +
@@ -362,26 +362,26 @@ public class CompleteTest2 extends AbstractCompleteTest {
 						"<EXECTIME Type=\"METHOD\" Ref=\"*f/w\\/rit*e\">" +
 						"<WORST Value=\"0.1ms\"/>" +
 						"</EXECTIME>" +
-						"<EXECTIME Type=\"TASK\" Ref=\"Task\\\\\\\\1\">" +
+						"<EXECTIME Type=\"TASK\" Ref=\"Task\\\\1\">" +
 						"<WORST Value=\"12.0ms\"/>" +
 						"</EXECTIME>" +
-						"<EXECTIME Type=\"TASK\" Ref=\"Task\\/\\/2\">" +
+						"<EXECTIME Type=\"TASK\" Ref=\"Task//2\">" +
 						"<WORST Value=\"4.0ms\"/>" +
 						"</EXECTIME>" +
-						"<EXECTIME Type=\"TASK\" Ref=\"\\/Task\\\\\\\\ISR1\\/\">" +
+						"<EXECTIME Type=\"TASK\" Ref=\"/Task\\\\ISR1/\">" +
 						"<WORST Value=\"2.0ms\"/>" +
 						"</EXECTIME>" +
-						"<EXECTIME Type=\"TASK\" Ref=\"Task\\/ISR2\">" +
+						"<EXECTIME Type=\"TASK\" Ref=\"Task/ISR2\">" +
 						"<WORST Value=\"1.0ms\"/>" +
 						"</EXECTIME>" +
 						"</ANNOTATION>" +
 						"<SCHEDULABILITY>" +
 							"<SCHEDULINGSCENARIO>" +
 								"<CPUSCHED CpuRef=\"CPU/0.erika\" Utilization=\"1.35\" SpeedFactor=\"1.42\" Boundary=\"0.7568284600108841\" Schedulable=\"false\"/>" +
-								"<TASKSCHED TaskRef=\"Task\\/ISR2\" Utilization=\"0.2\" CDelta=\"-2.0999999999999996\" Schedulable=\"true\" ResponseTime=\"1.0ms\"/>" +
-								"<TASKSCHED TaskRef=\"Task\\/\\/2\" Utilization=\"0.8\" CDelta=\"-2.0999999999999996\" Schedulable=\"false\" ResponseTime=\"Infinity\"/>" +
-								"<TASKSCHED TaskRef=\"Task\\\\\\\\1\" Utilization=\"0.3\" CDelta=\"-14.0\" Schedulable=\"false\" ResponseTime=\"Infinity\"/>" +
-								"<TASKSCHED TaskRef=\"\\/Task\\\\\\\\ISR1\\/\" Utilization=\"0.05\" CDelta=\"-14.0\" Schedulable=\"true\" ResponseTime=\"3.0ms\"/>" +
+								"<TASKSCHED TaskRef=\"Task/ISR2\" Utilization=\"0.2\" CDelta=\"-2.0999999999999996\" Schedulable=\"true\" ResponseTime=\"1.0ms\"/>" +
+								"<TASKSCHED TaskRef=\"Task//2\" Utilization=\"0.8\" CDelta=\"-2.0999999999999996\" Schedulable=\"false\" ResponseTime=\"Infinity\"/>" +
+								"<TASKSCHED TaskRef=\"Task\\\\1\" Utilization=\"0.3\" CDelta=\"-14.0\" Schedulable=\"false\" ResponseTime=\"Infinity\"/>" +
+								"<TASKSCHED TaskRef=\"/Task\\\\ISR1/\" Utilization=\"0.05\" CDelta=\"-14.0\" Schedulable=\"true\" ResponseTime=\"3.0ms\"/>" +
 							"</SCHEDULINGSCENARIO>" +
 						"</SCHEDULABILITY>" +
 						"</SYSTEM>"
@@ -545,18 +545,18 @@ public class CompleteTest2 extends AbstractCompleteTest {
 
 		"<MAPPING>" +
 			"<!-- Task 1 -->" +
-			"<PROCMAP ProcRef=\"filt*er\\/1\" TaskRef=\"Task\\\\\\\\1\" Order=\"1\" ModeRef=\"a/b/c*\\/\"/>" +
-			"<PROCMAP ProcRef=\"der\\\\1\"    TaskRef=\"Task\\\\\\\\1\" Order=\"2\" ModeRef=\"a/b/c*\\/\"/>" +
-			"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task\\\\\\\\1\" ModeRef=\"a/b/c*\\/\"/>" +
+			"<PROCMAP ProcRef=\"filt*er\\/1\" TaskRef=\"Task\\\\1\" Order=\"1\" ModeRef=\"a/b/c*\\/\"/>" +
+			"<PROCMAP ProcRef=\"der\\\\1\"    TaskRef=\"Task\\\\1\" Order=\"2\" ModeRef=\"a/b/c*\\/\"/>" +
+			"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task\\\\1\" ModeRef=\"a/b/c*\\/\"/>" +
 
 			"<!-- Task 2 -->" +
-			"<PROCMAP ProcRef=\"filt*er\\\\2\" TaskRef=\"Task\\/\\/2\" Order=\"1\"/>" +
-			"<PROCMAP ProcRef=\"\\/d\\/e\\/r\\/2\\/\"    TaskRef=\"Task\\/\\/2\" Order=\"2\"/>" +
-			"<PROCMAP ProcRef=\"\\\\\\/\\/\\\\mat\"     TaskRef=\"Task\\/\\/2\" Order=\"3\"/>" +
-			"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task\\/\\/2\"/>" +
+			"<PROCMAP ProcRef=\"filt*er\\\\2\" TaskRef=\"Task//2\" Order=\"1\"/>" +
+			"<PROCMAP ProcRef=\"\\/d\\/e\\/r\\/2\\/\"    TaskRef=\"Task//2\" Order=\"2\"/>" +
+			"<PROCMAP ProcRef=\"\\\\\\/\\/\\\\mat\"     TaskRef=\"Task//2\" Order=\"3\"/>" +
+			"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task//2\"/>" +
 
-			"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"\\/Task\\\\\\\\ISR1\\/\"/>" +
-			"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task\\/ISR2\"/>" +
+			"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"/Task\\\\ISR1/\"/>" +
+			"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task/ISR2\"/>" +
 
 			"<!-- Mutex 1 -->" +
 			"<VARMAP VarRef=\"x\"  MutexRef=\"Mutex\\/1\" ModeRef=\"a/b/c*\\/\"/>" +
@@ -614,17 +614,17 @@ public class CompleteTest2 extends AbstractCompleteTest {
 			"</EXECTIME>" +
 
 
-			"<EXECTIME Ref=\"Task\\\\\\\\1\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
+			"<EXECTIME Ref=\"Task\\\\1\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
 				"<WORST Value=\"12ms\" />" +
 			"</EXECTIME>" +
-			"<EXECTIME Ref=\"Task\\/\\/2\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
+			"<EXECTIME Ref=\"Task//2\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
 				"<WORST Value=\"4ms\" />" +
 			"</EXECTIME>" +
 
-			"<EXECTIME Ref=\"\\/Task\\\\\\\\ISR1\\/\" Type=\"TASK\">" +
+			"<EXECTIME Ref=\"/Task\\\\ISR1/\" Type=\"TASK\">" +
 				"<WORST Value=\"2ms\" />" +
 			"</EXECTIME>" +
-			"<EXECTIME Ref=\"Task\\/ISR2\" Type=\"TASK\">" +
+			"<EXECTIME Ref=\"Task/ISR2\" Type=\"TASK\">" +
 				"<WORST Value=\"1ms\" />" +
 			"</EXECTIME>" +
 		"</ANNOTATION>" +
@@ -760,18 +760,18 @@ public class CompleteTest2 extends AbstractCompleteTest {
 
 	"<MAPPING>" +
 		"<!-- Task 1 -->" +
-		"<PROCMAP ProcRef=\"filt*er\\/1\" TaskRef=\"Task\\\\\\\\1\" Order=\"1\" ModeRef=\"a/b/c*\\/\"/>" +
-		"<PROCMAP ProcRef=\"der\\\\1\"    TaskRef=\"Task\\\\\\\\1\" Order=\"2\" ModeRef=\"a/b/c*\\/\"/>" +
-		"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task\\\\\\\\1\" ModeRef=\"a/b/c*\\/\"/>" +
+		"<PROCMAP ProcRef=\"filt*er\\/1\" TaskRef=\"Task\\\\1\" Order=\"1\" ModeRef=\"a/b/c*\\/\"/>" +
+		"<PROCMAP ProcRef=\"der\\\\1\"    TaskRef=\"Task\\\\1\" Order=\"2\" ModeRef=\"a/b/c*\\/\"/>" +
+		"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task\\\\1\" ModeRef=\"a/b/c*\\/\"/>" +
 
 		"<!-- Task 2 -->" +
-		"<PROCMAP ProcRef=\"filt*er\\\\2\" TaskRef=\"Task\\/\\/2\" Order=\"1\"/>" +
-		"<PROCMAP ProcRef=\"\\/d\\/e\\/r\\/2\\/\"    TaskRef=\"Task\\/\\/2\" Order=\"2\"/>" +
-		"<PROCMAP ProcRef=\"\\\\\\/\\/\\\\mat\"     TaskRef=\"Task\\/\\/2\" Order=\"3\"/>" +
-		"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task\\/\\/2\"/>" +
+		"<PROCMAP ProcRef=\"filt*er\\\\2\" TaskRef=\"Task//2\" Order=\"1\"/>" +
+		"<PROCMAP ProcRef=\"\\/d\\/e\\/r\\/2\\/\"    TaskRef=\"Task//2\" Order=\"2\"/>" +
+		"<PROCMAP ProcRef=\"\\\\\\/\\/\\\\mat\"     TaskRef=\"Task//2\" Order=\"3\"/>" +
+		"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task//2\"/>" +
 
-		"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"\\/Task\\\\\\\\ISR1\\/\"/>" +
-		"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task\\/ISR2\"/>" +
+		"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"/Task\\\\ISR1/\"/>" +
+		"<TASKMAP rtosRef =\"CPU/0.erika\"    TaskRef=\"Task/ISR2\"/>" +
 
 		"<!-- Mutex 1 -->" +
 		"<VARMAP VarRef=\"x\"  MutexRef=\"Mutex\\/1\" ModeRef=\"a/b/c*\\/\"/>" +
@@ -829,24 +829,24 @@ public class CompleteTest2 extends AbstractCompleteTest {
 		"</EXECTIME>" +
 
 
-		"<EXECTIME Ref=\"Task\\\\\\\\1\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
+		"<EXECTIME Ref=\"Task\\\\1\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
 			"<WORST Value=\"12ms\" />" +
 		"</EXECTIME>" +
-		"<EXECTIME Ref=\"Task\\/\\/2\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
+		"<EXECTIME Ref=\"Task//2\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
 			"<WORST Value=\"4ms\" />" +
 		"</EXECTIME>" +
 
-		"<EXECTIME Ref=\"\\/Task\\\\\\\\ISR1\\/\" Type=\"TASK\">" +
+		"<EXECTIME Ref=\"/Task\\\\ISR1/\" Type=\"TASK\">" +
 			"<WORST Value=\"2ms\" />" +
 		"</EXECTIME>" +
-		"<EXECTIME Ref=\"Task\\/ISR2\" Type=\"TASK\">" +
+		"<EXECTIME Ref=\"Task/ISR2\" Type=\"TASK\">" +
 			"<WORST Value=\"1ms\" />" +
 		"</EXECTIME>" +
 
-		"<EXECTIME Ref=\"\\/Task\\\\\\\\ISR1\\/\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
+		"<EXECTIME Ref=\"/Task\\\\ISR1/\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
 			"<WORST Value=\"2ms\" />" +
 		"</EXECTIME>" +
-		"<EXECTIME Ref=\"Task\\/ISR2\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
+		"<EXECTIME Ref=\"Task/ISR2\" Type=\"TASK\" ModeRef=\"a/b/c*\\/\">" +
 			"<WORST Value=\"1ms\" />" +
 		"</EXECTIME>" +
 		
@@ -854,10 +854,10 @@ public class CompleteTest2 extends AbstractCompleteTest {
 	"<SCHEDULABILITY>" +
 		"<SCHEDULINGSCENARIO ModeRef=\"a/b/c*\\/\">" +
 			"<CPUSCHED CpuRef=\"CPU/0.erika\" Utilization=\"1.35\" SpeedFactor=\"1.42\" Boundary=\"0.7568284600108841\" Schedulable=\"false\"/>" +
-			"<TASKSCHED TaskRef=\"Task\\/ISR2\" Utilization=\"0.2\" CDelta=\"-2.0999999999999996\" Schedulable=\"true\" ResponseTime=\"1.0ms\"/>" +
-			"<TASKSCHED TaskRef=\"Task\\/\\/2\" Utilization=\"0.8\" CDelta=\"-2.0999999999999996\" Schedulable=\"false\" ResponseTime=\"Infinity\"/>" +
-			"<TASKSCHED TaskRef=\"Task\\\\\\\\1\" Utilization=\"0.3\" CDelta=\"-14.0\" Schedulable=\"false\" ResponseTime=\"Infinity\"/>" +
-			"<TASKSCHED TaskRef=\"\\/Task\\\\\\\\ISR1\\/\" Utilization=\"0.05\" CDelta=\"-14.0\" Schedulable=\"true\" ResponseTime=\"3.0ms\"/>" +
+			"<TASKSCHED TaskRef=\"Task/ISR2\" Utilization=\"0.2\" CDelta=\"-2.0999999999999996\" Schedulable=\"true\" ResponseTime=\"1.0ms\"/>" +
+			"<TASKSCHED TaskRef=\"Task//2\" Utilization=\"0.8\" CDelta=\"-2.0999999999999996\" Schedulable=\"false\" ResponseTime=\"Infinity\"/>" +
+			"<TASKSCHED TaskRef=\"Task\\\\1\" Utilization=\"0.3\" CDelta=\"-14.0\" Schedulable=\"false\" ResponseTime=\"Infinity\"/>" +
+			"<TASKSCHED TaskRef=\"/Task\\\\ISR1/\" Utilization=\"0.05\" CDelta=\"-14.0\" Schedulable=\"true\" ResponseTime=\"3.0ms\"/>" +
 		"</SCHEDULINGSCENARIO>" +
 	"</SCHEDULABILITY>" +
 "</SYSTEM>"
@@ -891,8 +891,8 @@ System.out.println("\nFirst check\n");
 		// check for resources
 		TaskSet ts = new TaskSet(vt, system, mode);
 		ts.setProperty("resource", "", false);
-		assertEquals(1, ts.getPrefixNumber());
-		final int cpuId = 0;
+		assertEquals(2, ts.getPrefixNumber());
+		final int cpuId = 1;
 		assertEquals(4, ts.getSize(cpuId));
 		{
 			Task t = (Task) ts.getItem(cpuId, 0);

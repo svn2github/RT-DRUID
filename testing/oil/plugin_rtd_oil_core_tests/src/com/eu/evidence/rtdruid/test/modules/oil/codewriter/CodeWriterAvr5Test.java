@@ -19,25 +19,29 @@ public class CodeWriterAvr5Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	@Test public void testAVR_boards() {
-		String names[] = new String[] {
-				"NO_BOARD", "ATMEGA_STK50X","XBOW_MIB5X0"
-		};
+	@Test public void testAVR_boards_NOBoard() {
+		testAVR_boards("NO_BOARD");
+	}
+	@Test public void testAVR_boards_STK50X() {
+		testAVR_boards("ATMEGA_STK50X");
+	}
+	@Test public void testAVR_boards_NOMIB5X0() {
+		testAVR_boards("XBOW_MIB5X0");
+	}
 
-		for (int i=0; i<names.length; i++) {
-		    final String text =
-					"CPU mySystem {\n" + 
-					"	OS myOs {\n" + 
-					"        CPU_DATA = AVR_5 {\n" + 
-					"			STACK_BOTTOM = 0x08000;\n" +
-					"			MULTI_STACK = FALSE;\n" + 
-					"		};\n" + 
-					"		KERNEL_TYPE = BCC1;\n" +
-					"		BOARD_DATA = "+names[i]+";\n" +
-					"	};\n" + 
-					"};\n";
-			commonWriterTest(text, 1);
-		}
+	private void testAVR_boards(String boardName) {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" + 
+				"        CPU_DATA = AVR_5 {\n" + 
+				"			STACK_BOTTOM = 0x08000;\n" +
+				"			MULTI_STACK = FALSE;\n" + 
+				"		};\n" + 
+				"		KERNEL_TYPE = BCC1;\n" +
+				"		BOARD_DATA = "+boardName+";\n" +
+				"	};\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
 	}
 
 }

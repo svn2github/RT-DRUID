@@ -15,6 +15,7 @@ import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
+import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /** This class contains many functions that look for a mapping between two compatible objects
@@ -444,7 +445,7 @@ public class Mapping {
 		}
 
 		final boolean use_fast_code = false;
-
+		
 		if (use_fast_code) {
 //			ITreeInterface ti = vt.newTreeInterface();
 //			
@@ -495,68 +496,78 @@ public class Mapping {
 			return null; //(String[]) procsDefaultMode.toArray(new String[procsDefaultMode.size()]);
 		
 		} else { // old Code (slow)
-		
-		LinkedList<String> reqMode = new LinkedList<String>();	// required mode
-		LinkedList<String> defMode = new LinkedList<String>();    // default mode
-		LinkedList<String> scarti = new LinkedList<String>(); // all proc not mapped to given task in current mode
-		 
-		ITreeInterface ti = vt.newTreeInterface();
-		
-		// check all ProcMap
-		String prefix = sysPath + S + "Mapping" + S + "ProcMapList";
-		String[] names = ti.getAllName(prefix, "ProcMap"); 
-		
-		for (int i=0; i<names.length; i++) {
-			String path = prefix + S + names[i];
-			
-			String tmpProc = (String) ti.getValue(path + S + "ProcRef").get(); // proc Name
-			String tmpMode = (String) ti.getValue(path + S + "ModeRef").get(); // mode
-			
-			// drop not valid values
-			if (tmpProc == null)  continue;
-
-			// check if mode of current element is the current mode
-			boolean currMode = tmpMode == null ? modeRef == null : tmpMode.equals(modeRef);
-			
-			// check if current element is a map to given Task
-			if (! taskName.equals( ti.getValue(path + S + "TaskRef").get() )) {
-				if (currMode) {
-					// store a proc not mapped to given task in current mode
-					scarti.add(tmpProc);
-				}
-				continue; // next element
-			}
-			
-			// store the reference
-			if (currMode) {
-				reqMode.add(tmpProc);
 				
-			} else if (tmpMode == null) { // default mode
-				defMode.add(tmpProc);
-			}
-		}
-		
-		// check all references stored as default mode if they are mapped to another task in current mode
-		Iterator<String> it = defMode.iterator();
-		while (it.hasNext()) {
-			String tmpProc = (String) it.next();
 			
-			boolean ok = true;
-			Iterator<String> itSc = scarti.iterator();
-			while (itSc.hasNext() && ok) {
-				if (tmpProc.equals( itSc.next())) {
-					// mapped to another task
-					ok = false;
+			String taskName2 = DataPath.removeSlash(taskName);
+			
+			LinkedList<String> reqMode = new LinkedList<String>();	// required mode
+			LinkedList<String> defMode = new LinkedList<String>();    // default mode
+			LinkedList<String> scarti = new LinkedList<String>(); // all proc not mapped to given task in current mode
+			 
+			ITreeInterface ti = vt.newTreeInterface();
+			
+			// check all ProcMap
+			String prefix = sysPath + S + "Mapping" + S + "ProcMapList";
+			String[] names = ti.getAllName(prefix, "ProcMap"); 
+			
+			for (int i=0; i<names.length; i++) {
+				String path = prefix + S + names[i];
+				
+				String tmpProc = (String) ti.getValue(path + S + "ProcRef").get(); // proc Name
+				String tmpMode = (String) ti.getValue(path + S + "ModeRef").get(); // mode
+				
+				// drop not valid values
+				if (tmpProc == null)  continue;
+	
+				// check if mode of current element is the current mode
+				boolean currMode = tmpMode == null ? modeRef == null : tmpMode.equals(modeRef);
+				
+				// check if current element is a map to given Task
+				String foundTaskName = null;
+				{
+					IVariable var = ti.getValue(path + S + "TaskRef");
+					if (var != null) {
+						foundTaskName = var.toString();
+					}
+				}
+				if (! ( taskName.equals( foundTaskName ) || taskName2.equals( foundTaskName ))) {
+					if (currMode) {
+						// store a proc not mapped to given task in current mode
+						scarti.add(tmpProc);
+					}
+					continue; // next element
+				}
+				
+				// store the reference
+				if (currMode) {
+					reqMode.add(tmpProc);
+					
+				} else if (tmpMode == null) { // default mode
+					defMode.add(tmpProc);
 				}
 			}
 			
-			if (ok) {
-				// not mapped to another task : store in the other list
-				reqMode.add(tmpProc);
+			// check all references stored as default mode if they are mapped to another task in current mode
+			Iterator<String> it = defMode.iterator();
+			while (it.hasNext()) {
+				String tmpProc = (String) it.next();
+				
+				boolean ok = true;
+				Iterator<String> itSc = scarti.iterator();
+				while (itSc.hasNext() && ok) {
+					if (tmpProc.equals( itSc.next())) {
+						// mapped to another task
+						ok = false;
+					}
+				}
+				
+				if (ok) {
+					// not mapped to another task : store in the other list
+					reqMode.add(tmpProc);
+				}
 			}
-		}
-		
-		return (String[]) reqMode.toArray( new String[0]);
+			
+			return (String[]) reqMode.toArray( new String[0]);
 		
 		}
 	}
@@ -581,7 +592,15 @@ public class Mapping {
 		String path = Utility.chooseModeRef(ti, sysPath + S + "Mapping" + S + "TaskMapList" + S, idList, 0, modeRef);
 		
 		// no data about "proc to task" mapping
-		if (path == null || !ti.exist(path + S + "RtosRef", DataPath.STRING_TYPE )) {
+		if (path == null) {
+			idList = new String[] { modeRef, Utility.pathToEvidence(DataPath.addSlash(taskName)) };
+			path = Utility.chooseModeRef(ti, sysPath + S + "Mapping" + S + "TaskMapList" + S, idList, 0, modeRef);
+			
+			// no data about "proc to task" mapping
+			if (path == null || !ti.exist(path + S + "RtosRef", DataPath.STRING_TYPE )) {
+				return null;
+			}
+		} else if (!ti.exist(path + S + "RtosRef", DataPath.STRING_TYPE )) {
 			return null;
 		}
 		

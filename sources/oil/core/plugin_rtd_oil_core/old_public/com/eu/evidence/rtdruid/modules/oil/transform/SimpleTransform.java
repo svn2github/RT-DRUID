@@ -66,6 +66,13 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  */
 public class SimpleTransform implements IOilTransform {
 
+	/**
+	 * 
+	 */
+	public static final String MESSAGE_TYPE = "MessageType";
+	public static final String COM_LIST = "ComList";
+	public static final String COM_TYPE = "Com";
+
 	protected final static int SYSTEM_NUMBER = 1;
 
 	protected final static DataPackage DPKG = DataPackage.eINSTANCE;
@@ -94,8 +101,8 @@ public class SimpleTransform implements IOilTransform {
 			};
 
 	/** All types of Oil Object that are stored inside the OS's OilVar * */
-	protected String[] otherObjectsTypes = { IOilXMLLabels.OBJ_COM, IOilXMLLabels.OBJ_IPDU,
-			IOilXMLLabels.OBJ_MESSAGE, // IOilXMLLabels.OBJ_NETWORKMESSAGE, IOilXMLLabels.OBJ_APPMODE, 
+	protected String[] otherObjectsTypes = { IOilXMLLabels.OBJ_IPDU,
+			//IOilXMLLabels.OBJ_MESSAGE,  IOilXMLLabels.OBJ_NETWORKMESSAGE, IOilXMLLabels.OBJ_APPMODE,IOilXMLLabels.OBJ_COM,  
 			IOilXMLLabels.OBJ_NM };
 	
 	// -------------------------------
@@ -167,6 +174,10 @@ public class SimpleTransform implements IOilTransform {
 		storeOsApplication(systemVtp, application, oilSysName, id);
 		/* Network messages */
 		storeNetworkMessages(systemVtp, application, id);
+		/* messages */
+		storeMessages(systemVtp, application, id);
+		/* Com */
+		storeCom(systemVtp, application, id);
 
 		/* OTHER OBJECTS */
 		storeOthers(systemVtp, application, rtosName, id);
@@ -1183,7 +1194,6 @@ public class SimpleTransform implements IOilTransform {
 			 */
 		}
 	}
-
 	/**
 	 * This method stores all Appmode inside the given IVarTreePointer, as mode
 	 * (not inside an OilVar)
@@ -1258,6 +1268,7 @@ public class SimpleTransform implements IOilTransform {
 
 			frameNamePath[2] = getAttribute(ar.get(0), IOilXMLLabels.ATTR_NAME);
 			IVarTreePointer curr = vtp.clone().makePath(frameNamePath, frameTypePath);
+			storeAVar(curr, MESSAGE_TYPE, IOilXMLLabels.OBJ_NETWORKMESSAGE);
 			String s = null;
 			size_search: for (int i = 0; i < ar.size(); i++) {
 				for (Element msg_prop : getAllSameElements(ar.get(i), "parameter", new String[] { IOilXMLLabels.ATTR_NAME },
@@ -1287,6 +1298,170 @@ public class SimpleTransform implements IOilTransform {
 			// storeInsideAOilVar(curr, (Element) ar.get(i), id);
 			// }
 
+		}
+	}
+	
+	/**
+	 * This method stores all Messages inside the given IVarTreePointer, as mode
+	 * (not inside an OilVar)
+	 * 
+	 * @param vtp
+	 *            point to the system
+	 * @param parent
+	 *            the parent node (Oil Application Node)
+	 * @param id
+	 *            contains the hw and rtos id of this data
+	 * 
+	 * @throws OilTransformException
+	 *             if there are some problems
+	 */
+	protected void storeMessages(IVarTreePointer vtp, Element parent, IOilImplID id)
+			throws OilTransformException {
+
+		String[] frameNamePath = { DPKG.getSystem_Architectural().getName(),
+				DPKG.getArchitectural_FrameList().getName(), null, // mode name
+																	// ... from
+		// oil
+		/* DPKG.getMode_OilVar().getName() */};
+		String[] frameTypePath = { DPKG.getSystem_Architectural().getName(),
+				DPKG.getArchitectural_FrameList().getName(), DPKG.getFrame().getName(),
+		/* DPKG.getMode_OilVar().getName() */};
+
+		// prepare where store all data
+		Element[] appmodeList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT, new String[] { IOilXMLLabels.ATTR_TYPE },
+				new String[] { IOilXMLLabels.OBJ_MESSAGE });
+
+		// aggregate instances of the same mutex
+		ArrayList<Element> unamedAppmode = new ArrayList<Element>();
+		ArrayList<ArrayList<Element>> namedAppmode = new ArrayList<ArrayList<Element>>();
+		{
+			// namedAppmodeKeys is used to group together all objects with the
+			// same name
+			HashMap<String, ArrayList<Element>> namedAppmodeKeys = new HashMap<String, ArrayList<Element>>();
+			for (int i = 0; i < appmodeList.length; i++) {
+				String tmp = getAttribute(appmodeList[i], IOilXMLLabels.ATTR_NAME);
+
+				if (tmp == null) {
+					unamedAppmode.add(appmodeList[i]);
+				} else {
+					if (namedAppmodeKeys.containsKey(tmp)) {
+						namedAppmodeKeys.get(tmp).add(appmodeList[i]);
+					} else {
+						ArrayList<Element> ar = new ArrayList<Element>();
+						ar.add(appmodeList[i]);
+						namedAppmodeKeys.put(tmp, ar);
+						namedAppmode.add(ar);
+					}
+				}
+			}
+		}
+
+
+		// parse all messages. If there're more than one instance for the same
+		// mutex, that message is parsed more than one time
+		for (Iterator<ArrayList<Element>> iter = namedAppmode.iterator(); iter.hasNext();) {
+			ArrayList<Element> ar = iter.next();
+
+			frameNamePath[2] = getAttribute(ar.get(0), IOilXMLLabels.ATTR_NAME);
+			IVarTreePointer curr = vtp.clone().makePath(frameNamePath, frameTypePath);
+			storeAVar(curr, MESSAGE_TYPE, IOilXMLLabels.OBJ_MESSAGE);
+			String s = null;
+			size_search: for (int i = 0; i < ar.size(); i++) {
+				for (Element msg_prop : getAllSameElements(ar.get(i), "parameter", new String[] { IOilXMLLabels.ATTR_NAME },
+						new String[] { "MESSAGEPROPERTY" })) {
+
+					for (Element msg_prop_static : getAllSameElements(msg_prop, "enumerator", new String[] { IOilXMLLabels.ATTR_NAME },
+							new String[] { "STATIC" })) {
+
+						for (Element msg_prop_static_size : getAllSameElements(msg_prop_static, "parameter",
+								new String[] { IOilXMLLabels.ATTR_NAME }, new String[] { "SIZEINBITS" })) {
+
+							s = getAttribute(msg_prop_static_size, "CurrValue");
+							if (s != null) {
+								break size_search;
+							}
+						}
+
+					}
+
+				}
+			}
+			if (s != null) {
+				storeAVar(curr, DPKG.getFrame_Length().getName(), s);
+			}
+
+			for (int i = 0; i < ar.size(); i++) {
+				storeInsideAOilVar(curr, ar.get(i), id);
+			}
+		}
+	}
+
+	/**
+	 * This method stores all Coms inside the given IVarTreePointer
+	 * 
+	 * @param vtp
+	 *            point to the system
+	 * @param parent
+	 *            the parent node (Oil Application Node)
+	 * @param id
+	 *            contains the hw and rtos id of this data
+	 * 
+	 * @throws OilTransformException
+	 *             if there are some problems
+	 */
+	protected void storeCom(IVarTreePointer vtp, Element parent, IOilImplID id)
+			throws OilTransformException {
+
+		String[] comNamePath = { DPKG.getSystem_Architectural().getName(),
+				COM_LIST, null, // mode name
+																	// ... from
+		// oil
+		/* DPKG.getMode_OilVar().getName() */};
+		String[] comTypePath = { DPKG.getSystem_Architectural().getName(),
+				COM_LIST, COM_TYPE,
+		/* DPKG.getMode_OilVar().getName() */};
+
+		// prepare where store all data
+		Element[] appmodeList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT, new String[] { IOilXMLLabels.ATTR_TYPE },
+				new String[] { IOilXMLLabels.OBJ_COM });
+
+		// aggregate instances of the same mutex
+		ArrayList<Element> unamedAppmode = new ArrayList<Element>();
+		ArrayList<ArrayList<Element>> namedAppmode = new ArrayList<ArrayList<Element>>();
+		{
+			// namedAppmodeKeys is used to group together all objects with the
+			// same name
+			HashMap<String, ArrayList<Element>> namedAppmodeKeys = new HashMap<String, ArrayList<Element>>();
+			for (int i = 0; i < appmodeList.length; i++) {
+				String tmp = getAttribute(appmodeList[i], IOilXMLLabels.ATTR_NAME);
+
+				if (tmp == null) {
+					unamedAppmode.add(appmodeList[i]);
+				} else {
+					if (namedAppmodeKeys.containsKey(tmp)) {
+						namedAppmodeKeys.get(tmp).add(appmodeList[i]);
+					} else {
+						ArrayList<Element> ar = new ArrayList<Element>();
+						ar.add(appmodeList[i]);
+						namedAppmodeKeys.put(tmp, ar);
+						namedAppmode.add(ar);
+					}
+				}
+			}
+		}
+
+
+		// parse all messages. If there're more than one instance for the same
+		// mutex, that message is parsed more than one time
+		for (Iterator<ArrayList<Element>> iter = namedAppmode.iterator(); iter.hasNext();) {
+			ArrayList<Element> ar = iter.next();
+
+			comNamePath[2] = getAttribute(ar.get(0), IOilXMLLabels.ATTR_NAME);
+			IVarTreePointer curr = vtp.clone().makePath(comNamePath, comTypePath);
+
+			for (int i = 0; i < ar.size(); i++) {
+				storeInsideAOilVar(curr, ar.get(i), id);
+			}
 		}
 	}
 
@@ -2192,33 +2367,62 @@ public class SimpleTransform implements IOilTransform {
 				}
 			}
 				break;
-			case IOilObjectList.NETWORKMESSAGE: {
+			case IOilObjectList.MESSAGE:
+			case IOilObjectList.NETWORKMESSAGE: 
+			{
 				final String sizeType = S + DPKG.getFrame_Length().getName();
 				final String prefix = sysName + S + DPKG.getArchitectural().getName() + S
 						+ DPKG.getArchitectural_FrameList().getName() + S;
 				ITreeInterface ti = vt.newTreeInterface();
 				final String[] names = ti.getAllName(prefix, DPKG.getFrame().getName());
 
-				objects = new SimpleGenRes[names.length];
+				ArrayList<ISimpleGenRes> temp = new ArrayList<ISimpleGenRes>();
 				for (int i = 0; i < names.length; i++) {
-					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
-					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_NETWORKMESSAGE);
-					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
+					String curr_type;
+					{
+						// default type = message.
+						IVariable type = ti.getValue(prefix + names[i] +S+ MESSAGE_TYPE);
+						if (objID == IOilObjectList.NETWORKMESSAGE) {
+							
+							if (!(IOilXMLLabels.OBJ_NETWORKMESSAGE.equalsIgnoreCase("" + type))) {
+								continue;
+							}
+							curr_type = IOilXMLLabels.OBJ_NETWORKMESSAGE;
+						} else {
+							curr_type = IOilXMLLabels.OBJ_MESSAGE;
+						}
+					}
+					
+					ISimpleGenRes curr = new SimpleGenRes(names[i], prefix + names[i]);
+					curr.setProperty(IOilXMLLabels.ATTR_TYPE, curr_type);
+					curr.setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
 
 					try {
 						IVariable size = ti.getValue(prefix + names[i] + sizeType);
 						if (size != null && size.toString() != null) {
-							objects[i].setProperty(ISimpleGenResKeywords.N_MESSAGE_LENGHT, size.toString());
+							curr.setProperty(ISimpleGenResKeywords.N_MESSAGE_LENGHT, size.toString());
 						}
 					} catch (Exception e) {
 						// nothing
 					}
 
+					temp.add(curr);
+				}
+				objects = (ISimpleGenRes[]) temp.toArray(new ISimpleGenRes[temp.size()]);
+			}
+				break;
+			case IOilObjectList.COM: {
+				String prefix = sysName + S + DPKG.getSystem_Architectural().getName() + S + COM_LIST + S;
+				String[] names = vt.newTreeInterface().getAllName(prefix, COM_TYPE);
+
+				objects = new SimpleGenRes[names.length];
+				for (int i = 0; i < names.length; i++) {
+					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
+					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_COM);
+					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
 				}
 			}
 				break;
-			case IOilObjectList.MESSAGE:
-			case IOilObjectList.COM:
 			case IOilObjectList.NM:
 			case IOilObjectList.IPDU: {
 				OilObjectType oType = OilObjectType.get(objID);
@@ -2303,17 +2507,18 @@ public class SimpleTransform implements IOilTransform {
 		case IOilObjectList.APPMODE: {
 //			path = DPKG.getRtos_OilVar().getName() + S + IOilXMLLabels.OBJ_APPMODE + S + oilVarPrefix;
 			
-			path = (new OilPath(OilObjectType.get(object.getString(IOilXMLLabels.ATTR_TYPE)), object.getName(), false)).getPath();
+//			path = (new OilPath(OilObjectType.get(object.getString(IOilXMLLabels.ATTR_TYPE)), object.getName(), false)).getPath();
 		}
-			break;
+//			break;
+		case IOilObjectList.COM:
+		case IOilObjectList.MESSAGE:
 		case IOilObjectList.NETWORKMESSAGE: {
 
 			// NOTE: This path doesn't exist
 //			path = DPKG.getMutex_OilVar().getName() + S + IOilXMLLabels.OBJ_RESOURCE + S + oilVarPrefix;
+			path = (new OilPath(OilObjectType.get(object.getString(IOilXMLLabels.ATTR_TYPE)), object.getName(), false)).getPath();
 		}
-//			break;
-		case IOilObjectList.MESSAGE:
-		case IOilObjectList.COM:
+			break;
 		case IOilObjectList.NM:
 		case IOilObjectList.IPDU:
 		default:

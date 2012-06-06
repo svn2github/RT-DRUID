@@ -35,7 +35,6 @@ public class EPackageEmfMergeTest extends AbstractEcoreEpackageMergeTest {
 	@Ignore
 	public void testMissingAttributes() throws RTDEPackageBuildException, IOException,
 			InterruptedException {
-		super.testMissingAttributes();
 	}
 	
 	/* (non-Javadoc)
@@ -46,7 +45,6 @@ public class EPackageEmfMergeTest extends AbstractEcoreEpackageMergeTest {
 	@Ignore
 	public void testTypes() throws RTDEPackageBuildException, IOException,
 			InterruptedException {
-		super.testTypes();
 	}
 
 	/* (non-Javadoc)
@@ -57,6 +55,5 @@ public class EPackageEmfMergeTest extends AbstractEcoreEpackageMergeTest {
 	@Ignore
 	public void testTypes2() throws RTDEPackageBuildException, IOException,
 			InterruptedException {
-		super.testTypes2();
 	}
 }

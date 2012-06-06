@@ -8,6 +8,7 @@ package com.eu.evidence.rtdruid.test.modules.jscan.common;
 
 import java.io.IOException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.modules.jscan.AbstractCompleteTest;
@@ -366,6 +367,7 @@ public class StackOptimizationTest extends AbstractCompleteTest{
 
 		
 		@Test
+		@Ignore("Missing stack informations in the input example")
 		public void test1() throws IOException {
 			IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 			

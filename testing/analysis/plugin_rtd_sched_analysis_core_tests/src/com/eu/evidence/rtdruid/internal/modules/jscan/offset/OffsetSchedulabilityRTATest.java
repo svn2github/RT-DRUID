@@ -180,7 +180,7 @@ public class OffsetSchedulabilityRTATest extends TestCase {
 		int testcases = 3;
 
 		int[] task = { 2, 2, 1 };
-		double[] result = { 9, 16, 49.975 };
+		double[] result = { 8, 4, 49.975 };
 
 		int i;
 		OffsetSchedulabilityRTA e = new OffsetSchedulabilityRTA();

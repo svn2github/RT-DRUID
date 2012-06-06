@@ -73,6 +73,8 @@
         eType="#//Signal" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="TaskList" lowerBound="1"
         upperBound="-1" eType="#//Task" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ComList" upperBound="-1"
+        eType="#//Com" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Mapping" eSuperTypes="#//ObjectWithID">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ProcMapList" upperBound="-1"
@@ -201,6 +203,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Length" eType="#//LongVar"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
         iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MessageType" eType="#//StringVar"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//ObjectWithID">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
@@ -381,5 +384,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
         iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="OilVar" eType="#//OilVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Com" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
+        iD="true"/>
   </eClassifiers>
 </ecore:EPackage>

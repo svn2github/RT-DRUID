@@ -5,10 +5,15 @@
  */
 package com.eu.evidence.rtdruid.modules.oil.codewriter.common;
 
+import static com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform.COM_LIST;
+import static com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform.COM_TYPE;
+import static com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform.MESSAGE_TYPE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -35,7 +40,6 @@ import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable;
-import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
@@ -467,7 +471,6 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			/*******************************************************************
 			 * Search tasks
 			 ******************************************************************/
-System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));			
 			// use class TaskSet to search all tasks mapped to current rtos
 			TaskSet ts = new TaskSet(vt, sysName);
 			ts.setProperty(Task.STR_TASK_TYPE, "", false);
@@ -992,6 +995,32 @@ System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
 	        	}
 	        }
 	        
+	        if (type == IOilObjectList.EVENT) {
+	        	Collections.sort(tmpAnswer, new Comparator<ISimpleGenRes>() {
+	        		/* (non-Javadoc)
+	        		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+	        		 */
+	        		@Override
+	        		public int compare(ISimpleGenRes o1, ISimpleGenRes o2) {
+	        			final int answer;
+	        			if (o1 == null || o1.getName() == null) {
+	        				if (o2 == null || o2.getName() == null) {
+	        					answer = 0;
+	        				} else {
+	        					answer = Integer.MIN_VALUE; 
+	        				}
+	        			} else {
+	        				if (o2 == null || o2.getName() == null) {
+	        					answer = Integer.MIN_VALUE; 
+	        				} else {
+	        					answer = o1.getName().compareTo(o2.getName()); 
+	        				}
+	        			}
+	        			return answer;
+	        		}
+				});
+	        }
+	        
 	        // convert the answer 
 	        if (tmpAnswer.size()>0) {
 	        	answer = tmpAnswer.toArray(new SimpleGenRes[tmpAnswer.size()]);
@@ -1039,10 +1068,65 @@ System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
 	        }
 		}
 			break;
-		/* ----------------------  OTHERS  ---------------------- */
+		/* ----------------------  MESSAGES  ---------------------- */
 		case IOilObjectList.MESSAGE:
 		case IOilObjectList.NETWORKMESSAGE:
-		case IOilObjectList.COM:
+		{
+			final String sizeType = S + DPKG.getFrame_Length().getName();
+			final String prefix = sysName + S + DPKG.getArchitectural().getName() + S
+					+ DPKG.getArchitectural_FrameList().getName() + S;
+			ITreeInterface ti = vt.newTreeInterface();
+			final String[] names = ti.getAllName(prefix, DPKG.getFrame().getName());
+
+			ArrayList<ISimpleGenRes> temp = new ArrayList<ISimpleGenRes>();
+			for (int i = 0; i < names.length; i++) {
+				String curr_type;
+				{
+					// default type = message.
+					IVariable msgtype = ti.getValue(prefix + names[i] +S+ MESSAGE_TYPE);
+					if (type == IOilObjectList.NETWORKMESSAGE) {
+						
+						if (!(IOilXMLLabels.OBJ_NETWORKMESSAGE.equalsIgnoreCase("" + msgtype))) {
+							continue;
+						}
+						curr_type = IOilXMLLabels.OBJ_NETWORKMESSAGE;
+					} else {
+						curr_type = IOilXMLLabels.OBJ_MESSAGE;
+					}
+				}
+				
+				ISimpleGenRes curr = new SimpleGenRes(names[i], prefix + names[i]);
+				curr.setProperty(IOilXMLLabels.ATTR_TYPE, curr_type);
+
+				try {
+					IVariable size = ti.getValue(prefix + names[i] + sizeType);
+					if (size != null && size.toString() != null) {
+						curr.setProperty(ISimpleGenResKeywords.N_MESSAGE_LENGHT, size.toString());
+					}
+				} catch (Exception e) {
+					// nothing
+				}
+
+				temp.add(curr);
+			}
+			answer = (ISimpleGenRes[]) temp.toArray(new ISimpleGenRes[temp.size()]);
+
+		}
+			break;
+		/* ----------------------  COM  ---------------------- */
+		case IOilObjectList.COM: {
+			String prefix = sysName + S + DPKG.getSystem_Architectural().getName() + S + COM_LIST + S;
+			String[] names = vt.newTreeInterface().getAllName(prefix, COM_TYPE);
+
+			answer = new SimpleGenRes[names.length];
+			for (int i = 0; i < names.length; i++) {
+				answer[i] = new SimpleGenRes(names[i], prefix + names[i]);
+				answer[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_COM);
+			}
+		}
+			break;
+
+		/* ----------------------  OTHERS  ---------------------- */
 		case IOilObjectList.IPDU:
 		case IOilObjectList.NM:
 		{

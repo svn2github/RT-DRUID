@@ -210,7 +210,8 @@ public class Task extends ModeRes {
 		for (int i = 0; i < annotation.length; i++) {
 			if (annotation[i][0].equalsIgnoreCase(what)) {
 				return Search.anExecTime(ti, sys, Utility
-						.pathToEvidence(DataPath.addSlash(nome)), "TASK",
+						.pathToEvidence(nome), "TASK",
+//						.pathToEvidence(DataPath.addSlash(nome)), "TASK",
 						modeRef)
 						+ S + annotation[i][1];
 			}
@@ -246,7 +247,7 @@ public class Task extends ModeRes {
 				ttpref += S + stnew + S + "TaskSchedList"; // sys + sched + list
 														   // + scenario +
 														   // taskList
-				ttnew = Utility.pathToEvidence(DataPath.addSlash(nome));
+				ttnew = Utility.pathToEvidence(nome); //DataPath.addSlash(nome));
 				stnew = DataPath.makeSlashedId(ttnew);
 				if (!ti.exist(ttpref + S + stnew, "TaskSched")) {
 					return null;
@@ -1052,7 +1053,9 @@ public class Task extends ModeRes {
 			if (annotation[i].equalsIgnoreCase(key)) {
 
 				String[] tmp = {
-						Utility.pathToEvidence(DataPath.addSlash(nome)), "TASK" };
+						Utility.pathToEvidence(nome
+//								DataPath.addSlash(nome)
+								), "TASK" };
 
 				String firstPrefix = sys + S + "Annotation" + S
 						+ "ExecTimeLists";
@@ -1147,7 +1150,7 @@ public class Task extends ModeRes {
 															   // list +
 															   // scenario +
 															   // taskList
-					ttnew = Utility.pathToEvidence(DataPath.addSlash(nome));
+					ttnew = Utility.pathToEvidence(nome); //DataPath.addSlash(nome));
 					stnew = DataPath.makeSlashedId(ttnew);
 					if (!ti.exist(ttpref + S + stnew, "TaskSched")) {
 						ti.addElement(ttnew, "TaskSched", ttpref);

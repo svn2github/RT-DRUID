@@ -6,14 +6,14 @@
  */
 package com.eu.evidence.rtdruid.internal.vartree.tools.test;
 
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -47,11 +47,7 @@ public class MappingTest1 {
 	public void testMappingString() {
 		Mapping m = new Mapping(vt, "Nome");
 		assertTrue(m.getSystem().equals("Nome"));
-		if (Utility.DEFAULT_MODE == null) {
-			assertTrue(m.getMode() == Utility.DEFAULT_MODE);
-		} else {
-			assertTrue(m.getMode().equals( Utility.DEFAULT_MODE));
-		}
+		assertEquals(Utility.DEFAULT_MODE, m.getMode());
 		
 		m = new Mapping(vt, "");
 		assertTrue(m.getSystem().equals(""));
@@ -70,12 +66,8 @@ public class MappingTest1 {
 		} catch (NullPointerException e) { ok = true; } assertTrue( ok );
 
 		m = new Mapping(vt, DataPath.makeSlashedId((String) null));
-		assertTrue(m.getSystem() == null);
-		if (Utility.DEFAULT_MODE == null) {
-			assertTrue(m.getMode() == Utility.DEFAULT_MODE);
-		} else {
-			assertTrue(m.getMode().equals( Utility.DEFAULT_MODE));
-		}
+		assertNull(m.getSystem() );
+		assertEquals(Utility.DEFAULT_MODE, m.getMode());
 
 	}
 
@@ -94,7 +86,7 @@ public class MappingTest1 {
 		
 		m = new Mapping(vt, "abc", null);
 		assertTrue(m.getSystem().equals("abc"));
-		assertTrue(m.getMode() == null);
+		assertNull(m.getMode() );
 
 		boolean ok = false;
 		try {
@@ -112,12 +104,12 @@ public class MappingTest1 {
 		} catch (NullPointerException e) { ok = true; } assertTrue( ok );
 
 		m = new Mapping(vt, DataPath.makeSlashedId((String) null), "abc");
-		assertTrue(m.getSystem() == null);
+		assertNull(m.getSystem() );
 		assertTrue(m.getMode().equals("abc"));
 
 		m = new Mapping(vt, DataPath.makeSlashedId((String) null), null);
-		assertTrue(m.getSystem() == null);
-		assertTrue(m.getMode() == null);
+		assertNull(m.getSystem() );
+		assertNull(m.getMode() );
 
 	}
 
@@ -131,16 +123,16 @@ public class MappingTest1 {
 		assertTrue(m.getMode().equals("Nuovo"));
 		
 		assertTrue(m.setMode(null).equals("Nuovo"));
-		assertTrue(m.getMode() == null);
+		assertNull(m.getMode() );
 
-		assertTrue(m.setMode(null) == null);
-		assertTrue(m.getMode() == null);
+		assertNull(m.setMode(null) );
+		assertNull(m.getMode() );
 
-		assertTrue(m.setMode("orig") == null);
+		assertNull(m.setMode("orig") );
 		assertTrue(m.getMode().equals("orig"));
 		
 		m = new Mapping(vt, "Nome", null);
-		assertTrue(m.setMode("") == null);
+		assertNull(m.setMode("") );
 		assertTrue(m.getMode().equals(""));
 
 		m = new Mapping(vt, "Nome");
@@ -162,7 +154,7 @@ public class MappingTest1 {
 		assertTrue(m.procToTask("filter2").equals("Task2"));
 		assertTrue(m.procToTask("der2").equals("Task2"));
 		assertTrue(m.procToTask("mat").equals("Task2"));
-		assertTrue(m.procToTask("_") == null);
+		assertNull(m.procToTask("_") );
 
 		// indicando un modo qualsiasi (con example 1 e' equivalente al caso precedente) 
 		m = new Mapping(vt, "defaultSystem", "Modo");
@@ -171,7 +163,7 @@ public class MappingTest1 {
 		assertTrue(m.procToTask("filter2").equals("Task2"));
 		assertTrue(m.procToTask("der2").equals("Task2"));
 		assertTrue(m.procToTask("mat").equals("Task2"));
-		assertTrue(m.procToTask("a") == null);
+		assertNull(m.procToTask("a") );
 
 		// indicando il modo null 
 		m = new Mapping(vt, "defaultSystem", null);
@@ -180,15 +172,15 @@ public class MappingTest1 {
 		assertTrue(m.procToTask("filter2").equals("Task2"));
 		assertTrue(m.procToTask("der2").equals("Task2"));
 		assertTrue(m.procToTask("mat").equals("Task2"));
-		assertTrue(m.procToTask("?") == null);
+		assertNull(m.procToTask("?") );
 		
 		// utilizzando un path errato
 		m = new Mapping(vt, "abc", null);
-		assertTrue(m.procToTask("filter1") == null);
-		assertTrue(m.procToTask("der1") == null);
-		assertTrue(m.procToTask("filter2") == null);
-		assertTrue(m.procToTask("der2") == null);
-		assertTrue(m.procToTask("mat") == null);
+		assertNull(m.procToTask("filter1") );
+		assertNull(m.procToTask("der1") );
+		assertNull(m.procToTask("filter2") );
+		assertNull(m.procToTask("der2") );
+		assertNull(m.procToTask("mat") );
 
 		} catch (IncompleteMappingException e) {
 			e.printStackTrace();
@@ -253,7 +245,7 @@ public class MappingTest1 {
 		
 		m.setProcToTask("filter1",null);
 		try {
-		assertTrue(m.procToTask("filter1") == null);
+		assertNull(m.procToTask("filter1") );
 		} catch (IncompleteMappingException ex) { fail(ex.getMessage()); }
 
 		int size_1_after_delete = m.taskToProc("Task1").length;
@@ -376,25 +368,25 @@ public class MappingTest1 {
 		Mapping m = new Mapping(vt, "defaultSystem");
 		assertTrue(m.taskToRTOS("Task1").equals("CPU0.erika"));
 		assertTrue(m.taskToRTOS("Task2").equals("CPU0.erika"));
-		assertTrue(m.taskToRTOS("___") == null);
+		assertNull(m.taskToRTOS("___") );
 
 		// indicando un modo qualsiasi (con example 1 e' equivalente al caso precedente) 
 		m = new Mapping(vt, "defaultSystem", "Modo");
 		assertTrue(m.taskToRTOS("Task1").equals("CPU0.erika"));
 		assertTrue(m.taskToRTOS("Task2").equals("CPU0.erika"));
-		assertTrue(m.taskToRTOS("abc") == null);
+		assertNull(m.taskToRTOS("abc") );
 
 		// indicando il modo null 
 		m = new Mapping(vt, "defaultSystem", null);
 		assertTrue(m.taskToRTOS("Task1").equals("CPU0.erika"));
 		assertTrue(m.taskToRTOS("Task2").equals("CPU0.erika"));
-		assertTrue(m.taskToRTOS("???") == null);
+		assertNull(m.taskToRTOS("???") );
 		
 		// utilizzando un path errato
 		m = new Mapping(vt, "abc", null);
-		assertTrue(m.taskToRTOS("Task1") == null);
-		assertTrue(m.taskToRTOS("Task1") == null);
-		assertTrue(m.taskToRTOS("") == null);
+		assertNull(m.taskToRTOS("Task1") );
+		assertNull(m.taskToRTOS("Task1") );
+		assertNull(m.taskToRTOS("") );
 
 		// eccezioni
 		m = new Mapping(vt, "DefaultSystem");
@@ -485,25 +477,25 @@ public class MappingTest1 {
 		Mapping m = new Mapping("DefaultSystem");
 		assertTrue(m.taskToCpu("Task1").equals("erika"));
 		assertTrue(m.taskToCpu("Task2").equals("erika"));
-		assertTrue(m.taskToCpu("___") == null);
+		assertNull(m.taskToCpu("___") );
 
 		// indicando un modo qualsiasi (con example 1 e' equivalente al caso precedente) 
 		m = new Mapping("DefaultSystem", "Modo");
 		assertTrue(m.taskToCpu("Task1").equals("erika"));
 		assertTrue(m.taskToCpu("Task2").equals("erika"));
-		assertTrue(m.taskToCpu("abc") == null);
+		assertNull(m.taskToCpu("abc") );
 
 		// indicando il modo null 
 		m = new Mapping("DefaultSystem", null);
 		assertTrue(m.taskToCpu("Task1").equals("erika"));
 		assertTrue(m.taskToCpu("Task2").equals("erika"));
-		assertTrue(m.taskToCpu("???") == null);
+		assertNull(m.taskToCpu("???") );
 		
 		// utilizzando un path errato
 		m = new Mapping("abc", null);
-		assertTrue(m.taskToCpu("Task1") == null);
-		assertTrue(m.taskToCpu("Task1") == null);
-		assertTrue(m.taskToCpu("") == null);
+		assertNull(m.taskToCpu("Task1") );
+		assertNull(m.taskToCpu("Task1") );
+		assertNull(m.taskToCpu("") );
 
 		// eccezioni
 		m = new Mapping("DefaultSystem");
@@ -587,25 +579,25 @@ public class MappingTest1 {
 		Mapping m = new Mapping(vt, "defaultSystem");
 		assertTrue(m.varToMutex("x").equals("Mutex1"));
 		assertTrue(m.varToMutex("dx").equals("Mutex1"));
-		assertTrue(m.varToMutex("___") == null);
+		assertNull(m.varToMutex("___") );
 
 		// indicando un modo qualsiasi (con example 1 e' equivalente al caso precedente) 
 		m = new Mapping(vt, "defaultSystem", "Modo");
 		assertTrue(m.varToMutex("x").equals("Mutex1"));
 		assertTrue(m.varToMutex("dx").equals("Mutex1"));
-		assertTrue(m.varToMutex("abc") == null);
+		assertNull(m.varToMutex("abc") );
 
 		// indicando il modo null 
 		m = new Mapping(vt, "defaultSystem", null);
 		assertTrue(m.varToMutex("x").equals("Mutex1"));
 		assertTrue(m.varToMutex("dx").equals("Mutex1"));
-		assertTrue(m.varToMutex("???") == null);
+		assertNull(m.varToMutex("???") );
 		
 		// utilizzando un path errato
 		m = new Mapping(vt, "abc", null);
-		assertTrue(m.varToMutex("x") == null);
-		assertTrue(m.varToMutex("dx") == null);
-		assertTrue(m.varToMutex("") == null);
+		assertNull(m.varToMutex("x") );
+		assertNull(m.varToMutex("dx") );
+		assertNull(m.varToMutex("") );
 
 		// eccezioni
 		m = new Mapping(vt, "defaultSystem");

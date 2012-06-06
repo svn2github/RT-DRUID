@@ -1,7 +1,6 @@
 package com.eu.evidence.rtdruid.vartree.variables;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,9 +9,9 @@ import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -23,6 +22,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
@@ -34,7 +34,7 @@ import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 public class PropertyVarTest {
 
 	@Test
-	public void testHashWriteLoad() {
+	public void testHashWriteLoad() throws IOException {
 		
 		Properties p = new Properties();
 		
@@ -43,11 +43,7 @@ public class PropertyVarTest {
 		p.setProperty("P3", "v3");
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		try {
-			p.storeToXML(os, null);
-		} catch (IOException e) {
-			fail(e.getMessage());
-		}
+		p.storeToXML(os, null);
 		
 		System.out.println(os.toString());
 	}
@@ -72,7 +68,7 @@ public class PropertyVarTest {
 	}
 	
 	@Test
-	public void testXmlPropertyVar() {
+	public void testXmlPropertyVar() throws ParserConfigurationException, SAXException, IOException, TransformerException {
 		PropertyVar var = new PropertyVar();
 		var.set("P1", "v1");
 		var.set("P2", "v2");
@@ -85,11 +81,9 @@ public class PropertyVarTest {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setIgnoringComments(true);
 		factory.setIgnoringElementContentWhitespace(true);
-		try {
+		{
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			doc = builder.newDocument();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
 		}
 		
 		Element root = doc.createElement("root");
@@ -99,11 +93,9 @@ public class PropertyVarTest {
 		String out = writeXml(doc);
 		System.out.println(out);
 		
-		try {
+		{
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			doc = builder.parse(new ByteArrayInputStream(out.getBytes()));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
 		}
 		
 		
@@ -148,31 +140,16 @@ public class PropertyVarTest {
 	
 	
 	
-	protected String writeXml(Document doc) {
+	protected String writeXml(Document doc) throws TransformerException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		
-		try {
+		{
 			Transformer transformer = TransformerFactory.newInstance()
 					.newTransformer();
 
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			// Transform the source XML
 			transformer.transform(new DOMSource(doc), new StreamResult(out));
-
-		} catch (TransformerConfigurationException tce) {
-			// Use the contained exception, if any
-			Throwable x = tce;
-			if (tce.getException() != null)
-				x = tce.getException();
-			throw new RuntimeException("Cannot produce the xml file", x);
-
-		} catch (TransformerException te) {
-			// Use the contained exception, if any
-			Throwable x = te;
-			if (te.getException() != null)
-				x = te.getException();
-			throw new RuntimeException("Cannot produce the xml file", x);
-
 		}
 		
 		return out.toString();

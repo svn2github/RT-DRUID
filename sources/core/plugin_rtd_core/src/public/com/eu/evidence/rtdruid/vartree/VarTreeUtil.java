@@ -311,6 +311,35 @@ public final class VarTreeUtil {
 	public static IStatus compare(EObject first, EObject second) {
 		return (new VtCompare(first, second)).checkTrees();
 	}
+	
+	/**
+	 * Try to merge current node with another Object of the same type (and all
+	 * its attributes and references). The result is stored in current node.
+	 * 
+	 * Note that this function is not intended to work with EPackages.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if two object are not compatible (or one of theirs
+	 *             descendants)
+	 * */
+	public static IVarTree merge(IVarTree first, EditingDomain second) {
+		if (first == null) {
+			first = newVarTree();
+		}
+		EObject firstRoot = getTreeRoot(first);
+		EObject secondRoot = getTreeRoot(second);
+		if (firstRoot == null) {
+			if (secondRoot == null) {
+				// return first;
+			} else {			
+				firstRoot = copy(secondRoot);
+				first.setRoot(firstRoot);
+			}
+		} else {
+			merge(firstRoot, secondRoot);
+		}
+		return first;
+	} 
 
 	/**
 	 * Try to merge current node with another Object of the same type (and all
@@ -635,5 +664,22 @@ public final class VarTreeUtil {
 			}
 		}
 	}
-	
+
+	/**
+	 * @param vt
+	 * @return
+	 */
+	public static EObject getTreeRoot(EditingDomain vt) {
+		if (vt != null) {
+			EList<Resource> resources = vt.getResourceSet().getResources();
+			if (resources.size()>0) {
+				EList<EObject> objectes = resources.get(0).getContents();
+				if (objectes.size()>0) {
+					return objectes.get(0);
+				}
+			}
+		}
+		return null;
+	}
+
 }
