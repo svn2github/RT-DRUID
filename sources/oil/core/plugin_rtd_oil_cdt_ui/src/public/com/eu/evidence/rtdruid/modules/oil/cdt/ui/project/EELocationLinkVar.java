@@ -48,7 +48,10 @@ public class EELocationLinkVar {
 	 * 
 	 */
 	public static boolean checkEEIncludePaths(IProject project, String basePath) {
-		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project)) {
+		ICProjectDescription cpd = CCorePlugin.getDefault()
+				.getProjectDescription(project, true);
+		
+		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project) || cpd == null) {
 			return false; // currently work only with new cdt projects
 		}
 		
@@ -56,28 +59,27 @@ public class EELocationLinkVar {
 		
 		final String ee_pkg_str = basePath + "/pkg";
 
-		ICProjectDescription cpd = CCorePlugin.getDefault()
-				.getProjectDescription(project, true);
-		ICConfigurationDescription[] cpds = cpd.getConfigurations();
-		for (ICConfigurationDescription cc : cpds) {
+		if (cpd != null) {
+			ICConfigurationDescription[] cpds = cpd.getConfigurations();
+			for (ICConfigurationDescription cc : cpds) {
 			
-			ICFolderDescription folderDescription = cc.getRootFolderDescription();
-			ICLanguageSetting[] languageSettings = folderDescription.getLanguageSettings();
-			for (ICLanguageSetting lang : languageSettings) {
-				if ("GNU C".equalsIgnoreCase(lang.getName())
-						|| lang.getName().endsWith(" C")) {
+				ICFolderDescription folderDescription = cc.getRootFolderDescription();
+				ICLanguageSetting[] languageSettings = folderDescription.getLanguageSettings();
+				for (ICLanguageSetting lang : languageSettings) {
+					if (isValidLanguage(lang)) {
 
-					ICLanguageSettingEntry[] includePathSettings = lang
-							.getSettingEntries(ICSettingEntry.INCLUDE_PATH);
-					for (ICLanguageSettingEntry entry : includePathSettings) {
-						String val = entry.getValue();
+						ICLanguageSettingEntry[] includePathSettings = lang
+								.getSettingEntries(ICSettingEntry.INCLUDE_PATH);
+						for (ICLanguageSettingEntry entry : includePathSettings) {
+							String val = entry.getValue();
 						
-						if (ee_pkg_str.equals(val)) {
-							return true;
+							if (ee_pkg_str.equals(val)) {
+								return true;
+							}
 						}
 					}
-				}
 	
+				}
 			}
 		}
 
@@ -85,7 +87,10 @@ public class EELocationLinkVar {
 	}
 	
 	public static boolean checkEESourcePaths(IProject project) {
-		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project)) {
+		ICProjectDescription cpd = CCorePlugin.getDefault()
+				.getProjectDescription(project, true);
+		
+		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project) || cpd == null) {
 			return false; // currently work only with new cdt projects
 		}
 		
@@ -93,8 +98,6 @@ public class EELocationLinkVar {
 		if (link.exists()) {
 			IPath fullPath = link.getFullPath();
 			
-			ICProjectDescription cpd = CCorePlugin.getDefault()
-					.getProjectDescription(project, true);
 			ICConfigurationDescription[] cpds = cpd.getConfigurations();
 			for (ICConfigurationDescription cc : cpds) {
 				
@@ -124,7 +127,10 @@ public class EELocationLinkVar {
 	}
 
 	public static boolean setEEIncludePaths(IProject project, String basePath, String output_folder) {
-		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project)) {
+		ICProjectDescription cpd = CCorePlugin.getDefault()
+				.getProjectDescription(project, true);
+		
+		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project) || cpd == null) {
 			return false; // currently work only with new cdt projects
 		}
 		
@@ -134,16 +140,14 @@ public class EELocationLinkVar {
 		final String ee_pkg_str = basePath+ "/pkg";
 		final String ee_contrib_str = basePath+ "/contrib";
 
-		ICProjectDescription cpd = CCorePlugin.getDefault()
-				.getProjectDescription(project, true);
+		
 		ICConfigurationDescription[] cpds = cpd.getConfigurations();
 		for (ICConfigurationDescription cc : cpds) {
 			
 			ICFolderDescription folderDescription = cc.getRootFolderDescription();
 			ICLanguageSetting[] languageSettings = folderDescription.getLanguageSettings();
 			for (ICLanguageSetting lang : languageSettings) {
-				if ("GNU C".equalsIgnoreCase(lang.getName())
-						|| lang.getName().endsWith(" C")) {
+				if (isValidLanguage(lang)) {
 
 					boolean ee_pkg = true;
 					boolean ee_contrib = true;
@@ -212,8 +216,19 @@ public class EELocationLinkVar {
 		return somethingChanged; 
 	}
 	
+	private static boolean isValidLanguage(ICLanguageSetting lang) {
+		return true;
+		/*if ("GNU C".equalsIgnoreCase(lang.getName())
+		|| "C".equalsIgnoreCase(lang.getName())
+		|| "C,c".equalsIgnoreCase(lang.getName())
+		|| lang.getName().endsWith(" C")) */
+	}
+	
 	public static boolean setEESourcePaths(IProject project) {
-		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project)) {
+		ICProjectDescription cpd = CCorePlugin.getDefault()
+				.getProjectDescription(project, true);
+		
+		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project) || cpd == null) {
 			return false; // currently work only with new cdt projects
 		}
 		
@@ -233,8 +248,6 @@ public class EELocationLinkVar {
 				
 				IPath fullPath = link.getFullPath();
 				
-				ICProjectDescription cpd = CCorePlugin.getDefault()
-						.getProjectDescription(project, true);
 				ICConfigurationDescription[] cpds = cpd.getConfigurations();
 				for (ICConfigurationDescription cc : cpds) {
 					boolean found = false;
@@ -285,7 +298,10 @@ public class EELocationLinkVar {
 	}
 
 	public static boolean removeEEIncludePaths(IProject project, String basePath, String output_folder) {
-		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project)) {
+		ICProjectDescription cpd = CCorePlugin.getDefault()
+				.getProjectDescription(project, true);
+		
+		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project) || cpd == null) {
 			return false; // currently work only with new cdt projects
 		}
 		
@@ -295,16 +311,13 @@ public class EELocationLinkVar {
 		final String ee_pkg_str = basePath+ "/pkg";
 		final String ee_contrib_str = basePath+ "/contrib";
 
-		ICProjectDescription cpd = CCorePlugin.getDefault()
-				.getProjectDescription(project, true);
 		ICConfigurationDescription[] cpds = cpd.getConfigurations();
 		for (ICConfigurationDescription cc : cpds) {
 			
 			ICFolderDescription folderDescription = cc.getRootFolderDescription();
 			ICLanguageSetting[] languageSettings = folderDescription.getLanguageSettings();
 			for (ICLanguageSetting lang : languageSettings) {
-				if ("GNU C".equalsIgnoreCase(lang.getName())
-						|| lang.getName().endsWith(" C")) {
+				if (isValidLanguage(lang)) {
 
 					ArrayList<ICLanguageSettingEntry> newIncludePathSettings = new ArrayList<ICLanguageSettingEntry>();
 					
@@ -340,7 +353,10 @@ public class EELocationLinkVar {
 	}
 	
 	public static boolean removeEESourcePaths(IProject project) {
-		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project)) {
+		ICProjectDescription cpd = CCorePlugin.getDefault()
+				.getProjectDescription(project, true);
+		
+		if (ManagedBuilderCorePlugin.getDefault().isOldStyleMakeProject(project) || cpd == null) {
 			return false; // currently work only with new cdt projects
 		}
 		
@@ -351,8 +367,6 @@ public class EELocationLinkVar {
 			IFolder link = project.getFolder("ErikaEnterprise");
 			IPath fullPath = link.getFullPath();
 			{
-				ICProjectDescription cpd = CCorePlugin.getDefault()
-						.getProjectDescription(project, true);
 				ICConfigurationDescription[] cpds = cpd.getConfigurations();
 				for (ICConfigurationDescription cc : cpds) {
 					int index = -1;

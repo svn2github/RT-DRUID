@@ -61,9 +61,11 @@ public interface ISimpleGenResKeywords {
 	 **************************************************************************/
 	public final static String ISR_CATEGORY = "category";
 	public final static String ISR_ENTRY = "entry";
-	public final static String ISR_PRIORITY = "priority";
+	public final static String ISR_USER_PRIORITY = "isr_priority_defined_by_user";
 	public final static String ISR_READY_PRIORITY = "isr_ready_priority";
 	public final static String ISR_HANDLER = "handler";
+	public final static String ISR_GENERATED_PRIORITY_VALUE  = "isr_priority_generated__integer";
+	public final static String ISR_GENERATED_PRIORITY_STRING = "isr_priority_generated__string";
 	public final static String ISR_GENERATED_HANDLER = "isr___generated_handler";
 	public final static String ISR_GENERATED_ENTRY = "isr___generated_entry";
 	public final static String ISR_GENERATED_PRIOID = "isr___generated_priority_id";
@@ -89,6 +91,7 @@ public interface ISimpleGenResKeywords {
 	public final static String COUNTER_TICKS = "counter_ticks";
 	public final static String COUNTER_MIN_CYCLE = "counter_minCycle";
 	public final static String COUNTER_SECONDPERTICK = "counter_second_per_ticks";
+	public final static String COUNTER_NANOSECONDPERTICK = "counter_nanosecond_per_ticks";
 	
 	public final static String COUNTER_TYPE = "counter_type";
 	public final static String COUNTER_TYPE_HW = "HARDWARE";
@@ -98,6 +101,8 @@ public interface ISimpleGenResKeywords {
 	public final static String COUNTER_ISR_PRIORITY = "counter__hw_isr_priority";
 	/** Handler used by the code (it may be the one proposed by the user or one computed by the code generator */
 	public final static String COUNTER_GENERATED_HANDLER = "counter__hw_generated_handler";
+	public final static String COUNTER_GENERATED_PRIORITY_VALUE = "counter__hw_generated_priority_value";
+	public final static String COUNTER_GENERATED_PRIORITY_STRING = "counter__hw_generated_priority_string";
 	public final static String COUNTER_SYSTIMER = "counter__hw_system_timer";
 	public final static String COUNTER_TYPE_SW = "SOFTWARE";
 	
@@ -136,6 +141,7 @@ public interface ISimpleGenResKeywords {
 	public final static String RESOURCE_GLOBAL = "resource_global";
 	public final static String RESOURCE_CEILING = "resource_ceiling";
 	public final static String RESOURCE_ISR_CEILING = "resource_isr_ceiling";
+	public final static String RESOURCE_USER_ISR_CEILING = "resource_isr_ceiling__user_value";
 	public final static String RESOURCE_SYS_ID = "resource_id";
 	public final static String RESOURCE_PROPERTY = "RESOURCEPROPERTY";
 	/** All Src files required by a resource (String[]) */
@@ -180,6 +186,7 @@ public interface ISimpleGenResKeywords {
 	public final static String OS_CPU_NAME = "cpu_name";
 	public final static String OS_CPU_DESCRIPTOR = "cpu_descriptor";
 	public final static String OS_CPU_COMMENT_MANAGER = "comment_manager";
+	public final static String OS_ADD_IRQH = "add_irq.h_include";
 	
 	public final static String OS_IRQ_STACK_ID = "id_for_default_irq_stack";
 

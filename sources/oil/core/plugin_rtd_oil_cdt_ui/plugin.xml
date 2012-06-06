@@ -152,6 +152,35 @@
          variable="ERIKA_ENTERPRISE_LOC">
    </variableResolver>
 </extension>
+<extension
+      point="org.eclipse.ui.popupMenus">
+   <objectContribution
+         id="com.eu.evidence.rtdruid.oil.cdt.ui.contribution1"
+         objectClass="org.eclipse.core.resources.IProject">
+      <menu
+            id="com.eu.evidence.rtdruid.oil.cdt.ui.menu1"
+            label="Evidence"
+            path="additions">
+         <separator
+               name="group1">
+         </separator>
+      </menu>
+      <action
+            class="com.eu.evidence.rtdruid.oil.cdt.ui.popup.actions.AddRtdNature"
+            enablesFor="1"
+            id="com.eu.evidence.rtdruid.oil.cdt.ui.newAction"
+            label="Add RT-Druid Builder"
+            menubarPath="com.eu.evidence.rtdruid.oil.cdt.ui.menu1/group1">
+            <enablement>
+            	<not>
+            		<objectState
+                        name="nature"
+                        value="com.eu.evidence.rtdruid.oil.niossupport.natureID"/>
+            	</not>
+            </enablement>
+      </action>
+   </objectContribution>
+</extension>
 
 
 </plugin>

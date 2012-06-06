@@ -577,7 +577,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 //				    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
 					sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+" " + commentWriterC.writerSingleLineComment("size = "+size[j][0]+" bytes"));
 			    	
-			    	final String decl = "static EE_STACK_T " +
+					final String decl = "static int " +
 //							( usePragma ? "" :
 //								(memId == null ? "EE_STACK_ATTRIB " : "EE_STACK_ATTRIB_NAME("+memId+") ")
 //							) +
@@ -608,7 +608,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 				 */
 				for (int j = 0; j < tos_size; j++) {
 				    
-			        String value = j == 0 ? "{0}" : "{(EE_ADDR)(&"+STACK_BASE_NAME+j+"[STACK_"+j+"_SIZE])}"; // DELTA
+			        String value = j == 0 ? "{0}" : "{(EE_ADDR)(&"+STACK_BASE_NAME+j+"[STACK_"+j+"_SIZE] - RX200_INIT_TOS_OFFSET)}"; // DELTA
 
 					sbStack.append(pre
 							+ post
@@ -633,7 +633,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 //					    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
 						sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+ " " + commentWriterC.writerSingleLineComment("size = "+irqSize[0]+" bytes"));
 						
-						final String decl = "static EE_STACK_T "+
+						final String decl = "static int "+
 								//( usePragma ? "" : "EE_STACK_ATTRIB ")+
 								STACK_BASE_NAME+j+"[STACK_"+j+"_SIZE];\t/* irq stack */";
 //					    if (usePragma) {

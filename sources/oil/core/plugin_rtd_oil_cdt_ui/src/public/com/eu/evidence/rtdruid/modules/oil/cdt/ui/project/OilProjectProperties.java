@@ -327,7 +327,7 @@ public class OilProjectProperties extends PropertyPage {
 	public boolean performOk() {
 
 	    Map<String, String> attributes = OilBuilder.getParameters(project);
-	    if (attributes != null && attributes.containsKey(OilBuilder.ATTR_CONFIG_FILES)) {
+	    if (attributes != null) {
 	        attributes.put(OilBuilder.ATTR_CONFIG_FILES, composeFiles(configFiles));
 	        OilBuilder.setParameters(project, attributes);
 	    }

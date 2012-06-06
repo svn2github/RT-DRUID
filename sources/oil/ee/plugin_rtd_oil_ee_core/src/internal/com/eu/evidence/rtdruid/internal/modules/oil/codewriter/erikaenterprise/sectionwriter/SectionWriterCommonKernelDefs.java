@@ -227,12 +227,12 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 								}
 								
 								final ArrayList<String> names;
-								if (curr.containsProperty(ISimpleGenResKeywords.RESOURCE_CHAIN_LIST)) {
-									 names = (ArrayList<String>) curr.getObject(ISimpleGenResKeywords.RESOURCE_CHAIN_LIST);
-								} else {
+//								if (curr.containsProperty(ISimpleGenResKeywords.RESOURCE_CHAIN_LIST)) {
+//									 names = (ArrayList<String>) curr.getObject(ISimpleGenResKeywords.RESOURCE_CHAIN_LIST);
+//								} else {
 									names = new ArrayList<String>();
 									names.add(curr.getName());
-								}
+//								}
 
 								for (int aln=0; aln<names.size(); aln++) {
 									buffer.append(indent + "#define " + names.get(aln) + " "

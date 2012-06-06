@@ -140,6 +140,408 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 //		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
 	}
 
+	@Test
+	public void testcortex_com_2() {
+	    final String text =
+		"CPU mySystem {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+			"\n" +
+				"		CPU_DATA = CORTEX_MX {\n" +
+				"			MODEL = M0;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			APP_SRC = \"initosekcom.c\";\n" +
+				"			JLINK = TRUE;\n" +
+				"			COMPILER_TYPE = IAR; \n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"\n" +
+				"		MCU_DATA = LPCXPRESSO {\n" +
+				"			MODEL = LPC12xx;\n" +
+				"		};\n" +
+				"		\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"		KERNEL_TYPE = FP;\n" +
+				"\n" +
+				"		EE_OPT = \"__ADD_LIBS__\";\n" +
+				"		LIB = ENABLE {\n" +
+				"			NAME = \"CMSIS\";\n" +
+				"		};\n" +
+				"		EE_OPT = \"__USE_LPC12XX_CMSIS_V2__\";\n" +
+				"		EE_OPT = \"__USE_CMSIS_IOCON__\";\n" +
+				"		EE_OPT = \"__USE_CMSIS_SYSCTRL__\";\n" +
+				"		EE_OPT = \"__USE_CMSIS_GPIO__\";\n" +
+				"		\n" +
+				"		\n" +
+//				"		EE_OPT = \"__COM_CCCA__\";\n" +
+				"	};\n" +
+				"	\n" +
+				"	COM myCom {\n" +
+				"		COMERRORHOOK = FALSE;\n" +
+				"		COMUSEGETSERVICEID =FALSE;\n" +
+				"		COMUSEPARAMETERACCESS = FALSE; \n" +
+				"		COMSTARTCOMEXTENSION = FALSE; \n" +
+				"		COMAPPMODE = \"EE_COM_MODE_A\"; \n" +
+				"		COMSTATUS = COMSTANDARD;\n" +
+				"		COMTYPE = CCCA;\n" +
+				"	};\n" +
+				"	\n" +
+				"	TASK Task0 {\n" +
+				"		PRIORITY = 0x01; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"ABS\";\n" +
+				"	};\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x03; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"RECEIVER1\";\n" +
+				"	};\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x03; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"RECEIVER2\";\n" +
+				"	};\n" +
+				"	TASK Task3 {\n" +
+				"		PRIORITY = 0x03; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"RECEIVER2\";\n" +
+				"	};\n" +
+				"	\n" +
+				"	COUNTER myCounter {\n" +
+				"		MAXALLOWEDVALUE = 65535;\n" +
+				"		TICKSPERBASE    = 1;\n" +
+				"		MINCYCLE        = 1;\n" +
+				"	};\n" +
+				"\n" +
+				"	ALARM AlarmTask0 {\n" +
+				"		COUNTER = \"myCounter\";\n" +
+				"		ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+				"	};\n" +
+				"	\n" +
+				"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
+				"\n" +
+				"	MESSAGE ABS {\n" +
+				"		MESSAGEPROPERTY = SEND_STATIC_INTERNAL {\n" +
+				"			CDATATYPE = \"unsigned char\";\n" +
+				"		};\n" +
+				"		NOTIFICATION = NONE;\n" +
+				"	};\n" +
+				"	\n" +
+				"	MESSAGE RECEIVER1 {\n" +
+				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
+				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			FILTER = ALWAYS;\n" +
+				"			INITIALVALUE = 0;\n" +
+				"		};\n" +
+				"		NOTIFICATION = ACTIVATETASK { TASK = \"Task1\"; }; \n" +
+				"	};\n" +
+				"	\n" +
+				"	MESSAGE RECEIVER2 {\n" +
+				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
+				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			FILTER = ALWAYS;\n" +
+				"			INITIALVALUE = 0;\n" +
+				"		};\n" +
+				"		NOTIFICATION = COMCALLBACK { \n" +
+				"			CALLBACKROUTINENAME = \"callback\"; \n" +
+				"			MESSAGE = \"RECEIVER2\";\n" +
+				"		};\n" +
+				"	};\n" +
+				"};";
+		DefaultTestResult res = commonWriterTest(text, 1);
+		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
+	}
+
+	@Test
+	public void testcortex_com_3() {
+	    final String text =
+		"CPU mySystem {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"\n" +
+				"		CPU_DATA = CORTEX_MX {\n" +
+				"			MODEL = M0;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			APP_SRC = \"initosekcom.c\";\n" +
+				"			JLINK = TRUE;\n" +
+				"			COMPILER_TYPE = IAR; \n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"\n" +
+				"		MCU_DATA = LPCXPRESSO {\n" +
+				"			MODEL = LPC12xx;\n" +
+				"		};\n" +
+				"		\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"		KERNEL_TYPE = FP;\n" +
+				"\n" +
+				"		EE_OPT = \"__ADD_LIBS__\";\n" +
+				"		LIB = ENABLE {\n" +
+				"			NAME = \"CMSIS\";\n" +
+				"		};\n" +
+				"		EE_OPT = \"__USE_LPC12XX_CMSIS_V2__\";\n" +
+				"		EE_OPT = \"__USE_CMSIS_IOCON__\";\n" +
+				"		EE_OPT = \"__USE_CMSIS_SYSCTRL__\";\n" +
+				"		EE_OPT = \"__USE_CMSIS_GPIO__\";\n" +
+				"		\n" +
+				"		\n" +
+//				"		EE_OPT = \"__COM_CCCA__\";\n" +
+				"	};\n" +
+				"	\n" +
+				"	COM myCom {\n" +
+				"		COMERRORHOOK = FALSE;\n" +
+				"		COMUSEGETSERVICEID =FALSE;\n" +
+				"		COMUSEPARAMETERACCESS = FALSE; \n" +
+				"		COMSTARTCOMEXTENSION = FALSE; \n" +
+				"		COMAPPMODE = \"EE_COM_MODE_A\"; \n" +
+				"		COMSTATUS = COMSTANDARD;\n" +
+				"		COMTYPE = CCCA;\n" +
+				"	};\n" +
+				"	\n" +
+				"	TASK Task0 {\n" +
+				"		PRIORITY = 0x01; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"ABS\";\n" +
+				"	};\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x03; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"RECEIVER1\";\n" +
+				"	};\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x03; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"RECEIVER2\";\n" +
+				"	};\n" +
+				"	TASK Task3 {\n" +
+				"		PRIORITY = 0x03; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"RECEIVER2\";\n" +
+				"	};\n" +
+				"	\n" +
+				"	COUNTER myCounter {\n" +
+				"		MAXALLOWEDVALUE = 65535;\n" +
+				"		TICKSPERBASE    = 1;\n" +
+				"		MINCYCLE        = 1;\n" +
+				"	};\n" +
+				"\n" +
+				"	ALARM AlarmTask0 {\n" +
+				"		COUNTER = \"myCounter\";\n" +
+				"		ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+				"	};\n" +
+				"	\n" +
+				"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
+				"\n" +
+				"	MESSAGE ABS {\n" +
+				"		MESSAGEPROPERTY = SEND_STATIC_INTERNAL {\n" +
+				"			CDATATYPE = \"EE_UINT32\";\n" +
+				"		};\n" +
+				"		NOTIFICATION = NONE;\n" +
+				"	};\n" +
+				"	\n" +
+				"	MESSAGE RECEIVER1 {\n" +
+				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
+				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			FILTER = ALWAYS;\n" +
+				"			INITIALVALUE = 0x1;\n" +
+				"		};\n" +
+				"		NOTIFICATION = ACTIVATETASK { TASK = \"Task1\"; }; \n" +
+				"	};\n" +
+				"	\n" +
+				"	MESSAGE RECEIVER2 {\n" +
+				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
+				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			FILTER = ALWAYS;\n" +
+				"			INITIALVALUE = 0;\n" +
+				"		};\n" +
+				"		NOTIFICATION = COMCALLBACK { \n" +
+				"			CALLBACKROUTINENAME = \"callback\"; \n" +
+				"			MESSAGE = \"RECEIVER2\";\n" +
+				"		};\n" +
+				"	};\n" +
+				"};";
+		DefaultTestResult res = commonWriterTest(text, 1);
+		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
+	}
+
+	@Test
+	public void testcortex_com_4() {
+	    final String text =
+		"CPU mySystem {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"\n" +
+				"		CPU_DATA = CORTEX_MX {\n" +
+				"			MODEL = M0;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			APP_SRC = \"initosekcom.c\";\n" +
+				"			JLINK = TRUE;\n" +
+				"			COMPILER_TYPE = IAR; \n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"\n" +
+				"		MCU_DATA = LPCXPRESSO {\n" +
+				"			MODEL = LPC12xx;\n" +
+				"		};\n" +
+				"		\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"		KERNEL_TYPE = FP;\n" +
+				"\n" +
+				"		EE_OPT = \"__ADD_LIBS__\";\n" +
+				"		LIB = ENABLE {\n" +
+				"			NAME = \"CMSIS\";\n" +
+				"		};\n" +
+				"		EE_OPT = \"__USE_LPC12XX_CMSIS_V2__\";\n" +
+				"		EE_OPT = \"__USE_CMSIS_IOCON__\";\n" +
+				"		EE_OPT = \"__USE_CMSIS_SYSCTRL__\";\n" +
+				"		EE_OPT = \"__USE_CMSIS_GPIO__\";\n" +
+				"		\n" +
+				"		\n" +
+//				"		EE_OPT = \"__COM_CCCA__\";\n" +
+				"	};\n" +
+				"	\n" +
+				"	COM myCom {\n" +
+				"		COMERRORHOOK = FALSE;\n" +
+				"		COMUSEGETSERVICEID =FALSE;\n" +
+				"		COMUSEPARAMETERACCESS = FALSE; \n" +
+				"		COMSTARTCOMEXTENSION = TRUE; \n" +
+				"		COMAPPMODE = \"EE_COM_MODE_A\"; \n" +
+				"		COMSTATUS = COMSTANDARD;\n" +
+				"		COMTYPE = CCCA;\n" +
+				"	};\n" +
+				"	\n" +
+				"	TASK Task0 {\n" +
+				"		PRIORITY = 0x01; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"ABS\";\n" +
+				"	};\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x03; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"RECEIVER1\";\n" +
+				"	};\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x03; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"RECEIVER2\";\n" +
+				"	};\n" +
+				"	TASK Task3 {\n" +
+				"		PRIORITY = 0x03; \n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
+				"		MESSAGE = \"RECEIVER2\";\n" +
+				"	};\n" +
+				"	\n" +
+				"	COUNTER myCounter {\n" +
+				"		MAXALLOWEDVALUE = 65535;\n" +
+				"		TICKSPERBASE    = 1;\n" +
+				"		MINCYCLE        = 1;\n" +
+				"	};\n" +
+				"\n" +
+				"	ALARM AlarmTask0 {\n" +
+				"		COUNTER = \"myCounter\";\n" +
+				"		ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+				"	};\n" +
+				"	\n" +
+				"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
+				"\n" +
+				"	MESSAGE ABS {\n" +
+				"		MESSAGEPROPERTY = SEND_STATIC_INTERNAL {\n" +
+				"			CDATATYPE = \"EE_UINT32\";\n" +
+				"		};\n" +
+				"		NOTIFICATION = NONE;\n" +
+				"	};\n" +
+				"	\n" +
+				"	MESSAGE RECEIVER1 {\n" +
+				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
+				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			FILTER = ALWAYS;\n" +
+				"			INITIALVALUE = 0x1;\n" +
+				"		};\n" +
+				"		NOTIFICATION = ACTIVATETASK { TASK = \"Task1\"; }; \n" +
+				"	};\n" +
+				"	\n" +
+				"	MESSAGE RECEIVER2 {\n" +
+				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
+				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			FILTER = ALWAYS;\n" +
+				"			INITIALVALUE = 0;\n" +
+				"		};\n" +
+				"		NOTIFICATION = COMCALLBACK { \n" +
+				"			CALLBACKROUTINENAME = \"callback\"; \n" +
+				"			MESSAGE = \"RECEIVER2\";\n" +
+				"		};\n" +
+				"	};\n" +
+				"};";
+		DefaultTestResult res = commonWriterTest(text, 1);
+		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
+	}
+
 	
 	@Test
 	public void testcortex_com_cccb() {

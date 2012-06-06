@@ -569,7 +569,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 			"		MAXALLOWEDVALUE = 10;\n" +
 			"		TICKSPERBASE = 1;\n" +
 			"		SECONDSPERTICK = 1.4;\n" +
-			"		TYPE = HARDWARE { DEVICE=\"DECREMENTER\"; PRIORITY=4;  SYSTEM_TIMER=TRUE;};\n" +
+			"		TYPE = HARDWARE { DEVICE=\"DECREMENTER\";  SYSTEM_TIMER=TRUE;};\n" +
 			"	};\n" +
 			"	COUNTER myCounter {\n" +
 			"		MINCYCLE = 0;\n" +
@@ -581,7 +581,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 			"		MAXALLOWEDVALUE = 10;\n" +
 			"		TICKSPERBASE = 1;\n" +
 			"		SECONDSPERTICK = 0.004;\n" +
-			"		TYPE = HARDWARE { DEVICE=\"INCREMENTER\";};\n" +
+			"		TYPE = HARDWARE { DEVICE=\"INCREMENTER\"; PRIORITY=4; };\n" +
 			"	};\n" +
 
 			"	ALARM AcquireAlarm {\n" +

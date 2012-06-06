@@ -30,12 +30,15 @@
       <plugin id="com.eu.evidence.rtdruid.oil.cortex.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.dspic.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.ee.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.esirisc.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.fp_edf.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.frsh.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.mico32.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.msp430.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.nios2.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.osek.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.ppc.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.renesas.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.s12.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.tricore.core"/>
       <plugin id="com.eu.evidence.templates.core"/>

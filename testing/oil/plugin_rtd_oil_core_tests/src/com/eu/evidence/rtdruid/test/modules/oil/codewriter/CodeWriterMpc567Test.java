@@ -1841,17 +1841,20 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"     PRIORITY = 1;\n" + 
 	    		"     RESOURCE = \"ResourceA\";\n" + 
 	    		"     RESOURCE = \"ResourceB\";\n" + 
+	    	    "     ENTRY = \"0\";\n" +
 	    		"   };\n" + 
 	    		" \n" + 
 	    		"   ISR IsrMedium {\n" + 
 	    		"     CATEGORY = 2;\n" + 
 	    		"     PRIORITY = 2;\n" + 
+	    	    "     ENTRY = \"1\";\n" +
 	    		"   };\n" + 
 	    		" \n" + 
 	    		"   ISR IsrHigh {\n" + 
 	    		"     CATEGORY = 2;\n" + 
 	    		"     PRIORITY = 3;\n" + 
 	    		"     RESOURCE = \"ResourceB\";\n" + 
+	    	    "     ENTRY = \"2\";\n" +
 	    		"   };\n" + 
 	    		" \n" + 
 	    		"   RESOURCE Resource1 { RESOURCEPROPERTY = STANDARD; };\n" + 
@@ -1861,4 +1864,71 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
     	commonWriterTest(text, 1);
 	}
 
+	public void testMpc567_monostack_resource() {
+	    final String text = " CPU test_application {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"		EE_OPT = \"__USE_LEDS__\";\n" +
+				"		EE_OPT = \"__USE_BUTTONS__\";\n" +
+				"		EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n" +
+				"		EE_OPT = \"__CODEWARRIOR__\";\n" +
+				"		EE_OPT = \"EE_ISR_DYNAMIC_TABLE\";\n" +
+				"\n" +
+				"		CFLAGS = \"\";\n" +
+				"		ASFLAGS = \"\";\n" +
+				"		LDFLAGS = \"\";\n" +
+				"\n" +
+				"		CPU_DATA = PPCE200ZX {\n" +
+				"			MODEL = E200Z7;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"			VLE = TRUE;\n" +
+				"		};\n" +
+				"\n" +
+				"		MCU_DATA = PPCE200ZX {\n" +
+				"			MODEL = MPC5674F;\n" +
+				"		};\n" +
+				"		\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"		\n" +
+				"        KERNEL_TYPE = BCC1;\n" +
+				"        EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+				"\n" +
+				"//		ORTI_SECTIONS = ALL;\n" +
+				"    };\n" +
+				"\n" +
+				"    APPMODE ModeIncrement;\n" +
+				"    APPMODE ModeDecrement;\n" +
+				"\n" +
+				"    TASK LowTask {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"Resource\";\n" +
+				"    };\n" +
+				"\n" +
+				"    TASK HighTask {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };	\n" +
+				"		STACK = SHARED;\n" +
+				"		RESOURCE = \"Resource\";\n" +
+				"    };\n" +
+				"\n" +
+				"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" +
+				"};";
+    	commonWriterTest(text, 1);
+	}
 }

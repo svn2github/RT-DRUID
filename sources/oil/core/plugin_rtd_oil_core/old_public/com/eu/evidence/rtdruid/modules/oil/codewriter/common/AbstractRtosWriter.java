@@ -687,7 +687,23 @@ System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
 				{	// ----------- PRIORITY ------------
 					values = CommonUtils.getValue(vt, path+"PRIORITY");
 					if (values!= null && values.length >0) {
-						answer[i].setProperty(ISimpleGenResKeywords.ISR_PRIORITY, values[0]);
+						answer[i].setProperty(ISimpleGenResKeywords.ISR_USER_PRIORITY, values[0]);
+//					} else {
+//						answer[i].setProperty(ISimpleGenResKeywords.ISR_PRIORITY, "");
+					}
+				}
+				{	// ----------- ENTRY ------------
+					values = CommonUtils.getValue(vt, path+"ENTRY");
+					if (values!= null && values.length >0) {
+						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, values[0]);
+//					} else {
+//						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, "");
+					}
+				}
+				{	// ----------- PRIORITY ------------
+					values = CommonUtils.getValue(vt, path+"PRIORITY");
+					if (values!= null && values.length >0) {
+						answer[i].setProperty(ISimpleGenResKeywords.ISR_USER_PRIORITY, values[0]);
 //					} else {
 //						answer[i].setProperty(ISimpleGenResKeywords.ISR_PRIORITY, "");
 					}

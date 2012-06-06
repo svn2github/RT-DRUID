@@ -113,9 +113,12 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 				throw new OilCodeWriterException("Expected a CLOCK for cpu " + ErikaEnterpriseWriter.getOSName(ool));
 			}
 			buffer.append(    "#define EE_CPU_CLOCK      " + speed+"U\n");
-			buffer.append(    "#define EE_MAX_COUNTER_HW " + max_counter_hw+"U\n");
+			buffer.append(    "#define EE_MAX_COUNTER_HW " + max_counter_hw+"\n");
 			if (sysTimer != null) {
 				buffer.append("#define EE_SYSTEM_TIMER   " + sysTimer.getName() +"\n");
+				if (sysTimer.containsProperty(ISimpleGenResKeywords.COUNTER_DEVICE)) {
+					buffer.append("#define EE_SYSTEM_TIMER_DEVICE   " + "EE_"+hw_id+"_"+sysTimer.getString(ISimpleGenResKeywords.COUNTER_DEVICE) +"\n");					
+				}
 			}
 			
 			buffer.append("\n");
@@ -124,8 +127,8 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 				String entry_id = "EE_"+hw_id+"_"+dev.getKey()+"_ISR";
 				ISimpleGenRes curr = dev.getValue();
 				buffer.append("#define " + entry_id + " " + curr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER) +"\n");
-				if (curr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
-					String prio = curr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY) ? curr.getString(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY) : "";
+				if (curr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING)) {
+					String prio = curr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING);
 					buffer.append("#define " + entry_id + "_PRI " + prio+"\n");
 				}
 
@@ -171,18 +174,23 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 					if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_SYSTIMER)
 							&& Boolean.TRUE.equals(sgr.getObject(ISimpleGenResKeywords.COUNTER_SYSTIMER))) {
 						sysTimer = sgr;
-					}
 					
-					{ // handler
+						if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_USER_HANDLER)) {
+							throw new OilCodeWriterException("System time does not support handler redefinition");
+						}
+						if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
+							throw new OilCodeWriterException("System time does not support priority redefinition");
+						}
+						
+						sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, systimer_handler);
+						
+					} else  { // handler
 						String handler = "EE_" + sgr.getName() + "_handler";
 						if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_USER_HANDLER)) {
 							handler = sgr.getString(ISimpleGenResKeywords.COUNTER_USER_HANDLER);
-						} else if (sgr == sysTimer) {
-							handler = systimer_handler;
 						}
 						
 						sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, handler);
-						
 					}
 				}
 			}

@@ -9,6 +9,7 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.common;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.eu.evidence.rtdruid.desk.Messages;
+import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
@@ -37,6 +39,7 @@ import com.eu.evidence.rtdruid.vartree.data.DataPackage;
  */
 public class ResourceList {
 	
+	public static final String EE_RES_ISR_UNMASKED = "EE_ISR_UNMASKED";
 	/* Where found data inside the oil var of a resource */
 	protected final static String RESOURCE_PROPERTY = "RESOURCEPROPERTY";
 	protected final static String RESOURCE_LINKED = "LINKEDRESOURCE";
@@ -73,6 +76,10 @@ public class ResourceList {
 
 		/** The isr ceiling of this resource */
 		int[] isrceiling;
+		/** The macro corresponding to the isr ceiling */
+		String[] isrceilingId;
+		/** The value set by the user */
+		String[] isrceilingUser;
 
 		/** The type of this resource */
 		int type;
@@ -97,6 +104,8 @@ public class ResourceList {
 			cpu = new BitSet();
 			ceiling = new int[numOfRtos];
 			isrceiling = new int[numOfRtos];
+			isrceilingId = new String[numOfRtos];
+			isrceilingUser = new String[numOfRtos];
 		}
 
 		/**
@@ -287,17 +296,17 @@ public class ResourceList {
 		 * 
 		 * @param vet
 		 *            a list of ResourceTmp
-		 * @param size
-		 *            the current size of legal ResourceTmp in vet
 		 * @param name
 		 *            the name to search
+		 *            
+		 * @return the value, or null if not found
 		 */
-		public int search(ResourceTmp[] vet, int size, String name) {
-			for (int i = 0; i < size; i++) {
-				if (name.equals(vet[i].name))
-					return i;
+		public ResourceTmp search(Collection<ResourceTmp> vet, String name) {
+			for (ResourceTmp res : vet) {
+				if (name.equals(res.name))
+					return res;
 			}
-			return -1;
+			return null;
 		}
 
 		/**
@@ -338,9 +347,9 @@ public class ResourceList {
 	 *            contains all objects (only tasks are required)
 	 */
 	public ResourceList(IVarTree vt, String prefix, String oilPrefix,
-			IOilObjectList[] oilObjects, final boolean useResScheduler) {
+			IOilObjectList[] oilObjects, final boolean useResScheduler) throws OilCodeWriterException {
 
-		final LinkedList rTt;
+		final LinkedList<ResourceTmp> rTemp;
 		{
 			ITreeInterface ti = vt.newTreeInterface();
 			LinkedList pendenti = new LinkedList(); // store a link to a resource
@@ -356,7 +365,10 @@ public class ResourceList {
 					+ dpkg.getArchitectural_MutexList().getName() +S;
 			String[] resName = ti.getAllName(tmpPref, dpkg.getMutex().getName());
 	
-			ResourceTmp[] rTemp = new ResourceTmp[resName.length];
+			rTemp = new LinkedList<ResourceList.ResourceTmp>();
+			if (useResScheduler) {
+				rTemp.add(new ResourceTmp(IWritersKeywords.RES_SCHEDULER, STANDARD));
+			}
 			int resNumb = resName.length;
 			for (int i = 0; i < resNumb; i++) {
 				String currPrefix = tmpPref + resName[i]+S
@@ -367,14 +379,33 @@ public class ResourceList {
 				String resType = CommonUtils.getFirstChildEnumType(vt, currPrefix + RESOURCE_PROPERTY, newName);
 				currPrefix += RESOURCE_PROPERTY+CommonUtils.VARIANT_ELIST + newName[0] + CommonUtils.PARAMETER_LIST;
 	
+				if (IWritersKeywords.RES_SCHEDULER.equals(resName[i])) {
+					if (useResScheduler) {
+						if ((RES_STANDARD.equalsIgnoreCase(resType))) {
+							
+							continue; // !!! do not create a new RES_SCHEDULER
+							
+						} else {
+							throw new OilCodeWriterException("When USERESSCHEDULER is true, a resource called RES_SCHEDULER can have only a 'STANDARD' type");
+						}
+					} else {
+						if (RES_STANDARD.equalsIgnoreCase(resType)) {
+							Messages.sendWarningNl("Found a resource called RES_SCHEDULER when USERESSCHEDULER is false");
+						} else {
+							Messages.sendWarningNl("Found a resource called RES_SCHEDULER with type different from 'STANDARD' (USERESSCHEDULER is false)");
+						}
+					}
+				}
+				
+				ResourceTmp current;
 				if (RES_STANDARD.equalsIgnoreCase(resType)) {
 					// -------- RES_STANDARD ------------
-					rTemp[i] = new ResourceTmp(resName[i], STANDARD);
+					current = new ResourceTmp(resName[i], STANDARD);
 	
 					// --------- SRC ----------
 					String[] srcFiles = CommonUtils.getValue(vt, currPrefix + "APP_SRC");
 					if (srcFiles != null) {
-						rTemp[i].srcFiles = srcFiles;
+						current.srcFiles = srcFiles;
 					}
 	
 				} else if (RES_LINKED.equalsIgnoreCase(resType)) {
@@ -386,21 +417,21 @@ public class ResourceList {
 								"Resources : Expected a not null resource type for a linked resource."
 										+ " (resource = " + resName[i] + ")");
 	
-					rTemp[i] = new ResourceTmp(resName[i], LINKED);
-					rTemp[i].linkTo = tmp[0];
+					current = new ResourceTmp(resName[i], LINKED);
+					current.linkTo = tmp[0];
 	
-					int pos = (new ResourceTmp()).search(rTemp, i, tmp[0]);
+					ResourceTmp searched = (new ResourceTmp()).search(rTemp, tmp[0]);
 	
-					if (pos == -1) { // store a link
+					if (searched == null) { // store a link
 						String[] link = { tmp[0], resName[i] };
 						pendenti.add(link);
 					} else {
-						rTemp[pos].dep.add(resName[i]);
+						searched.dep.add(resName[i]);
 					}
 					
 				} else if (RES_INTERNAL.equalsIgnoreCase(resType)) {
 					// -------- RES_INTERNAL ------------
-					rTemp[i] = new ResourceTmp(resName[i], INTERNAL);
+					current = new ResourceTmp(resName[i], INTERNAL);
 	
 				} else {
 					throw new RuntimeException(
@@ -408,7 +439,7 @@ public class ResourceList {
 									+ resName[i] + ", type = " + resType);
 				}
 	
-	
+				rTemp.add(current);
 			}
 	
 			/***********************************************************************
@@ -421,18 +452,16 @@ public class ResourceList {
 			for (Iterator iter = pendenti.iterator(); iter.hasNext(); ) {
 				String[] p = (String[]) iter.next();
 	
-				int pos = (new ResourceTmp()).search(rTemp, resNumb, p[0]);
+				ResourceTmp searched = (new ResourceTmp()).search(rTemp, p[0]);
 	
-				if (pos == -1) { // store a link
+				if (searched == null) { // store a link
 					throw new RuntimeException(
 							"Resources: link to a non-existent resource : from = "
 									+ p[1] + " -> to = " + p[0]);
 				}
 	
-				rTemp[pos].dep.add(p[1]);
+				searched.dep.add(p[1]);
 			}
-			
-			rTt = new LinkedList(Arrays.asList(rTemp));
 		}
 
 		// move data and check for chains
@@ -440,9 +469,9 @@ public class ResourceList {
 		nomiRis = new ArrayList();
 		infoRis = new ArrayList();
 		//rTt = new LinkedList(Arrays.asList(rTemp));
-		Collections.sort(rTt);
-		while (rTt.size() > 0) {
-			ResourceTmp risorsa = (ResourceTmp) rTt.removeFirst();
+		Collections.sort(rTemp);
+		while (rTemp.size() > 0) {
+			ResourceTmp risorsa = (ResourceTmp) rTemp.removeFirst();
 
 			ResInfo r = new ResInfo(oilObjects.length);
 			infoRis.add(r);
@@ -463,7 +492,7 @@ public class ResourceList {
 			// if (i>0) { // impossible !!
 			nomiRis.add(-i - 1, new ResName(risorsa.name, pos, risorsa.type));
 
-			makeGroup(risorsa, null, rTt, r, pos);
+			makeGroup(risorsa, null, rTemp, r, pos);
 			pos++; // update index
 		}
 		
@@ -522,7 +551,8 @@ public class ResourceList {
 						//copy.setProperty(SimpleGenResKeywords.RESOURCE_ID, "" + id);
 
 						copy.setProperty(ISimpleGenResKeywords.RESOURCE_CEILING, "" + info.ceiling[i]);
-						copy.setProperty(ISimpleGenResKeywords.RESOURCE_ISR_CEILING, "" + info.isrceiling[i]);
+						copy.setProperty(ISimpleGenResKeywords.RESOURCE_USER_ISR_CEILING, (info.isrceilingUser[i] == null ? "0" : info.isrceilingUser[i]) );
+						copy.setProperty(ISimpleGenResKeywords.RESOURCE_ISR_CEILING, (info.isrceilingId[i] == null ? EE_RES_ISR_UNMASKED : info.isrceilingId[i]) );
 						tmpList[i].add(copy);
 					}
 				}
@@ -618,7 +648,7 @@ public class ResourceList {
 						}
 						
 						if (!preemptable) {
-							throw new RuntimeException(
+							Messages.sendWarningNl(
 									"Resources: an internal resource ("
 											+ tRes[j]
 											+ ") is required by a non preemptable task ("+currTask.getName()+")");
@@ -669,7 +699,7 @@ public class ResourceList {
 				}
 				if (tRes.length == 0) {
 					continue; // no resources ... nothing to do
-		}
+				}
 		
 				String category = isr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? isr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
 		
@@ -678,20 +708,17 @@ public class ResourceList {
 					continue;
 				}
 				
-				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_PRIORITY)) {
+				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_VALUE)) {
 					Messages.sendErrorNl("Need isr priority to support ISR2 resources (" + isr.getName() + ")", null, "", null);
 				}
 					
 				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIOID)) {
 					Messages.sendErrorNl("This architecture does not support ISR2 resources (" + isr.getName() + ")", null, "", null);
 					continue;
-			}
+				}
 			
-				
-
-				
 				/** ISR's PRIORITY ==> RESOURCE's CEILING (prio) */
-				int prio = isr.getInt(ISimpleGenResKeywords.ISR_PRIORITY);
+				int prio = isr.getInt(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_VALUE);
 				int readyprio = isr.getInt(ISimpleGenResKeywords.ISR_READY_PRIORITY);
 				
 //				if (maxprioritiesIsr[cpuId] < prio) { // check max priority of this cpu
@@ -719,6 +746,8 @@ public class ResourceList {
 
 					if (rinfo.isrceiling[cpuId] < prio) {
 						rinfo.isrceiling[cpuId] = prio;
+						rinfo.isrceilingUser[cpuId] = isr.getString(ISimpleGenResKeywords.ISR_USER_PRIORITY);
+						rinfo.isrceilingId[cpuId] = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING);
 					} // ceiling
 				
 					// first set cpuId ..
@@ -788,7 +817,7 @@ public class ResourceList {
 		if (current.linkTo != null) {
 
 			// only if is a new node
-			if (!current.linkTo.equals(previous.name)) {
+			if (previous==null || !current.linkTo.equals(previous.name)) {
 				int i = Collections.binarySearch(remainder, current.linkTo);
 				if (i < 0) {
 					throw new RuntimeException(

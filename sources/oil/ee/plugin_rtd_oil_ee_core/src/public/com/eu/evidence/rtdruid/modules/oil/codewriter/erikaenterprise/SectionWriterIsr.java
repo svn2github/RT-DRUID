@@ -22,6 +22,7 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractOb
 
 public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExtentions {
 	
+	private static final String ISR_DISABLE_ENTRY = "isr_disable_entry";
 	protected Set<String> entries;
 	protected final String hw_id;
 	
@@ -98,6 +99,7 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 					} else if ("2".equals(category)) {
 						String handler = curr.getString(ISimpleGenResKeywords.ISR_GENERATED_HANDLER);
 						String entry_id = curr.getString(ISimpleGenResKeywords.ISR_GENERATED_ENTRY);
+						boolean disable = curr.containsProperty(ISR_DISABLE_ENTRY) && "true".equalsIgnoreCase(curr.getString(ISR_DISABLE_ENTRY));
 						
 						if (entries != null) {
 							if (!entries.contains(entry_id)) {
@@ -108,13 +110,13 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 
 						ArrayList<String> tempStrings = new ArrayList<String>();
 						tempStrings.add("#define " + entry_id + " " + handler+"\n");
-						if (curr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIOID)) {
-							String prio = curr.containsProperty(ISimpleGenResKeywords.ISR_PRIORITY) ? curr.getString(ISimpleGenResKeywords.ISR_PRIORITY) : "";
+						if (curr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIOID) && curr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING)) {
+							String prio = curr.getString(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING);
 							tempStrings.add("#define " + curr.getString(ISimpleGenResKeywords.ISR_GENERATED_PRIOID) + " " + prio+"\n");
 						}
 
-						if (entry_id==null || entry_id.length()==0){
-							Messages.sendWarningNl("Disabling static ISR define for " + curr.getName() +": missing the entry value.");
+						if (disable){
+							Messages.sendWarningNl("Disabling static ISR define for " + curr.getName());
 							for (int i=0; i<tempStrings.size(); i++) {
 								tempStrings.set(i, 
 										commentWriterH.writerSingleLineComment(tempStrings.get(i)));
@@ -140,18 +142,23 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 	public void updateObjects() {
 		
 		for (IOilObjectList ool : parent.getOilObjects()) {
-
-			int size = 0;
 			int max_level = 0;
-			
+			int size = 0;
 			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.ISR)) {
 				String category = sgr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? sgr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
 				
 				if ("2".equals(category)) {
 					
 					String entry = sgr.containsProperty(ISimpleGenResKeywords.ISR_ENTRY) ? sgr.getString(ISimpleGenResKeywords.ISR_ENTRY) : "";
+					if (entry == null || entry.length() == 0) {
+						Messages.sendWarningNl("Missing ISR ENTRY for isr " + sgr.getName());
+						sgr.setProperty(ISR_DISABLE_ENTRY, "true");
+					}
 					String entry_id = "EE_"+hw_id+"_"+entry+"_ISR";
 					sgr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_ENTRY, entry_id);
+
+					String prioId = entry_id+"_PRI";
+					sgr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIOID, prioId);
 
 					
 					{ // handler
@@ -160,15 +167,12 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 					}
 					
 					{ // priority
-						if (sgr.containsProperty(ISimpleGenResKeywords.ISR_PRIORITY)) {
+						if (sgr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_VALUE)) {
+							int prioVal = sgr.getInt(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_VALUE);
 							
-							int prio = sgr.getInt(ISimpleGenResKeywords.ISR_PRIORITY);
-							if (prio>max_level) {
-								max_level = prio;
+							if (prioVal>max_level) {
+								max_level = prioVal;
 							}
-							
-							String prioId = entry_id+"_PRI";
-							sgr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIOID, prioId);
 						}
 					}
 					
@@ -186,6 +190,7 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 					}
 				}
 			}
+			
 			
 			if (size> 0) {
 				ISimpleGenRes os = ool.getList(IOilObjectList.OS).get(0);

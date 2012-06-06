@@ -85,9 +85,9 @@
 	
 	<target name="-remove_launchers" if="required.remove_launchers">
 		<delete>
-			<fileset dir="${TEMP_DIR}/zip/RT-Druid/p2"/>
+<!--		<fileset dir="${TEMP_DIR}/zip/RT-Druid/p2"/>-->
 			<fileset dir="${TEMP_DIR}/zip/RT-Druid/plugins" includes="org.eclipse.equinox.launcher.*/**/*"/>
-			<fileset dir="${TEMP_DIR}/zip/RT-Druid/" includes="artifacts.xml"/>
+<!--		<fileset dir="${TEMP_DIR}/zip/RT-Druid/" includes="artifacts.xml"/>-->
 			<fileset dir="${TEMP_DIR}/zip/RT-Druid/" includes=".eclipseproduct"/>
 			<fileset dir="${TEMP_DIR}/zip/RT-Druid/" includes="eclipse*"/>
 		</delete>

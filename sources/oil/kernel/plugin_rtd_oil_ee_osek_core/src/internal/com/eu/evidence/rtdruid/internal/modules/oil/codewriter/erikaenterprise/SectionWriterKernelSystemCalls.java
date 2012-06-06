@@ -81,7 +81,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		"SetRelAlarm",
 		"SetAbsAlarm",
 		"CancelAlarm",
-		"counter_tick"
+		"IncrementCounter"
 	};
 
 	
@@ -203,7 +203,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		{
 		
 			Integer sections = (Integer) AbstractRtosWriter.getOsObject(ool, OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS);
-				if (sections != null && (sections.intValue() & OsekOrtiConstants.EE_ORTI_OS) != 0) {
+			if (sections != null && (sections.intValue() & OsekOrtiConstants.EE_ORTI_OS) != 0) {
 					String s="ORTI_ext_set_service";
 					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
 				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_ORTI_set_service,\n");
