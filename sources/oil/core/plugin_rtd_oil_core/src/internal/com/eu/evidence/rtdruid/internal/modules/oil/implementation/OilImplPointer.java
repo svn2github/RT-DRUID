@@ -120,7 +120,7 @@ public class OilImplPointer implements IOilImplPointer {
 	 * 
 	 * @return a distinct OilImplPointer (that point to the same node)
 	 */
-	public Object clone() {
+	public IOilImplPointer clone() {
 		OilImplPointer answer = new OilImplPointer(doc);
 		answer.point = point;
 

@@ -5,11 +5,14 @@
  */
 package com.eu.evidence.rtdruid.test.modules.jscan.common;
 
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
+
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.modules.jscan.AbstractCompleteTest;
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
@@ -31,10 +34,6 @@ import com.eu.evidence.rtdruid.vartree.tools.Search;
  * @author Nicola Serreli
  */
 public class JScanMultiFrameTest extends AbstractCompleteTest {
-	
-	public JScanMultiFrameTest(String name) {
-		super(name);
-	}
 	
 	public final static String[] example1 = {
 		// input
@@ -523,7 +522,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		// results
 		""	};
 
-
+	@Test
 	public void testPrepareData() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
@@ -570,7 +569,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 
 	}
 
-	
+	@Test
 	public void test1() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
@@ -593,7 +592,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		
 		//check(vt, Utility.loadString(example1[1]));
 	}
-
+	@Test
 	public void testPrepareData2() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example2[0]);
 		
@@ -654,7 +653,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		}
 
 	}
-
+	@Test
 	public void test2() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example2[0]);
 		
@@ -742,7 +741,7 @@ public class JScanMultiFrameTest extends AbstractCompleteTest {
 		//check(vt, Utility.loadString(example1[1]));
 	}
 
-
+	@Test
 	public void test3() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example3[0]);
 		

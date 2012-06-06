@@ -6,11 +6,13 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.jscan;
 
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
+import com.eu.evidence.rtdruid.tests.AbstractNamedTest;
 import com.eu.evidence.rtdruid.tests.vartree.data.SimpleExamples;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -21,10 +23,9 @@ import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
 /**
  * @author Nicola Serreli
  */
-public class TaskSetTest extends TestCase {
+public class TaskSetTest extends AbstractNamedTest {
 
-	//----------------------------------------
-
+	@Test
 	public void testExample1() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample1());
 		
@@ -46,22 +47,20 @@ public class TaskSetTest extends TestCase {
 		for (int i=0; i<taskP.length; i++) {
 			ts.setProperty(taskP[i][0],taskP[i][1], false);
 		}
-
-
-		
 	}
 	
+	@Test
 	public void testExample2() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(SimpleExamples.testLoadExample2());
 		
 		TaskSet ts = new TaskSet(vt, DataPath.makeSlashedId("Root/"));
 		
-		assertEquals(ts.getPrefixNumber() , 5);
-		assertEquals(ts.getSize(0) , 1);
-		assertEquals(ts.getSize(1) , 3);
-		assertEquals(ts.getSize(2) , 4);
-		assertEquals(ts.getSize(3) , 5);
-		assertEquals(ts.getSize(4) , 1);
+		assertEquals(5, ts.getPrefixNumber());
+		assertEquals(1, ts.getSize(0));
+		assertEquals(3, ts.getSize(1));
+		assertEquals(4, ts.getSize(2));
+		assertEquals(5, ts.getSize(3));
+		assertEquals(1, ts.getSize(4));
 		
 		
 		

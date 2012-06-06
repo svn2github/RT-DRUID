@@ -125,6 +125,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	@Test
 	public void testCortexCpuDataSplitted() {
 	    final String text =
 				"CPU mySystem {\n" + 
@@ -174,6 +175,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 		//System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(commonWriterTest(text, 1).vt)));
 	}
 	
+	@Test
 	public void testCortexCpuDataSplittedBis() {
 	    final String text =
 				"CPU mySystem {\n" + 
@@ -391,7 +393,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 	}
 
 	
-
+	@Test
 	public void testIsr() {
 	    final String text =
 	    		"CPU mySystem {\n"+
@@ -446,7 +448,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 		
-
+	@Test
 	public void testM4Keil() {
 	    final String text =
 	    		"CPU mySystem {\n"+
@@ -500,6 +502,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	@Test
 	public void testCortex_systemTimer() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +

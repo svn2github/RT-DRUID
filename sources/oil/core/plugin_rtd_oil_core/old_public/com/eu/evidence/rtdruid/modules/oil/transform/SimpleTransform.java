@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.ecore.EObject;
@@ -74,7 +75,9 @@ public class SimpleTransform implements IOilTransform {
 	protected static final String TASK_MAPPING = "sgrk_task_mapping";
 	protected static final String TASK_FORCE_MAPPING = "sgrk_task_add_mapping";
 
-	private static final boolean DEBUG = true;
+	public static final String SGR_ADDITIONAL = "sgr__map_additional_text";
+
+	private static final boolean DEBUG = false;
 
 	protected IVarTree vt;
 
@@ -124,7 +127,6 @@ public class SimpleTransform implements IOilTransform {
 
 		vt = lvt;
 		oilImpl = OilImplFactory.getAnInstance(vt).getImpl(id);
-System.out.println("\n>>>>>>>>>\n"+ oilImpl.toOil() + "\n<<<<<<<<<<<<<<<<\n");
 
 		Element application = appl.getDocumentElement();
 		checkTrue("application".equalsIgnoreCase(application.getNodeName()), "Expected an application node");
@@ -2299,6 +2301,15 @@ System.out.println("\n>>>>>>>>>\n"+ oilImpl.toOil() + "\n<<<<<<<<<<<<<<<<\n");
 		// header
 		buffer.append(INDENT + object.getString(IOilXMLLabels.ATTR_TYPE) + " " + object.getName() + " {\n");
 
+		// add properties
+		writeApplicationObjectProperties(buffer, INDENT + INDENT,
+				object, objType, rtosPath);
+		
+		Map<String, String> additional = new HashMap<String, String>();
+		if (object.containsProperty(SGR_ADDITIONAL)) {
+			additional = (Map) object.getObject(SGR_ADDITIONAL);
+		}
+		
 		IVarTreePointer vtp = vt.newVarTreePointer();
 		vtp.goAbsolute(object.getPath());
 		final String path;
@@ -2359,7 +2370,7 @@ System.out.println("\n>>>>>>>>>\n"+ oilImpl.toOil() + "\n<<<<<<<<<<<<<<<<\n");
 		// children
 		if (vtp.go(path)) {
 			for (boolean ok = vtp.goFirstChild(); ok; ok = vtp.goNextSibling()) {
-				writeApplicationObject(buffer, INDENT + INDENT, (IVarTreePointer) vtp.clone());
+				writeApplicationObject(buffer, INDENT + INDENT, (IVarTreePointer) vtp.clone(), additional, "");
 			}
 		}
 
@@ -2434,7 +2445,7 @@ System.out.println("\n>>>>>>>>>\n"+ oilImpl.toOil() + "\n<<<<<<<<<<<<<<<<\n");
 	 * @param id
 	 *            identifies the Application
 	 */
-	protected void writeApplicationObject(StringBuffer buffer, String indent, IVarTreePointer vtp) {
+	protected void writeApplicationObject(StringBuffer buffer, String indent, IVarTreePointer vtp, Map<String, String> additional, String path) {
 
 		String name = vtp.getName();
 
@@ -2443,7 +2454,7 @@ System.out.println("\n>>>>>>>>>\n"+ oilImpl.toOil() + "\n<<<<<<<<<<<<<<<<\n");
 				// ------------- A VARIANT -----------------
 				for (boolean ok = vtp.goFirstChild(); ok; ok = vtp.goNextSibling()) {
 					buffer.append(indent + name + " = ");
-					writeApplicationObject(buffer, indent, (IVarTreePointer) vtp.clone());
+					writeApplicationObject(buffer, indent, (IVarTreePointer) vtp.clone(), additional, path+"/"+name);
 					buffer.append(";\n");
 				}
 	
@@ -2467,21 +2478,37 @@ System.out.println("\n>>>>>>>>>\n"+ oilImpl.toOil() + "\n<<<<<<<<<<<<<<<<\n");
 				
 				
 				// ------------- A SINGLE ENUM -----------------
+				String tmpPath;
 				{
 					String type = OilEcoreCreator.getOilEnumType(vtp);
 					buffer.append("" + type);
+					tmpPath = path +"/"+type;
 				}
 	
 				boolean ok = vtp.goFirstChild();
+				
+				String init = " {\n";
+				String end = ""; 
+				if (additional.containsKey(tmpPath)) {
+					buffer.append(init);
+					init = "";
+					end = indent + "}";
+					
+					buffer.append(additional.get(tmpPath));
+					additional.remove(tmpPath);
+				}
+
 				if (ok) {
-					buffer.append(" {\n");
+					buffer.append(init);
 	
 					for (; ok; ok = vtp.goNextSibling()) {
-						writeApplicationObject(buffer, indent + INDENT, (IVarTreePointer) vtp.clone());
+						writeApplicationObject(buffer, indent + INDENT, (IVarTreePointer) vtp.clone(), additional, tmpPath);
 					}
-					buffer.append(indent + "}");
+					end = indent + "}";
 				}
-				
+
+				buffer.append(end);
+
 				if (addEnd) {
 					buffer.append(";\n");
 				}

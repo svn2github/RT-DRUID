@@ -1,12 +1,16 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+
+import org.eclipse.core.runtime.IStatus;
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
@@ -27,7 +31,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 
 	private String VT_PROP_AUTOSAR_FORMAT = "vt_property__autosar_format";
 	
-	
+	@Test
 	public void testAutosar_1() {
 	    final String text =
 				"CPU mySystem {\n" + 
@@ -128,6 +132,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 	}
 	
 	
+	@Test
 	public void testAutosar_2() {
 	    final String text =
 	    		"CPU PerfTestApp {\n" +
@@ -211,37 +216,40 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 			"		CATEGORY = 2;\n" +
 			"	};\n" +
 			"\n" +
-			"	OSAPPLICATION TrustedApp {\n" +
+			"	APPLICATION TrustedApp {\n" +
 			"		TRUSTED = TRUE;\n" +
-			"		OS_APP_ISR_REF = \"TrustedIsr\";\n" +
-			"		OS_APP_TASK_REF = \"MainTask\";\n" +
-			"		OS_APP_TASK_REF = \"TrustedTask\";\n" +
+			"		ISR = TrustedIsr;\n" +
+			"		TASK = MainTask;\n" +
+			"		TASK = TrustedTask;\n" +
 			
 			"		MEMORY_BASE = 0x40010000;\n" +
 			"		MEMORY_SIZE = 0x10000;\n" +
 
 			"		SHARED_STACK_SIZE = 512;\n" +
+			"		IRQ_STACK_SIZE = 1024;\n" +
 			"	};\n" +
 			"\n" +
-			"	OSAPPLICATION App1 {\n" +
+			"	APPLICATION App1 {\n" +
 			"		TRUSTED = FALSE;\n" +
-			"		OS_APP_ISR_REF = \"App1Isr\";\n" +
-			"		OS_APP_TASK_REF = \"App1Task\";\n" +
+			"		ISR = \"App1Isr\";\n" +
+			"		TASK = \"App1Task\";\n" +
 
 			"		MEMORY_BASE = 0x40020000;\n" +
 			"		MEMORY_SIZE = 0x10000;\n" +
 
 			"		SHARED_STACK_SIZE = 512;\n" +
+			"		IRQ_STACK_SIZE = 1024;\n" +
 			"	};\n" +
 			"\n" +
-			"	OSAPPLICATION App2 {\n" +
+			"	APPLICATION App2 {\n" +
 			"		TRUSTED = FALSE;\n" +
-			"		OS_APP_ISR_REF = \"App2Isr\";\n" +
-			"		OS_APP_TASK_REF = \"App2Task\";\n" +
+			"		ISR = App2Isr;\n" +
+			"		TASK = App2Task;\n" +
 
 			"		MEMORY_BASE = 0x40030000;\n" +
 			"		MEMORY_SIZE = 0x4000;\n" +
 			"		SHARED_STACK_SIZE = 512;\n" +
+			"		IRQ_STACK_SIZE = 1024;\n" +
 			"	};\n" +
 			"};\n";
   
@@ -253,9 +261,12 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 
 	public DefaultTestResult[] writerAutosarTest(String oil_text, int expected_cpu) {
 		DefaultTestResult[] answer = new DefaultTestResult[2];
-		
+		IVarTree vt1 = loadVt(oil_text);
 		answer[0] = commonWriterTest(oil_text, expected_cpu);
-		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(answer[0].vt)));
+		IStatus st = VarTreeUtil.compare(vt1, answer[0].vt); assertTrue(st.getMessage(), st.isOK());
+//		System.out.println("<<<--->>>\n\n" + Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(vt1)));
+//		System.out.println("<<<--->>>\n\n" + Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(answer[0].vt)));
+		
 
 		answer[1] = commonAutosarWriterTest(oil_text, expected_cpu);
 		
@@ -276,6 +287,28 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 	
 	
 	public DefaultTestResult commonAutosarWriterTest(String oil_text, int expected_cpu) {
+		{
+			String[] exp =RTD_XMI_Factory.getAllExportTypes(); 
+			assertNotNull(exp);
+			boolean ok = false;
+			for (String s: exp) {
+				if ("arxml".equalsIgnoreCase(s)) {
+					ok = true;
+				}
+			}
+			assertTrue("arxml file export is not supported", ok);
+		}
+		{
+			String[] exp =RTD_XMI_Factory.getAllImportTypes(); 
+			assertNotNull(exp);
+			boolean ok = false;
+			for (String s: exp) {
+				if ("arxml".equalsIgnoreCase(s)) {
+					ok = true;
+				}
+			}
+			assertTrue("arxml file import is not supported", ok);
+		}
 		
 		
 		// convert OIL to AUTOSAR
@@ -298,7 +331,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 			autosarFormat = outputStream.toString();
 		}
 
-		System.out.println(autosarFormat);
+//		System.out.println(autosarFormat);
 
 		
 		// reload everything from autosar
@@ -321,7 +354,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 			
 		}
 		
-		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(autosar_vt)));
+//		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(autosar_vt)));
 
 		
 		

@@ -1330,6 +1330,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	}
 	
 
+	@Test
 	public void testMpc567_alarm_counter_incr() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
@@ -1408,7 +1409,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-
+	@Test
 	public void testMpc567_alarm_counter_incr_cycle() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
@@ -1493,6 +1494,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    assertTrue(ok);
 	}
 	
+	@Test
 	public void testMpc567_alarm_counter_incr_cycle1() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
@@ -1582,7 +1584,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	}
 
 	
-
+	@Test
 	public void testMpc567_alarm_counter_incr_2() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
@@ -1683,6 +1685,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
     	commonWriterTest(text, 1);
 	}
 
+	@Test
 	public void testMpc567_systemTimer() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
@@ -1777,7 +1780,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	}
 
 	
-
+	@Test
 	public void testMpc567_isr_resources() {
 	    final String text = " CPU test_application {\n" + 
 	    		" \n" + 

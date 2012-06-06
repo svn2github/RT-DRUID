@@ -73,6 +73,17 @@ public abstract class OilImplFactory {
 	public abstract boolean merge(IOilImplementation data);
 
 	/**
+	 * Remove an Implementation
+	 * 
+	 * @param id
+	 *            identifies the Oil Implementation that should be removed
+	 * 
+	 * @return the removed IOilImplementation, or null if there was not any OilImplementation with given ID.
+	 */
+	public abstract IOilImplementation remove(IOilImplID id);
+
+	
+	/**
 	 * Returns identifiers of all stored OilImplementation
 	 * 
 	 * @return an id for each stored OilImplementation object

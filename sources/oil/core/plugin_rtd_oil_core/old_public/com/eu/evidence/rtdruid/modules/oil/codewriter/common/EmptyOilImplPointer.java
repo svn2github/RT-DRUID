@@ -61,7 +61,7 @@ public class EmptyOilImplPointer implements IOilImplPointer {
 	}
 
 	@Override
-	public Object clone() {
+	public IOilImplPointer clone() {
 		return new EmptyOilImplPointer();
 	}
 }

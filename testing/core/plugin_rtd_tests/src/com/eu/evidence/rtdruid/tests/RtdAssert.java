@@ -55,6 +55,7 @@ public class RtdAssert {
 			this.exceptions.add(t);
 		}
 	
+		String currException = "\n No exception";
 		try {
 			doCheck();
 		} catch (Throwable e) {
@@ -63,8 +64,9 @@ public class RtdAssert {
 					return;
 				}
 			}
+			currException = "\nReal exception is " + e.getClass().getName() + ":\n"+e.getMessage();
 		}
-		fail(message);
+		fail(message + currException);
 	}
 
 	/**

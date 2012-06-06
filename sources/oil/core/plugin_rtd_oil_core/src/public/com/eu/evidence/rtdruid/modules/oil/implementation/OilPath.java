@@ -5,9 +5,10 @@ package com.eu.evidence.rtdruid.modules.oil.implementation;
 
 import static com.eu.evidence.rtdruid.vartree.DataPath.SEPARATOR;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.eu.evidence.rtdruid.vartree.DataPath;
@@ -22,10 +23,11 @@ public class OilPath {
 	
 	private final OilObjectType objType;
 	
-	private ArrayList<String> pathElements;
-	private ArrayList<String> typeElements;
+	private LinkedList<String> pathElements;
+	private LinkedList<String> typeElements;
 	private String path;
 	private String type;
+	private final int init_size;
 	
 	private static boolean requiredName(OilObjectType type) {
 		return type == OilObjectType.COM || type == OilObjectType.IPDU || type == OilObjectType.MESSAGE || type == OilObjectType.NM;
@@ -39,10 +41,11 @@ public class OilPath {
 	private OilPath(OilPath old) {
 		this.objType = old.objType;
 
-		this.pathElements = old.pathElements == null ? null : new ArrayList<String>(old.pathElements);
-		this.typeElements = old.typeElements == null ? null : new ArrayList<String>(old.typeElements);
+		this.pathElements = old.pathElements == null ? null : new LinkedList<String>(old.pathElements);
+		this.typeElements = old.typeElements == null ? null : new LinkedList<String>(old.typeElements);
 		this.path = old.path;
 		this.type = old.type;
+		this.init_size = old.init_size;
 	}
 
 	/**
@@ -55,8 +58,9 @@ public class OilPath {
 		this.objType = type;
 		
 		String[][] values = makeOilVarPrefix(addName, name, objType.getText(), null);
-		pathElements = new ArrayList<String>(Arrays.asList(values[0]));
-		typeElements = new ArrayList<String>(Arrays.asList(values[1]));
+		pathElements = new LinkedList<String>(Arrays.asList(values[0]));
+		typeElements = new LinkedList<String>(Arrays.asList(values[1]));
+		this.init_size = values[0].length;
 		this.type= values[2][0];
 		path = null;
 	}
@@ -65,7 +69,7 @@ public class OilPath {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	protected OilPath clone() {
+	public OilPath clone() {
 		return new OilPath(this);
 	}
 	
@@ -101,6 +105,39 @@ public class OilPath {
 	}
 
 	
+	/**
+	 * Add one element to this OilPath
+	 * 
+	 */
+	public void addElement(String path, String type) {
+		pathElements.add(path);
+		String newType = incremental_compute_full_name(typeElements.getLast(), type);
+		typeElements.add(newType);
+	}
+
+	/**
+	 * Remove last element
+	 * 
+	 * @return false if there are not elements
+	 */
+	public boolean removeElement() {
+		
+		boolean answer = pathElements.size()>init_size;
+		if (answer) {
+			pathElements.removeLast();
+			typeElements.removeLast();
+		}
+		return answer;
+	}
+	
+	/**
+	 * Remove last element
+	 * 
+	 * @return false if there are not elements
+	 */
+	public void cleanElement() {
+		while(removeElement()) {}
+	}
 	
 	// -----------------------------------------------------------------
 	
@@ -140,7 +177,7 @@ public class OilPath {
 	 * @param path
 	 * @return
 	 */
-	public static String compute_full_name(ArrayList<String> path) {
+	public static String compute_full_name(Collection<String> path) {
 		StringBuffer answer = new StringBuffer();
 
 		for (String elem : path) {
@@ -150,6 +187,23 @@ public class OilPath {
 		return answer.toString();
 	}
 
+	/**
+	 * Creates a Emf type identifier corresponding to an Oil type path
+	 * 
+	 * @param path
+	 * @return
+	 */
+	public static String compute_full_name(IOilImplPointer oip) {
+		LinkedList<String> types = new LinkedList<String>();
+		oip = oip.clone();
+		do {
+			types.addFirst(oip.getCurrentDescr().getName());
+		} while (oip.goParent());
+		types.removeFirst();
+		
+		return OilPath.compute_full_name(types);
+	}
+	
 	/**
 	 * Creates a Emf type identifier corresponding to an Oil type path
 	 * 

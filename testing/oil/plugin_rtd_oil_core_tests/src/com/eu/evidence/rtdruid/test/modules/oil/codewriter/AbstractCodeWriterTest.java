@@ -2,7 +2,7 @@ package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,14 +20,11 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.TestName;
 import org.w3c.dom.Document;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
@@ -40,6 +37,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.transform.OilTransformFactory;
+import com.eu.evidence.rtdruid.tests.AbstractNamedTest;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
@@ -50,22 +48,7 @@ import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
  * @author Nicola Serreli
  *
  */
-public abstract class AbstractCodeWriterTest {
-	
-	@Rule public TestName name = new TestName();
-	
-	@Before
-	public void setUp() throws Exception {
-		System.err.flush();
-		System.out.println("\n\n************\n TEST " + getClass().getName() + " - " + name.getMethodName() + "\n************\n\n");
-		System.out.flush();
-	}
-	
-	@After
-	public void setDown() throws Exception {
-		System.err.flush();
-		System.out.flush();
-	}
+public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 		
 	/**
 	 * A small class used to retur the IVarTree and computed Buffers
@@ -111,8 +94,9 @@ public abstract class AbstractCodeWriterTest {
 	 */
 	protected DefaultTestResult writerTest(String oil_text, int expected_cpu) {
 
-		IVarTree vt = VarTreeUtil.newVarTree();
-		(new OilReader()).load(new ByteArrayInputStream(oil_text.getBytes()), vt, null, null);
+		IVarTree vt = loadVt(oil_text);
+		IVarTree vt2 = loadVt(oil_text);
+		
 
 		// -------------- search rtos ----------------
 		ITreeInterface ti = vt.newTreeInterface();
@@ -126,7 +110,7 @@ public abstract class AbstractCodeWriterTest {
 		try {
 			buffers = RtosFactory.INSTANCE.write(vt, prefix);
 		} catch (OilCodeWriterException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 			throw new RuntimeException("Write fail: " + e.getMessage(), e);
 		}
 
@@ -135,7 +119,15 @@ public abstract class AbstractCodeWriterTest {
 		for (int i=0; i<expected_cpu; i++)
 			System.out.println("buff " + i + ":\n" + (buffers[i]).toString());
 
+		IStatus st = VarTreeUtil.compare(vt, vt2); assertTrue(st.getMessage(), st.isOK());
+		
 		return new DefaultTestResult(vt, buffers);
+	}
+
+	protected IVarTree loadVt(String oil_text) {
+		IVarTree vt2 = VarTreeUtil.newVarTree();
+		(new OilReader()).load(new ByteArrayInputStream(oil_text.getBytes()), vt2, null, null);
+		return vt2;
 	}
 	
 	/**
@@ -161,17 +153,27 @@ public abstract class AbstractCodeWriterTest {
 		IOilImplID id = otf.getOilId("ee");
 		String answer = otf.getTransform("ee").write(vt, id, prefix);
 		assertNotNull(answer);
+//System.err.flush();
+//System.out.flush();
+//System.out.println("\n\n-------------\n" + answer);
 
-		// --------------------
-		// Load the produced Oil as Vt and compare
-		IVarTree vt2 = VarTreeUtil.newVarTree();
-		(new OilReader()).load(new ByteArrayInputStream(answer.getBytes()),
-				vt2, null, null);
-		
-		String t = VarTreeUtil.compare(
+
+		IVarTree vt2 = loadVt(answer);
+//		
+//System.err.flush();
+//System.out.flush();
+//System.out.println("\n\n-------------\n" + Vt2StringUtilities.varTreeToStringErtd(vt));
+//System.err.flush();
+//System.out.flush();
+//
+//System.out.println("\n\n-------------\n" + Vt2StringUtilities.varTreeToStringErtd(vt2));
+//System.err.flush();
+//System.out.flush();
+//		
+		IStatus st = VarTreeUtil.compare(
 				(EObject) ((Resource) vt.getResourceSet().getResources().get(0)).getContents().get(0),
 				(EObject) ((Resource) vt2.getResourceSet().getResources().get(0)).getContents().get(0)
-		).getMessage(); assertNull(t, t);
+		); assertTrue(st.getMessage(), st.isOK());
 
 	}
 
@@ -256,7 +258,7 @@ public abstract class AbstractCodeWriterTest {
 		try {
 			buffers = RtosFactory.INSTANCE.write(vt, prefix);
 		} catch (OilCodeWriterException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 			throw new RuntimeException("Write fail: " + e.getMessage(), e);
 		}
 
@@ -276,11 +278,11 @@ public abstract class AbstractCodeWriterTest {
 		if (objList.size() > 0) {
 			IVarTree vtt = VarTreeUtil.newVarTree();
 			vtt.setRoot(res);
-			mergeInput(vt, ((com.eu.evidence.rtdruid.vartree.data.System) objList.get(0)));
+			mergeInput(vt, objList.get(0));
 		}
 	}
 	
-	protected void mergeInput(IVarTree vt, com.eu.evidence.rtdruid.vartree.data.System root) {
+	protected void mergeInput(IVarTree vt, EObject root) {
 		// get the old root
 		EList<Resource> resList = vt.getResourceSet().getResources();
 		if (resList.size() == 0) {

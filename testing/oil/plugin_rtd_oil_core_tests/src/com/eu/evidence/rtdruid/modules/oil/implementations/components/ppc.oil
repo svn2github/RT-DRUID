@@ -49,6 +49,6 @@ IMPLEMENTATION ee {
                 STRING HANDLER_LVL7;
 
             }
-        ] CPU_DATA;
+        ] CPU_DATA[];
     };
 };

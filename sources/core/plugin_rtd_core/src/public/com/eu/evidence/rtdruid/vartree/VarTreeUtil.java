@@ -1,5 +1,9 @@
 package com.eu.evidence.rtdruid.vartree;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -15,12 +19,17 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 
+import com.eu.evidence.rtdruid.epackage.EPackageUtility;
+import com.eu.evidence.rtdruid.epackage.IEPackageMerge;
+import com.eu.evidence.rtdruid.epackage.RTDEPackageBuildException;
 import com.eu.evidence.rtdruid.epackage.RtdEPackage;
 import com.eu.evidence.rtdruid.internal.vartree.VarTree;
 import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
@@ -204,6 +213,56 @@ public final class VarTreeUtil {
 		return RtdEPackage.eINSTANCE;
 	}
 
+	public static void mergeEPackage(EditingDomain ed, EPackage epkg) throws RTDEPackageBuildException {
+		EPackage originalPackage = getRtDruidEPackage(ed);
+		HashMap<Resource, byte[]> temp = new HashMap<Resource, byte[]>();
+
+		IEPackageMerge merger = EPackageUtility.instance.getPackageMerge();
+		merger.addEPackage(EcoreFactory.eINSTANCE.createEPackage());
+		merger.addEPackage(originalPackage);
+		merger.addEPackage(epkg);
+		EPackage newPackage = merger.getResult();
+
+		boolean reset_package = false;
+
+		try {
+			EList<Resource> reslist = ed.getResourceSet().getResources();
+			if (reslist.size() == 0) {
+				reset_package = true;
+				VarTreeCreator.addEPackage(ed, newPackage);
+			} else {
+				for (Resource res: reslist) {
+					
+					ByteArrayOutputStream output = new ByteArrayOutputStream();
+					res.save(output, null);
+					temp.put(res, output.toByteArray());
+					res.getContents().clear();
+				}
+				VarTreeCreator.addEPackage(ed, newPackage);
+				for (Resource res: reslist) {
+					res.load(new ByteArrayInputStream(temp.get(res)), null);				
+				}
+			}
+		} catch (IOException e) {
+			// try to go back to original state
+			if (reset_package) {
+				VarTreeCreator.addEPackage(ed, originalPackage);
+				for (Resource res: ed.getResourceSet().getResources()) {
+					if (temp.containsKey(res)) {
+						try {
+							res.load(new ByteArrayInputStream(temp.get(res)), null);
+						} catch (IOException ee) {
+							// do nothing
+						}
+					}
+				}
+			}
+			
+			
+			throw new RuntimeException(e);
+		}
+
+	}
 	/**
 	 * Make a distinct copy of current node and all its attributes and
 	 * references
@@ -236,7 +295,7 @@ public final class VarTreeUtil {
 	 */
 	public static IStatus compare(IVarTree first, IVarTree second) {
 		return (new VtCompare(first, second)).checkTrees();
-	}
+	} 
 
 	/**
 	 * Compare two subtrees
@@ -284,8 +343,10 @@ public final class VarTreeUtil {
 			String curID = VarTreeIdHandler.getId(destination);
 			String sourceID = VarTreeIdHandler.getId(addition);
 			if (curID == null ? sourceID != null : !curID.equals(sourceID)) {
-				throw new IllegalArgumentException("Try to merge two objects with differents ID: " + curID + " and "
-						+ sourceID + "\n\tpath = " + path);
+				if (!("System".equalsIgnoreCase(destination.eClass().getName()))) {
+					throw new IllegalArgumentException("Try to merge two objects with differents ID: " + curID + " and "
+							+ sourceID + "\n\tpath = " + path);
+				}
 			}
 
 			path = (path == null ? "" : path) + DataPath.SEPARATOR + curID;
@@ -321,19 +382,26 @@ public final class VarTreeUtil {
 				Object var = destination.eGet(attr);
 				Object newVar = addition.eGet(attr);
 				if (!compare(var, newVar)) {
-
-					if (overwrite) {
-						destination.eSet(attr, newVar);
-					} else {
-
-						// check if it was the default value
-						Object def = attr.getDefaultValue();
-						if (compare(var, def)) {
+					
+					if (("System".equalsIgnoreCase(destination.eClass().getName())) && "Name".equalsIgnoreCase(attr.getName())) {
+						if (overwrite) {
 							destination.eSet(attr, newVar);
-						} else if (!compare(newVar, def)) {
-							throw new IllegalArgumentException(
-									"Try to change the vaule of an already set attribute (mono value). " + "path = "
-											+ path + DataPath.SEPARATOR + attr.getName());
+						} // else do nothing
+					} else {
+	
+						if (overwrite) {
+							destination.eSet(attr, newVar);
+						} else {
+	
+							// check if it was the default value
+							Object def = attr.getDefaultValue();
+							if (compare(var, def)) {
+								destination.eSet(attr, newVar);
+							} else if (!compare(newVar, def)) {
+								throw new IllegalArgumentException(
+										"Try to change the vaule of an already set attribute (mono value). " + "path = "
+												+ path + DataPath.SEPARATOR + attr.getName());
+							}
 						}
 					}
 				}

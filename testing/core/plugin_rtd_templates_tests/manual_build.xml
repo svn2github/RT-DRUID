@@ -46,7 +46,7 @@
 			</fileset>
 		</resources>	
 
-		<antcall target="common_build.jar">
+		<antcall target="common_build.dir">
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
 			<param name="jar_name" value="rtdruid_templates_tests"/>

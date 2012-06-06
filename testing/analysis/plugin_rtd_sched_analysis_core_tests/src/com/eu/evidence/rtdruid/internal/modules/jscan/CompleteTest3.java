@@ -5,10 +5,12 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.jscan;
 
-
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Properties;
+
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.modules.jscan.common.RTASchedulability;
 import com.eu.evidence.rtdruid.internal.modules.jscan.offset.OffSetSchedulability;
@@ -59,6 +61,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 			}
 		}
 
+		@SuppressWarnings("unchecked")
 		public MyTaskSet(double[] wcet, double[] period, double[] deadline,
 				double[] offset, double[] blocking, String[][] properties) {
 			super(VarTreeUtil.newVarTree(), "", "");
@@ -79,6 +82,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 				elenco[1].add(task);
 			}
 		}
+		@SuppressWarnings("unchecked")
 		public MyTaskSet(double[] wcet, double[] period, double[] deadline,
 				double[] offset, double[] blocking, String[] type, String[][] properties) {
 			super(VarTreeUtil.newVarTree(), "", "");
@@ -101,10 +105,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 		}
 	}
 
-	public CompleteTest3(String name) {
-		super(name);
-	}
-
+	@Test
 	public void testWithoutBlocking() {
 		
 		GenResList resources = new GenResList(VarTreeUtil.newVarTree(), new String[] {""}, "Resources");
@@ -221,6 +222,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 		}
 	}
 
+	@Test
 	public void testWithBlocking() {
 		GenResList resources = new GenResList(VarTreeUtil.newVarTree(), new String[] {""}, "Resources");
 		
@@ -359,6 +361,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 		}
 	}
 
+	@Test
 	public void testWithBlockingAndSporadic() {
 		class TestWithBlockingAndType {
 			public double[] period;
@@ -535,6 +538,7 @@ public class CompleteTest3 extends AbstractCompleteTest {
 		}
 	}
 
+	@Test
 	public void testModes() {
 		
 		GenResList resources = new GenResList(VarTreeUtil.newVarTree(), new String[] {""}, "Resources");

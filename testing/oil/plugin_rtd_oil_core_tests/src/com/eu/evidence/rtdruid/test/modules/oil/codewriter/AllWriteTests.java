@@ -18,7 +18,9 @@ import org.junit.runners.Suite.SuiteClasses;
 		CodeWriterCosmicS12Test.class, CodeWriterDsPicTest.class, CodeWriterMico32Test.class,
 		CodeWriterMisraTest.class, CodeWriterMpc567Test.class, CodeWriterMpc5Test.class,
 		CodeWriterMultiPic30Test.class, CodeWriterNiosIITest.class, CodeWriterPic32Test.class,
-		CodeWriterPpcMultiCoreTest.class, CodeWritertMPTest.class, CodeWriterTricore1Test.class, CodeWritertTest.class })
+		CodeWriterPpcMultiCoreTest.class, CodeWritertMPTest.class, CodeWriterTricore1Test.class,
+		CodeWriterComTest.class, CodeWriterRx200Test.class, CodeWriterMultiEcuTest.class,
+		CodeWritertTest.class })
 public class AllWriteTests {
 
 }

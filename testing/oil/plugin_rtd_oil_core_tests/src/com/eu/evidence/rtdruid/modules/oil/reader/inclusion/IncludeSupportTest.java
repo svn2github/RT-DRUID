@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,6 +26,8 @@ import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerOilConfWriter;
 import com.eu.evidence.rtdruid.modules.oil.Rtd_oil_corePlugin;
 
 public class IncludeSupportTest {
+	
+	
 	@Rule public TestName name = new TestName();
 	
 	@Before
@@ -187,6 +190,7 @@ public class IncludeSupportTest {
 		String filepath = "src" + BASE_PATH + "/seed/pic32";
 		String filename = filepath + "/conf.oil";
 
+		Assume.assumeTrue(new File(filename).exists());
 		
 //		File f = new File("."); // current working directory
 //		System.out.println(f.getAbsolutePath());
@@ -224,6 +228,7 @@ public class IncludeSupportTest {
 		// this test have to be run setting the correct "current working directory"
 		String filename = "src" + BASE_PATH + 
 				"/seed/pic32/conf.oil";
+		Assume.assumeTrue(new File(filename).exists());
 		
 		assertTrue(filename, (new File(filename).exists()));
 		

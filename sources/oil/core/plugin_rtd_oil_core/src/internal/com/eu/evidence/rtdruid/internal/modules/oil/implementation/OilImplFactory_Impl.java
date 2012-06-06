@@ -105,6 +105,17 @@ public class OilImplFactory_Impl extends OilImplFactory {
 		return false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory#remove(com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID)
+	 */
+	@Override
+	public IOilImplementation remove(IOilImplID id) {
+		int pos = Collections.binarySearch(descrList, id);
+		if (pos >= 0) {
+			return descrList.remove(pos);
+		}
+		return null;
+	}
 
 	/**
 	 * Add a new Implementation. If already exist an Implementation with the same ID,

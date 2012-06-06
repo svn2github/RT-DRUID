@@ -21,8 +21,10 @@ import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplementation;
+import com.eu.evidence.rtdruid.tests.RtdAssert;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.tools.Search;
 
 /**
  * @author Nicola Serreli
@@ -48,7 +50,7 @@ public class OilImplementationMergeTest implements Examples {
 
 	@Test
     public void testLoad_test_1() {
-    	IVarTree vt = VarTreeUtil.newVarTree();
+    	final IVarTree vt = VarTreeUtil.newVarTree();
         IOilImplID[] oids = OilImplFactory_Impl.getAnInstance(vt).getImplNames();
         assertNotNull(oids);
         assertEquals(oids.length , 0);
@@ -59,16 +61,24 @@ public class OilImplementationMergeTest implements Examples {
         assertNotNull(oids);
         assertEquals(oids.length , 1);
         
-        (new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1_IMPL_ONLY_OS.getBytes()), vt);
-        (new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1_IMPL_ONLY_ALARM.getBytes()), vt);
+        
+		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1_IMPL_ONLY_OS.getBytes()), vt);
+		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1_IMPL_ONLY_ALARM.getBytes()), vt);
+	        
 
         assertEquals(OilImplFactory_Impl.getAnInstance(vt).getImplNames().length , 1);
         
         OilImplFactory_Impl.getAnInstance(vt).clear();
 
         (new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1_IMPL_ONLY_OS.getBytes()), vt);
-        (new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1_IMPL_ONLY_ALARM.getBytes()), vt);
+		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1_IMPL_ONLY_ALARM.getBytes()), vt);
+
+        assertEquals(OilImplFactory_Impl.getAnInstance(vt).getImplNames().length , 1);
         
+        OilImplFactory_Impl.getAnInstance(vt).clear();
+
+		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_1_IMPL_ONLY_ALARM.getBytes()), vt);
+
         assertEquals(OilImplFactory_Impl.getAnInstance(vt).getImplNames().length , 1);
     }
 

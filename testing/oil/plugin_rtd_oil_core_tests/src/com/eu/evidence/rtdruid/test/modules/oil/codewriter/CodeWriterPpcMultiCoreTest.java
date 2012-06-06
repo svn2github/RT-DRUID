@@ -208,6 +208,7 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 	    System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
 	}
 	
+	@Test
 	public void testIrqNested() {
 	    final String text = 	
 	    		"CPU test_application {\n"+
@@ -301,7 +302,7 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 	    System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
 	}
 	
-
+	@Test
 	public void testMultiStack() {
 	    final String text = 	
 			"CPU test_application {\n" +
@@ -385,6 +386,7 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 	    System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(res.vt)));
 	}
 	
+	@Test
 	public void testPragmaMultiStack() {
 	    final String text = 	
 			"CPU test_application {\n" +
@@ -470,7 +472,7 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 	}
 
 
-
+	@Test
 	public void testMpc567_alarm_counter_incr_multi() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +
@@ -578,6 +580,7 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
     	commonWriterTest(text, 2);
 	}
 
+	@Test
 	public void testMpc567_alarm_counter_incr_multi_remote_counter() {
 	    final String text = "CPU test_application {\n" +
 			"\n" +

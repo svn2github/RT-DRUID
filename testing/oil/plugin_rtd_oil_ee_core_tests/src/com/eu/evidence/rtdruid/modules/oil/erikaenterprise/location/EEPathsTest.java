@@ -1,8 +1,9 @@
 package com.eu.evidence.rtdruid.modules.oil.erikaenterprise.location;
 
 
+
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
+import org.junit.Assume;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.modules.oil.codewriter.options.PreferenceStorage;
@@ -36,7 +38,7 @@ public class EEPathsTest {
 	}
 	
 	@Test
-	public void testConfEe_base() {
+	public void testConfEe_base() throws CoreException, IOException {
 		String pkg_name = "/" + getClass().getPackage().getName().replace('.', '/') + "/";
 		{
 			List<EE_src_distr> a1 = EEPaths.parseAllEEsrcExtensions();
@@ -49,11 +51,6 @@ public class EEPathsTest {
 			check(".", a2);
 		}
 		{
-			PreferenceStorage.getCommonIstance().load(getClass().getClassLoader().getResourceAsStream(pkg_name+"eebase_absolute_path.properties"));
-			List<EE_src_distr> a2 = EEPaths.parseAllEEsrcExtensions();
-			check("c:/", a2);
-		}
-		{
 			PreferenceStorage.getCommonIstance().load(getClass().getClassLoader().getResourceAsStream(pkg_name+"eebase_eclipse_location.properties"));
 			List<EE_src_distr> a2 = EEPaths.parseAllEEsrcExtensions();
 			check("${eclipse_home}/plugins", a2);
@@ -63,29 +60,35 @@ public class EEPathsTest {
 			List<EE_src_distr> a2 = EEPaths.parseAllEEsrcExtensions();
 			check("${eclipse_home}/..", a2);
 		}
-
-
 	}
 	
-	protected void check(String expectedExpression, List<EE_src_distr> values) {
+	/**
+	 * This test runs only on windows
+	 * @throws IOException 
+	 * @throws CoreException 
+	 */
+	@Test
+	public void testConfAbsoulteWinEe_base() throws CoreException, IOException {
+		String pkg_name = "/" + getClass().getPackage().getName().replace('.', '/') + "/";
+		Assume.assumeTrue(new File("c:/").exists());
+		{
+			PreferenceStorage.getCommonIstance().load(getClass().getClassLoader().getResourceAsStream(pkg_name+"eebase_absolute_path.properties"));
+			List<EE_src_distr> a2 = EEPaths.parseAllEEsrcExtensions();
+			check("c:/", a2);
+		}
+	}
+	
+	protected void check(String expectedExpression, List<EE_src_distr> values) throws CoreException, IOException {
 		
 		IStringVariableManager isvm = VariablesPlugin.getDefault().getStringVariableManager();
-		assert(isvm != null);
+		assertNotNull(isvm);
 		
 		String expectedFile = null;
-		try {
-			expectedFile = isvm.performStringSubstitution(expectedExpression, true);
-		} catch (CoreException e) {
-			fail(e.getMessage());
-		}
+		expectedFile = isvm.performStringSubstitution(expectedExpression, true);
 		
 		File cRoot = new File(expectedFile); 
 		String expectedPath = null;
-		try {
-			expectedPath = cRoot.getCanonicalPath();
-		} catch (IOException e) {
-			fail(e.getMessage());
-		}
+		expectedPath = cRoot.getCanonicalPath();
 
 		
 		boolean found = false;
@@ -94,9 +97,8 @@ public class EEPathsTest {
 			found |= expectedPath.equals(v.erikaFilesLocation);
 		}
 		
-		System.out.println(expectedExpression + "\t" +found+"\t" + values);
+//		System.out.println(expectedExpression + "\t" +found+"\t" + values);
 		
 		assertTrue(found);
-
 	}
 }

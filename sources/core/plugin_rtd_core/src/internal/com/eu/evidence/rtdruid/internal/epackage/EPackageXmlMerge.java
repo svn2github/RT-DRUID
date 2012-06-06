@@ -115,10 +115,11 @@ public class EPackageXmlMerge implements IEPackageMerge {
 		}
 
 		public String getId(Element o) {
+			String attrId = "details".equalsIgnoreCase(getCategory(o)) ? "key" : "name";
 			NamedNodeMap attrs = o.getAttributes();
 			for (int i = 0; i<attrs.getLength(); i++) {
 				Node attr = attrs.item(i);
-				if ("name".equalsIgnoreCase(attr.getNodeName())) {
+				if (attrId.equalsIgnoreCase(attr.getNodeName())) {
 					return attr.getNodeValue();
 				}
 			}

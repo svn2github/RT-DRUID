@@ -8,6 +8,8 @@ package com.eu.evidence.rtdruid.test.modules.jscan.common;
 
 import java.io.IOException;
 
+import org.junit.Test;
+
 import com.eu.evidence.rtdruid.internal.modules.jscan.AbstractCompleteTest;
 import com.eu.evidence.rtdruid.internal.modules.jscan.common.StackOptimization;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -21,10 +23,6 @@ import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class StackOptimizationTest extends AbstractCompleteTest{
-	
-	public StackOptimizationTest(String name) {
-		super(name);
-	}
 	
 	String[] example1 = {
 			// input
@@ -367,6 +365,7 @@ public class StackOptimizationTest extends AbstractCompleteTest{
 		};
 
 		
+		@Test
 		public void test1() throws IOException {
 			IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 			

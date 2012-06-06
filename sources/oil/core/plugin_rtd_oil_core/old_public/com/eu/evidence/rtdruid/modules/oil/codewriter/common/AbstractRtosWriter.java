@@ -35,6 +35,7 @@ import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
 import com.eu.evidence.rtdruid.vartree.IVariable;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.GenRes;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.Task;
 import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
@@ -466,7 +467,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			/*******************************************************************
 			 * Search tasks
 			 ******************************************************************/
-			
+System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));			
 			// use class TaskSet to search all tasks mapped to current rtos
 			TaskSet ts = new TaskSet(vt, sysName);
 			ts.setProperty(Task.STR_TASK_TYPE, "", false);

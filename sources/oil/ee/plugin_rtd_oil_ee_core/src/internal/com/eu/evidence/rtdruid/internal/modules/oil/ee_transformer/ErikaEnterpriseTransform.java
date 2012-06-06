@@ -25,6 +25,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplID;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
@@ -34,6 +35,7 @@ import com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTreePointer;
+import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
@@ -274,11 +276,60 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 
 
 			storeInsideAOilVar(curr, current.os, id);
+			
+			{ // move vars outside OilVar
+				IVarTreePointer oilVtp = (IVarTreePointer) curr.clone();
+				IVarTreePointer osVtp = (IVarTreePointer) curr.clone();
+				osVtp.goParent();
+
+				final String path = (new OilPath(OilObjectType.OS, null)).getPath();
+				
+				{ // ----------- CPU_CLOCK ------------
+					
+					for (String s: getEnums(oilVtp, path+"CPU_DATA")) {
+					
+						IVarTreePointer lvtp = extract(oilVtp, path +"CPU_DATA"+S+s+S+"CPU_CLOCK");
+						if (lvtp!= null) {
+							String[] pNames = {
+									DPKG.getCpu_Speed().getName()
+							};
+							String[] pTypes = {
+									DPKG.getCpu_Speed().getName()
+							};
+							
+							
+							IVariable var = lvtp.getVar();
+							if (var != null && var.get() != null) {
+								lvtp.setVar(null);
+								// remove data
+	//							lvtp.goParent();
+	//							lvtp.destroy();
+	
+								lvtp = osVtp.clone().makePath(pNames, pTypes);
+								lvtp.setVar(var);
+							}
+						}
+							
+					}
+				}
+			}
+
 		}
 
 		return makeRtosId(cpuName, rtosName);
 	}
-	
+
+	private List<String> getEnums(IVarTreePointer vtp, String path) {
+		
+		vtp = vtp.clone();
+		boolean ok = vtp.go(path); //+ VARIANT_ELIST);
+		ArrayList<String> answer = new ArrayList<String>();
+		for (ok &= vtp.goFirstChild(); ok; ok&=vtp.goNextSibling()) {
+			answer.add(vtp.getName());
+		}
+		return answer;
+	}
+
 	
 	/* (non-Javadoc)
 	 * @see rtdruid.modules.oil.transform.SimpleTransform#storeTasks(rtdruid.vartree.IVarTreePointer, org.w3c.dom.Element, rtdruid.modules.oil.vtextensions.OilImplID, java.lang.String)
@@ -521,6 +572,7 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 		
 		switch (objType) {
 		case IOilObjectList.OS: {
+			HashMap<String, String> add = new HashMap<String, String>(); 
 
 			ISimpleGenRes tmp = new SimpleGenRes(object.getName().contains("" + DataPath.SEPARATOR) ? extractRtosName(object.getName()) : "EE",
 						object.getPath());
@@ -533,6 +585,49 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 			}
 			
 			object = tmp;
+			{ // add CPU_SPEED
+				IVarTreePointer vtp = vt.newVarTreePointer();
+				boolean ok = vtp.goAbsolute(object.getPath());
+				ok &= vtp.goParent();
+				ok &= vtp.go(DPKG.getCpu_Speed().getName());
+				if (ok) {
+					IVariable v = vtp.getVar();
+					if (v != null && v.get() != null) {
+						String speedt = v.toString();
+						if (!speedt.isEmpty() && !(""+null).equals(speedt)) {
+							double factor = 1;
+							if (speedt.toLowerCase().contains("ghz")) {
+								factor = 1000;
+								speedt = speedt.toLowerCase().replace("ghz", "").trim();
+							} else if (speedt.toLowerCase().contains("mhz")) {
+								speedt = speedt.toLowerCase().replace("mhz", "").trim();
+							} else if (speedt.toLowerCase().contains("khz")) {
+								factor = 0.001;
+								speedt = speedt.toLowerCase().replace("khz", "").trim();
+							} else if (speedt.toLowerCase().contains("hz")) {
+								factor = 0.000001;
+								speedt = speedt.toLowerCase().replace("hz", "").trim();
+							}
+							double speed = 0;
+							try {
+								speed = Double.parseDouble(speedt);
+							} catch (NumberFormatException e) {
+								speed = 0;
+							}
+							
+							if (speed != 0) {
+								String oilPath = object.getPath() +S+ (new OilPath(OilObjectType.OS, null)).getPath()+ S + "CPU_DATA";
+
+								for (String s: CommonUtils.getAllChildrenEnumType(vt, oilPath, null)) {
+									add.put("/CPU_DATA/"+s, INDENT+INDENT+INDENT+"CPU_CLOCK = " + (speed*factor) + ";\n");
+								}
+							}
+						}
+					}
+				}
+			}
+			object.setObject(SGR_ADDITIONAL, add);
+			
 		}
 			break;		
 			

@@ -6,17 +6,16 @@
 
 package com.eu.evidence.rtdruid.internal.modules.jscan.offset;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+import com.eu.evidence.rtdruid.tests.AbstractNamedTest;
 
 /**
  * @author sachin
  *
  */
-
-
-public class OffsetDMSchedulabilityCompleteTest extends TestCase {
-	
-	OffsetDMSchedulabilityComplete o ;
+public class OffsetDMSchedulabilityCompleteTest extends AbstractNamedTest {
 	
 	int 	numTasks = 3 ;
 	int 	testCases = 5 ;
@@ -67,16 +66,9 @@ public class OffsetDMSchedulabilityCompleteTest extends TestCase {
 	
 	
 	
-	/*
-	 * @see TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		this.o = new OffsetDMSchedulabilityComplete();
-		super.setUp();
-	}
-	
-	
+@Test
 public void testCheckTask() {
+	OffsetDMSchedulabilityComplete o = new OffsetDMSchedulabilityComplete();
 		int i , k;
 		
 		int testCases = 5 ;
@@ -105,7 +97,9 @@ public void testCheckTask() {
 	}
 
 
+@Test
 public void testResponseTime() {
+	OffsetDMSchedulabilityComplete o = new OffsetDMSchedulabilityComplete();
 	int 	numTasks = 3 ;
 	int 	testCases = 1 ;
 	
@@ -159,8 +153,9 @@ public void testResponseTime() {
 	}
 
 
-
+@Test
 public void testWhenWcetZero() {
+	OffsetDMSchedulabilityComplete o = new OffsetDMSchedulabilityComplete();
 	int 	numTasks = 3 ;
 	int 	testCases = 3 ;
 	
@@ -225,8 +220,10 @@ public void testWhenWcetZero() {
 	}
 
 
+@Test
 public void testWhenHighLoad() {
-	
+	OffsetDMSchedulabilityComplete o = new OffsetDMSchedulabilityComplete();
+
 	int 	testCases = 1 ;
 	
 	long[][] period = 	{	

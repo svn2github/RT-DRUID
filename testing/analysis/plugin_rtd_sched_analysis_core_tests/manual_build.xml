@@ -73,6 +73,7 @@
 			<include name="testSuite.properties/"/>
 			<include name="META-INF/"/>
 			<include name="epl-v10.html"/>
+			<include name="testSuite.properties"/>
 		</fileset>
 
 		<antcall target="common_gather.bin.parts">

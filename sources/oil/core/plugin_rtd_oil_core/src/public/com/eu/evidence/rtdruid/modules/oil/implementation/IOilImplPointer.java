@@ -29,7 +29,7 @@ public interface IOilImplPointer {
 	 * 
 	 * @return a distinct OilImplPointer (that point to the same node)
 	 */
-	public Object clone();
+	public IOilImplPointer clone();
 
 	/**
 	 * Tries to move pointer to node that is the parent of current node.

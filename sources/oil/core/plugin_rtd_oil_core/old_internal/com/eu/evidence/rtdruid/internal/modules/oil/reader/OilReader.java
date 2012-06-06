@@ -11,18 +11,26 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.w3c.dom.Document;
 
+import com.eu.evidence.rtdruid.Rtd_corePlugin;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.epackage.EPackageFactory;
+import com.eu.evidence.rtdruid.epackage.EPackageUtility;
+import com.eu.evidence.rtdruid.epackage.IEPackageMerge;
+import com.eu.evidence.rtdruid.epackage.RTDEPackageBuildException;
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplCollector;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilImplFactory;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplementation;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilEcoreCreator;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IOilReader;
 import com.eu.evidence.rtdruid.modules.oil.transform.IOilTransform;
 import com.eu.evidence.rtdruid.modules.oil.transform.OilTransformFactory;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
+import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 /**
  * This class asks for a Oil file, looks through it and stores its data in
@@ -182,12 +190,35 @@ final public class OilReader implements IOilReader {
 	        oid = OilTransformFactory.INSTANCE.getOilId(parsed.name);
 	
 	        // Add the implemetation part to OilImplFactory
-	        if (oif.add(oid, parsed.getImpl())) {
+	        IOilImplementation oldImpl = oif.getImpl(oid);
+	        if (oif.merge(oid, parsed.getImpl())) {
 	        	// compute a new EPackage !!!
 	        	if (vt.newVarTreePointer().goFirstChild()) {
-	        		throw new RuntimeException("Unsupported load of a custom oil file in an already filled tree");
+
+	        		try {
+	    				EPackage ePkg = createEPackage(oif, false);
+						VarTreeUtil.mergeEPackage(vt, ePkg);
+					} catch (RTDEPackageBuildException e) {
+						oif.remove(oid);
+						if (oldImpl != null) {
+							oif.add(oldImpl);
+						}
+						
+						throw new RuntimeException(e);
+					}
+
 	        	} else {
-	        		EPackageFactory epkgFactory = EPackageFactory.getFactory();
+
+	        		try {
+		        		VarTreeUtil.VarTreeCreator.addEPackage(vt, createEPackage(oif, true));
+		    		} catch (RTDEPackageBuildException e) {
+						oif.remove(oid);
+						if (oldImpl != null) {
+							oif.add(oldImpl);
+						}
+		    			throw new RuntimeException(e);
+		    		}
+
 	        	}
 	        } else {
 	            throw new RuntimeException("The oil id ("+oid+") is already assigned to a different Oil Implementation: It's impossible to load the given oil data.");
@@ -218,6 +249,29 @@ final public class OilReader implements IOilReader {
 
     }
     
+    
+    private EPackage createEPackage(OilImplFactory oif, boolean addBase) throws RTDEPackageBuildException {
+		IEPackageMerge merger = EPackageUtility.instance.getPackageMerge();
+		merger.addEPackage(EcoreFactory.eINSTANCE.createEPackage());
+
+		if (addBase) {
+    		EPackageFactory epkgFactory = EPackageFactory.getFactory();
+    		EPackage base = epkgFactory.getEPackageFactoryElement(Rtd_corePlugin.EPACKAGE_BASE_ID).getFactory().getEPackage();
+    		merger.addEPackage(base);
+		}
+
+		IOilImplID[] ids = oif.getImplNames();
+		for (IOilImplID id : ids) {
+			IOilImplementation impl = oif.getImpl(id);
+			
+			OilEcoreCreator oec = OilEcoreCreator.getCreator(impl);
+			EPackage ePkg = oec.buildPackage();
+			if (ePkg != null) {
+				merger.addEPackage(ePkg);
+			}
+		}
+		return merger.getResult();
+    }
     
     public Document loadAsXml(InputStream stream, String fileName, String filePath) {
     	IncludeSupport incSup = new IncludeSupport(".");

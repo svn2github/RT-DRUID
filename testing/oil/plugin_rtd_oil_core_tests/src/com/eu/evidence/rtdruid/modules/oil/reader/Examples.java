@@ -604,6 +604,122 @@ interface Examples {
 		"        };" +
 		"    };";
 
+    String OIL_TEST_2_IMPL_ONLY =
+		"    OIL_VERSION = \"2.4\";" +
+		"    IMPLEMENTATION something {" +
+		"        OS {" +
+		"            STRING ERIKA_OPT[];" +
+		"            STRING APP_SRC[];" +
+		"            STRING THUMB_SRC[];" +
+		"            ENUM [STANDARD, EXTENDED] STATUS;" +
+		"            BOOLEAN STARTUPHOOK;" +
+		"            BOOLEAN ERRORHOOK;" +
+		"            BOOLEAN SHUTDOWNHOOK;" +
+		"            BOOLEAN PRETASKHOOK;" +
+		"            BOOLEAN POSTTASKHOOK;" +
+		"            BOOLEAN USEGETSERVICEID;" +
+		"            BOOLEAN USEPARAMETERACCESS;" +
+		"            BOOLEAN USERESSCHEDULER = TRUE;" +
+		"            BOOLEAN [" +
+		"                    TRUE {" +
+		"                            BOOLEAN [" +
+		"                                    TRUE {" +
+		"                                            UINT32 SYS_SIZE;" +
+		"                                            UINT32 IRQ_SIZE;" +
+		"                                            }," +
+		"                                    FALSE" +
+		"                            ] IRQ_STACK;" +
+		"                            ENUM [" +
+		"                                SHARED," +
+		"                                PRIVATE {" +
+		"                                    UINT32 SYS_SIZE;" +
+		"                                    UINT32 IRQ_SIZE;" +
+		"                                }" +
+		"                            ] DUMMY_STACK;" +
+		"                    }," +
+		"                    FALSE" +
+		"            ] MULTI_STACK;" +
+		"            UINT32 STACK_TOP;" +
+		"            UINT32 STACK_BOTTOM;" +
+		"            UINT32 SYS_SIZE;" +
+		"            UINT32 IRQ_SIZE;" +
+		"            UINT32 SVC_SIZE;" +
+		"            UINT32 FIQ_SIZE;" +
+		"            UINT32 ABT_SIZE;" +
+		"            UINT32 UND_SIZE;" +
+		"            STRING HW_TYPE = \"ARM7\";" +
+		"            ENUM [" +
+		"                    FP {" +
+		"                            BOOLEAN NESTED_IRQ;" +
+		"                    }," +
+		"                    SRPT {" +
+		"                            BOOLEAN NESTED_IRQ;" +
+		"                    }," +
+		"                    BCC1," +
+		"                    BCC2," +
+		"                    ECC1," +
+		"                    ECC2" +
+		"            ] KERNEL_TYPE = BCC1;" +
+		"" +
+		"    	ENUM [ALL, OS_SECTION, TASK_SECTION, RESOURCE_SECTION, STACK_SECTION, ALARM_SECTION] ORTI_SECTIONS[];" +
+		"        };" +
+		"        TASK {" +
+		"            UINT32 PRIORITY;" +
+		"            UINT32 ACTIVATION = 1;" +
+		"            ENUM [NON, FULL] SCHEDULE;" +
+		"    	EVENT_TYPE EVENT[];" +
+		"            UINT32 DISPATCH_PRIORITY;" +
+		"            ENUM [" +
+		"                SHARED," +
+		"                PRIVATE {" +
+		"                    UINT32 SIZE;" +
+		"                    UINT32 SYSTEM_SIZE;" +
+		"                }" +
+		"            ] STACK;" +
+		"            RESOURCE_TYPE RESOURCE[];" +
+		"            BOOLEAN [" +
+		"                TRUE" +
+		"                {" +
+		"                    APPMODE_TYPE APPMODE[];" +
+		"                }," +
+		"                FALSE" +
+		"            ] AUTOSTART;" +
+		"        };" +
+		"        RESOURCE {" +
+		"                    ENUM [" +
+		"                            STANDARD," +
+		"                            LINKED {" +
+		"                                    RESOURCE_TYPE LINKEDRESOURCE;" +
+		"                            }," +
+		"                            INTERNAL" +
+		"                    ] RESOURCEPROPERTY;" +
+		"        };" +
+		"        EVENT {" +
+		"            UINT32 WITH_AUTO MASK = AUTO;" +
+		"        };" +
+		"        COUNTER {" +
+		"            UINT32 MINCYCLE;" +
+		"            UINT32 MAXALLOWEDVALUE;" +
+		"            UINT32 TICKSPERBASE;" +
+		"        };" +
+		"        APPMODE {};" +
+		"        ALARM {" +
+		"            COUNTER_TYPE COUNTER;" +
+		"            ENUM [" +
+		"                    ACTIVATETASK {" +
+		"                            TASK_TYPE TASK;" +
+		"                    }," +
+		"                    SETEVENT {" +
+		"                            TASK_TYPE TASK;" +
+		"                            EVENT_TYPE EVENT;" +
+		"                    }," +
+		"                    ALARMCALLBACK {" +
+		"                            STRING ALARTMCALLBACKNAME;" +
+		"                    }" +
+		"            ] ACTION;" +
+		"        };" +
+		"    };";
+
     String OIL_TEST_SENZA_IMPL =
 		"    CPU prova_Janus {" +
 		"        OS erika_Janus {" +

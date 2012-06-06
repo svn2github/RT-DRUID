@@ -5,21 +5,22 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.project.templates;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import com.eu.evidence.rtdruid.internal.modules.project.templates.ExampleTemplate;
-import com.eu.evidence.rtdruid.internal.modules.project.templates.SearchTemplates;
-
-import junit.framework.TestCase;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests about Example Templates
  * 
  * @author Nicola Serreli
  */
-public class SearchTemplatesTest extends TestCase {
+public class SearchTemplatesTest {
 
+	@Test
 	public void testXMLParser() {
 		final String category = "dspic/test su multi";
 		final String title = "Title of this test";
@@ -169,6 +170,8 @@ public class SearchTemplatesTest extends TestCase {
 	 *  "example2 -> with config file (title = example2)"
 	 *  "example3 -> with config file (title = example3)"
 	 */
+	@Test
+	@Ignore
 	public void testSearchFS() {
 		final String FS_PATH = "C:\\evidence\\examples\\";
 		
@@ -187,7 +190,9 @@ public class SearchTemplatesTest extends TestCase {
 	 *  "example2 -> with config file (title = example2)"
 	 *  "example3 -> with config file (title = example3)"
 	 */
+	@Test
 	public void testSearchAll() {
+		// TODO: rewrote
 		
 		ExampleTemplate[] answer = SearchTemplates.getConfigTemplates();
 		

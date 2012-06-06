@@ -5,11 +5,14 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.jscan;
 
-
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
+
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
@@ -24,10 +27,7 @@ import com.eu.evidence.rtdruid.vartree.abstractions.old.TaskSet;
  */
 public class CompleteTest2 extends AbstractCompleteTest {
 	
-	public CompleteTest2(String name) {
-		super(name);
-	}
-	
+	@Test
 	public void test1() throws IOException {
 
 		String[] testcase1 = {
@@ -410,11 +410,15 @@ public class CompleteTest2 extends AbstractCompleteTest {
 					, (IVariable) null);
 		}
 		
+		System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt));
 		
-		check(vt, Vt2StringUtilities.loadString(testcase1[1]));
+		IVarTree vt2 =Vt2StringUtilities.loadString(testcase1[1]);
+		System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt2));
+		check(vt, vt2);
 	}
 	
 
+	@Test
 	public void test2() throws IOException {
 
 		String[] testcase4 = {
@@ -887,33 +891,34 @@ System.out.println("\nFirst check\n");
 		// check for resources
 		TaskSet ts = new TaskSet(vt, system, mode);
 		ts.setProperty("resource", "", false);
-		assertEquals(ts.getPrefixNumber() , 2);
-		assertEquals(ts.getSize(1) , 4);
+		assertEquals(1, ts.getPrefixNumber());
+		final int cpuId = 0;
+		assertEquals(4, ts.getSize(cpuId));
 		{
-			Task t = (Task) ts.getItem(1, 0);
-			assertTrue("Task\\\\1".equals(t.getName()));
+			Task t = (Task) ts.getItem(cpuId, 0);
+			assertEquals("Task\\\\1", t.getName());
 			Enumeration<String> en = t.getAllResources();
 			assertTrue(en.hasMoreElements());
-			assertTrue("Mutex/1".equals( en.nextElement()));
-			assertFalse(en.hasMoreElements());
+			assertEquals("Mutex/1",  en.nextElement());
+			assertEquals(false, en.hasMoreElements());
 		}
 		{
-			Task t = (Task) ts.getItem(1, 1);
-			assertTrue("Task//2".equals(t.getName()));
+			Task t = (Task) ts.getItem(cpuId, 1);
+			assertEquals("Task//2", t.getName());
 			Enumeration<String> en = t.getAllResources();
 			assertTrue(en.hasMoreElements());
-			assertTrue("Mutex/1".equals( en.nextElement()));
-			assertFalse(en.hasMoreElements());
+			assertEquals("Mutex/1",  en.nextElement());
+			assertEquals(false, en.hasMoreElements());
 		}
 		{
-			Task t = (Task) ts.getItem(1, 2);
-			assertTrue("/Task\\\\ISR1/".equals(t.getName()));
-			assertFalse(t.getAllResources().hasMoreElements());
+			Task t = (Task) ts.getItem(cpuId, 2);
+			assertEquals("/Task\\\\ISR1/", t.getName());
+			assertEquals(false, t.getAllResources().hasMoreElements());
 		}
 		{
-			Task t = (Task) ts.getItem(1, 3);
-			assertTrue("Task/ISR2".equals(t.getName()));
-			assertFalse(t.getAllResources().hasMoreElements());
+			Task t = (Task) ts.getItem(cpuId, 3);
+			assertEquals("Task/ISR2", t.getName());
+			assertEquals(false, t.getAllResources().hasMoreElements());
 		}
 		
 		

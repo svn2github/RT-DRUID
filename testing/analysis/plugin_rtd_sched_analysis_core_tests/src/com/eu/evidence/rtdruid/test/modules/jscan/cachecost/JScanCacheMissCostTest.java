@@ -5,9 +5,11 @@
  */
 package com.eu.evidence.rtdruid.test.modules.jscan.cachecost;
 
-
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.modules.jscan.AbstractCompleteTest;
 import com.eu.evidence.rtdruid.internal.modules.jscan.JScan;
@@ -26,10 +28,6 @@ import com.eu.evidence.rtdruid.vartree.tools.Search;
  * @author Nicola Serreli
  */
 public class JScanCacheMissCostTest extends AbstractCompleteTest {
-	
-	public JScanCacheMissCostTest(String name) {
-		super(name);
-	}
 	
 	public final static String[] example1 = {
 		// input
@@ -433,6 +431,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 		""	};
 
 
+	@Test
 	public void testPrepareData() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
@@ -470,6 +469,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 	}
 
 	
+	@Test
 	public void test1() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
@@ -493,6 +493,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 	}
 	
 
+	@Test
 	public void test1Compare() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
@@ -510,7 +511,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 
 	
 	
-	
+	@Test
 	public void test2() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example2[0]);
 		
@@ -533,7 +534,7 @@ public class JScanCacheMissCostTest extends AbstractCompleteTest {
 		//check(vt, Utility.loadString(example1[1]));
 	}
 	
-
+	@Test
 	public void test2Compare() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example2[0]);
 		

@@ -5,15 +5,17 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.jscan.offset;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import com.eu.evidence.rtdruid.tests.AbstractNamedTest;
 
 /**
  * @author sachin
  *
  */
-public class OffsetEDFSchedulabilityCompleteTest extends TestCase {
-	
-	OffsetEDFSchedulabilityComplete o ;
+public class OffsetEDFSchedulabilityCompleteTest extends AbstractNamedTest {
 	
 	int 	numTasks = 3 ;
 	int 	testCases = 1 ;
@@ -64,16 +66,9 @@ public class OffsetEDFSchedulabilityCompleteTest extends TestCase {
 		
 	double[][] rt = {  { 2,2 ,4 } };
 	
-	/*
-	 * @see TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		this.o = new OffsetEDFSchedulabilityComplete();
-		super.setUp();
-	}
-	
-	
+@Test	
 public void testCheckTask() {
+	OffsetEDFSchedulabilityComplete o = new OffsetEDFSchedulabilityComplete();
 		int i , k;
 		
 		boolean[] IsSchedulable ;

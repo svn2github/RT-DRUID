@@ -5,11 +5,16 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.jscan;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 
 import java.io.IOException;
 
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -20,10 +25,6 @@ import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
  * @author Nicola Serreli
  */
 public class CompleteTest1 extends AbstractCompleteTest {
-	
-	public CompleteTest1(String name) {
-		super(name);
-	}
 	
 	public final static String[] example1 = {
 		// input
@@ -307,6 +308,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	};
 
 	
+	@Test
 	public void test1() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
@@ -323,6 +325,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 		check(vt, Vt2StringUtilities.loadString(example1[1]));
 	}
 
+	@Test
 	public void test1Undo() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example1[0]);
 		
@@ -357,6 +360,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	}
 
 	
+	@Test
 	public void test1AutoUndo() throws IOException {
 		String example1bis =
 			"<!DOCTYPE SYSTEM SYSTEM \"evidence_0.2.dtd\">" +
@@ -706,6 +710,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 			"</SYSTEM>"
 		};
 
+	@Test
 	public void test2() throws IOException {
 		IVarTree vt = Vt2StringUtilities.loadString(example2[0]);
 		
@@ -868,6 +873,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
+	@Test
 	public void test3() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example3[0]);
 		
@@ -1030,6 +1036,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
+	@Test
 	public void test4() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example4[0]);
 		
@@ -1216,6 +1223,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
+	@Test
 	public void test5() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example5[0]);
 		
@@ -1402,6 +1410,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
+	@Test
 	public void test6() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example6[0]);
 		
@@ -1608,6 +1617,7 @@ public class CompleteTest1 extends AbstractCompleteTest {
 	"</SYSTEM>"
 		};
 
+	@Test
 	public void test7() throws IOException {
 		IVarTree vt =Vt2StringUtilities.loadString(example7[0]);
 		

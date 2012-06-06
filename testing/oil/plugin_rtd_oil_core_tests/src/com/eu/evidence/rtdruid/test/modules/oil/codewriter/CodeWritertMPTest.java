@@ -145,7 +145,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "	 EVENT evento1 {};\n"
 			+ "};\n";
 
-	public void testCodeWrite1() {
+	public void testCodeWrite1() throws OilCodeWriterException {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_2_NIOS.getBytes()),
 				vt);
@@ -168,12 +168,7 @@ public class CodeWritertMPTest extends TestCase {
 				DataPackage.eINSTANCE.getRtos().getName()));
 
 		IOilWriterBuffer[] buffers = null;
-		try {
-			buffers = RtosFactory.INSTANCE.write(vt, new String[] { prefix1, prefix2 });
-		} catch (OilCodeWriterException e) {
-			e.printStackTrace();
-			assertTrue(false);
-		}
+		buffers = RtosFactory.INSTANCE.write(vt, new String[] { prefix1, prefix2 });
 
 		assertTrue(buffers != null);
 		assertTrue(buffers.length == 2);
