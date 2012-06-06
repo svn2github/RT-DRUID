@@ -22,6 +22,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OsType;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
@@ -555,7 +556,7 @@ public class SectionWriterHalTricore extends SectionWriter
 	 */
 	private void writeMakeFile(final IOilObjectList ool) {
 		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
-		HostOsUtils wrapper = HostOsUtils.common;
+		OsType wrapper = HostOsUtils.common.getTarget();
 
 		StringBuffer sbMakefile = new StringBuffer(commentWriterMf
 				.writerBanner("Tricore"));
@@ -587,7 +588,7 @@ public class SectionWriterHalTricore extends SectionWriter
 			}
 			
 			String platformStr = "";
-			if (HostOsUtils.common.getCurrentSystem() == HostOsUtils.LINUX) {
+			if (wrapper == OsType.Linux) {
 				platformStr = "export PLATFORM := LINUX\n\n";
 			} else {
 				platformStr = "export PLATFORM := CYGWIN\n\n";

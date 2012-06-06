@@ -22,6 +22,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OsType;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtdruidConfiguratorNumber;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
@@ -206,7 +207,7 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 			 ******************************************************************/
 			{
 				final String eeBasePath = parent.getEE_location();
-				HostOsUtils wrapper = HostOsUtils.common;
+				OsType wrapper = HostOsUtils.common.getTarget();
 				sbMakefile.append(
 						commentWriterMf.writerBanner("Erika base directory") +
 						"ifdef ERIKA_FILES\n"+

@@ -21,6 +21,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OsType;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtdruidConfiguratorNumber;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
@@ -28,7 +29,6 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEoptConstant;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
 /**
@@ -165,7 +165,7 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
 			 **********************************************************************/
 		
 			final String eeBasePath = parent.getEE_location();
-			HostOsUtils wrapper = HostOsUtils.common;
+			OsType wrapper = HostOsUtils.common.getTarget();
 			sbCommon_mk.append(
 					commentWriterMf.writerBanner("Makefile created by RT-Druid\n\nCommon file") +"\n"+
 					commentWriterMf.writerSingleLineComment("Erika base directory") +

@@ -27,6 +27,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.DefaultRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OsType;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.ResourceList;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
@@ -176,12 +177,12 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		answer.addAll(Arrays.asList(super.extractKeys()));
 		
 		{ // HOST OS
-			HostOsUtils hostOs = HostOsUtils.common;
-			if (hostOs.getCurrentSystem() == HostOsUtils.CYGWIN) {
+			OsType wrapper = HostOsUtils.common.getTarget();
+			if (wrapper == OsType.Cygwin) {
 				if (!answer.contains(IEEWriterKeywords.DEF_HOST_OS_CYGWIN)) {
 					answer.add(IEEWriterKeywords.DEF_HOST_OS_CYGWIN);
 				}
-			} else if (hostOs.getCurrentSystem() == HostOsUtils.LINUX) {
+			} else if (wrapper == OsType.Linux) {
 				if (!answer.contains(IEEWriterKeywords.DEF_HOST_OS_LINUX)) {
 					answer.add(IEEWriterKeywords.DEF_HOST_OS_LINUX);
 				}

@@ -14,6 +14,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.Rtd_oil_cdt_Plugin;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.RTDOilProjectNature;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OsType;
 import com.eu.evidence.rtdruid.ui.common.ResourceUtility;
 
 public class MyMakeBuilder {
@@ -110,7 +111,7 @@ public class MyMakeBuilder {
 	public String getFileContent() {
 		String pName = project != null ? project.getName() : "_project_name_";
 		
-		if (HostOsUtils.common.getCurrentSystem() == HostOsUtils.CYGWIN) {
+		if (HostOsUtils.common.getCurrentSystem() == OsType.Cygwin) {
 			// C:\\cygwin
 			String cygpath_base = CygwinProperties.getCygwinPath();
 			if (cygpath_base == null) {

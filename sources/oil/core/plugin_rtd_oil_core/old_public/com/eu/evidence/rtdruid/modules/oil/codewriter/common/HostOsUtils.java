@@ -12,57 +12,44 @@ import org.eclipse.core.runtime.Platform;
 public class HostOsUtils {
 
 	final static public HostOsUtils common = new HostOsUtils();
+	
+	protected OsType target;
 
-	final static public int UNKNOWN = 0;
+	final protected OsType currentSystem;
 
-	final static public int CYGWIN = 1;
-	final static public int LINUX = 2;
-
-	final protected int currentSystem;
-
-	public HostOsUtils() {
+	protected HostOsUtils() {
 		if (Platform.getOS().equals(Platform.OS_WIN32) || 
 				Platform.getOS().equals("win64")) {
-			currentSystem = CYGWIN;
+			currentSystem = OsType.Cygwin;
 		} else if (Platform.getOS().equals(Platform.OS_LINUX)) {
-			currentSystem = LINUX;
+			currentSystem = OsType.Linux;
 			
 		} else {
-			currentSystem = UNKNOWN;
+			currentSystem = OsType.Unknown;
 		}
+		
+		target = currentSystem;
 	}
 
-	public int getCurrentSystem() {
+	public OsType getCurrentSystem() {
 		return currentSystem;
 	}
-
+	
 	/**
-	 * This function wraps paths, if needed
-	 * 
-	 * @param path
-	 *            path in the file system
-	 *            
-	 * @return the same path, but protected if needed
+	 * @return the target
 	 */
-	public String wrapPath(String path) {
-		String answer = path;
-
-		switch (currentSystem) {
-		case CYGWIN:
-
-			// protect '\' chars ?
-
-			answer = "$(shell cygpath `cygpath -ms '" + path + "'`)";
-			break;
-
-		case LINUX:
-			answer = path;
-			break;
-
-		case UNKNOWN:
-		default:
-			answer = path;
+	public OsType getTarget() {
+		return target;
+	}
+	
+	/**
+	 * @param target the target to set
+	 */
+	public void setTarget(OsType target) {
+		if (target == null) {
+			target = currentSystem;
+		} else {
+			this.target = target;
 		}
-		return answer;
 	}
 }

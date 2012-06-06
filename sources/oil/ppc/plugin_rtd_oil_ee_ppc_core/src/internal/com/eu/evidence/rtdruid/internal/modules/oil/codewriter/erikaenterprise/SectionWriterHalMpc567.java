@@ -31,6 +31,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OsType;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
@@ -907,7 +908,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
          * MAKE FILE
          *  
          **********************************************************************/
-			HostOsUtils wrapper = HostOsUtils.common;
+		OsType wrapper = HostOsUtils.common.getTarget();
 
 		    StringBuffer sbMakefile_variables = new StringBuffer(commentWriterMf.writerBanner("Freescale"+mcu_type+", PPC "+cpu_type));
 		    
