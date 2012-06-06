@@ -3,8 +3,13 @@ package com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.AbstractCodeWriterTest;
+import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.DirectWriter;
 
-public class CodeWriterAutosar extends AbstractCodeWriterTest {
+public class CodeWriterAutosar extends AbstractCodeWriterTest implements DirectWriter {
+	@Override
+	public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+		return super.commonWriterTest(oil_text, expected_cpu);
+	}
 
 	@Test
 	public void testAutosar_1() {
@@ -103,7 +108,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 				"};\n";
 	    
 	    
-	    AutosarOilWriterTests.writerAutosarTest(text, 1);
+	    AutosarOilWriterTests.writerAutosarTest(this, text, 1);
 	}
 	
 	
@@ -228,7 +233,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 			"	};\n" +
 			"};\n";
   
-	    AutosarOilWriterTests.writerAutosarTest(text, 1);
+	    AutosarOilWriterTests.writerAutosarTest(this, text, 1);
 	}
 
 }

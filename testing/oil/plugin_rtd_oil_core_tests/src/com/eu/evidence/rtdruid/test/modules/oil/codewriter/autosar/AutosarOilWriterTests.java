@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Collection;
 import java.util.HashMap;
 
 import org.eclipse.core.runtime.IStatus;
@@ -22,9 +23,9 @@ import com.eu.evidence.rtdruid.io.IRTDImporter;
 import com.eu.evidence.rtdruid.io.IVTResource;
 import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OsType;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.AbstractCodeWriterTest;
+import com.eu.evidence.rtdruid.test.modules.oil.codewriter.AbstractCodeWriterTest.DefaultTestResult;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterArm7Test;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterAvr5Test;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterComTest;
@@ -65,7 +66,6 @@ import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWri
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.AutosarCodeWriterTricore1Test;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.AutosarCodeWritertMPTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.AutosarCodeWritertTest;
-import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
@@ -86,149 +86,235 @@ import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 		AutosarCodeWriterPpcMultiCoreTest.class, AutosarCodeWriterResourcesTest.class, 
 		AutosarCodeWriterRx200Test.class, AutosarCodeWritertMPTest.class, AutosarCodeWriterTricore1Test.class,
 		AutosarCodeWritertTest.class })
-public class AutosarOilWriterTests extends AbstractCodeWriterTest {
+public class AutosarOilWriterTests {
+	
+	public static interface DirectWriter {
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu);
+		public DefaultTestResult dowrite(int expected_cpu, IVarTree vt, Collection<OsType> testList);
+		public Collection<OsType> getOsSequence();
+	}
 	
 	static String VT_PROP_AUTOSAR_FORMAT = "vt_property__autosar_format";
 
-	public static class AutosarCodeWriterArm7Test extends CodeWriterArm7Test {
+	public static class AutosarCodeWriterArm7Test extends CodeWriterArm7Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
 	
-	public static class AutosarCodeWriterAvr5Test extends CodeWriterAvr5Test {
+	public static class AutosarCodeWriterAvr5Test extends CodeWriterAvr5Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterComTest extends CodeWriterComTest {
+	public static class AutosarCodeWriterComTest extends CodeWriterComTest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterCortexTest extends CodeWriterCortexTest {
+	public static class AutosarCodeWriterCortexTest extends CodeWriterCortexTest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterCosmicS12Test extends CodeWriterCosmicS12Test {
+	public static class AutosarCodeWriterCosmicS12Test extends CodeWriterCosmicS12Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterDsPicTest extends CodeWriterDsPicTest {
+	public static class AutosarCodeWriterDsPicTest extends CodeWriterDsPicTest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterMico32Test extends CodeWriterMico32Test {
+	public static class AutosarCodeWriterMico32Test extends CodeWriterMico32Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterMisraTest extends CodeWriterMisraTest {
+	public static class AutosarCodeWriterMisraTest extends CodeWriterMisraTest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterMpc567Test extends CodeWriterMpc567Test {
+	public static class AutosarCodeWriterMpc567Test extends CodeWriterMpc567Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterMpc5Test extends CodeWriterMpc5Test {
+	public static class AutosarCodeWriterMpc5Test extends CodeWriterMpc5Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterMultiEcuTest extends CodeWriterMultiEcuTest {
+	public static class AutosarCodeWriterMultiEcuTest extends CodeWriterMultiEcuTest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterMultiPic30Test extends CodeWriterMultiPic30Test {
+	public static class AutosarCodeWriterMultiPic30Test extends CodeWriterMultiPic30Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterNiosIITest extends CodeWriterNiosIITest {
+	public static class AutosarCodeWriterNiosIITest extends CodeWriterNiosIITest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterPic32Test extends CodeWriterPic32Test {
+	public static class AutosarCodeWriterPic32Test extends CodeWriterPic32Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterPpcMultiCoreTest extends CodeWriterPpcMultiCoreTest {
+	public static class AutosarCodeWriterPpcMultiCoreTest extends CodeWriterPpcMultiCoreTest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterResourcesTest extends CodeWriterResourcesTest {
+	public static class AutosarCodeWriterResourcesTest extends CodeWriterResourcesTest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterRx200Test extends CodeWriterRx200Test {
+	public static class AutosarCodeWriterRx200Test extends CodeWriterRx200Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWritertMPTest extends CodeWritertMPTest {
+	public static class AutosarCodeWritertMPTest extends CodeWritertMPTest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
-	public static class AutosarCodeWriterTricore1Test extends CodeWriterTricore1Test {
+	public static class AutosarCodeWriterTricore1Test extends CodeWriterTricore1Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
 
-	public static class AutosarCodeWritertTest extends CodeWritertTest {
+	public static class AutosarCodeWritertTest extends CodeWritertTest implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
-			return AutosarOilWriterTests.writerAutosarTest(oil_text, expected_cpu)[0];
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
 		}
 	}
 
@@ -237,24 +323,22 @@ public class AutosarOilWriterTests extends AbstractCodeWriterTest {
 	// ----------------------------------------------------------------------
 	
 	
-	public static DefaultTestResult[] writerAutosarTest(String oil_text, int expected_cpu) {
+	public static DefaultTestResult[] writerAutosarTest(DirectWriter test, String oil_text, int expected_cpu) {
+		System.out.println("Ciao");
+		System.out.flush();
 		DefaultTestResult[] answer = new DefaultTestResult[2];
-		IVarTree vt1 = loadVt(oil_text);
-		answer[0] = (new AutosarOilWriterTests()).commonWriterTest(oil_text, expected_cpu);
+		IVarTree vt1 = AbstractCodeWriterTest.loadVt(oil_text);
+		answer[0] = test.doWrite(oil_text, expected_cpu);
 		IStatus st = VarTreeUtil.compare(vt1, answer[0].vt); assertTrue(st.getMessage(), st.isOK());
 //		System.out.println("<<<--->>>\n\n" + Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(vt1)));
 //		System.out.println("<<<--->>>\n\n" + Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(answer[0].vt)));
-		
 
 		try {
-			answer[1] = commonAutosarWriterTest(oil_text, expected_cpu);
+			answer[1] = commonAutosarWriterTest(test, oil_text, expected_cpu);
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
 		
-		
-		
-
 		IOilWriterBuffer[] buffers_0 = answer[0].buffers;
 		IOilWriterBuffer[] buffers_1 = answer[1].buffers;
 		assertEquals(buffers_0.length , buffers_1.length);
@@ -268,7 +352,7 @@ public class AutosarOilWriterTests extends AbstractCodeWriterTest {
 	
 	
 	
-	public static DefaultTestResult commonAutosarWriterTest(String oil_text, int expected_cpu) throws Throwable {
+	public static DefaultTestResult commonAutosarWriterTest(DirectWriter test, String oil_text, int expected_cpu) throws Throwable {
 		{
 			String[] exp =RTD_XMI_Factory.getAllExportTypes(); 
 			assertNotNull(exp);
@@ -329,25 +413,11 @@ public class AutosarOilWriterTests extends AbstractCodeWriterTest {
 		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(autosar_vt)));
 
 		
-		
-		// -------------- search rtos ----------------
-		ITreeInterface ti = autosar_vt.newTreeInterface();
-
-		String[] prefix = CommonUtils.getAllRtos(ti);
-		assertEquals(expected_cpu, prefix.length );
-
-		// --------------- write -----------------
-
-		IOilWriterBuffer[] buffers = RtosFactory.INSTANCE.write(autosar_vt, prefix);
-
-		assertNotNull(buffers);
-		assertEquals(expected_cpu, buffers.length );
-		for (int i=0; i<expected_cpu; i++)
-			System.out.println("buff " + i + ":\n" + (buffers[i]).toString());
-		
+		DefaultTestResult answer = test.dowrite(expected_cpu, autosar_vt, test.getOsSequence());
+				
 		autosar_vt.getProperties().put(VT_PROP_AUTOSAR_FORMAT, autosarFormat);
 		
-		return new DefaultTestResult(autosar_vt, buffers);
+		return answer;
 		
 	}
 
