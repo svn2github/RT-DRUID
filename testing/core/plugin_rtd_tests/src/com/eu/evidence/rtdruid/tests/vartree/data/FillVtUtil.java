@@ -43,6 +43,8 @@ public class FillVtUtil {
 	private final Resource res;
 	private EObject lastRoot = null;
 	
+	private boolean enableProperties = false;
+	
 	public FillVtUtil(EditingDomain editingDomain, Resource res) {
 		this.ed = editingDomain;
 		if (res == null) {
@@ -53,6 +55,10 @@ public class FillVtUtil {
 			ed.getResourceSet().getResources().add(res);
 		}
 		this.res = res;
+	}
+	
+	public void setEnableProperties(boolean enableProperties) {
+		this.enableProperties = enableProperties;
 	}
 	
 	public FillVtUtil() {
@@ -133,19 +139,20 @@ public class FillVtUtil {
 			if (at.isChangeable()) {
 				
 				if (at.getName().equalsIgnoreCase("properties")) { // DataPackage.eINSTANCE.getObjectWithID_Properties().getName()
-					
-					Properties p = new Properties();
-					for (int c=0; c<maxSiblings; c++) {
-						p.setProperty("" + ((char)('a'+c)), ""+nextID); nextID++;
+					if (enableProperties) {
+						Properties p = new Properties();
+						for (int c=0; c<maxSiblings; c++) {
+							p.setProperty("" + ((char)('a'+c)), ""+nextID); nextID++;
+						}
+						
+						ByteArrayOutputStream os = new ByteArrayOutputStream();
+						// may throw IOException
+						p.storeToXML(os, null);
+						
+						Object tmp = EcoreUtil.createFromString(at
+								.getEAttributeType(), os.toString());
+						current.eSet(at, tmp);
 					}
-					
-					ByteArrayOutputStream os = new ByteArrayOutputStream();
-					// may throw IOException
-					p.storeToXML(os, null);
-					
-					Object tmp = EcoreUtil.createFromString(at
-							.getEAttributeType(), os.toString());
-					current.eSet(at, tmp);
 					
 					// do nothing
 				} else if (at.isMany()) {

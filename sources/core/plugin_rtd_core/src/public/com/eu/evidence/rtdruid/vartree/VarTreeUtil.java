@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -34,6 +36,7 @@ import com.eu.evidence.rtdruid.epackage.RtdEPackage;
 import com.eu.evidence.rtdruid.internal.vartree.VarTree;
 import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
+import com.eu.evidence.rtdruid.vartree.variables.PropertyVar;
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
 public final class VarTreeUtil {
@@ -389,18 +392,56 @@ public final class VarTreeUtil {
 						} // else do nothing
 					} else {
 	
-						if (overwrite) {
-							destination.eSet(attr, newVar);
-						} else {
-	
-							// check if it was the default value
-							Object def = attr.getDefaultValue();
-							if (compare(var, def)) {
+						if ("properties".equalsIgnoreCase(attr.getName())) {
+							
+							if (var == null) {
 								destination.eSet(attr, newVar);
-							} else if (!compare(newVar, def)) {
-								throw new IllegalArgumentException(
-										"Try to change the vaule of an already set attribute (mono value). " + "path = "
-												+ path + DataPath.SEPARATOR + attr.getName());
+							} else {
+								if (var instanceof PropertyVar) {
+									PropertyVar pv1 = ((PropertyVar) var);
+									Properties p1 = pv1.get();
+									if (newVar != null && newVar instanceof PropertyVar) {
+										Properties p2 = ((PropertyVar) newVar).get();
+										boolean changed = false;
+										for (Entry<Object, Object> e : p2.entrySet()) {
+											if (p1.containsKey(e.getKey())) {
+												if (overwrite) {
+													changed = true;
+													pv1.set((String)e.getKey(), (String)e.getValue());
+												} else {
+													if (!(("" + p1.get(e.getKey())).equals(""+e.getValue()))) {
+														throw new IllegalArgumentException(
+																"Try to change the vaule of an already set property. " + "path = "
+																		+ path + DataPath.SEPARATOR + attr.getName() + ", property = " + e.getKey());
+													}
+												}
+											} else {
+												changed = true;
+												pv1.set((String)e.getKey(), (String)e.getValue());
+											}
+										}
+										if (changed) {
+											destination.eSet(attr, pv1);
+										}
+									}
+								}
+							}
+							
+						} else {
+							
+							if (overwrite) {
+								destination.eSet(attr, newVar);
+							} else {
+		
+								// check if it was the default value
+								Object def = attr.getDefaultValue();
+								if (compare(var, def)) {
+									destination.eSet(attr, newVar);
+								} else if (!compare(newVar, def)) {
+									throw new IllegalArgumentException(
+											"Try to change the vaule of an already set attribute (mono value). " + "path = "
+													+ path + DataPath.SEPARATOR + attr.getName());
+								}
 							}
 						}
 					}
@@ -422,8 +463,8 @@ public final class VarTreeUtil {
 
 					EObject newChild = newChildren.get(j);
 					if (newChild != null) {
-						int pos = children.indexOf(newChild);
-						if (pos < 0) {
+						EObject oldChild = searchEObjectById(children, newChild);
+						if (oldChild == null) {
 							EObject child = newInstance(newChild.eClass());
 							VarTreeIdHandler.setId(child, VarTreeIdHandler.getId(newChild));
 
@@ -432,11 +473,11 @@ public final class VarTreeUtil {
 							// check the new child.
 							// Note: set overwrite to true, because the new
 							// child may have default values
-							merge(child, newChild, path, true);
+							merge(child, newChild, path, overwrite);
 
 						} else {
 							// check the old child
-							merge(children.get(pos), newChild, path, overwrite);
+							merge(oldChild, newChild, path, overwrite);
 						}
 					}
 				}
@@ -453,13 +494,28 @@ public final class VarTreeUtil {
 						destination.eSet(ref, child);
 						// Note: set overwrite to true, because the new
 						// child may have default values
-						merge(child, newChild, path, true);
+						merge(child, newChild, path, overwrite);
 					} else {
 						merge(child, newChild, path, overwrite);
 					}
 				}
 			}
 		}
+	}
+	
+	private static EObject searchEObjectById(EList<EObject> elements, EObject value) {
+		String vId = VarTreeIdHandler.getId(value);
+		if (vId == null) {
+			return null;
+		} else {
+			for (EObject elem : elements) {
+				if (vId.equals(VarTreeIdHandler.getId(elem))) {
+					return elem;
+				}
+			}
+		}
+		
+		return null;
 	}
 
 	private static boolean searchVar(LinkedList<?> vars, Object value) {

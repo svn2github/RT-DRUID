@@ -1,8 +1,7 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -11,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.eclipse.emf.ecore.EObject;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
@@ -28,7 +28,6 @@ import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 
 public class CodeWriterMultiAutosar extends AbstractCodeWriterTest {
 
@@ -95,7 +94,7 @@ public class CodeWriterMultiAutosar extends AbstractCodeWriterTest {
 		IRTDMultiFileImporter importer = MultiSourceImporterFactory.getFactory().getImporterFor(types.toArray(new String[types.size()]));
 		assertNotNull(importer);
 		IVarTree vt = VarTreeUtil.newVarTree();
-		ObjectWithID root = importer.load((InputStream[]) inputs.toArray(new InputStream[inputs.size()]), names.toArray(new String[names.size()]), null);
+		EObject root = importer.load((InputStream[]) inputs.toArray(new InputStream[inputs.size()]), names.toArray(new String[names.size()]), null);
 		assertNotNull(root);
 		vt.setRoot(root);
 		
@@ -216,6 +215,7 @@ public class CodeWriterMultiAutosar extends AbstractCodeWriterTest {
 	}
 
 	
+	@Test
 	public void testsplitted_os_application() {
 	    final String text1 = "CPU test_application {\n" +
 			"\n" +
@@ -418,6 +418,7 @@ public class CodeWriterMultiAutosar extends AbstractCodeWriterTest {
 		}
 	}
 	
+	@Test
 	public void testsplitted_os_application2() throws IOException {
 	    final String input1 = "CPU test_application {\n" +
 			"\n" +

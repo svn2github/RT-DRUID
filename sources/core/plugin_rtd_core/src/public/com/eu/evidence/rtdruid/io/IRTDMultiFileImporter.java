@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * This interface is used to import data into the internal data structure from
  * another kind of formalism, collecting multiple sources at once.
@@ -40,7 +42,7 @@ public interface IRTDMultiFileImporter {
 	 * @throws IOException
 	 *             if there is any problem while reading the input stream.
 	 */
-	com.eu.evidence.rtdruid.vartree.data.System load(InputStream[] input,
+	EObject load(InputStream[] input,
 			String[] input_name, Map<?, ?> options) throws IOException;
 
 }

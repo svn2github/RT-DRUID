@@ -229,7 +229,7 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 			// load
 			for (MultiSourceImporterFactory.LoadHelper helper : helpers) {
 
-				com.eu.evidence.rtdruid.vartree.data.System root = helper.load();
+				EObject root = helper.load();
 				mergeInput(vt, root);
 			}
 			

@@ -79,7 +79,13 @@ public class OilPath {
 	public String getType() {
 		return type;
 	}
-	
+
+	/**
+	 * @return the type
+	 */
+	public OilObjectType getObjType() {
+		return objType;
+	}
 	/**
 	 * @return the path
 	 */

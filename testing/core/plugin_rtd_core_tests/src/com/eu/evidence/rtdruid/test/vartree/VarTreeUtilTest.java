@@ -7,10 +7,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -20,9 +25,13 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.junit.Test;
 
+import com.eu.evidence.rtdruid.internal.vartree.VarTree;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil.VarTreeCreator;
+import com.eu.evidence.rtdruid.vartree.tools.Search;
+import com.eu.evidence.rtdruid.vartree.tools.Search.ArchElement;
 
 /**
  *
@@ -207,6 +216,61 @@ public class VarTreeUtilTest {
 			assertSame(epkg2, res.getPackageRegistry().get("someting"));
 		}
 
+	}
+	
+	
+	@Test
+	public void testMerge() throws IOException {
+		String test1 ="<?xml version=\"1.0\" encoding=\"ASCII\"?>\n" +
+				"<com.eu.evidence.rtdruid.data:System xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:com.eu.evidence.rtdruid.data=\"http://www.evidence.eu.com/rtdruid/data\" Name=\"system\">\n" +
+				"  <Architectural>\n" +
+				"    <SignalList Name=\"SystemTimer\" Type=\"COUNTER\">\n" +
+				"      <COUNTER_OIL_EXT main_obj_id=\"COUNTER\" TICKSPERBASE=\"1\" SECONDSPERTICK=\"0.0010\">\n" +
+				"        <TYPE xsi:type=\"com.eu.evidence.rtdruid.data:OILCOUNTER__TYPE__HARDWARE\"/>\n" +
+				"      </COUNTER_OIL_EXT>\n" +
+				"    </SignalList>\n" +
+				"  </Architectural>\n" +
+				"</com.eu.evidence.rtdruid.data:System>\n";
+		
+		String test2 ="<?xml version=\"1.0\" encoding=\"ASCII\"?>\n" +
+				"<com.eu.evidence.rtdruid.data:System xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:com.eu.evidence.rtdruid.data=\"http://www.evidence.eu.com/rtdruid/data\" Name=\"system\">\n" +
+				"  <Architectural>\n" +
+				"    <SignalList Name=\"SystemTimer\" Type=\"COUNTER\">\n" +
+				"      <COUNTER_OIL_EXT main_obj_id=\"COUNTER\" MINCYCLE=\"2\" TICKSPERBASE=\"1\" >\n" +
+				"        <TYPE xsi:type=\"com.eu.evidence.rtdruid.data:OILCOUNTER__TYPE__HARDWARE\"/>\n" +
+				"      </COUNTER_OIL_EXT>\n" +
+				"    </SignalList>\n" +
+				"  </Architectural>\n" +
+				"</com.eu.evidence.rtdruid.data:System>\n";
+		
+		String result = "<?xml version=\"1.0\" encoding=\"ASCII\"?>\n" +
+				"<com.eu.evidence.rtdruid.data:System xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:com.eu.evidence.rtdruid.data=\"http://www.evidence.eu.com/rtdruid/data\" Name=\"system\">\n" +
+				"  <Architectural>\n" +
+				"    <SignalList Name=\"SystemTimer\" Type=\"COUNTER\">\n" +
+				"      <COUNTER_OIL_EXT main_obj_id=\"COUNTER\" MINCYCLE=\"2\" TICKSPERBASE=\"1\" SECONDSPERTICK=\"0.0010\">\n" +
+				"        <TYPE xsi:type=\"com.eu.evidence.rtdruid.data:OILCOUNTER__TYPE__HARDWARE\"/>\n" +
+				"      </COUNTER_OIL_EXT>\n" +
+				"    </SignalList>\n" +
+				"  </Architectural>\n" +
+				"</com.eu.evidence.rtdruid.data:System>";
+		
+		IVarTree vt1 = Vt2StringUtilities.loadString(test1, "ertd");
+		IVarTree vt2 = Vt2StringUtilities.loadString(test2, "ertd");
+		IVarTree vt2_copy = Vt2StringUtilities.loadString(test2, "ertd");
+		IVarTree vt_result = Vt2StringUtilities.loadString(result, "ertd");
+		
+		EObject obj = VarTreeUtil.merge(vt1.getResourceSet().getResources().get(0).getContents().get(0),
+				vt2.getResourceSet().getResources().get(0).getContents().get(0));
+		assertEquals(obj, vt1.getResourceSet().getResources().get(0).getContents().get(0));
+		{ IStatus st = VarTreeUtil.compare(vt2, vt2_copy); assertTrue(st.getMessage(), st.isOK()); }
+		
+		System.out.println(Vt2StringUtilities.varTreeToStringErtd(vt1));
+		
+		ArchElement[] found = Search.allSignalsNames(vt1.newTreeInterface(), Search.SIGNAL_TYPE_COUNTER);
+		assertNotNull(found);
+		assertEquals(1, found.length);
+		{ IStatus st = VarTreeUtil.compare(vt1, vt_result); assertTrue(st.getMessage(), st.isOK()); }
+		
 	}
 
 }

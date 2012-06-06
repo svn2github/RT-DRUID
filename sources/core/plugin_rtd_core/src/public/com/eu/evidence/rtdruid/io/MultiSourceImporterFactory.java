@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
+
 import com.eu.evidence.rtdruid.internal.io.RTDResourceManagerFactory;
 
 public final class MultiSourceImporterFactory {
@@ -79,11 +81,11 @@ public final class MultiSourceImporterFactory {
 			return Collections.unmodifiableList(fileName);
 		}
 		
-		public com.eu.evidence.rtdruid.vartree.data.System load() throws IOException {
+		public EObject load() throws IOException {
 			return load(null);
 		}
 
-		public com.eu.evidence.rtdruid.vartree.data.System load(Map<?, ?> options) throws IOException {
+		public EObject load(Map<?, ?> options) throws IOException {
 			return importer.load(inputs.toArray(new InputStream[inputs.size()]), fileName.toArray(new String[fileName.size()]), options);
 		}
 

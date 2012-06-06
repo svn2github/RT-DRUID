@@ -33,6 +33,7 @@ public abstract class OilEcoreCreator {
 	protected static final String ANNOTATION_VARIANT_TYPE = "variant_type";
 	protected static final String ANNOTATION_OIL_ATTR = "oil_attribute";
 	protected static final String ANNOTATION_OIL_REF = "oil_reference";
+	protected static final String ANNOTATION_OIL_1L_OBJ_TYPE = "oil_first_level_type";
 
 	protected OilEcoreCreator() {
 		super();
@@ -69,7 +70,16 @@ public abstract class OilEcoreCreator {
 //		}
 //		return answer == null ? null : answer+"_OIL_EXT";
 	}
-	
+
+	public static boolean isOilFirstObject(IVarTreePointer vtp) {
+		EMap<String, String> map = getAnnotation(vtp);
+		if (map != null && map.containsKey(ANNOTATION_OIL_1L_OBJ_TYPE)) {
+			return map.get(ANNOTATION_OIL_1L_OBJ_TYPE) != null;
+		}
+		
+		return false;
+	}
+
 	public static boolean isOilAttribute(IVarTreePointer vtp) {
 		IVarTreePointer.EmfPoint epoint = vtp.getEPoint();
 		EStructuralFeature esf = epoint.getCurrentFeature();
@@ -79,7 +89,7 @@ public abstract class OilEcoreCreator {
 				return map.containsKey(ANNOTATION_OIL_ATTR);
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -113,6 +123,15 @@ public abstract class OilEcoreCreator {
 		return false;
 	}
 
+	public static String getOilFirstObjectType(IVarTreePointer vtp) {
+		EMap<String, String> map = getAnnotation(vtp);
+		if (map != null && map.containsKey(ANNOTATION_OIL_1L_OBJ_TYPE)) {
+			return map.get(ANNOTATION_OIL_1L_OBJ_TYPE);
+		}
+		
+		return null;
+	}
+
 	public static String getOilEnumType(IVarTreePointer vtp) {
 		EMap<String, String> map = getAnnotation(vtp);
 		if (map != null) {
@@ -123,6 +142,53 @@ public abstract class OilEcoreCreator {
 		
 		return null;
 	}
+	
+	/**
+	 * Returns the type of the variant that contains current enum 
+	 * 
+	 * @param vtp
+	 * @return
+	 */
+	public static String getOilEnumVariantType(IVarTreePointer vtp) {
+		IVarTreePointer.EmfPoint epoint = vtp.getEPoint();
+		EStructuralFeature esf = epoint.getCurrentFeature();
+		if (esf == null) {
+			EObject eobj = epoint.getEObject();
+			if (eobj == null) {
+				return null;
+			}
+			EStructuralFeature esfC = eobj.eContainingFeature();
+			if (esfC != null) {
+				return esfC.getName();
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns the type of the variant that contains current enum 
+	 * 
+	 * @param vtp
+	 * @return
+	 */
+	public static boolean isOilEnumMultiValue(IVarTreePointer vtp) {
+		IVarTreePointer.EmfPoint epoint = vtp.getEPoint();
+		EStructuralFeature esf = epoint.getCurrentFeature();
+		if (esf == null) {
+			EObject eobj = epoint.getEObject();
+			if (eobj == null) {
+				return false;
+			}
+			EStructuralFeature esfC = eobj.eContainingFeature();
+			if (esfC != null) {
+				return esfC.isMany();
+			}
+		}
+		
+		return false;
+	}
+
 
 	public static String getOilVariantType(IVarTreePointer vtp) {
 		EMap<String, String> map = getAnnotation(vtp);

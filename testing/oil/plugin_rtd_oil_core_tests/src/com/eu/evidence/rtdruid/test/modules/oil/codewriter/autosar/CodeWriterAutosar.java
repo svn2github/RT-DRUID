@@ -1,7 +1,8 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
@@ -25,7 +26,6 @@ import com.eu.evidence.rtdruid.test.modules.oil.codewriter.AbstractCodeWriterTes
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
-import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 public class CodeWriterAutosar extends AbstractCodeWriterTest {
 
@@ -277,7 +277,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 		IOilWriterBuffer[] buffers_1 = answer[1].buffers;
 		assertTrue(buffers_0.length == buffers_1.length);
 		for (int i=0; i<expected_cpu; i++) {
-			assertTrue((buffers_0[i]).toString().equals((buffers_1[i]).toString()));
+			assertEquals((buffers_0[i]).toString(), (buffers_1[i]).toString());
 		}
 		
 		return answer;
@@ -318,6 +318,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 			IVarTree oil_vt = VarTreeUtil.newVarTree();
 			(new OilReader()).load(new ByteArrayInputStream(oil_text.getBytes()), oil_vt, null, null);
 
+//			System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(oil_vt)));
 			
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			HashMap<String, String> output_options = new HashMap<String, String>();

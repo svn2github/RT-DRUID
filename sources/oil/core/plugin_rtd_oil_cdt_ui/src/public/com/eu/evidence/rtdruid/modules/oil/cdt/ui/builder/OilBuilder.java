@@ -1129,7 +1129,7 @@ class ProjectBuilder implements IProjectBuilder {
 //				}
 //
 				try {
-					com.eu.evidence.rtdruid.vartree.data.System root = helper.load();
+					EObject root = helper.load();
 					mergeInput(vt, root);
 				} catch (Exception e) {
 					Messages.sendErrorNl("Unable to load \"" + helper.getNames() + "\" caused by :", "", "ASDASDAS", null);
@@ -1179,7 +1179,7 @@ class ProjectBuilder implements IProjectBuilder {
 		}
 	}
 	
-	protected static void mergeInput(IVarTree vt, com.eu.evidence.rtdruid.vartree.data.System root) {
+	protected static void mergeInput(IVarTree vt, EObject root) {
 		// get the old root
 		EList<Resource> resList = vt.getResourceSet().getResources();
 		if (resList.size() == 0) {

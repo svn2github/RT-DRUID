@@ -140,12 +140,19 @@ public class SimpleTransform implements IOilTransform {
 			return;
 		}
 
-		String sysName = application.getAttribute(IOilXMLLabels.ATTR_NAME);
-		IVarTreePointer systemVtp = checkSystemName(vt, sysName);
+		IVarTreePointer systemVtp;
+		String oilSysName = application.getAttribute(IOilXMLLabels.ATTR_NAME);
+		{
+			String sysName =  Search.systemName(vt);
+			if (sysName == null) {
+				sysName = oilSysName;
+			}
+			systemVtp = checkSystemName(vt, sysName);
+		}
 
 		// check and store all objects
 		/* RT-OS */
-		String rtosName = storeOS(systemVtp, application, sysName, id);
+		String rtosName = storeOS(systemVtp, application, oilSysName, id);
 		/* TASK */
 		storeTasks(systemVtp, application, id, rtosName);
 		/* ISR */
@@ -157,7 +164,7 @@ public class SimpleTransform implements IOilTransform {
 		/* APPMODE */
 		storeAppmode(systemVtp, application, id);
 		/* OS Application */
-		storeOsApplication(systemVtp, application, sysName, id);
+		storeOsApplication(systemVtp, application, oilSysName, id);
 		/* Network messages */
 		storeNetworkMessages(systemVtp, application, id);
 
@@ -644,63 +651,7 @@ public class SimpleTransform implements IOilTransform {
 
 						if (values != null && values.length != 0) {
 
-							// path to Task's ReourcesRef
-							String[][] taskResRef = { { // Names
-									DPKG.getTask_ResourceRefList().getName(), null, // mode
-											DPKG.getResourceRef_ResourceMethodRef().getName() }, { // Types
-									DPKG.getTask_ResourceRefList().getName(), DPKG.getResourceRef().getName(),
-											DPKG.getResourceRef_ResourceMethodRef().getName() } };
-
-							// path to Resource's Method
-							String[][] resources = {
-									{ DPKG.getArchitectural_ResourceList().getName(), null, // resource
-																							// Name
-											DPKG.getResource_Methods().getName() },
-									{ DPKG.getArchitectural_ResourceList().getName(), DPKG.getResource().getName(),
-											DPKG.getResource_Methods().getName() } };
-
-							// path to Resource's MutexRef
-							String[][] resMutexRef = {
-									{ DPKG.getResource_MutexRefList().getName(), null, // mode
-											DPKG.getMutexRef_MutexName().getName() },
-									{ DPKG.getResource_MutexRefList().getName(), DPKG.getMutexRef().getName(),
-											DPKG.getMutexRef_MutexName().getName() } };
-
-							IVarTreePointer archVtp = (IVarTreePointer) taskVtp.clone();
-
-							archVtp.goParent(); // -> taskList
-							archVtp.goParent(); // -> architectural
-
-							for (int i = 0; i < values.length; i++) {
-								// prepare names
-								final String mutexName = values[i];
-								final String resName = "res_" + mutexName;
-								final String methodName = "DefaultMethod";
-
-								final String resMethodName = Utility.pathToEvidence(DataPath.makeId(resName)) + S
-										+ methodName;
-
-								// complete Resource's paths
-								resources[0][1] = resName;
-
-								{ // add a reference to the Resource inside the
-									// task
-									lvtp = taskVtp.clone().makePath(taskResRef[0], taskResRef[1]);
-									updateVar(lvtp, resMethodName);
-								}
-
-								{ // make the resource
-									lvtp = archVtp.clone().makePath(resources[0], resources[1]);
-									updateVar(lvtp, methodName);
-								}
-
-								{ // make the resource's Mutex Ref
-									lvtp.goParent();
-									lvtp.makePath(resMutexRef[0], resMutexRef[1]);
-									updateVar(lvtp, mutexName);
-								}
-
-							}
+							addTaskResourcesRef(taskVtp, values);
 						}
 					}
 
@@ -712,7 +663,72 @@ public class SimpleTransform implements IOilTransform {
 //____ System.out.println("\n\n5--------" + Vt2StringUtilities.varTreeToStringErtd(vt) + "\n-----\n\n");	
 	}
 
-	private void updateVar(IVarTreePointer lvtp, final String value) {
+	/**
+	 * @param taskVtp
+	 * @param values
+	 */
+	public static void addTaskResourcesRef(IVarTreePointer taskVtp, String[] values) {
+		IVarTreePointer lvtp;
+		// path to Task's ReourcesRef
+		String[][] taskResRef = { { // Names
+				DPKG.getTask_ResourceRefList().getName(), null, // mode
+						DPKG.getResourceRef_ResourceMethodRef().getName() }, { // Types
+				DPKG.getTask_ResourceRefList().getName(), DPKG.getResourceRef().getName(),
+						DPKG.getResourceRef_ResourceMethodRef().getName() } };
+
+		// path to Resource's Method
+		String[][] resources = {
+				{ DPKG.getArchitectural_ResourceList().getName(), null, // resource
+																		// Name
+						DPKG.getResource_Methods().getName() },
+				{ DPKG.getArchitectural_ResourceList().getName(), DPKG.getResource().getName(),
+						DPKG.getResource_Methods().getName() } };
+
+		// path to Resource's MutexRef
+		String[][] resMutexRef = {
+				{ DPKG.getResource_MutexRefList().getName(), null, // mode
+						DPKG.getMutexRef_MutexName().getName() },
+				{ DPKG.getResource_MutexRefList().getName(), DPKG.getMutexRef().getName(),
+						DPKG.getMutexRef_MutexName().getName() } };
+
+		IVarTreePointer archVtp = (IVarTreePointer) taskVtp.clone();
+
+		archVtp.goParent(); // -> taskList
+		archVtp.goParent(); // -> architectural
+
+		for (int i = 0; i < values.length; i++) {
+			// prepare names
+			final String mutexName = values[i];
+			final String resName = "res_" + mutexName;
+			final String methodName = "DefaultMethod";
+
+			final String resMethodName = Utility.pathToEvidence(DataPath.makeId(resName)) + S
+					+ methodName;
+
+			// complete Resource's paths
+			resources[0][1] = resName;
+
+			{ // add a reference to the Resource inside the
+				// task
+				lvtp = taskVtp.clone().makePath(taskResRef[0], taskResRef[1]);
+				updateVar(lvtp, resMethodName);
+			}
+
+			{ // make the resource
+				lvtp = archVtp.clone().makePath(resources[0], resources[1]);
+				updateVar(lvtp, methodName);
+			}
+
+			{ // make the resource's Mutex Ref
+				lvtp.goParent();
+				lvtp.makePath(resMutexRef[0], resMutexRef[1]);
+				updateVar(lvtp, mutexName);
+			}
+
+		}
+	}
+
+	private static void updateVar(IVarTreePointer lvtp, final String value) {
 		IVariable lvar = lvtp.getVar();
 		if (lvar == null) {
 			lvar = lvtp.getNewVar(value);
@@ -834,63 +850,7 @@ public class SimpleTransform implements IOilTransform {
 
 						if (values != null && values.length != 0) {
 
-							// path to Isr's ReourcesRef
-							String[][] isrResRef = { { // Names
-									DPKG.getTask_ResourceRefList().getName(), null, // mode
-											DPKG.getResourceRef_ResourceMethodRef().getName() }, { // Types
-									DPKG.getTask_ResourceRefList().getName(), DPKG.getResourceRef().getName(),
-											DPKG.getResourceRef_ResourceMethodRef().getName() } };
-
-							// path to Resource's Method
-							String[][] resources = {
-									{ DPKG.getArchitectural_ResourceList().getName(), null, // resource
-																							// Name
-											DPKG.getResource_Methods().getName() },
-									{ DPKG.getArchitectural_ResourceList().getName(), DPKG.getResource().getName(),
-											DPKG.getResource_Methods().getName() } };
-
-							// path to Resource's MutexRef
-							String[][] resMutexRef = {
-									{ DPKG.getResource_MutexRefList().getName(), null, // mode
-											DPKG.getMutexRef_MutexName().getName() },
-									{ DPKG.getResource_MutexRefList().getName(), DPKG.getMutexRef().getName(),
-											DPKG.getMutexRef_MutexName().getName() } };
-
-							IVarTreePointer archVtp = (IVarTreePointer) isrVtp.clone();
-
-							archVtp.goParent(); // -> taskList
-							archVtp.goParent(); // -> architectural
-
-							for (int i = 0; i < values.length; i++) {
-								// prepare names
-								final String mutexName = values[i];
-								final String resName = "res_" + mutexName;
-								final String methodName = "DefaultMethod";
-
-								final String resMethodName = Utility.pathToEvidence(DataPath.makeId(resName)) + S
-										+ methodName;
-
-								// complete Resource's paths
-								resources[0][1] = resName;
-
-								{ // add a reference to the Resource inside the
-									// task
-									lvtp = isrVtp.clone().makePath(isrResRef[0], isrResRef[1]);
-									updateVar(lvtp, resMethodName);
-								}
-
-								{ // make the resource
-									lvtp = archVtp.clone().makePath(resources[0], resources[1]);
-									updateVar(lvtp, methodName);
-								}
-
-								{ // make the resource's Mutex Ref
-									lvtp.goParent();
-									lvtp.makePath(resMutexRef[0], resMutexRef[1]);
-									updateVar(lvtp, mutexName);
-								}
-
-							}
+							addTaskResourcesRef(isrVtp, values);
 						}
 					}
 

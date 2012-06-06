@@ -129,6 +129,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				path.add(type);
 				current_eclass.setName(OilPath.compute_full_name(path));
 				
+				addAnnotation(ANNOTATION_OIL_1L_OBJ_TYPE, type, current_eclass);
 
 				
 				{

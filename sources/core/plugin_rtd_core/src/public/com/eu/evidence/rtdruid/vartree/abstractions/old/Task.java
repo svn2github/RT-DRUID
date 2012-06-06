@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
+import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.tools.CacheMissCostCommon;
@@ -129,7 +129,7 @@ public class Task extends ModeRes {
 	/**
 	 * Association btw resource name and WCET
 	 */
-	private Hashtable<String, Object> resources;
+	private HashMap<String, Double> resources;
 
 	/** used to store the order of insertion of all resources */
 	private ArrayList<String> resNames;
@@ -147,7 +147,7 @@ public class Task extends ModeRes {
 		super(parent, name, prefix, modeRef);
 
 		rtosName = RTOS;
-		resources = new Hashtable<String, Object>();
+		resources = new HashMap<String, Double>();
 		resNames = new ArrayList<String>();
 		sys = "" + S + (DataPath.splitPath(pref))[0];
 	}
@@ -156,7 +156,7 @@ public class Task extends ModeRes {
 		super(parent, name, prefix);
 
 		rtosName = RTOS;
-		resources = new Hashtable<String, Object>();
+		resources = new HashMap<String, Double>();
 		resNames = new ArrayList<String>();
 		sys = "" + S + (DataPath.splitPath(pref))[0];
 	}
@@ -317,452 +317,7 @@ public class Task extends ModeRes {
 
 		// The list of Vars
 		if (("Resource").equalsIgnoreCase(name)) {
-			Mapping map = new Mapping(padre.getVarTree(), sys, modeRef);
-
-			// there is a mapping between proc and task?
-			String[] procNames = map.taskToProc(Utility.pathToEvidence(DataPath
-					.addSlash(nome)));
-			if (procNames.length > 0) {
-				// first search all procs ... (procNames)
-
-				for (int i = 0; i < procNames.length; i++) {
-					// ... for each search all used method ...
-					String procPath = Search.aProc(ti, sys, procNames[i]);
-					if (procPath == null) {
-						// warning : proc not found
-						Messages.sendWarningNl("Proc not found : " + procNames[i]
-								+ " , required by task " + nome, null, "Task",
-								null);
-						continue; // next proc
-					}
-					String subSystemPath = Search.procPrefix(ti, sys,
-							procNames[i]);
-
-					ITreeInterface.TiInfo[] objs = ti.getAll(procPath + S
-							+ "MethodRefList" + S + ITreeInterface.SPECIAL + S
-							+ "MethodName", "MethodRef");
-
-					if (objs == null)
-						continue; // no method ref : next proc
-
-					for (int j = 0; j < objs.length; j++) {
-						// reset the first value
-						String tmpSubSystemPath = subSystemPath;
-
-						// ... check if the reference is to a Var
-						if (objs[j] == null
-								|| objs[j].getVariable().get() == null)
-							continue; // ???? No MethodName: is not a good thing
-
-						String methId = objs[j].getVariable().toString();
-
-						//Messages.sendDebug("\nInizio Metodo = " + methId + "
-						// - SubSystem = " +
-						// Utility.makeEvidenceID(tmpSubSystemPath) + " - Proc =
-						// " + procNames[i]);
-						int stato = 0;
-						StringBuffer chain = new StringBuffer(
-								", required by :\n\tproc : " + procNames[i]
-										+ " (task " + nome + ")");
-						for (; stato < 1000; stato++) {
-							chain.append("\n\tmethodRef : " + methId);
-
-							//Messages.sendDebug("\tMetodo = " + methId + " -
-							// SubSystem = " +
-							// Utility.makeEvidenceID(tmpSubSystemPath));
-							// search objName (with protection!!) and objPath
-							String objPath = null; // with VarTreeNotation
-
-							//						String objName = null; // with Evidence notation
-							//						String methodName = null;// with Evidence
-							// notation
-
-							String objVTP = null; // with VarTreeNotation
-							String methodVTP = null; // with VarTreeNotation
-							{
-								try {
-									objPath = Search.aLocalMethod(ti,
-											tmpSubSystemPath, methId);
-								} catch (Exception e) {
-									// do nothing
-									objPath = null;
-								}
-								if (objPath == null) {
-									Messages.sendWarningNl(
-											"Method not found : " + methId
-													+ chain.toString(), null,
-											"Task", null);
-
-									break; // next proc
-								}
-
-								String[] t = DataPath.splitPath(Utility
-										.pathToVarTree(methId));
-								methodVTP = t[t.length - 1];
-								objVTP = t[t.length - 2];
-							}
-
-							/*
-							 * 
-							 * REQUIRED INTERFACE !!!
-							 *  
-							 */
-
-							// is it a reference to a local subSystem?
-							if (ti.exist(objPath, Utility.T_SUBSYSTEM)
-									&& objPath.equals(tmpSubSystemPath)) {
-								chain.append(" -> Required Interface");
-								//Messages.sendDebug("\trequired interface
-								// objPath = " +
-								// Utility.makeEvidenceID(objPath));
-								//search a required interface
-								String ttmpath = tmpSubSystemPath + S
-										+ "RequiredInterfaceList" + S
-										+ methodVTP;
-								if (!ti.exist(ttmpath, "RequiredInterface")) {
-									// warning : proc not found
-									Messages
-											.sendWarningNl(
-													"Required interface not found : "
-															+ DataPath
-																	.removeSlash(methodVTP)
-															+ ", subsystem "
-															+ DataPath
-																	.removeSlash(objVTP)
-															+ chain.toString(),
-													null, "Task", null);
-									break;
-								}
-
-								// search a method ref and get methodName
-								/*
-								 * String[] mRefNames = ti.getAllName(ttmpath,
-								 * "MethodRef"); if (mRefNames.length == 0) {
-								 * Messages.sendWarning("Required interface
-								 * found but without methodRef: "
-								 * +VarTree.removeSlash(methodVTP) + ",
-								 * subsystem "+ VarTree.removeSlash(objVTP)
-								 * +chain.toString(), null, "Task", null);
-								 * break; } if (mRefNames.length > 1) {
-								 * Messages.sendWarning("Required interface
-								 * found with more than one methodRef: "
-								 * +VarTree.removeSlash(methodVTP) + ",
-								 * subsystem "+ VarTree.removeSlash(objVTP) +
-								 * chain.toString(), null, "Task", null); break; }
-								 */
-								//ttmpath += S + mRefNames[0];
-								methId = (String) ti.getValue(
-										ttmpath + S + "ExternalMethodRef")
-										.get();
-								if (methId == null) {
-									// nothing to do (Not mapped??)
-									break;
-								}
-
-								// correct path and make a new loop
-								tmpSubSystemPath = Mapping.parentSubSystemPath(
-										padre.getVarTree(), tmpSubSystemPath);
-								continue;
-							}
-
-							/*
-							 * 
-							 * PROVIDED INTERFACE
-							 *  
-							 */
-							// obj is a local subSystem ?
-							if (ti.exist(objPath, Utility.T_SUBSYSTEM)) {
-								chain.append(" -> Provided Interface");
-								//Messages.sendDebug("\tprovided interface
-								// objPath = " +
-								// Utility.makeEvidenceID(objPath));
-
-								String tp = objPath + S
-										+ "ProvidedInterfaceList" + S
-										+ methodVTP;
-
-								// search the correct provided interface
-								if (!ti.exist(tp, "ProvidedInterface")) {
-									// warning : proc not found
-									Messages
-											.sendWarningNl(
-													"Provided interface not found : "
-															+ DataPath
-																	.removeSlash(methodVTP)
-															+ ", SubSystem "
-															+ DataPath
-																	.removeSlash(objVTP)
-															+ chain.toString(),
-													null, "Task", null);
-									break;
-								}
-
-								String objName = (String) ti.getValue(
-										tp + S + "LocalObjectRef").get();
-								String methodName = (String) ti.getValue(
-										tp + S + "LocalMethodRef").get();
-								if (objName == null || methodName == null) {
-									// nothing to do (Not mapped??)
-									break;
-								}
-
-								// compose a method identificator and make a new
-								// loop
-								methId = objName + S + methodName;
-
-								// correct path and make a new loop
-								tmpSubSystemPath = objPath;
-								continue;
-							}
-
-							/*
-							 * 
-							 * VAR
-							 *  
-							 */
-							// search a local var in current zone
-							String varPath = Search.aLocalVar(ti,
-									tmpSubSystemPath, DataPath
-											.removeSlash(objVTP));
-							if (varPath != null) {
-								chain.append(" -> Var");
-								//Messages.sendDebug("\tvar varjPath = " +
-								// Utility.makeEvidenceID(varPath));
-
-								// remove protection from objName and methName
-
-								// search a mapping to a mutex
-								String mutexName = map.varToMutex(Mapping
-										.makeVarName(padre.getVarTree(),
-												tmpSubSystemPath, DataPath
-														.removeSlash(objVTP)));
-								if (mutexName == null)
-									break; // not mapped var -> not shared
-									//Messages.sendDebug("\tmutexName = " +
-									// mutexName);
-
-								{ //	check for mutex
-									String tmpPath = sys
-											+ S
-											+ "Architectural"
-											+ S
-											+ "MutexList"
-											+ S
-											+ Utility.pathToVarTree(DataPath
-													.addSlash(mutexName));
-									if (!ti.exist(tmpPath, "Mutex")) {
-										// no annotation about this method.
-										// Is it a good thing?
-										Messages.sendWarningNl(
-												"Mutex not found: " + mutexName
-														+ chain.toString(),
-												null, "Task", null);
-										break; // next method ref
-									}
-								}
-
-								// Check method name
-								ArrayList<?> elencoMethod = (ArrayList<?>) ti
-										.getValue(varPath + S + "Methods")
-										.get();
-								String tmpMethod = DataPath
-										.removeSlash(methodVTP);
-
-								boolean ok = false;
-								for (int jj = 0; jj < elencoMethod.size()
-										&& !ok; jj++) {
-									if (tmpMethod.equals(elencoMethod.get(jj)))
-										ok = true;
-								}
-								if (!ok) {
-									ok |= tmpMethod.equalsIgnoreCase("read");
-									ok |= tmpMethod.equalsIgnoreCase("write");
-								}
-								if (!ok) {
-									Messages
-											.sendWarningNl(
-													"The proc "
-															+ procNames[i]
-															+ " (task "
-															+ nome
-															+ ") required an illegal resource method."
-															+ "\n\tResource = "
-															+ DataPath
-																	.removeSlash(objVTP)
-															+ ",  method = "
-															+ tmpMethod
-															+ chain.toString(),
-													null, "Task", null);
-									break;
-								}
-
-								// search annotation
-								String tmpMethodName = Mapping.makeVarName(
-										padre.getVarTree(), tmpSubSystemPath,
-										DataPath.removeSlash(objVTP))
-										+ S + Utility.pathToEvidence(methodVTP);
-
-								String tmpPath = Search.anExecTime(ti, sys,
-										tmpMethodName, "METHOD", modeRef);
-
-								if (tmpPath == null) {
-									// no annotation about this method.
-									// Is it a good thing?
-									Messages.sendWarningNl(
-											"Not found ExecTime for '"
-													+ tmpMethod + "' method"
-													+ chain.toString(), null,
-											"Task", null);
-									break; // next method ref
-								}
-								//Messages.sendDebug("\tExecTime ok");
-
-								// set time to milli_seconds
-								IVariable var = ti.getValue(tmpPath + S
-										+ "Worst");
-								if (var instanceof TimeVar) {
-									((TimeVar) var)
-											.setType(COMMON_TIME_TYPE);
-								} else if (var instanceof TimeMVar) {
-									((TimeMVar) var)
-											.setType(COMMON_TIME_TYPE);
-								}
-								Double time = (Double) var.get();
-								if (time == null)
-									break; // no value, next method ref
-
-								mutexName = DataPath.removeSlash(mutexName);
-								if (getResourceUsage(mutexName) < time
-										.doubleValue()) {
-									useResource(mutexName, time.doubleValue());
-								}
-								// next method ref
-
-								// end. Next method ref
-								break;
-							}
-
-							// stato = EXIT
-							break;
-						}
-
-						if (stato == 100) {
-							Messages.sendWarningNl("Found a infinity loop"
-									+ chain.toString(), null, "Task", null);
-							// continue
-						}
-
-						// next method ref
-					}
-					// next proc ref
-				}
-
-			} else { // use data stored into Architectural
-
-				// first search all used resources ...
-				String tmpPref = sys + S + "Architectural" + S + "TaskList" + S
-						+ DataPath.addSlash(nome) + S + "ResourceRefList";
-				String[] idList = { modeRef };
-				tmpPref = Utility
-						.chooseModeRef(ti, tmpPref, idList, 0, modeRef);
-
-				// if tmpPref == null, nothing to do
-				if (tmpPref != null
-						&& ti.exist(tmpPref + S + "ResourceMethodRef",
-								DataPath.STRING_M_TYPE)) {
-
-					ArrayList<?> methNames = (ArrayList<?>) ti.getValue(
-							tmpPref + S + "ResourceMethodRef").get();
-					if (methNames == null)
-						methNames = new ArrayList<String>(); // no resource or method
-													 // name
-
-					// only one cicle
-					for (int i = 0; i < methNames.size(); i++) {
-						String methName = (String) methNames.get(i);
-
-						// search the resource
-						String resPath = Search.aResourceMethod(ti, sys,
-								methName);
-						if (resPath == null) {
-							Messages.sendWarningNl("Required a resource with '"
-									+ methName + "' method by Task '" + nome
-									+ "", null, "Task", null);
-							continue; // Warning !!!
-						}
-
-						String[] idList2 = { modeRef };
-						String tmpPath = Utility.chooseModeRef(ti, resPath + S
-								+ "MutexRefList", idList2, 0, modeRef);
-
-						if (tmpPath == null
-								|| !ti.exist(tmpPath + S + "MutexName",
-										DataPath.STRING_TYPE)) {
-							continue; // no mapping to mutex
-						}
-
-						String mutexName = (String) ti.getValue(
-								tmpPath + S + "MutexName").get();
-						if (mutexName == null) {
-							continue; // no mutex name
-						}
-
-						// check for mutex
-						tmpPath = sys
-								+ S
-								+ "Architectural"
-								+ S
-								+ "MutexList"
-								+ S
-								+ Utility.pathToVarTree(DataPath
-										.addSlash(mutexName));
-						if (!ti.exist(tmpPath, "Mutex")) {
-							// no annotation about this method.
-							// Is it a good thing?
-							Messages.sendWarningNl("Mutex not found: "
-									+ mutexName + ", required by task " + nome,
-									null, "Task", null);
-							continue; // next method ref
-						}
-
-						tmpPath = Search.anExecTime(ti, sys, methName,
-								"RESOURCE_METHOD", modeRef);
-
-						Double time = new Double(0);
-						if (tmpPath == null) {
-							// no annotation about this method.
-							// Is it a good thing?
-
-							// it's ok for Oil Configuration
-
-							//Messages.sendWarning("Not found ExecTime for
-							// '"+methName+"' method, required by task " + nome
-							//		, null, "Task", null);
-							//continue; // next method ref
-						} else {
-
-							// set time to milli_seconds
-							IVariable var = ti.getValue(tmpPath + S + "Worst");
-							if (var instanceof TimeVar) {
-								((TimeVar) var).setType(COMMON_TIME_TYPE);
-							} else if (var instanceof TimeMVar) {
-								((TimeMVar) var).setType(COMMON_TIME_TYPE);
-							}
-							time = (Double) var.get();
-							if (time == null) {
-								time = new Double(0);
-								//continue; // no value, next method ref
-							}
-						}
-
-						mutexName = DataPath.removeSlash(mutexName);
-						if (getResourceUsage(mutexName) < time.doubleValue()) {
-							useResource(mutexName, time.doubleValue());
-						}
-						// next method ref
-					}
-				}
-			}
+			computeResources(nome, padre.getVarTree(), modeRef, resources, resNames);
 
 			/*
 			 * // look over each method ref String[] resourceRef =
@@ -948,6 +503,460 @@ public class Task extends ModeRes {
 		//	}
 
 		return super.load(name, required);
+	}
+
+	/**
+	 * 
+	 */
+	public static void computeResources(String nome, IVarTree vt, String modeRef, HashMap<String, Double> resourceUsage, ArrayList<String> resourceNames) {
+		String sys = Search.systemName(vt);
+		ITreeInterface ti = vt.newTreeInterface();
+		Mapping map = new Mapping(vt, sys, modeRef);
+
+		// there is a mapping between proc and task?
+		String[] procNames = map.taskToProc(Utility.pathToEvidence(DataPath
+				.addSlash(nome)));
+		if (procNames.length > 0) {
+			// first search all procs ... (procNames)
+
+			for (int i = 0; i < procNames.length; i++) {
+				// ... for each search all used method ...
+				String procPath = Search.aProc(ti, sys, procNames[i]);
+				if (procPath == null) {
+					// warning : proc not found
+					Messages.sendWarningNl("Proc not found : " + procNames[i]
+							+ " , required by task " + nome, null, "Task",
+							null);
+					continue; // next proc
+				}
+				String subSystemPath = Search.procPrefix(ti, sys,
+						procNames[i]);
+
+				ITreeInterface.TiInfo[] objs = ti.getAll(procPath + S
+						+ "MethodRefList" + S + ITreeInterface.SPECIAL + S
+						+ "MethodName", "MethodRef");
+
+				if (objs == null)
+					continue; // no method ref : next proc
+
+				for (int j = 0; j < objs.length; j++) {
+					// reset the first value
+					String tmpSubSystemPath = subSystemPath;
+
+					// ... check if the reference is to a Var
+					if (objs[j] == null
+							|| objs[j].getVariable().get() == null)
+						continue; // ???? No MethodName: is not a good thing
+
+					String methId = objs[j].getVariable().toString();
+
+					//Messages.sendDebug("\nInizio Metodo = " + methId + "
+					// - SubSystem = " +
+					// Utility.makeEvidenceID(tmpSubSystemPath) + " - Proc =
+					// " + procNames[i]);
+					int stato = 0;
+					StringBuffer chain = new StringBuffer(
+							", required by :\n\tproc : " + procNames[i]
+									+ " (task " + nome + ")");
+					for (; stato < 1000; stato++) {
+						chain.append("\n\tmethodRef : " + methId);
+
+						//Messages.sendDebug("\tMetodo = " + methId + " -
+						// SubSystem = " +
+						// Utility.makeEvidenceID(tmpSubSystemPath));
+						// search objName (with protection!!) and objPath
+						String objPath = null; // with VarTreeNotation
+
+						//						String objName = null; // with Evidence notation
+						//						String methodName = null;// with Evidence
+						// notation
+
+						String objVTP = null; // with VarTreeNotation
+						String methodVTP = null; // with VarTreeNotation
+						{
+							try {
+								objPath = Search.aLocalMethod(ti,
+										tmpSubSystemPath, methId);
+							} catch (Exception e) {
+								// do nothing
+								objPath = null;
+							}
+							if (objPath == null) {
+								Messages.sendWarningNl(
+										"Method not found : " + methId
+												+ chain.toString(), null,
+										"Task", null);
+
+								break; // next proc
+							}
+
+							String[] t = DataPath.splitPath(Utility
+									.pathToVarTree(methId));
+							methodVTP = t[t.length - 1];
+							objVTP = t[t.length - 2];
+						}
+
+						/*
+						 * 
+						 * REQUIRED INTERFACE !!!
+						 *  
+						 */
+
+						// is it a reference to a local subSystem?
+						if (ti.exist(objPath, Utility.T_SUBSYSTEM)
+								&& objPath.equals(tmpSubSystemPath)) {
+							chain.append(" -> Required Interface");
+							//Messages.sendDebug("\trequired interface
+							// objPath = " +
+							// Utility.makeEvidenceID(objPath));
+							//search a required interface
+							String ttmpath = tmpSubSystemPath + S
+									+ "RequiredInterfaceList" + S
+									+ methodVTP;
+							if (!ti.exist(ttmpath, "RequiredInterface")) {
+								// warning : proc not found
+								Messages
+										.sendWarningNl(
+												"Required interface not found : "
+														+ DataPath
+																.removeSlash(methodVTP)
+														+ ", subsystem "
+														+ DataPath
+																.removeSlash(objVTP)
+														+ chain.toString(),
+												null, "Task", null);
+								break;
+							}
+
+							// search a method ref and get methodName
+							/*
+							 * String[] mRefNames = ti.getAllName(ttmpath,
+							 * "MethodRef"); if (mRefNames.length == 0) {
+							 * Messages.sendWarning("Required interface
+							 * found but without methodRef: "
+							 * +VarTree.removeSlash(methodVTP) + ",
+							 * subsystem "+ VarTree.removeSlash(objVTP)
+							 * +chain.toString(), null, "Task", null);
+							 * break; } if (mRefNames.length > 1) {
+							 * Messages.sendWarning("Required interface
+							 * found with more than one methodRef: "
+							 * +VarTree.removeSlash(methodVTP) + ",
+							 * subsystem "+ VarTree.removeSlash(objVTP) +
+							 * chain.toString(), null, "Task", null); break; }
+							 */
+							//ttmpath += S + mRefNames[0];
+							methId = (String) ti.getValue(
+									ttmpath + S + "ExternalMethodRef")
+									.get();
+							if (methId == null) {
+								// nothing to do (Not mapped??)
+								break;
+							}
+
+							// correct path and make a new loop
+							tmpSubSystemPath = Mapping.parentSubSystemPath(
+									vt, tmpSubSystemPath);
+							continue;
+						}
+
+						/*
+						 * 
+						 * PROVIDED INTERFACE
+						 *  
+						 */
+						// obj is a local subSystem ?
+						if (ti.exist(objPath, Utility.T_SUBSYSTEM)) {
+							chain.append(" -> Provided Interface");
+							//Messages.sendDebug("\tprovided interface
+							// objPath = " +
+							// Utility.makeEvidenceID(objPath));
+
+							String tp = objPath + S
+									+ "ProvidedInterfaceList" + S
+									+ methodVTP;
+
+							// search the correct provided interface
+							if (!ti.exist(tp, "ProvidedInterface")) {
+								// warning : proc not found
+								Messages
+										.sendWarningNl(
+												"Provided interface not found : "
+														+ DataPath
+																.removeSlash(methodVTP)
+														+ ", SubSystem "
+														+ DataPath
+																.removeSlash(objVTP)
+														+ chain.toString(),
+												null, "Task", null);
+								break;
+							}
+
+							String objName = (String) ti.getValue(
+									tp + S + "LocalObjectRef").get();
+							String methodName = (String) ti.getValue(
+									tp + S + "LocalMethodRef").get();
+							if (objName == null || methodName == null) {
+								// nothing to do (Not mapped??)
+								break;
+							}
+
+							// compose a method identificator and make a new
+							// loop
+							methId = objName + S + methodName;
+
+							// correct path and make a new loop
+							tmpSubSystemPath = objPath;
+							continue;
+						}
+
+						/*
+						 * 
+						 * VAR
+						 *  
+						 */
+						// search a local var in current zone
+						String varPath = Search.aLocalVar(ti,
+								tmpSubSystemPath, DataPath
+										.removeSlash(objVTP));
+						if (varPath != null) {
+							chain.append(" -> Var");
+							//Messages.sendDebug("\tvar varjPath = " +
+							// Utility.makeEvidenceID(varPath));
+
+							// remove protection from objName and methName
+
+							// search a mapping to a mutex
+							String mutexName = map.varToMutex(Mapping
+									.makeVarName(vt,
+											tmpSubSystemPath, DataPath
+													.removeSlash(objVTP)));
+							if (mutexName == null)
+								break; // not mapped var -> not shared
+								//Messages.sendDebug("\tmutexName = " +
+								// mutexName);
+
+							{ //	check for mutex
+								String tmpPath = sys
+										+ S
+										+ "Architectural"
+										+ S
+										+ "MutexList"
+										+ S
+										+ Utility.pathToVarTree(DataPath
+												.addSlash(mutexName));
+								if (!ti.exist(tmpPath, "Mutex")) {
+									// no annotation about this method.
+									// Is it a good thing?
+									Messages.sendWarningNl(
+											"Mutex not found: " + mutexName
+													+ chain.toString(),
+											null, "Task", null);
+									break; // next method ref
+								}
+							}
+
+							// Check method name
+							ArrayList<?> elencoMethod = (ArrayList<?>) ti
+									.getValue(varPath + S + "Methods")
+									.get();
+							String tmpMethod = DataPath
+									.removeSlash(methodVTP);
+
+							boolean ok = false;
+							for (int jj = 0; jj < elencoMethod.size()
+									&& !ok; jj++) {
+								if (tmpMethod.equals(elencoMethod.get(jj)))
+									ok = true;
+							}
+							if (!ok) {
+								ok |= tmpMethod.equalsIgnoreCase("read");
+								ok |= tmpMethod.equalsIgnoreCase("write");
+							}
+							if (!ok) {
+								Messages
+										.sendWarningNl(
+												"The proc "
+														+ procNames[i]
+														+ " (task "
+														+ nome
+														+ ") required an illegal resource method."
+														+ "\n\tResource = "
+														+ DataPath
+																.removeSlash(objVTP)
+														+ ",  method = "
+														+ tmpMethod
+														+ chain.toString(),
+												null, "Task", null);
+								break;
+							}
+
+							// search annotation
+							String tmpMethodName = Mapping.makeVarName(
+									vt, tmpSubSystemPath,
+									DataPath.removeSlash(objVTP))
+									+ S + Utility.pathToEvidence(methodVTP);
+
+							String tmpPath = Search.anExecTime(ti, sys,
+									tmpMethodName, "METHOD", modeRef);
+
+							if (tmpPath == null) {
+								// no annotation about this method.
+								// Is it a good thing?
+								Messages.sendWarningNl(
+										"Not found ExecTime for '"
+												+ tmpMethod + "' method"
+												+ chain.toString(), null,
+										"Task", null);
+								break; // next method ref
+							}
+							//Messages.sendDebug("\tExecTime ok");
+
+							// set time to milli_seconds
+							IVariable var = ti.getValue(tmpPath + S
+									+ "Worst");
+							if (var instanceof TimeVar) {
+								((TimeVar) var)
+										.setType(COMMON_TIME_TYPE);
+							} else if (var instanceof TimeMVar) {
+								((TimeMVar) var)
+										.setType(COMMON_TIME_TYPE);
+							}
+							Double time = (Double) var.get();
+							if (time == null)
+								break; // no value, next method ref
+
+							mutexName = DataPath.removeSlash(mutexName);
+							if (getResourceUsage(resourceUsage, mutexName) < time
+									.doubleValue()) {
+								useResource(resourceUsage, resourceNames, mutexName, time.doubleValue());
+							}
+							// next method ref
+
+							// end. Next method ref
+							break;
+						}
+
+						// stato = EXIT
+						break;
+					}
+
+					if (stato == 100) {
+						Messages.sendWarningNl("Found a infinity loop"
+								+ chain.toString(), null, "Task", null);
+						// continue
+					}
+
+					// next method ref
+				}
+				// next proc ref
+			}
+
+		} else { // use data stored into Architectural
+
+			// first search all used resources ...
+			String tmpPref = sys + S + "Architectural" + S + "TaskList" + S
+					+ DataPath.addSlash(nome) + S + "ResourceRefList";
+			String[] idList = { modeRef };
+			tmpPref = Utility
+					.chooseModeRef(ti, tmpPref, idList, 0, modeRef);
+
+			// if tmpPref == null, nothing to do
+			if (tmpPref != null
+					&& ti.exist(tmpPref + S + "ResourceMethodRef",
+							DataPath.STRING_M_TYPE)) {
+
+				ArrayList<?> methNames = (ArrayList<?>) ti.getValue(
+						tmpPref + S + "ResourceMethodRef").get();
+				if (methNames == null)
+					methNames = new ArrayList<String>(); // no resource or method
+												 // name
+
+				// only one cicle
+				for (int i = 0; i < methNames.size(); i++) {
+					String methName = (String) methNames.get(i);
+
+					// search the resource
+					String resPath = Search.aResourceMethod(ti, sys,
+							methName);
+					if (resPath == null) {
+						Messages.sendWarningNl("Required a resource with '"
+								+ methName + "' method by Task '" + nome
+								+ "", null, "Task", null);
+						continue; // Warning !!!
+					}
+
+					String[] idList2 = { modeRef };
+					String tmpPath = Utility.chooseModeRef(ti, resPath + S
+							+ "MutexRefList", idList2, 0, modeRef);
+
+					if (tmpPath == null
+							|| !ti.exist(tmpPath + S + "MutexName",
+									DataPath.STRING_TYPE)) {
+						continue; // no mapping to mutex
+					}
+
+					String mutexName = (String) ti.getValue(
+							tmpPath + S + "MutexName").get();
+					if (mutexName == null) {
+						continue; // no mutex name
+					}
+
+					// check for mutex
+					tmpPath = sys
+							+ S
+							+ "Architectural"
+							+ S
+							+ "MutexList"
+							+ S
+							+ Utility.pathToVarTree(DataPath
+									.addSlash(mutexName));
+					if (!ti.exist(tmpPath, "Mutex")) {
+						// no annotation about this method.
+						// Is it a good thing?
+						Messages.sendWarningNl("Mutex not found: "
+								+ mutexName + ", required by task " + nome,
+								null, "Task", null);
+						continue; // next method ref
+					}
+
+					tmpPath = Search.anExecTime(ti, sys, methName,
+							"RESOURCE_METHOD", modeRef);
+
+					Double time = new Double(0);
+					if (tmpPath == null) {
+						// no annotation about this method.
+						// Is it a good thing?
+
+						// it's ok for Oil Configuration
+
+						//Messages.sendWarning("Not found ExecTime for
+						// '"+methName+"' method, required by task " + nome
+						//		, null, "Task", null);
+						//continue; // next method ref
+					} else {
+
+						// set time to milli_seconds
+						IVariable var = ti.getValue(tmpPath + S + "Worst");
+						if (var instanceof TimeVar) {
+							((TimeVar) var).setType(COMMON_TIME_TYPE);
+						} else if (var instanceof TimeMVar) {
+							((TimeMVar) var).setType(COMMON_TIME_TYPE);
+						}
+						time = (Double) var.get();
+						if (time == null) {
+							time = new Double(0);
+							//continue; // no value, next method ref
+						}
+					}
+
+					mutexName = DataPath.removeSlash(mutexName);
+					if (getResourceUsage(resourceUsage, mutexName) < time.doubleValue()) {
+						useResource(resourceUsage, resourceNames, mutexName, time.doubleValue());
+					}
+					// next method ref
+				}
+			}
+		}
 	}
 
 	protected boolean doStore(String key, Object o) {
@@ -1176,10 +1185,23 @@ public class Task extends ModeRes {
 	 *            worst case duration of the critical section
 	 */
 	public void useResource(String r, double w) {
-		if (!resources.containsKey(r)) {
-			resNames.add(r);
+		useResource(resources, resNames, r, w);
+	}
+	
+	/**
+	 * Specifies that this task uses resource r with a critical section that has
+	 * a worst case execution time w
+	 * 
+	 * @param r
+	 *            resource
+	 * @param w
+	 *            worst case duration of the critical section
+	 */
+	private static void useResource(HashMap<String, Double> resUsage, ArrayList<String> names, String r, double w) {
+		if (!resUsage.containsKey(r)) {
+			names.add(r);
 		}
-		resources.put(r, new Double(w));
+		resUsage.put(r, new Double(w));
 	}
 
 	/**
@@ -1190,12 +1212,23 @@ public class Task extends ModeRes {
 	 *            resource
 	 */
 	public double getResourceUsage(String r) {
-		Double w = (Double) resources.get(r);
+		return getResourceUsage(resources, r);
+	}
+	
+	/**
+	 * Returns the worst case duration of the longest critical section of this
+	 * task on resource r. If the resource isn't found, return -1
+	 * 
+	 * @param r
+	 *            resource
+	 */
+	private static double getResourceUsage(HashMap<String, Double> resUsage, String r) {
+		Double w = (Double) resUsage.get(r);
 		if (w != null) {
 			return w.doubleValue();
 		} else
 			return -1;
-	}
+	} 
 
 	public Enumeration<String> getAllResources() {
 		return Collections.enumeration(resNames);
@@ -1321,8 +1354,7 @@ public class Task extends ModeRes {
 		StringBuffer risp = new StringBuffer(super.toString());
 
 		risp.append("\nResources:");
-		for (Enumeration<String> keys = resources.keys(); keys.hasMoreElements();) {
-			String k = (String) keys.nextElement();
+		for (String k : resources.keySet()) {
 			risp.append("\n name = " + k + " \tvalue = " + resources.get(k));
 		}
 

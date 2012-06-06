@@ -143,6 +143,17 @@ public class VarTreeIdHandler {
 		List<EAttribute> idFeatures = getMap(obj.eClass());
 
 		if (idFeatures.size() == 0) {
+			EStructuralFeature conFeature = obj.eContainmentFeature();
+			if (conFeature == null) {
+				return obj.eClass().getName();
+			} // else 
+			if (conFeature.isMany()) {
+				try {
+					return "" + ((EList<EObject>)obj.eContainer().eGet(conFeature)).indexOf(obj);
+				} catch (Exception e) {
+					// do nothing
+				}
+			} // else
 			return obj.eClass().getName();
 		}
 

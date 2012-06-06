@@ -7,7 +7,6 @@ package com.eu.evidence.rtdruid.io;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedInputStream;
@@ -26,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.junit.Test;
 
+import com.eu.evidence.rtdruid.tests.RtdAssert;
 import com.eu.evidence.rtdruid.tests.vartree.data.FillVtUtil;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeIdHandler;
@@ -297,7 +297,7 @@ public class XMI2XMLlTest {
 	
 	@Test
 	public void testLoadBis() throws IOException {
-		String xmlInput1 = 	"<SYSTEM Name=\"hp_test5 (bug 223)\">" +
+		final String xmlInput1 = 	"<SYSTEM Name=\"hp_test5 (bug 223)\">" +
 			"<SCHEDULABILITY>" +
 			"<SCHEDULINGSCENARIO>" +
 			"<TASKSCHED TaskRef=\"t1\" Utilization=\"0.2\" Schedulable=\"true\"/>" +
@@ -305,36 +305,11 @@ public class XMI2XMLlTest {
 			"</SCHEDULINGSCENARIO>" +
 			"</SCHEDULABILITY>" +
 			"</SYSTEM>";
-		
-		Resource res = loadStringRtd(xmlInput1);
-
-		EObject root = res.getContents().get(0);
-		assertEquals(ID_SYSTEM, root.eClass().getName());
-		EObject schedulability = (EObject) root.eGet(root.eClass().getEStructuralFeature(ID_SCHEDULING)); 
-		assertNotNull(schedulability);
-		EList<?> schedulingScenarioList = (EList<?>) schedulability.eGet(schedulability.eClass().getEStructuralFeature(ID_SCHEDULING_SCENARIO)); 
-		assertNotNull(schedulingScenarioList);
-		assertEquals(1, schedulingScenarioList.size());
-		EObject sScen = (EObject) schedulingScenarioList.get(0);
-		EList<?> taskSchedList = (EList<?>) sScen.eGet(sScen.eClass().getEStructuralFeature(ID_SCENARIO_TASK_LIST)); 
-		assertNotNull(taskSchedList);
-		assertEquals(2, taskSchedList.size());
-
-		{
-			EObject ts = (EObject) taskSchedList.get(0);
-			assertEquals("t1", VarTreeIdHandler.getId(ts)); 
-			assertEquals("true", "" +ts.eGet(ts.eClass().getEStructuralFeature(ID_TASK_SCHED_SCHEDULABLE))); 
-			assertEquals("0.2", "" +ts.eGet(ts.eClass().getEStructuralFeature(ID_TASK_SCHED_UTILIZATION)));
-			assertNull(ts.eGet(ts.eClass().getEStructuralFeature(ID_TASK_SCHED_CDELTA)));
-		}
-		{	
-			EObject ts = (EObject) taskSchedList.get(1);
-			assertEquals("t1", VarTreeIdHandler.getId(ts)); 
-			assertNull(ts.eGet(ts.eClass().getEStructuralFeature(ID_TASK_SCHED_SCHEDULABLE))); 
-			assertEquals("2.0", "" +ts.eGet(ts.eClass().getEStructuralFeature(ID_TASK_SCHED_UTILIZATION)));
-			assertEquals("-3.0", "" +ts.eGet(ts.eClass().getEStructuralFeature(ID_TASK_SCHED_CDELTA)));
-		}
-
+		new RtdAssert(IllegalArgumentException.class) {
+			protected void doCheck() throws Throwable {
+				loadStringRtd(xmlInput1);
+			};
+		};
 	}
 
 	

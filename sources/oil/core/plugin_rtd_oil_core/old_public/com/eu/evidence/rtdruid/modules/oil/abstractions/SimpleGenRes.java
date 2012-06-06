@@ -242,6 +242,7 @@ public class SimpleGenRes implements ISimpleGenRes {
 	
 	// ------------------------------------
 	
+	@SuppressWarnings("unchecked")
 	public ISimpleGenRes clone() {
 		SimpleGenRes answer = new SimpleGenRes(name, path);
 		answer.properties = (HashMap<String, Object>) properties.clone();
@@ -249,6 +250,7 @@ public class SimpleGenRes implements ISimpleGenRes {
 		return answer;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void merge(ISimpleGenRes source) {
 		Map<String, ? extends Object> map = source.getAllProperties();
@@ -306,15 +308,15 @@ public class SimpleGenRes implements ISimpleGenRes {
 						} else if (oldValue instanceof String[]) {
 							setObject(key, merge((String[])oldValue, (String[])newValue));
 						} else if (oldValue instanceof int[]) {
-							setObject(key, merge((String[])oldValue, (String[])newValue));
+							setObject(key, merge((int[])oldValue, (int[])newValue));
 						} else if (oldValue instanceof double[]) {
-							setObject(key, merge((String[])oldValue, (String[])newValue));
+							setObject(key, merge((double[])oldValue, (double[])newValue));
 						} else if (oldValue instanceof Object[]) {
-							setObject(key, merge((String[])oldValue, (String[])newValue));
+							setObject(key, merge((Object[])oldValue, (Object[])newValue));
 						} else if ((""+oldValue).equals(""+newValue) || oldValue.equals(newValue)) {
 							// the same value, do nothing
 						} else {
-							RtdruidLog.showDebug("Different values of properties (key="+key+", v1 = "+newValue+", v2 = "+newValue+")\n\t"+this+"\n\t"+source);
+							RtdruidLog.showDebug("Different values of properties (key="+key+", v1 = "+oldValue+", v2 = "+newValue+")\n\t"+this+"\n\t"+source);
 						}
 						
 						
@@ -335,6 +337,82 @@ public class SimpleGenRes implements ISimpleGenRes {
 		}
 	}
 	
+	private int[] merge(int[] v1, int[] v2) {
+		if (v1.length == 0) {
+			return Arrays.copyOf(v2, v2.length);
+		}
+		if (v2.length == 0) {
+			return Arrays.copyOf(v1, v1.length);
+		}
+		
+		// v1>0 && v2>0
+		
+		int finalSize = v1.length;
+		int[] temp = Arrays.copyOf(v1, v1.length + v2.length);
+		
+		for (int newElem: v2) {
+			
+			boolean add = true;
+			for (int oldElem: temp) {
+				if (add && oldElem == newElem) {
+					add = false;
+				}
+			}
+			
+			if (add) {
+				temp[finalSize] = newElem;
+				finalSize ++;
+			}
+		}
+		
+		int[] answer;
+		if (finalSize == temp.length) {
+			answer = temp;
+		} else {
+			answer = Arrays.copyOf(temp, finalSize);
+		}
+		
+		
+		return answer;
+	}
+	private double[] merge(double[] v1, double[] v2) {
+		if (v1.length == 0) {
+			return Arrays.copyOf(v2, v2.length);
+		}
+		if (v2.length == 0) {
+			return Arrays.copyOf(v1, v1.length);
+		}
+		
+		// v1>0 && v2>0
+		
+		int finalSize = v1.length;
+		double[] temp = Arrays.copyOf(v1, v1.length + v2.length);
+		
+		for (double newElem: v2) {
+			
+			boolean add = true;
+			for (double oldElem: temp) {
+				if (add && oldElem == newElem) {
+					add = false;
+				}
+			}
+			
+			if (add) {
+				temp[finalSize] = newElem;
+				finalSize ++;
+			}
+		}
+		
+		double[] answer;
+		if (finalSize == temp.length) {
+			answer = temp;
+		} else {
+			answer = Arrays.copyOf(temp, finalSize);
+		}
+		
+		
+		return answer;
+	}
 	private <T> T[] merge(T[] v1, T[] v2) {
 		if (v1.length == 0) {
 			return Arrays.copyOf(v2, v2.length);
