@@ -6,9 +6,13 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.ByteArrayInputStream;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
@@ -24,25 +28,11 @@ import com.eu.evidence.rtdruid.vartree.data.DataPackage;
  * 
  * @author Nicola Serreli
  */
-public class CodeWritertMPTest extends TestCase {
+public class CodeWritertMPTest extends AbstractCodeWriterTest {
 	
 	// UPDRTD SPEZZARE X ARCHITTETURA
 
 	final static private String S = "" + DataPath.SEPARATOR;
-
-	/** Clear the OilImplFactory and RtosFactory before each test */
-	protected void setUp() throws Exception {
-		//OilImplFactory.INSTANCE.clear();
-		RtosFactory.INSTANCE.init();
-		super.setUp();
-	}
-
-	/** Clear the OilImplFactory and RtosFactory after each test */
-	protected void tearDown() throws Exception {
-		//OilImplFactory.INSTANCE.clear();
-		RtosFactory.INSTANCE.init();
-		super.tearDown();
-	}
 
 	final static public String DEFAULT_EE_IMPLEMENTATION ="";// CodeWritertTest.DEFAULT_EE_IMPLEMENTATION;
 
@@ -145,6 +135,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "	 EVENT evento1 {};\n"
 			+ "};\n";
 
+	@Test
 	public void testCodeWrite1() throws OilCodeWriterException {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_2_NIOS.getBytes()),
@@ -170,8 +161,8 @@ public class CodeWritertMPTest extends TestCase {
 		IOilWriterBuffer[] buffers = null;
 		buffers = RtosFactory.INSTANCE.write(vt, new String[] { prefix1, prefix2 });
 
-		assertTrue(buffers != null);
-		assertTrue(buffers.length == 2);
+		assertNotNull(buffers);
+		assertEquals(2, buffers.length );
 		System.out.println((buffers[0]).toString());
 		System.out.println((buffers[1]).toString());
 
@@ -300,6 +291,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "    };\n"
 			+ "};\n";
 
+	@Test
 	public void testGlobalResources() {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_2_NIOS_WITH_GLOBAL_RESOURCES
@@ -331,8 +323,8 @@ public class CodeWritertMPTest extends TestCase {
 			assertTrue(false);
 		}
 
-		assertTrue(buffers != null);
-		assertTrue(buffers.length == 2);
+		assertNotNull(buffers);
+		assertEquals(2, buffers.length );
 		System.out.println((buffers[0]).toString());
 		System.out.println((buffers[1]).toString());
 
@@ -458,6 +450,7 @@ public class CodeWritertMPTest extends TestCase {
 	+ "    };\n"
 	+ "};\n";
 
+	@Test
 	public void testGlobalResourcesBis() {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(
@@ -489,8 +482,8 @@ public class CodeWritertMPTest extends TestCase {
 			assertTrue(false);
 		}
 
-		assertTrue(buffers != null);
-		assertTrue(buffers.length == 2);
+		assertNotNull(buffers);
+		assertEquals(2, buffers.length );
 		System.out.println((buffers[0]).toString());
 		System.out.println((buffers[1]).toString());
 
@@ -645,6 +638,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "    };\n"
 			+ "};\n";
 
+	@Test
 	public void test3cpuGlobalResources() {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(
@@ -799,6 +793,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "    };\n"
 			+ "};\n";
 
+	@Test
 	public void testFP() {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_2_NIOS_FP
@@ -830,8 +825,8 @@ public class CodeWritertMPTest extends TestCase {
 			assertTrue(false);
 		}
 
-		assertTrue(buffers != null);
-		assertTrue(buffers.length == 2);
+		assertNotNull(buffers);
+		assertEquals(2, buffers.length );
 		System.out.println((buffers[0]).toString());
 		System.out.println((buffers[1]).toString());
 
@@ -976,6 +971,7 @@ public class CodeWritertMPTest extends TestCase {
 	    "	    RESOURCEPROPERTY = STANDARD;\n" +
 	    "	};\n" +
 		"};\n";
+	@Test
 	public void test4Task2Cpu() {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(ALTERA_EXAMPLE
@@ -1007,8 +1003,8 @@ public class CodeWritertMPTest extends TestCase {
 			assertTrue(false);
 		}
 
-		assertTrue(buffers != null);
-		assertTrue(buffers.length == 2);
+		assertNotNull(buffers);
+		assertEquals(2, buffers.length );
 		System.out.println((buffers[0]).toString());
 		System.out.println((buffers[1]).toString());
 
@@ -1154,6 +1150,7 @@ public class CodeWritertMPTest extends TestCase {
 	    "	    RESOURCEPROPERTY = STANDARD;\n" +
 	    "	};\n" +
 		"};\n";
+	@Test
 	public void test4Task2CpuAlwaysRN() {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(ALTERA_EXAMPLE_always_rn
@@ -1185,8 +1182,8 @@ public class CodeWritertMPTest extends TestCase {
 			assertTrue(false);
 		}
 	
-		assertTrue(buffers != null);
-		assertTrue(buffers.length == 2);
+		assertNotNull(buffers);
+		assertEquals(2, buffers.length );
 		System.out.println((buffers[0]).toString());
 		System.out.println((buffers[1]).toString());
 	
@@ -1332,7 +1329,8 @@ public class CodeWritertMPTest extends TestCase {
 	    "	    RESOURCEPROPERTY = STANDARD { APP_SRC = \"res.c\"; };\n" +
 	    "	};\n" +
 		"};\n";
-	public void test4Task2CpuSplitted() {
+	@Test
+	public void test4Task2CpuSplitted() throws OilCodeWriterException {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(ALTERA_EXAMPLE_split_tasks
 				.getBytes()), vt);
@@ -1355,16 +1353,11 @@ public class CodeWritertMPTest extends TestCase {
 				DataPackage.eINSTANCE.getRtos().getName()));
 	
 		IOilWriterBuffer[] buffers = null;
-		try {
-			buffers = RtosFactory.INSTANCE.write(vt, new String[] { prefix1,
+		buffers = RtosFactory.INSTANCE.write(vt, new String[] { prefix1,
 					prefix2 });
-		} catch (OilCodeWriterException e) {
-			e.printStackTrace();
-			assertTrue(false);
-		}
 	
-		assertTrue(buffers != null);
-		assertTrue(buffers.length == 2);
+		assertNotNull(buffers);
+		assertEquals(2, buffers.length );
 		System.out.println((buffers[0]).toString());
 		System.out.println((buffers[1]).toString());
 	
@@ -1471,6 +1464,7 @@ public class CodeWritertMPTest extends TestCase {
 			+ "	 EVENT evento1 {};\n"
 			+ "};\n";
 
+	@Test
 	public void testOrti1() {
 		IVarTree vt = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_ORTI_1_NIOS
@@ -1502,8 +1496,8 @@ public class CodeWritertMPTest extends TestCase {
 			assertTrue(false);
 		}
 
-		assertTrue(buffers != null);
-		assertTrue(buffers.length == 2);
+		assertNotNull(buffers);
+		assertEquals(2, buffers.length );
 		System.out.println((buffers[0]).toString());
 		System.out.println((buffers[1]).toString());
 

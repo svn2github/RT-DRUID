@@ -16,6 +16,7 @@ import com.eu.evidence.rtdruid.modules.oil.implementations.components.mp_oil_Tes
 import com.eu.evidence.rtdruid.modules.oil.reader.ReaderTests;
 import com.eu.evidence.rtdruid.modules.oil.reader.inclusion.IncludeSupportTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.AllWriteTests;
+import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.CodeWriterAutosar;
 
 /**
@@ -35,6 +36,7 @@ import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.CodeWriterAut
 	IncludeSupportTest.class,
 	AllWriteTests.class,
 	CodeWriterAutosar.class,
+	AutosarOilWriterTests.class,
 	OilTestSuite.SubTes.class
 })
 public class OilTestSuite {

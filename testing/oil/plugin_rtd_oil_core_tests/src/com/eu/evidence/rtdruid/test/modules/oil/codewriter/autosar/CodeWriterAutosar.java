@@ -1,36 +1,11 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.HashMap;
-
-import org.eclipse.core.runtime.IStatus;
 import org.junit.Test;
 
-import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
-import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
-import com.eu.evidence.rtdruid.io.IRTDExporter;
-import com.eu.evidence.rtdruid.io.IRTDImporter;
-import com.eu.evidence.rtdruid.io.IVTResource;
-import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
-import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.AbstractCodeWriterTest;
-import com.eu.evidence.rtdruid.vartree.ITreeInterface;
-import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
 public class CodeWriterAutosar extends AbstractCodeWriterTest {
 
-	private String VT_PROP_AUTOSAR_FORMAT = "vt_property__autosar_format";
-	
 	@Test
 	public void testAutosar_1() {
 	    final String text =
@@ -128,7 +103,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 				"};\n";
 	    
 	    
-	    writerAutosarTest(text, 1);
+	    AutosarOilWriterTests.writerAutosarTest(text, 1);
 	}
 	
 	
@@ -253,139 +228,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest {
 			"	};\n" +
 			"};\n";
   
-	    writerAutosarTest(text, 1);
-	}
-	
-	
-	// ------------------------------
-
-	public DefaultTestResult[] writerAutosarTest(String oil_text, int expected_cpu) {
-		DefaultTestResult[] answer = new DefaultTestResult[2];
-		IVarTree vt1 = loadVt(oil_text);
-		answer[0] = commonWriterTest(oil_text, expected_cpu);
-		IStatus st = VarTreeUtil.compare(vt1, answer[0].vt); assertTrue(st.getMessage(), st.isOK());
-//		System.out.println("<<<--->>>\n\n" + Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(vt1)));
-//		System.out.println("<<<--->>>\n\n" + Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(answer[0].vt)));
-		
-
-		answer[1] = commonAutosarWriterTest(oil_text, expected_cpu);
-		
-		
-		
-
-		IOilWriterBuffer[] buffers_0 = answer[0].buffers;
-		IOilWriterBuffer[] buffers_1 = answer[1].buffers;
-		assertTrue(buffers_0.length == buffers_1.length);
-		for (int i=0; i<expected_cpu; i++) {
-			assertEquals((buffers_0[i]).toString(), (buffers_1[i]).toString());
-		}
-		
-		return answer;
+	    AutosarOilWriterTests.writerAutosarTest(text, 1);
 	}
 
-	
-	
-	
-	public DefaultTestResult commonAutosarWriterTest(String oil_text, int expected_cpu) {
-		{
-			String[] exp =RTD_XMI_Factory.getAllExportTypes(); 
-			assertNotNull(exp);
-			boolean ok = false;
-			for (String s: exp) {
-				if ("arxml".equalsIgnoreCase(s)) {
-					ok = true;
-				}
-			}
-			assertTrue("arxml file export is not supported", ok);
-		}
-		{
-			String[] exp =RTD_XMI_Factory.getAllImportTypes(); 
-			assertNotNull(exp);
-			boolean ok = false;
-			for (String s: exp) {
-				if ("arxml".equalsIgnoreCase(s)) {
-					ok = true;
-				}
-			}
-			assertTrue("arxml file import is not supported", ok);
-		}
-		
-		
-		// convert OIL to AUTOSAR
-		String autosarFormat;
-		{
-			// LOAD AS OIL
-			IVarTree oil_vt = VarTreeUtil.newVarTree();
-			(new OilReader()).load(new ByteArrayInputStream(oil_text.getBytes()), oil_vt, null, null);
-
-//			System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(oil_vt)));
-			
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			HashMap<String, String> output_options = new HashMap<String, String>();
-			output_options.put(IRTDExporter.OPT_USE_EXPORTER_TYPE, "arxml");
-			try {
-				oil_vt.getResourceSet().getResources().get(0).save(outputStream, output_options);
-			} catch (IOException e) {
-				e.printStackTrace();
-				fail(e.getMessage());
-			}
-			autosarFormat = outputStream.toString();
-		}
-
-//		System.out.println(autosarFormat);
-
-		
-		// reload everything from autosar
-		IVarTree autosar_vt;
-		{
-			// LOAD AS OIL
-			autosar_vt = VarTreeUtil.newVarTree();
-
-			try {
-			    IVTResource res = (IVTResource) new RTD_XMI_Factory().createResource();
-			    HashMap<String, String> input_options = new HashMap<String, String>();
-			    input_options.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "arxml");
-				res.load(new ByteArrayInputStream(autosarFormat.getBytes()), input_options);
-				
-				autosar_vt.setRoot(res);
-			} catch (IOException e) {
-				e.printStackTrace();
-				fail(e.getMessage());
-			}
-			
-		}
-		
-//		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(autosar_vt)));
-
-		
-		
-		// -------------- search rtos ----------------
-		ITreeInterface ti = autosar_vt.newTreeInterface();
-
-		String[] prefix = CommonUtils.getAllRtos(ti);
-		assertTrue(prefix.length == expected_cpu);
-
-		// --------------- write -----------------
-
-		IOilWriterBuffer[] buffers = null;
-		try {
-			buffers = RtosFactory.INSTANCE.write(autosar_vt, prefix);
-		} catch (OilCodeWriterException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException("Write fail: " + e.getMessage(), e);
-		}
-
-		assertTrue(buffers != null);
-		assertTrue(buffers.length == expected_cpu);
-		for (int i=0; i<expected_cpu; i++)
-			System.out.println("buff " + i + ":\n" + (buffers[i]).toString());
-		
-		
-		
-		autosar_vt.getProperties().put(VT_PROP_AUTOSAR_FORMAT, autosarFormat);
-		
-
-		return new DefaultTestResult(autosar_vt, buffers);
-		
-	}
 }

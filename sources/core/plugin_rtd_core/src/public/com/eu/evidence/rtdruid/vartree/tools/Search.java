@@ -2028,6 +2028,48 @@ public final class Search {
 	}
 
 	/**
+	 * Searchs all Application Modes stored inside the tree. If no system was found, returns
+	 * null, otherwise returns an array with 0 or more String that contain paths
+	 * of all found Application Modes
+	 * 
+	 * @param ti
+	 *            current data repository
+	 * 
+	 * @return null if NO system is found. Otherwise returns a not null array
+	 *         with 0 or more path, one for each found Application Mode
+	 * 
+	 * @throws NullPointerException
+	 *             if ti is null
+	 */
+	public static ArchElement[] allApplModesNames(ITreeInterface ti) {
+		if (ti == null) {
+			throw new NullPointerException("Required a not null treeinterface");
+		}
+
+		DataPackage dpkg = DataPackage.eINSTANCE;
+		String S = "" + DataPath.SEPARATOR;
+
+		String prefix = null;
+		String[] tmp = ti.getAllName(prefix, dpkg.getSystem().getName());
+		if (tmp.length == 0) {
+			// Messages.sendWarning("No System found", null, "", null);
+			return null;
+		}
+
+		prefix = tmp[0] +S+DPKG.getSystem_Modes().getName()+S+DPKG.getModes_ModeList().getName();
+
+		String[] ttmp = ti.getAllName(prefix, dpkg.getMode().getName());
+		ArchElement[] answer = new ArchElement[ttmp.length];
+
+		for (int i = 0; i < answer.length; i++) {
+			answer[i] = new ArchElement(prefix + S + ttmp[i], DataPath
+					.removeSlash(DataPath.removeSlash(ttmp[i])));
+		}
+
+		return answer;
+	}
+
+	/**
 	 * Searchs all Resources stored inside the tree. If no system was found, returns
 	 * null, otherwise returns an array with 0 or more String that contain paths
 	 * of all found Resources

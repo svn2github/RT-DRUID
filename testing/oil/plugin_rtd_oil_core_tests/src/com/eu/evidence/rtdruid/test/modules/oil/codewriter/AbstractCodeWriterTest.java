@@ -6,8 +6,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,13 +52,17 @@ import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
  *
  */
 public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
+	
+	protected String basePath = "e:/tests/";
+	
+	public static boolean DEBUG_OIL_GENERATION = true;
 		
 	/**
 	 * A small class used to retur the IVarTree and computed Buffers
 	 * 
 	 * @author Nicola Serreli
 	 */
-	protected class DefaultTestResult {
+	public static class DefaultTestResult {
 		public final IVarTree vt;
 		public final IOilWriterBuffer[] buffers;
 		public DefaultTestResult(IVarTree vt, IOilWriterBuffer[] buffers) {
@@ -116,15 +123,15 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 
 		assertNotNull(buffers);
 		assertEquals(expected_cpu, buffers.length);
-		for (int i=0; i<expected_cpu; i++)
-			System.out.println("buff " + i + ":\n" + (buffers[i]).toString());
+		debug(buffers);
+		writeTestResultToFile(buffers);
 
 		IStatus st = VarTreeUtil.compare(vt, vt2); assertTrue(st.getMessage(), st.isOK());
 		
 		return new DefaultTestResult(vt, buffers);
 	}
 
-	protected IVarTree loadVt(String oil_text) {
+	protected static IVarTree loadVt(String oil_text) {
 		IVarTree vt2 = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(oil_text.getBytes()), vt2, null, null);
 		return vt2;
@@ -262,15 +269,12 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 			throw new RuntimeException("Write fail: " + e.getMessage(), e);
 		}
 
-		assertNotNull(buffers);
-		for (int i=0; i<buffers.length; i++)
-			System.out.println("buff " + i + ":\n" + (buffers[i]).toString());
+		debug(buffers);
 
 		assertEquals(expected_cpu, buffers.length);
 
 		return new DefaultTestResult(vt, buffers);
 	}
-	
 	
 
 	protected void mergeInput(IVarTree vt, IVTResource res) {
@@ -316,4 +320,60 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 		return output.toString();
     }
 
+    
+    /**
+     * This method writes all provided test results to a file corresponding to current test 
+     * 
+     * @param buffers
+     */
+    protected void writeTestResultToFile(IOilWriterBuffer[] buffers) {
+    	String path = basePath + (basePath.length()>0 && !basePath.endsWith(File.separator) ? File.separator : "")+getClass().getName() + "-" + name.getMethodName();
+    	writeTestResultToFile(buffers, path);
+    }
+    /**
+     * This method writes all provided test results to a generic file 
+     * 
+     * @param buffers
+     */
+    protected void writeTestResultToFile(IOilWriterBuffer[] buffers, String filePath) {
+		try {
+	    	File f = new File(filePath);
+	    	FileOutputStream out = new FileOutputStream(f);
+	    	write(buffers, out);
+	    	out.flush();
+	    	out.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+    }
+    
+
+	
+	/**
+	 * Write all buffers to standard output or to the given stream
+	 * 
+	 * @param buffers
+	 */
+	public void debug(IOilWriterBuffer[] buffers) {
+		if (DEBUG_OIL_GENERATION) {
+			write(buffers, System.out);
+		}
+	}
+	
+	/**
+	 * Write all buffers to standard output or to the given stream
+	 * 
+	 * @param buffers
+	 */
+	public void write(IOilWriterBuffer[] buffers, OutputStream out) {
+		try {
+			for (int i=0; i<buffers.length; i++) {
+				out.write(("buff " + i + ":\n").getBytes());
+				out.write((buffers[i]).toString().getBytes());
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+    
 }
