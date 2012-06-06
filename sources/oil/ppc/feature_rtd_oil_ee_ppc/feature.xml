@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.ppc"
       label="RT-Druid Oil for PPC for Erika Enterprise feature"
-      version="1.6.1.qualifier"
+      version="2.0.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.ppc.core">
 
@@ -11,13 +11,12 @@
    </description>
 
    <copyright url="http://www.evidence.eu.com">
-Copyright (c) 2004, 2011 Evidence S.r.l.
+      Copyright (c) 2004, 2011 Evidence S.r.l.
 All rights reserved.
-
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
-            Eclipse Public License - v 1.0
+      Eclipse Public License - v 1.0
 
 THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC LICENSE (&quot;AGREEMENT&quot;). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES RECIPIENT&apos;S ACCEPTANCE OF THIS AGREEMENT.
 
@@ -105,19 +104,25 @@ Everyone is permitted to copy and distribute copies of this Agreement, but in or
 This Agreement is governed by the laws of the State of New York and the intellectual property laws of the United States of America. No party to this Agreement will bring a legal action under this Agreement more than one year after the cause of action arose. Each party waives its rights to a jury trial in any resulting litigation.
    </license>
 
-
    <requires>
       <import feature="com.eu.evidence.rtdruid.core"/>
       <import feature="com.eu.evidence.rtdruid.oil.core"/>
-      <import feature="com.eu.evidence.rtdruid.oil.ee" />
+      <import feature="com.eu.evidence.rtdruid.oil.ee"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="com.eu.evidence.rtdruid.core" />
+      <import plugin="com.eu.evidence.rtdruid.core"/>
       <import plugin="com.eu.evidence.rtdruid.oil.core"/>
       <import plugin="com.eu.evidence.rtdruid.oil.ee.core"/>
    </requires>
 
    <plugin
          id="com.eu.evidence.rtdruid.oil.ppc.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.eu.evidence.rtdruid.oil.ppc.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

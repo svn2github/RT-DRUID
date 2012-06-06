@@ -2,8 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Oil Plug-in for c/c++ support (Tests)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.cdt.ui.tests
-Bundle-Version: 1.6.1.qualifier
-Fragment-Host: com.eu.evidence.rtdruid.oil.cdt.ui;bundle-version="1.6.1"
+Bundle-Version: 2.0.0.qualifier
+Fragment-Host: com.eu.evidence.rtdruid.oil.cdt.ui
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.
-Require-Bundle: com.eu.evidence.rtdruid.tests;bundle-version="1.6.1"
+Require-Bundle: com.eu.evidence.rtdruid.tests,
+ com.eu.evidence.rtdruid.core.ui.tests
+

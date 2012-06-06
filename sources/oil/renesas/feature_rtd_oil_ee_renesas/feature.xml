@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.renesas"
       label="RT-Druid Oil for Renesas for Erika Enterprise feature"
-      version="1.6.1.qualifier"
+      version="2.0.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.renesas.core">
 

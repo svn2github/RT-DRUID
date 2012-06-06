@@ -290,11 +290,18 @@ public class OilBuilder extends IncrementalProjectBuilder {
                 //System.err.println(">>" + res);
                 
                 IProject project = res.getProject();
-                Set<String> confFile = new LinkedHashSet<String>(Arrays.asList(getConfigFile(project)));
+                Set<String> confFile;
+                {
+	                String[] tmp = getConfigFile(project);
+	                if (tmp == null) {
+	                	return true;
+	                }
+	                confFile = new LinkedHashSet<String>(Arrays.asList(tmp));
+                }
                 
                 // if rebuild already contains this project, continue with the next resource
                 //IProjectBuilder builder = getProjectBuilder();
-                if (rebuild.containsKey(project) || confFile == null) {
+                if (rebuild.containsKey(project) || confFile.size() == 0) {
                     return true;
                 }
                 
@@ -1175,7 +1182,7 @@ class ProjectBuilder implements IProjectBuilder {
 //			System.out.println("\t------------FINE OI1L------------\n\n");
 
 			
-			mergeInput(vt, ((com.eu.evidence.rtdruid.vartree.data.System) objList.get(0)));
+			mergeInput(vt, objList.get(0));
 		}
 	}
 	

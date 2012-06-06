@@ -9,7 +9,7 @@ package com.eu.evidence.rtdruid.modules.oil.cortex.constants;
  * @author Nicola Serreli
  *
  */
-public class CortexConstants {
+public interface CortexConstants {
 
 	/***************************************************************************
 	 * 

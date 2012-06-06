@@ -9,7 +9,7 @@ package com.eu.evidence.modules.oil.dspic.constants;
  * @author Nicola Serreli
  *
  */
-public class PicConstants {
+public interface PicConstants {
 
 	/** Enable ICD2 for PIC30 */
 	public final static String SGRK__PIC30_ICD2__ = "__PIC_30_ICD2__";

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.eu.evidence.rtdruid.ui.tests"
+      label="RT-Druid tests"
+      version="2.0.0.qualifier"
+      provider-name="Evidence S.r.l."
+      plugin="com.eu.evidence.rtdruid.core.ui.tests">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="com.eu.evidence.rtdruid.oil.cdt.ui.tests"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="com.eu.evidence.rtdruid.core.ui.tests"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

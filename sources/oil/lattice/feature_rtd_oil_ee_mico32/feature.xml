@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.mico32"
       label="RT-Druid Oil for Lattice mico32 for Erika Enterprise feature"
-      version="1.6.1.qualifier"
+      version="2.0.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.mico32.core">
 

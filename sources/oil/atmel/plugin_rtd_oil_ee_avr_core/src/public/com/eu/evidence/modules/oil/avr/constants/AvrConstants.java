@@ -9,12 +9,12 @@ package com.eu.evidence.modules.oil.avr.constants;
  * @author Nicola Serreli
  *
  */
-public class AvrConstants {
+public interface AvrConstants {
 	/***************************************************************************
 	 * 
 	 * AVR preferences
 	 *  
 	 **************************************************************************/
-	public final static String PREF_AVR_GCC_PATH = "preference_avr5__path_for_cc_compiler";
+	String PREF_AVR_GCC_PATH = "preference_avr5__path_for_cc_compiler";
 
 }

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Freescale S12 Core Plug-in
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.s12.core;singleton:=true
-Bundle-Version: 1.6.1.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.s12.Activator
 Require-Bundle: org.eclipse.core.runtime,
  com.eu.evidence.rtdruid.core,

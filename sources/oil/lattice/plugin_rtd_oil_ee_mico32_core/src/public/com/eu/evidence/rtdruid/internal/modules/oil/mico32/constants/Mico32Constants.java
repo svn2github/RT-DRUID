@@ -10,7 +10,7 @@ package com.eu.evidence.rtdruid.internal.modules.oil.mico32.constants;
  * @author Nicola Serreli
  *
  */
-public class Mico32Constants {
+public interface Mico32Constants {
 
 	public final static String SGRK__MICO32_SMALLC__ = "sgrk_cpu_property_mico32__use_smallc";
 	public final static String SGRK__MICO32_STANDALONE_PRINTF__ = "sgrk_cpu_property_mico32__use_standalone_printf";

@@ -9,7 +9,7 @@ package com.eu.evidence.rtdruid.modules.oil.s12.constants;
  * @author Nicola Serreli
  *
  */
-public class S12Constants {
+public interface S12Constants {
 
 	/** Enable ICD2 for S12 */
 //	public final static String SGRK__S12_ICD2__ = "__PIC_30_ICD2__";

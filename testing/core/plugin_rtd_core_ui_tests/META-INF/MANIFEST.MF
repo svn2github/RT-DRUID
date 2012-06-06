@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RT-Druid UI core Testing (and utilities)
+Bundle-SymbolicName: com.eu.evidence.rtdruid.core.ui.tests
+Bundle-Version: 2.0.0.qualifier
+Bundle-Activator: com.eu.evidence.rtdruid.tests.ui.RtdUiTestsActivator
+Require-Bundle: org.junit4;visibility:=reexport,
+ org.apache.log4j;visibility:=reexport,
+ org.eclipse.swtbot.eclipse.finder;visibility:=reexport,
+ org.eclipse.swtbot.eclipse.gef.finder;visibility:=reexport,
+ org.eclipse.swtbot.forms.finder;visibility:=reexport,
+ org.eclipse.swtbot.junit4_x;visibility:=reexport,
+ org.eclipse.swtbot.swt.finder;visibility:=reexport,
+ org.hamcrest;visibility:=reexport,
+ org.hamcrest.library;visibility:=reexport,
+ org.eclipse.core.runtime,
+ org.eclipse.jface;visibility:=reexport,
+ org.eclipse.ui.workbench
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Evidence S.r.l.
+Eclipse-RegisterBuddy: org.apache.log4j
+Export-Package: com.eu.evidence.rtdruid.tests.ui.swtbot

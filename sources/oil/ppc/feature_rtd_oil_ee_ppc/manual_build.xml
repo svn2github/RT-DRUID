@@ -25,6 +25,10 @@
 				<property name="bundleId" value="com.eu.evidence.rtdruid.oil.ppc.core"/>
 				<property name="bundleVersion" value="${rtd_oil_ee_ppc_core_v}.${build_number}"/>
 			</ant>
+			<ant antfile="manual_build.xml" dir="../plugin_rtd_oil_ee_ppc_ui" target="${target}">
+				<property name="bundleId" value="com.eu.evidence.rtdruid.oil.ppc.ui"/>
+				<property name="bundleVersion" value="${rtd_oil_ee_ppc_ui_v}.${build_number}"/>
+			</ant>
 		</target>
 
 		<target name="all.features">
@@ -48,7 +52,7 @@
 				<param name="feature_id" value="${bundleId}"/>
 				<param name="feature_version" value="${bundleVersion}"/>
 				<param name="feature_featureIds" value=""/>
-				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.ppc.core:0.0.0,${rtd_oil_ee_ppc_core_v}.${build_number},"/>
+				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.ppc.core:0.0.0,${rtd_oil_ee_ppc_core_v}.${build_number},com.eu.evidence.rtdruid.oil.ppc.ui:0.0.0,${rtd_oil_ee_ppc_ui_v}.${build_number},"/>
 			</antcall>
 		</target>
 		
@@ -57,7 +61,7 @@
 				<param name="feature_id" value="${bundleId}"/>
 				<param name="feature_version" value="${bundleVersion}"/>
 				<param name="feature_featureIds" value=""/>
-				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.ppc.core:0.0.0,${rtd_oil_ee_ppc_core_v}.${build_number},"/>
+				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.oil.ppc.core:0.0.0,${rtd_oil_ee_ppc_core_v}.${build_number},com.eu.evidence.rtdruid.oil.ppc.ui:0.0.0,${rtd_oil_ee_ppc_ui_v}.${build_number},"/>
 			</antcall>
 		</target>
 </project>

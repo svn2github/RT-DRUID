@@ -5,7 +5,7 @@ package com.eu.evidence.modules.oil.tricore.constants;
  * @author Nicola Serreli
  *
  */
-public class TricoreConstants {
+public interface TricoreConstants {
 
 	
 	public final static String SGRK__TRICORE_MODEL__ = "sgrk_cpu_property_tricore1__model";

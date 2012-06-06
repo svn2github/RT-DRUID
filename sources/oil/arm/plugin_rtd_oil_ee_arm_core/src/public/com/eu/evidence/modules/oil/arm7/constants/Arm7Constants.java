@@ -9,7 +9,7 @@ package com.eu.evidence.modules.oil.arm7.constants;
  * @author Nicola Serreli
  *
  */
-public class Arm7Constants {
+public interface Arm7Constants {
 
 	/***************************************************************************
 	 * 

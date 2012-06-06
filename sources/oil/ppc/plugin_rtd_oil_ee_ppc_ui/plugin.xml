@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.builderOptions">
+      <options
+            class="com.eu.evidence.rtdruid.modules.oil.ppc.ui.preferencepages.Options">
+      </options>
+   </extension>
+
+   <extension
+      point = "org.eclipse.ui.preferencePages">
+       <page id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID.ppcConfigurator"
+            class="com.eu.evidence.rtdruid.modules.oil.ppc.ui.preferencepages.PpcConfigurator"
+            category="com.eu.evidence.rtdruid.oil.preferencePagesID"
+            name="e200Zx">
+       </page>
+   </extension>
+
+</plugin>

@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Cortex plugin (Core)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.cortex.core;singleton:=true
-Bundle-Version: 1.6.1.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.cortex.Activator
 Require-Bundle: org.eclipse.core.runtime,
- com.eu.evidence.rtdruid.core;bundle-version="1.6.1",
- com.eu.evidence.rtdruid.oil.core;bundle-version="1.6.1",
- com.eu.evidence.rtdruid.oil.ee.core;bundle-version="1.6.1"
+ com.eu.evidence.rtdruid.core,
+ com.eu.evidence.rtdruid.oil.core,
+ com.eu.evidence.rtdruid.oil.ee.core
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.

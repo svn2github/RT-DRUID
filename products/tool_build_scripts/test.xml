@@ -20,6 +20,7 @@
 
 	<property name="eclipse-home" value="${basedir}/../.." />
 	<property name="library-file" value="${eclipse-home}/plugins/org.eclipse.test_${org.eclipse.test}/library.xml" />
+	<property name="sbot-library-file" value="${eclipse-home}/plugins/${swtbot.headles.plugin}/library.xml" />
 	<property name="junit-stylesheet" value="${eclipse-home}/plugins/org.eclipse.test_${org.eclipse.test}/JUNIT.XSL" />
 	
 	<dirname property="current.ant.file.basedir" file="${ant.file}"/>
@@ -132,6 +133,21 @@
 			<property name="classname" value="${class-tests}" />
 		</ant>
 	</target>
+	
+	<!-- This target defines the tests that need to be run. -->
+	<target name="sbot_suite" unless="performance">
+		<property name="data" value="${eclipse-home}/test-workspace" />
+		<property name="jvmOption" value="" />
+		<property name="vmAgent" value="-javaagent:${eclipse-home}/plugins/org.eclipse.test_${org.eclipse.test}/lib/jacocoagent.jar=destfile=${coverage-output}/jacoco_swtbot_${class-tests}${NOW.DSTAMP}_${NOW.TSTAMP}.exec"/>
+		<!--<delete dir="${location1}" quiet="true"/> -->
+		<ant target="swtbot-test" antfile="${sbot-library-file}" dir="${eclipse-home}">
+			<property name="data-dir" value="${data}" />
+			<property name="plugin-name" value="${plugin-name}" />
+			<property name="classname" value="${class-tests}" />
+			<property name="vmargs" value=" -Xms512M -Xmx1024M -XX:MaxPermSize=512M ${jvmOption} ${vmAgent}" />
+		</ant>
+	</target>
+		
 
 	<!-- This target holds code to cleanup the testing environment after the tests -->
 	<!-- have been run. You can use this to delete temporary files that are created. -->
@@ -161,6 +177,12 @@
 	<!-- the tests have been run should go here. -->
 	<target name="run" depends="init,suite,cleanup">
 		<ant target="collect" antfile="${library-file}" dir="${eclipse-home}">
+			<property name="includes" value="org*.xml" />
+			<property name="output-file" value="${plugin-name}.xml" />
+		</ant>
+	</target>
+	<target name="run_sbot" depends="init,sbot_suite,cleanup">
+		<ant target="collect" antfile="${sbot-library-file}" dir="${eclipse-home}">
 			<property name="includes" value="org*.xml" />
 			<property name="output-file" value="${plugin-name}.xml" />
 		</ant>

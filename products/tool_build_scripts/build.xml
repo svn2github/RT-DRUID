@@ -54,6 +54,7 @@
 
 	<target name="rtdruid_tests.features" if="enable_tests_features">
 		<ant antfile="manual_build.xml" target="${target}" dir="../../testing/core/feature_rtd_tests"/>
+		<ant antfile="manual_build.xml" target="${target}" dir="../../testing/core/feature_rtd_ui_tests"/>
 	</target>
 
 	<target name="all.features">
