@@ -4,14 +4,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,18 +35,21 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.w3c.dom.Document;
 
+import com.eu.evidence.rtdruid.Rtd_corePlugin;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
 import com.eu.evidence.rtdruid.io.IVTResource;
 import com.eu.evidence.rtdruid.io.MultiSourceImporterFactory;
 import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OsType;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
 import com.eu.evidence.rtdruid.modules.oil.transform.OilTransformFactory;
 import com.eu.evidence.rtdruid.tests.AbstractNamedTest;
-import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 
@@ -53,10 +61,86 @@ import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
  */
 public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 	
-	protected String basePath = "e:/tests/";
+	protected String basePath = null;
+	public final static String SYS_PROP_TEST_BASE_PATH = "RTD_OIL_TESTS_RESULT_PATH";
+	public final static String SYS_PROP_TEST_BASE_ACTION = "RTD_OIL_TESTS_RESULT_ACTION";
+	public final static String SYS_PROP_TEST_BASE_ACTION_WRITE = "write";
+	public final static String SYS_PROP_TEST_BASE_ACTION_READ = "read";
+	public final static String SYS_PROP_TEST_BASE_ACTION_DISABLED = "disable";
+	
+	protected final boolean enable_generation;
+	protected final boolean enable_file_check;
+	
+	public final static Collection<OsType> defaultOsSequence;
+	protected final Collection<OsType> osSequence;
+	
+	static {
+		ArrayList<OsType> temp = new ArrayList<OsType>();
+		switch (HostOsUtils.common.getCurrentSystem()) {
+		case Cygwin:
+		case Win:
+			temp.add(OsType.Linux);
+			temp.add(OsType.Cygwin);
+			break;
+		case Linux:
+		default:
+			temp.add(OsType.Cygwin);
+			temp.add(OsType.Linux);				
+			break;
+		}
+		defaultOsSequence = Collections.unmodifiableCollection(temp); 
+	}
+	
+	/**
+	 * 
+	 */
+	public AbstractCodeWriterTest() {
+		super();
+		boolean default_check = true;
+		{
+			String tmp = System.getenv(SYS_PROP_TEST_BASE_PATH);
+			if (tmp != null) {
+				basePath = tmp;
+			} else if (Rtd_corePlugin.IS_RESOURCES_BUNDLE_ACTIVE) {
+				default_check = false;
+			}
+		}
+		{
+			String tmp = System.getenv(SYS_PROP_TEST_BASE_ACTION);
+			if (SYS_PROP_TEST_BASE_ACTION_WRITE.equalsIgnoreCase(tmp)) {
+				enable_generation = true;
+				enable_file_check = false;
+			} else if (SYS_PROP_TEST_BASE_ACTION_READ.equalsIgnoreCase(tmp)) {
+				enable_generation = false;
+				enable_file_check = true;
+			} else if (SYS_PROP_TEST_BASE_ACTION_DISABLED.equalsIgnoreCase(tmp)) {
+				enable_generation = false;
+				enable_file_check = false;
+			}  else { // DEFAULT
+				enable_generation = false;
+				enable_file_check = default_check;
+			}
+		}
+		
+		if (enable_file_check || enable_generation) {
+			osSequence = defaultOsSequence;
+		} else {
+			ArrayList<OsType> tmp = new ArrayList<OsType>();
+			tmp.add(HostOsUtils.common.getCurrentSystem());
+			osSequence = Collections.unmodifiableCollection(tmp);
+		}
+	}
 	
 	public static boolean DEBUG_OIL_GENERATION = true;
-		
+
+	
+	/**
+	 * @return the osSequence
+	 */
+	public Collection<OsType> getOsSequence() {
+		return osSequence;
+	}
+	
 	/**
 	 * A small class used to retur the IVarTree and computed Buffers
 	 * 
@@ -85,6 +169,7 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 	 */
 	public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
 		checkOilTransformation(oil_text, expected_cpu);
+		
 		return writerTest(oil_text, expected_cpu);
 	}
 	
@@ -103,35 +188,15 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 
 		IVarTree vt = loadVt(oil_text);
 		IVarTree vt2 = loadVt(oil_text);
-		
 
-		// -------------- search rtos ----------------
-		ITreeInterface ti = vt.newTreeInterface();
-
-		String[] prefix = CommonUtils.getAllRtos(ti);
-		//assertEquals(expected_cpu, prefix.length);
-
-		// --------------- write -----------------
-
-		IOilWriterBuffer[] buffers = null;
-		try {
-			buffers = RtosFactory.INSTANCE.write(vt, prefix);
-		} catch (OilCodeWriterException e) {
-//			System.out.println(e.getMessage());
-			throw new RuntimeException("Write fail: " + e.getMessage(), e);
-		}
-
-		assertNotNull(buffers);
-		assertEquals(expected_cpu, buffers.length);
-		debug(buffers);
-		writeTestResultToFile(buffers);
+		DefaultTestResult answer = dowrite(expected_cpu, vt, osSequence);
 
 		IStatus st = VarTreeUtil.compare(vt, vt2); assertTrue(st.getMessage(), st.isOK());
 		
-		return new DefaultTestResult(vt, buffers);
+		return answer;
 	}
 
-	protected static IVarTree loadVt(String oil_text) {
+	public static IVarTree loadVt(String oil_text) {
 		IVarTree vt2 = VarTreeUtil.newVarTree();
 		(new OilReader()).load(new ByteArrayInputStream(oil_text.getBytes()), vt2, null, null);
 		return vt2;
@@ -253,27 +318,47 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 			}
 		}
 		
-		// -------------- search rtos ----------------
-		ITreeInterface ti = vt.newTreeInterface();
+		return dowrite(expected_cpu, vt, osSequence);
+	}
 
-		String[] prefix = CommonUtils.getAllRtos(ti);
-//		assertTrue(prefix.length == expected_cpu);
+	/**
+	 * @param expected_cpu
+	 * @param vt
+	 * @return
+	 */
+	public DefaultTestResult dowrite(int expected_cpu, IVarTree vt, Collection<OsType> testList) {
+		// -------------- search rtos ----------------
+		String[] prefix = CommonUtils.getAllRtos(vt.newTreeInterface());
 
 		// --------------- write -----------------
-
-		IOilWriterBuffer[] buffers = null;
+		OsType originalTarget = HostOsUtils.common.getTarget();
 		try {
-			buffers = RtosFactory.INSTANCE.write(vt, prefix);
-		} catch (OilCodeWriterException e) {
-//			System.out.println(e.getMessage());
-			throw new RuntimeException("Write fail: " + e.getMessage(), e);
+			HashMap<String, Object> options = new HashMap<String, Object>();
+			options.put(IWritersKeywords.ERIKA_ENTERPRISE_LOCATION, "ee");
+			DefaultTestResult answer = null;
+			for (OsType os: testList) {
+				HostOsUtils.common.setTarget(os);
+			
+				IOilWriterBuffer[] buffers = null;
+				try {
+					buffers = RtosFactory.INSTANCE.write(vt, prefix, options);
+				} catch (OilCodeWriterException e) {
+		//			System.out.println(e.getMessage());
+					throw new RuntimeException("Write fail: " + e.getMessage(), e);
+				}
+		
+				debug(buffers);
+				writeTestResultToFile(buffers);
+				checkTestResultWithFile(buffers);
+		
+				assertEquals(expected_cpu, buffers.length);
+		
+				answer = new DefaultTestResult(vt, buffers);
+			}	
+			return answer;
+		} finally {
+			HostOsUtils.common.setTarget(originalTarget);
 		}
-
-		debug(buffers);
-
-		assertEquals(expected_cpu, buffers.length);
-
-		return new DefaultTestResult(vt, buffers);
 	}
 	
 
@@ -327,17 +412,49 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
      * @param buffers
      */
     protected void writeTestResultToFile(IOilWriterBuffer[] buffers) {
-    	String path = basePath + (basePath.length()>0 && !basePath.endsWith(File.separator) ? File.separator : "")+getClass().getName() + "-" + name.getMethodName();
-    	writeTestResultToFile(buffers, path);
+    	if (enable_generation) {
+	    	assertNotNull("Missing the base path where write the result of code generation", basePath);
+	    	String path = basePath + (basePath.length()>0 && !basePath.endsWith(File.separator) ? File.separator : ""
+	    			) + HostOsUtils.common.getTarget().getText();
+	    	writeTestResultToFile(buffers, path, getClass().getName() + "-" + name.getMethodName());
+    	}
+    }
+    
+    /**
+     * This method writes all provided test results to a file corresponding to current test 
+     * 
+     * @param buffers
+     */
+    protected void checkTestResultWithFile(IOilWriterBuffer[] buffers) {
+    	if (enable_file_check) {
+	    	assertNotNull("Missing the base path where read the expected result of code generation", basePath);
+	    	String path = basePath + (basePath.length()>0 && !basePath.endsWith(File.separator) ? File.separator : "") +
+	    			HostOsUtils.common.getTarget().getText() + File.separator
+	    			+getClass().getName() + "-" + name.getMethodName();
+	    	checkTestResultWithFile(buffers, path);
+    	}
     }
     /**
      * This method writes all provided test results to a generic file 
      * 
      * @param buffers
      */
-    protected void writeTestResultToFile(IOilWriterBuffer[] buffers, String filePath) {
+    protected void writeTestResultToFile(IOilWriterBuffer[] buffers, String folderPath, String fileName) {
+		String path = fileName;
+		if (folderPath != null){ // test directory
+			File f = new File(folderPath);
+			if (f.exists()) {
+				assertTrue(f.isDirectory());
+			} else {
+				f.mkdirs();
+			}
+			path = folderPath + (folderPath.length()>0 && !folderPath.endsWith(File.separator) ? File.separator : "") + fileName;
+		}
+		if (DEBUG_OIL_GENERATION) {
+			System.out.println("Check " +path);
+		}
 		try {
-	    	File f = new File(filePath);
+	    	File f = new File(path);
 	    	FileOutputStream out = new FileOutputStream(f);
 	    	write(buffers, out);
 	    	out.flush();
@@ -345,6 +462,33 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+    }
+    /**
+     * This method writes all provided test results to a generic file 
+     * 
+     * @param buffers
+     */
+    protected void checkTestResultWithFile(IOilWriterBuffer[] buffers, String filePath) {
+		if (DEBUG_OIL_GENERATION) {
+			System.out.println("Check " +filePath);
+		}
+		String expected = null;
+		try {
+	    	File f = new File(filePath);
+	    	InputStream in = new BufferedInputStream(new FileInputStream(f));
+	    	StringBuffer buff = new StringBuffer();
+	    	for (int r = in.read(); r!=-1; r=in.read()) {
+	    		buff.append((char)r);
+	    	}
+	    	expected = buff.toString();
+	    	in.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		
+		String actual = toString(buffers);
+		
+		assertEquals(expected, actual);
     }
     
 
@@ -358,6 +502,17 @@ public abstract class AbstractCodeWriterTest extends AbstractNamedTest {
 		if (DEBUG_OIL_GENERATION) {
 			write(buffers, System.out);
 		}
+	}
+	
+	/**
+	 * Convert all buffers to a single String. Do not use this function to save buffers to output stream.
+	 * 
+	 * @param buffers
+	 */
+	public String toString(IOilWriterBuffer[] buffers) {
+		ByteArrayOutputStream buff = new ByteArrayOutputStream();
+		write(buffers, buff);
+		return buff.toString();
 	}
 	
 	/**

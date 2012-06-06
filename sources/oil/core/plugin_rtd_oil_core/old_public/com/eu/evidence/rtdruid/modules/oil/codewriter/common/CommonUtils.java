@@ -166,26 +166,24 @@ public final class CommonUtils {
 		for (String path: paths) {
 			boolean ok = true;
 			String answer = null;
-			String firstChildName = null;
 			
 			// search the node ....
 			ok &= vtp.goAbsolute(path);
 
 			if (ok) {
 				IVarTreePointer.EmfPoint p = vtp.getEPoint();
-				String feature = "";
+				String firstChildName = "";
 				if (p.getCurrentFeature() != null) {
 					ok &= vtp.goFirstChild();
 					p = vtp.getEPoint();
-					feature = vtp.getName() + S;
+					firstChildName = vtp.getName();
 				}
 				if (ok) {
-					firstChildName = vtp.getName();
 					answer = OilEcoreCreator.getOilEnumType(vtp);
 					
 					// if is required the name of First child ...
 					if (fullPath != null && fullPath.length > 0) {
-						fullPath[0] = path + feature + firstChildName;
+						fullPath[0] = path + firstChildName;
 					}
 					return answer;
 				}
@@ -461,7 +459,7 @@ public final class CommonUtils {
 	 *         contains a short description of problem
 	 */
 	public static String checkConfigFileName(final String fileName) {
-	
+// TODO: remove frome here (move into an UI plugin.) If possible, use CheckFileName class	
 		IPath ipath = new Path("");
 		/*
 		 * Check if config file is valid
