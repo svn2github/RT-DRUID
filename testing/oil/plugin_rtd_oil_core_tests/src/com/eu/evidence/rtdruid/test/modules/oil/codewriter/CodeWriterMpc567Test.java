@@ -1864,6 +1864,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
     	commonWriterTest(text, 1);
 	}
 
+	@Test
 	public void testMpc567_monostack_resource() {
 	    final String text = " CPU test_application {\n" +
 				"\n" +

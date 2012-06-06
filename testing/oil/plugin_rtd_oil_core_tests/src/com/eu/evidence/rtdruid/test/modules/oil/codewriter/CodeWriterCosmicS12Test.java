@@ -1016,105 +1016,105 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	    commonWriterTest(text_new, 1);
 	}
 
-	@Test
-	public void testCosmic_S12_autostart_false() {
-		
-	    final String text_new =
-			"CPU test_application {\n"+
-			"\n"+
-			"	OS EE {\n"+
-			"		EE_OPT = \"DEBUG\";\n"+
-			"		EE_OPT = \"__CODEWARRIOR__\";\n"+
-			"\n"+
-			"		CPU_DATA = MC9S12 {\n" +
-			"			APP_SRC = \"main.c\";\n" +
-			"			MULTI_STACK = TRUE {\n" +
-			"				IRQ_STACK = TRUE {\n" +
-			"					SYS_SIZE=512;\n" +
-			"				};\n" +
-			"			};\n" +
-			"		};\n" +
-			"		\n" +
-			"		MCU_DATA = MC9S12 {\n" +
-			"   			MODEL = MC9S12G128;\n" +
-			"   			TIMER = TRUE;\n" +
-			"  		};\n" +
-			"\n" +
-			"		BOARD_DATA = TWRS12G128 {\n" +
-			"				OPTIONS = ALL;\n" +
-			"		};\n" +
-			"\n"+
-			"		STATUS = EXTENDED;\n"+
-			"		STARTUPHOOK = TRUE; // this demo is using the StartupHook!\n"+
-			"		ERRORHOOK = TRUE;\n"+
-			"		SHUTDOWNHOOK = FALSE;\n"+
-			"		PRETASKHOOK = FALSE;\n"+
-			"		POSTTASKHOOK = FALSE;\n"+
-			"		USEGETSERVICEID = FALSE;\n"+
-			"		USEPARAMETERACCESS = FALSE;\n"+
-			"		USERESSCHEDULER = TRUE;\n"+
-			"\n"+
-			"        KERNEL_TYPE = ECC2;\n"+
-			"		\n"+
-			"		/* This generates the ORTI File used by lauterbach Trace32! */\n"+
-			"		//ORTI_SECTIONS = ALL;\n"+
-			"    };\n"+
-			"\n"+
-			"    TASK Task1 {\n"+
-			"		PRIORITY = 0x01;\n"+
-			"		ACTIVATION = 1;\n"+
-			"		SCHEDULE = FULL;\n"+
-			"		AUTOSTART = TRUE;\n"+
-			"		STACK = PRIVATE {\n"+
-			"			SYS_SIZE = 1024;\n"+
-			"		};\n"+
-			"		EVENT = \"TimerEvent\";\n"+
-			"		EVENT = \"ButtonEvent\";\n"+
-			"    };\n"+
-			"\n"+
-			"    TASK Task2 {\n"+
-			"		PRIORITY = 0x02;\n"+
-			"		ACTIVATION = 1;\n"+
-			"		SCHEDULE = FULL;\n"+
-			"		AUTOSTART = FALSE;\n"+
-			"		STACK = SHARED;\n"+
-			"    };\n"+
-			"\n"+
-			"    EVENT TimerEvent  { MASK = AUTO; };\n"+
-			"    EVENT ButtonEvent { MASK = AUTO; };\n"+
-			"\n"+
-			"    COUNTER Counter1 {\n"+
-			"        MINCYCLE = 2;\n"+
-			"        MAXALLOWEDVALUE = 0xFFFF ;\n"+
-			"        TICKSPERBASE = 1;\n"+
-			"    };\n"+
-			"\n"+
-			"    ALARM AlarmTask1 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = SETEVENT { TASK = \"Task1\"; EVENT = \"TimerEvent\"; };\n"+
-			"                AUTOSTART = FALSE;\n"+
-			"    };\n"+
-			"\n"+
-			"    ALARM AlarmTask2 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = ACTIVATETASK { TASK = \"Task2\"; };\n"+
-			"                AUTOSTART = FALSE { ALARMTIME = 55; CYCLETIME = 66; };\n"+
-			"    };\n"+
-			"};";
-	    
-	    boolean ok = false;
-	    try {
-	    	commonWriterTest(text_new, 1);
-	    } catch (Exception e) {
-	    	ok = true;
-	    }
-	    assertTrue(ok);
-	}
-
+	@Test
+	public void testCosmic_S12_autostart_false() {
+		
+	    final String text_new =
+			"CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"DEBUG\";\n"+
+			"		EE_OPT = \"__CODEWARRIOR__\";\n"+
+			"\n"+
+			"		CPU_DATA = MC9S12 {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" +
+			"				IRQ_STACK = TRUE {\n" +
+			"					SYS_SIZE=512;\n" +
+			"				};\n" +
+			"			};\n" +
+			"		};\n" +
+			"		\n" +
+			"		MCU_DATA = MC9S12 {\n" +
+			"   			MODEL = MC9S12G128;\n" +
+			"   			TIMER = TRUE;\n" +
+			"  		};\n" +
+			"\n" +
+			"		BOARD_DATA = TWRS12G128 {\n" +
+			"				OPTIONS = ALL;\n" +
+			"		};\n" +
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"		STARTUPHOOK = TRUE; // this demo is using the StartupHook!\n"+
+			"		ERRORHOOK = TRUE;\n"+
+			"		SHUTDOWNHOOK = FALSE;\n"+
+			"		PRETASKHOOK = FALSE;\n"+
+			"		POSTTASKHOOK = FALSE;\n"+
+			"		USEGETSERVICEID = FALSE;\n"+
+			"		USEPARAMETERACCESS = FALSE;\n"+
+			"		USERESSCHEDULER = TRUE;\n"+
+			"\n"+
+			"        KERNEL_TYPE = ECC2;\n"+
+			"		\n"+
+			"		/* This generates the ORTI File used by lauterbach Trace32! */\n"+
+			"		//ORTI_SECTIONS = ALL;\n"+
+			"    };\n"+
+			"\n"+
+			"    TASK Task1 {\n"+
+			"		PRIORITY = 0x01;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"		AUTOSTART = TRUE;\n"+
+			"		STACK = PRIVATE {\n"+
+			"			SYS_SIZE = 1024;\n"+
+			"		};\n"+
+			"		EVENT = \"TimerEvent\";\n"+
+			"		EVENT = \"ButtonEvent\";\n"+
+			"    };\n"+
+			"\n"+
+			"    TASK Task2 {\n"+
+			"		PRIORITY = 0x02;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"    };\n"+
+			"\n"+
+			"    EVENT TimerEvent  { MASK = AUTO; };\n"+
+			"    EVENT ButtonEvent { MASK = AUTO; };\n"+
+			"\n"+
+			"    COUNTER Counter1 {\n"+
+			"        MINCYCLE = 2;\n"+
+			"        MAXALLOWEDVALUE = 0xFFFF ;\n"+
+			"        TICKSPERBASE = 1;\n"+
+			"    };\n"+
+			"\n"+
+			"    ALARM AlarmTask1 {\n"+
+			"                COUNTER = \"Counter1\";\n"+
+			"                ACTION = SETEVENT { TASK = \"Task1\"; EVENT = \"TimerEvent\"; };\n"+
+			"                AUTOSTART = FALSE;\n"+
+			"    };\n"+
+			"\n"+
+			"    ALARM AlarmTask2 {\n"+
+			"                COUNTER = \"Counter1\";\n"+
+			"                ACTION = ACTIVATETASK { TASK = \"Task2\"; };\n"+
+			"                AUTOSTART = FALSE { ALARMTIME = 55; CYCLETIME = 66; };\n"+
+			"    };\n"+
+			"};";
+	    
+	    boolean ok = false;
+	    try {
+	    	commonWriterTest(text_new, 1);
+	    } catch (Exception e) {
+	    	ok = true;
+	    }
+	    assertTrue(ok);
+	}
+
 }
 
 
 
 
 
-
+

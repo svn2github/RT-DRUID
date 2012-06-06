@@ -1119,7 +1119,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	
+	@Test
 	public void testEasyLab() {
 	    final String text =
 				"CPU mySystem {\n" + 
