@@ -372,9 +372,8 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 				/* Use an HashMap to write all files only one time */
 	            LinkedHashSet<String> src_files = new LinkedHashSet<String>();
 
-	            for (ISimpleGenRes sgrCpu : ool.getList(IOilObjectList.OS)) {
-		            if (sgrCpu.containsProperty(SGRK_OS_CPU_DATA_PREFIX)) {
-						final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
+				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+				for (String currentCpuPrefix: currentCpuPrefixes) {
 		
 						/* Get all source files for current cpu */ 
 						String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
@@ -386,7 +385,6 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 							}
 						}
 		            }
-	            }
 				/* Get all source files of all tasks mapped to current cpu */ 
 				for (Iterator<ISimpleGenRes> iter = ool.getList(IOilObjectList.TASK).iterator(); iter.hasNext(); ) {
 					ISimpleGenRes task = (ISimpleGenRes) iter.next();

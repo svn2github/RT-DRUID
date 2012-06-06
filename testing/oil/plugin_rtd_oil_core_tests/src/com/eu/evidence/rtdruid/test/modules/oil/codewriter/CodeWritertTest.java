@@ -54,6 +54,9 @@ public class CodeWritertTest extends AbstractCodeWriterTest {
 //	}
 	
 	@Test public void testEclipseBasePath() {
+		System.err.flush();
+		System.out.flush();
+		
 		Location path = Platform.getInstallLocation();
 		URL url = path.getURL();
 		System.err.println("URL eclipse = " + url);
@@ -103,6 +106,9 @@ public class CodeWritertTest extends AbstractCodeWriterTest {
     	System.err.println("sub2 "+tmp.substring(0,pos2));
     	
     	System.err.println("sub3 "+tmp.substring(pos2+1,pos));
+    	
+		System.err.flush();
+		System.out.flush();
 	}
 
 	/** Try to load an oil file and write all configuration files */

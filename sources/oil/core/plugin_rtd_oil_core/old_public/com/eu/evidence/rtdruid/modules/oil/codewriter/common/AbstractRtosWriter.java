@@ -8,6 +8,7 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.common;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -1232,9 +1233,19 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 		if (ool != null) {
 			for (ISimpleGenRes sgrOs : ool.getList(IOilObjectList.OS)) {
 				if (sgrOs.containsProperty(key)) {
-					String t = sgrOs.getString(key);
-					if (t != null) {
-						l.add(t);
+					Object o = sgrOs.getObject(key);
+					if (o != null) {
+						if (o instanceof String) {
+							l.add((String) o);
+						} else if (o instanceof String[]) {
+							l.addAll(Arrays.asList((String[]) o ));
+						} else if (o instanceof Collection) {
+							for (Object obj : (Collection<?>)o) {
+								if (obj != null) {
+									l.add(obj.toString());
+								}
+							}
+						}
 					}
 				}
 			}

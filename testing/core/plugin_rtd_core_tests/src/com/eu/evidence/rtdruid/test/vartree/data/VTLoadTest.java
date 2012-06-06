@@ -229,7 +229,7 @@ public class VTLoadTest {
 	@Test
 	public void testLoad_null_rtd_2() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
-		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
+		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
 		
 		loadString(xmlInput2, null, map, true);
 	}

@@ -136,8 +136,7 @@ public class SectionWriterHalMico32 extends SectionWriter
 		 **********************************************************************/
 		{
 	        for (ISimpleGenRes os : ool.getList(IOilObjectList.OS)) {
-				final String currentCpuPrefix = os.getString(SGRK_OS_CPU_DATA_PREFIX);
-	        	
+				for (final String currentCpuPrefix : (List<String>) os.getObject(SGRK_OS_CPU_DATA_PREFIX)) {
 		        {
 					String tmp1 = CommonUtils
 							.getFirstChildEnumType(vt, currentCpuPrefix
@@ -154,6 +153,7 @@ public class SectionWriterHalMico32 extends SectionWriter
 					if ("TRUE".equalsIgnoreCase(tmp1)) {
 						os.setProperty(Mico32Constants.SGRK__MICO32_SMALLC__, "true");
 				    }
+				}
 				}
 	        	
 	        }

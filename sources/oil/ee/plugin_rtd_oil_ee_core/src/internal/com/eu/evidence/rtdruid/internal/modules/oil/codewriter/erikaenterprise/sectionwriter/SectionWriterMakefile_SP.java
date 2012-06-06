@@ -309,10 +309,10 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 				
 				StringBuffer tmpBuff = new StringBuffer();
 
-				for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)) 
-				{
+				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+				for (String currentCpuPrefix: currentCpuPrefixes) {
 					// THUMB SRC
-					String[] tmp = CommonUtils.getValue(vt, os.getString(SGRK_OS_CPU_DATA_PREFIX) + S
+					String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix + S
 							+ "THUMB_SRC");
 					if (tmp != null) {
 						for (int i = 0; i < tmp.length; i++) {

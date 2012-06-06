@@ -166,7 +166,13 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 							tmpCpuName = DEFAULT_CPU_NAME;
 						}
 						
-						if (firstCpuName_os != null && !firstCpuName_os.sameCpuName(tmpCpuName)) {
+						if (firstCpuName_os == null){
+							
+							firstCpuName_os = new OScpuName(osList[i], tmpCpuName);
+							
+							// save current os inside the os-cpuName list
+							finalOsList.add(firstCpuName_os);
+						} else if  (!firstCpuName_os.sameCpuName(tmpCpuName)) {
 							
 							/*
 							 * Create a new OS object and move current cpu inside it 
@@ -192,12 +198,6 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 
 							// save the new os inside the os-cpuName list
 							finalOsList.add(new OScpuName(newOS, tmpCpuName));
-							
-						} else {
-							firstCpuName_os = new OScpuName(osList[i], tmpCpuName);
-							
-							// save current os inside the os-cpuName list
-							finalOsList.add(firstCpuName_os);
 						}
 
 					}
@@ -277,11 +277,11 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 		return makeRtosId(cpuName, rtosName);
 	}
 	
+	
 	/* (non-Javadoc)
 	 * @see rtdruid.modules.oil.transform.SimpleTransform#storeTasks(rtdruid.vartree.IVarTreePointer, org.w3c.dom.Element, rtdruid.modules.oil.vtextensions.OilImplID, java.lang.String)
 	 */
-	@Override
-	protected void storeTasks(IVarTreePointer vtp, Element parent, IOilImplID id,
+	protected void storeTasks(IVarTreePointer vtp, Element parent, OilImplID id,
 			String rtos) throws OilTransformException {
 
 		// get only the name of rtos without cpu

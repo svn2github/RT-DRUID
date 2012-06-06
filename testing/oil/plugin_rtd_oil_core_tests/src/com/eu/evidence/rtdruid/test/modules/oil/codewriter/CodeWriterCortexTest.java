@@ -4,7 +4,6 @@ import org.junit.Test;
 
 
 
-
 public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 	
 
@@ -46,6 +45,112 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 				"    };\n" + 
 				"};\n";
 		commonWriterTest(text, 1);
+	}
+
+	public void testCortexCpuDataSplitted() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"\n" + 
+				"	OS myOs {\n" + 
+				"	                \n" + 
+				"		EE_OPT = \"DEBUG\";\n" + 
+				"        STATUS = EXTENDED;\n" + 
+				"        STARTUPHOOK = TRUE;\n" + 
+				"        ERRORHOOK = FALSE;\n" + 
+				"        SHUTDOWNHOOK = FALSE;\n" + 
+				"        PRETASKHOOK = FALSE;\n" + 
+				"        POSTTASKHOOK = FALSE;\n" + 
+				"        USEGETSERVICEID = FALSE;\n" + 
+				"        USEPARAMETERACCESS = FALSE;\n" + 
+				"        USERESSCHEDULER = TRUE;\n" + 
+				"        \n" + 
+				"        CPU_DATA = CORTEX_MX {\n" + 
+				"			MODEL = M0;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"		};\n" + 
+				"	};\n" + 
+				"	OS myOs {\n" + 
+				"        CPU_DATA = CORTEX_MX {\n" + 
+				"			MODEL = M0;\n" +
+				"			APP_SRC = \"code2.c\";\n" +
+				"			MULTI_STACK = TRUE {\n" + 
+				"				IRQ_STACK = TRUE {\n" + 
+				"					SYS_SIZE=64;\n" + 
+				"				};\n" + 
+				"			};\n" + 
+				"		};\n" + 
+				"		KERNEL_TYPE = FP;\n" + 
+				"	};\n" + 
+				"\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 1;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"	};\n" + 
+				"\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"    };\n" + 
+				"};\n";
+	    commonWriterTest(text, 1);
+		//System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(commonWriterTest(text, 1).vt)));
+	}
+	
+	public void testCortexCpuDataSplittedBis() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"\n" + 
+				"	OS myOs {\n" + 
+				"	                \n" + 
+				"		EE_OPT = \"DEBUG\";\n" + 
+				"        STATUS = EXTENDED;\n" + 
+				"        STARTUPHOOK = TRUE;\n" + 
+				"        ERRORHOOK = FALSE;\n" + 
+				"        SHUTDOWNHOOK = FALSE;\n" + 
+				"        PRETASKHOOK = FALSE;\n" + 
+				"        POSTTASKHOOK = FALSE;\n" + 
+				"        USEGETSERVICEID = FALSE;\n" + 
+				"        USEPARAMETERACCESS = FALSE;\n" + 
+				"        USERESSCHEDULER = TRUE;\n" + 
+				"        \n" + 
+				"        CPU_DATA = CORTEX_MX {\n" + 
+				"			MODEL = M0;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			MULTI_STACK = TRUE {\n" + 
+				"				IRQ_STACK = TRUE {\n" + 
+				"					SYS_SIZE=64;\n" + 
+				"				};\n" + 
+				"			};\n" + 
+				"			MULTI_STACK = TRUE {\n" + 
+				"				IRQ_STACK = TRUE {\n" + 
+				"					SYS_SIZE=64;\n" + 
+				"				};\n" + 
+				"			};\n" + 
+				"		};\n" + 
+				"        CPU_DATA = CORTEX_MX {\n" + 
+				"			MODEL = M0;\n" +
+				"			APP_SRC = \"code2.c\";\n" +
+				"			MULTI_STACK = TRUE {\n" + 
+				"				IRQ_STACK = TRUE {\n" + 
+				"					SYS_SIZE=64;\n" + 
+				"				};\n" + 
+				"			};\n" + 
+				"		};\n" + 
+				"		KERNEL_TYPE = FP;\n" + 
+				"	};\n" + 
+				"\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 1;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"	};\n" + 
+				"\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"    };\n" + 
+				"};\n";
+	    commonWriterTest(text, 1);
+		//System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(commonWriterTest(text, 1).vt)));
 	}
 
 	
