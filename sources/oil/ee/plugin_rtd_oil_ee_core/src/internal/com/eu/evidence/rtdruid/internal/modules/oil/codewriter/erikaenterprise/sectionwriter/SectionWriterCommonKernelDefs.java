@@ -20,6 +20,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtdruidConfiguratorNumber;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
@@ -40,6 +41,8 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
  */
 public class SectionWriterCommonKernelDefs extends SectionWriter 
 		implements IEEWriterKeywords, IEEoptConstant {
+	
+	private static final String EE_MAX_ISR2_WITH_RESOURCES = "EE_MAX_ISR2_WITH_RESOURCES";
 	
 	public final static boolean includeEE_opt_application = true;
 	
@@ -127,9 +130,8 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 			// ---------------- required ----------------
 
 			IOilObjectList ool = oilObjects[rtosId];
-			final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-			final ICommentWriter commentWriterC = getCommentWriter(sgrCpu, FileTypes.C);
-			final ICommentWriter commentWriterH = getCommentWriter(sgrCpu, FileTypes.H);
+			final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
+			final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
 
 			// ---------------- prepare buffer ----------------
 
@@ -151,20 +153,6 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 			buffer.append(commentWriterH.writerBanner("Common defines ( CPU "
 					+ rtosId + " )"));
 
-			
-			// ---------------- binary distribution header ----------------
-			
-			if (binaryDistr) {
-				
-				final String distrVarName = parent.getDistributionName(sgrCpu, rtosId);
-
-				buffer.append("#define __CONFIG_"+distrVarName+"__\n"
-						+"#include \"ee_libcfg.h\"\n\n");
-				
-				if (binaryDistrFull) {
-					buffer_c.append(commentWriterC.writerBanner("Set EE_MAX_xxx integers"));
-				}
-			}
 
 			// ---------------- fill buffer ----------------
 
@@ -257,6 +245,18 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 					}
 				}
 
+				
+				if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES))) {
+					
+					String max_level = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES_MAX_PRIO);
+					String size = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES_SIZE);
+					
+					buffer.append("\n"+indent + "#define " +EE_MAX_ISR2_WITH_RESOURCES+" "
+							+ size + "U\n");
+					buffer.append(indent + "#define EE_ISR2_MAX_LEVEL          "
+							+ max_level + "U\n");
+					
+				}
 			}
 
 			{
@@ -358,11 +358,8 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 				 */
 
 				List<ISimpleGenRes> appmodeList = ool.getList(IOilObjectList.APPMODE);
-				ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS)
-						.get(0);
 
-				int id = "true".equalsIgnoreCase(os
-								.getString(ISimpleGenResKeywords.OSEK_AUTOSTART)) ? 1 : 0;
+				int id = "true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OSEK_AUTOSTART)) ? 1 : 0;
 				ArrayList<String> appModes = new ArrayList<String>();
 				for (Iterator<ISimpleGenRes> iter = ool.getList(IOilObjectList.APPMODE)
 						.iterator(); iter.hasNext();) {
@@ -479,10 +476,8 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 				final String CURRENT_CPU = "RTD_CURRENTCPU";
 
 				// compute the number of APPMODES
-				final ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 				final int appNumber = ool.getList(IOilObjectList.APPMODE).size() + (
-						"true".equalsIgnoreCase(os
-							.getString(ISimpleGenResKeywords.OSEK_AUTOSTART)) ? 1 : 0); 
+						"true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OSEK_AUTOSTART)) ? 1 : 0); 
 				
 				// write all definitions
 				buffer_c.append("#define " + MAX_ALARM +" "+ ool.getList(IOilObjectList.ALARM).size()+ "U\n"

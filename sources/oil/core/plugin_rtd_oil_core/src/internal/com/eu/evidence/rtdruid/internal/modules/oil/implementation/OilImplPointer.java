@@ -283,7 +283,7 @@ public class OilImplPointer implements IOilImplPointer {
 
 		{
 			NamedNodeMap nodeAttributes = cur.getAttributes();
-			if (attributes != null) {
+			if (attributes != null && nodeAttributes != null) {
 				for (int i = 0; i < nodeAttributes.getLength(); i++) {
 					Node tmp = nodeAttributes.item(i);
 					String n = tmp.getNodeName();

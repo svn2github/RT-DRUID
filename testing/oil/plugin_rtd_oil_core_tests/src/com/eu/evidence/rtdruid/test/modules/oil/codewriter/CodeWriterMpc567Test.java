@@ -1,5 +1,6 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
@@ -10,6 +11,114 @@ import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	
 	
+	@Test public void testDoublez4() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"		EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n"+
+			"\n"+
+			"		MASTER_CPU = \"master\";\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			ID = \"master\";\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"master.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			ID = \"slave\";\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"		STARTUPHOOK = FALSE;\n"+
+			"		ERRORHOOK = FALSE;\n"+
+			"		SHUTDOWNHOOK = FALSE;\n"+
+			"		PRETASKHOOK = FALSE;\n"+
+			"		POSTTASKHOOK = FALSE;\n"+
+			"		USEGETSERVICEID = FALSE;\n"+
+			"		USEPARAMETERACCESS = FALSE;\n"+
+			"		USERESSCHEDULER = FALSE;\n"+
+			"\n"+
+			"		USEREMOTETASK = ALWAYS;\n"+
+			"		ORTI_SECTIONS = ALL;\n"+
+			"\n"+
+			"		KERNEL_TYPE = BCC1;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6 {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6b {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6c {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0 {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = TRUE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0b {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0c {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"};\n";
+		commonWriterTest(text, 2);
+	}
+
 	@Test public void testMpc567_bug88() {
 	    final String text = "CPU test_application {\n"+
 			"\n"+
@@ -606,6 +715,161 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(result.vt)));
 	}
 
+	@Test public void testMpc567_full_os_application__pragma() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"		EE_OPT = \"USE_PRAGMAS\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\";\n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" +
+			"				IRQ_STACK = TRUE {\n" + 
+			"					SYS_SIZE=512;\n" + 
+			"				};\n" + 
+			"			};\n" +
+			"			MODEL = E200Z6;\n" +
+			"		};\n" +
+			"\n" +
+//			"		MCU_DATA = PPCE200ZX {\n" +
+//			"			MODEL = MPC5668G;\n" + 
+//			"		};\n" +
+			"\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"\n" +
+			"    };\n" +
+			"\n" +
+
+			"    APPLICATION main_app {\n" +
+			"		TRUSTED = TRUE;\n" +
+			"		IRQ_STACK_SIZE = 512;\n" +
+			"       TASK = MainTask;\n" +
+			"       TASK = MyTask1;\n" +
+			"       TASK = MyTask3;\n" +
+			"       TASK = MyTask4;\n" +
+			
+			"       ISR = isr2entry_isr2;\n" +
+			"       ISR = isrentry_isr1;\n" +
+			"       ISR = isrexit_isr1;\n" +
+			"       ISR = istentry_isr2;\n" +
+			"       ISR = istexit_isr2;\n" +
+			
+    		"		SHARED_STACK_SIZE = 512;\n"+
+    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_SIZE = 0x10000;\n"+
+			"    };\n" +
+
+			"    APPLICATION app1 {\n" +
+			"		TRUSTED = FALSE;\n" +
+			"		IRQ_STACK_SIZE = 512;\n" +
+			"       TASK = TaskApp1;\n" +
+    		"		SHARED_STACK_SIZE = 512;\n"+
+    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_SIZE = 0x10000;\n"+
+			"	};\n" +
+			"    APPLICATION app2 {\n" +
+			"		TRUSTED = FALSE;\n" +
+			"		IRQ_STACK_SIZE = 512;\n" +
+    		"		SHARED_STACK_SIZE = 512;\n"+
+    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_SIZE = 0x10000;\n"+
+			"       TASK = TaskApp2;\n" +
+			"	};\n" +
+			
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK MainTask {\n" +
+			"		PRIORITY = 0x02;\n" +
+			"		AUTOSTART = TRUE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 128;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK MyTask1 {\n" +
+			"		PRIORITY = 0x01;\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 128;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};\n" +
+			"    TASK MyTask3 {\n" +
+			"		PRIORITY = 0x04;\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 128;\n" +
+			"			};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"    TASK MyTask4 {\n" +
+			"		PRIORITY = 0x08;\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 128;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"    TASK TaskApp1 {\n" +
+			"		PRIORITY = 0x08;\n" +
+			"		APP_SRC = \"app1.c\";\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 128;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"    TASK TaskApp2 {\n" +
+			"		PRIORITY = 0x08;\n" +
+			"		APP_SRC = \"app2.c\";\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 128;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			
+			"    ISR isr2entry_isr2 {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};	\n" +			
+			"    ISR isrentry_isr1 {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};	\n" +			
+			"    ISR isrexit_isr1 {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};	\n" +			
+			"    ISR istentry_isr2 {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};	\n" +			
+			"    ISR istexit_isr2 {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};	\n" +		
+			
+			"    OS EE { \n" +
+			"		KERNEL_TYPE = ECC2;\n" +
+			"		ORTI_SECTIONS = ALL;\n" +
+			"		MAX_NESTING_LEVEL = 8;\n" +
+			"		MEMORY_PROTECTION = TRUE;\n" +
+			"  }; 	\n" +
+			"};";
+		DefaultTestResult result = commonWriterTest(text, 1);
+		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(result.vt)));
+	}
 	
 	@Test public void testMpc567_bug90_stack() {
 	    final String text = "CPU test_application {\n" +
@@ -1064,4 +1328,534 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"};\n";
 		commonWriterTest(text, 1);
 	}
+	
+
+	public void testMpc567_alarm_counter_incr() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {		\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\"; \n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" + 
+			"				IRQ_STACK = TRUE {\n" + 
+			"					SYS_SIZE=64;\n" + 
+			"				};\n" + 
+			"			};\n" + 
+			"			MODEL = E200Z7;\n" +
+			"			VLE = FALSE;\n" +
+			"		};\n" +
+			"		\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5674F;\n" + 
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"		\n" +
+			"    };\n" +
+			"    \n" +
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK Task2 {\n" +
+			"		PRIORITY = 0x02;   /* High priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    OS EE { \n" +
+			"		KERNEL_TYPE = ECC2;\n" +
+			"		ORTI_SECTIONS = ALL;\n" +
+			"  }; 	\n" +
+			"	COUNTER myCounter1 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+
+			"	ALARM AcquireAlarm {\n" +
+			"		COUNTER = \"myCounter\";\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"	};\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+	
+
+	public void testMpc567_alarm_counter_incr_cycle() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {		\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\"; \n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" + 
+			"				IRQ_STACK = TRUE {\n" + 
+			"					SYS_SIZE=64;\n" + 
+			"				};\n" + 
+			"			};\n" + 
+			"			MODEL = E200Z7;\n" +
+			"			VLE = FALSE;\n" +
+			"		};\n" +
+			"		\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5674F;\n" + 
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"		\n" +
+			"    };\n" +
+			"    \n" +
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK Task2 {\n" +
+			"		PRIORITY = 0x02;   /* High priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    OS EE { \n" +
+			"		KERNEL_TYPE = ECC2;\n" +
+			"		ORTI_SECTIONS = ALL;\n" +
+			"  }; 	\n" +
+			"	COUNTER myCounter1 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	ALARM AcquireAlarm {\n" +
+			"		COUNTER = \"myCounter1\";\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"	};\n" +
+
+			"};";
+	    boolean ok = false;
+	    try {
+	    	commonWriterTest(text, 1);
+	    } catch (RuntimeException e) {
+	    	ok = true;
+	    }
+	    assertTrue(ok);
+	}
+	
+	public void testMpc567_alarm_counter_incr_cycle1() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {		\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\"; \n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" + 
+			"				IRQ_STACK = TRUE {\n" + 
+			"					SYS_SIZE=64;\n" + 
+			"				};\n" + 
+			"			};\n" + 
+			"			MODEL = E200Z7;\n" +
+			"			VLE = FALSE;\n" +
+			"		};\n" +
+			"		\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5674F;\n" + 
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"		\n" +
+			"    };\n" +
+			"    \n" +
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK Task2 {\n" +
+			"		PRIORITY = 0x02;   /* High priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    OS EE { \n" +
+			"		KERNEL_TYPE = ECC2;\n" +
+			"		ORTI_SECTIONS = ALL;\n" +
+			"  }; 	\n" +
+			"	COUNTER myCounter1 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	ALARM AcquireAlarm {\n" +
+			"		COUNTER = \"myCounter1\";\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter\"; };\n" +
+			"	};\n" +
+
+			"	ALARM AcquireAlarm2 {\n" +
+			"		COUNTER = \"myCounter\";\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"	};\n" +
+			"};";
+	    boolean ok = false;
+	    try {
+	    	commonWriterTest(text, 1);
+	    } catch (RuntimeException e) {
+	    	ok = true;
+	    }
+	    assertTrue(ok);
+	}
+
+	
+
+	public void testMpc567_alarm_counter_incr_2() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {		\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\"; \n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" + 
+			"				IRQ_STACK = TRUE {\n" + 
+			"					SYS_SIZE=64;\n" + 
+			"				};\n" + 
+			"			};\n" + 
+			"			MODEL = E200Z7;\n" +
+			"			VLE = FALSE;\n" +
+			"		};\n" +
+			"		\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5674F;\n" + 
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"		\n" +
+			"    };\n" +
+			"    \n" +
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK Task2 {\n" +
+			"		PRIORITY = 0x02;   /* High priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    OS EE { \n" +
+			"		KERNEL_TYPE = ECC2;\n" +
+			"		ORTI_SECTIONS = ALL;\n" +
+			"  }; 	\n" +
+			"	COUNTER myCounter1 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter2 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter3 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter4 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	ALARM alarm1 {\n" +
+			"		COUNTER = \"myCounter1\";\n" +
+			"		ACTION = ACTIVATETASK { TASK = \"Task1\"; };\n" +
+			"	};\n" +
+
+			"	ALARM AcquireAlarm2 {\n" +
+			"		COUNTER = \"myCounter2\";\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"	};\n" +
+			"	ALARM AcquireAlarm3 {\n" +
+			"		COUNTER = \"myCounter3\";\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter2\"; };\n" +
+			"	};\n" +
+			"	ALARM AcquireAlarm4 {\n" +
+			"		COUNTER = \"myCounter4\";\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"	};\n" +
+			"};";
+    	commonWriterTest(text, 1);
+	}
+
+	public void testMpc567_systemTimer() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {		\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\"; \n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" + 
+			"				IRQ_STACK = TRUE {\n" + 
+			"					SYS_SIZE=64;\n" + 
+			"				};\n" + 
+			"			};\n" + 
+			"			MODEL = E200Z7;\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			VLE = FALSE;\n" +
+			"		};\n" +
+			"		\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5674F;\n" + 
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"		\n" +
+			"    };\n" +
+			"    \n" +
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK Task2 {\n" +
+			"		PRIORITY = 0x02;   /* High priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    OS EE { \n" +
+			"		KERNEL_TYPE = ECC2;\n" +
+			"		ORTI_SECTIONS = ALL;\n" +
+			"  }; 	\n" +
+			"	COUNTER myCounter0 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter1 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"		SECONDSPERTICK = 1.4;\n" +
+			"		TYPE = HARDWARE { DEVICE=\"DECREMENTER\"; SYSTEM_TIMER=TRUE;};\n" +
+			"	};\n" +
+			"	COUNTER myCounter {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter2 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"		SECONDSPERTICK = 0.004;\n" +
+			"		TYPE = HARDWARE { DEVICE=\"INCREMENTER\";};\n" +
+			"	};\n" +
+
+			"	ALARM AcquireAlarm {\n" +
+			"		COUNTER = \"myCounter\";\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"	};\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+
+	
+
+	public void testMpc567_isr_resources() {
+	    final String text = " CPU test_application {\n" + 
+	    		" \n" + 
+	    		"   OS EE {\n" + 
+	    		"     EE_OPT = \"__ASSERT__\";\n" + 
+	    		"     EE_OPT = \"DEBUG\";\n" + 
+	    		" \n" + 
+	    		"     STATUS = STANDARD;\n" + 
+	    		" \n" + 
+	    		"     STARTUPHOOK = FALSE;\n" + 
+	    		"     ERRORHOOK = TRUE;\n" + 
+	    		"     SHUTDOWNHOOK = FALSE;\n" + 
+	    		"     PRETASKHOOK = FALSE;\n" + 
+	    		"     POSTTASKHOOK = FALSE;\n" + 
+	    		" \n" + 
+	    		"     USEGETSERVICEID = FALSE;\n" + 
+	    		"     USEPARAMETERACCESS = FALSE;\n" + 
+	    		"     USERESSCHEDULER = FALSE;\n" + 
+	    		" \n" + 
+	    		"     EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n" + 
+	    		"     EE_OPT = \"__CODEWARRIOR__\";\n" + 
+	    		"     //EE_OPT = \"EEOPT_DIAB_5_8\";\n" + 
+//	    		"     EE_OPT = \"EE_ISR_DYNAMIC_TABLE\";\n" + 
+	    		" \n" + 
+	    		"     MCU_DATA = PPCE200ZX {\n" + 
+	    		"       MODEL = MPC5674F;\n" + 
+	    		"     };\n" + 
+	    		" \n" + 
+	    		"     CPU_DATA = PPCE200ZX {\n" + 
+	    		"       MODEL = E200Z7;\n" + 
+	    		"       APP_SRC = \"code.c\";\n" + 
+	    		"       APP_SRC = \"testcase/common/e200zx/test_irq.c\";\n" + 
+	    		"       VLE = FALSE;\n" + 
+	    		"       SYS_STACK_SIZE=2048;\n" + 
+	    		" \n" + 
+	    		"       MULTI_STACK = TRUE {\n" + 
+	    		"         IRQ_STACK = FALSE;\n" + 
+	    		"       };\n" + 
+	    		"     };\n" + 
+	    		" \n" + 
+	    		"     KERNEL_TYPE = ECC1;\n" + 
+	    		"     EE_OPT = \"__OO_STARTOS_OLD__\";\n" + 
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   TASK Task1 {\n" + 
+	    		"     PRIORITY = 1;\n" + 
+	    		"     ACTIVATION = 1;\n" + 
+	    		"     SCHEDULE = FULL;\n" + 
+	    		"     AUTOSTART = FALSE;\n" + 
+	    		"     STACK = SHARED;\n" + 
+	    		"     RESOURCE = \"Resource1\";\n" + 
+	    		"     RESOURCE = \"ResourceA\";\n" + 
+	    		"     RESOURCE = \"ResourceB\";\n" + 
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   ISR IsrLow {\n" + 
+	    		"     CATEGORY = 2;\n" + 
+	    		"     PRIORITY = 1;\n" + 
+	    		"     RESOURCE = \"ResourceA\";\n" + 
+	    		"     RESOURCE = \"ResourceB\";\n" + 
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   ISR IsrMedium {\n" + 
+	    		"     CATEGORY = 2;\n" + 
+	    		"     PRIORITY = 2;\n" + 
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   ISR IsrHigh {\n" + 
+	    		"     CATEGORY = 2;\n" + 
+	    		"     PRIORITY = 3;\n" + 
+	    		"     RESOURCE = \"ResourceB\";\n" + 
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   RESOURCE Resource1 { RESOURCEPROPERTY = STANDARD; };\n" + 
+	    		"   RESOURCE ResourceA { RESOURCEPROPERTY = STANDARD; };\n" + 
+	    		"   RESOURCE ResourceB { RESOURCEPROPERTY = STANDARD; };\n" + 
+	    		" };\n";
+    	commonWriterTest(text, 1);
+	}
+
 }

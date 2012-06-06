@@ -6,7 +6,6 @@
 package com.eu.evidence.rtdruid.modules.oil.abstractions;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,7 +63,7 @@ public interface IOilObjectList {
 	public static final int CPU = OBJECT_NUMBER;
 
 	// ------------------------------------------------------------------
-	void setList(int id, ArrayList<? extends ISimpleGenRes> list);
+	void setList(int id, List<? extends ISimpleGenRes> list);
 
 	/**
 	 * Stores a list of specific OSEK objects. <br>
@@ -91,4 +90,19 @@ public interface IOilObjectList {
 	 * @return an unmodificable list of specific OSEK objects.
 	 */
 	List<ISimpleGenRes> getList(int id);
+	
+	/**
+	 * Adds all elements of the given IOilObjecList. If copy parameter is true,
+	 * it does a copy before add to this IOilObjectList
+	 * 
+	 * @param ool
+	 *            the list of elment to add
+	 * 
+	 * @param doCopy
+	 *            if true, do a copy of each object before add them to the list
+	 * 
+	 * 
+	 * @return an unmodificable list of specific OSEK objects.
+	 */
+	void merge(IOilObjectList ool, boolean doCopy);
 }

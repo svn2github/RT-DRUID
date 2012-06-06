@@ -30,7 +30,9 @@ import com.eu.evidence.rtdruid.ui.preferencepages.AbstractPage;
  */
 public class CortexConfigurator extends AbstractPage {
 
-	private Text paramGcc = null;
+	private Text paramIar = null;
+	private Text paramCcs = null;
+	private Text paramKeil = null;
     
 	/**
 	 * (non-Javadoc) Method declared on PreferencePage
@@ -42,20 +44,56 @@ public class CortexConfigurator extends AbstractPage {
 		Composite composite_tab = createComposite(parent, 3);
 		composite_tab.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL));
 
-		createLabel(composite_tab, "Gcc path", 1); //$NON-NLS-1$
-		paramGcc = createTextField(composite_tab); //$NON-NLS-1$
-		Button gccButton = createPushButton(composite_tab, "Browse"); //$NON-NLS-1$
-		gccButton.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {	work(e);	}
-			public void widgetDefaultSelected(SelectionEvent e) {	work(e);	}
-			protected void work(SelectionEvent e) {
-				DirectoryDialog dia = new DirectoryDialog(getShell());
-				String path = dia.open();
-				if (path!=null) {
-					paramGcc.setText(path);
+		createLabel(composite_tab, "IAR Compiler path", 1); //$NON-NLS-1$
+		paramIar = createTextField(composite_tab); //$NON-NLS-1$
+		{
+			Button gccButton = createPushButton(composite_tab, "Browse"); //$NON-NLS-1$
+			gccButton.addSelectionListener(new SelectionListener() {
+				public void widgetSelected(SelectionEvent e) {	work(e);	}
+				public void widgetDefaultSelected(SelectionEvent e) {	work(e);	}
+				protected void work(SelectionEvent e) {
+					DirectoryDialog dia = new DirectoryDialog(getShell());
+					String path = dia.open();
+					if (path!=null) {
+						paramIar.setText(path);
+					}
 				}
-			}
-		});
+			});
+		}
+
+		createLabel(composite_tab, "CCS Compiler path", 1); //$NON-NLS-1$
+		paramCcs = createTextField(composite_tab); //$NON-NLS-1$
+		{
+			Button gccButton = createPushButton(composite_tab, "Browse"); //$NON-NLS-1$
+			gccButton.addSelectionListener(new SelectionListener() {
+				public void widgetSelected(SelectionEvent e) {	work(e);	}
+				public void widgetDefaultSelected(SelectionEvent e) {	work(e);	}
+				protected void work(SelectionEvent e) {
+					DirectoryDialog dia = new DirectoryDialog(getShell());
+					String path = dia.open();
+					if (path!=null) {
+						paramCcs.setText(path);
+					}
+				}
+			});
+		}
+
+		createLabel(composite_tab, "Keil Compiler path", 1); //$NON-NLS-1$
+		paramKeil = createTextField(composite_tab); //$NON-NLS-1$
+		{
+			Button gccButton = createPushButton(composite_tab, "Browse"); //$NON-NLS-1$
+			gccButton.addSelectionListener(new SelectionListener() {
+				public void widgetSelected(SelectionEvent e) {	work(e);	}
+				public void widgetDefaultSelected(SelectionEvent e) {	work(e);	}
+				protected void work(SelectionEvent e) {
+					DirectoryDialog dia = new DirectoryDialog(getShell());
+					String path = dia.open();
+					if (path!=null) {
+						paramKeil.setText(path);
+					}
+				}
+			});
+		}
 
 		initializeValues();
 
@@ -91,7 +129,9 @@ public class CortexConfigurator extends AbstractPage {
 	 * store.
 	 */
 	private void initializeDefaults() {
-		paramGcc.setText(Options.DEFAULT_CORTEX_CONF_GCC);
+		paramIar.setText(Options.DEFAULT_CORTEX_CONF_IAR);
+		paramCcs.setText(Options.DEFAULT_CORTEX_CONF_CCS);
+		paramKeil.setText(Options.DEFAULT_CORTEX_CONF_KEIL);
 		
 		enableOk();
 	}
@@ -102,10 +142,24 @@ public class CortexConfigurator extends AbstractPage {
 	private void initializeValues() {
 		IPreferenceStore store = getPreferenceStore();
 		
-		String gcc = store.contains(Options.CORTEX_CONF_GCC) ?
-				store.getString(Options.CORTEX_CONF_GCC) 
-				: Options.DEFAULT_CORTEX_CONF_GCC;
-		paramGcc.setText(gcc);
+		{
+			String gcc = store.contains(Options.CORTEX_CONF_CCS) ?
+					store.getString(Options.CORTEX_CONF_CCS) 
+					: Options.DEFAULT_CORTEX_CONF_CCS;
+			paramCcs.setText(gcc);
+		}
+		{
+			String gcc = store.contains(Options.CORTEX_CONF_IAR) ?
+					store.getString(Options.CORTEX_CONF_IAR) 
+					: Options.DEFAULT_CORTEX_CONF_IAR;
+			paramIar.setText(gcc);
+		}
+		{
+			String gcc = store.contains(Options.CORTEX_CONF_KEIL) ?
+					store.getString(Options.CORTEX_CONF_KEIL) 
+					: Options.DEFAULT_CORTEX_CONF_KEIL;
+			paramKeil.setText(gcc);
+		}
 
 		enableOk();
 	}
@@ -136,7 +190,9 @@ public class CortexConfigurator extends AbstractPage {
 	protected void storeValues() {
 		IPreferenceStore store = getPreferenceStore();
 
-		store.setValue(Options.CORTEX_CONF_GCC, paramGcc.getText());
+		store.setValue(Options.CORTEX_CONF_CCS, paramCcs.getText());
+		store.setValue(Options.CORTEX_CONF_IAR, paramIar.getText());
+		store.setValue(Options.CORTEX_CONF_KEIL, paramKeil.getText());
 	}
 
 }

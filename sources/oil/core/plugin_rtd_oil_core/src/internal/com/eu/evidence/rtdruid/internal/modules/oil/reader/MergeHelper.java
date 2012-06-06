@@ -406,7 +406,7 @@ public class MergeHelper implements IParserConstants {
 		// DESCRIPTION
 		// -----------------------------------------------
 		else if (IOilXMLLabels.ELEM_DESCRIPTION.equals(nodeName)) {
-			parent.appendChild(child);
+			parent.appendChild(parent.getOwnerDocument().importNode(child, true));
 
 		} else {
 			throw new RuntimeException("Not valid node Name :\n " + child);

@@ -7,8 +7,8 @@ package com.eu.evidence.rtdruid.test.vartree.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -229,7 +229,7 @@ public class VTLoadTest {
 	@Test
 	public void testLoad_null_rtd_2() throws IOException {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
-		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "rtd");
+		map.put(IRTDImporter.OPT_USE_IMPORTER_TYPE, "ertd");
 		
 		loadString(xmlInput2, null, map, true);
 	}
@@ -326,7 +326,6 @@ public class VTLoadTest {
 //		System.out.println(Utility.varTreeToString(vt));
 		String t = VarTreeUtil.compare(vt, correct).getMessage(); assertNull(t, t);
 	}
-
 	
 	@Test(expected=IOException.class)
 	public void testLoad_null_null_4() throws IOException {

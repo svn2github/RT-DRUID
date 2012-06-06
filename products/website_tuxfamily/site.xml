@@ -3,70 +3,70 @@
    <description url="d:\rtd_open_website">
       RT-Druid main web site to update Eclipse Plugins
    </description>
-   <feature url="features/com.eu.evidence.rtdruid.core_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.core" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.core_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.core" version="1.6.1.201107142307">
       <category name="RT-Druid Core"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.cdt_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.cdt" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.cdt_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.cdt" version="1.6.1.201107142307">
       <category name="RT-Druid Core"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.core_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.core" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.core_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.core" version="1.6.1.201107142307">
       <category name="RT-Druid Core"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee_1.6.0.201107142307.jar" id="com.eu.evidence.ee" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.ee_1.6.1.201107142307.jar" id="com.eu.evidence.ee" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.avr_1.6.0.201107142307.jar" id="com.eu.evidence.ee.templates.avr" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.ee.templates.avr_1.6.1.201107142307.jar" id="com.eu.evidence.ee.templates.avr" version="1.6.1.201107142307">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.dspic_1.6.0.201107142307.jar" id="com.eu.evidence.ee.templates.dspic" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.ee.templates.dspic_1.6.1.201107142307.jar" id="com.eu.evidence.ee.templates.dspic" version="1.6.1.201107142307">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.ppc_1.6.0.201107142307.jar" id="com.eu.evidence.ee.templates.ppc" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.ee.templates.ppc_1.6.1.201107142307.jar" id="com.eu.evidence.ee.templates.ppc" version="1.6.1.201107142307">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.s12_1.6.0.201107142307.jar" id="com.eu.evidence.ee.templates.s12" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.ee.templates.s12_1.6.1.201107142307.jar" id="com.eu.evidence.ee.templates.s12" version="1.6.1.201107142307">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.arm_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.arm" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.arm_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.arm" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.avr_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.avr" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.avr_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.avr" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.dspic_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.dspic" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.dspic_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.dspic" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.fp_edf_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.fp_edf" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.fp_edf_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.fp_edf" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.frsh_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.frsh" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.frsh_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.frsh" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.mico32_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.mico32" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.mico32_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.mico32" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.nios2_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.nios2" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.nios2_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.nios2" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.osek_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.osek" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.osek_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.osek" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.ppc_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.ppc" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.ppc_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.ppc" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.s12_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.s12" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.s12_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.s12" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.tricore_1.6.0.201107142307.jar" id="com.eu.evidence.ee.templates.tricore" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.ee.templates.tricore_1.6.1.201107142307.jar" id="com.eu.evidence.ee.templates.tricore" version="1.6.1.201107142307">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.tricore_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.tricore" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.tricore_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.tricore" version="1.6.1.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.jscan_1.6.0.201107142307.jar" id="com.eu.evidence.rtdruid.jscan" version="1.6.0.201107142307">
+   <feature url="features/com.eu.evidence.rtdruid.jscan_1.6.1.201107142307.jar" id="com.eu.evidence.rtdruid.jscan" version="1.6.1.201107142307">
       <category name="RT_Druid_analysis"/>
    </feature>
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.esirisc_1.0.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.esirisc" version="1.0.0.201107142307">
@@ -75,7 +75,7 @@
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.msp430_1.0.0.201107142307.jar" id="com.eu.evidence.rtdruid.oil.ee.msp430" version="1.0.0.201107142307">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.tests_1.6.0.qualifier.jar" id="com.eu.evidence.rtdruid.tests" version="1.6.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.tests_1.6.1.qualifier.jar" id="com.eu.evidence.rtdruid.tests" version="1.6.1.qualifier">
       <category name="RT-Druid_tests"/>
    </feature>
    <category-def name="RT-Druid Core" label="Base Plugins">

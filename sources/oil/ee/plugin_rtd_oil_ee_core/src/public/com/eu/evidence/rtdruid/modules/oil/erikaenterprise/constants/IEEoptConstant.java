@@ -41,14 +41,15 @@ public interface IEEoptConstant {
 	 */
 	int EE_OPT_FOR_SIGNATURE = 1 << 7;
 
+	/** Identifies only user options */
+	int EE_OPT_USER_ONLY = 1;
+
 	/**
 	 * Identifies all options (without USE/GENERATE binary distribution and
 	 * "for a signature")
 	 */
-	int EE_OPT_ALL = IGetEEOPTExtentions.EE_OPT_USER_ONLY
+	int EE_OPT_ALL = EE_OPT_USER_ONLY
 			| EE_OPT_COMMON_AUTO_ONLY | EE_OPT_CPU_ONLY | EE_OPT_ENABLE_DISTR;
 
-	/** Identifies only user options */
-	int EE_OPT_USER_ONLY = 1;
 
 }

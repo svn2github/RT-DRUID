@@ -104,7 +104,7 @@ public final class OptionsManager {
 	        	answer.add(af);
 	    }
 	    
-	    System.err.println("\n\nELENCO Options trovate :\n" +answer + "\n\n");
+//	    System.err.println("\n\nELENCO Options trovate :\n" +answer + "\n\n");
     	
         return (IBuildOptions[]) answer.toArray(new IBuildOptions[answer.size()]);
     }

@@ -19,6 +19,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
@@ -167,15 +168,12 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			// all objects for current os
 			IOilObjectList ool = oilObjects[rtosId];
 			// current os
-			ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(
-					0);
-//			List<Integer> requiredOilObjects = (List<Integer>) os.getObject(SGRK__FORCE_ARRAYS_LIST__);
 
-			final int EE_ORTI_current = os.containsProperty(OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS)?
-					(Integer)os.getObject(OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS) : 0;
+			final int EE_ORTI_current = ErikaEnterpriseWriter.checkOrDefault((Integer)AbstractRtosWriter.getOsObject(ool, OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS),
+					new Integer(0));
 
 
-			ICommentWriter commentWriter = getCommentWriter(os, FileTypes.ORTI);
+			ICommentWriter commentWriter = getCommentWriter(ool, FileTypes.ORTI);
 
 			
 			if (answer[rtosId] == null) {
@@ -234,8 +232,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			{
 				
 				List<ISimpleGenRes> appmodeList = ool.getList(IOilObjectList.APPMODE);
-				int id = "true".equalsIgnoreCase(os
-								.getString(ISimpleGenResKeywords.OSEK_AUTOSTART)) ? 1 : 0;
+				int id = "true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OSEK_AUTOSTART)) ? 1 : 0;
 
 				if (id == 1) { // add default mode
 					all_appmodes_id.append("            \"OSDEFAULTAPPMODE\" = 0");
@@ -254,10 +251,12 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				all_appmodes_id.append("\n");
 			}
 			
-			if (os.containsProperty(SGRK_OS_STACK_LIST)) {
-				EEStackData[] stacks = (EEStackData[]) os.getObject(SGRK_OS_STACK_LIST);
-				for (int i=0; i<stacks.length; i++) {
-					all_stack_id.append("            \"Stack"+i+"\" : Stack"+i+" = "+i+",\n");
+			{
+				EEStackData[] stacks = (EEStackData[]) AbstractRtosWriter.getOsObject(ool, SGRK_OS_STACK_LIST);
+				if (stacks != null) {
+					for (int i=0; i<stacks.length; i++) {
+						all_stack_id.append("            \"Stack"+i+"\" : Stack"+i+" = "+i+",\n");
+					}
 				}
 			}
 			
@@ -265,13 +264,23 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				all_isr2.append("        ENUM \"void *\" [\n" +
 						"            \"NO_ISR2\" = 0");
 				
-				List<ISimpleGenRes> isrList = ool.getList(IOilObjectList.ISR);
-				for (ISimpleGenRes isr: isrList) {
+				for (ISimpleGenRes isr: ool.getList(IOilObjectList.ISR)) {
 					if (isr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) && "2".equals(isr.getString(ISimpleGenResKeywords.ISR_CATEGORY))) {
-						all_isr2.append(",\n            \""+isr.getName()+"\" = \""+isr.getName()+"\"");
+						String handler = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_HANDLER);
+						if (handler != null) {
+							all_isr2.append(",\n            \""+isr.getName()+"\" = \""+handler+"\"");
+						}
 					}
 				}
-				
+				for (ISimpleGenRes counter: ool.getList(IOilObjectList.COUNTER)) {
+					if (counter.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER)) {
+						String handler = counter.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER);
+						if (handler != null) {
+							all_isr2.append(",\n            \""+counter.getName()+"\" = \""+handler+"\"");
+						}
+					}
+				}
+
 				all_isr2.append("\n        ] RUNNINGISR2, \"Running ISR2\";\n\n");
 			}
 			
@@ -443,7 +452,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 								"EE_ORTI_th_priority[EE_stkfirst]" : "0") + "\";\n" + 
 
 					((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ISR2) != 0 ?
-								"    RUNNINGISR2 = \"EE_ORTI_ISR2_magic\";\n" : "") +
+								"    RUNNINGISR2 = \"EE_ORTI_runningisr2\";\n" : "") +
 
 					"    SERVICETRACE = \"EE_ORTI_servicetrace\";\n" + 
 					"    LASTERROR = \"EE_ORTI_lasterror\";\n" + 
@@ -458,8 +467,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				 * TASK
 				 **************************************************************/
 
-				String stack_vector_name = os.containsProperty(SGRK_OS_STACK_VECTOR_NAME) ?
-							(String) os.getObject(SGRK_OS_STACK_VECTOR_NAME) : "EE_hal_thread_tos";
+				String stack_vector_name = ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGRK_OS_STACK_VECTOR_NAME), "EE_hal_thread_tos");
 
 				List<ISimpleGenRes> taskList = ool.getList(IOilObjectList.TASK);
 				if (taskList.size() > 0) {
@@ -502,13 +510,12 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				}
 			}
 
-			
-			if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_STACK) != 0 && os.containsProperty(SGRK_OS_STACK_LIST)) {
+			{
+				EEStackData[] stacks = (EEStackData[]) AbstractRtosWriter.getOsObject(ool, SGRK_OS_STACK_LIST);
+				if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_STACK) != 0 && stacks != null) {
 				/***************************************************************
 				 * STACK
 				 **************************************************************/
-				EEStackData[] stacks = (EEStackData[]) os.getObject(SGRK_OS_STACK_LIST);
-
 				if (stacks.length >0) {
 					eeortiBuffer.append("\n"+indent2+"/* Stacks */\n");
 					
@@ -524,10 +531,11 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 								"    FILLPATTERN = \"0xA5A5A5A5\";\n" + 
 								"};\n"); 
 						
-						//"(unsigned int *)((unsigned int*)((int)(&__alt_stack_pointer) - 4096))
+							//"(unsigned int *)((unsigned int*)((int)(&__alt_stack_pointer) - 4096))
+						}
 					}
-				}
-			}			
+				}			
+			}
 			
 			if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ALARM) != 0 && ool.getList(IOilObjectList.ALARM).size() >0) {
 				/***************************************************************
@@ -577,7 +585,12 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 								String callBackName = curr.getString(ISimpleGenResKeywords.ALARM_CALL_BACK);
 								
 								actionDescr = "callback " + callBackName;
+
+							} else if (tipo.equals(ISimpleGenResKeywords.ALARM_INCR_COUNTER)) {
+								String counterName = curr.getString(ISimpleGenResKeywords.ALARM_INCR_COUNTER);
 								
+								actionDescr = "incr counter " + counterName;
+
 							} else {
 								throw new Error("Unknow type");
 							}
@@ -693,11 +706,8 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 		boolean requiredISR2 = false;
 		for (int currentRtosId = 0; currentRtosId<oilObjects.length; currentRtosId++) { 
 			final IOilObjectList ool = oilObjects[currentRtosId];
-			final ISimpleGenRes sgrOs = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 
-			final String currentRtosPrefix = parent.computeOilRtosPrefix(sgrOs.getPath());
-			ArrayList<String> value = CommonUtils.getAllChildrenEnumType(vt,
-					currentRtosPrefix + "ORTI_SECTIONS", null);
+			List<String> value = parent.getRtosCommonChildType(ool, "ORTI_SECTIONS");
 	
 			if (value != null) {
 				for (int i=0; i<value.size(); i++) {
@@ -711,10 +721,13 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				}
 			}
 			
-			if (sgrOs.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
-				CpuHwDescription currentStackDescription = (CpuHwDescription) sgrOs.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
+			
+			{
+				CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+				if (currentStackDescription != null) {
 				supportISR2 |= currentStackDescription.isSupportOrtiISR2();
 			}
+		}
 		}
 		if (requiredISR2 && !supportISR2) {
 			throw new OilCodeWriterException("This architecture does not support ORTI ISR2 section");
@@ -728,13 +741,13 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 		
 		for (int currentRtosId = 0; currentRtosId<oilObjects.length; currentRtosId++) { 
 			final IOilObjectList ool = oilObjects[currentRtosId];
-			final ISimpleGenRes sgrOs = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 			
 			/*
 			 * Update EE_OPT for ORTI
 			 */
 			
 			{ 
+				ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
 				String[] lista = sgrOs.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS) ?
 						(String[]) sgrOs.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS) :
 							new String[0];
@@ -764,7 +777,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 					array.add("__OO_ORTI_ALARMTIME__");
 				}
 				if ((EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ISR2) != 0) {
-					array.add("__OO_ORTI_ISR2__");
+					array.add("__OO_ORTI_RUNNINGISR2__");
 				}
 
 				
@@ -775,6 +788,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			 * Add  
 			 */
 			{
+				ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
 				sgrOs.setObject(OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS, new Integer(EE_ORTI_current));
 			}
 		}
@@ -785,7 +799,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 		{ 
         	final ISimpleGenRes sgrOs = oilObjects[RTOS_ID___COMMON_DATA].getList(IOilObjectList.OS).get(0);
         	
-        	ICommentWriter commentWriter = getCommentWriter(sgrOs, FileTypes.MAKEFILE);
+        	ICommentWriter commentWriter = getCommentWriter(oilObjects[RTOS_ID___COMMON_DATA], FileTypes.MAKEFILE);
         	
     		String value = commentWriter.writerBanner("Orti") + "EE_ORTI_SUPPORT := 1\n";
 			CommonUtils.updateSgrProperty(sgrOs, SGRK__MAKEFILE_MP_EXT_VARS__, value);

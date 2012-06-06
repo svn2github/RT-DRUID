@@ -2,12 +2,15 @@ package com.eu.evidence.rtdruid.internal.modules.project.templates;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
 
 import com.eu.evidence.templates.Activator;
 import com.eu.evidence.templates.interfaces.ITemplatePathProvider;
@@ -20,86 +23,81 @@ import com.eu.evidence.templates.interfaces.ITemplatePathProvider;
 
 public class ExpTemplateCollector {
 
-	private static final Object RTD_TEMPLATE_ENV_VARIABLE_ID = "RTDRUID_TEMPLATES_PATH";
-	private static ArrayList<ITemplatesFolder> templatesArray = null;
-	private static ArrayList<ITemplatePathProvider> dynamicProviders = null;
+	private static Map<ITemplatePathProvider, List<ITemplatesFolder>> templatesArray = null;
+	private static List<ITemplatePathProvider> providersOrder = null;
 
 	static {
-		dynamicProviders = new ArrayList<ITemplatePathProvider>();
 		templatesArray = parseAllExtensions();
+		providersOrder = new ArrayList<ITemplatePathProvider>(templatesArray.keySet());
+		
+		Collections.sort(providersOrder, new Comparator<ITemplatePathProvider>() {
+			@Override
+			public int compare(ITemplatePathProvider o1,
+					ITemplatePathProvider o2) {
+				return o1.priority() - o2.priority();
+			}
+		});
 	}
 	
-	private static ArrayList<ITemplatesFolder> parseAllExtensions() {
-		ArrayList<ITemplatesFolder> answer = new ArrayList<ITemplatesFolder>();
-		answer.addAll(parseTemplates());
-		answer.addAll(parseTemplatePathProviders());
-		answer.addAll(parseEnvironment());
+	// ------------- INIT ALL -----------------
+	/**
+	 * Searches all templates folders 
+	 * 
+	 * @return the list of available templateFolders
+	 */
+	private static  Map<ITemplatePathProvider, List<ITemplatesFolder>> parseAllExtensions() {
+		HashMap<ITemplatePathProvider, List<ITemplatesFolder>> answer = new LinkedHashMap<ITemplatePathProvider, List<ITemplatesFolder>>();
+		parseEnvironment(answer);
+		parseTemplatePathProviders(answer);
+		parseTemplates(answer);
 		return answer;
 	}
 	
-	private static ArrayList<ITemplatesFolder> parseEnvironment() {
-		ArrayList<ITemplatesFolder> answer = new ArrayList<ITemplatesFolder>();
-		String paths = System.getenv().containsKey(RTD_TEMPLATE_ENV_VARIABLE_ID) ? System.getenv().get(RTD_TEMPLATE_ENV_VARIABLE_ID) : "";
-		
-		String[] elems = paths != null ? paths.split(File.pathSeparator) : new String[0];
-		for (String elem: elems) {
-			
-			File f = new File(elem);
-			if (f.exists() && f.isDirectory() && f.canRead()) {
-				answer.add(new FileSystemTemplateItem("env", "environment", elem));
-			}
+	/**
+	 * Check if the environment contains TEMPLATE_PATH variable. If true, stores
+	 * them in the provided map. If the variable does not exist or if there is
+	 * not any readable folder, the map is untouched.
+	 * 
+	 * @param answer
+	 *            where store the connection between the TemplatePathProvider
+	 *            and all TemplatesFolder related to the provider
+	 */
+	private static void parseEnvironment(Map<ITemplatePathProvider, List<ITemplatesFolder>> answer) {
+		ITemplatePathProvider tpp = new EnvironmentTemplatePathProvider();
+		ArrayList<ITemplatesFolder> folders = new ArrayList<ITemplatesFolder>();
+		getPaths(tpp, folders);
+		if (folders.size()>0) {
+			answer.put(tpp, folders);
+		}
+	}
+	
+	/**
+	 * Check if any plugin contains some readable template folder. If true, this method stores
+	 * them in the provided map, otherwise the map is untouched.
+	 * 
+	 * @param answer
+	 *            where store the connection between the TemplatePathProvider
+	 *            and all TemplatesFolder related to the provider
+	 */
+	private static void parseTemplates(Map<ITemplatePathProvider, List<ITemplatesFolder>> answer) {
+		PluginsTemplatePathProvider tpp = new PluginsTemplatePathProvider();
+		List<ITemplatesFolder> folders = tpp.getTemplatesFolder();
+		if (folders.size()>0) {
+			answer.put(tpp, folders);
 		}
 		
-		return answer;
-
-	}
-	
-	private static ArrayList<ITemplatesFolder> parseTemplates() {
-		ArrayList<ITemplatesFolder> answer = new ArrayList<ITemplatesFolder>();
-		
-		IConfigurationElement[] config = Platform.getExtensionRegistry()
-				.getConfigurationElementsFor(
-						"com.eu.evidence.templates.core.template");
-		assert (config != null);
-		int l = config.length;
-
-		for (int i = 0; i < l; i++)
-			if ("template".equals(config[i].getName())) {
-				String bundleName = "";
-				String fileName = "";
-				try {
-					fileName = config[i].getAttribute("dir");
-					
-					if (fileName == null) {
-						continue;
-					}
-
-					bundleName = config[i].getContributor().getName();
-					Bundle bundle = Platform.getBundle(bundleName);
-					assert (bundle != null);
-					
-					if (FileLocator.find(bundle, new Path(fileName),
-							null) == null) {
-						continue;
-					}
-					File f = FileLocator.getBundleFile(bundle);
-					String bundlePath = null;
-					if (f != null) {
-						bundlePath = f.getAbsolutePath();
-					}
-					answer.add(new PluginTemplateItem(bundleName, bundlePath, fileName));
-					
-				} catch (Exception e) {
-					Activator.log("Unable to get the specified template directory:\n bundle= " + 
-							bundleName + "\n dir= " + fileName,
-							e);
-				}
-			}
-		return answer;
 	}
 
-	private static ArrayList<ITemplatesFolder> parseTemplatePathProviders() {
-		ArrayList<ITemplatesFolder> answer = new ArrayList<ITemplatesFolder>();
+	/**
+	 * Check if any plugin contains TemplatePathProvider with one or more template folder. If true, this method stores
+	 * them in the provided map, otherwise the map is untouched.
+	 * Dynamic providers are stored without check template folders (that will be checked when templates are required).
+	 * 
+	 * @param answer
+	 *            where store the connection between the TemplatePathProvider
+	 *            and all TemplatesFolder related to the provider
+	 */
+	private static void parseTemplatePathProviders(Map<ITemplatePathProvider, List<ITemplatesFolder>> answer) {
 		
 		IConfigurationElement[] config = Platform.getExtensionRegistry()
 				.getConfigurationElementsFor(
@@ -117,19 +115,32 @@ public class ExpTemplateCollector {
 					}
 					ITemplatePathProvider tpp = (ITemplatePathProvider) provider;
 					if (tpp.isDynamic()) {
-						dynamicProviders.add(tpp);
+						answer.put(tpp, null);
+						
 					} else {
-						getPaths(tpp, answer);
+						ArrayList<ITemplatesFolder> folders = new ArrayList<ITemplatesFolder>();
+						getPaths(tpp, folders);
+						if (folders.size()>0) {
+							answer.put(tpp, folders);
+						}
 					}
+					
 					
 				} catch (Exception e) {
 					Activator.log("Unable to get the specified template provider:\n " + config[i].getAttribute("provider"),
 							e);
 				}
 			}
-		return answer;
 	}
 	
+	
+	
+	/**
+	 * This is an Utility function to transform provider's path in FileSystemTemplateItems
+	 * 
+	 * @param provider the path provider
+	 * @param answer where store all FileSystemTemplateItems
+	 */
 	private static void getPaths(ITemplatePathProvider provider, ArrayList<ITemplatesFolder> answer) {
 		String[] paths = provider.getPaths();
 		if (paths == null) {
@@ -148,19 +159,21 @@ public class ExpTemplateCollector {
 		
 	}
 
+	// ----------------- Retrive paths ---------------------------
+	
 	
 	/** Returns all available paths of templates. */
 	public static ITemplatesFolder[] getTemplates() {
 		ArrayList<ITemplatesFolder> temp = new ArrayList<ITemplatesFolder>();
-		for (ITemplatePathProvider tpp: dynamicProviders) {
-			getPaths(tpp, temp);
+		
+		for (ITemplatePathProvider tpp: providersOrder) {
+			if (tpp.isDynamic()) {
+				getPaths(tpp, temp);
+			} else {
+				temp.addAll(templatesArray.get(tpp));
+			}
 		}
-		if (temp.size() == 0) {
-			temp = templatesArray;
-		} else {
-			temp.addAll(templatesArray);
-		}
-		return temp.toArray(new ITemplatesFolder[templatesArray.size()]) ;
+		return temp.toArray(new ITemplatesFolder[temp.size()]) ;
 	}
 
 }

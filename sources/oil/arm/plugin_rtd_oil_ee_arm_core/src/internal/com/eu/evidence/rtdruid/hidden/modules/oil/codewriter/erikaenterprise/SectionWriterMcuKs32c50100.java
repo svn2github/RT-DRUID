@@ -130,11 +130,10 @@ public class SectionWriterMcuKs32c50100 extends SectionWriter implements IEEWrit
 		final int currentRtosId = 0;
 		
 		/* COMMON VARIABLES */
-		ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-		final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
+		final ICommentWriter commentWriterC = getCommentWriter(oilObjects[currentRtosId], FileTypes.C);
 		Properties irq = new Properties();
 
-		{
+		for (ISimpleGenRes os: oilObjects[currentRtosId].getList(IOilObjectList.OS)) {
 			/***********************************************************************
 			 * get values
 			 **********************************************************************/

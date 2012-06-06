@@ -1,6 +1,16 @@
 package com.eu.evidence.templates.interfaces;
 
 public interface ITemplatePathProvider {
+	
+	int ENVIRONMENT_PRIORITY = 100000;
+	int PLUGINS_PRIORITY = 0;
+	
+	/**
+	 * Get the importance of templates provided by this class. Higher values will be checked before.
+	 * 
+	 * @return the importance of this provider.
+	 */
+	int priority();
 
 	/**
 	 * 

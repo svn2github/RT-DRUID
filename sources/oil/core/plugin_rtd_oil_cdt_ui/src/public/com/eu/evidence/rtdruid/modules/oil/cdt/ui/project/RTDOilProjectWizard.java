@@ -595,7 +595,7 @@ public class RTDOilProjectWizard extends NewMakeCProjectWizard {
 		    ICommand command = desc.newCommand();
 		    command.setBuilderName(OilBuilder.BUILDER_ID);
 		    Map attributes = new HashMap();
-		    attributes.put(OilBuilder.ATTR_CONFIG_FILE, niosWizardPage.configFile);
+		    attributes.put(OilBuilder.ATTR_CONFIG_FILES, niosWizardPage.configFile);
 		    command.setArguments(attributes);
 		    RTDOilProjectNature.setBuildSpec(newProject, command);
 		    

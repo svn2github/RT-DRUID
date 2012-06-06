@@ -3,6 +3,7 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.common.xsltcodegeneration
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.CDATASection;
@@ -14,7 +15,10 @@ import org.w3c.dom.Text;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.reader.OilReader;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.implementation.IOilImplID;
@@ -43,7 +47,7 @@ public abstract class XsltWriter implements ISectionWriter, ISectionWriterWithOp
 	protected ISWCategory category;
 	
 	protected IVarTree vt;
-	protected String[] rtosPrefix;
+	protected Map<String, IOilObjectList> rtosPrefix;
 	protected HashMap<String, Object> opt;
 	
 	protected XsltComponent transformation;
@@ -95,11 +99,11 @@ public abstract class XsltWriter implements ISectionWriter, ISectionWriterWithOp
 				IOilTransform transformer =  OilTransformFactory.INSTANCE.getTransform(oilId);
 				
 				computeRtos();
-				if (rtosPrefix == null || rtosPrefix.length == 0) {
+				if (rtosPrefix == null || rtosPrefix.isEmpty()) {
 					return null;
 				}
 				
-				String txt = transformer.write(vt, implID, rtosPrefix[0]);
+				String txt = transformer.write(vt, implID, getPaths(rtosPrefix, 0).toArray(new String[0]));
 //				System.out.println(txt);
 				document = (new OilReader()).loadAsXml(new ByteArrayInputStream(txt.getBytes()), null, null);
 				
@@ -118,21 +122,36 @@ public abstract class XsltWriter implements ISectionWriter, ISectionWriterWithOp
 		return null;
 	}
 
+	private List<String> getPaths(Map<String, IOilObjectList> all, int index) {
+		if (index >= all.size()) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+		
+		IOilObjectList ool = all.values().toArray(new IOilObjectList[all.size()])[index];
+		ArrayList<String> answer = new ArrayList<String>();
+		for (ISimpleGenRes sgros: ool.getList(IOilObjectList.OS)) {
+			answer.add(sgros.getPath());
+		}
+		return answer;
+	}
+
 	public void setTransformation(XsltComponent transformation) {
 		this.transformation = transformation;
 	}
 	
 	protected void computeRtos() {
 		if (rtosPrefix == null) {
-			rtosPrefix = Search.allRtos(vt.newTreeInterface());
+			rtosPrefix = AbstractRtosWriter.extractDistinctOs(vt, Search.allRtos(vt.newTreeInterface()));
 		}
 	}
 	
 	/** @return a not null map used to connect a cpu to a buffer */
 	protected HashMap<String, IOilWriterBuffer> getMap(IOilWriterBuffer[] buffers) {
 		HashMap<String, IOilWriterBuffer> map = new HashMap<String, IOilWriterBuffer>();
-		for (int i=0; i<buffers.length && i<rtosPrefix.length; i++) {
-			map.put(rtosPrefix[i], buffers[i]);
+		for (int i=0; i<buffers.length && i<rtosPrefix.size(); i++) {
+			for (String s:getPaths(rtosPrefix, i)) {
+				map.put(s, buffers[i]);
+			}
 		}
 		return map;
 	}
@@ -151,7 +170,7 @@ public abstract class XsltWriter implements ISectionWriter, ISectionWriterWithOp
 		
 		
 		// init buffers
-		IOilWriterBuffer[] answer = new IOilWriterBuffer[rtosPrefix.length];
+		IOilWriterBuffer[] answer = new IOilWriterBuffer[rtosPrefix.size()];
 		for (int i=0; i<answer.length; i++) {
 			answer[i] = new OilWriterBuffer();
 		}

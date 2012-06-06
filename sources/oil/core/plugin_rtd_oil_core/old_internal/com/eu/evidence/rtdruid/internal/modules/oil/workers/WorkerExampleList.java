@@ -7,6 +7,7 @@ package com.eu.evidence.rtdruid.internal.modules.oil.workers;
 
 import java.util.HashMap;
 
+import com.eu.evidence.rtdruid.desk.Logger;
 import com.eu.evidence.rtdruid.internal.modules.project.templates.ExampleTemplate;
 import com.eu.evidence.rtdruid.internal.modules.project.templates.SearchTemplates;
 
@@ -53,6 +54,7 @@ public class WorkerExampleList implements IWorkerExampleWriter {
 					+       "Title = " + ex.getTitle()+"\n"
 					+ wsp + "Cat.  = " + ex.getCategory() + "\n"
 					+ wsp + "ID    = " + ex.getExampleID() + "\n"
+					+ wsp + "Path  = " + ex.getFs_path() + "\n"
 					+ wsp + "Descr.= " + ex.getShortDescr();
 			myLog("", buff);
 		}

@@ -8,12 +8,10 @@ import java.util.List;
 
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
-import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 public class SectionWriterHalPicBoards implements IEEWriterKeywords {
 	
@@ -203,29 +201,40 @@ public class SectionWriterHalPicBoards implements IEEWriterKeywords {
 					"__MICROCHIP_DSPICDEM11PLUS__",
 					new String[] {"USELEDS", "USEBUTTONS", "USELCD", "USEANALOG", "USEAUDIO"},
 					new String[] {"__USE_LEDS__", "__USE_BUTTONS__", "__USE_LCD__", "__USE_ANALOG__", "__USE_AUDIO__"}));
+			
+
+			STANDARD_BOARD_PROPERTIES.put("EE_EASYLAB", new BOARD_MODEL(
+					"EE_EASYLAB", // name
+					"EE_EASYLAB",
+					new String[] {"USETIMER", "USEUART", "USELEDS", "USEDIO", "USEBUZZER", "USEADC", "USEPWM"},
+					new String[] {"USE_TIMER", "USE_UART", "USE_LEDS", "USE_DIO", "USE_TIMER USE_BUZZER", "USE_ADC", "USE_PWM"}));
 		}
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		
 		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId ++) { 
 			
-			/* COMMON VARIABLES */
-			ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-	
-			{
-				/***********************************************************************
-				 * get values and store as EE_OPT
-				 **********************************************************************/
-	
-				// prepare the path :
-				// ... the prefix ...
-				String currentMcuPrefix = os.getPath() + S
-						+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-						+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "BOARD_DATA";
+			/***********************************************************************
+			 * get values and store as EE_OPT
+			 **********************************************************************/
+
+			ArrayList<String> childPaths = new ArrayList<String>();
+			List<String> childFound = parent.getRtosCommonChildType(oilObjects[currentRtosId], "BOARD_DATA", childPaths);
+
+			String board_type = null;
+			for (int index = 0; index<childFound.size(); index++) {
+				String type_found = childFound.get(index); 
+				if (board_type == null) {
+					board_type = type_found;
+				} else {
+					if (!(board_type.equalsIgnoreCase(type_found))) {
+						Messages.sendWarningNl("Found more than one Board section for the same cpu. (" + board_type + " and " + type_found + ")",
+								null, "ajidasoidjasdiojasdi", null);
+					}
+				}
 				
-				// ... get the node identifier
-				String[] child = new String[1];
-				String board_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+				
+			
 				
 					/* STANDARD MCU */
 				BOARD_MODEL board_properties = STANDARD_BOARD_PROPERTIES.get(board_type);
@@ -233,7 +242,7 @@ public class SectionWriterHalPicBoards implements IEEWriterKeywords {
 					if (board_properties.def!= null && !ee_opts.contains(board_properties.def)) {
 						ee_opts.add(board_properties.def);
 					}
-					currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+					String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST;
 	
 					if (board_properties.board_subtype != null) {
 						checkEE_FlexBoard(ee_opts, currentMcuPrefix, board_properties.board_subtype);
@@ -243,9 +252,12 @@ public class SectionWriterHalPicBoards implements IEEWriterKeywords {
 						String tmp = board_properties.properties[i];
 						
 						String value_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix+tmp, null);
-						
-						if ("TRUE".equals(value_type) && !ee_opts.contains(board_properties.defines[i])) {
-							ee_opts.add(board_properties.defines[i]);
+						if ("TRUE".equals(value_type)) {
+							for (String s: board_properties.defines[i].split(" ")) {
+								 if (!ee_opts.contains(s)) {
+									ee_opts.add(s);
+								}
+							}
 						}
 					}
 					

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
+import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 
 public class CpuUtility {
@@ -12,15 +13,19 @@ public class CpuUtility {
 	public final static String CPU_APP_SRC = "cpu_data_app_src";
 
 	
-	public static boolean getSupportForNestedIRQ(ISimpleGenRes os) {
+	public static boolean getSupportForNestedIRQ(IOilObjectList ool) {
 		boolean answer = CpuHwDescription.DEFAULT_supportForNestedIRQ;
 	
-		if (os.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
-			answer = ((CpuHwDescription) os.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)).supportForNestedIRQ;
+		CpuHwDescription descr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+		if (descr != null) {
+			answer = descr.supportForNestedIRQ;
 		}
 		return answer;
 	}
 
+	public static void addSources(IOilObjectList ool, String[] file) {
+		addSources(ool.getList(IOilObjectList.OS).get(0), file);
+	}
 
 	public static void addSources(ISimpleGenRes os, String file) {
 		addSources(os, new String[] {file});
@@ -43,7 +48,16 @@ public class CpuUtility {
 		os.setObject(CPU_APP_SRC, src_files.toArray(new String[src_files.size()]));
 
 	}
-	
+
+	public static String[] getSources(IOilObjectList ool) {
+		ArrayList<String> answer = new ArrayList<String>();
+		
+		for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)) {
+			answer.addAll(Arrays.asList(getSources(os)));
+		}
+		return (String[]) answer.toArray(new String[answer.size()]);
+	}
+
 	public static String[] getSources(ISimpleGenRes os) {
 		
 		if (os.containsProperty(CPU_APP_SRC)) {

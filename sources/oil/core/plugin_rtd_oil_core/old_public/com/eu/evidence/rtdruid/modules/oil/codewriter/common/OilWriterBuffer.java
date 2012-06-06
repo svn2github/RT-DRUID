@@ -134,6 +134,7 @@ public class OilWriterBuffer implements IOilWriterBuffer {
 	 *            the source
 	 */
 	public void append(IOilWriterBuffer ibuffer) {
+		if (ibuffer != null) {
 		
 		if (ibuffer instanceof OilWriterBuffer) {
 			OilWriterBuffer buffer = (OilWriterBuffer) ibuffer; 
@@ -162,6 +163,7 @@ public class OilWriterBuffer implements IOilWriterBuffer {
 		} else {
 			// TODO: add support for a generic IOilWriterBuffer  
 			throw new UnsupportedOperationException();
+			}
 		}
 	}
 

@@ -28,12 +28,16 @@ public class Options implements IBuildOptions {
 			+ "CORTEX_CONF."; //$NON-NLS-1$
 
 	/** A String that identifies the GCC Path */
-	public static final String CORTEX_CONF_GCC = CORTEX_CONF_PREFIX + "gcc_path";
+	public static final String CORTEX_CONF_CCS = CORTEX_CONF_PREFIX + "ccs_path";
+	public static final String CORTEX_CONF_IAR = CORTEX_CONF_PREFIX + "iar_path";
+	public static final String CORTEX_CONF_KEIL = CORTEX_CONF_PREFIX + "keil_path";
 
 	/*
 	 * Default values
 	 */
-	public static final String DEFAULT_CORTEX_CONF_GCC = CortexConstants.DEFAULT_CORTEXM0_CONF_CC;
+	public static final String DEFAULT_CORTEX_CONF_CCS = CortexConstants.DEFAULT_CORTEXMX_CONF_CCS_CC;
+	public static final String DEFAULT_CORTEX_CONF_IAR = CortexConstants.DEFAULT_CORTEXMX_CONF_IAR_CC;
+	public static final String DEFAULT_CORTEX_CONF_KEIL = CortexConstants.DEFAULT_CORTEXMX_CONF_KEIL_CC;
 
 	/**
 	 * Returns the values of preferences controlled by this preference page.
@@ -43,9 +47,21 @@ public class Options implements IBuildOptions {
 				.getPreferenceStore();
 		HashMap<String, String> answer = new HashMap<String, String>();
 
-		String gcc = store.contains(CORTEX_CONF_GCC) ? store
-				.getString(CORTEX_CONF_GCC) : DEFAULT_CORTEX_CONF_GCC;
-		answer.put(CortexConstants.PREF_CORTEXM0_CC_PATH, gcc);
+		{
+			String gcc = store.contains(CORTEX_CONF_CCS) ? store
+					.getString(CORTEX_CONF_CCS) : DEFAULT_CORTEX_CONF_CCS;
+			answer.put(CortexConstants.PREF_CORTEXMx_CCS_CC_PATH, gcc);
+		}
+		{
+			String gcc = store.contains(CORTEX_CONF_IAR) ? store
+					.getString(CORTEX_CONF_IAR) : DEFAULT_CORTEX_CONF_IAR;
+			answer.put(CortexConstants.PREF_CORTEXMx_IAR_CC_PATH, gcc);
+		}
+		{
+			String gcc = store.contains(CORTEX_CONF_KEIL) ? store
+					.getString(CORTEX_CONF_KEIL) : DEFAULT_CORTEX_CONF_KEIL;
+			answer.put(CortexConstants.PREF_CORTEXMx_KEIL_CC_PATH, gcc);
+		}
 
 		return answer;
 	}

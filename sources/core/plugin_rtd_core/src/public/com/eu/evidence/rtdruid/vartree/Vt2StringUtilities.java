@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import com.eu.evidence.rtdruid.io.IRTDExporter;
 import com.eu.evidence.rtdruid.io.IRTDImporter;
 import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 
@@ -69,6 +70,26 @@ public class Vt2StringUtilities {
 		return output.toString();
 	}
 	
+	/**   LOAD data from a string
+	 * 
+	 * @param input a string that contains all data
+	 * @return 
+	 */ 
+	public static String writeString(IVarTree input, String format) {
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put(IRTDExporter.OPT_USE_EXPORTER_TYPE, format);
+		
+		Resource res = (Resource) input.getResourceSet().getResources().get(0);
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		try {
+			res.save(output, map);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return output.toString();
+	}
+	
 	public static String varTreeToString(EditingDomain vt) {
 		List<Resource> resources = vt.getResourceSet().getResources();
 		
@@ -103,6 +124,9 @@ public class Vt2StringUtilities {
 		
 		return output.toString();
 	}
+	
+
+
 	public static String varTreeToStringRtd(EditingDomain vt) {
 		List<Resource> resources = vt.getResourceSet().getResources();
 		

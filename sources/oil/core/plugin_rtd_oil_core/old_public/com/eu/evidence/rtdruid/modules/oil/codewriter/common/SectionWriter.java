@@ -17,8 +17,8 @@ import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.IncompatibleWrite
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.RequiredWriterKeywordsException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
-import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.CommentWriterEmpty;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.CommentsManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
@@ -207,19 +207,14 @@ public abstract class SectionWriter implements ISectionWriter {
 			throws OilCodeWriterException;
 
 	
-	
-	public static ICommentWriter getCommentWriter(ISimpleGenRes os, String fileType) {
+	public static ICommentWriter getCommentWriter(IOilObjectList ool, String fileType) {
 		ICommentWriter commentWriter;
-		if (os.containsProperty(ISimpleGenResKeywords.OS_CPU_COMMENT_MANAGER)) {
-			CommentsManager cManager = (CommentsManager) os.getObject(ISimpleGenResKeywords.OS_CPU_COMMENT_MANAGER);
+		CommentsManager cManager = (CommentsManager) AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU_COMMENT_MANAGER);
 			if (cManager != null) {
 				commentWriter = cManager.getCommentWriter(fileType);
 			} else {
 				commentWriter = new CommentWriterEmpty();
 			}
-		} else {
-			commentWriter = new CommentWriterEmpty();
-		}
 		return commentWriter;
 	}
 }

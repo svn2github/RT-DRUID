@@ -24,11 +24,18 @@ public class OilIO implements IRTDImporter, IRTDExporter {
 
 	@Override
 	public EObject load(InputStream input, Map<?, ?> options) throws IOException {
+		return load(input, null, options);
+	}
+
+	public EObject load(InputStream input, IVarTree vt, Map<?, ?> options) throws IOException {
 		if (input == null) {
 			throw new NullPointerException("Null input");
 		}
 		
-		IVarTree vt = VarTreeUtil.newVarTree();
+		if (vt == null) {
+			vt = VarTreeUtil.newVarTree();
+		}
+		
 		String fileName = null;
 		String filePath = null;
 		if (options != null && options.containsKey(OPT_FILE_FULLNAME)) {

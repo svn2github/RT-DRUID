@@ -690,7 +690,7 @@ public class RTDOilProjectWizardNew extends CProjectWizard {
 		    ICommand command = desc.newCommand();
 		    command.setBuilderName(OilBuilder.BUILDER_ID);
 		    Map<String, String> attributes = new HashMap<String, String>();
-		    attributes.put(OilBuilder.ATTR_CONFIG_FILE, niosWizardPage.configFile);
+		    attributes.put(OilBuilder.ATTR_CONFIG_FILES, niosWizardPage.configFile);
 		    command.setArguments(attributes);
 		    RTDOilProjectNature.setBuildSpec(prj, command);
 		    

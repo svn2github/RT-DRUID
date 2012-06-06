@@ -9,6 +9,10 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.common;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
 
@@ -66,6 +70,8 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 	 * Contains the prefix inside the OilVar (one for all rtos)
 	 */
 	protected String oilHwRtosPrefix;
+
+	private Integer rtosSize;
 
 	/***************************************************************************
 	 * 
@@ -174,22 +180,191 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 	 */
 	protected IOilObjectList[] extractObjects()
 			throws OilCodeWriterException {
-		IOilObjectList[] answer = new IOilObjectList[rtosPrefix.length];
+		
+		Map<String, IOilObjectList> answer = extractDistinctOs();
+		
+		for (IOilObjectList ool: answer.values()) {
+
+			for (ISimpleGenRes sgros: ool.getList(IOilObjectList.OS)) {
+				String prefix = sgros.getPath();
+				
+				// search all objects
+				for (int id = 0; id < IOilObjectList.OBJECT_NUMBER; id++) {
+					List<ISimpleGenRes> list = ool.getList(id);
+					ool.setList(id, merge(id, list, extractObject(id, prefix)));
+				}
+			}
+		}
+		
+		return answer.values().toArray(new IOilObjectList[answer.size()]);
+	}
+
+	public Map<String, IOilObjectList> extractDistinctOs() {
+		return extractDistinctOs(vt, rtosPrefix);
+	}
+	public static Map<String, IOilObjectList> extractDistinctOs(IVarTree vt, String[] rtosPrefix) {
+		final DataPackage DPKG = DataPackage.eINSTANCE;
+		Map<String, IOilObjectList> answer = new LinkedHashMap<String, IOilObjectList>();
 
 		// cicle all rtos
 		for (int rtosId = 0; rtosId < rtosPrefix.length; rtosId++) {
+			ISimpleGenRes oss = new SimpleGenRes(
+					getVarAsString(vt, rtosPrefix[rtosId] + S
+							+ DPKG.getRtos_Name().getName()), rtosPrefix[rtosId]);
+			final String osName = oss.getName();
+			if (answer.containsKey(osName)) {
+				IOilObjectList old_ool = answer.get(osName);  
+				ArrayList<ISimpleGenRes> newList = new ArrayList<ISimpleGenRes>(old_ool.getList(IOilObjectList.OS));
+				
+				newList.add(oss);
+				old_ool.setList(IOilObjectList.OS, newList);
+			} else {
 			IOilObjectList ool = new OilObjectList();
-			answer[rtosId] = ool;
+				ool.setList(IOilObjectList.OS, new ISimpleGenRes[] {oss});
+				answer.put(osName, ool);
+			}
+			
+		}
+		return answer;
+	}
+	
+	
 
-			// search all objects
-			for (int i = 0; i < IOilObjectList.OBJECT_NUMBER; i++) {
-				ool.setList(i, extractObject(i, rtosPrefix[rtosId]));
+	protected List<? extends ISimpleGenRes> merge(int objType, List<ISimpleGenRes> list,
+			ISimpleGenRes[] extractObject) {
+		if (list == null) {
+			list = new ArrayList<ISimpleGenRes>();
+		}
+		if (extractObject == null) {
+			return list;
+		}
+		
+		Map<String, ISimpleGenRes> answer = new LinkedHashMap<String, ISimpleGenRes>();
+		
+		// first add all list elements
+		for (ISimpleGenRes sgr: list) {
+			String id = getId(objType, sgr);
+			if (answer.containsKey(id)) {
+				answer.get(id).merge(sgr);
+			} else {
+				answer.put(id, sgr);
 			}
 		}
+		// then add all vector elments
+		for (ISimpleGenRes sgr: extractObject) {
+			String id = getId(objType, sgr);
+			if (answer.containsKey(id)) {
+				answer.get(id).merge(sgr);
+			} else {
+				answer.put(id, sgr);
+			}
+			}
+		return new ArrayList<ISimpleGenRes>(answer.values());
+		}
 
+	protected String getId(int objType, ISimpleGenRes sgr) {
+		String answer;
+		switch (objType) {
+		case IOilObjectList.OSAPPLICATION:
+//		case IOilObjectList.MESSAGE:
+//		case IOilObjectList.COM:
+//		case IOilObjectList.NM:
+//		case IOilObjectList.IPDU:
+			answer = sgr.getName();
+			break;
+		default:
+			answer = sgr.getPath();
+		};
+		
 		return answer;
 	}
 
+	
+
+	/**
+	 * ALARM INCREMENT COUNTER CHECK
+	 */
+	public void checkAlarmIncrementCountCycles(IOilObjectList[] objects) {
+        LinkedHashMap<String, ISimpleGenRes> counters = new LinkedHashMap<String, ISimpleGenRes>();
+        @SuppressWarnings("unchecked") HashSet<String>[] counters_ool = new HashSet[objects.length];
+        for (int i=0; i<counters_ool.length; i++) {
+        	counters_ool[i] = new HashSet<String>();
+        }
+
+        int i=0;
+		for (IOilObjectList ool :  objects) {
+			for (ISimpleGenRes curr :  ool.getList(IOilObjectList.COUNTER)) {
+				counters.put(curr.getName(), curr);
+				counters_ool[i].add(curr.getName());
+			}
+			i++;
+		}
+        
+        LinkedHashMap<String, ISimpleGenRes> counter_to_alarm = new LinkedHashMap<String, ISimpleGenRes>();
+		
+        LinkedHashMap<String, ISimpleGenRes> alarm_incr_counter = new LinkedHashMap<String, ISimpleGenRes>();
+        i=0;
+		for (IOilObjectList ool :  objects) {
+			for (ISimpleGenRes curr :  ool.getList(IOilObjectList.ALARM)) {
+				final String tipo = curr.getString(ISimpleGenResKeywords.ALARM_ACTION_TYPE);
+				if (tipo.equals(ISimpleGenResKeywords.ALARM_INCR_COUNTER)) {
+					String coun_Al_Name = curr.getString(ISimpleGenResKeywords.ALARM_COUNTER);
+					String counter_al_name = curr.getString(ISimpleGenResKeywords.ALARM_INCR_COUNTER);
+					
+					if (!counters.containsKey(coun_Al_Name)) {
+						throw new RuntimeException(
+								"Alarm : Wrong counter name for this Alarm."
+										+ " (Alarm = " + curr.getName()
+										+ ", counter = " + coun_Al_Name
+										+ ")");
+					}
+					if (!counters_ool[i].contains(coun_Al_Name)) {
+						throw new RuntimeException(
+								"Alarm : Alarm " + curr.getName()
+										+ " requires a remote counter = " + coun_Al_Name
+										+ ", but is not supported.");
+					}
+					if (!counters.containsKey(counter_al_name)) {
+						throw new RuntimeException(
+								"Alarm : Wrong counter name for this Alarm."
+										+ " (Alarm = " + curr.getName()
+										+ ", counter = " + counter_al_name
+										+ ")");
+					}
+					
+					if (!counters_ool[i].contains(counter_al_name)) {
+						throw new RuntimeException(
+								"Alarm : Alarm " + curr.getName()
+								+ " requires a remote counter = " + coun_Al_Name
+								+ ", but this feature is not supported.");
+					}
+						
+					
+					counter_to_alarm.put(coun_Al_Name, curr);
+					alarm_incr_counter.put(curr.getName(), curr);
+				}
+			}
+			i++;
+		}
+			
+		for (ISimpleGenRes starting_alarm :  alarm_incr_counter.values()) {
+			
+			String counter = starting_alarm.getString(ISimpleGenResKeywords.ALARM_INCR_COUNTER);
+			while (counter_to_alarm.containsKey(counter)) {
+				
+				ISimpleGenRes alarm = counter_to_alarm.get(counter);
+				if (alarm == starting_alarm) {
+					throw new RuntimeException(
+							"Alarm : Found an increment counter cycle starting from " + starting_alarm.getName());
+				}
+				
+				counter = alarm.getString(ISimpleGenResKeywords.ALARM_INCR_COUNTER);
+			}
+			
+		}
+	}
+	
+	
 	/**
 	 * This method searchs all Oil Objects of a specific category for a specific
 	 * rtos. All valid categories are listed in
@@ -264,8 +439,11 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					SimpleGenRes s = new SimpleGenRes(name, path+S+ name);
 					s.setProperty(IOilXMLLabels.ATTR_TYPE,
 							IOilXMLLabels.OBJ_OSAPPLICATION);
-					s.setProperty(ISimpleGenResKeywords.RTOS_PATH,
-							rtosPrefix);
+					
+					s.setObject(ISimpleGenResKeywords.RTOS_PATH,
+							new String[] {rtosPrefix});
+					s.setObject(ISimpleGenResKeywords.OS_APPL_PATH,
+							new String[] { s.getPath()});
 					tempList.add(s);
 				}
 			}
@@ -489,10 +667,35 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					values = CommonUtils.getValue(vt, path+"CATEGORY");
 					if (values!= null && values.length >0) {
 						answer[i].setProperty(ISimpleGenResKeywords.ISR_CATEGORY, values[0]);
-					} else {
-						answer[i].setProperty(ISimpleGenResKeywords.ISR_CATEGORY, "");
+//					} else {
+//						answer[i].setProperty(ISimpleGenResKeywords.ISR_CATEGORY, "");
 					}
 				}
+				{	// ----------- ENTRY ------------
+					values = CommonUtils.getValue(vt, path+"ENTRY");
+					if (values!= null && values.length >0) {
+						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, values[0]);
+//					} else {
+//						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, "");
+					}
+				}
+				{	// ----------- PRIORITY ------------
+					values = CommonUtils.getValue(vt, path+"PRIORITY");
+					if (values!= null && values.length >0) {
+						answer[i].setProperty(ISimpleGenResKeywords.ISR_PRIORITY, values[0]);
+//					} else {
+//						answer[i].setProperty(ISimpleGenResKeywords.ISR_PRIORITY, "");
+					}
+				}
+				{	// ----------- HANDLER ------------
+					values = CommonUtils.getValue(vt, path+"HANDLER");
+					if (values!= null && values.length >0) {
+						answer[i].setProperty(ISimpleGenResKeywords.ISR_HANDLER, values[0]);
+					} else {
+						answer[i].setProperty(ISimpleGenResKeywords.ISR_HANDLER, answer[i].getName());
+					}
+				}
+				
 			}
 		}
 			break;
@@ -560,6 +763,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 							final String str_ACTION_ACTIVATE_TASK = "ACTIVATETASK";
 							final String str_ACTION_SET_EVENT = "SETEVENT";
 							final String str_ACTION_ALARM_CALL_BACK = "ALARMCALLBACK";
+							final String str_ACTION_ALARM_INCR_COUNTER = "INCREMENTCOUNTER";
 							
 							final String str_ACTIVATE_TASK_TASK = "TASK";
 							
@@ -568,6 +772,8 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 							
 							final String str_ALARM_CALL_BACK_NAME = "ALARMCALLBACKNAME";
 							
+							final String str_ALARM_COUNTER_NAME = "COUNTER";
+
 							String[] childName = new String[1];
 							String tmpType = CommonUtils.getFirstChildEnumType(vt, path, childName);
 							
@@ -638,6 +844,25 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 								sgr.setObject(ISimpleGenResKeywords.ALARM_CALL_BACK, callBackName);
 								sgr.setProperty(ISimpleGenResKeywords.ALARM_ACTION_TYPE,
 										ISimpleGenResKeywords.ALARM_CALL_BACK);
+
+							} else if (str_ACTION_ALARM_INCR_COUNTER.equalsIgnoreCase(tmpType)) { // INCREMENT COUNTER
+								final String counterName;
+								
+								path +=CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
+								
+								// Counter
+								String[] val = CommonUtils.getValue(vt, path+str_ALARM_COUNTER_NAME);
+								if (val != null && val.length>0 && val[0] != null) {
+									counterName = val[0];
+								} else {
+									throw new OilCodeWriterException("Required " + 
+											str_ACTION_ALARM_INCR_COUNTER + "/"+str_ALARM_COUNTER_NAME 
+											+ " for alarm " + sgr.getName());
+								}
+	
+								sgr.setObject(ISimpleGenResKeywords.ALARM_INCR_COUNTER, counterName);
+								sgr.setProperty(ISimpleGenResKeywords.ALARM_ACTION_TYPE,
+										ISimpleGenResKeywords.ALARM_INCR_COUNTER);
 
 							} else {
 
@@ -746,8 +971,10 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 	        
 	        // convert the answer 
 	        if (tmpAnswer.size()>0) {
-	        	answer = (SimpleGenRes[]) tmpAnswer.toArray(new SimpleGenRes[tmpAnswer.size()]);
+	        	answer = tmpAnswer.toArray(new SimpleGenRes[tmpAnswer.size()]);
 	        }
+	        
+	        
 		}
 			break;
 			
@@ -795,6 +1022,48 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 		case IOilObjectList.COM:
 		case IOilObjectList.IPDU:
 		case IOilObjectList.NM:
+		{
+			String objPath = rtosPrefix + S+ DPKG.getRtos_OilVar().getName();
+
+			// search all Modes ...
+	        String[] modesNames = vt.newTreeInterface().getAllName(objPath, null);
+	        if (modesNames.length>0) {
+	        	final String expectedType;
+	        	switch (type) {
+	    		case IOilObjectList.MESSAGE:
+	    			expectedType = IOilXMLLabels.OBJ_MESSAGE;
+	    			break;
+	    		case IOilObjectList.NETWORKMESSAGE:
+	    			expectedType = IOilXMLLabels.OBJ_NETWORKMESSAGE;
+	    			break;
+	    		case IOilObjectList.COM:
+	    			expectedType = IOilXMLLabels.OBJ_COM;
+	    			break;
+	    		case IOilObjectList.IPDU:
+	    			expectedType = IOilXMLLabels.OBJ_IPDU;
+	    			break;
+	    		case IOilObjectList.NM:
+	    			expectedType = IOilXMLLabels.OBJ_NM;
+	    			break;
+    			default:
+	    			expectedType = "";
+	    			break;
+	        	}
+	        	
+				ArrayList<SimpleGenRes> tmpList = new ArrayList<SimpleGenRes>(); 
+
+				// ... and store as SimpleGenRes 
+		        for (int i=0; i<modesNames.length; i++) {
+		        	
+		        	String[] split = DataPath.resolveId(DataPath.removeSlash(DataPath.removeSlash(modesNames[i])));
+		        	if (split.length == 2 && expectedType.equals(split[0])) {
+						tmpList.add(new SimpleGenRes(
+								split[1], objPath+S+modesNames[i]+S));
+		        	}
+		        }
+		        answer = (SimpleGenRes[]) tmpList.toArray(new SimpleGenRes[tmpList.size()]);
+	        }
+		}
 			break;
 
 		/* ----------------------  CPU  ---------------------- */
@@ -819,6 +1088,9 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 	 *         was empty or not found
 	 */
 	protected String getVarAsString(String path) {
+		return getVarAsString(vt, path);
+	}
+	protected static String getVarAsString(IVarTree vt, String path) {
 		IVarTreePointer vtp = vt.newVarTreePointer();
 
 		// search ...
@@ -838,11 +1110,23 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 		return null;
 	}
 	
+	
+	
 	/**
 	 * Returns the size of Rtos List 
 	 */
 	public int getRtosSize() {
-		return rtosPrefix != null ? rtosPrefix.length : 0;
+		
+		if (rtosSize == null) {
+			
+			if (oilObjects != null) {
+				rtosSize = oilObjects.length;
+			} else {
+				rtosSize = extractDistinctOs().size();
+			}
+		}
+		
+		return rtosSize;
 	}
 	
 
@@ -942,5 +1226,67 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 	 * @return the identifier of current rtos
 	 */
 	protected abstract String getHwOilId();
+	
+	public static List<String> getOsProperties(IOilObjectList ool, String key) {
+		ArrayList<String> l = new ArrayList<String>();
+		if (ool != null) {
+			for (ISimpleGenRes sgrOs : ool.getList(IOilObjectList.OS)) {
+				if (sgrOs.containsProperty(key)) {
+					String t = sgrOs.getString(key);
+					if (t != null) {
+						l.add(t);
+					}
+				}
+			}
+		}
+		return l;
+	}
+	
+	public static String getOsProperty(IOilObjectList ool, String key) {
+		if (ool == null) {
+			return null;
+		}
+		for (ISimpleGenRes sgrOs : ool.getList(IOilObjectList.OS)) {
+			if (sgrOs.containsProperty(key)) {
+				String t = sgrOs.getString(key);
+				if (t != null) {
+					return t;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static List<Object> getOsObjects(IOilObjectList ool, String key) {
+		ArrayList<Object> l = new ArrayList<Object>();
+		if (ool != null) {
+			for (ISimpleGenRes sgrOs : ool.getList(IOilObjectList.OS)) {
+				if (sgrOs.containsProperty(key)) {
+					Object t = sgrOs.getObject(key);
+					if (t != null) {
+						l.add(t);
+					}
+				}
+			}
+
+		}
+		return l;
+	}
+	
+	public static Object getOsObject(IOilObjectList ool, String key) {
+		if (ool == null) {
+			return null;
+		}
+		for (ISimpleGenRes sgrOs : ool.getList(IOilObjectList.OS)) {
+			if (sgrOs.containsProperty(key)) {
+				Object t = sgrOs.getObject(key);
+				if (t != null) {
+					return t;
+				}
+			}
+		}
+		return null;
+	}
+
 }
 

@@ -351,8 +351,12 @@ public class OilImplementation implements IOilImplementation {
 				ok &= tcd.getType() == IOilImplPointer.CDATA;
 				ok &= tcd.getAttributes().containsKey(IOilXMLLabels.ATTR_VALUE);
 				if (ok) {
-					description = (description.length() == 0 ? " : " : ". " )
-						+ tcd.getAttributes().getProperty(IOilXMLLabels.ATTR_VALUE);
+					String ndescr = tcd.getAttributes().getProperty(IOilXMLLabels.ATTR_VALUE);
+							
+					if (!(description.contains(ndescr))) {
+						description = (description.length() == 0 ? " : " : description+ ". " )
+								+ ndescr;
+					}
 				}
 				
 			} else if (checkChildren) {

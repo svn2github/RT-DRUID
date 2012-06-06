@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="RT-Druid" uid="com.eu.evidence.rtdruid.standalone" id="com.eu.evidence.rtdruid.oil.core.com_eu_evidence_rtdruid_oil_standalone" application="com.eu.evidence.rtdruid.oil.standalone.writer" version="1.6.0.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="RT-Druid" uid="com.eu.evidence.rtdruid.standalone" id="com.eu.evidence.rtdruid.oil.core.com_eu_evidence_rtdruid_oil_standalone" application="com.eu.evidence.rtdruid.oil.standalone.writer" version="1.6.1.qualifier" useFeatures="false" includeLaunchers="false">
+
 
    <configIni use="default">
    </configIni>
@@ -12,6 +13,7 @@
 
    <windowImages/>
 
+
    <launcher name="eclipse">
       <solaris/>
       <win useIco="false">
@@ -19,14 +21,17 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
+
 
    <plugins>
       <plugin id="com.eu.evidence.rtdruid.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.arm.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.avr.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.core"/>
+      <plugin id="com.eu.evidence.rtdruid.oil.cortex.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.dspic.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.ee.core"/>
       <plugin id="com.eu.evidence.rtdruid.oil.fp_edf.core"/>
@@ -58,8 +63,5 @@
       <plugin id="org.eclipse.osgi"/>
    </plugins>
 
-   <configurations>
-      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
-   </configurations>
 
 </product>

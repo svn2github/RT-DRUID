@@ -10,7 +10,8 @@ elif [ -z "$ECLIPSE_HOME" ]; then
     echo >&2 "Usage:  start_ant.sh <RT-Druid_dir> [more ant options]"
     exit 2
 fi
-LAUNCHER_JAR="`find "${ECLIPSE_HOME}/plugins" -iname "org.eclipse.equinox.launcher_*.jar"`"
+LAUNCHER_JAR=`find "${ECLIPSE_HOME}/plugins" -name "org.eclipse.equinox.launcher_*.jar" | sort | tail -1`
+
 case "`uname -s`" in
     *CYGWIN*)
 #

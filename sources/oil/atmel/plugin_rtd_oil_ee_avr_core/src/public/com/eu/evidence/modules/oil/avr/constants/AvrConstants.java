@@ -15,6 +15,6 @@ public class AvrConstants {
 	 * AVR preferences
 	 *  
 	 **************************************************************************/
-	public final static String PREF_AVR_GCC_PATH = "preference_avr5__path_for_gcc_compiler";
+	public final static String PREF_AVR_GCC_PATH = "preference_avr5__path_for_cc_compiler";
 
 }

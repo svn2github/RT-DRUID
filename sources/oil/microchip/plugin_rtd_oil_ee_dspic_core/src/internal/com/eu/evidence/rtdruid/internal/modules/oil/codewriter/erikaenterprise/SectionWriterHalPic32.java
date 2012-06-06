@@ -26,6 +26,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
@@ -33,7 +34,6 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
@@ -141,21 +141,16 @@ public class SectionWriterHalPic32 extends SectionWriter
 		
 		final int currentRtosId = 0;
 		final IOilObjectList ool = oilObjects[currentRtosId];
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-		final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
-
 		/***********************************************************************
 		 * 
 		 * EE OPTS
 		 *  
 		 **********************************************************************/
 		{
-			//List requiredOilObjects = (List) sgrCpu.getObject(SGRK__FORCE_ARRAYS_LIST__);
-
-	        // ICD 2
 	        ArrayList<String> tmp = new ArrayList<String>();
 	        
-	        // store all older values (if there are)
+	        // store all older values in the first cpu (if there are)
+	        ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 	        if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS)) {
 	        	String[] old = (String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS);
 	        	tmp.addAll(Arrays.asList(old));
@@ -165,15 +160,16 @@ public class SectionWriterHalPic32 extends SectionWriter
 	        tmp.add(_EE_OPT_HAL_MICROCHIP_PIC32);
 	        
 	        {
-				String tmp1 = CommonUtils
-						.getFirstChildEnumType(vt, currentCpuPrefix
-								+ "ICD2", null);
-				if ("TRUE".equalsIgnoreCase(tmp1) /*&& !sgrCpu.containsProperty(SGRK__PIC32_ICD2__)*/) {
-		            sgrCpu.setProperty(PicConstants.SGRK__PIC32_ICD2__, "true");
-		            tmp.add("__PIC32_ICD2__");
-		        }
-			}
-
+	        	boolean found = false;
+	        	for (String s: parent.getCpuDataEnum(ool, "ICD2")) {
+	        		found |= "TRUE".equalsIgnoreCase(s);
+	        	}
+	        	
+	        	if (found) {
+	        		sgrCpu.setProperty(PicConstants.SGRK__PIC32_ICD2__, "true");
+	        		tmp.add("__PIC32_ICD2__");
+	        	}
+	        }
 
 			// mcu
 			checkMcu(tmp);
@@ -220,10 +216,8 @@ public class SectionWriterHalPic32 extends SectionWriter
 		StringBuffer sbInithal_c = answer.get(FILE_EE_CFG_C);
 		
 		final IOilObjectList ool = oilObjects[currentRtosId];
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-		final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
-		final ICommentWriter commentWriterC = getCommentWriter(sgrCpu, FileTypes.C);
-		final ICommentWriter commentWriterMf = getCommentWriter(sgrCpu, FileTypes.MAKEFILE);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
+		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 		
 		List<ISimpleGenRes> taskNames = ool.getList(IOilObjectList.TASK);
 		String stackType = parent.getStackType(); // MULTI or MONO
@@ -240,13 +234,7 @@ public class SectionWriterHalPic32 extends SectionWriter
 
 		sbInithal_c.append("\n#include \"ee.h\"\n");
 		
-		final int STACK_UNIT;
-		if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
-			CpuHwDescription currentStackDescription = (CpuHwDescription) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
-			STACK_UNIT = currentStackDescription.stackSize;
-		} else {
-			STACK_UNIT = 4;
-		}
+	    final int STACK_UNIT = ErikaEnterpriseWriter.getStackUnit(ool);
 
 		/***********************************************************************
 		 * MULTI STACK
@@ -264,48 +252,53 @@ public class SectionWriterHalPic32 extends SectionWriter
 				/***************************************************************
 				 * IRQ_STACK
 				 **************************************************************/
-				
-				String[] child = new String[1];
-				String type = CommonUtils
-						.getFirstChildEnumType(vt, currentCpuPrefix
-								+ "MULTI_STACK", child);
-
-				if ("TRUE".equalsIgnoreCase(type)) {
-					String prefixIRQ = currentCpuPrefix
-						+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
-						+ "IRQ_STACK";
-					boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
-					.getFirstChildEnumType(vt, prefixIRQ, child));
-					
-					if (ok) {
+				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+				for (String currentCpuPrefix: currentCpuPrefixes) {
+					if (irqSize != null) {
+						break;
+					}
+					String[] child = new String[1];
+					String type = CommonUtils
+							.getFirstChildEnumType(vt, currentCpuPrefix
+									+ "MULTI_STACK", child);
+	
+					if ("TRUE".equalsIgnoreCase(type)) {
+						String prefixIRQ = currentCpuPrefix
+							+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
+							+ "IRQ_STACK";
+						boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
+						.getFirstChildEnumType(vt, prefixIRQ, child));
 						
-						prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
-						irqSize = new int[1];
-						{ // get data for IRQ STACK ...
-							String path[] = { "SYS_SIZE" };
-
-							for (int i = 0; i < path.length; i++) {
-								String tmp = null;
-								IVariable var = ti.getValue(prefixIRQ + path[i]
-										+ VALUE_VALUE);
-								if (var != null && var.get() != null) {
-									tmp = var.toString();
-								}
-								if (tmp == null)
-									throw new RuntimeException(
-											ERR_CPU_TYPE + " : Expected " + path[i]);
-
-								// check for value
-								try {
-									// ... store them inside the irqSize vector
-									irqSize[0] = (Integer.decode("" + tmp))
-											.intValue();
-									// ... and increase the memory requirement
-//									stackEnd += irqSize[0];
-								} catch (Exception e) {
-									throw new RuntimeException(
-											ERR_CPU_TYPE + " : Wrong int" + path[i]
-													+ ", value = " + tmp + ")");
+						if (ok) {
+							
+							prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
+							irqSize = new int[1];
+							{ // get data for IRQ STACK ...
+								String path[] = { "SYS_SIZE" };
+	
+								for (int i = 0; i < path.length; i++) {
+									String tmp = null;
+									IVariable var = ti.getValue(prefixIRQ + path[i]
+											+ VALUE_VALUE);
+									if (var != null && var.get() != null) {
+										tmp = var.toString();
+									}
+									if (tmp == null)
+										throw new RuntimeException(
+												ERR_CPU_TYPE + " : Expected " + path[i]);
+	
+									// check for value
+									try {
+										// ... store them inside the irqSize vector
+										irqSize[0] = (Integer.decode("" + tmp))
+												.intValue();
+										// ... and increase the memory requirement
+	//									stackEnd += irqSize[0];
+									} catch (Exception e) {
+										throw new RuntimeException(
+												ERR_CPU_TYPE + " : Wrong int" + path[i]
+														+ ", value = " + tmp + ")");
+									}
 								}
 							}
 						}
@@ -518,6 +511,7 @@ public class SectionWriterHalPic32 extends SectionWriter
 		        );
 		    }
 
+		    ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
             sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile.toString());
 
 		}
@@ -538,59 +532,61 @@ public class SectionWriterHalPic32 extends SectionWriter
 
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		final int currentRtosId = 0;
+		final IOilObjectList ool = oilObjects[currentRtosId];
 		
 		/* COMMON VARIABLES */
-		ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-		final ICommentWriter commentWriterMf = getCommentWriter(os, FileTypes.MAKEFILE);
+		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 		String mcu_model = null;	// != null only if found a valid mcu
 
 		Mcu_Model mcu_properties = null;
-		{
-			/***********************************************************************
-			 * get values
-			 **********************************************************************/
-
-			// prepare the path :
-			// ... the prefix ...
-			String currentMcuPrefix = os.getPath() + S
-					+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MCU_DATA";
-			
-			// ... get the node identifier
-			String[] child = new String[1];
-			String mcu_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
-			
-			if (child.length >0 && PIC_MCU.equals(mcu_type)) {
-				// ... and compete it 
-				currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST + "MODEL";
-
-				String model_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+		for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)){
+				if (mcu_model == null) {
+				/***********************************************************************
+				 * get values
+				 **********************************************************************/
+	
+				// prepare the path :
+				// ... the prefix ...
+				String currentMcuPrefix = os.getPath() + S
+						+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
+						+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MCU_DATA";
 				
-				/* CUSTOM */
-				if (CUSTOM_MCU.equals(model_type)) {
-//					 read also LINKERSCRIPT, DEV_LIB, INCLUDE_C, INCLUDE_S
-					currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
-					String[] model = CommonUtils.getValue(vt, currentMcuPrefix+"MODEL");
-					String[] linker = CommonUtils.getValue(vt, currentMcuPrefix+"LINKERSCRIPT");
-					String[] dev    = CommonUtils.getValue(vt, currentMcuPrefix+"DEV_LIB");
-					String[] inc_c  = CommonUtils.getValue(vt, currentMcuPrefix+"INCLUDE_C");
-					String[] inc_s  = CommonUtils.getValue(vt, currentMcuPrefix+"INCLUDE_S");
+				// ... get the node identifier
+				String[] child = new String[1];
+				String mcu_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+				
+				if (child.length >0 && PIC_MCU.equals(mcu_type)) {
+					// ... and compete it 
+					currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST + "MODEL";
+	
+					String model_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
 					
-					mcu_properties = new Mcu_Model(
-							CUSTOM_MCU,
-							clean(model),
-							"__"+clean(model)+"__",
-							clean(linker),
-							clean(dev),
-							clean(inc_c),
-							clean(inc_s)
-					);
-					mcu_model = CUSTOM_MCU;
-				} else {
-					/* STANDARD MCU */
-					mcu_properties = STANDARD_MCU_PROPERTIES.get(model_type);
-					if (mcu_properties != null) {
-						mcu_model = model_type;
+					/* CUSTOM */
+					if (CUSTOM_MCU.equals(model_type)) {
+	//					 read also LINKERSCRIPT, DEV_LIB, INCLUDE_C, INCLUDE_S
+						currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+						String[] model = CommonUtils.getValue(vt, currentMcuPrefix+"MODEL");
+						String[] linker = CommonUtils.getValue(vt, currentMcuPrefix+"LINKERSCRIPT");
+						String[] dev    = CommonUtils.getValue(vt, currentMcuPrefix+"DEV_LIB");
+						String[] inc_c  = CommonUtils.getValue(vt, currentMcuPrefix+"INCLUDE_C");
+						String[] inc_s  = CommonUtils.getValue(vt, currentMcuPrefix+"INCLUDE_S");
+						
+						mcu_properties = new Mcu_Model(
+								CUSTOM_MCU,
+								clean(model),
+								"__"+clean(model)+"__",
+								clean(linker),
+								clean(dev),
+								clean(inc_c),
+								clean(inc_s)
+						);
+						mcu_model = CUSTOM_MCU;
+					} else {
+						/* STANDARD MCU */
+						mcu_properties = STANDARD_MCU_PROPERTIES.get(model_type);
+						if (mcu_properties != null) {
+							mcu_model = model_type;
+						}
 					}
 				}
 			}
@@ -604,6 +600,7 @@ public class SectionWriterHalPic32 extends SectionWriter
 			 **********************************************************************/
 			
 			// The answer (StringBuffer)
+			ISimpleGenRes os = ool.getList(IOilObjectList.OS).get(0);
 			String temp = os.getString(SGRK__MAKEFILE_EXTENTIONS__);
 			StringBuffer answerBuffer = new StringBuffer();
 			if (temp != null) {
@@ -637,50 +634,51 @@ public class SectionWriterHalPic32 extends SectionWriter
 		final int currentRtosId = 0;
 		
 		/* COMMON VARIABLES */
-		ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
 		//String mcu_model = null;	// != null only if found a valid mcu
 		Mcu_Model mcu_properties = null;
 
-		{
-			/***********************************************************************
-			 * get values
-			 **********************************************************************/
-
-			// prepare the path :
-			// ... the prefix ...
-			String currentMcuPrefix = os.getPath() + S
-					+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MCU_DATA";
-			
-			// ... get the node identifier
-			String[] child = new String[1];
-			String mcu_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
-			
-			if (child.length >0 && PIC_MCU.equals(mcu_type)) {
-				// ... and compete it 
-				currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST + "MODEL";
-
-				String model_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+		for (ISimpleGenRes os: oilObjects[currentRtosId].getList(IOilObjectList.OS)){
+			if (mcu_properties == null) {
+				/***********************************************************************
+				 * get values
+				 **********************************************************************/
+	
+				// prepare the path :
+				// ... the prefix ...
+				String currentMcuPrefix = os.getPath() + S
+						+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
+						+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MCU_DATA";
 				
-				/* CUSTOM */
-				if (CUSTOM_MCU.equals(model_type)) {
+				// ... get the node identifier
+				String[] child = new String[1];
+				String mcu_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+				
+				if (child.length >0 && PIC_MCU.equals(mcu_type)) {
+					// ... and compete it 
+					currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST + "MODEL";
+	
+					String model_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
 					
-					// read only MODEL
-					currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
-					String model = clean(CommonUtils.getValue(vt, currentMcuPrefix+"MODEL"));
-					if (model != null && !ee_opts.contains("__"+model+"__")) {
-						ee_opts.add("__"+model+"__");
-					}
-
-				} else {
+					/* CUSTOM */
+					if (CUSTOM_MCU.equals(model_type)) {
+						
+						// read only MODEL
+						currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+						String model = clean(CommonUtils.getValue(vt, currentMcuPrefix+"MODEL"));
+						if (model != null && !ee_opts.contains("__"+model+"__")) {
+							ee_opts.add("__"+model+"__");
+						}
+	
+					} else {
+							/* STANDARD MCU */
 						/* STANDARD MCU */
-					/* STANDARD MCU */
-					mcu_properties = STANDARD_MCU_PROPERTIES.get(model_type);
-					if (mcu_properties != null) {
-						String[] splitted = mcu_properties.ee_opt == null ? new String[0] : mcu_properties.ee_opt.split(" ");
-						for (String t : splitted) {
-							if (!ee_opts.contains(t)) {
-								ee_opts.add(t);
+						mcu_properties = STANDARD_MCU_PROPERTIES.get(model_type);
+						if (mcu_properties != null) {
+							String[] splitted = mcu_properties.ee_opt == null ? new String[0] : mcu_properties.ee_opt.split(" ");
+							for (String t : splitted) {
+								if (!ee_opts.contains(t)) {
+									ee_opts.add(t);
+								}
 							}
 						}
 					}

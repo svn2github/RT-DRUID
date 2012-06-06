@@ -5,6 +5,9 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
+import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter.getOsObject;
+import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter.getOsProperty;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -23,6 +26,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
@@ -31,7 +35,6 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDescriptionManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants;
@@ -231,12 +234,8 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 		final int rtosNumber = oilObjects.length;
 	    boolean enable_rn = false; 
 
-		CpuHwDescription currentStackDescription = null;
-		{
-			// usw thw cpu type of first cpu (all cpus have the same type) 
-			String cpuType = ((ISimpleGenRes) oilObjects[0].getList(IOilObjectList.OS).get(0)).getString(ISimpleGenResKeywords.OS_CPU_TYPE);
-			currentStackDescription = EECpuDescriptionManager.getHWDescription(cpuType);
-		}
+		// usw thw cpu type of first cpu (all cpus have the same type) 
+		CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(oilObjects[0]);
 
 		/*
 		 * Extract the max number of distrinct Priorities for current HW.
@@ -262,21 +261,20 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 			// all objects for current os
 			IOilObjectList ool = oilObjects[rtosId];
 			// current os
-			ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-			List requiredOilObjects = (List) os.getObject(SGRK__FORCE_ARRAYS_LIST__);
-			final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
-			final ICommentWriter commentWriterH = getCommentWriter(os, FileTypes.H);
+			List requiredOilObjects = (List) getOsObject(ool, SGRK__FORCE_ARRAYS_LIST__);
+			final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
+			final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
 
-			if ( os.containsProperty(IRemoteNotificationsConstants.DEF__RN_BITS__) ) {
-			    BitSet rn_set = (BitSet) os.getObject(IRemoteNotificationsConstants.DEF__RN_BITS__);
-			    enable_rn = rn_set.cardinality() > 0;
+			{
+			    BitSet rn_set = (BitSet) getOsObject(ool, IRemoteNotificationsConstants.DEF__RN_BITS__);
+			    enable_rn = rn_set == null ? false : rn_set.cardinality() > 0;
 			}
 
 		
 			StringBuffer buffer = answer[rtosId].get(FILE_EE_CFG_C);
 			StringBuffer buffer_ee_h = answer[rtosId].get(FILE_EE_CFG_H);
 
-			Map<String,Contract> contracts = (Map<String,Contract>) os.getObject(FRSH_OS_CONTRACT_LIST);
+			Map<String,Contract> contracts = (Map<String,Contract>) getOsObject(ool, FRSH_OS_CONTRACT_LIST);
 			// required for contracts taskname field
 			Map<String, String> contract2task = new HashMap<String, String>();
 			{
@@ -497,7 +495,7 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 //					sbThread.append(pre + pre2 + indent2 + "(EE_ADDR)Func"
 //							+ tname);
 					sbStub.append(pre + post + indent2
-							+ "(EE_FADDR)Func" + tname);
+							+ "Func" + tname);
 					pre2 = "\n";
 		
 					ee_th.append(indent2 + "{ " + prio + ", EE_TASK_SUSPENDED, EE_NIL, 0, 0, ");
@@ -532,12 +530,12 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 				+ contractsBuffer // Contracts
 				+ commentWriterC.writerBanner("Tasks")
 				+ ee_th
-				+ indent1 + "const EE_FADDR EE_hal_thread_body["+MAX_TASK+"] = {\n"
+				+ indent1 + "const EE_THREAD_PTR EE_hal_thread_body["+MAX_TASK+"] = {\n"
 				+ sbStub
 				+ indent1 + "};\n\n");
 //				+ indent1 + "EE_UINT32 EE_terminate_data["+MAX_TASK+"];\n\n"
 //				+ indent1 + commentWriterC.writerSingleLineComment("ip of each thread body (ROM)) // */\n"
-//				+ indent1 + "const EE_ADDR EE_terminate_real_th_body["+MAX_TASK+"] = {\n"
+//				+ indent1 + "const EE_FADDR EE_terminate_real_th_body["+MAX_TASK+"] = {\n"
 //				+ sbThread.toString() + "\n"
 //				+ indent1 + "};\n");
 		
@@ -686,7 +684,7 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 				 * FRESCOR SEMAPHORES 
 				 **************************************************************/
 				
-				if (os.containsProperty(FRSH_OS_USE_SYNC_OBJ) && Boolean.TRUE.equals(os.getObject(FRSH_OS_USE_SYNC_OBJ)) ) {
+				if (Boolean.TRUE.equals(getOsObject(ool, FRSH_OS_USE_SYNC_OBJ)) ) {
 					
 					buffer.append(commentWriterC.writerBanner("FRESCOR SYNCHRONIZATION OBJECTS") + 
 							indent1 + "EE_TYPETIMEOUTSTRUCT EE_frsh_timeout["+MAX_TASK+"];\n\n"+
@@ -916,20 +914,20 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 		
 		
 			{ // TIMERS
-				final boolean cpu_timers = os.containsProperty(FRSH_CPU_TIMER);
-				final boolean free_run   = os.containsProperty(FRSH_CPU_FREE_TIMER);
+				final boolean cpu_timers = getOsObject(ool, FRSH_CPU_TIMER) != null;
+				final boolean free_run   = getOsObject(ool, FRSH_CPU_FREE_TIMER) != null;
 
 				if (cpu_timers || free_run ) {
 					buffer_ee_h.append(commentWriterC.writerBanner("FRSH Timers"));
 				}
 				if (free_run) { // TIMERS
-					String free = os.getString(FRSH_CPU_FREE_TIMER);
+					String free = getOsProperty(ool, FRSH_CPU_FREE_TIMER);
 					buffer_ee_h.append(
 							indent1 + "#define TIMER_SYSTEM_BASE "  + free + "_BASE\n\n"); 
 				}
 				if (cpu_timers) { // TIMERS
-					FrshTimer timer = (FrshTimer) os.getObject(FRSH_CPU_TIMER);
-					Boolean useSem = (Boolean) os.getObject(FRSH_OS_USE_SYNC_OBJ);
+					FrshTimer timer = (FrshTimer) getOsObject(ool, FRSH_CPU_TIMER);
+					Boolean useSem = (Boolean) getOsObject(ool, FRSH_OS_USE_SYNC_OBJ);
 					
 					if (timer.isSingle()) {
 						buffer_ee_h.append(
@@ -963,8 +961,7 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 	
 		if (enable_rn) {
 			
-        	final ISimpleGenRes sgrOs = oilObjects[0].getList(IOilObjectList.OS).get(0);
-        	final ICommentWriter commentWriterC = getCommentWriter(sgrOs, FileTypes.C);
+        	final ICommentWriter commentWriterC = getCommentWriter(oilObjects[0], FileTypes.C);
 
 			
 			final String MAX_RN = (binaryDistr ? "RTD_" : "EE_") + "MAX_RN";
@@ -1005,25 +1002,23 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 		HashMap<String, Map<String,Contract>> cpuContracts = new HashMap<String, Map<String,Contract>>();
 		for (int currentRtosId=0; currentRtosId<oilObjects.length; currentRtosId++) {// search the RTOS 
 			final IOilObjectList ool = oilObjects[currentRtosId];
-			final ISimpleGenRes sgrOs = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-			final String t_cpuid = sgrOs.getString(ISimpleGenResKeywords.OS_CPU_NAME);
+			final String t_cpuid = ErikaEnterpriseWriter.getOSName(ool);
 			LinkedHashMap<String,Contract> map = new LinkedHashMap<String,Contract>();
 			cpuContracts.put(t_cpuid, map);
 			// store the map as a property of the OS
-			sgrOs.setObject(FRSH_OS_CONTRACT_LIST, map);
-			final String currentRtosPrefix = sgrOs.getPath();
+			{
+				ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
+				sgrOs.setObject(FRSH_OS_CONTRACT_LIST, map);
+			}
 
 		
 			// SEARCH Tick Time
 		
 			// check only the first RTOS !!! (as rtos of CPU0)
-			String[] child = new String[1];
-			String oilVarPrefix = currentRtosPrefix + S + DataPackage.eINSTANCE.getRtos_OilVar().getName()
-					+ S + IOilXMLLabels.OBJ_OS + oilHwRtosPrefix +S;
-		
-			String kernel_type = CommonUtils.getFirstChildEnumType(vt,
-					 oilVarPrefix + "KERNEL_TYPE", child);
-			
+			ArrayList<String> childPaths = new ArrayList<String>();
+			List<String> childFound = parent.getRtosCommonChildType(ool, "KERNEL_TYPE", childPaths);
+			String kernel_type = childFound.isEmpty() ? null : childFound.get(0);
+
 			if (kernel_type != null && "FRSH".equals(kernel_type)) {
 				
 				found_kernel = true;
@@ -1031,8 +1026,7 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 				
 				{//read TICK_TIME
 					final String param = "TICK_TIME";
-					String dl_option_prefix = oilVarPrefix + S + "KERNEL_TYPE"
-							+ VARIANT_ELIST + child[0] + PARAMETER_LIST + param;
+					String dl_option_prefix = childPaths.get(0) + PARAMETER_LIST + param;
 					String[] tmpType = CommonUtils.getValue(vt, dl_option_prefix);
 					if (tmpType != null) {
 						if (tmpType.length == 1) {
@@ -1068,24 +1062,19 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 			 **********************************************************************/
 	
 			final IOilObjectList ool = oilObjects[currentRtosId];
-			final ISimpleGenRes sgrOs = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
+			
 			
 			double tick_time = -1; 			
 			if (tv_tick_time != null) {
+				final ISimpleGenRes sgrOs = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 				sgrOs.setObject(FRSH_OS_TICK_TIME, (TimeVar)tv_tick_time);
 				tick_time = ((Double)tv_tick_time.get()).doubleValue();
 			}
 
 			
-			final String currentRtosPrefix = sgrOs.getPath();
-	
-			// check only the first RTOS !!! (as rtos of CPU0)
-			String[] child = new String[1];
-			String oilVarPrefix = currentRtosPrefix + S + DataPackage.eINSTANCE.getRtos_OilVar().getName()
-					+ S + IOilXMLLabels.OBJ_OS + oilHwRtosPrefix +S;
-		
-			String kernel_type = CommonUtils.getFirstChildEnumType(vt,
-					 oilVarPrefix + "KERNEL_TYPE", child);
+			ArrayList<String> childPaths = new ArrayList<String>();
+			List<String> childFound = parent.getRtosCommonChildType(ool, "KERNEL_TYPE", childPaths);
+			String kernel_type = childFound.isEmpty() ? null : childFound.get(0);
 			
 			if (kernel_type != null && "FRSH".equals(kernel_type)) {
 	
@@ -1095,9 +1084,7 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 					
 					final String param = "USE_SYNC_OBJ";
 					
-					String dl_option_prefix = oilVarPrefix +S
-							+ "KERNEL_TYPE" + VARIANT_ELIST + child[0]
-					    	+ PARAMETER_LIST + param;
+					String dl_option_prefix = childPaths.get(0) + PARAMETER_LIST + param;
 					
 					ArrayList<String> tmpType = CommonUtils.getAllChildrenEnumType(vt, dl_option_prefix, null);
 					
@@ -1125,9 +1112,7 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 				}
 				{ // CONTRACTs
 				
-					String contract_prefix = oilVarPrefix +S
-							+ "KERNEL_TYPE" + VARIANT_ELIST + child[0]
-					    	+ PARAMETER_LIST + "CONTRACTS";
+					String contract_prefix = childPaths.get(0) + PARAMETER_LIST + "CONTRACTS";
 //					String[] val = CommonUtils
 //							.getValue(vt, contract_prefix);
 					
@@ -1272,10 +1257,7 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 		if (parent.checkKeyword(IWritersKeywords.CPU_NIOSII)) { // TIMERS
 			for (int currentRtosId=0; currentRtosId<oilObjects.length; currentRtosId++) {// search the RTOS 
 				final IOilObjectList ool = oilObjects[currentRtosId];
-				final ISimpleGenRes sgrOs = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-				final String currentCpuPrefix = sgrOs.getString(SGRK_OS_CPU_DATA_PREFIX);
-
-				final String cpuName = sgrOs.getString(ISimpleGenResKeywords.OS_CPU_NAME);
+				final String cpuName = ErikaEnterpriseWriter.getOSName(ool);
 
 
 				/*
@@ -1283,72 +1265,84 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 				 */
 
 				FrshTimer timer = null;
-
-				String[] child = new String[1];
-				String type = CommonUtils
-						.getFirstChildEnumType(vt, currentCpuPrefix
-								+ "FRSH_TIMERS", child);
-
-				if ("SINGLE".equalsIgnoreCase(type)) {
-					String prefixIRQ = currentCpuPrefix
-						+ "FRSH_TIMERS" + VARIANT_ELIST+child[0] + PARAMETER_LIST
-						+ "TIMER_IRQ";
-
-					String[] tmp = CommonUtils.getValue(vt, prefixIRQ);
-					if (tmp == null || tmp.length == 0 || tmp[0] == null)
-						throw new RuntimeException("Expected " + "TIMER_IRQ" +" for cpu " + cpuName );
-
-					timer = new FrshTimer(tmp[0]);
-				
-				} else if ("MULTIPLE".equalsIgnoreCase(type)) {
-								
-					String prefixIRQ = currentCpuPrefix
-						+ "FRSH_TIMERS" + VARIANT_ELIST+child[0] + PARAMETER_LIST;
-
-					String[] tmp_budg = CommonUtils.getValue(vt, prefixIRQ + "TIMER_IRQ_BUDGET");
-					if (tmp_budg == null || tmp_budg.length == 0 || tmp_budg[0] == null)
-						throw new RuntimeException("Expected " + "TIMER_IRQ_BUDGET" +" for cpu " + cpuName );
-					
-					String[] tmp_rec = CommonUtils.getValue(vt, prefixIRQ + "TIMER_IRQ_RECHARGE");
-					if (tmp_rec == null || tmp_rec.length == 0 || tmp_rec[0] == null)
-						throw new RuntimeException("Expected " + "TIMER_IRQ_RECHARGE" +" for cpu " + cpuName );
-					
-					String[] tmp_dl = CommonUtils.getValue(vt, prefixIRQ + "TIMER_IRQ_DLCHECK");
-					if (tmp_dl == null || tmp_dl.length == 0 || tmp_dl[0] == null)
-						throw new RuntimeException("Expected " + "TIMER_IRQ_DLCHECK" +" for cpu " + cpuName );
-					
-					String[] tmp_sem; 
-					tmp_sem = CommonUtils.getValue(vt, prefixIRQ + "TIMER_IRQ_SEM");
-					
-					if (tmp_sem == null || tmp_sem.length == 0 || tmp_sem[0] == null) {
-						if (use_sync_objs.booleanValue()){
-							throw new RuntimeException("Expected " + "TIMER_IRQ_SEM" +" for cpu " + cpuName );
-						} else {
-							tmp_sem = new String[] {null};
-			}
-
-		}		
-			
-					timer = new FrshTimer(tmp_budg[0], tmp_rec[0], tmp_dl[0], tmp_sem[0]);
-				} else {
-					throw new RuntimeException("Expected " + "FRSH_TIMERS" +" for cpu " + cpuName 
-							+ "( Valid values are : SINGLE and MULTIPLE. Found: "+type+" )" );
-				}
-
-
-				/*
-				 * TIMER_FREERUNNING
-				 */
 				String freeRunning = null;
-				{
-					String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
-							+ "TIMER_FREERUNNING");
-					if (tmp == null || tmp.length == 0 || tmp[0] == null)
-						throw new RuntimeException("Expected " + "TIMER_FREERUNNING" +" for cpu " + cpuName );
-			
-					freeRunning = tmp[0];
-			}
-			
+				
+				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+				for (String currentCpuPrefix: currentCpuPrefixes) {
+					if (timer == null) {
+		
+						String[] child = new String[1];
+						String type = CommonUtils
+								.getFirstChildEnumType(vt, currentCpuPrefix
+										+ "FRSH_TIMERS", child);
+		
+						if ("SINGLE".equalsIgnoreCase(type)) {
+							String prefixIRQ = currentCpuPrefix
+								+ "FRSH_TIMERS" + VARIANT_ELIST+child[0] + PARAMETER_LIST
+								+ "TIMER_IRQ";
+		
+							String[] tmp = CommonUtils.getValue(vt, prefixIRQ);
+							if (tmp == null || tmp.length == 0 || tmp[0] == null)
+								throw new RuntimeException("Expected " + "TIMER_IRQ" +" for cpu " + cpuName );
+		
+							timer = new FrshTimer(tmp[0]);
+						
+						} else if ("MULTIPLE".equalsIgnoreCase(type)) {
+										
+							String prefixIRQ = currentCpuPrefix
+								+ "FRSH_TIMERS" + VARIANT_ELIST+child[0] + PARAMETER_LIST;
+		
+							String[] tmp_budg = CommonUtils.getValue(vt, prefixIRQ + "TIMER_IRQ_BUDGET");
+							if (tmp_budg == null || tmp_budg.length == 0 || tmp_budg[0] == null)
+								throw new RuntimeException("Expected " + "TIMER_IRQ_BUDGET" +" for cpu " + cpuName );
+							
+							String[] tmp_rec = CommonUtils.getValue(vt, prefixIRQ + "TIMER_IRQ_RECHARGE");
+							if (tmp_rec == null || tmp_rec.length == 0 || tmp_rec[0] == null)
+								throw new RuntimeException("Expected " + "TIMER_IRQ_RECHARGE" +" for cpu " + cpuName );
+							
+							String[] tmp_dl = CommonUtils.getValue(vt, prefixIRQ + "TIMER_IRQ_DLCHECK");
+							if (tmp_dl == null || tmp_dl.length == 0 || tmp_dl[0] == null)
+								throw new RuntimeException("Expected " + "TIMER_IRQ_DLCHECK" +" for cpu " + cpuName );
+							
+							String[] tmp_sem; 
+							tmp_sem = CommonUtils.getValue(vt, prefixIRQ + "TIMER_IRQ_SEM");
+							
+							if (tmp_sem == null || tmp_sem.length == 0 || tmp_sem[0] == null) {
+								if (use_sync_objs.booleanValue()){
+									throw new RuntimeException("Expected " + "TIMER_IRQ_SEM" +" for cpu " + cpuName );
+								} else {
+									tmp_sem = new String[] {null};
+								}
+							}		
+					
+							timer = new FrshTimer(tmp_budg[0], tmp_rec[0], tmp_dl[0], tmp_sem[0]);
+						}
+					}
+				
+
+					/*
+					 * TIMER_FREERUNNING
+					 */
+					
+					if (freeRunning == null) {
+						String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
+								+ "TIMER_FREERUNNING");
+				
+						if (tmp != null && tmp.length >0) 
+							freeRunning = tmp[0];
+					}
+				}
+				
+				if (timer == null)
+					throw new RuntimeException("Expected " + "FRSH_TIMERS" +" for cpu " + cpuName 
+							+ "( Valid values are : SINGLE and MULTIPLE. )" );
+
+				
+				if (freeRunning == null)
+					throw new RuntimeException("Expected " + "TIMER_FREERUNNING" +" for cpu " + cpuName );
+
+				
+				ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
 				sgrOs.setObject(FRSH_CPU_TIMER, timer);
 				sgrOs.setObject(FRSH_CPU_FREE_TIMER, freeRunning);
 			} // End For each Cpu
@@ -1380,9 +1374,8 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 
 				double total_task_utilization = 0;
 				final IOilObjectList ool = _oilObjects[i];
-				final ISimpleGenRes sgrOs = (ISimpleGenRes)ool.getList(IOilObjectList.OS).get(0);
 				final List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.TASK);
-				final String t_cpuid = sgrOs.getString(ISimpleGenResKeywords.OS_CPU_NAME);
+				final String t_cpuid = ErikaEnterpriseWriter.getOSName(ool);
 
 			// update stack properties of each task
 			new EEStacks(parent, ool, null);
@@ -1434,13 +1427,17 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 				if (total_task_utilization >1) {
 					throw new OilCodeWriterException("Current totat utilization of cpu " + t_cpuid + " is higher than one : "+ total_task_utilization);
 				}
-				sgrOs.setObject(FRSH_OS_USE_SYNC_OBJ, use_sync_objs.booleanValue() ? Boolean.TRUE : Boolean.FALSE);
+				{ // set values
+					ool.getList(IOilObjectList.OS).get(0).setObject(FRSH_OS_USE_SYNC_OBJ, use_sync_objs.booleanValue() ? Boolean.TRUE : Boolean.FALSE);
+				}
+
 
 				{ // EE_OPT
+					ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
 					String[] lista = sgrOs.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS) ?
 							(String[]) sgrOs.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS) :
 								new String[0];
-					List requiredOilObjects = (List) sgrOs.getObject(SGRK__FORCE_ARRAYS_LIST__);
+					List requiredOilObjects = ErikaEnterpriseWriter.checkOrDefault((List) getOsObject(ool, SGRK__FORCE_ARRAYS_LIST__), new ArrayList());
 					//ArrayList<String> array = new ArrayList<String>(Arrays.asList(lista));
 					ArrayList<String> array = new ArrayList<String>(Arrays.asList(lista));
 					
@@ -1455,15 +1452,15 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 						array.add("__FRSH_SYNCHOBJ__");
 					}
 					
-					if ( sgrOs.containsProperty(IRemoteNotificationsConstants.DEF__RN_BITS__) ) {
-					    BitSet rn_set = (BitSet) sgrOs.getObject(IRemoteNotificationsConstants.DEF__RN_BITS__);
-						if (rn_set.cardinality()>0) {
+					{
+					    BitSet rn_set = (BitSet) getOsObject(ool, IRemoteNotificationsConstants.DEF__RN_BITS__);
+						if (rn_set != null && rn_set.cardinality()>0) {
 							array.add("__RN_BIND__");
 							array.add("__RN_UNBIND__");
 					    }
 					}
 					
-					if (CpuUtility.getSupportForNestedIRQ(sgrOs) 
+					if (CpuUtility.getSupportForNestedIRQ(ool) 
 							&& parent.checkKeyword(DEF__ALLOW_NESTED_IRQ__)) {
 						array.add("__ALLOW_NESTED_IRQ__");
 					}
@@ -1476,24 +1473,23 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 					if (sgrOs.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
 						String single_irq_opt = "__FRSH_SINGLEIRQ__";
 						
-						CpuHwDescription currentStackDescription = (CpuHwDescription) sgrOs.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR); 
+						CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(ool); 
 
 						if (IWritersKeywords.CPU_NIOSII.equals(currentStackDescription.cpuType)) {
-							FrshTimer timer = (FrshTimer) sgrOs.getObject(FRSH_CPU_TIMER);
-							if (timer.isSingle()) {
+							FrshTimer timer = (FrshTimer) getOsObject(ool, FRSH_CPU_TIMER);
+							if (timer != null && timer.isSingle()) {
 								array.add(single_irq_opt);
 							}
 							
 						} else if (IWritersKeywords.CPU_PIC_30.equals(currentStackDescription.cpuType)) {
 							array.add(single_irq_opt);
-		}
+						}
 		
 					}
-		
 					sgrOs.setObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS, array.toArray(new String[array.size()]));
-	}
+				}
 
-}
+			}
 		}
 		
 	}

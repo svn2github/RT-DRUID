@@ -16,6 +16,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
@@ -99,13 +100,10 @@ public class SectionWriterHalMpc5 extends SectionWriter implements IEEWriterKeyw
 
 		IOilWriterBuffer answer = new OilWriterBuffer();
 		final int currentRtosId = 0;
-
-		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-		final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
+		final IOilObjectList ool = oilObjects[currentRtosId];
 		
-		final ICommentWriter commentWriterC = getCommentWriter(sgrCpu, FileTypes.C);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 
 		// ------------- Common string --------------------
 		boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
@@ -142,8 +140,7 @@ public class SectionWriterHalMpc5 extends SectionWriter implements IEEWriterKeyw
 		long stackPointer;
 		long stackEnd;
 		{
-			String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
-					+ S + "STACK_BOTTOM");
+			String[] tmp = parent.getCpuDataValue(ool, "STACK_BOTTOM");
 			if (tmp == null || tmp.length == 0 || tmp[0] == null)
 				throw new RuntimeException("cfg_mpc5 : Expected " + "STACK_BOTTOM");
 
@@ -179,48 +176,53 @@ public class SectionWriterHalMpc5 extends SectionWriter implements IEEWriterKeyw
 				/***************************************************************
 				 * IRQ_STACK
 				 **************************************************************/
-				
-				String[] child = new String[1];
-				String type = CommonUtils
-						.getFirstChildEnumType(vt, currentCpuPrefix
-								+ "MULTI_STACK", child);
-
-				if ("TRUE".equalsIgnoreCase(type)) {
-					String prefixIRQ = currentCpuPrefix
-						+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
-						+ "IRQ_STACK";
-					boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
-					.getFirstChildEnumType(vt, prefixIRQ, child));
-					
-					if (ok) {
+				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+				for (String currentCpuPrefix: currentCpuPrefixes) {
+					if (irqSize != null) {
+						break;
+					}
+					String[] child = new String[1];
+					String type = CommonUtils
+							.getFirstChildEnumType(vt, currentCpuPrefix
+									+ "MULTI_STACK", child);
+	
+					if ("TRUE".equalsIgnoreCase(type)) {
+						String prefixIRQ = currentCpuPrefix
+							+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
+							+ "IRQ_STACK";
+						boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
+						.getFirstChildEnumType(vt, prefixIRQ, child));
 						
-						prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
-						irqSize = new int[1];
-						{ // get data for IRQ STACK ...
-							String path[] = { "SYS_SIZE" };
-
-							for (int i = 0; i < path.length; i++) {
-								String tmp = null;
-								IVariable var = ti.getValue(prefixIRQ + path[i]
-										+ VALUE_VALUE);
-								if (var != null && var.get() != null) {
-									tmp = var.toString();
-								}
-								if (tmp == null)
-									throw new RuntimeException(
-											"cfg_mpc5 : Expected " + path[i]);
-
-								// check for value
-								try {
-									// ... store them inside the irqSize vector
-									irqSize[0] = (Integer.decode("" + tmp))
-											.intValue();
-									// ... and increase the memory requirement
-									stackEnd -= irqSize[0];
-								} catch (Exception e) {
-									throw new RuntimeException(
-											"cfg_mpc5 : Wrong int" + path[i]
-													+ ", value = " + tmp + ")");
+						if (ok) {
+							
+							prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
+							irqSize = new int[1];
+							{ // get data for IRQ STACK ...
+								String path[] = { "SYS_SIZE" };
+	
+								for (int i = 0; i < path.length; i++) {
+									String tmp = null;
+									IVariable var = ti.getValue(prefixIRQ + path[i]
+											+ VALUE_VALUE);
+									if (var != null && var.get() != null) {
+										tmp = var.toString();
+									}
+									if (tmp == null)
+										throw new RuntimeException(
+												"cfg_mpc5 : Expected " + path[i]);
+	
+									// check for value
+									try {
+										// ... store them inside the irqSize vector
+										irqSize[0] = (Integer.decode("" + tmp))
+												.intValue();
+										// ... and increase the memory requirement
+										stackEnd -= irqSize[0];
+									} catch (Exception e) {
+										throw new RuntimeException(
+												"cfg_mpc5 : Wrong int" + path[i]
+														+ ", value = " + tmp + ")");
+									}
 								}
 							}
 						}
@@ -406,8 +408,7 @@ public class SectionWriterHalMpc5 extends SectionWriter implements IEEWriterKeyw
 			// get all defined handler
 			for (int i=0; i<=7; i++) {
 				for (int il=0; il<2; il++) {
-					String tmpVal[] = CommonUtils.getValue(vt, currentCpuPrefix
-						+ S + irq_labels[il]+i);
+					String[] tmpVal = parent.getCpuDataValue(ool, irq_labels[il]+i);
 				
 					if (tmpVal != null && tmpVal.length >0) {
 						irq.setProperty(irq_labels[il]+i,

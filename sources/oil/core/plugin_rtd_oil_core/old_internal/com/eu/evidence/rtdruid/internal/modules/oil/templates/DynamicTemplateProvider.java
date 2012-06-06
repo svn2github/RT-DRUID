@@ -35,4 +35,8 @@ public class DynamicTemplateProvider implements ITemplatePathProvider {
 		return true;
 	}
 
+	@Override
+	public int priority() {
+		return 100;
+	}
 }

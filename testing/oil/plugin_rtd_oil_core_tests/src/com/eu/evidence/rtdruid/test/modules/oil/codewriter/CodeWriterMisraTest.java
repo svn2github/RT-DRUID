@@ -205,7 +205,10 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		ACTION = ACTIVATETASK {\n" +
 				"			TASK = \"Task1\";\n" +
 				"		};\n" +
-				"		AUTOSTART = TRUE;\n" +
+				"		AUTOSTART = TRUE {" +
+				"			ALARMTIME = 1;\n" +
+				"			CYCLETIME = 1;\n" +
+				"		};\n" +
 				"	};\n" +
 				"\n" +
 				"	OS EE { KERNEL_TYPE = ECC1; };\n" +
@@ -281,7 +284,10 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		ACTION = ACTIVATETASK {\n" +
 				"			TASK = \"Task1\";\n" +
 				"		};\n" +
-				"		AUTOSTART = TRUE;\n" +
+				"		AUTOSTART = TRUE {" +
+				"			ALARMTIME = 1;\n" +
+				"			CYCLETIME = 1;\n" +
+				"		};\n" +
 				"	};\n" +
 				"\n" +
 				"	OS EE { KERNEL_TYPE = ECC2; };\n" +

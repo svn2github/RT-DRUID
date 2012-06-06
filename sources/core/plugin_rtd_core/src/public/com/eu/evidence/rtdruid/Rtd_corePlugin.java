@@ -148,5 +148,3 @@ public class Rtd_corePlugin extends Plugin implements ResourceLocator {
 	}
 	
 }
-
-

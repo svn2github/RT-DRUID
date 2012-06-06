@@ -5,6 +5,7 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter;
 
+import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils.addToAllStrings;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -133,13 +134,12 @@ public class SectionWriterOsApplication extends SectionWriter implements
 
 	protected void addOsApplications(IOilObjectList ool, IOilWriterBuffer answer) throws OilCodeWriterException {
 		List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
-		ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 
 		StringBuffer ee_h_buffer = answer.get(FILE_EE_CFG_H);
-		final ICommentWriter commentWriterH = getCommentWriter(os, FileTypes.H);
+		final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
 
 		StringBuffer ee_c_buffer = answer.get(FILE_EE_CFG_C);
-		final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 		
 		StringBuffer linker_buffer = answer.get(EE_APPS_CONF);
 
@@ -177,14 +177,14 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			// ee_cfg.c
 //			extern const int app0_start, app0_sstart, app0_end;
 			
-			ee_c_buffer.append(indent1 + "extern const int _load_data_"+name+";\n" +
-					indent1 + "extern int _sstack_"+name+";\n" +
-					indent1 + "extern int _sdata_"+name+";\n" +
-					indent1 + "extern int _sbss_"+name+";\n" +
-					indent1 + "extern int _ebss_"+name+";\n");
+			ee_c_buffer.append(indent1 + "extern const int ee_load_data_"+name+";\n" +
+					indent1 + "extern int ee_sstack_"+name+";\n" +
+					indent1 + "extern int ee_sdata_"+name+";\n" +
+					indent1 + "extern int ee_sbss_"+name+";\n" +
+					indent1 + "extern int ee_ebss_"+name+";\n");
 
 			application_rom.append(end +
-					indent2 + "{{ &_load_data_"+name+", &_sstack_"+name+", &_sdata_"+name+", &_sbss_"+name+", &_ebss_"+name+" }}");
+					indent2 + "{{ &ee_load_data_"+name+", &ee_sstack_"+name+", &ee_sdata_"+name+", &ee_sbss_"+name+", &ee_ebss_"+name+" }}");
 
 			application_ram.append(end +
 					indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)], "+
@@ -278,18 +278,20 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			int id = 0;
 			List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
 			for (ISimpleGenRes appl : applications) {
-				String appl_path = appl.getPath();
+				
+				//String appl_path = appl.getPath();
+				String[] appl_paths = (String[]) appl.getObject(ISimpleGenResKeywords.OS_APPL_PATH);
 				String appl_name = appl.getName();
 				
 				
 				appl.setProperty(ISimpleGenResKeywords.OS_APPL_ID, "" +id);
 				
 				String[] trusted_child = new String[1];
-				String type = CommonUtils.getFirstChildEnumType(vt, appl_path + path_trusted, trusted_child);
+				String type = CommonUtils.getFirstChildEnumType(vt, addToAllStrings(appl_paths, path_trusted), trusted_child);
 				if ("true".equalsIgnoreCase(type)) {
 					appl.setProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED, "true");
 					ArrayList<String> childName = new ArrayList<String>();
-					String trusted_func_path = appl_path + path_trusted + VARIANT_ELIST +  trusted_child[0] + path_trusted_function;
+					String trusted_func_path = trusted_child[0] + path_trusted_function;
 					
 					ArrayList<String> trustedFunctionNames = new ArrayList<String>();
 					
@@ -314,7 +316,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				}
 			
 				{
-					String[] val = CommonUtils.getValue(vt, appl_path + path_mem_base);
+					String[] val = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_mem_base));
 					if (val != null && val.length>0 && val[0] != null && val[0].length()>0) {
 						
 						try {
@@ -329,7 +331,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					}
 				}
 				{
-					String[] val = CommonUtils.getValue(vt, appl_path + path_mem_size);
+					String[] val = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_mem_size));
 					if (val != null && val.length>0 && val[0] != null && val[0].length()>0) {
 						
 						try {
@@ -344,13 +346,13 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					}
 				}
 				{
-					String[] val = CommonUtils.getValue(vt, appl_path + path_mem_shared);
+					String[] val = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_mem_shared));
 					if (val != null && val.length>0 && val[0] != null && val[0].length()>0) {
 						appl.setProperty(OS_APPLICATION_SHARED_SIZE, val[0]);
 					}
 				}
 				{
-					String[] val = CommonUtils.getValue(vt, appl_path + path_mem_irq);
+					String[] val = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_mem_irq));
 					if (val != null && val.length>0 && val[0] != null && val[0].length()>0) {
 						appl.setProperty(OS_APPLICATION_IRQ_SIZE, val[0]);
 					}
@@ -358,7 +360,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				
 				{
 					ArrayList<String> alarms = new ArrayList<String>();
-					String[] values = CommonUtils.getValue(vt, appl_path + path_alarm);
+					String[] values = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_alarm));
 					if (values != null) for (String val: values) {
 						if (!map_alarm.containsKey(val)) {
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the alarm " + val);
@@ -371,7 +373,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				}
 				{
 					ArrayList<String> counter = new ArrayList<String>();
-					String[] values = CommonUtils.getValue(vt, appl_path + path_counter);
+					String[] values = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_counter));
 					if (values != null) for (String val: values) {
 						if (!map_counter.containsKey(val)) {
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the counter " + val);
@@ -384,7 +386,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				}
 				{
 					ArrayList<String> isr = new ArrayList<String>();
-					String[] values = CommonUtils.getValue(vt, appl_path + path_isr);
+					String[] values = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_isr));
 					if (values != null) for (String val: values) {
 						if (!map_isr.containsKey(val)) {
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the isr " + val);
@@ -397,7 +399,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				}
 				{
 					ArrayList<String> resource = new ArrayList<String>();
-					String[] values = CommonUtils.getValue(vt, appl_path + path_resource);
+					String[] values = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_resource));
 					if (values != null) for (String val: values) {
 						if (!map_resource.containsKey(val)) {
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the resource " + val);
@@ -410,7 +412,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				}
 				{
 					ArrayList<String> task = new ArrayList<String>();
-					String[] values = CommonUtils.getValue(vt, appl_path + path_task);
+					String[] values = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_task));
 					if (values != null) for (String val: values) {
 						if (!map_task.containsKey(val)) {
 							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the task " + val);

@@ -48,6 +48,6 @@ public class Arm7Constants {
 	 *  
 	 **************************************************************************/
 //	public final static String PREF_ARM7_ASM_PATH = "preference_arm7__path_for_asm_compiler";
-	public final static String PREF_ARM7_GCC_PATH = "preference_arm7__path_for_gcc_compiler";
+	public final static String PREF_ARM7_GCC_PATH = "preference_arm7__path_for_cc_compiler";
 	
 }

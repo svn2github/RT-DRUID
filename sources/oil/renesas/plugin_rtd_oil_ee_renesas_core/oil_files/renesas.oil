@@ -1,0 +1,51 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+	OS {
+		UINT32 MAX_NESTING_LEVEL;
+		
+    	ENUM [
+    		RX200 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                            ENUM [
+                                SHARED,
+                                PRIVATE {
+                                    UINT32 SYS_SIZE;
+                                }
+                            ] DUMMY_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+
+				ENUM [
+					CCRX
+				] COMPILER_TYPE;
+
+                UINT32 STACK_BOTTOM;
+
+//                UINT32 SYS_SIZE;    // available space for all user stacks
+//                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
+                
+            }
+            
+        ] CPU_DATA;
+        
+        ENUM [
+			RENESAS {
+				ENUM [
+					R5F5210x
+				] MODEL;
+			}
+		] MCU_DATA;
+    };
+};

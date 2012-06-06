@@ -225,12 +225,10 @@ public class Mico32BoardXP2Camera extends AMico32Board {
 				foundOptions, eeoptions, cpu.commentManager);
 	
 
-		for (int currentRtosId = 0; currentRtosId  < oilObjects.length; currentRtosId++) {  
-		
-			/* COMMON VARIABLES */
-			ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-
-			updateOs(os, definitions, indexes);
+		for (IOilObjectList ool: oilObjects) {
+			for (ISimpleGenRes os : ool.getList(IOilObjectList.OS)) {
+				updateOs(os, definitions, indexes);
+			}
 		}
 
 	}

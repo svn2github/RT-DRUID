@@ -5,6 +5,9 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
+import static com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter.checkOrDefault;
+import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter.getOsProperty;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
@@ -14,6 +17,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.mico32.constants.Mico32Const
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
@@ -99,81 +103,80 @@ public class Mico32McuLattice implements IEEWriterKeywords {
 		String platform_cfg = "";
 		
 		/* COMMON VARIABLES */
-		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId++) {
+		for (IOilObjectList ool: oilObjects) {
+			for (ISimpleGenRes os : ool.getList(IOilObjectList.OS)) {
+	
+				// prepare the path :
+				// ... the prefix ...
+				final String currentMcuPrefix = os.getPath() + S
+						+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
+						+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MCU_DATA";
+				
+				// ... get the node identifier
+				String[] child = new String[1];
+				String mcu_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+				
+				if (child.length >0 && MICO32_MCU.equals(mcu_type)) {
+					
+					{ // LIBRARY
+						// ... and compete it 
+						String libraryPath = currentMcuPrefix + VARIANT_ELIST + child[0] + PARAMETER_LIST + "MODEL";
 		
-			ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(currentRtosId);
-
-			// prepare the path :
-			// ... the prefix ...
-			final String currentMcuPrefix = os.getPath() + S
-					+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MCU_DATA";
-			
-			// ... get the node identifier
-			String[] child = new String[1];
-			String mcu_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
-			
-			if (child.length >0 && MICO32_MCU.equals(mcu_type)) {
-				
-				{ // LIBRARY
-					// ... and compete it 
-					String libraryPath = currentMcuPrefix + VARIANT_ELIST + child[0] + PARAMETER_LIST + "MODEL";
-	
-					String model_type = CommonUtils.getFirstChildEnumType(vt, libraryPath, child);
-					
-					/* CUSTOM */
-					if ("LIBRARY".equals(model_type)) {
-						libraryPath += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+						String model_type = CommonUtils.getFirstChildEnumType(vt, libraryPath, child);
 						
-						// read Platform name 
-						String name = SectionWriterHalMico32.clean(CommonUtils.getValue(vt, libraryPath+"PLATFORM_NAME"));
-						if (name != null) {
-							platform_name = name;
+						/* CUSTOM */
+						if ("LIBRARY".equals(model_type)) {
+							libraryPath += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+							
+							// read Platform name 
+							String name = SectionWriterHalMico32.clean(CommonUtils.getValue(vt, libraryPath+"PLATFORM_NAME"));
+							if (name != null) {
+								platform_name = name;
+							}
+							
+							// read Platform path 
+							String path = SectionWriterHalMico32.clean(CommonUtils.getValue(vt, libraryPath+"PLATFORM_LIB_PATH"));
+							if (path != null) {
+								platform_path = path;
+							}
+							
+							// read Platform name 
+							String cfg = SectionWriterHalMico32.clean(CommonUtils.getValue(vt, libraryPath+"PLATFORM_BLD_CFG"));
+							if (cfg != null) {
+								platform_cfg = cfg;
+							}
 						}
 						
-						// read Platform path 
-						String path = SectionWriterHalMico32.clean(CommonUtils.getValue(vt, libraryPath+"PLATFORM_LIB_PATH"));
-						if (path != null) {
-							platform_path = path;
-						}
-						
-						// read Platform name 
-						String cfg = SectionWriterHalMico32.clean(CommonUtils.getValue(vt, libraryPath+"PLATFORM_BLD_CFG"));
-						if (cfg != null) {
-							platform_cfg = cfg;
-						}
 					}
 					
-				}
-				
-				{ // ------  Devices  ------
-
-					// ... and compete it 
-					String devicesPath = currentMcuPrefix + VARIANT_ELIST + child[0] + PARAMETER_LIST + "DEVICE";
+					{ // ------  Devices  ------
 	
-					ArrayList<String> children = new ArrayList<String>();
-					ArrayList<String> device_types = CommonUtils.getAllChildrenEnumType(vt, devicesPath, children);
-					
-					if (device_types != null)
-					for (int i=0; i<device_types.size(); i++) {
-						String type = device_types.get(i);
-						String path = devicesPath + VARIANT_ELIST + children.get(i) + PARAMETER_LIST;
-						if ("UART".equals(type)) { // UART max 2
-							foundDevices.uarts.add(Device.loadDevice(vt, path));
-						} else if ("SPI".equals(type)) { // SPI max 2
-							foundDevices.spi.add(Device.loadDevice(vt, path));
-						} else if ("TIMER".equals(type)) { // TIMER max 4								
-							foundDevices.timer.add(Device.loadDevice(vt, path));
-						} else if ("I2C".equals(type)) { // I2C max 2
-							foundDevices.i2c.add(Device.loadDevice(vt, path));
-						} else if ("GPIO".equals(type)) { // GPIO max ??
-							foundDevices.gpio.add(Device.loadDevice(vt, path));
+						// ... and compete it 
+						String devicesPath = currentMcuPrefix + VARIANT_ELIST + child[0] + PARAMETER_LIST + "DEVICE";
+		
+						ArrayList<String> children = new ArrayList<String>();
+						ArrayList<String> device_types = CommonUtils.getAllChildrenEnumType(vt, devicesPath, children);
+						
+						if (device_types != null)
+						for (int i=0; i<device_types.size(); i++) {
+							String type = device_types.get(i);
+							String path = devicesPath + VARIANT_ELIST + children.get(i) + PARAMETER_LIST;
+							if ("UART".equals(type)) { // UART max 2
+								foundDevices.uarts.add(Device.loadDevice(vt, path));
+							} else if ("SPI".equals(type)) { // SPI max 2
+								foundDevices.spi.add(Device.loadDevice(vt, path));
+							} else if ("TIMER".equals(type)) { // TIMER max 4								
+								foundDevices.timer.add(Device.loadDevice(vt, path));
+							} else if ("I2C".equals(type)) { // I2C max 2
+								foundDevices.i2c.add(Device.loadDevice(vt, path));
+							} else if ("GPIO".equals(type)) { // GPIO max ??
+								foundDevices.gpio.add(Device.loadDevice(vt, path));
+							}
+	
 						}
-
+						
 					}
-					
 				}
-				
 			}
 		}
 		
@@ -191,34 +194,13 @@ public class Mico32McuLattice implements IEEWriterKeywords {
 		}
 		
 		
-		int last_uart  = 0;
-		int last_spi   = 0;
-		int last_timer = 0;
-		int last_i2c   = 0;
-		int last_gpio   = 0;
+		int last_uart  = getValue(oilObjects[0], Mico32Constants.SGRK__MICO32_LAST_USED_UART__Integer, 0);
+		int last_spi   = getValue(oilObjects[0], Mico32Constants.SGRK__MICO32_LAST_USED_SPI__Integer, 0);
+		int last_timer = getValue(oilObjects[0], Mico32Constants.SGRK__MICO32_LAST_USED_TIMER__Integer, 0);
+		int last_i2c   = getValue(oilObjects[0], Mico32Constants.SGRK__MICO32_LAST_USED_I2C__Integer, 0);
+		int last_gpio  = getValue(oilObjects[0], Mico32Constants.SGRK__MICO32_LAST_USED_GPIO__Integer, 0);
 		
-		final ICommentWriter commentWriter;
-		{
-			ISimpleGenRes os = (ISimpleGenRes) oilObjects[0].getList(IOilObjectList.OS).get(0);
-
-			if (os.containsProperty(Mico32Constants.SGRK__MICO32_LAST_USED_UART__Integer)) {
-				last_uart = ((Integer) os.getObject(Mico32Constants.SGRK__MICO32_LAST_USED_UART__Integer)).intValue();
-			}
-			if (os.containsProperty(Mico32Constants.SGRK__MICO32_LAST_USED_SPI__Integer)) {
-				last_spi = ((Integer) os.getObject(Mico32Constants.SGRK__MICO32_LAST_USED_SPI__Integer)).intValue();
-			}
-			if (os.containsProperty(Mico32Constants.SGRK__MICO32_LAST_USED_TIMER__Integer)) {
-				last_timer = ((Integer) os.getObject(Mico32Constants.SGRK__MICO32_LAST_USED_TIMER__Integer)).intValue();
-			}
-			if (os.containsProperty(Mico32Constants.SGRK__MICO32_LAST_USED_I2C__Integer)) {
-				last_i2c = ((Integer) os.getObject(Mico32Constants.SGRK__MICO32_LAST_USED_I2C__Integer)).intValue();
-			}
-			if (os.containsProperty(Mico32Constants.SGRK__MICO32_LAST_USED_GPIO__Integer)) {
-				last_gpio = ((Integer) os.getObject(Mico32Constants.SGRK__MICO32_LAST_USED_GPIO__Integer)).intValue();
-			}
-			
-			commentWriter = SectionWriter.getCommentWriter(os, FileTypes.H);
-		}
+		final ICommentWriter commentWriter = SectionWriter.getCommentWriter(oilObjects[0], FileTypes.H);
 
 		
 		StringBuffer definitions = new StringBuffer();
@@ -316,15 +298,17 @@ public class Mico32McuLattice implements IEEWriterKeywords {
 		
 		
 		// -- Store everything
-		for (int currentRtosId = 0; currentRtosId  < oilObjects.length; currentRtosId++) {  
-		
+		for (IOilObjectList ool: oilObjects) {
+
 			/* COMMON VARIABLES */
-			ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
+			ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 
-			String base = "";
+			String base = AbstractRtosWriter.getOsProperty(ool, Mico32Constants.SGRK__MICO32_BOARD_EEC_DEFINES__);
 
-			if (os.containsProperty(Mico32Constants.SGRK__MICO32_BOARD_EEC_DEFINES__)) {
-				base = os.getString(Mico32Constants.SGRK__MICO32_BOARD_EEC_DEFINES__) + "\n";
+			if (base == null) {
+				base = "";
+			} else {
+				base += "\n";
 			}
 			os.setProperty(Mico32Constants.SGRK__MICO32_BOARD_EEC_DEFINES__,
 					base + definitions.toString());
@@ -337,21 +321,26 @@ public class Mico32McuLattice implements IEEWriterKeywords {
 		}
 	}
 	
+	private int getValue(IOilObjectList ool, String key, int defaultValue) {
+		Object o = AbstractRtosWriter.getOsObject(ool, key);
+		if (o == null) {
+			return defaultValue;
+		}
+		return ((Integer) o).intValue();
+	}
 	
 	
 	
 	
-	public static void addPlatformFile(ISimpleGenRes os, IOilWriterBuffer answer) {
+	
+	public static void addPlatformFile(IOilObjectList ool, IOilWriterBuffer answer) {
 		StringBuffer buffer = answer.get("platform.mk");
 		
-		final String platform_name = os.containsProperty(Mico32Constants.SGRK__OS_PLATFORM_NAME__) ?
-				os.getString(Mico32Constants.SGRK__OS_PLATFORM_NAME__) : "";
-		final String platform_lib_path = os.containsProperty(Mico32Constants.SGRK__OS_PLATFORM_LIB_PATH_) ?
-				os.getString(Mico32Constants.SGRK__OS_PLATFORM_LIB_PATH_) : "";
-		final String platform_cfg = os.containsProperty(Mico32Constants.SGRK__OS_PLATFORM_CFG__) ?
-				os.getString(Mico32Constants.SGRK__OS_PLATFORM_CFG__) : "";
+		final String platform_name = checkOrDefault(getOsProperty(ool, Mico32Constants.SGRK__OS_PLATFORM_NAME__), "");
+		final String platform_lib_path = checkOrDefault(getOsProperty(ool, Mico32Constants.SGRK__OS_PLATFORM_LIB_PATH_), "");
+		final String platform_cfg = checkOrDefault(getOsProperty(ool, Mico32Constants.SGRK__OS_PLATFORM_CFG__), "");
 		
-		final ICommentWriter commentWriter = SectionWriter.getCommentWriter(os, FileTypes.MAKEFILE);
+		final ICommentWriter commentWriter = SectionWriter.getCommentWriter(ool, FileTypes.MAKEFILE);
 		// Dynamic part
 		buffer.append("# Platform-specific settings\n"+
 				"#\n"+

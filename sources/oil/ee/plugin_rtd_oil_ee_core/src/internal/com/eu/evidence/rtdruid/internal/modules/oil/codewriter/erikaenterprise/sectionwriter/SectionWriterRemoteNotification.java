@@ -6,12 +6,10 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
@@ -21,6 +19,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
@@ -131,10 +130,13 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 		
 		IMacrosForSharedData macros = new EmptyMacrosForSharedData();
 		if (rtosNumber>0) {
-			List<ISimpleGenRes> oslist = oilObjects[0].getList(IOilObjectList.OS);
-			if (oslist.size()>0 && oslist.get(0).containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
-				macros = ((CpuHwDescription) oslist.get(0).getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)).getShareDataMacros();
+			CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(oilObjects[0]);
+			if (currentStackDescription != null) {
+				macros =currentStackDescription.getShareDataMacros();
 			}
+		}
+		if (parent.checkPragma(0)) {
+			macros = macros.getPragma();
 		}
 
 		
@@ -152,13 +154,8 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 		StringBuffer sbRnDeclaration = new StringBuffer();
 
 		
-		final StringBuffer EE_rn_cpuBuffer = new StringBuffer(indent1 
-				+ "const EE_UINT8 " +
-				macros.constVectorRom("EE_rn_cpu","["+MAX_RN+"]") +" =\n"+indent2+"{");
-		final StringBuffer EE_rn_taskBuffer = new StringBuffer(indent1
-				+ "#if defined( __RN_EVENT__ ) || defined( __RN_TASK__ )\n"
-				+ indent2 + "const EE_TID " +
-				macros.constVectorRom("EE_rn_task","["+MAX_RN+"]") +" = {\n");
+		final StringBuffer EE_rn_cpuBuffer_body = new StringBuffer(" =\n"+indent2+"{");
+		final StringBuffer EE_rn_taskBuffer_body = new StringBuffer(" = {\n");
 
 		// number of remote notifications
 		int rnNumber = 0;
@@ -195,8 +192,8 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 				
 				final boolean remote = task.containsProperty(ISimpleGenResKeywords.TASK_REMOTE);
 				if (remote) {
-					EE_rn_cpuBuffer.append(rn_pre + " " + cpuId+"U");
-					EE_rn_taskBuffer.append(rn_pre + rn_post + indent3 + taskId);
+					EE_rn_cpuBuffer_body.append(rn_pre + " " + cpuId+"U");
+					EE_rn_taskBuffer_body.append(rn_pre + rn_post + indent3 + taskId);
 					
 					
 					// definition of remote notification
@@ -205,7 +202,7 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 					for (int rnOS =0; rnOS<rtosNumber; rnOS++) {
 						if (rnOS != rtosId) {
 							sbRnThread[rnOS].append(indent1
-									+ "#define " + task.getName() + " (rn_" + task.getName() + "|EE_REMOTE_TID)\n");
+									+ "#define " + task.getName() + " ((EE_TID)rn_" + task.getName() + "+(EE_TID)EE_REMOTE_TID)\n");
 						}
 					}
 					
@@ -230,8 +227,8 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 		}
 		nGlobRes = globRes.size();
 		
-		EE_rn_cpuBuffer.append("};\n\n");
-		EE_rn_taskBuffer.append(rn_post + indent2 + "};\n"+indent1+"#endif\n\n");
+		EE_rn_cpuBuffer_body.append("};\n");
+		EE_rn_taskBuffer_body.append(rn_post + indent2 + "};\n");
 		
 		
 		/***********************************************************************
@@ -250,9 +247,9 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 		 **********************************************************************/
 		for (int rtosId = 0; rtosId < rtosNumber; rtosId++) {
 			StringBuffer sbCfg_h = answer[rtosId].get(FILE_EE_CFG_H);
+			IOilObjectList ool = oilObjects[rtosId];
 			
-        	final ISimpleGenRes sgrOs = oilObjects[rtosId].getList(IOilObjectList.OS).get(0);
-        	final ICommentWriter commentWriter = getCommentWriter(sgrOs, FileTypes.C);
+        	final ICommentWriter commentWriter = getCommentWriter(ool, FileTypes.C);
 			
 			sbCfg_h.append(commentWriter.writerBanner("Remote Notification")
 					+ indent1 + "#define "+MAX_RN+" "+rnNumber+"\n"
@@ -282,10 +279,10 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 			 * 
 			 **********************************************************************/
 	
-	    	final ISimpleGenRes sgrOs = oilObjects[0].getList(IOilObjectList.OS).get(0);
-			ICommentWriter commentWriter = getCommentWriter(sgrOs, FileTypes.C);
+			ICommentWriter commentWriter = getCommentWriter(oilObjects[0], FileTypes.C);
 
 			{
+		    	final ISimpleGenRes sgrOs = oilObjects[0].getList(IOilObjectList.OS).get(0);
 				CpuUtility.addSources(sgrOs, answer[0].getFileName(FILE_EE_COMMON_C));
 			}
 			
@@ -302,39 +299,26 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 						+ "#endif\n\n");
 			}
 	
-			sbCommon_c.append(EE_rn_cpuBuffer.toString()
-					+ EE_rn_taskBuffer.toString() );
+			StringBuffer tmpCommon_c = new StringBuffer();
+			tmpCommon_c.append(
+					macros.constVectorRom(indent1+ "const EE_UINT8 ", "EE_rn_cpu","["+MAX_RN+"]", EE_rn_cpuBuffer_body.toString() ) + "\n"
+					+ indent1 + "#if defined( __RN_EVENT__ ) || defined( __RN_TASK__ )\n"
+					+ macros.constVectorRom(indent2 + "const EE_TID ", "EE_rn_task","["+MAX_RN+"]", EE_rn_taskBuffer_body.toString()) 
+					+indent1+"#endif\n\n");
 			
 	
-			sbCommon_c.append(
+			tmpCommon_c.append(
 					indent1 + "/* For each RN: The type of notification that must be used\n" +
 					indent1 + " * EE_RN_COUNTER, EE_RN_EVENT, EE_RN_TASK,\n" +
 					indent1 + " * EE_RN_FUNC, EE_RN_SEM\n" +
-					indent1 + " */\n" +
-					indent1 + "EE_TYPERN_NOTIFY " +
-					macros.vectorRam("EE_rn_type","["+MAX_RN+"][2]") +" = {\n");
+					indent1 + " */\n");
 			
-			StringBuffer sb_rn_counter = new StringBuffer(
-					indent1 + "/* For each RN: The counter number if EE_RN_COUNTER, or -1 */\n"
-					+ indent1 + "#ifdef __RN_COUNTER__\n"
-					+ indent2 + "const EE_TYPECOUNTER "
-					+ macros.constVectorRom("EE_rn_counter","["+MAX_RN+"]") +" =\n"
+			StringBuffer sb_rn_type_body = new StringBuffer(" = {\n");
+			StringBuffer sb_rn_counter_body = new StringBuffer(" =\n"
 					+ indent3 + "{");
-	
-			
-			StringBuffer sb_rn_event = new StringBuffer(
-			        indent1 + "#ifdef __RN_EVENT__ \n"
-					+ indent2 + "EE_TYPEEVENTMASK "
-					+ macros.vectorRam("EE_rn_event","["+MAX_RN+"][2]") +" = {\n");
-	
-			
-			StringBuffer sb_rn_next = new StringBuffer(
-					indent1 + "EE_TYPERN " +
-					macros.vectorRam("EE_rn_next","["+MAX_RN+"][2]") +" = {\n");
-	
-			StringBuffer sb_rn_pending = new StringBuffer(
-			        indent1 + "EE_UREG " +
-			        macros.vectorRam("EE_rn_pending","["+MAX_RN+"][2]") +" = {\n");
+			StringBuffer sb_rn_event_body = new StringBuffer(" = {\n");
+			StringBuffer sb_rn_next_body = new StringBuffer(" = {\n");
+			StringBuffer sb_rn_pending_body = new StringBuffer(" = {\n");
 	
 			{
 				String pre = "";
@@ -342,39 +326,47 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 				String tp = "";
 				String tp2 = "";
 				for (int i=0; i< rnNumber; i++) {
-					sbCommon_c.append(pre +post+ indent2+ "{0U, 0U}");
-					sb_rn_counter.append(tp + "-1");
-					sb_rn_event.append(tp2 +indent3+ "{0U, 0U}");
-					sb_rn_next.append(tp2 +indent3+ "{-1, -1}");
-					sb_rn_pending.append(tp2 +indent2+ "{0U, 0U}");
+					sb_rn_type_body.append(pre +post+ indent2+ "{0U, 0U}");
+					sb_rn_counter_body.append(tp + "-1");
+					sb_rn_event_body.append(tp2 +indent3+ "{0U, 0U}");
+					sb_rn_next_body.append(tp2 +indent3+ "{-1, -1}");
+					sb_rn_pending_body.append(tp2 +indent2+ "{0U, 0U}");
 		
 					tp = ", ";
 					tp2 = ",\n";
 					pre = ",";
 					post = (String) rnDescr.get(i);
 				}
-				sbCommon_c.append(post+indent1+"};\n\n");
+				sb_rn_type_body.append(post+indent1+"};\n");
 			}
 	
-			sb_rn_counter.append("};\n"+ indent1 + "#endif\n\n");
-			sb_rn_event.append("\n" + indent2 +"};\n" + indent1 + "#endif\n\n");
-			sb_rn_next.append("\n" + indent1 + "};\n\n");
-			sb_rn_pending.append("\n" + indent1 + "};\n\n");
+			sb_rn_counter_body.append("};\n");
+			sb_rn_event_body.append("\n" + indent2 +"};\n");
+			sb_rn_next_body.append("\n" + indent1 + "};\n");
+			sb_rn_pending_body.append("\n" + indent1 + "};\n");
 	
 			
-			sbCommon_c.append( 
-			        sb_rn_counter.toString() + 
-			        sb_rn_event.toString() + 
-			        sb_rn_next.toString() + 
-			        sb_rn_pending.toString() +
+			tmpCommon_c.append(
+					macros.vectorRam(indent1 + "EE_TYPERN_NOTIFY ", "EE_rn_type","["+MAX_RN+"][2]", sb_rn_type_body.toString()) +"\n"
+					
+					+ indent1 + "/* For each RN: The counter number if EE_RN_COUNTER, or -1 */\n"
+					+ indent1 + "#ifdef __RN_COUNTER__\n"
+					+ macros.constVectorRom(indent2 + "const EE_TYPECOUNTER ", "EE_rn_counter","["+MAX_RN+"]", sb_rn_counter_body.toString())
+			        + indent1 + "#endif\n\n"
 			        
-					indent1 + "#ifdef __RN_FUNC__\n" +
-					indent2 + "/* const EE_ADDR "
-					+ macros.constVectorRom("EE_rn_func","["+MAX_RN+"]") +" = {(EE_ADDR)f,...};*/\n" +
+			        + indent1 + "#ifdef __RN_EVENT__ \n"
+					+ macros.vectorRam(indent2 + "EE_TYPEEVENTMASK ", "EE_rn_event","["+MAX_RN+"][2]", sb_rn_event_body.toString())
+			        + indent1 + "#endif\n\n"
+			        
+					+ macros.vectorRam(indent1 + "EE_TYPERN ", "EE_rn_next","["+MAX_RN+"][2]", sb_rn_next_body.toString()) + "\n"
+					
+			        + macros.vectorRam(indent1 + "EE_UREG ", "EE_rn_pending","["+MAX_RN+"][2]", sb_rn_pending_body.toString()) + "\n" +
+			        
+					indent1 + "#ifdef __RN_FUNC__\n"
+					+ macros.constVectorRom(indent2 + "/* const EE_ADDR ", "EE_rn_func","["+MAX_RN+"]"," = {(EE_ADDR)f,...};*/\n") +
 					indent1 + "#endif\n\n" +
 					indent1 + "#ifdef __RN_SEM__\n" +
-					indent2 + "/*EE_SEM * const " +
-					macros.constVectorRom("EE_rn_sem","["+MAX_RN+"]") +";*/\n" +
+					macros.constVectorRom(indent2 + "/*EE_SEM * const ", "EE_rn_sem","["+MAX_RN+"]",";*/\n") +
 					indent1 + "#endif\n\n");
 	
 			/*
@@ -386,32 +378,35 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 			 * 
 			 */
 			
-			StringBuffer sbRnFirst = new StringBuffer(indent1 + "EE_TYPERN " +
-					macros.vectorRam("EE_rn_first","["+MAX_CPU+"][2]") +" = {\n"+indent2);
-			StringBuffer sbRnSpin = new StringBuffer(indent1 + "const EE_TYPESPIN " +
-					macros.constVectorRom("EE_rn_spin","["+MAX_CPU+"]") +" = { ");
-			StringBuffer sbRnSwitch = new StringBuffer(indent1 + "EE_TYPERN_SWITCH " +
-					macros.vectorRam("EE_rn_switch","["+MAX_CPU+"]") +" = { ");
+			StringBuffer sbRnFirst_body = new StringBuffer(" = {\n"+indent2);
+			StringBuffer sbRnSpin_body = new StringBuffer(" = { ");
+			StringBuffer sbRnSwitch_body = new StringBuffer(" = { ");
 			
 			// prepare strings
 			String pre2="";
 			for (int i=0; i<rtosNumber; i++) {
-				sbRnFirst.append(pre2+"{ -1, -1}");
-				sbRnSpin.append(pre2+(nGlobRes+i)+"U");
-				sbRnSwitch.append(pre2+"0U");
+				sbRnFirst_body.append(pre2+"{ -1, -1}");
+				sbRnSpin_body.append(pre2+(nGlobRes+i)+"U");
+				sbRnSwitch_body.append(pre2+"0U");
 				
 				pre2 =", ";
 			}
-			sbRnFirst.append("\n"+indent1 + "};\n\n");
-			sbRnSpin.append("};\n\n");
-			sbRnSwitch.append("};\n\n");
+			sbRnFirst_body.append("\n"+indent1 + "};\n");
+			sbRnSpin_body.append("};\n");
+			sbRnSwitch_body.append("};\n");
 	
-			sbCommon_c.append(
-					sbRnFirst.toString() +
-					sbRnSpin.toString() +
-					sbRnSwitch.toString()
+			tmpCommon_c.append(
+					
+					macros.vectorRam(indent1 + "EE_TYPERN ", "EE_rn_first","["+MAX_CPU+"][2]", sbRnFirst_body.toString()) + "\n" +
+					macros.constVectorRom(indent1 + "const EE_TYPESPIN ", "EE_rn_spin","["+MAX_CPU+"]", sbRnSpin_body.toString()) + "\n" +
+					macros.vectorRam(indent1 + "EE_TYPERN_SWITCH ", "EE_rn_switch","["+MAX_CPU+"]", sbRnSwitch_body.toString()) + "\n"
 					//+"#endif /* __RN__ */"
 			);
+			
+			if (macros instanceof IMacrosForSharedData.IPragma) {
+				sbCommon_c.append(((IMacrosForSharedData.IPragma) macros).getPragmaSections());
+			}
+			sbCommon_c.append(tmpCommon_c);
 			
 		}
 		return answer;
@@ -443,7 +438,8 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 
 			// all objects for current os
 			IOilObjectList ool = oilObjects[rtosId];
-			ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
+			// set values into the first cpu
+			final ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 			
 			os.setObject(DEF__RN_BITS__, rn_set);
 			
@@ -523,8 +519,7 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 			 ******************************************************************/
 			
 			if (ool != null) {
-			    ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-			    BitSet rn_set = (BitSet) sgrCpu.getObject(DEF__RN_BITS__);
+			    BitSet rn_set = (BitSet) AbstractRtosWriter.getOsObject(ool, DEF__RN_BITS__);
 	
 				// set each bit
 			    if (rn_set.cardinality()>0)            { answer.add("__RN__"); }

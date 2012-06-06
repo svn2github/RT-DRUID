@@ -3,7 +3,9 @@ package com.eu.evidence.rtdruid.internal.io;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -14,6 +16,7 @@ import com.eu.evidence.rtdruid.Rtd_corePlugin;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.io.IRTDExporter;
 import com.eu.evidence.rtdruid.io.IRTDImporter;
+import com.eu.evidence.rtdruid.io.IRTDMultiFileImporter;
 
 /**
  * This class is used to store every single file reader and writer, able to load 
@@ -35,12 +38,25 @@ public final class RTDResourceManagerFactory {
 		final Class<IRTDImporter> importer;
 		final String description;
 		final boolean caseSensitive;
+		final String[] multiTypes;
 		
 		public ResImporter(String type, Class<IRTDImporter> importer, String descr, boolean caseSensitive) {
 			this.type = type;
 			this.importer = importer;
 			this.description = descr;
 			this.caseSensitive = caseSensitive;
+			
+			String[] tmp = null;
+			try {
+				IRTDImporter in = getAnInstance();
+				if (in instanceof IRTDMultiFileImporter) {
+					tmp = ((IRTDMultiFileImporter) in).validExtensions();
+				}
+			} catch (Exception e) {
+				// ignore it
+			}
+			
+			this.multiTypes = tmp;
 		}
 		@Override
 		public String toString() {
@@ -175,8 +191,13 @@ public final class RTDResourceManagerFactory {
 		    	String chName = element.getName();
 			    if (S_IMPORTER_ELEM.equalsIgnoreCase(chName)) {
 			    	ResImporter res = parseImport(element);
-			    	if (res != null)
+			    	if (res != null) {
 			    		ilist.add(res);
+//			    		IRTDImporter importer = res.getAnInstance();
+//			    		if (importer instanceof IRTDMultiFileImporter) {
+//			    			
+//			    		}
+			    	}
 			    } else if (S_EXPORTER_ELEM.equalsIgnoreCase(chName)) {
 			    	ResExporter res = parseExport(element);
 			    	if (res != null)
@@ -425,4 +446,57 @@ public final class RTDResourceManagerFactory {
 
 		return null;
 	}
+	
+	// MULTI IMPORT
+	
+
+	public List<IRTDMultiFileImporter> getElements() {
+		ArrayList<IRTDMultiFileImporter> answer = new ArrayList<IRTDMultiFileImporter>();
+		
+		for (ResImporter res: impFactories) {
+			if (res.multiTypes != null) {
+				answer.add((IRTDMultiFileImporter) res.getAnInstance());
+			}
+		}
+		return Collections.unmodifiableList(answer);
+	}
+	
+	public IRTDMultiFileImporter getImporterFor(String[] types) {
+		// try to remove double extensions
+		Set<String> required = prepareSet(types);
+		
+		ResImporter answer = null;
+		int extraTypes = Integer.MAX_VALUE;
+		for (ResImporter res: impFactories) {
+			if (res.multiTypes != null) {
+			
+				Set<String> s = prepareSet(res.multiTypes);
+				if (s.size() >= required.size()) {
+					int current_extra_values = s.size()-required.size();
+					
+					boolean valid = true;
+					for (String t: required) {
+						valid &= s.contains(t);
+					}
+					if (valid && (current_extra_values < extraTypes)) {
+						answer = res;
+						extraTypes = current_extra_values;
+					}
+				}
+			}
+			
+		}
+		
+		return answer == null ? null : (IRTDMultiFileImporter) answer.getAnInstance();
+	}
+	
+	protected Set<String> prepareSet(String[] values) {
+		LinkedHashSet<String> answer = new LinkedHashSet<String>();
+		for (String t: values) {
+			t = t.toLowerCase();
+			answer.add(t);
+		}
+		return answer;
+	}
+	
 }

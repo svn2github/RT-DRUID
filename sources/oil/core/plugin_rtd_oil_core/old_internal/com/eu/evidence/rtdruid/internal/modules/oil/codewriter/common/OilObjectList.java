@@ -9,7 +9,9 @@ package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.common;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
@@ -43,13 +45,12 @@ public class OilObjectList implements IOilObjectList {
 	 * @throws IndexOutOfBoundsException
 	 *             if id isn't a valid identifer (see contants declared above).
 	 */
-	@SuppressWarnings("unchecked")
-	public void setList(int id, ArrayList<? extends ISimpleGenRes> list) {
+	public void setList(int id, List<? extends ISimpleGenRes> list) {
 		if (list == null) {
 			list = new ArrayList<ISimpleGenRes>();
 		}
 		objectLists[id] = Collections
-				.unmodifiableList((ArrayList<? extends ISimpleGenRes>) list.clone());
+				.unmodifiableList(new ArrayList<ISimpleGenRes>(list));
 	}
 
 	/**
@@ -88,6 +89,27 @@ public class OilObjectList implements IOilObjectList {
 	
 	public String toString() {
 		return objectLists == null ? "empty" : Arrays.asList(objectLists).toString();
+	}
+
+	@Override
+	public void merge(IOilObjectList ool, boolean doCopy) {
+		for (int i=0; i<OBJECT_NUMBER; i++) {
+			Set<ISimpleGenRes> tot = new LinkedHashSet<ISimpleGenRes>();
+			tot.addAll(objectLists[i]);
+			
+			if (doCopy) {
+				for (ISimpleGenRes sgr: ool.getList(i)) {
+					if (!tot.contains(sgr)) {
+						tot.add(sgr.clone());
+					}
+				}
+				
+			} else {
+				tot.addAll(ool.getList(i));
+			}
+			setList(i, tot.toArray(new ISimpleGenRes[tot.size()]));
+		}
+		
 	}
 
 }

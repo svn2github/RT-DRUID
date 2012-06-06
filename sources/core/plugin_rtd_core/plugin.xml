@@ -48,6 +48,14 @@
    		name="RT-Druid data importer and exporter"
    		schema="schema/data_tranformation.exsd"/>
 
+   <!-- Tasks -->
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            library="rtdruid_core_ant.jar"
+            name="rtdruid.Convert"
+            class="com.eu.evidence.rtdruid.ant.vartree.Convert"/>
+   </extension>
    <!-- Ant Extra Classpath -->
    <extension
          point="org.eclipse.ant.core.extraClasspathEntries">

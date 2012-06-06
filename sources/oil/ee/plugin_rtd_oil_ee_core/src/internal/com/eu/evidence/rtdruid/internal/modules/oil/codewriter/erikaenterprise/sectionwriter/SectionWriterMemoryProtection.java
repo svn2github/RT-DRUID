@@ -17,6 +17,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
@@ -128,11 +129,9 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 			
 			final IOilObjectList ool = oilObjects[currentRtosId];
 			List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
-			ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-
 			
 			StringBuffer ee_c_buffer = answer[currentRtosId].get(FILE_EE_CFG_C);
-			final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
+			final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 
 			
 			ee_c_buffer.append(
@@ -185,21 +184,26 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 		final String indent2 = indent1 + IWritersKeywords.INDENT;
 
 		List<ISimpleGenRes> osApplications = ool.getList(IOilObjectList.OSAPPLICATION);
-		ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 
 		StringBuffer ee_h_buffer = answer.get(FILE_EE_CFG_H);
-		final ICommentWriter commentWriterH = getCommentWriter(os, FileTypes.H);
+		final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
 
 		StringBuffer ee_c_buffer = answer.get(FILE_EE_CFG_C);
-		final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 		
 
 		int max_level = CpuHwDescription.DEFAULT_MAX_NESTING_LEVEL;
 		
-		if (os.containsProperty(SGR_OS_MAX_NESTING_LEVEL)) {
-			max_level = os.getInt(SGR_OS_MAX_NESTING_LEVEL);
-		} else if (os.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
-			max_level = ((CpuHwDescription) os.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)).getMaxNestedInts();
+		{
+			String svalue = AbstractRtosWriter.getOsProperty(ool, SGR_OS_MAX_NESTING_LEVEL);
+			if (svalue != null) {
+				max_level =  Integer.decode(svalue).intValue();
+			} else {
+				CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+				if (currentStackDescription != null) {
+					max_level = currentStackDescription.getMaxNestedInts();
+				}
+			}
 		}
 
 		// ee_cfg.h
@@ -315,8 +319,7 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 		for (IOilObjectList ool : oilObjects) {
 
 			
-			{ // nesting level
-				ISimpleGenRes os = ool.getList(IOilObjectList.OS).get(0);
+			for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)){ // nesting level
 				String[] value = CommonUtils.getValue(vt, os.getPath() + osNestingLevelPath);
 				if (value != null && value.length>0 && value[0] != null && value[0].length()>0) {
 					os.setProperty(SGR_OS_MAX_NESTING_LEVEL, value[0]);

@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
@@ -18,6 +19,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
@@ -123,11 +125,8 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 			// ---------------- required ----------------
 
 			IOilObjectList ool = oilObjects[rtosId];
-			final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 			StringBuffer sbMakefile = answer[rtosId].get(FILE_MAKEFILE);
-			final ICommentWriter commentWriterMf = getCommentWriter(sgrCpu, FileTypes.MAKEFILE);
-
-			final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
+			final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 
 			// ------------------------------------------
 
@@ -226,7 +225,8 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 						"endif\n"+
 						"endif # ERIKA_FILES\n"+
 						"# ERIKA_FILES has fulfilled its role. Make sure it's not used inside Erika makefiles\n"+ 
-						"ERIKA_FILES :=\n"					
+						"ERIKA_FILES :=\n"+
+						 "$(info Using erika files in $(EEBASE))\n"
 		        );
 			}
 			
@@ -235,8 +235,7 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 			/*******************************************************************
 			 * EXTENTIONS
 			 ******************************************************************/
-			if (sgrCpu.containsProperty(SGRK__MAKEFILE_EXTENTIONS__)) {
-			    String value = sgrCpu.getString(SGRK__MAKEFILE_EXTENTIONS__);
+			for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__MAKEFILE_EXTENTIONS__)) {
 				sbMakefile.append(value);
 			}
 			
@@ -307,16 +306,22 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 			
 			// cpu's sources (SPECIAL)
 			if (parent.checkKeyword(IWritersKeywords.CPU_ARM7)) {
+				
+				StringBuffer tmpBuff = new StringBuffer();
 
-				// THUMB SRC
-				String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix + S
-						+ "THUMB_SRC");
-				if (tmp != null) {
-					sbMakefile.append("THUMB_SRCS =");
-					for (int i = 0; i < tmp.length; i++) {
-						sbMakefile.append(" " + tmp[i]);
+				for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)) 
+				{
+					// THUMB SRC
+					String[] tmp = CommonUtils.getValue(vt, os.getString(SGRK_OS_CPU_DATA_PREFIX) + S
+							+ "THUMB_SRC");
+					if (tmp != null) {
+						for (int i = 0; i < tmp.length; i++) {
+							tmpBuff.append(" " + tmp[i]);
+						}
 					}
-					sbMakefile.append("\n");
+				}
+				if (tmpBuff.length() > 0) {
+					sbMakefile.append("THUMB_SRCS =" + tmpBuff + "\n");
 				}
 
 			} else if (parent.checkKeyword(IWritersKeywords.CPU_JANUS)) {
@@ -329,8 +334,7 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 				/***********************************************************************
 				 * CONTRIBUTION  to makefile after file listing
 				 ***********************************************************************/
-				if (sgrCpu.containsProperty(SGRK__MAKEFILE_AFTER_FILES__)) {
-				    String value = sgrCpu.getString(SGRK__MAKEFILE_AFTER_FILES__);
+				for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__MAKEFILE_AFTER_FILES__)) {
 				    if (value != null) 
 				    	sbMakefile.append(value);
 				}
@@ -348,8 +352,7 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 				/***********************************************************************
 				 * CONTRIBUTION  to the end of makefile
 				 ***********************************************************************/
-				if (sgrCpu.containsProperty(SGRK__MAKEFILE_EXT_EOF__)) {
-				    String value = sgrCpu.getString(SGRK__MAKEFILE_EXT_EOF__);
+				for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__MAKEFILE_EXT_EOF__)) {
 				    if (value != null) 
 				    	sbMakefile.append(value);
 				}
@@ -367,30 +370,22 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 		ArrayList<String> answer = new ArrayList<String>();
 		
 //		String found = null;
-	    for (int rtosId=0; rtosId<oilObjects.length; rtosId++) {
+	    for (IOilObjectList ool : oilObjects) {
+			ArrayList<String> childPaths = new ArrayList<String>();
+			List<String> childFound = parent.getRtosCommonChildType(ool, "LIB", childPaths);
 
-    		IOilObjectList ool = oilObjects[rtosId];
-	    	final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
+			for (int index = 0; index<childFound.size(); index++) {
+	    	
+        		if ("ENABLE".equals(childFound.get(index))) {
 
-	    	String currentRtosPrefix = parent.computeOilRtosPrefix(sgrCpu.getPath()); 
-
-
-	    	ArrayList<String> child = new ArrayList<String>();
-	        ArrayList<String> tmp = CommonUtils.getAllChildrenEnumType(vt, currentRtosPrefix + S + "LIB", child);
-	        if (tmp != null) {
-	        	for (int i=0; i<tmp.size(); i++) {
-	        		if ("ENABLE".equals(tmp.get(i))) {
-			        				        	
-			        	// NAME
-			        	String[] names = CommonUtils.getValue(vt, currentRtosPrefix + S + "LIB" + S + CommonUtils.VARIANT_ELIST 
-			        			+ child.get(i) + PARAMETER_LIST+ "NAME");
-			        	
-			        	if (names!= null) {
-			        		for (int j=0; j<names.length; j++)
-			        			if (!answer.contains(names[j]))
-			        				answer.add(names[j]);
-			        	}
-	        		}
+    		        	// NAME
+        			String[] names = CommonUtils.getValue(vt, childPaths.get(index) + PARAMETER_LIST+ "NAME");
+		        	
+		        	if (names!= null) {
+		        		for (int j=0; j<names.length; j++)
+		        			if (!answer.contains(names[j]))
+		        				answer.add(names[j]);
+		        	}
 	        	}
 	        }
 			

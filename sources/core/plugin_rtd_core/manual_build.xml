@@ -136,4 +136,8 @@
 		<antcall target="rtdruid_core_ant.jar"/>
 	</target>
 
+	<target name="runtime_ant.jar">
+		<eclipse.convertPath property="bin_path" resourcepath="plugin_rtd_core/bin_ant"/>
+		<jar destfile="rtdruid_core_ant.jar" basedir="${bin_path}"/>
+	</target>
 </project>

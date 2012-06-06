@@ -233,7 +233,8 @@ public class OilApplPointer extends VarTreePointerEMF implements
 					throw new IllegalStateException("Oil Implementation not found: "+ oilId);
 				}
 				IOilImplPointer oiPointer = impl.getPointer();
-				boolean go = oiPointer.goChild(objType);
+				String otype = DataPath.resolveId(DataPath.removeSlash(objType))[0];
+				boolean go = oiPointer.goChild(otype);
 				while (go && !pathSk.empty()) {
 					String tmp = (String) pathSk.pop();
 					go = oiPointer.goChild(tmp);
@@ -1058,7 +1059,13 @@ public class OilApplPointer extends VarTreePointerEMF implements
 			if (current.pointer instanceof Enumerator && ((Enumerator) current.pointer).getValue() != null && ((Enumerator) current.pointer).getValue().get() != null) {
 				answer.push(((Enumerator) current.pointer).getValue().get());
 			} else {
-				answer.push(((ObjectWithID) current.pointer).getObjectID());
+				String id = ((ObjectWithID) current.pointer).getObjectID();
+				String[] split = DataPath.resolveId(DataPath.removeSlash(id));
+				if (split.length>1) {
+					id = split[0];
+				}
+				
+				answer.push(id);
 			}
 			current.pointer = current.pointer.eContainer();
 

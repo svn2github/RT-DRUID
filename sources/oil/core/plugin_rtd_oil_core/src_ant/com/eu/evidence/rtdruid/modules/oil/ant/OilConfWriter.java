@@ -7,11 +7,14 @@ package com.eu.evidence.rtdruid.modules.oil.ant;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.FileSet;
+import org.apache.tools.ant.types.resources.FileResource;
 
-import com.eu.evidence.rtdruid.internal.modules.oil.workers.Logger;
+import com.eu.evidence.rtdruid.desk.Logger;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.OilWorkerException;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerOilConfWriter;
 import com.eu.evidence.rtdruid.io.IRTDImporter;
@@ -57,6 +60,22 @@ public class OilConfWriter extends Task {
 		worker.setInputfile(fileName);
 	}
 
+	/**
+	 * Specifies a set of input file
+	 * 
+	 * @param fileSet
+	 *            a set of input files
+	 */
+	public void addConfigured(FileSet fileSet) {
+		for (Iterator iter= fileSet.iterator(); iter.hasNext(); ) {
+			Object o = iter.next();
+			if (o instanceof FileResource) {
+				FileResource fres = (FileResource) o;
+				worker.addInputfile(fres.getFile().getAbsolutePath());
+			}
+		}
+	}
+	
 	/**
 	 * Specifies the absolute path of directory that will contains the output
 	 * 

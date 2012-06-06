@@ -33,6 +33,7 @@
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/cosmic/feature_rtd_oil_ee_s12"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/lattice/feature_rtd_oil_ee_mico32"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/infineon/feature_rtd_oil_ee_tricore"/>
+		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/renesas/feature_rtd_oil_ee_renesas"/>
 
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/ensilica/feature_rtd_oil_ee_esirisc"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/ti/feature_rtd_oil_ee_msp430"/>
@@ -40,6 +41,7 @@
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/ee/feature_ee"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/atmel/feature_ee_templates_avr"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/microchip/feature_ee_templates_dspic"/>
+		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/arm/feature_ee_templates_cortex"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/cosmic/feature_ee_templates_s12"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/ppc/feature_ee_templates_ppc"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/infineon/feature_ee_templates_tricore"/>
@@ -90,6 +92,13 @@
 *******************************
 -->
 	
+	<target name="lazy.clean" depends="import" description="Clean the plug-in: rtdruid of all the zips, jars and logs created.">
+			
+		<delete dir="${product.temp.folder}"/>
+		<delete file="${output.folder}"/>
+		
+	</target>
+	
 	<target name="clean" depends="import" description="Clean the plug-in: rtdruid of all the zips, jars and logs created.">
 		
 		<delete dir="${temp.folder}"/>
@@ -98,7 +107,6 @@
 		<antcall target="all.features">
 			<param name="target" value="clean"/>
 		</antcall>
-		
 		
 	</target>
 

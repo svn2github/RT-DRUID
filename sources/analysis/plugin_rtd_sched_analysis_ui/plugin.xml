@@ -169,18 +169,11 @@
       <perspectiveExtension
             targetID="org.eclipse.ui.resourcePerspective">
          <viewShortcut
-               id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidViewID"/>
-         <viewShortcut
                id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidTableViewID"/>
          <newWizardShortcut
                id="com.eu.evidence.rtdruid.vartree.data.presentation.DataModelWizardID"/>
          <newWizardShortcut
                id="com.eu.evidence.rtdruid.vartree.data.presentation.ProjectWizardID"/>
-         <view
-               ratio="0.5"
-               relative="org.eclipse.ui.views.TaskList"
-               relationship="right"
-               id="com.eu.evidence.rtdruid.vartree.data.presentation.RtdruidViewID"/>
       </perspectiveExtension>
    </extension>
 <!--

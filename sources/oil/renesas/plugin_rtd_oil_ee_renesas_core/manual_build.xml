@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="com.eu.evidence.rtdruid.oil.renesas.core" default="build.jars" basedir=".">
+
+	<!--
+	******************************************
+	                 COMMON
+	******************************************
+	-->
+		<import file="../../../../products/tool_build_scripts/ant_parameters.xml" optional="false"/>
+
+		<import file="../../../../products/tool_build_scripts/manual_build_plugins.xml" optional="false"/>
+		
+		<property name="bundleId" value="com.eu.evidence.rtdruid.oil.renesas.core"/>
+		<property name="bundleVersion" value="${rtd_oil_ee_renesas_core_v}.${build_number}"/>
+
+
+	<!--
+	******************************************
+	                 SPECIFIC
+	******************************************
+	-->
+		<target name="build.update.jar" description="Build the plug-in: ${bundleId} for an update site.">
+			<antcall target="common_build.update.jar">
+				<param name="plugin_id" value="${bundleId}"/>
+				<param name="plugin_vers" value="${bundleVersion}"/>
+			</antcall>
+		</target>
+
+		<target name="rtdruid_oil_renesas_core.jar" unless="rtdruid_oil_renesas_core.jar" description="Create jars: ${bundleId} rtdruid_oil_renesas_core.jar.">
+			<path id="common_build_classpath">
+				<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
+				
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/*/rtdruid_core.jar"/>
+				
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.core_${rtd_oil_core_v}.${build_number}/rtdruid_oil_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/*/rtdruid_oil_core.jar"/>
+
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_${rtd_oil_ee_core_v}.${build_number}/rtdruid_oil_ee_core.jar"/>
+				<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.oil.ee.core_*/rtdruid_oil_ee_core.jar"/>
+
+			</path>
+			<resources id="common_build_binary_files">
+				<fileset dir="src/internal" >
+					<include name="**/*"/>
+					<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+					<exclude name="**/package.htm*"/>
+				</fileset>
+				<fileset dir="src/public" >
+					<include name="**/*"/>
+					<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+					<exclude name="**/package.htm*"/>
+				</fileset>
+			</resources>	
+
+			<antcall target="common_build.dir">
+				<param name="plugin_id" value="${bundleId}"/>
+				<param name="plugin_vers" value="${bundleVersion}"/>
+				<param name="jar_name" value="rtdruid_oil_renesas_core"/>
+				<param name="common_build_sources" value="src/public/:src/internal/"/>
+				<reference refid="common_build_classpath"/>
+				<reference refid="common_build_binary_files"/>
+			</antcall>
+		</target>
+
+		<target name="publish.bin.parts">
+			<antcall target="common_publish.bin.parts">
+				<param name="plugin_id" value="${bundleId}"/>
+				<param name="plugin_vers" value="${bundleVersion}"/>
+				<param name="jar_name" value="rtdruid_oil_renesas_core"/>
+			</antcall>
+		</target>
+
+		<target name="gather.bin.parts" if="destination.temp.folder">
+			<fileset dir="${basedir}" id="common_gather_binary">
+				<include name="META-INF/"/>
+			<include name="epl-v10.html/"/>
+				<include name="plugin.xml"/>
+				<include name="oil_files/"/>
+				<include name="rtdruid.png"/>
+				<include name="about.ini"/>
+				<include name="about.html"/>
+			</fileset>
+
+			<antcall target="common_gather.bin.parts">
+				<param name="plugin_id" value="${bundleId}"/>
+				<param name="plugin_vers" value="${bundleVersion}"/>
+				<param name="jar_name" value="rtdruid_oil_renesas_core"/>
+				<reference refid="common_gather_binary"/>
+			</antcall>
+		</target>
+
+		<!---->
+		<target name="build.jars" description="Compile classes and build nested jars for the plug-in: ${bundleId}.">
+			<delete file="${compilation.problem.marker}" quiet="true"/>
+			<available property="rtdruid_oil_renesas_core.jar" file="${build.result.folder}/rtdruid_oil_renesas_core.jar"/>
+			<antcall target="rtdruid_oil_renesas_core.jar"/>
+		</target>
+</project>

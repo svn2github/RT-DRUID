@@ -3,7 +3,7 @@ package com.eu.evidence.rtdruid.modules.oil.product;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 
-import com.eu.evidence.rtdruid.internal.modules.oil.workers.Logger;
+import com.eu.evidence.rtdruid.desk.Logger;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.StdOutLogger;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerOilConfWriter;
 

@@ -7,8 +7,8 @@ if [ $# -lt 3 ]; then
     echo >&2 "Usage:  templates.sh <RT-Druid_dir> <template_id> <output_dir>"
     exit 2
 fi
+LAUNCHER_JAR=`find "$1/plugins" -name "org.eclipse.equinox.launcher_*.jar" | sort | tail -1`
 
-LAUNCHER_JAR="`find "$1/plugins" -iname "org.eclipse.equinox.launcher_*.jar"`"
 case "`uname -s`" in
     *CYGWIN*)
 #

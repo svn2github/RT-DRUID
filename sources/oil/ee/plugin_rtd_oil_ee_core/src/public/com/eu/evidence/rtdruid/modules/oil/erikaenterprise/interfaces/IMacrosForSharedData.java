@@ -8,20 +8,26 @@ package com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces;
  */
 public interface IMacrosForSharedData {
 	
-	String vectorRam(String vectorName, String array);
+	public interface IPragma extends IMacrosForSharedData {
+		String getPragmaSections();
+	}
+	
+	IPragma getPragma();
+	
+	String vectorRam(String type, String vectorName, String array, String body);
 
-	String vectorRom(String vectorName, String array);
+	String vectorRom(String type, String vectorName, String array, String body);
 
-	String constVectorRam(String vectorName, String array);
+	String constVectorRam(String type, String vectorName, String array, String body);
 
-	String constVectorRom(String vectorName, String array);
+	String constVectorRom(String type, String vectorName, String array, String body);
 
-	String valueRam(String valueName);
+	String valueRam(String type, String valueName, String body);
 
-	String valueRom(String valueName);
+	String valueRom(String type, String valueName, String body);
 
-	String constValueRam(String valueName);
+	String constValueRam(String type, String valueName, String body);
 
-	String constValueRom(String valueName);
+	String constValueRom(String type, String valueName, String body);
 	
 }

@@ -1113,6 +1113,87 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 	}
 
 	
-	
+	public void testEasyLab() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"\n" + 
+				"	OS myOs {\n" + 
+				"	                \n" + 
+				"		EE_OPT = \"DEBUG\";\n" + 
+				"        STATUS = EXTENDED;\n" + 
+				"\n" + 
+				"        STARTUPHOOK = TRUE;\n" + 
+				"        ERRORHOOK = FALSE;\n" + 
+				"        SHUTDOWNHOOK = FALSE;\n" + 
+				"        PRETASKHOOK = FALSE;\n" + 
+				"        POSTTASKHOOK = FALSE;\n" + 
+				"        USEGETSERVICEID = FALSE;\n" + 
+				"        USEPARAMETERACCESS = FALSE;\n" + 
+				"        USERESSCHEDULER = TRUE;\n" + 
+				"        \n" + 
+				"        CPU_DATA = PIC30 {\n" + 
+				"			APP_SRC = \"code.c\";\n" + 
+				"			APP_SRC = \"T1.S\";\n" + 
+				"			MULTI_STACK = TRUE {\n" + 
+				"				IRQ_STACK = TRUE {\n" + 
+				"					SYS_SIZE=64;\n" + 
+				"				};\n" + 
+				"			};\n" + 
+				"			ICD2 = TRUE;\n" + 
+				"		};\n" + 
+				"\n" + 
+				"		KERNEL_TYPE = BCC1;\n" + 
+				"		BOARD_DATA = EE_EASYLAB {\n" +
+				"			USETIMER  = TRUE;\n" +
+				"			USEUART   = TRUE;\n" +
+				"			USELEDS   = TRUE;\n" +
+				"			USEDIO    = TRUE;\n" +
+				"			USEBUZZER = TRUE; // Dovrebbe forzare la definizione dei timer (__USE_TIMER__)\n" +
+				"			USEADC    = TRUE;\n" +
+				"			USEPWM    = TRUE;\n" +
+				"		};				\n" +
+				"	};\n" + 
+				"\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 1;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = PRIVATE {\n" + 
+				"			SYS_SIZE = 64;\n" + 
+				"		};\n" + 
+				"		SCHEDULE = FULL;\n" + 
+				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"	};\n" + 
+				"\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"\n" + 
+				"    TASK Task2 {\n" + 
+				"        PRIORITY = 3;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"        RESOURCE = \"MUTEX_sync\";\n" + 
+				"        APP_SRC = \"demo.c\";\n" + 
+				"    };\n" + 
+				"\n" + 
+				"    TASK Task3 {\n" + 
+				"        PRIORITY = 4;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"        APP_SRC = \"demo1.c\";\n" + 
+				"        APP_SRC = \"demo2.c\";\n" + 
+				"    };\n" + 
+				"    RESOURCE MUTEX_sync { RESOURCEPROPERTY = STANDARD {" +
+				"        APP_SRC = \"demo3.c\";\n" + 
+				"        APP_SRC = \"demo4.c\";\n" + 
+				"    };};\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
+	}	
 	
 }

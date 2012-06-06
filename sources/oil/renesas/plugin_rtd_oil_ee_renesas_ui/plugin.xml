@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.builderOptions">
+      <options
+            class="com.eu.evidence.rtdruid.modules.oil.renesas.ui.preferencepages.Options">
+      </options>
+   </extension>
+
+   <extension
+      point = "org.eclipse.ui.preferencePages">
+       <page id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID.RenesasConfigurator"
+            class="com.eu.evidence.rtdruid.modules.oil.renesas.ui.preferencepages.RenesasConfigurator"
+            category="com.eu.evidence.rtdruid.oil.preferencePagesID"
+            name="Renesas">
+       </page>
+   </extension>
+
+</plugin>

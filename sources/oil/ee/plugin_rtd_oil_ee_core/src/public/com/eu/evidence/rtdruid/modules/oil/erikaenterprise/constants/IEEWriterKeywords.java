@@ -103,6 +103,7 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	
 	/** A SimpleGenResKeyword for cpu data inside an OS */
 	public final static String SGRK_OS_CPU_DATA_PREFIX = "os_cpu_data_prefix";
+	public final static String SGRK_OS_CPU_SPEED_HZ = "os_cpu_speed__hertz";
 
 	/** A SimpleGenResKeyword that identifies a list of stack for a OS (an EEStackData[]) */
 	public final static String SGRK_OS_STACK_LIST = "os_stack_list";

@@ -139,4 +139,10 @@ public interface ISimpleGenRes {
 	 * Clones this object
 	 */
 	ISimpleGenRes clone();
+	
+
+	/**
+	 * Add all properties in the source
+	 */
+	void merge(ISimpleGenRes source);
 }

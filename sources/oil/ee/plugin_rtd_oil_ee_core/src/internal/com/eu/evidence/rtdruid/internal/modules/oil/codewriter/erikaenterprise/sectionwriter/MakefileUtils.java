@@ -18,9 +18,6 @@ class MakefileUtils {
 	
 	public static LinkedHashSet<String> getSources(IOilObjectList ool, IVarTree vt) {
 		
-		
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-		
 		LinkedHashSet<String> src_files = new LinkedHashSet<String>();
 		// get Task's files
 		for (Iterator<ISimpleGenRes> iter = ool.getList(IOilObjectList.TASK).iterator(); iter.hasNext(); ) {
@@ -65,9 +62,8 @@ class MakefileUtils {
 		}
 
 		// CPU
-		{
+		for (ISimpleGenRes sgrCpu: ool.getList(IOilObjectList.OS)){
 			src_files.addAll(Arrays.asList(CpuUtility.getSources(sgrCpu)));
-		}
 		
 		if (sgrCpu.containsProperty(IEEWriterKeywords.SGRK_OS_CPU_DATA_PREFIX)) { // cpu's sources (common)
 			final String currentCpuPrefix = sgrCpu.getString(IEEWriterKeywords.SGRK_OS_CPU_DATA_PREFIX);
@@ -82,6 +78,9 @@ class MakefileUtils {
 			}
 
 		}
+		
+		}
+		
 		
 		return src_files;
 	}

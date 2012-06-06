@@ -711,6 +711,9 @@ edf
 		UINT32 [1, 2] CATEGORY;
 		RESOURCE_TYPE RESOURCE[];
 		MESSAGE_TYPE MESSAGE[];
+		STRING ENTRY: "the interrupt source id or source number (arch. dependent)"; 
+		UINT32 PRIORITY: "the interrupt priority";
+		STRING HANDLER: "if defined, this is the name of the function, otherwise the isr name is used as function name";
 	};
 
     COUNTER {
@@ -719,7 +722,15 @@ edf
         UINT32 TICKSPERBASE;
         
         
-        ENUM [HARDWARE, SOFTWARE] TYPE;
+        ENUM [
+        	HARDWARE {
+        		BOOLEAN SYSTEM_TIMER = FALSE;
+				UINT32 PRIORITY: "the priority of related interrupt";
+        		STRING DEVICE;
+        		STRING HANDLER;
+        	},
+        	SOFTWARE
+        ] TYPE;
         FLOAT SECONDSPERTICK;
         
         STRING CPU_ID = "default_cpu";
@@ -737,6 +748,9 @@ edf
             },
             ALARMCALLBACK {
                 STRING ALARMCALLBACKNAME;
+            },
+            INCREMENTCOUNTER {
+            	COUNTER_TYPE COUNTER;
             }
         ] ACTION;
 

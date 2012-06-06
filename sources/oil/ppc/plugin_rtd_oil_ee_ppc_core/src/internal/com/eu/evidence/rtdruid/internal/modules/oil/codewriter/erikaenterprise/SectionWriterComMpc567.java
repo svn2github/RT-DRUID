@@ -11,7 +11,6 @@ import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterExce
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
-import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
@@ -139,8 +138,7 @@ public class SectionWriterComMpc567 extends SectionWriter
 		IOilWriterBuffer[] answer = new IOilWriterBuffer[oilObjects.length];
 		ICommentWriter commentWriter;
 		{
-			ISimpleGenRes sgrCpu = oilObjects[0].getList(IOilObjectList.OS).get(0);
-			commentWriter = getCommentWriter(sgrCpu, FileTypes.C);
+			commentWriter = getCommentWriter(oilObjects[0], FileTypes.C);
 		}
 		
 		StringBuffer com_h = new StringBuffer();
@@ -162,9 +160,7 @@ public class SectionWriterComMpc567 extends SectionWriter
 				if (rtosId == 0) {
 					// master
 					answer[rtosId].get("Com.c").append(com_c);
-					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
-					
-					CpuUtility.addSources(sgrCpu, answer[rtosId].getFileName("Com.c"));
+					CpuUtility.addSources(ool, new String[] {answer[rtosId].getFileName("Com.c")});
 				}
 				answer[rtosId].get("Com.h").append(com_h);
 			}

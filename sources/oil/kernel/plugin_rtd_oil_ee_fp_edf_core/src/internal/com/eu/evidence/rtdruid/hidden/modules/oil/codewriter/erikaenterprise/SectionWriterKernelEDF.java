@@ -19,6 +19,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
@@ -193,7 +194,7 @@ public class SectionWriterKernelEDF extends SectionWriter
 		CpuHwDescription currentStackDescription = null;
 		{
 			// usw thw cpu type of first cpu (all cpus have the same type) 
-			String cpuType = ((ISimpleGenRes) oilObjects[0].getList(IOilObjectList.OS).get(0)).getString(ISimpleGenResKeywords.OS_CPU_TYPE);
+			String cpuType = AbstractRtosWriter.getOsProperty(oilObjects[0], ISimpleGenResKeywords.OS_CPU_TYPE);
 			currentStackDescription = EECpuDescriptionManager.getHWDescription(cpuType); 
 		}
 
@@ -221,9 +222,8 @@ public class SectionWriterKernelEDF extends SectionWriter
 			// all objects for current os
 			IOilObjectList ool = oilObjects[rtosId];
 			// current os
-			ISimpleGenRes os = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-			List<Integer> requiredOilObjects = (List<Integer>) os.getObject(SGRK__FORCE_ARRAYS_LIST__);
-			final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
+			List<Integer> requiredOilObjects = (List<Integer>) AbstractRtosWriter.getOsObject(ool, SGRK__FORCE_ARRAYS_LIST__);
+			final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 
 			StringBuffer buffer = answer[rtosId].get(FILE_EE_CFG_C);
 
@@ -350,7 +350,7 @@ public class SectionWriterKernelEDF extends SectionWriter
 //					sbThread.append(pre + pre2 + indent2 + "(EE_ADDR)Func"
 //							+ tname);
 					sbStub.append(pre + post + indent2
-							+ "(EE_FADDR)Func" + tname);
+							+ "&Func" + tname);
 					pre2 = "\n";
 		
 					pre = ",";
@@ -374,12 +374,12 @@ public class SectionWriterKernelEDF extends SectionWriter
 			// declare task and theirs address
 			buffer.append(indent1 + commentWriterC.writerSingleLineComment("Definition of task's body") //\n"
 				+ sbDecThread + "\n\n"
-				+ indent1 + "const EE_FADDR EE_hal_thread_body["+MAX_TASK+"] = {\n"
+				+ indent1 + "const EE_THREAD_PTR EE_hal_thread_body["+MAX_TASK+"] = {\n"
 				+ sbStub + "\n"
 				+ indent1 + "};\n\n");
 //				+ indent1 + "EE_UINT32 EE_terminate_data["+MAX_TASK+"];\n\n"
 //				+ indent1 + commentWriterC.writerSingleLineComment("p of each thread body (ROM)") //\n"
-//				+ indent1 + "const EE_ADDR EE_terminate_real_th_body["+MAX_TASK+"] = {\n"
+//				+ indent1 + "const EE_FADDR EE_terminate_real_th_body["+MAX_TASK+"] = {\n"
 //				+ sbThread.toString() + "\n"
 //				+ indent1 + "};\n");
 		
@@ -432,8 +432,7 @@ public class SectionWriterKernelEDF extends SectionWriter
 			 * DeadLines
 			 */
 			String enable_dline_const = 
-				os.containsProperty(EDF_OS_REL_DEADLINES_IN_RAM) &&
-						EDF_OS_REL_DEADLINES_IN_RAM_value_ram.equals(os.getString(EDF_OS_REL_DEADLINES_IN_RAM)) ?
+						EDF_OS_REL_DEADLINES_IN_RAM_value_ram.equals(AbstractRtosWriter.getOsProperty(ool, EDF_OS_REL_DEADLINES_IN_RAM)) ?
 								"" : "const ";
 
 			buffer.append(indent1 + commentWriterC.writerSingleLineComment("deadlines") //\n"
@@ -747,27 +746,28 @@ public class SectionWriterKernelEDF extends SectionWriter
 		// NOTE : EDF works only on a single processor system
 		final int currentRtosId = 0;
 
-		final TimeVar ticsLength; 
+		TimeVar ticsLength = null;
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		final IVarTree vt = parent.getVt();
 		final IOilObjectList ool = oilObjects[currentRtosId];
 		final String oilHwRtosPrefix = parent.getOilHwRtosPrefix();
-		final ISimpleGenRes sgrOs = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 		
 		final long timerSize_bits;
-		if (sgrOs.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
-			CpuHwDescription currentStackDescription = (CpuHwDescription) sgrOs.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
-			timerSize_bits = currentStackDescription.timerSize; 
-		} else {
-			timerSize_bits = 32;
+		{
+			CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+			if (currentStackDescription != null) {
+				timerSize_bits = currentStackDescription.timerSize; 
+			} else {
+				timerSize_bits = 32;
+			}
 		}
 		final long timerSize = 1l<<timerSize_bits; 
 		
 		boolean store_dl_in_ram = false;
 
 
-		{// search the RTOS 
+		for (ISimpleGenRes sgrOs: ool.getList(IOilObjectList.OS)){// search the RTOS 
 	
 			final String currentRtosPrefix = sgrOs.getPath();
 	
@@ -912,6 +912,7 @@ public class SectionWriterKernelEDF extends SectionWriter
 
 
 		{ // EE_OPT
+			ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
 			String[] lista = sgrOs.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS) ?
 					(String[]) sgrOs.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS) :
 						new String[0];
@@ -942,7 +943,7 @@ public class SectionWriterKernelEDF extends SectionWriter
 					}
 				}
 				
-				if (CpuUtility.getSupportForNestedIRQ(sgrOs) 
+				if (CpuUtility.getSupportForNestedIRQ(ool) 
 						&& parent.checkKeyword(DEF__ALLOW_NESTED_IRQ__)) {
 					array.add("__ALLOW_NESTED_IRQ__");
 				}
@@ -954,12 +955,25 @@ public class SectionWriterKernelEDF extends SectionWriter
 		
 
 		{// force alarms
-			List<Integer> array = new ArrayList<Integer>(sgrOs.containsProperty(ErikaEnterpriseWriter.SGRK__FORCE_ARRAYS_LIST__) ?
-					(List<Integer>) sgrOs.getObject(ErikaEnterpriseWriter.SGRK__FORCE_ARRAYS_LIST__) :
-						new ArrayList<Integer>());
-			if (!array.contains(new Integer(IOilObjectList.ALARM))) { 
-				array.add(new Integer(IOilObjectList.ALARM));
+			List<Integer> array = null;
+			for (ISimpleGenRes sgrOs : ool.getList(IOilObjectList.OS)) {
+				if (array == null) {
+					if (sgrOs.containsProperty(ErikaEnterpriseWriter.SGRK__FORCE_ARRAYS_LIST__)) {
+						array = (List<Integer>) sgrOs.getObject(ErikaEnterpriseWriter.SGRK__FORCE_ARRAYS_LIST__);
+
+						if (array != null && !array.contains(new Integer(IOilObjectList.ALARM))) { 
+							array = new ArrayList<Integer>(array);
+							array.add(new Integer(IOilObjectList.ALARM));
+							sgrOs.setObject(ErikaEnterpriseWriter.SGRK__FORCE_ARRAYS_LIST__, array);
+						}
+					}
+				}
 			}
+			if (array == null) {
+				array = new ArrayList<Integer>();
+				ool.getList(IOilObjectList.OS).get(0).setObject(ErikaEnterpriseWriter.SGRK__FORCE_ARRAYS_LIST__, array);
+			}
+			
 		}
 
 	}

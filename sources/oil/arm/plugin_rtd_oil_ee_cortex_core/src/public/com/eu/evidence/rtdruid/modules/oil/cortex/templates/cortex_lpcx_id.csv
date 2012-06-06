@@ -1,0 +1,3 @@
+#OIL/MODEL	LINKERSCRIPT	INCL_C	INCL_S	STARTUP	
+#LPC12xx	lpc12xx_flash.icf	LPC12xx.h	?	?
+LPC12xx	?	?	?	?

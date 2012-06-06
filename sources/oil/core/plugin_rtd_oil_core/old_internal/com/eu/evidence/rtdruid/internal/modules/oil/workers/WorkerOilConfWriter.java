@@ -6,25 +6,21 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.workers;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.eclipse.emf.common.util.URI;
-
+import com.eu.evidence.rtdruid.desk.Logger;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.desk.WorkerConfReader;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
-import com.eu.evidence.rtdruid.io.IVTResource;
-import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 
 /**
@@ -34,13 +30,10 @@ import com.eu.evidence.rtdruid.vartree.tools.Search;
  * @author Nicola Serreli
  *  
  */
-public class WorkerOilConfWriter {
+public class WorkerOilConfWriter extends WorkerConfReader {
 
 	/** The default left part of an output. See {@link #myLog myLog}. */
 	private final static String LEFT = "OIL WRITER";
-
-	/** The input file (oil) */
-	protected String inputFile = null;
 
 	/** The directory where store all outputs */
 	protected String outputDir = null;
@@ -49,12 +42,10 @@ public class WorkerOilConfWriter {
 	protected HashMap<String, Object> options = new HashMap<String, Object>();
 
 	/** The default separator for current OS */
-	static final String dirSep = System.getProperty("file.separator");
-	
-	protected Logger logger;
+	private static final String dirSep = System.getProperty("file.separator");
 	
 	public WorkerOilConfWriter(Logger logger) {
-		this.logger = logger;
+		super(logger);
 	}
 	
 	/**
@@ -84,16 +75,6 @@ public class WorkerOilConfWriter {
 	}
 	
 	/**
-	 * Specifies the input oil file
-	 * 
-	 * @param fileName
-	 *            contains the name of Oil file
-	 */
-	public void setInputfile(String fileName) {
-		inputFile = fileName;
-	}
-
-	/**
 	 * Specifies the absolute path of directory that will contains the output
 	 * 
 	 * @param value
@@ -109,40 +90,6 @@ public class WorkerOilConfWriter {
 
 	}
 
-	/**
-	 * Returns the logger
-	 */
-	public Logger getLogger() {
-		return logger;
-	}
-	
-	/**
-	 * This method loads the specified oil file.
-	 * 
-	 * @return the VarTree that contains the loaded file.
-	 * 
-	 * @throws OilWorkerException
-	 */
-	protected IVarTree load() throws OilWorkerException {
-		IVarTree vt = VarTreeUtil.newVarTree();
-
-		myLog("LOAD", inputFile);
-		try {
-			// load and parse the input file
-			IVTResource res = (IVTResource) new RTD_XMI_Factory().createResource(URI.createFileURI(inputFile));
-			try {
-				res.load(new FileInputStream(inputFile), null);
-			} catch (Exception e) {
-				throw new OilWorkerException("Unable to load \"" + inputFile + "\".", e);
-			}
-			vt.setRoot(res);
-		} catch (RuntimeException e) {
-			throw new OilWorkerException(e.getMessage(), e);
-		}
-
-		return vt;
-	}
-		
 	/**
 	 * Stores all buffers inside the specified directory.
 	 * 
@@ -194,7 +141,7 @@ public class WorkerOilConfWriter {
 	 */
 	public void execute() throws OilWorkerException {
 		// ------------- make all checks ----------------
-		if (inputFile == null) {
+		if (inputFiles.isEmpty()) {
 			throw new OilWorkerException("Required an input file");
 		}
 		if (outputDir == null) {
@@ -231,7 +178,12 @@ public class WorkerOilConfWriter {
 
 		// --------------- Load data ------------------
 
-		final IVarTree vt = load();
+		IVarTree vt;
+		try {
+			vt = load();
+		} catch (VtReaderException e1) {
+			throw new OilWorkerException(e1);
+		}
 		final ITreeInterface ti = vt.newTreeInterface();
 
 		// Prepare to store all rtos
@@ -245,7 +197,6 @@ public class WorkerOilConfWriter {
 			rtosPath.addAll(Arrays.asList(tmp));
 		}
 
-		
 		//myLog("ELENCO", ""+rtosPath);
 		if (rtosPath.size() == 0) {
 			myLog(LEFT, "No RT-OS found");
@@ -273,8 +224,9 @@ public class WorkerOilConfWriter {
 		myLog("WORKING", "Prepare configuration's files");
 		IOilWriterBuffer[] buffers = null;
 		try {
-			buffers = RtosFactory.INSTANCE.write(vt, (String[]) rtosPath
-					.toArray(new String[rtosPath.size()]), options);
+			buffers = RtosFactory.INSTANCE.write(vt,
+					(String[]) rtosPath.toArray(new String[rtosPath.size()]),
+					options);
 		} catch (OilCodeWriterException e) {
 			RtdruidLog.showDebug(e);
 			throw new OilWorkerException(e.getMessage());
@@ -284,27 +236,4 @@ public class WorkerOilConfWriter {
 		// ---------------- Store files -------------------
 		save(buffers);
 	}
-
-	/**
-	 * This method shows a message.
-	 * 
-	 * The output looks like :<br>
-	 * [LEFT &nbsp;&nbsp;&nbsp;RIGTH]
-	 * 
-	 * @param left
-	 *            what write in the left side
-	 * @param rigth
-	 *            what write in the rigth side
-	 */
-	protected void myLog(String left, String right) {
-		final int LEFT_SIZE = 10;
-
-		logger.log("["
-				+ left
-				+ ("                 ".substring(0,
-						(left.length() > LEFT_SIZE - 1 ? 1 : LEFT_SIZE
-								- left.length()))) + right + "]");
-	}
-
-	
 }

@@ -83,6 +83,16 @@
 		</p2.director>
 	</target>
 	
+	<target name="-remove_launchers" if="required.remove_launchers">
+		<delete>
+			<fileset dir="${TEMP_DIR}/zip/RT-Druid/p2"/>
+			<fileset dir="${TEMP_DIR}/zip/RT-Druid/plugins" includes="org.eclipse.equinox.launcher.*/**/*"/>
+			<fileset dir="${TEMP_DIR}/zip/RT-Druid/" includes="artifacts.xml"/>
+			<fileset dir="${TEMP_DIR}/zip/RT-Druid/" includes=".eclipseproduct"/>
+			<fileset dir="${TEMP_DIR}/zip/RT-Druid/" includes="eclipse*"/>
+		</delete>
+	</target>
+	
 	<!-- Requires
 	TEMP_DIR 
 	input.file
@@ -99,6 +109,7 @@
 		
 		<antcall target="saveSpace_compl"/>
 		<antcall target="-install.iu"/>
+		<antcall target="-remove_launchers"/>
 		
 		<mkdir dir="${TEMP_DIR}/scripts"/>
 		<copy todir="${TEMP_DIR}/scripts">
@@ -144,7 +155,8 @@
 <!--				<param name="required.iu" value="com.eu.evidence.ee,com.eu.evidence.ee.templates.avr,com.eu.evidence.ee.templates.ppc,com.eu.evidence.ee.templates.dspic,com.eu.evidence.ee.templates.s12,com.eu.evidence.ee.templates.tricore"/>-->
 <!--				<reference refId="linux_scripts" torefId="scripts"/>-->
 			<param name="input.file" value="${input.file.dir}/${input.file.name}"/>
-			<param name="output.file" value="${output.dir}/${input.file.name}"/>
+<!--			<param name="output.file" value="${output.dir}/${input.file.name}"/>-->
+			<param name="output.file" value="${output.dir}/${buildId}.zip"/>
 			<reference refid="scripts"/>
 		</antcall>
 	</target>

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.eu.evidence.rtdruid.desk.Logger;
 import com.eu.evidence.rtdruid.internal.modules.project.templates.ExampleTemplate;
 import com.eu.evidence.rtdruid.internal.modules.project.templates.SearchTemplates;
 
@@ -97,7 +98,7 @@ public class WorkerExampleWriter implements IWorkerExampleWriter {
 		ArrayList<String> names = new ArrayList<String>();
 		for (int i=0; i<templates.length; i++) {
 			if (exampleID.equals(templates[i].getExampleID())) {
-				myLog(""," ... FOUND"); // empty line
+				myLog(""," ... FOUND at '" + templates[i].getFs_path() + "'"); // empty line
 				return templates[i];
 			}
 			names.add(templates[i].getExampleID());

@@ -49,6 +49,7 @@ public class ErikaEnterpriseXsltWriter extends XsltWriter {
 		
 		IOilObjectList[] oils = parent.getOilObjects();
 		for (int i=0; i<oils.length; i++) {
+			// OS[0] is enough
 			ISimpleGenRes sgr = oils[i].getList(IOilObjectList.OS).get(0);
 			map.put(sgr.getName(), buffers[i]);
 		}
@@ -60,12 +61,7 @@ public class ErikaEnterpriseXsltWriter extends XsltWriter {
 		if (parent == null) {
 			super.computeRtos();
 		} else {
-			IOilObjectList[] oils = parent.getOilObjects();
-			rtosPrefix = new String[oils.length];
-			for (int i=0; i<oils.length; i++) {
-				ISimpleGenRes sgr = oils[i].getList(IOilObjectList.OS).get(0);
-				rtosPrefix[i] = sgr.getPath();
-			}
+			rtosPrefix = parent.extractDistinctOs();
 		}
 	}
 }

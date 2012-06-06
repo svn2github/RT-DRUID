@@ -21,6 +21,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
@@ -135,12 +136,11 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 
 		// ------------- Requirement --------------------
 		StringBuffer sbInithal_c = answer.get(FILE_EE_CFG_C);
-		List<ISimpleGenRes> taskNames = oilObjects[currentRtosId].getList(IOilObjectList.TASK);
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-		final String cpuName = ErikaEnterpriseWriter.getOSName(sgrCpu);
-		final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
-		final ICommentWriter commentWriterC = getCommentWriter(sgrCpu, FileTypes.C);
-		final ICommentWriter commentWriterMf = getCommentWriter(sgrCpu, FileTypes.MAKEFILE);
+		IOilObjectList ool = oilObjects[currentRtosId];
+		List<ISimpleGenRes> taskNames = ool.getList(IOilObjectList.TASK);
+		final String cpuName = ErikaEnterpriseWriter.getOSName(ool);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
+		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 		
 		String stackType = parent.getStackType(); // MULTI or MONO
 		//boolean irq_stack_need = checkKeyword(WritersKeys.IRQ_STACK_NEEDED);
@@ -171,9 +171,8 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 					"ABT_SIZE", "FIQ_SIZE", "SVC_SIZE", "SYS_SIZE" /*, "IRQ_SIZE"*/ };
 
 			for (int i = 0; i < path.length; i++) {
-				String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
-						+ S + path[i]);
-				if (tmp == null || tmp.length == 0 || tmp[0] == null)
+				String[] tmp = parent.getCpuDataValue(ool, path[i]);
+				if (tmp == null || tmp.length == 0)
 					throw new RuntimeException("cfg_ARM7 : Expected " + path[i]);
 
 				// check that values are (Long) numbers
@@ -239,48 +238,55 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 				/***************************************************************
 				 * IRQ_STACK
 				 **************************************************************/
-				
-				String[] child = new String[1];
-				String type = CommonUtils
-						.getFirstChildEnumType(vt, currentCpuPrefix
-								+ "MULTI_STACK", child);
 
-				if ("TRUE".equalsIgnoreCase(type)) {
-					String prefixIRQ = currentCpuPrefix
-						+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
-						+ "IRQ_STACK";
-					boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
-					.getFirstChildEnumType(vt, prefixIRQ, child));
+				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+				for (String currentCpuPrefix: currentCpuPrefixes) {
+					if (irqSize != null) {
+						break;
+					}
 					
-					if (ok) {
+					String[] child = new String[1];
+					String type = CommonUtils
+							.getFirstChildEnumType(vt, currentCpuPrefix
+									+ "MULTI_STACK", child);
+	
+					if ("TRUE".equalsIgnoreCase(type)) {
+						String prefixIRQ = currentCpuPrefix
+							+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
+							+ "IRQ_STACK";
+						boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
+						.getFirstChildEnumType(vt, prefixIRQ, child));
 						
-						prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
-						irqSize = new int[2];
-						{ // get data for IRQ STACK ...  
-							String path[] = { "SYS_SIZE"/*, "IRQ_SIZE" */};
-
-							for (int i = 0; i < path.length; i++) {
-								String tmp = null;
-								IVariable var = ti.getValue(prefixIRQ + path[i]
-										+ VALUE_VALUE);
-								if (var != null && var.get() != null) {
-									tmp = var.toString();
-								}
-								if (tmp == null)
-									throw new RuntimeException(
-											"cfg_janus : Expected " + path[i]);
-
-								// check for value
-								try {
-									// ... store them inside the irqSize vector
-									irqSize[i] = (Integer.decode("" + tmp))
-											.intValue();
-									// ... and increase the memory requirement
-									//stackRequired[i] += irqSize[i];
-								} catch (Exception e) {
-									throw new RuntimeException(
-											"cfg_janus : Wrong int" + path[i]
-													+ ", value = " + tmp + ")");
+						if (ok) {
+							
+							prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
+							irqSize = new int[2];
+							{ // get data for IRQ STACK ...  
+								String path[] = { "SYS_SIZE"/*, "IRQ_SIZE" */};
+	
+								for (int i = 0; i < path.length; i++) {
+									String tmp = null;
+									IVariable var = ti.getValue(prefixIRQ + path[i]
+											+ VALUE_VALUE);
+									if (var != null && var.get() != null) {
+										tmp = var.toString();
+									}
+									if (tmp == null)
+										throw new RuntimeException(
+												"cfg_janus : Expected " + path[i]);
+	
+									// check for value
+									try {
+										// ... store them inside the irqSize vector
+										irqSize[i] = (Integer.decode("" + tmp))
+												.intValue();
+										// ... and increase the memory requirement
+										//stackRequired[i] += irqSize[i];
+									} catch (Exception e) {
+										throw new RuntimeException(
+												"cfg_janus : Wrong int" + path[i]
+														+ ", value = " + tmp + ")");
+									}
 								}
 							}
 						}
@@ -502,6 +508,7 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 
 		
 			// required by ORTI
+			ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 			sgrCpu.setObject(SGRK_OS_STACK_LIST, stackTmp.toArray(new EEStackData[0]));
 			sgrCpu.setObject(SGRK_OS_STACK_VECTOR_NAME, "EE_hal_thread_tos");
 
@@ -519,17 +526,16 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 			final Object stackPointer;
 			{
 				String key = "STACK_TOP";
-				String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
-						+ S + key);
-				if (tmp == null || tmp.length == 0 || tmp[0] == null)
+				List<String> tmp = parent.getRtosCommonAttributes(ool, key);
+				if (tmp.size() == 0)
 					throw new RuntimeException("Expected " + key +" for cpu " + cpuName );
 
 				// check that values is a (Long) number
 				Object stmp = null;
 				try {
-					stmp = Long.decode(tmp[0]);
+					stmp = Long.decode(tmp.get(0));
 				} catch (Exception e) {
-					stmp = tmp[0];
+					stmp = tmp.get(0);
 				}
 				stackPointer = stmp;
 
@@ -547,19 +553,17 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 			final long stackSize;
 			{
 				String key = "SYS_SIZE";
-				String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
-						+ S + key);
-				if (tmp == null || tmp.length == 0 || tmp[0] == null)
+				List<String> tmp = parent.getRtosCommonAttributes(ool, key);
+				if (tmp.size() == 0)
 					throw new RuntimeException("Expected " + key +" for cpu " + cpuName );
 
 				// check that values is a (Long) number
 				Long stmp = null;
 				try {
-					stmp = Long.decode(tmp[0]);
+					stmp = Long.decode(tmp.get(0));
 				} catch (Exception e) {
 					throw new RuntimeException(
-							"cfg_nios2 : Wrong int" + currentCpuPrefix + S + key
-									+ ", value = " + tmp[0] + ")");
+							"Expected an integer for SYS_SIZE ("+ tmp.get(0) + ")");
 				}
 				stackSize = stmp.longValue();
 			}
@@ -570,7 +574,8 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 			stackD[0] = new EEStackData(0, new long[] {stackSize}, new long[] {stackSize},
 					new String[] {"(unsigned int *)(" + stackBaseDescr + " - 0x" +
 							Long.toHexString(stackSize).toUpperCase()+ /*DELTA +*/ " )"}, true);
-					
+			
+			ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 			sgrCpu.setObject(SGRK_OS_STACK_LIST, stackD);
 		}
 
@@ -648,14 +653,14 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 
 			    
 			    // linker script
-		        String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
-					                              						+ S + "LINKER_SCRIPT");
-		        if (tmp != null && tmp.length>0) {
+				String[] tmp = parent.getCpuDataValue(ool, "LINKER_SCRIPT");
+				if (tmp != null && tmp.length != 0 && tmp[0] != null){
 		            String linkerScript = tmp[0];
 		            
 		            sbMakefile.append("PIC30_LINKERSCRIPT := " + linkerScript+"\n\n");
 		        }
 		        
+				ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 	            sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile.toString());
 
 			}

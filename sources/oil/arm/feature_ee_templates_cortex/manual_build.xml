@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="com.eu.evidence.ee.templates.cortex" default="build.update.jar" basedir=".">
+
+	<!--
+	******************************************
+	                 COMMON
+	******************************************
+	-->
+		<import file="../../../../products/tool_build_scripts/ant_parameters.xml" optional="false"/>
+
+		<property name="bundleId" value="com.eu.evidence.ee.templates.cortex"/>
+		<property name="bundleVersion" value="${ftemplates_ee_cortex_v}.${build_number}"/>
+		
+		<import file="../../../../products/tool_build_scripts/manual_build_features.xml" optional="false"/>
+		
+		
+		
+	<!--
+	******************************************
+	                 SPECIFIC
+	******************************************
+	-->	
+		<target name="all.plugins">
+			<ant antfile="manual_build.xml" dir="../plugin_ee_templates_cortex" target="${target}">
+				<property name="bundleId" value="com.eu.evidence.ee.templates.cortex"/>
+				<property name="bundleVersion" value="${templates_ee_cortex_v}.${build_number}"/>
+			</ant>
+		</target>
+
+		<target name="all.features">
+		</target>
+		<target name="update.feature">
+		</target>
+		
+		<target name="rootFileswin32_win32_x86">
+		</target>
+
+
+		<target name="build.update.jar" description="Build the feature jar of: com.eu.evidence.rtdruid.core for an update site.">
+			<antcall target="common_build.update.jar">
+				<param name="feature_id" value="${bundleId}"/>
+				<param name="feature_version" value="${bundleVersion}"/>
+			</antcall>
+		</target>
+
+		<target name="publish.bin.parts">
+			<antcall target="common_publish.bin.parts">
+				<param name="feature_id" value="${bundleId}"/>
+				<param name="feature_version" value="${bundleVersion}"/>
+				<param name="feature_featureIds" value=""/>
+				<param name="feature_pluginIds" value="com.eu.evidence.ee.templates.cortex:0.0.0,${templates_ee_cortex_v}.${build_number},"/>
+			</antcall>
+		</target>
+		
+		<target name="gather.bin.parts" if="feature.base">
+			<antcall target="common_gather.bin.parts">
+				<param name="feature_id" value="${bundleId}"/>
+				<param name="feature_version" value="${bundleVersion}"/>
+				<param name="feature_featureIds" value=""/>
+				<param name="feature_pluginIds" value="com.eu.evidence.ee.templates.cortex:0.0.0,${templates_ee_cortex_v}.${build_number},"/>
+			</antcall>
+		</target>
+</project>

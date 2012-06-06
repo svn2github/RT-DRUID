@@ -480,8 +480,8 @@ public class RTDOilProjectNature implements IProjectNature {
 						IPath loc  = outputs[0].getLocation();
 						IPath full = outputs[0].getFullPath();
 						
-						System.out.println("loc  " + loc);
-						System.out.println("full " + full);
+//						System.out.println("loc  " + loc);
+//						System.out.println("full " + full);
 						
 						
 						return "" + full;

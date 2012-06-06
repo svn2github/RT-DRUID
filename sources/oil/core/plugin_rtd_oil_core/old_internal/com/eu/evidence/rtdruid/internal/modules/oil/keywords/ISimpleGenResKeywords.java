@@ -60,8 +60,17 @@ public interface ISimpleGenResKeywords {
 	 * Isr
 	 **************************************************************************/
 	public final static String ISR_CATEGORY = "category";
+	public final static String ISR_ENTRY = "entry";
+	public final static String ISR_PRIORITY = "priority";
+	public final static String ISR_READY_PRIORITY = "isr_ready_priority";
+	public final static String ISR_HANDLER = "handler";
+	public final static String ISR_GENERATED_HANDLER = "isr___generated_handler";
+	public final static String ISR_GENERATED_ENTRY = "isr___generated_entry";
+	public final static String ISR_GENERATED_PRIOID = "isr___generated_priority_id";
 	public final static String ISR_ID = "isr_index";
 	public final static String ISR_OS_APPLICATION_NAME = "isr_mapped_to_an_os_application";
+	public final static String ISR_RESOURCE_LIST = TASK_RESOURCE_LIST;
+	public final static String ISR_REQUIRES_RESOURCES = "isr_requires_resources";
 	
 	/***************************************************************************
 	 * Autostart
@@ -79,6 +88,18 @@ public interface ISimpleGenResKeywords {
 	public final static String COUNTER_MAX_ALLOWED = "counter_maxAllowed";
 	public final static String COUNTER_TICKS = "counter_ticks";
 	public final static String COUNTER_MIN_CYCLE = "counter_minCycle";
+	public final static String COUNTER_SECONDPERTICK = "counter_second_per_ticks";
+	
+	public final static String COUNTER_TYPE = "counter_type";
+	public final static String COUNTER_TYPE_HW = "HARDWARE";
+	public final static String COUNTER_DEVICE = "counter__hw_device";
+	/** Handler defined by the user (if one)*/
+	public final static String COUNTER_USER_HANDLER = "counter__hw_user_handler";
+	public final static String COUNTER_ISR_PRIORITY = "counter__hw_isr_priority";
+	/** Handler used by the code (it may be the one proposed by the user or one computed by the code generator */
+	public final static String COUNTER_GENERATED_HANDLER = "counter__hw_generated_handler";
+	public final static String COUNTER_SYSTIMER = "counter__hw_system_timer";
+	public final static String COUNTER_TYPE_SW = "SOFTWARE";
 	
 	public final static String COUNTER_OS_APPLICATION_NAME = "counter_mapped_to_an_os_application";
 
@@ -101,6 +122,8 @@ public interface ISimpleGenResKeywords {
 	public final static String ALARM_SET_EVENT = "alarm_set_event";
 	/** contains the callBack name */
 	public final static String ALARM_CALL_BACK = "alarm_call_back";
+	/** contains the counter name */
+	public final static String ALARM_INCR_COUNTER = "alarm_increment_counter";
 	/** contains true if the task name is remote */
 	public final static String ALARM_TASK_IS_REMOTE = "alarm_task_is_remote";
 
@@ -112,6 +135,7 @@ public interface ISimpleGenResKeywords {
 	 **************************************************************************/
 	public final static String RESOURCE_GLOBAL = "resource_global";
 	public final static String RESOURCE_CEILING = "resource_ceiling";
+	public final static String RESOURCE_ISR_CEILING = "resource_isr_ceiling";
 	public final static String RESOURCE_SYS_ID = "resource_id";
 	public final static String RESOURCE_PROPERTY = "RESOURCEPROPERTY";
 	/** All Src files required by a resource (String[]) */
@@ -184,6 +208,12 @@ public interface ISimpleGenResKeywords {
 	public final static String OS_CPU_NIOS2_APP_CONFIG = "_cpu_type_specifics_nios2_app_config_";
 //	public final static String OS_CPU_ORTI_SECTIONS = "_cpu_type_specifics_orti_sections_";
 //	
+	
+	public final static String OS_CPU__ISR_REQUIRES_RESOURCES = "an_isr_requires_resources";
+	public final static String OS_CPU__ISR_REQUIRES_RESOURCES_MAX_PRIO = "an_isr_requires_resources_max_priority";
+	public final static String OS_CPU__ISR_REQUIRES_RESOURCES_SIZE = "an_isr_requires_resources_size";
+
+	
 	public final static String OS_CPU_STATUS = "_cpu_type_specifics_status_";
 	public final static String OS_CPU_STARTUPHOOK = "_cpu_type_specifics_startuphook_";
 	public final static String OS_CPU_ERRORHOOK = "_cpu_type_specifics_errorhook_";
@@ -253,6 +283,7 @@ public interface ISimpleGenResKeywords {
 	 * OS Application
 	 **************************************************************************/
 	public final static String OS_APPL_ID = "os_application_id";
+	public final static String OS_APPL_PATH = "os_application_paths";
 	public final static String OS_APPL_STACK = "os_application_stack";
 
 	public final static String OS_APPL_LIST_REF_ALARM = "os_application_list_ref_alarm";

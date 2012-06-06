@@ -5,12 +5,17 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
+import static com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter.checkOrDefault;
+import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter.getOsProperty;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -22,6 +27,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
@@ -29,6 +35,8 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterKernelCounterHw;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDescriptionManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
@@ -40,7 +48,6 @@ import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This writer build files for a DS PIC CPU - Board
@@ -52,6 +59,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			IExtractObjectsExtentions,
 			IExtractKeywordsExtentions {
 
+	private static final String EE_E200ZX_SYSTEM_TIMER_HANDLER = "EE_e200zx_system_timer_handler";
 	final String indent1 = IWritersKeywords.INDENT;
 	final String indent2 = indent1 + IWritersKeywords.INDENT;
 
@@ -72,6 +80,10 @@ public class SectionWriterHalMpc567 extends SectionWriter
 
 	static final String STACK_BASE_NAME = "EE_stack_";
 	private static final long DEFAULT_SYS_STACK_SIZE = 4096;
+	
+	private final SectionWriterIsr isrWriter;
+	private final SectionWriterKernelCounterHw counterHwWriter;
+	
 	/**
 	 * 
 	 */
@@ -97,6 +109,9 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		
 		this.parent = parent;
 		this.vt = parent == null ? null : parent.getVt();
+		
+		isrWriter = new SectionWriterIsr(parent, IWritersKeywords.CPU_PPCE200ZX);
+		counterHwWriter = new SectionWriterKernelCounterHw(parent, IWritersKeywords.CPU_PPCE200ZX, EE_E200ZX_SYSTEM_TIMER_HANDLER);
 	}
 
 	/**
@@ -132,6 +147,11 @@ public class SectionWriterHalMpc567 extends SectionWriter
 	 * @throws OilCodeWriterException if some ISR's attribute is missing 
 	 */
 	public void updateObjects() throws OilCodeWriterException {
+		
+		{
+			isrWriter.updateObjects();
+			counterHwWriter.updateObjects();
+		}
 
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		
@@ -140,11 +160,8 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		
 		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId++) {
 			final IOilObjectList ool = oilObjects[currentRtosId];
-			final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 			
-			if (sgrCpu.containsProperty(SGRK_OS_CPU_DATA_PREFIX)) {
-				final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
-	
+			{
 		        ArrayList<String> tmp_eeopts = new ArrayList<String>();
 				
 				/***********************************************************************
@@ -154,11 +171,15 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				 **********************************************************************/
 				String hw_type = null;
 //				Utility.explodeOilVar(Utility.varTreeToStringErtd(vt))
-				{
+				for (String currentCpuPrefix: AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX)) {
 					String cpu_model = CommonUtils.getFirstChildEnumType(vt, currentCpuPrefix+"MODEL", null);
 					if ("E200Z0".equals(cpu_model)) {
 						tmp_eeopts.add("__PPCE200Z0__");
 						hw_type = IWritersKeywords.CPU_PPCE200Z0;
+						
+					} else if ("E200Z4".equals(cpu_model)) {
+						tmp_eeopts.add("EE_PPCE200Z4");
+						hw_type = IWritersKeywords.CPU_PPCE200Z4;
 						
 					} else if ("E200Z6".equals(cpu_model)) {
 						tmp_eeopts.add("__PPCE200Z6__");
@@ -173,22 +194,22 @@ public class SectionWriterHalMpc567 extends SectionWriter
 								" cpu model for PPC E200Zx family." +
 								(cpu_model != null ? " Found " + cpu_model : ""), null, "", null);
 					}
-					
-					if (hw_type != null) {
-						sgrCpu.setProperty(ISimpleGenResKeywords.OS_CPU_TYPE, hw_type);
-						
-						CpuHwDescription cpuDescr = EECpuDescriptionManager.getHWDescription(hw_type);
-						if (cpuDescr != null) {
-							sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR, cpuDescr);
-							sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_COMMENT_MANAGER, cpuDescr.commentManager);
-						} else {
-							sgrCpu.removeAProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
-						}
-						
-						tmp_common_eeopts.add("__PPCE200ZX__");
-					}
 				}
-	
+				if (hw_type != null) {
+					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
+					sgrCpu.setProperty(ISimpleGenResKeywords.OS_CPU_TYPE, hw_type);
+					
+					CpuHwDescription cpuDescr = EECpuDescriptionManager.getHWDescription(hw_type);
+					if (cpuDescr != null) {
+						sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR, cpuDescr);
+						sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_COMMENT_MANAGER, cpuDescr.commentManager);
+					} else {
+						sgrCpu.removeAProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
+					}
+					
+					tmp_common_eeopts.add("__PPCE200ZX__");
+				}
+			
 				/***********************************************************************
 				 * 
 				 * EE OPTS
@@ -199,12 +220,20 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		
 			        
 			        // store all older values (if there are)
+					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 			        if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS)) {
 			        	String[] old = (String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS);
 			        	tmp_eeopts.addAll(Arrays.asList(old));
 			        }
 			        
-					String vle = CommonUtils.getFirstChildEnumType(vt, currentCpuPrefix+"VLE");
+
+			        String vle = null;
+					for (String currentCpuPrefix: AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX)) {
+						if (vle == null) {
+							vle = CommonUtils.getFirstChildEnumType(vt, currentCpuPrefix+"VLE");
+						}
+					}
+
 					if ("TRUE".equals(vle)
 							|| (vle == null && hw_type == IWritersKeywords.CPU_PPCE200Z0)) {
 						tmp_eeopts.add("__VLE__");
@@ -239,7 +268,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				 *  
 				 **********************************************************************/
 				{
-					String[] stack_size = CommonUtils.getValue(vt, currentCpuPrefix+"SYS_STACK_SIZE");
+					String[] stack_size = parent.getCpuDataValue(ool, "SYS_STACK_SIZE");
 					if (stack_size != null && stack_size.length>0 && stack_size[0] != null) {
 						
 						boolean valid = false;
@@ -255,6 +284,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 							Messages.sendWarningNl("System stack size cannot be negative (" + value + ")");
 						} else {
 							
+							ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 							sgrCpu.setProperty(SGR_OS_CPU_SYS_STACK_SIZE, ""+value);
 						}
 						
@@ -275,10 +305,9 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_COMMON_EE_OPTS, tmp_common_eeopts.toArray(new String[tmp_common_eeopts.size()]));			
 			
 			// updateStacks (needed by orti)... not the best solution....
-			handleStacks(ool);
+			handleStacks(currentRtosId, ool);
 		}
 
-	
 	}
 	
 	/**
@@ -312,7 +341,6 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			StringBuffer sbInithal_h = cpuBuffs.get(FILE_EE_CFG_H);
 			
 			final IOilObjectList ool = oilObjects[currentRtosId];
-			final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 	
 	
 			// ------------- Compute --------------------
@@ -322,26 +350,29 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			/***********************************************************************
 			 * SYSTEM STACK SIZE
 			 **********************************************************************/
-			sbInithal_h.append(indent1 + getCommentWriter(sgrCpu, FileTypes.H).writerSingleLineComment("System stack size") + 
+			sbInithal_h.append(indent1 + getCommentWriter(ool, FileTypes.H).writerSingleLineComment("System stack size") + 
 						indent1 + "#define EE_SYS_STACK_SIZE     " + 
-							( sgrCpu.containsProperty(SGR_OS_CPU_SYS_STACK_SIZE) ? 
-									sgrCpu.getString(SGR_OS_CPU_SYS_STACK_SIZE) :
-									DEFAULT_SYS_STACK_SIZE)
+							( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
+									DEFAULT_SYS_STACK_SIZE))
 						+ "\n\n");
 			
 			
 			/***********************************************************************
 			 * OTHER STACKs
 			 **********************************************************************/
-			sbInithal_c.append(handleStacks(ool));
+			sbInithal_c.append(handleStacks(currentRtosId, ool));
 			
 	
 			
 			//  ------------- MORE FILES ---------------
 			
 			
+			// isr
+			isrWriter.writeIsr(currentRtosId, ool, cpuBuffs);
+			counterHwWriter.writeCounterHw(currentRtosId, ool, cpuBuffs);
+			
 			// makefile
-			prepareMakeFile(sgrCpu);
+			prepareMakeFile(ool);
 		
 		}
 		
@@ -349,23 +380,25 @@ public class SectionWriterHalMpc567 extends SectionWriter
 	}
 
 
-	protected StringBuffer handleStacks(final IOilObjectList ool) throws OilCodeWriterException  {
+	protected StringBuffer handleStacks(int currentRtosId, final IOilObjectList ool) throws OilCodeWriterException  {
 		String stackType = parent.getStackType(); // MULTI or MONO
 		StringBuffer sbInithal_c = new StringBuffer();
 
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-		if (!sgrCpu.containsProperty(SGRK_OS_CPU_DATA_PREFIX)) {
+		if (getOsProperty(ool, SGRK_OS_CPU_DATA_PREFIX) == null) {
 			return sbInithal_c;
 		}
-		final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
-		final ICommentWriter commentWriterC = getCommentWriter(sgrCpu, FileTypes.C);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 		
 		List<ISimpleGenRes> taskNames = ool.getList(IOilObjectList.TASK);
 		List<ISimpleGenRes> osApplications = ool.getList(IOilObjectList.OSAPPLICATION);
 		boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
 		
-		final String cpu_type = sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_TYPE) ? sgrCpu.getString(ISimpleGenResKeywords.OS_CPU_TYPE) : PPC_MCU;
-		final String mcu_type = sgrCpu.containsProperty(SGR_OS_MCU_MODEL) ? " " + sgrCpu.getString(SGR_OS_MCU_MODEL) : "";
+		final String cpu_type = checkOrDefault(getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE), PPC_MCU);
+		final String mcu_type;
+		{
+			String tmp = getOsProperty(ool, SGR_OS_MCU_MODEL);
+			mcu_type = tmp == null ? "" : " " + tmp;
+		}
 
 		/*
 		 * Define a string for each MAX_OBJECT_NUMBER (OBJECT=task, RESOURCE, ...).
@@ -378,8 +411,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		final String indent = IWritersKeywords.INDENT;
 		
 		EEStackData sys_stack = new EEStackData(0,
-				new long[] { sgrCpu.containsProperty(SGR_OS_CPU_SYS_STACK_SIZE) ? 
-						sgrCpu.getLong(SGR_OS_CPU_SYS_STACK_SIZE) : DEFAULT_SYS_STACK_SIZE},
+				new long[] { Long.decode(checkOrDefault(getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE), "" + DEFAULT_SYS_STACK_SIZE))},
 				new long[] {0},
 				new String[] {" (int)&EE_e200zx_sys_stack "}, true);
 
@@ -398,6 +430,8 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			/* A buffer about declarations of stacks  */
 			StringBuffer sbStackDecl = new StringBuffer();
 			StringBuffer sbStackDeclSize = new StringBuffer();
+			final boolean usePragma = parent.checkPragma(currentRtosId);
+			LinkedHashMap<String, StringBuffer> sbStackPragma = new LinkedHashMap<String, StringBuffer>();
 //			StringBuffer stackPatternFill = new StringBuffer();
 			
 			sbInithal_c.append(commentWriterC
@@ -412,54 +446,59 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				/***************************************************************
 				 * IRQ_STACK
 				 **************************************************************/
-				
-				String[] child = new String[1];
-				String type = CommonUtils
-						.getFirstChildEnumType(vt, currentCpuPrefix
-								+ "MULTI_STACK", child);
-
-				if ("TRUE".equalsIgnoreCase(type)) {
-					String prefixIRQ = currentCpuPrefix
-						+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
-						+ "IRQ_STACK";
-					boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
-					.getFirstChildEnumType(vt, prefixIRQ, child));
+				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+				for (String currentCpuPrefix: currentCpuPrefixes) {
+					if (irqSize != null) {
+						break;
+					}
 					
-					if (ok) {
+					String[] child = new String[1];
+					String type = CommonUtils
+							.getFirstChildEnumType(vt, currentCpuPrefix
+									+ "MULTI_STACK", child);
+	
+					if ("TRUE".equalsIgnoreCase(type)) {
+						String prefixIRQ = currentCpuPrefix
+							+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
+							+ "IRQ_STACK";
+						boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
+						.getFirstChildEnumType(vt, prefixIRQ, child));
 						
-						prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
-						irqSize = new int[1];
-						{ // get data for IRQ STACK ...
-							String path[] = { "SYS_SIZE" };
-
-							for (int i = 0; i < path.length; i++) {
-								String tmp = null;
-								IVariable var = ti.getValue(prefixIRQ + path[i]
-										+ VALUE_VALUE);
-								if (var != null && var.get() != null) {
-									tmp = var.toString();
-								}
-								if (tmp == null)
-									throw new RuntimeException(
-											ERR_CPU_TYPE + " : Expected " + path[i]);
-
-								// check for value
-								try {
-									// ... store them inside the irqSize vector
-									irqSize[0] = (Integer.decode("" + tmp))
-											.intValue();
-									// ... and increase the memory requirement
-//									stackEnd += irqSize[0];
-								} catch (Exception e) {
-									throw new RuntimeException(
-											ERR_CPU_TYPE + " : Wrong int" + path[i]
-													+ ", value = " + tmp + ")");
+						if (ok) {
+							
+							prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
+							irqSize = new int[1];
+							{ // get data for IRQ STACK ...
+								String path[] = { "SYS_SIZE" };
+	
+								for (int i = 0; i < path.length; i++) {
+									String tmp = null;
+									IVariable var = ti.getValue(prefixIRQ + path[i]
+											+ VALUE_VALUE);
+									if (var != null && var.get() != null) {
+										tmp = var.toString();
+									}
+									if (tmp == null)
+										throw new RuntimeException(
+												ERR_CPU_TYPE + " : Expected " + path[i]);
+	
+									// check for value
+									try {
+										// ... store them inside the irqSize vector
+										irqSize[0] = (Integer.decode("" + tmp))
+												.intValue();
+										// ... and increase the memory requirement
+	//									stackEnd += irqSize[0];
+									} catch (Exception e) {
+										throw new RuntimeException(
+												ERR_CPU_TYPE + " : Wrong int" + path[i]
+														+ ", value = " + tmp + ")");
+									}
 								}
 							}
 						}
 					}
 				}
-
 			}
 
 			/*
@@ -607,11 +646,21 @@ public class SectionWriterHalMpc567 extends SectionWriter
 //				 DECLARE STACK SIZE && STACK (ARRAY)
 				for (int j = 1; j < size.length; j++) {
 				    long value = size[j][0];
+			    	final String memId = memoryId[j];
 //				    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
-					sbStackDecl.append(indent1 + "static EE_STACK_T " +
-								(memoryId[j] == null ? "EE_STACK_ATTRIB" : "EE_STACK_ATTRIB_NAME("+memoryId[j]+")") +
-								" "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* "+descrStack[j]+" */\n");
 					sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+" " + commentWriterC.writerSingleLineComment("size = "+size[j][0]+" bytes"));
+			    	
+			    	final String decl = "static EE_STACK_T " +
+							( usePragma ? "" :
+								(memId == null ? "EE_STACK_ATTRIB " : "EE_STACK_ATTRIB_NAME("+memId+") ")
+							) +
+								STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* "+descrStack[j]+" */";
+			    	
+				    if (usePragma) {
+				    	addPragmaSections(sbStackPragma, decl, memId);
+				    } else {
+				    	sbStackDecl.append(indent1 + decl + "\n");
+				    }
 					
 					// USED BY ORTI
 					stackTmp.add(new EEStackData(j, new long[] {size[j][0]}, new long[] {size[j][0]},
@@ -651,11 +700,18 @@ public class SectionWriterHalMpc567 extends SectionWriter
 
 				{ // if required, init also the irq stack
 					if (irqSize != null) {
-					    int j = size.length;
+						int j = size.length;
 					    long value = irqSize[0];
+					    
 //					    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
-						sbStackDecl.append(indent1 + "static EE_STACK_T EE_STACK_ATTRIB "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* irq stack */\n");
 						sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+ " " + commentWriterC.writerSingleLineComment("size = "+irqSize[0]+" bytes"));
+						
+						final String decl = "static EE_STACK_T "+( usePragma ? "" : "EE_STACK_ATTRIB ")+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)];\t/* irq stack */";
+					    if (usePragma) {
+					    	addPragmaSections(sbStackPragma, decl, null);
+					    } else {
+					    	sbStackDecl.append(indent1 + decl + "\n");
+					    }
 
 						sbStack
 								.append(indent+"/* stack used only by IRQ handlers */\n"
@@ -668,6 +724,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 						stackTmp.add(new EEStackData(eesdID, new long[] {irqSize[0]}, new long[] {irqSize[0]},
 								new String[] {" (int)(&"+STACK_BASE_NAME+j+")"}, true)); // DELTA
 
+						ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 						sgrCpu.setProperty(ISimpleGenResKeywords.OS_IRQ_STACK_ID, ""+eesdID);
 					}
 				}
@@ -680,25 +737,67 @@ public class SectionWriterHalMpc567 extends SectionWriter
 						ISimpleGenRes sgr = iter.next();
 						sgr.setObject(SGRK_TASK_STACK, stackTmp.get(pos[j]));
 					}
+					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 					sgrCpu.setObject(SGRK_OS_STACK_LIST, stackTmp.toArray(new EEStackData[0]));
 					sgrCpu.setObject(SGRK_OS_STACK_VECTOR_NAME, "EE_e200z7_system_tos");
 				}
 
 			}		
 
-			//  add stack buffers
-			sbInithal_c.append(sbStackDeclSize+"\n"+
-			        sbStackDecl + "\n" +
+			// add stack sizes
+			sbInithal_c.append(sbStackDeclSize+"\n");
+
+			//  add pragma sections
+			closePragmaSections(sbStackPragma);
+			for (StringBuffer buff: sbStackPragma.values()) {
+				sbInithal_c.append(buff+"\n\n");
+			}
+
+			// add other stack declarations
+			sbInithal_c.append(sbStackDecl + "\n" +
 			        sbStack
 //			        +stackPatternFill
 			        );
+
 		} else {
+			
+			ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 			sgrCpu.setObject(SGRK_OS_STACK_LIST, new EEStackData[] {sys_stack});
 		}
 
 		return sbInithal_c;
 	}
+
+	private void addPragmaSections(
+			LinkedHashMap<String, StringBuffer> sbStackPragma, String stack_def,
+			final String memId) {
+		StringBuffer buff;
+		if (sbStackPragma.containsKey(memId)) {
+			buff = sbStackPragma.get(memId);
+		} else {
+			buff = new StringBuffer();
+			sbStackPragma.put(memId, buff);
+			if (memId == null) {
+				buff.append("#pragma section PRAGMA_SECTION_BEGIN_SYS_STACK\n");
+			} else {
+				buff.append("#pragma section DATA \"ee_stack_"+memId+"\" \"ee_stack_"+memId+"\"\n");
+			}
+		}
+		
+		buff.append(indent1 + stack_def + "\n");
+	}
 	
+	private void closePragmaSections(LinkedHashMap<String, StringBuffer> sbStackPragma){
+		for (Entry<String, StringBuffer> entry : sbStackPragma.entrySet()) {
+			String key = entry.getKey();
+			if (key == null) {
+				entry.getValue().append("#pragma section PRAGMA_SECTION_END_SYS_STACK\n");
+			} else {
+				entry.getValue().append("#pragma section DATA\n");
+			}
+		}
+	}
+
 	/*
 	 * Parse and write the MCU Section
 	 */
@@ -706,46 +805,46 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		int z0 = 0;
+		int z4 = 0;
 		int z6 = 0;
 		int z7 = 0;
 		
 		String mcu_model = null;
 		
-		for (int currentRtosId = 0; mcu_model == null && currentRtosId < oilObjects.length; currentRtosId ++) { 
-			
-			/* COMMON VARIABLES */
-			ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
+		for (IOilObjectList ool : oilObjects) {
 
-			{
+			if (mcu_model == null) {
 				/***********************************************************************
 				 * get values
 				 **********************************************************************/
-	
-				// prepare the path :
-				// ... the prefix ...
-				String currentMcuPrefix = os.getPath() + S
-						+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-						+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "MCU_DATA";
-				
-				// ... get the node identifier
-				String[] child = new String[1];
-				String mcu_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
-				
-				if (child.length >0 && PPC_MCU.equals(mcu_type)) {
-					// ... and compete it 
-					currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST + "MODEL";
-	
-					mcu_model = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+				ArrayList<String> childPaths = new ArrayList<String>();
+				List<String> childFound = parent.getRtosCommonChildType(ool, "MCU_DATA", childPaths);
+
+				for (int index = 0; index<childFound.size(); index++) {
+					if (mcu_model == null) {
+						String mcu_type = childFound.get(index);
+						
+						if (PPC_MCU.equals(mcu_type)) {
+							// ... and compete it 
+							String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "MODEL";
+			
+							mcu_model = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, null);
+						}
+						
+					}
 				}
+
 			}
 			
 			
 			
-			if (os.containsProperty(ISimpleGenResKeywords.OS_CPU_TYPE)) {
-				String hw_type = os.getString(ISimpleGenResKeywords.OS_CPU_TYPE);
+			{
+				String hw_type = getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE);
 
 				if (IWritersKeywords.CPU_PPCE200Z0.equals(hw_type)) {
 					z0++;
+				} else if (IWritersKeywords.CPU_PPCE200Z4.equals(hw_type)) {
+					z4++;
 				} else if (IWritersKeywords.CPU_PPCE200Z6.equals(hw_type)) {
 					z6++;
 				} else if (IWritersKeywords.CPU_PPCE200Z7.equals(hw_type)) {
@@ -758,42 +857,50 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		String mcu_ee_opt = null;
 		if ("MPC5668G".equals(mcu_model)) {
 			
-			if (z0>1 || z6>1 || z7 >0) {
+			if (z0>1 || z6>1 || z4 >0 || z7 >0) {
 				Messages.sendWarningNl("MPC5668G mcu supports not more than one z0 and not more than one z6");
 			}
 			mcu_ee_opt = "__MPC5668G__";
 		} else if ("MPC5674F".equals(mcu_model)) {
 			
-			if (z0>0 || z6>0 || z7 !=1) {
+			if (z0>0 || z6>0 || z4 >0 || z7 !=1) {
 				Messages.sendWarningNl("MPC5674F mcu supports only a single Z7 cpu");
 			}
 			mcu_ee_opt = "__MPC5674F__";
+		} else if ("MPC5643L".equals(mcu_model)) {
+			
+			if (z0>0 || z6>0 || z7 >0 || z4 > 2) {
+				Messages.sendWarningNl("MPC5643L mcu supports one or two Z4 cpu");
+			}
+			mcu_ee_opt = "EE_MPC5643L";
 			
 		} else {
 			Messages.sendWarningNl("Unsupported MCU");
 		}
+		
+		if (mcu_ee_opt != null) {
+			tmp_common_eeopts.add(mcu_ee_opt);				
+		}
 
 			
-		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId ++) { 
-			
-			/* COMMON VARIABLES */
-			ISimpleGenRes sgrCpu = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-
-			if (mcu_ee_opt != null) {
-				tmp_common_eeopts.add(mcu_ee_opt);				
-			}
-			
-			if (mcu_model != null)
+		if (mcu_model != null) {
+			for (IOilObjectList ool: oilObjects) { 
+				ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 				sgrCpu.setProperty(SGR_OS_MCU_MODEL, mcu_model);
+			}
 		}
 	}
 	
-	void prepareMakeFile(ISimpleGenRes sgrCpu) {
-		final ICommentWriter commentWriterMf = getCommentWriter(sgrCpu, FileTypes.MAKEFILE);
+	void prepareMakeFile(IOilObjectList ool) {
+		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 		
 		
-		final String cpu_type = sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_TYPE) ? sgrCpu.getString(ISimpleGenResKeywords.OS_CPU_TYPE) : PPC_MCU;
-		final String mcu_type = sgrCpu.containsProperty(SGR_OS_MCU_MODEL) ? " " + sgrCpu.getString(SGR_OS_MCU_MODEL) : "";
+		final String cpu_type = checkOrDefault(getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE), PPC_MCU);
+		final String mcu_type;
+		{
+			String tmp = getOsProperty(ool, SGR_OS_MCU_MODEL);
+			mcu_type = tmp == null ? "" : " " + tmp;
+		}
 		
 		/***********************************************************************
          * 
@@ -832,10 +939,10 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		        );
 		    }
 
+			ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
             sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile_variables.toString());
 
 	}
-
 	
 	/**
 	 * This metod takes an array and returns the first element, or null if the

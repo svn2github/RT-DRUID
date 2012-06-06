@@ -11,8 +11,8 @@ goto end
 
 
 :run
-for /f %%a in ('dir /B %1\plugins\org.eclipse.equinox.launcher_*.jar') do @set jar_launcher=%%a 
-java -jar %1\plugins\%jar_launcher% -data %3/workspace -application com.eu.evidence.rtdruid.oil.standalone.templates --templateId %2 --outputDir %3
+for /f "delims= tokens=1" %%c in ('dir /B /S /OD %1\plugins\org.eclipse.equinox.launcher_*.jar') do set jar_launcher=%%c
+java -jar "%jar_launcher%" -data %3/workspace -application com.eu.evidence.rtdruid.oil.standalone.templates --templateId %2 --outputDir %3
 
 
 

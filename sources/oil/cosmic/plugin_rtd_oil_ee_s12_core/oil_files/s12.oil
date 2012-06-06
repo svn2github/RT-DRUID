@@ -4,7 +4,7 @@ IMPLEMENTATION ee {
     OS {
 
         ENUM [
-            MC9S12XS {
+            MC9S12XS { // still HERE for back-compatibility
                 STRING ID = "default_cpu";
                 STRING APP_SRC[];
                 
@@ -21,11 +21,27 @@ IMPLEMENTATION ee {
                 ] MULTI_STACK = FALSE;
                 
                 BOOLEAN ICD = FALSE;	
+            },
+            MC9S12 { // all S12 cpus (like, s12xs and s12g)
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                        TRUE {
+                            BOOLEAN [
+                                TRUE {
+                                    UINT32 SYS_SIZE;
+                                },
+                                FALSE
+                            ] IRQ_STACK;
+                        },
+                        FALSE
+                ] MULTI_STACK = FALSE;
             }
         ] CPU_DATA[];
 
         ENUM [
-			S12XS {
+			S12XS { // still HERE for back-compatibility
 				BOOLEAN SERIAL = FALSE;
 				BOOLEAN TIMER = FALSE;			
 			
@@ -38,6 +54,22 @@ IMPLEMENTATION ee {
 						STRING INCLUDE_S;
 					},
 					MC9S12XS128
+				] MODEL;
+			},
+			MC9S12 {
+				BOOLEAN SERIAL = FALSE;
+				BOOLEAN TIMER = FALSE;			
+			
+				ENUM [
+					CUSTOM {
+						STRING MODEL;
+						STRING LINKERSCRIPT;
+						STRING INCLUDE_H;
+						STRING INCLUDE_C;
+						STRING INCLUDE_S;
+					},
+					MC9S12XS128,
+					MC9S12G128
 				] MODEL;
 			}
 		] MCU_DATA;
@@ -52,6 +84,16 @@ IMPLEMENTATION ee {
 						BUTTONS,
 						LEDS,
 						LIGHT_SENSOR,
+						ALL
+				] OPTIONS[];
+			},
+			// ----- FREESCALE S12G -----
+			TWRS12G128 {	
+						
+				ENUM [
+						SCI,
+						BUTTONS,
+						LEDS,
 						ALL
 				] OPTIONS[];
 			}

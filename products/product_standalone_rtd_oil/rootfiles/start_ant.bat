@@ -14,9 +14,8 @@ goto end
 
 
 :run
-for /f %%a in ('dir /B %1\plugins\org.eclipse.equinox.launcher_*.jar') do set jar_launcher=%%a 
+for /f "delims= tokens=1" %%c in ('dir /B /S /OD %1\plugins\org.eclipse.equinox.launcher_*.jar') do set jar_launcher=%%c
 
-set java_path=%1\plugins\%jar_launcher%
 :: remove eclipse path from parameters
 SHIFT
 
@@ -53,6 +52,6 @@ goto :compress
 if /I "%WSOPT_set%"=="true" ( set WSOPT=)
 
 @echo on
-java -jar %java_path% %WSOPT% -application org.eclipse.ant.core.antRunner %all_params%
+java -jar "%jar_launcher%" %WSOPT% -application org.eclipse.ant.core.antRunner %all_params%
 
 :end

@@ -42,4 +42,9 @@ public class ConfigurationTemplateProvider implements ITemplatePathProvider {
 	public boolean isDynamic() {
 		return true;
 	}
+	
+	@Override
+	public int priority() {
+		return 10;
+	}
 }

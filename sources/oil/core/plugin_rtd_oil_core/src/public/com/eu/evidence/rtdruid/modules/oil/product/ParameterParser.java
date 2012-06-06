@@ -3,11 +3,12 @@ package com.eu.evidence.rtdruid.modules.oil.product;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.eu.evidence.rtdruid.desk.Logger;
 import com.eu.evidence.rtdruid.desk.ReadVersion;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.IWorkerExampleWriter;
-import com.eu.evidence.rtdruid.internal.modules.oil.workers.Logger;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.StdOutLogger;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerAllExampleWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerExampleList;
@@ -53,7 +54,7 @@ public class ParameterParser {
 			"RT-Druid "+ ReadVersion.getRTDruidVersion() +"\n\n" +
 			"Valid parameters are:\n" +
 	//		"  "+ANT_KEY+" file_name      specifies the ant file to use\n" +
-			"  "+INPUT_KEY+" file_name      specifies directly the oil file\n" +
+			"  "+INPUT_KEY+" file_name [file_name .. file_name]      specifies directly one or more input files.\n" +
 			"  "+CONF_FILE_KEY+" file_name      specifies the system configuration file\n" +
 			"  "+OUTPUT_KEY+" directory   specifies the directory where store every file (Default value is '"+DEFAULT_CONF_OUTPUT+"')\n" +
 			"                       (Note : application directory is the parent of the specified output)\n\n";
@@ -120,10 +121,11 @@ public class ParameterParser {
 			throw new IllegalArgumentException(getWriterHelp());
 		}
 		
-		String oil_file = null;
+		ArrayList<String> oil_file = new ArrayList<String>();
 		String pref_file = null;
 		String output_dir = null;
 
+		boolean inputKeyFound = false;
 		for (int i=0; i<args.length; i++) {
 			if (HELP_KEY.equals(args[i])) {
 				throw new IllegalArgumentException(getWriterHelp());
@@ -131,8 +133,9 @@ public class ParameterParser {
 			} else if (INPUT_KEY.equals(args[i])) {
 				// get the next element
 				i++;
+				inputKeyFound = true;
 				if (i<args.length) {
-					oil_file = args[i];
+					oil_file.add(args[i]);
 				} else {
 					throw new IllegalArgumentException(INPUT_KEY + " parameter required a value");
 				}
@@ -152,13 +155,16 @@ public class ParameterParser {
 				} else {
 					throw new IllegalArgumentException(CONF_FILE_KEY + " parameter required a value");
 				}
+			} else if (inputKeyFound) {
+				oil_file.add(args[i]); // one more input file
 			} else {
+				
 				throw new IllegalArgumentException(args[i] + " parameter is not valid\n\n" + getWriterHelp());
 			}
 		}
 		// end parse args
 		
-		if (oil_file == null) {
+		if (oil_file.size() == 0) {
 			throw new IllegalArgumentException(getWriterHelp());
 		}
 		
@@ -167,7 +173,9 @@ public class ParameterParser {
 		}
 		
 		WorkerOilConfWriter writer = new WorkerOilConfWriter(logger);
-		writer.setInputfile(oil_file);
+		for (String s: oil_file) {
+			writer.addInputfile(s);
+		}
 		writer.setOutputdir(output_dir);
 		loadProperties(pref_file, writer);
 

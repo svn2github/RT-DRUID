@@ -69,7 +69,7 @@ public class OilVarMP extends OilVar implements IMountPointVar {
 	public static final int BOTH =2;
 
 	protected int current;
-	protected EList emfDoc;
+	protected EList<OilObjectWithID> emfDoc;
 	//protected EList value;
 
 
@@ -155,15 +155,20 @@ public class OilVarMP extends OilVar implements IMountPointVar {
 		return this.value == null ? "null" : (String) this.value;
 	}
 	
+	
+	protected void popolateEmf() {
+		if (current == STR) {
+			emfDoc = parse( (String) this.value);
+			current = BOTH;
+		}
+	}
+	
 	/**
 	 * @retun  null if this object doesn't contains data, a IVarTreePointer otherwise
 	 */
 	public ISubVarTreePointer getPointer(EditingDomain editingDomain) {
 		
-		if (current == STR) {
-			emfDoc = parse( (String) this.value);
-			current = BOTH;
-		}
+		popolateEmf();
 		
 		return new OilApplPointer(emfDoc, editingDomain, new DocumentState() {
 			public void modified() {
@@ -178,8 +183,8 @@ public class OilVarMP extends OilVar implements IMountPointVar {
 	}
 	//-------------------
 	
-	protected EList parse(String data) {//, OilImplID implId) {
-		EList tmpDoc = new BasicEList();
+	protected EList<OilObjectWithID> parse(String data) {//, OilImplID implId) {
+		EList<OilObjectWithID> tmpDoc = new BasicEList<OilObjectWithID>();
 		// return a void tree
         if (data == null) {
 			return tmpDoc;
@@ -212,7 +217,7 @@ public class OilVarMP extends OilVar implements IMountPointVar {
 			NodeList children = doc.getDocumentElement().getChildNodes();
 			for (int i=0; i<children.getLength(); i++) {
 				if (children.item(i) instanceof Element) {
-					tmpDoc.add(storeInsideAOilVar((Element) children.item(i), null));
+					tmpDoc.add((OilObjectWithID) storeInsideAOilVar((Element) children.item(i), null));
 				}
 			}
 		}
@@ -266,6 +271,8 @@ public class OilVarMP extends OilVar implements IMountPointVar {
 			if (current.hasAttribute(IOilXMLLabels.ATTR_NAME)) {
 				String att = current.getAttribute(IOilXMLLabels.ATTR_NAME);
 				((HW) answer).setName(new StringVar(att));
+			} else {
+				((HW) answer).setName(null);
 			}
         	
 			childrenList = ((HW) answer).getRtosList();
@@ -279,6 +286,8 @@ public class OilVarMP extends OilVar implements IMountPointVar {
 			if (current.hasAttribute(IOilXMLLabels.ATTR_NAME)) {
 				String att = current.getAttribute(IOilXMLLabels.ATTR_NAME);
 				((RTOS) answer).setName(new StringVar(att));
+			} else {
+				((RTOS) answer).setName(null);
 			}
         	
 			childrenList = ((RTOS) answer).getParameterList();
@@ -455,4 +464,33 @@ public class OilVarMP extends OilVar implements IMountPointVar {
 		return buffer.toString();
 	}
 	
+	
+	@Override
+	public void merge(IMountPointVar var, String path, boolean overwrite) {
+		if (var == null) {
+			return;
+		}
+		if (!(var instanceof OilVarMP)) {
+			throw new IllegalArgumentException();
+		}
+		
+		// ensure emfDoc are full
+		OilVarMP newVar = (OilVarMP) var;
+		newVar.popolateEmf();
+		popolateEmf();
+		
+		for (OilObjectWithID rroot : newVar.emfDoc) {
+			boolean newElem = true;
+			for (Iterator<OilObjectWithID> iter = emfDoc.iterator(); iter.hasNext() && newElem;) {
+				OilObjectWithID elem = iter.next();
+				if (checkStrings(elem.getObjectID(), rroot.getObjectID())) {
+					newElem = false;
+					VarTreeCopy.merge(elem, rroot, path, overwrite);
+				}
+			}
+			if (newElem) {
+				emfDoc.add(rroot.clone());
+			}
+		}
+	}
 }

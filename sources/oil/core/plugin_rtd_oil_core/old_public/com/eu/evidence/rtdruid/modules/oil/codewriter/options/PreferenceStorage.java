@@ -64,6 +64,12 @@ public class PreferenceStorage {
 		// third: check if there is a file inside the workspace
 		if (currentFile == null) {
 			lookForInstallationFile();
+			if (currentFile == null) {
+				lookForEclipseHome();
+				if (currentFile == null) {
+					lookForEclipseHomeConfiguration();
+				}
+			}
 		}
 	}
 	
@@ -183,6 +189,55 @@ public class PreferenceStorage {
 
 		try {
 			Location location = Platform.getConfigurationLocation();
+			dbg += "\n>>lookForPlatformCOnfigurationDir :" + location + " ... ";
+			if (location != null) {
+				URL url = location.getURL();
+				String url_f = url == null ? null : url.getFile();
+				
+				if (url_f != null) { 
+				
+					IPath path = new Path(url_f);
+					path = path.append(DEFAULT_NAME);
+					dbg += path + " ... ";
+					
+					File file = new File(path.toOSString());
+					if (file.exists() && file.isFile() && file.canRead()) {
+						Properties tmp = new Properties();
+						try {
+							tmp.load(new FileInputStream(file));
+							values.clear();
+							values.putAll(tmp);
+							currentFile = file;
+							loaded = true;
+							dbg += " ... done ";
+						} catch (FileNotFoundException e) {
+							// cannot be
+							RtdruidLog.log(e);
+						} catch (IOException e) {
+							// some problems reading the file
+							RtdruidLog.log(e);
+							dbg += " ... " + e.getMessage();
+						}
+					} else {
+						dbg += " ... not found";
+					}
+				}
+			}
+		} finally {
+			dbg += "<<\n\n";
+			//System.out.println(dbg);
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	protected void lookForEclipseHome() {
+		currentFile = null;
+		String dbg = "";
+
+		try {
+			Location location = Platform.getInstallLocation();
 			dbg += "\n>>lookForInstallationFile :" + location + " ... ";
 			if (location != null) {
 				URL url = location.getURL();
@@ -223,6 +278,57 @@ public class PreferenceStorage {
 		}
 	}
 
+	/**
+	 * 
+	 */
+	protected void lookForEclipseHomeConfiguration() {
+		currentFile = null;
+		String dbg = "";
+
+		try {
+			Location location = Platform.getInstallLocation();
+			dbg += "\n>>lookForInstallation/configurationFile :" + location + " ... ";
+			if (location != null) {
+				URL url = location.getURL();
+				String url_f = url == null ? null : url.getFile();
+				
+				if (url_f != null) { 
+				
+					IPath path = new Path(url_f);
+					path = path.append("configuration");
+					path = path.append(DEFAULT_NAME);
+					dbg += path + " ... ";
+					
+					File file = new File(path.toOSString());
+					if (file.exists() && file.isFile() && file.canRead()) {
+						Properties tmp = new Properties();
+						try {
+							tmp.load(new FileInputStream(file));
+							values.clear();
+							values.putAll(tmp);
+							currentFile = file;
+							loaded = true;
+							dbg += " ... done ";
+						} catch (FileNotFoundException e) {
+							// cannot be
+							RtdruidLog.log(e);
+						} catch (IOException e) {
+							// some problems reading the file
+							RtdruidLog.log(e);
+							dbg += " ... " + e.getMessage();
+						}
+					} else {
+						dbg += " ... not found";
+					}
+				}
+			}
+		} finally {
+			dbg += "<<\n\n";
+			//System.out.println(dbg);
+		}
+	}
+
+	
 	/**
 	 * @return a copy of all values handled set in this Preference Storage
 	 */

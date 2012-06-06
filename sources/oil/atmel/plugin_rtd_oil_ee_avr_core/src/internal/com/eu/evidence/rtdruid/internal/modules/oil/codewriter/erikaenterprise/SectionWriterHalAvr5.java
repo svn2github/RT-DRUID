@@ -23,6 +23,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
@@ -38,7 +39,6 @@ import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This writer build files for a FP Kernel
@@ -133,14 +133,15 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 
 		// ------------- Requirement --------------------
 		StringBuffer sbInithal_c = answer.get(FILE_EE_CFG_C);
-		List<ISimpleGenRes> taskNames = oilObjects[currentRtosId].getList(IOilObjectList.TASK);
+		IOilObjectList ool = oilObjects[currentRtosId];
+		List<ISimpleGenRes> taskNames = ool.getList(IOilObjectList.TASK);
 		String stackType = parent.getStackType(); // MULTI or MONO
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-		final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
+//		final ISimpleGenRes sgrCpu = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS____CHECK_REQUIRED).get(0);
+		final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
 		//boolean irq_stack_need = checkKeyword(WritersKeys.IRQ_STACK_NEEDED);
 		
-		final ICommentWriter commentWriterC = getCommentWriter(sgrCpu, FileTypes.C);
-		final ICommentWriter commentWriterMf = getCommentWriter(sgrCpu, FileTypes.MAKEFILE);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
+		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 
 		// ------------- Buffers --------------------
 		/* A buffer about stack  */
@@ -156,9 +157,8 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 		long stackPointer;
 		long stackEnd;
 		{
-			String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
-					+ S + "STACK_BOTTOM");
-			if (tmp == null || tmp.length == 0 || tmp[0] == null)
+			String[] tmp = parent.getCpuDataValue(ool, "STACK_BOTTOM");
+			if (tmp != null && tmp.length == 0)
 				throw new OilCodeWriterException(ERR_CPU_TYPE + " : Expected " + "STACK_BOTTOM");
 
 			// check that values is a (Long) number
@@ -190,48 +190,53 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 				/***************************************************************
 				 * IRQ_STACK
 				 **************************************************************/
-				
-				String[] child = new String[1];
-				String type = CommonUtils
-						.getFirstChildEnumType(vt, currentCpuPrefix
-								+ "MULTI_STACK", child);
-
-				if ("TRUE".equalsIgnoreCase(type)) {
-					String prefixIRQ = currentCpuPrefix
-						+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
-						+ "IRQ_STACK";
-					boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
-					.getFirstChildEnumType(vt, prefixIRQ, child));
+				for (String currentCpuPrefix: currentCpuPrefixes) {
+					if (irqSize != null) {
+						break;
+					}
 					
-					if (ok) {
+					String[] child = new String[1];
+					String type = CommonUtils
+							.getFirstChildEnumType(vt, currentCpuPrefix
+									+ "MULTI_STACK", child);
+	
+					if ("TRUE".equalsIgnoreCase(type)) {
+						String prefixIRQ = currentCpuPrefix
+							+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
+							+ "IRQ_STACK";
+						boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
+						.getFirstChildEnumType(vt, prefixIRQ, child));
 						
-						prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
-						irqSize = new int[1];
-						{ // get data for IRQ STACK ...
-							String path[] = { "SYS_SIZE" };
-
-							for (int i = 0; i < path.length; i++) {
-								String tmp = null;
-								IVariable var = ti.getValue(prefixIRQ + path[i]
-										+ VALUE_VALUE);
-								if (var != null && var.get() != null) {
-									tmp = var.toString();
-								}
-								if (tmp == null)
-									throw new RuntimeException(
-											ERR_CPU_TYPE + " : Expected " + path[i]);
-
-								// check for value
-								try {
-									// ... store them inside the irqSize vector
-									irqSize[0] = (Integer.decode("" + tmp))
-											.intValue();
-									// ... and increase the memory requirement
-									stackEnd -= irqSize[0];
-								} catch (Exception e) {
-									throw new RuntimeException(
-											ERR_CPU_TYPE + " : Wrong int" + path[i]
-													+ ", value = " + tmp + ")");
+						if (ok) {
+							
+							prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
+							irqSize = new int[1];
+							{ // get data for IRQ STACK ...
+								String path[] = { "SYS_SIZE" };
+	
+								for (int i = 0; i < path.length; i++) {
+									String tmp = null;
+									IVariable var = ti.getValue(prefixIRQ + path[i]
+											+ VALUE_VALUE);
+									if (var != null && var.get() != null) {
+										tmp = var.toString();
+									}
+									if (tmp == null)
+										throw new RuntimeException(
+												ERR_CPU_TYPE + " : Expected " + path[i]);
+	
+									// check for value
+									try {
+										// ... store them inside the irqSize vector
+										irqSize[0] = (Integer.decode("" + tmp))
+												.intValue();
+										// ... and increase the memory requirement
+										stackEnd -= irqSize[0];
+									} catch (Exception e) {
+										throw new RuntimeException(
+												ERR_CPU_TYPE + " : Wrong int" + path[i]
+														+ ", value = " + tmp + ")");
+									}
 								}
 							}
 						}
@@ -412,6 +417,7 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 						ISimpleGenRes sgr = iter.next();
 						sgr.setObject(SGRK_TASK_STACK, stackTmp.get(pos[j]));
 					}
+					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 					sgrCpu.setObject(SGRK_OS_STACK_LIST, stackTmp.toArray(new EEStackData[0]));
 				}
 
@@ -573,9 +579,8 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 
 //			Properties irq = new Properties();
 			
-			String path = currentCpuPrefix + S + "HANDLER";
 			ArrayList<String> handlersPaths = new ArrayList<String>();
-			ArrayList<String> handlersFound = CommonUtils.getAllChildrenEnumType(vt, path , handlersPaths);
+			List<String> handlersFound =parent.getRtosCommonChildType(ool, "HANDLER", handlersPaths);
 			
 			// this map is useful to group all functions (KEY = "type_function")
 			class HandlerInfo implements Comparable<Object> {
@@ -621,7 +626,7 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 				if (index>=0) {
 
 					// get the name of the function and the isr type
-					String tp = path + CommonUtils.VARIANT_ELIST + handlersPaths.get(index) + CommonUtils.PARAMETER_LIST;
+					String tp = handlersPaths.get(index) + CommonUtils.PARAMETER_LIST;
 					String tmpVal[] = CommonUtils.getValue(vt, tp + "FUNCTION");
 					String tmpTyp[] = CommonUtils.getValue(vt, tp + "TYPE");
 					
@@ -740,6 +745,8 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 			        );
 			    }
 		        
+			    // save in the first OS
+			    final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
 	            sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile.toString());
 
 		}
@@ -755,9 +762,7 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 		final IOilObjectList[] oilObjects = parent.getOilObjects();		
 		
 		final int currentRtosId = 0;
-		final IOilObjectList ool = oilObjects[currentRtosId];
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-		final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
+		final IOilObjectList ool = oilObjects[currentRtosId];			
 
 		/***********************************************************************
 		 * 
@@ -769,7 +774,8 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 	        // TIMERs
 	        ArrayList<String> tmp = new ArrayList<String>();
 	        
-	        // store all older values (if there are)
+	        // store all older values (if there are) in the first cpu
+	        final ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 	        if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS)) {
 	        	String[] old = (String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS);
 	        	tmp.addAll(Arrays.asList(old));
@@ -779,25 +785,28 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 	        String[] timers = new String[] {"TIMER0", "TIMER1", "TIMER2", "TIMER3"};
 	        
 	        boolean enable_some_timers = false; 
-	        for (int i=0; i<timers.length; i++) {
-				String tmp1 = CommonUtils
-						.getFirstChildEnumType(vt, currentCpuPrefix
-								+ timers[i], null);
-				if (tmp1 == null) {
-					tmp1 = TIMER_STOP;
-				}
-				
-				// enable a timer only if is not stop
-				if (!TIMER_STOP.equals(tmp1)) {
-					String ee_opt = "__TIMER" + i + "_CLK_"+tmp1+"__";
-					tmp.add(ee_opt);
+	        final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+	        for (String currentCpuPrefix: currentCpuPrefixes) {
+		        for (int i=0; i<timers.length; i++) {
+					String tmp1 = CommonUtils
+							.getFirstChildEnumType(vt, currentCpuPrefix
+									+ timers[i], null);
+					if (tmp1 == null) {
+						tmp1 = TIMER_STOP;
+					}
 					
-					String ee_opt2 = "__TIMER_" + i + "_USED__";
-					tmp.add(ee_opt2);
-					
-					enable_some_timers = true;
+					// enable a timer only if is not stop
+					if (!TIMER_STOP.equals(tmp1)) {
+						String ee_opt = "__TIMER" + i + "_CLK_"+tmp1+"__";
+						tmp.add(ee_opt);
+						
+						String ee_opt2 = "__TIMER_" + i + "_USED__";
+						tmp.add(ee_opt2);
+						
+						enable_some_timers = true;
+					}
 				}
-			}
+	        }
 
 			// enable a timers only if at least one timer is not stop
 	        if (enable_some_timers) {
@@ -846,8 +855,6 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 		final int currentRtosId = 0;
 		
 		/* COMMON VARIABLES */
-		ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-
 		{
 			/***********************************************************************
 			 * get values and store as EE_OPT
@@ -855,42 +862,55 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 
 			// prepare the path :
 			// ... the prefix ...
-			String currentMcuPrefix = os.getPath() + S
-					+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-					+ IOilXMLLabels.OBJ_OS + parent.getOilHwRtosPrefix() + "BOARD_DATA";
-			
-			// ... get the node identifier
-			String[] child = new String[1];
-			String board_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
-			
-				/* STANDARD MCU */
-			AVR_BOARD_MODEL board_properties = STANDARD_MCU_PROPERTIES.get(board_type);
-			if (board_properties != null) {
-				currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+			ArrayList<String> childPaths = new ArrayList<String>();
+			List<String> childFound = parent.getRtosCommonChildType(oilObjects[currentRtosId], "BOARD_DATA", childPaths);
 
-				if (board_properties.def!= null && !ee_opts.contains(board_properties.def)) {
-					ee_opts.add(board_properties.def);
-				}
-//
-//				for (int i=0; i<board_properties.properties.length; i++) {
-//					String tmp = board_properties.properties[i];
-//					
-//					String value_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix+tmp, null);
-//					
-//					if ("TRUE".equals(value_type) && !ee_opts.contains(board_properties.defines[i])) {
-//						ee_opts.add(board_properties.defines[i]);
-//					}
-//				}
-			} else {
-				String tmp = "";
-			
-				for (Iterator<String> keys = STANDARD_MCU_PROPERTIES.keySet().iterator(); keys.hasNext(); ) {
-					tmp += keys.next() + (keys.hasNext() ? ", " : "");
+			String board_type = null;
+			for (int index = 0; index<childFound.size(); index++) {
+				String type_found = childFound.get(index); 
+				if (board_type == null) {
+					board_type = type_found;
+				} else {
+					if (!(board_type.equalsIgnoreCase(type_found))) {
+						Messages.sendWarningNl("Found more than one Board section for the same cpu. (" + board_type + " and " + type_found + ")",
+								null, "ajidasoidjasdiojasdi", null);
+					}
 				}
 				
-				Messages.sendWarningNl("No board is specified in BOARD_DATA section. Valid values are " +tmp + ".",
-						null, "ajidasoidjasdiojasdi", null);
+				
+				
+				/* STANDARD MCU */
+				AVR_BOARD_MODEL board_properties = STANDARD_MCU_PROPERTIES.get(board_type);
+				if (board_properties != null) {
+	
+					if (board_properties.def!= null && !ee_opts.contains(board_properties.def)) {
+						ee_opts.add(board_properties.def);
+					}
+	
+//					String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST;
+//					for (int i=0; i<board_properties.properties.length; i++) {
+//						String tmp = board_properties.properties[i];
+//						
+//						String value_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix+tmp, null);
+//						
+//						if ("TRUE".equals(value_type) && !ee_opts.contains(board_properties.defines[i])) {
+//							ee_opts.add(board_properties.defines[i]);
+//						}
+//					}
+				} else {
+					String tmp = "";
+				
+					for (Iterator<String> keys = STANDARD_MCU_PROPERTIES.keySet().iterator(); keys.hasNext(); ) {
+						tmp += keys.next() + (keys.hasNext() ? ", " : "");
+					}
+					
+					Messages.sendWarningNl("No board is specified in BOARD_DATA section. Valid values are " +tmp + ".",
+							null, "ajidasoidjasdiojasdi", null);
+				}
+				
+				
 			}
+			
 
 		}
 	}

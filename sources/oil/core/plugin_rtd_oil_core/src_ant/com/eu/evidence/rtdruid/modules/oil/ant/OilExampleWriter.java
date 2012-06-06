@@ -8,7 +8,7 @@ package com.eu.evidence.rtdruid.modules.oil.ant;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
-import com.eu.evidence.rtdruid.internal.modules.oil.workers.Logger;
+import com.eu.evidence.rtdruid.desk.Logger;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.OilWorkerException;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerExampleWriter;
 

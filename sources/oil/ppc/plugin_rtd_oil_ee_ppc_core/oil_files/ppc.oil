@@ -69,9 +69,11 @@ IMPLEMENTATION ee {
                 ] MULTI_STACK = FALSE;
                 
                 UINT32 SYS_STACK_SIZE;
+                FLOAT CPU_CLOCK;
                 
                 ENUM [
                 	E200Z0,
+                	E200Z4,
                 	E200Z6,
                 	E200Z7
                 ] MODEL; 
@@ -86,7 +88,8 @@ IMPLEMENTATION ee {
 			PPCE200ZX {
 				ENUM [
 					MPC5668G, /* Z6+Z0 */
-					MPC5674F  /* (mono Z7) */
+					MPC5674F, /* (mono Z7) */
+					MPC5643L  /* (one or two Z4) */
 				] MODEL;
 			}
 		] MCU_DATA;

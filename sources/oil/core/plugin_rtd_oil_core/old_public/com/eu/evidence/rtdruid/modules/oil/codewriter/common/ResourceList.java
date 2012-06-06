@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
@@ -69,6 +70,9 @@ public class ResourceList {
 		/** The ceiling of this resource */
 		int[] ceiling;
 
+		/** The isr ceiling of this resource */
+		int[] isrceiling;
+
 		/** The type of this resource */
 		int type;
 
@@ -91,6 +95,7 @@ public class ResourceList {
 		public ResInfo(int numOfRtos) {
 			cpu = new BitSet();
 			ceiling = new int[numOfRtos];
+			isrceiling = new int[numOfRtos];
 		}
 
 		/**
@@ -332,7 +337,7 @@ public class ResourceList {
 	 *            contains all objects (only tasks are required)
 	 */
 	public ResourceList(IVarTree vt, String prefix, String oilPrefix,
-			IOilObjectList[] oilObjects, boolean useResScheduler) {
+			IOilObjectList[] oilObjects, final boolean useResScheduler) {
 
 		final LinkedList rTt;
 		{
@@ -461,6 +466,77 @@ public class ResourceList {
 			pos++; // update index
 		}
 		
+		int[] maxpriorities = task2ResourceReferences(oilObjects);
+//		int[] maxprioritiesIsr = 
+				isr2ResourceReferences(oilObjects, maxpriorities);
+		
+		// set ResScheduler
+		if (useResScheduler) {
+			addResScheduler(oilObjects);
+		}
+		
+		{ // store all inside the OilObjectList
+		
+			List[] tmpList = new List[oilObjects.length];
+			for (int i=0; i<tmpList.length; i++) {
+				tmpList[i] = oilObjects[i].getList(IOilObjectList.RESOURCE);
+				
+				if (tmpList[i].size()!=0) {
+					throw new RuntimeException("already found old resources");
+				}
+				tmpList[i] = new ArrayList();
+			}
+			
+			// store all names, in each rtos that uses it
+			for (Iterator iter = nomiRis.iterator(); iter.hasNext(); ) {
+				ResName rname = (ResName) iter.next();
+				ISimpleGenRes sgr = new SimpleGenRes(rname.getName(), null);
+				
+				ResInfo info = (ResInfo) infoRis.get(rname.getIndex());
+
+				if (info.global) {
+					// Increase ceiling of global resources !! --> use max isr priority ???
+					info.ceiling = maxpriorities; // maxprioritiesIsr;
+				}
+
+				int type = rname.getResType()
+					| (rname.getName().equals(info.chainRoot) ? ISimpleGenResKeywords.RESOURCE_CHAIN_ROOT : 0);
+				
+				sgr.setProperty(ISimpleGenResKeywords.RESOURCE_GLOBAL, "" + info.global);
+				sgr.setProperty(ISimpleGenResKeywords.RESOURCE_TYPE, "" + type);
+				sgr.setObject(ISimpleGenResKeywords.RESOURCE_ALLOCATION, info.cpu.clone());
+				sgr.setObject(ISimpleGenResKeywords.RESOURCE_CHAIN_LIST, info.chainNames);
+
+				if (info.srcFiles != null) {
+					sgr.setObject(ISimpleGenResKeywords.RESOURCE_SRC, info.srcFiles);
+				}
+//System.err.println(">>" + sgr + "<<\n\n");
+				// clone a copy inside all list of resources (they can have differt ceiling and position/id)
+				for (int i=0; i<info.cpu.length() && i<tmpList.length; i++) {
+					if (info.cpu.get(i)) {
+						ISimpleGenRes copy = (ISimpleGenRes) sgr.clone();
+
+						// set an id
+						//int id = tmpList[i].size();
+						//copy.setProperty(SimpleGenResKeywords.RESOURCE_ID, "" + id);
+
+						copy.setProperty(ISimpleGenResKeywords.RESOURCE_CEILING, "" + info.ceiling[i]);
+						copy.setProperty(ISimpleGenResKeywords.RESOURCE_ISR_CEILING, "" + info.isrceiling[i]);
+						tmpList[i].add(copy);
+					}
+				}
+				
+			}
+			
+			for (int i=0; i<tmpList.length; i++) {
+				oilObjects[i].setList(IOilObjectList.RESOURCE, tmpList[i]);
+			}
+		}
+		
+		setResourceId(oilObjects);
+	}
+
+	private int[] task2ResourceReferences(IOilObjectList[] oilObjects) {
 		/***********************************************************************
 		 * 
 		 * check links between resources and tasks
@@ -481,9 +557,7 @@ public class ResourceList {
 			
 			maxpriorities[cpuId] = 0;
 			
-			for (Iterator iter = (oilObjects[cpuId].getList(IOilObjectList.TASK)).iterator(); iter.hasNext(); ) {
-
-				ISimpleGenRes currTask = (ISimpleGenRes) iter.next();
+			for (ISimpleGenRes currTask : (oilObjects[cpuId].getList(IOilObjectList.TASK))) {
 
 				/** TASK's PRIORITY ==> RESOURCE's CEILING (prio) */
 				int prio = currTask.getInt(ISimpleGenResKeywords.TASK_READY_PRIORITY);
@@ -557,72 +631,116 @@ public class ResourceList {
 				}
 			}
 		}
-		
-		// set ResScheduler
-		if (useResScheduler) {
-			addResScheduler(oilObjects);
-		}
-		
-		{ // store all inside the OilObjectList
-		
-			List[] tmpList = new List[oilObjects.length];
-			for (int i=0; i<tmpList.length; i++) {
-				tmpList[i] = oilObjects[i].getList(IOilObjectList.RESOURCE);
-				
-				if (tmpList[i].size()!=0) {
-					throw new RuntimeException("already found old resources");
-				}
-				tmpList[i] = new ArrayList();
-			}
-			
-			// store all names, in each rtos that uses it
-			for (Iterator iter = nomiRis.iterator(); iter.hasNext(); ) {
-				ResName rname = (ResName) iter.next();
-				ISimpleGenRes sgr = new SimpleGenRes(rname.getName(), null);
-				
-				ResInfo info = (ResInfo) infoRis.get(rname.getIndex());
-
-				if (info.global) {
-					// Increase ceiling of global resources !!
-					info.ceiling = maxpriorities;
-				}
-
-				int type = rname.getResType()
-					| (rname.getName().equals(info.chainRoot) ? ISimpleGenResKeywords.RESOURCE_CHAIN_ROOT : 0);
-				
-				sgr.setProperty(ISimpleGenResKeywords.RESOURCE_GLOBAL, "" + info.global);
-				sgr.setProperty(ISimpleGenResKeywords.RESOURCE_TYPE, "" + type);
-				sgr.setObject(ISimpleGenResKeywords.RESOURCE_ALLOCATION, info.cpu.clone());
-				sgr.setObject(ISimpleGenResKeywords.RESOURCE_CHAIN_LIST, info.chainNames);
-
-				if (info.srcFiles != null) {
-					sgr.setObject(ISimpleGenResKeywords.RESOURCE_SRC, info.srcFiles);
-				}
-//System.err.println(">>" + sgr + "<<\n\n");
-				// clone a copy inside all list of resources (they can have differt ceiling and position/id)
-				for (int i=0; i<info.cpu.length() && i<tmpList.length; i++) {
-					if (info.cpu.get(i)) {
-						ISimpleGenRes copy = (ISimpleGenRes) sgr.clone();
-
-						// set an id
-						//int id = tmpList[i].size();
-						//copy.setProperty(SimpleGenResKeywords.RESOURCE_ID, "" + id);
-
-						copy.setProperty(ISimpleGenResKeywords.RESOURCE_CEILING, "" + info.ceiling[i]);
-						tmpList[i].add(copy);
-					}
-				}
-				
-			}
-			
-			for (int i=0; i<tmpList.length; i++) {
-				oilObjects[i].setList(IOilObjectList.RESOURCE, (ArrayList) tmpList[i]);
-			}
-		}
-		
-		setResourceId(oilObjects);
+		return maxpriorities;
 	}
 
+	private void isr2ResourceReferences(IOilObjectList[] oilObjects, int[] maxpriorities) {
+		/***********************************************************************
+		 * 
+		 * check links between resources and tasks
+		 *  
+		 **********************************************************************/
+
+		// set resource ceiling and "local/global"
+		// 1) get for each task, its priority and list of resources
+		// 2) if necessary, increment the priority of task's resources and all
+		// resources linked to them
+		// 3) if task has remote activation, set to "global" all resources used
+		// by this task (and all resources linked to them)
+		
+		// remember the max priorities
+		//int[] maxprioritiesIsr = new int[oilObjects.length];
+
+		for (int cpuId = 0; cpuId < oilObjects.length; cpuId++) {
+			
+//			maxprioritiesIsr[cpuId] = 0;
+			
+			for (ISimpleGenRes isr : (oilObjects[cpuId].getList(IOilObjectList.ISR))) {
+		
+				/*
+				 * Check if this isr uses resources
+				 */
+				String[] tRes;
+				if (isr.containsProperty(ISimpleGenResKeywords.ISR_RESOURCE_LIST)) {
+					tRes = (String[]) ((List) isr.getObject(ISimpleGenResKeywords.ISR_RESOURCE_LIST)).toArray(new String[0]);
+				} else {
+					tRes = new String[0];
+				}
+				if (tRes.length == 0) {
+					continue; // no resources ... nothing to do
+		}
+		
+				String category = isr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? isr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
+		
+				if (!"2".equals(category) && tRes.length != 0) {
+					Messages.sendErrorNl("Need isr category 2 to handle resources (" + isr.getName() + ")", null, "", null);
+					continue;
+				}
+				
+				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_PRIORITY)) {
+					Messages.sendErrorNl("Need isr priority to support ISR2 resources (" + isr.getName() + ")", null, "", null);
+				}
+					
+				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIOID)) {
+					Messages.sendErrorNl("This architecture does not support ISR2 resources (" + isr.getName() + ")", null, "", null);
+					continue;
+			}
+			
+				
+
+				
+				/** ISR's PRIORITY ==> RESOURCE's CEILING (prio) */
+				int prio = isr.getInt(ISimpleGenResKeywords.ISR_PRIORITY);
+				int readyprio = isr.getInt(ISimpleGenResKeywords.ISR_READY_PRIORITY);
+				
+//				if (maxprioritiesIsr[cpuId] < prio) { // check max priority of this cpu
+//					maxprioritiesIsr[cpuId] = prio;
+//				}
+
+				// check all values for each resource
+				for (int j = 0; j < tRes.length; j++) {
+					// search resource's description
+					int tmppos = Collections.binarySearch(nomiRis, tRes[j]);
+
+					if (tmppos < 0) { // store a link
+						throw new RuntimeException(
+								"Resources: link to a non-existent resource : from task = "
+										+ isr.getName() + " -> to = "
+										+ tRes[j]);
+				}
+					ResInfo rinfo = (ResInfo) infoRis.get(((ResName) nomiRis
+							.get(tmppos)).getIndex()); // description of current
+													   // resource
+
+					if (rinfo.ceiling[cpuId] < readyprio) {
+						rinfo.ceiling[cpuId] = readyprio;
+					} // ceiling
+
+					if (rinfo.isrceiling[cpuId] < prio) {
+						rinfo.isrceiling[cpuId] = prio;
+					} // ceiling
+				
+					// first set cpuId ..
+					rinfo.cpu.set(cpuId); // cpuID
+
+					if (rinfo.type == INTERNAL) {
+						if (rinfo.cpu.cardinality() > 1) {
+							throw new RuntimeException(
+									"Resources: an internal resource ("
+											+ tRes[j]
+											+ ") is shared between tasks assigned to different processors");
+				}
+
+					} else {
+
+						// .. then set global
+						rinfo.global |= /*remote ||*/ (rinfo.cpu.cardinality() > 1); // global
+					}
+				}
+			}
+			}
+		}
+		
 	/**
 	 * Searchs for chains and groups
 	 * 
@@ -747,17 +865,19 @@ public class ResourceList {
 		 * Set ResScheduler's ceiling as highet values to "disable" preemption. */
 
 		// search where store new name
-		int posName = Collections.binarySearch(nomiRis, IWritersKeywords.RES_SCHEDULER);
-		if (posName > 0) {
-			throw new IllegalStateException(
-					"Resources: Try to store more times the RES_SCHEDUER resource.");
+		final int posName = Collections.binarySearch(nomiRis, IWritersKeywords.RES_SCHEDULER);
+		ResInfo res_sched;
+		if (posName < 0) {
+			// create a new
+			res_sched = new ResInfo(oilObjects.length);
+			res_sched.type = STANDARD;
+			res_sched.chainRoot = IWritersKeywords.RES_SCHEDULER;
+			res_sched.chainNames.add(IWritersKeywords.RES_SCHEDULER);
+		} else {
+			res_sched = (ResInfo) infoRis.get(((ResName) nomiRis.get(posName)).pos);
 		}
 
 		// search the max priority
-		ResInfo res_sched = new ResInfo(oilObjects.length);
-		res_sched.type = STANDARD;
-		res_sched.chainRoot = IWritersKeywords.RES_SCHEDULER;
-		res_sched.chainNames.add(IWritersKeywords.RES_SCHEDULER);
 		for (int cpuId = 0; cpuId < oilObjects.length; cpuId++) {
 			
 			int maxPrio = 0;
@@ -786,9 +906,11 @@ public class ResourceList {
 
 		res_sched.global = false;
 
+		if (posName<0) {
 		infoRis.add(res_sched);
 		nomiRis.add(-posName - 1, new ResName(IWritersKeywords.RES_SCHEDULER, 
 				infoRis.size() - 1, STANDARD));
+	}
 	}
 	
 	

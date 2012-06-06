@@ -129,13 +129,13 @@ public class SectionWriterMcu_unibo_mparm extends SectionWriter implements IEEWr
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		final int currentRtosId = 0;
+		final IOilObjectList ool = oilObjects[currentRtosId];
 		
 		/* COMMON VARIABLES */
-		ISimpleGenRes os = (ISimpleGenRes) oilObjects[currentRtosId].getList(IOilObjectList.OS).get(0);
-		final ICommentWriter commentWriterC = getCommentWriter(os, FileTypes.C);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 		Properties irq = new Properties();
 
-		{
+		for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)) {
 			/***********************************************************************
 			 * get values
 			 **********************************************************************/

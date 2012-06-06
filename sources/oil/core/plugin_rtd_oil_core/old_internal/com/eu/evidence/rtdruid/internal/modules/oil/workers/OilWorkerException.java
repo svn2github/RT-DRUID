@@ -1,6 +1,8 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.workers;
 
-public class OilWorkerException extends Exception {
+import com.eu.evidence.rtdruid.desk.WorkerConfReader.VtReaderException;
+
+public class OilWorkerException extends VtReaderException {
 	
     /**
 	 * 

@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.dspic"
       label="RT-Druid Oil for DSPic for Erika Enterprise feature"
-      version="1.6.0.qualifier"
+      version="1.6.1.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.dspic.core">
 

@@ -20,6 +20,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
@@ -31,7 +32,6 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKe
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEoptConstant;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 
 /**
  * This writer builds makefile for erika, using source or binary distributions.
@@ -155,8 +155,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 	     ******************************************************************/
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		IOilObjectList ool = oilObjects[RTOS_ID___COMMON_DATA];
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-		final ICommentWriter commentWriterMf = getCommentWriter(sgrCpu, FileTypes.MAKEFILE);
+		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 
 		StringBuffer sbCommon_mk = buffers[0].get(FILE_EE_COMMON_MK);
 
@@ -203,8 +202,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 			/***********************************************************************
 			 * CONTRIBUTION  to VARIABLES
 			 ***********************************************************************/
-			if (sgrCpu.containsProperty(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__)) {
-			    String value = sgrCpu.getString(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__);
+			for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__COMMON_MAKEFILE_MP_EXT_VARS__)) {
 			    if (value != null) 
 			    	sbCommon_mk.append(value);
 			}
@@ -215,8 +213,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 			/***********************************************************************
 			 * CONTRIBUTION  before SUBDIR include
 			 ***********************************************************************/
-			if (sgrCpu.containsProperty(SGRK__COMMON_MAKEFILE_MP_EXT_B_SUBD_INCLUDES__)) {
-			    String value = sgrCpu.getString(SGRK__COMMON_MAKEFILE_MP_EXT_B_SUBD_INCLUDES__);
+			for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__COMMON_MAKEFILE_MP_EXT_B_SUBD_INCLUDES__)) {
 			    if (value != null) 
 			    	sbCommon_mk.append(value);
 			}
@@ -241,8 +238,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 			/***********************************************************************
 			 * CONTRIBUTION  after SUBDIR include
 			 ***********************************************************************/
-			if (sgrCpu.containsProperty(SGRK__COMMON_MAKEFILE_MP_EXT_A_SUBD_INCLUDES__)) {
-			    String value = sgrCpu.getString(SGRK__COMMON_MAKEFILE_MP_EXT_A_SUBD_INCLUDES__);
+			for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__COMMON_MAKEFILE_MP_EXT_A_SUBD_INCLUDES__)) {
 			    if (value != null) 
 			    	sbCommon_mk.append(value);
 			}
@@ -252,8 +248,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 			/***********************************************************************
 			 * CONTRIBUTION  to the end of common.mk
 			 ***********************************************************************/
-			if (sgrCpu.containsProperty(SGRK__COMMON_MAKEFILE_MP_EXT_EOF__)) {
-			    String value = sgrCpu.getString(SGRK__COMMON_MAKEFILE_MP_EXT_EOF__);
+			for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__COMMON_MAKEFILE_MP_EXT_EOF__)) {
 			    if (value != null) 
 			    	sbCommon_mk.append(value);
 			}
@@ -282,9 +277,8 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
          **********************************************************************/
 	    for (int rtosId=0; rtosId<oilObjects.length; rtosId++) {
 	        final IOilObjectList ool = oilObjects[rtosId];
-            final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-            final String cpuName = ErikaEnterpriseWriter.getOSName(sgrCpu);
-			final ICommentWriter commentWriterMf = getCommentWriter(sgrCpu, FileTypes.MAKEFILE);
+            final String cpuName = ErikaEnterpriseWriter.getOSName(ool);
+			final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 
 	        
 	        {
@@ -331,8 +325,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 	    			/***********************************************************************
 	    			 * CONTRIBUTION  to variables
 	    			 ***********************************************************************/
-	    			if (sgrCpu.containsProperty(SGRK__MAKEFILE_MP_CPU_EXT_VARS__)) {
-	    			    String value = sgrCpu.getString(SGRK__MAKEFILE_MP_CPU_EXT_VARS__);
+	    			for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__MAKEFILE_MP_CPU_EXT_VARS__)) {
 	    			    if (value != null) 
 	    			    	sbCpu_mk.append(value);
 	    			}
@@ -342,8 +335,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 	    			/***********************************************************************
 	    			 * CONTRIBUTION  before COMMON.MK include
 	    			 ***********************************************************************/
-	    			if (sgrCpu.containsProperty(SGRK__MAKEFILE_MP_CPU_EXT_B_COMMON_INCLUDE__)) {
-	    			    String value = sgrCpu.getString(SGRK__MAKEFILE_MP_CPU_EXT_B_COMMON_INCLUDE__);
+	    			for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__MAKEFILE_MP_CPU_EXT_B_COMMON_INCLUDE__)) {
 	    			    if (value != null) 
 	    			    	sbCpu_mk.append(value);
 	    			}
@@ -357,8 +349,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 					/***********************************************************************
 					 * CONTRIBUTION to end of file
 					 ***********************************************************************/
-					if (sgrCpu.containsProperty(SGRK__MAKEFILE_MP_CPU_EOF__)) {
-						String value = sgrCpu.getString(SGRK__MAKEFILE_MP_CPU_EOF__);
+	    			for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__MAKEFILE_MP_CPU_EOF__)) {
 						if (value != null)
 							sbCpu_mk.append(value);
 					}
@@ -381,18 +372,20 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 				/* Use an HashMap to write all files only one time */
 	            LinkedHashSet<String> src_files = new LinkedHashSet<String>();
 
-	            if (sgrCpu.containsProperty(SGRK_OS_CPU_DATA_PREFIX)) {
-					final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
-	
-					/* Get all source files for current cpu */ 
-					String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
-					                              						+ S + "APP_SRC");
-					if (tmp != null) {
-	
-						for (int i = 0; i < tmp.length; i++) {
-							src_files.add(tmp[i]);
+	            for (ISimpleGenRes sgrCpu : ool.getList(IOilObjectList.OS)) {
+		            if (sgrCpu.containsProperty(SGRK_OS_CPU_DATA_PREFIX)) {
+						final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
+		
+						/* Get all source files for current cpu */ 
+						String[] tmp = CommonUtils.getValue(vt, currentCpuPrefix
+						                              						+ S + "APP_SRC");
+						if (tmp != null) {
+		
+							for (int i = 0; i < tmp.length; i++) {
+								src_files.add(tmp[i]);
+							}
 						}
-					}
+		            }
 	            }
 				/* Get all source files of all tasks mapped to current cpu */ 
 				for (Iterator<ISimpleGenRes> iter = ool.getList(IOilObjectList.TASK).iterator(); iter.hasNext(); ) {
@@ -439,7 +432,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 
 				// CPU
 				{
-					src_files.addAll(Arrays.asList(CpuUtility.getSources(sgrCpu)));
+					src_files.addAll(Arrays.asList(CpuUtility.getSources(ool)));
 				}
 				
 				String[] tmp = (String[]) src_files.toArray(new String[src_files.size()]);
@@ -499,8 +492,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 	 */
 	protected void writeMakefile(IOilWriterBuffer[] buffers) {
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
-		final ISimpleGenRes masterSgrCpu = oilObjects[RTOS_ID___COMMON_DATA].getList(IOilObjectList.OS).get(0);
-		final ICommentWriter commentWriter = getCommentWriter(masterSgrCpu, FileTypes.MAKEFILE);
+		final ICommentWriter commentWriter = getCommentWriter(oilObjects[RTOS_ID___COMMON_DATA], FileTypes.MAKEFILE);
 		
         /*******************************************************************
          * MAKEFILE
@@ -539,8 +531,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
         int portNumber = 10000;
         for (int i=0; i<oilObjects.length; i++) {
 	        final IOilObjectList ool = oilObjects[i];
-            final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-            final String cpuName = ErikaEnterpriseWriter.getOSName(sgrCpu);
+            final String cpuName = ErikaEnterpriseWriter.getOSName(ool);
             
             if (i==0) {
             	sbMakefile.append("# Master CPU\n" +
@@ -577,8 +568,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 			/***********************************************************************
 			 * CONTRIBUTION  to variables
 			 ***********************************************************************/
-			if (masterSgrCpu.containsProperty(SGRK__MAKEFILE_MP_EXT_VARS__)) {
-			    String value = masterSgrCpu.getString(SGRK__MAKEFILE_MP_EXT_VARS__);
+        	for (String value : AbstractRtosWriter.getOsProperties(oilObjects[RTOS_ID___COMMON_DATA], SGRK__MAKEFILE_MP_EXT_VARS__)) {
 			    if (value != null) 
 			    	sbMakefile.append(value);
 			}
@@ -588,8 +578,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 			/***********************************************************************
 			 * CONTRIBUTION to end of file
 			 ***********************************************************************/
-			if (masterSgrCpu.containsProperty(SGRK__MAKEFILE_MP_EXT_EOF__)) {
-				String value = masterSgrCpu.getString(SGRK__MAKEFILE_MP_EXT_EOF__);
+        	for (String value : AbstractRtosWriter.getOsProperties(oilObjects[RTOS_ID___COMMON_DATA], SGRK__MAKEFILE_MP_EXT_EOF__)) {
 				if (value != null)
 					sbMakefile.append(value);
 			}
@@ -607,37 +596,22 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 	    for (int rtosId=0; rtosId<oilObjects.length; rtosId++) {
 
     		IOilObjectList ool = oilObjects[rtosId];
-	    	final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
+    		
+			ArrayList<String> childPaths = new ArrayList<String>();
+			List<String> childFound = parent.getRtosCommonChildType(ool, "LIB", childPaths);
 
-	    	String currentRtosPrefix = sgrCpu.getPath() + S
-				+ DataPackage.eINSTANCE.getRtos_OilVar().getName() + S
-				+ IOilXMLLabels.OBJ_OS + oilHwRtosPrefix;
+			for (int index = 0; index<childFound.size(); index++) {
+	    	
+        		if ("ENABLE".equals(childFound.get(index))) {
 
-	    	ArrayList<String> child = new ArrayList<String>();
-	        ArrayList<String> tmp = CommonUtils.getAllChildrenEnumType(vt, currentRtosPrefix + S + "LIB", child);
-	        if (tmp != null) {
-	        	for (int i=0; i<tmp.size(); i++) {
-	        		if ("ENABLE".equals(tmp.get(i))) {
-			        	
-		//	        	if (found != null && !found.equals(tmp)) {
-		//	        		throw new RuntimeException("LIB parameter set with different values (inside OS section)"); 
-		//	        	}
-		//	        	
-		//	        	found = tmp;
-			        	
-			        	// check parameters
-			        	
-			        	// NAME
-			        	String[] names = CommonUtils.getValue(vt, currentRtosPrefix + S + "LIB" + S + CommonUtils.VARIANT_ELIST 
-			        			+ child.get(i) + PARAMETER_LIST+ "NAME");
-			        	
-			        	if (names!= null) {
-			        		for (int j=0; j<names.length; j++)
-			        			if (!answer.contains(names[j]))
-			        				answer.add(names[j]);
-			        	}
-	        		}
-	        	}
+        			String[] names = CommonUtils.getValue(vt, childPaths + PARAMETER_LIST+ "NAME");
+	        	
+		        	if (names!= null) {
+		        		for (int j=0; j<names.length; j++)
+		        			if (!answer.contains(names[j]))
+		        				answer.add(names[j]);
+		        	}
+        		}
 	        }
 			
 	    }

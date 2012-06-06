@@ -6,7 +6,15 @@
 package com.eu.evidence.rtdruid.modules.oil.abstractions;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import com.eu.evidence.rtdruid.desk.RtdruidLog;
 
 
 
@@ -95,7 +103,8 @@ public class SimpleGenRes implements ISimpleGenRes {
 	 *             if the property doesn't exist
 	 */
 	public String getString(String pName) {
-		return (String) properties.get(check(pName));
+		Object o = properties.get(check(pName));
+		return o == null ? null : o.toString() ;
 	}
 
 	/**
@@ -236,6 +245,136 @@ public class SimpleGenRes implements ISimpleGenRes {
 	public ISimpleGenRes clone() {
 		SimpleGenRes answer = new SimpleGenRes(name, path);
 		answer.properties = (HashMap<String, Object>) properties.clone();
+		
+		return answer;
+	}
+	
+	@Override
+	public void merge(ISimpleGenRes source) {
+		Map<String, ? extends Object> map = source.getAllProperties();
+		for (Entry<String, ? extends Object> entry : map.entrySet()) {
+			String key = entry.getKey();
+			
+			if (containsProperty(key)) {
+				Object oldValue = getObject(key);
+				Object newValue = entry.getValue();
+				if (newValue != null) {
+					
+					if (oldValue == null) {
+						setObject(key, entry.getValue());
+					} else {
+						if (oldValue.getClass() != newValue.getClass()) {
+							boolean both_collections = (oldValue instanceof Collection) && (newValue instanceof Collection); 
+							boolean both_map = (oldValue instanceof Map) && (newValue instanceof Map); 
+							if (!both_collections && !both_map) {
+								throw new IllegalArgumentException("Incompatible elements (key="+key+")\n\t"+this+"\n\t"+source);
+							}
+						}
+
+						
+						if (oldValue instanceof Map) {
+							try {
+								((Map) oldValue).putAll((Map) newValue);
+							} catch (UnsupportedOperationException e) {
+								LinkedHashMap nmap = new LinkedHashMap();
+								nmap.putAll((Map)oldValue);
+								nmap.putAll((Map)newValue);
+								setObject(key, nmap);
+							}
+						} else if (oldValue instanceof Collection) {
+							ArrayList nlist = new ArrayList();
+							nlist.addAll((Collection)oldValue);
+							
+							boolean failed = true;
+							try {
+								for (Object o: (Collection) newValue) {
+									if (!((Collection) oldValue).contains(o)) {
+										((Collection) oldValue).add(o);
+									}
+								}
+								failed = false;
+							} catch (UnsupportedOperationException e) {
+							}
+							if (failed) {
+								for (Object o: (Collection) newValue) {
+									if (!(nlist.contains(o))) {
+										nlist.add(o);
+									}
+								}
+								setObject(key, nlist);
+							}
+						} else if (oldValue instanceof String[]) {
+							setObject(key, merge((String[])oldValue, (String[])newValue));
+						} else if (oldValue instanceof int[]) {
+							setObject(key, merge((String[])oldValue, (String[])newValue));
+						} else if (oldValue instanceof double[]) {
+							setObject(key, merge((String[])oldValue, (String[])newValue));
+						} else if (oldValue instanceof Object[]) {
+							setObject(key, merge((String[])oldValue, (String[])newValue));
+						} else if ((""+oldValue).equals(""+newValue) || oldValue.equals(newValue)) {
+							// the same value, do nothing
+						} else {
+							RtdruidLog.showDebug("Different values of properties (key="+key+", v1 = "+newValue+", v2 = "+newValue+")\n\t"+this+"\n\t"+source);
+						}
+						
+						
+						
+					}
+					
+					
+				}
+				
+				
+				
+				
+				
+				
+			} else {
+				setObject(key, entry.getValue());
+			}
+		}
+	}
+	
+	private <T> T[] merge(T[] v1, T[] v2) {
+		if (v1.length == 0) {
+			return Arrays.copyOf(v2, v2.length);
+		}
+		if (v2.length == 0) {
+			return Arrays.copyOf(v1, v1.length);
+		}
+		
+		// v1>0 && v2>0
+		
+		int finalSize = v1.length;
+		T[] temp = Arrays.copyOf(v1, v1.length + v2.length);
+		
+		for (T newElem: v2) {
+			
+			if (newElem != null) {
+				
+				boolean add = true;
+				for (T oldElem: temp) {
+					if (add && oldElem != null && (
+							(oldElem == newElem) || oldElem.equals(newElem))
+							) {
+						add = false;
+					}
+				}
+				
+				if (add) {
+					temp[finalSize] = newElem;
+					finalSize ++;
+				}
+			}
+		}
+		
+		T[] answer;
+		if (finalSize == temp.length) {
+			answer = temp;
+		} else {
+			answer = Arrays.copyOf(temp, finalSize);
+		}
+		
 		
 		return answer;
 	}

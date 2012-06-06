@@ -400,7 +400,10 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			"ALARM AlarmTask2 {\n" +
 			"            COUNTER = \"Counter1\";\n" +
 			"            ACTION = ACTIVATETASK { TASK = \"Task1\"; };\n" +
-			"                AUTOSTART = TRUE;\n" +
+			"		AUTOSTART = TRUE {" +
+			"			ALARMTIME = 1;\n" +
+			"			CYCLETIME = 1;\n" +
+			"		};\n" +
 			"	};\n" +
 			"};\n";
 

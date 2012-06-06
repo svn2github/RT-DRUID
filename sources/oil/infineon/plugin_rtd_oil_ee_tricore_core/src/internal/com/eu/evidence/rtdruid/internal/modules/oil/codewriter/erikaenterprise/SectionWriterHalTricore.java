@@ -18,6 +18,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
@@ -25,7 +26,6 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
@@ -123,8 +123,6 @@ public class SectionWriterHalTricore extends SectionWriter
 		
 		final int currentRtosId = 0;
 		final IOilObjectList ool = oilObjects[currentRtosId];
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-		final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
 
 		/***********************************************************************
 		 * 
@@ -137,6 +135,7 @@ public class SectionWriterHalTricore extends SectionWriter
 	        ArrayList<String> tmp = new ArrayList<String>();
 	        
 	        // store all older values (if there are)
+	        ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 	        if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS)) {
 	        	String[] old = (String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS);
 	        	tmp.addAll(Arrays.asList(old));
@@ -147,8 +146,7 @@ public class SectionWriterHalTricore extends SectionWriter
 	        
 	        
 	        {
-				String[] tmp1 = CommonUtils
-						.getValue(vt, currentCpuPrefix + "MODEL");
+				String[] tmp1 = parent.getCpuDataValue(ool, "MODEL");
 				if (tmp1 != null && tmp1.length >0 && tmp1[0] != null) {
 					String model = tmp1[0];
 				
@@ -299,9 +297,7 @@ public class SectionWriterHalTricore extends SectionWriter
 		StringBuffer sbInithal_c = answer.get(FILE_EE_CFG_C);
 		
 		final IOilObjectList ool = oilObjects[currentRtosId];
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-		final ICommentWriter commentWriterC = getCommentWriter(sgrCpu, FileTypes.C);
-		final String currentCpuPrefix = sgrCpu.getString(SGRK_OS_CPU_DATA_PREFIX);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 		
 		List<ISimpleGenRes> taskNames = ool.getList(IOilObjectList.TASK);
 		String stackType = parent.getStackType(); // MULTI or MONO
@@ -316,13 +312,7 @@ public class SectionWriterHalTricore extends SectionWriter
 
 		// ------------- Compute --------------------
 
-		final int STACK_UNIT;
-		if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
-			CpuHwDescription currentStackDescription = (CpuHwDescription) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
-			STACK_UNIT = currentStackDescription.stackSize;
-		} else {
-			STACK_UNIT = 4;
-		}
+		final int STACK_UNIT = ErikaEnterpriseWriter.getStackUnit(ool);
 		
 		sbInithal_c.append("\n#include \"ee.h\"\n");
 		/***********************************************************************
@@ -341,48 +331,54 @@ public class SectionWriterHalTricore extends SectionWriter
 				/***************************************************************
 				 * IRQ_STACK
 				 **************************************************************/
-				
-				String[] child = new String[1];
-				String type = CommonUtils
-						.getFirstChildEnumType(vt, currentCpuPrefix
-								+ "MULTI_STACK", child);
-
-				if ("TRUE".equalsIgnoreCase(type)) {
-					String prefixIRQ = currentCpuPrefix
-						+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
-						+ "IRQ_STACK";
-					boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
-					.getFirstChildEnumType(vt, prefixIRQ, child));
-					
-					if (ok) {
+				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+				for (String currentCpuPrefix: currentCpuPrefixes) {
+					if (irqSize != null) {
+						break;
+					}
+	
+					String[] child = new String[1];
+					String type = CommonUtils
+							.getFirstChildEnumType(vt, currentCpuPrefix
+									+ "MULTI_STACK", child);
+	
+					if ("TRUE".equalsIgnoreCase(type)) {
+						String prefixIRQ = currentCpuPrefix
+							+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
+							+ "IRQ_STACK";
+						boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
+						.getFirstChildEnumType(vt, prefixIRQ, child));
 						
-						prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
-						irqSize = new int[1];
-						{ // get data for IRQ STACK ...
-							String path[] = { "SYS_SIZE" };
-
-							for (int i = 0; i < path.length; i++) {
-								String tmp = null;
-								IVariable var = ti.getValue(prefixIRQ + path[i]
-										+ VALUE_VALUE);
-								if (var != null && var.get() != null) {
-									tmp = var.toString();
-								}
-								if (tmp == null)
-									throw new RuntimeException(
-											ERR_CPU_TYPE + " : Expected " + path[i]);
-
-								// check for value
-								try {
-									// ... store them inside the irqSize vector
-									irqSize[0] = (Integer.decode("" + tmp))
-											.intValue();
-									// ... and increase the memory requirement
-//									stackEnd += irqSize[0];
-								} catch (Exception e) {
-									throw new RuntimeException(
-											ERR_CPU_TYPE + " : Wrong int" + path[i]
-													+ ", value = " + tmp + ")");
+						if (ok) {
+							
+							prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
+							irqSize = new int[1];
+							{ // get data for IRQ STACK ...
+								String path[] = { "SYS_SIZE" };
+	
+								for (int i = 0; i < path.length; i++) {
+									String tmp = null;
+									IVariable var = ti.getValue(prefixIRQ + path[i]
+											+ VALUE_VALUE);
+									if (var != null && var.get() != null) {
+										tmp = var.toString();
+									}
+									if (tmp == null)
+										throw new RuntimeException(
+												ERR_CPU_TYPE + " : Expected " + path[i]);
+	
+									// check for value
+									try {
+										// ... store them inside the irqSize vector
+										irqSize[0] = (Integer.decode("" + tmp))
+												.intValue();
+										// ... and increase the memory requirement
+	//									stackEnd += irqSize[0];
+									} catch (Exception e) {
+										throw new RuntimeException(
+												ERR_CPU_TYPE + " : Wrong int" + path[i]
+														+ ", value = " + tmp + ")");
+									}
 								}
 							}
 						}
@@ -561,8 +557,7 @@ public class SectionWriterHalTricore extends SectionWriter
 	 * MakeFile
 	 */
 	private void writeMakeFile(final IOilObjectList ool) {
-		final ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
-		final ICommentWriter commentWriterMf = getCommentWriter(sgrCpu, FileTypes.MAKEFILE);
+		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 		HostOsUtils wrapper = HostOsUtils.common;
 
 		StringBuffer sbMakefile = new StringBuffer(commentWriterMf
@@ -601,8 +596,7 @@ public class SectionWriterHalTricore extends SectionWriter
 				platformStr = "export PLATFORM := CYGWIN\n\n";
 			}
 			
-			String model = sgrCpu.containsProperty(TricoreConstants.SGRK__TRICORE_MODEL__) ?
-					sgrCpu.getString(TricoreConstants.SGRK__TRICORE_MODEL__) : "";
+			String model = ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, TricoreConstants.SGRK__TRICORE_MODEL__), "");
 			
 			sbMakefile
 					.append(platformStr
@@ -612,6 +606,7 @@ public class SectionWriterHalTricore extends SectionWriter
 							+ "TRICORE1_GCCDIR := $(realpath $(shell dirname $(shell which tricore-gcc))/../)");
 		}
 
+		ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 		sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile.toString());
 
 	}

@@ -20,7 +20,7 @@ public class CpuDescrPpcE200Z6 extends CpuHwDescription {
 	 */
 	public CpuDescrPpcE200Z6() {
 		super(IWritersKeywords.CPU_PPCE200Z6, "PRIVATE",
-				new String[] { "SYS_SIZE" }, new String[] {}, 16, 4, 4, 32, false);
+				new String[] { "SYS_SIZE" }, new String[] {}, 16, 4, 4, 32, true);
 		handlesEmpyVector = false;
 		supportOrtiISR2 = true;
 		

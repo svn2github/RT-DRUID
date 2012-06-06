@@ -37,6 +37,9 @@ public interface IWritersKeywords {
 	/** Identifies a JANUS architecture (two cpu) */
 	public final static String CPU_JANUS = "JANUS";
 
+	/** Identifies a Renesas RX200 architecture */
+	public final static String CPU_RX200 = "RX200";
+	
 	/** Identifies a PPC architecture (without protection) */
 	public final static String CPU_MPC5xx = "MPC5";
 
@@ -45,6 +48,9 @@ public interface IWritersKeywords {
 	
 	/** Identifies a PPC architecture (Z0) */
 	public final static String CPU_PPCE200Z0 = "E200Z0";
+
+	/** Identifies a PPC architecture (Z4) */
+	public final static String CPU_PPCE200Z4 = "E200Z4";
 
 	/** Identifies a PPC architecture (Z6) */
 	public final static String CPU_PPCE200Z6 = "E200Z6";
@@ -61,8 +67,8 @@ public interface IWritersKeywords {
 	/** Identifies a TriCore architecture (one or more cpu?) */
 	public final static String CPU_TRICORE1 = "TRICORE1";
 
-	/** Identifies a Cortex M0 architecture (one or more cpu?) */
-	public final static String CPU_CORTEX_M0 = "CORTEX_M0";
+	/** Identifies a generic Cortex Mx architecture (one or more cpu?) */
+	public final static String CPU_CORTEX_MX = "CORTEX_MX";
 	
 	/** Identifies a PIC 30 architecture (one or more cpu?) */
 	public final static String CPU_PIC_30 = "PIC30";
@@ -74,7 +80,9 @@ public interface IWritersKeywords {
 	public final static String CPU_MICO_32 = "LM32";
 
 	/** Identifies a S12 architecture (one or more cpu?) */
-	public final static String CPU_S12 = "MC9S12XS";
+	public final static String CPU_S12 = "MC9S12";
+	/** Identifies a S12 architecture (one or more cpu?) */
+	public final static String CPU_S12_OLD_NAME = "MC9S12XS";
 
 	/** Identifies an AVR 5 architecture (one cpu?) */
 	public final static String CPU_AVR5 = "AVR_5";

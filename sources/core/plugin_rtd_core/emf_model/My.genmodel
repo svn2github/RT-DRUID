@@ -5,10 +5,9 @@
     editDirectory="/plugin_rtd_core/src/e_edit" editorDirectory="" modelPluginID="com.eu.evidence.rtdruid.core"
     redirection="" modelName="Data" modelPluginClass="com.eu.evidence.rtdruid.Rtd_coreModelPlugin"
     editPluginClass="com.eu.evidence.rtdruid.Rtd_coreModelPlugin" editorPluginClass="rtdruid.vartree.data.presentation.DataEditorPlugin"
-    updateClasspath="false" rootImplementsInterface="" featureMapWrapperClass="" testsDirectory="/plugin_rtd_core_model_test/src"
+    updateClasspath="false" rootImplementsInterface="" featureMapWrapperClass="" testsDirectory=""
     complianceLevel="5.0" editPluginID="com.eu.evidence.rtdruid.core" editorPluginID="rtdruid.vartree.data.editor"
-    testsPluginID="com.eu.evidence.rtdruid.core.modeltest" language="" interfaceNamePattern=""
-    classNamePattern="">
+    language="" interfaceNamePattern="" classNamePattern="">
   <foreignModel>rtdruid_merge.ecore</foreignModel>
   <genPackages prefix="Data" basePackage="com.eu.evidence" interfacePackageSuffix="vartree.data"
       metaDataPackageSuffix="vartree.data" classPackageSuffix="internal.vartree.data.impl"
