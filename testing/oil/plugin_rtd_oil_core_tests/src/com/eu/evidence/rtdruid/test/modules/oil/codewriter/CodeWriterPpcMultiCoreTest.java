@@ -560,21 +560,21 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 			"		TICKSPERBASE = 1;\n" +
 			"	};\n" +
 			"	ALARM alarm1 {\n" +
-			"		COUNTER = \"myCounter1\";\n" +
-			"		ACTION = ACTIVATETASK { TASK = \"TaskZ6\"; };\n" +
+			"		COUNTER = myCounter1;\n" +
+			"		ACTION = ACTIVATETASK { TASK = TaskZ6; };\n" +
 			"	};\n" +
 
 			"	ALARM AcquireAlarm2 {\n" +
-			"		COUNTER = \"myCounter2\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter2;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 			"	ALARM AcquireAlarm3 {\n" +
-			"		COUNTER = \"myCounter3\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter4\"; };\n" +
+			"		COUNTER = myCounter3;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter4; };\n" +
 			"	};\n" +
 			"	ALARM AcquireAlarm4 {\n" +
-			"		COUNTER = \"myCounter4\";\n" +
-			"		ACTION =  ACTIVATETASK { TASK = \"TaskZ0\"; };\n" +
+			"		COUNTER = myCounter4;\n" +
+			"		ACTION =  ACTIVATETASK { TASK = TaskZ0; };\n" +
 			"	};\n" +
 			"};";
     	commonWriterTest(text, 2);
@@ -668,21 +668,21 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 			"		TICKSPERBASE = 1;\n" +
 			"	};\n" +
 			"	ALARM alarm1 {\n" +
-			"		COUNTER = \"myCounter1\";\n" +
-			"		ACTION = ACTIVATETASK { TASK = \"TaskZ6\"; };\n" +
+			"		COUNTER = myCounter1;\n" +
+			"		ACTION = ACTIVATETASK { TASK = TaskZ6; };\n" +
 			"	};\n" +
 
 			"	ALARM AcquireAlarm2 {\n" +
-			"		COUNTER = \"myCounter2\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter2;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 			"	ALARM AcquireAlarm3 {\n" +
-			"		COUNTER = \"myCounter3\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter2\"; };\n" +
+			"		COUNTER = myCounter3;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter2; };\n" +
 			"	};\n" +
 			"	ALARM AcquireAlarm4 {\n" +
-			"		COUNTER = \"myCounter4\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter4;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 			"};";
 	    boolean ok = false;

@@ -73,7 +73,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 64;\n" + 
 				"		};\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"\n" + 
 				"    TASK Task1 {\n" + 
@@ -91,7 +91,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"		STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
-				"        RESOURCE = \"MUTEX_sync\";\n" + 
+				"        RESOURCE = MUTEX_sync;\n" + 
 				"    };\n" + 
 				"\n" + 
 				"    TASK Task3 {\n" + 
@@ -159,7 +159,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 64;\n" + 
 				"		};\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"\n" + 
 				"    TASK Task1 {\n" + 
@@ -174,7 +174,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"		STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
-				"        RESOURCE = \"MUTEX_sync\";\n" + 
+				"        RESOURCE = MUTEX_sync;\n" + 
 				"        APP_SRC = \"demo.c\";\n" + 
 				"    };\n" + 
 				"\n" + 
@@ -230,7 +230,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 65;\n" + 
 				"		};\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"\n" + 
 				"    TASK Task1 {\n" + 
@@ -245,7 +245,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"		 STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
-				"        RESOURCE = \"MUTEX_sync\";\n" + 
+				"        RESOURCE = MUTEX_sync;\n" + 
 				"    };\n" + 
 				"\n" + 
 				"    TASK Task3 {\n" + 
@@ -453,7 +453,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 65;\n" + 
 				"		};\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"    RESOURCE MUTEX_sync { RESOURCEPROPERTY = STANDARD; };\n" + 
 				"};\n";
@@ -498,7 +498,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 65;\n" + 
 				"		};\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"    RESOURCE MUTEX_sync { RESOURCEPROPERTY = STANDARD; };\n" + 
 				"};\n";
@@ -670,8 +670,8 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"		};\n" +
 			"		COUNTER myCounter;\n" +
 			"		ALARM myAlarm {\n" +
-			"			COUNTER = \"myCounter\";\n" +
-			"		    ACTION = ACTIVATETASK { TASK = \"myTask\"; };\n" +
+			"			COUNTER = myCounter;\n" +
+			"		    ACTION = ACTIVATETASK { TASK = myTask; };\n" +
 			"		};\n" +
 			"	};\n";
 		commonWriterTest(text, 1);
@@ -711,8 +711,8 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"	COUNTER myCounter;\n" +
 
 			"	ALARM myAlarm {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"	    ACTION = ACTIVATETASK { TASK = \"myTask\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"	    ACTION = ACTIVATETASK { TASK = myTask; };\n" +
 			"	};\n" +
 			"};\n";
 		commonWriterTest(text, 1);
@@ -760,8 +760,8 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"	COUNTER myCounter;\n" +
 
 			"	ALARM AcquireAlarm {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"		ACTION = ACTIVATETASK { TASK = \"AcquireTask\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"		ACTION = ACTIVATETASK { TASK = AcquireTask; };\n" +
 			"	};\n" +
 			"};\n";			
 		DefaultTestResult res = commonWriterTest(text, 1);
@@ -871,8 +871,8 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 //			"	COUNTER myCounter;\n" +
 //
 //			"	ALARM AcquireAlarm {\n" +
-//			"		COUNTER = \"myCounter\";\n" +
-//			"		ACTION = ACTIVATETASK { TASK = \"T1\"; };\n" +
+//			"		COUNTER = myCounter;\n" +
+//			"		ACTION = ACTIVATETASK { TASK = T1; };\n" +
 //			"	};\n" +
 //			"};\n";			
 //		commonWriterTest(text, 1);
@@ -982,8 +982,8 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"	COUNTER myCounter;\n" +
 
 			"	ALARM AcquireAlarm {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"		ACTION = ACTIVATETASK { TASK = \"T1\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"		ACTION = ACTIVATETASK { TASK = T1; };\n" +
 			"	};\n" +
 			"};\n";
 		commonWriterTest(text, 1);
@@ -1039,7 +1039,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"		SCHEDULE = FULL;\n"+
 			"		AUTOSTART = FALSE;\n"+
 			"		STACK = SHARED;\n"+
-			"		RESOURCE = \"Resource\";\n"+
+			"		RESOURCE = Resource;\n"+
 			"    };\n"+
 			"\n"+
 			"    TASK HighTask {\n"+
@@ -1047,7 +1047,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"		ACTIVATION = 1;\n"+
 			"		SCHEDULE = FULL;\n"+
 			"		STACK = SHARED;\n"+
-			"		RESOURCE = \"Resource\";\n"+
+			"		RESOURCE = Resource;\n"+
 			"    };\n"+
 			"\n"+
 			"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n"+
@@ -1102,16 +1102,16 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 			"		SCHEDULE = FULL;\n"+
 			"		AUTOSTART = FALSE;\n"+
 			"		STACK = SHARED;\n"+
-			"		RESOURCE = \"Resource\";\n"+
+			"		RESOURCE = Resource;\n"+
 			"    };\n"+
 			"\n"+
 			"    TASK HighTask {\n"+
 			"		PRIORITY = 0x02;\n"+
 			"		ACTIVATION = 1;\n"+
 			"		SCHEDULE = FULL;\n"+
-			"		AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };	\n"+
+			"		AUTOSTART = TRUE { APPMODE=ModeIncrement; };	\n"+
 			"		STACK = SHARED;\n"+
-			"		RESOURCE = \"Resource\";\n"+
+			"		RESOURCE = Resource;\n"+
 			"    };\n"+
 			"\n"+
 			"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n"+
@@ -1168,7 +1168,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 64;\n" + 
 				"		};\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"\n" + 
 				"    TASK Task1 {\n" + 
@@ -1183,7 +1183,7 @@ public class CodeWriterDsPicTest extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"		STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
-				"        RESOURCE = \"MUTEX_sync\";\n" + 
+				"        RESOURCE = MUTEX_sync;\n" + 
 				"        APP_SRC = \"demo.c\";\n" + 
 				"    };\n" + 
 				"\n" + 

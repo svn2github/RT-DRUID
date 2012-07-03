@@ -28,6 +28,13 @@ class EnumTests extends XtextTest {
 	@Inject ParseHelper<OilFile> parser
 	@Inject ValidationTestHelper tester
 
+	def public getParser() {
+		parser
+	}
+	def public getTester() {
+		tester
+	}
+	
 //	ValidatorTester<OilJavaValidator> tester
 
 //	@Before

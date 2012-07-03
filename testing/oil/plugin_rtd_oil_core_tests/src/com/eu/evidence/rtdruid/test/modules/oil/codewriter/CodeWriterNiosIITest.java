@@ -18,7 +18,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 			"	                CFLAGS = \"-Wall\";\n" +
 			"	                ASFLAGS = \"-g\";\n" +
 			"	                LDFLAGS = \"-Wl,-Map -Wl,project.map\";\n" +
-			"	                LDDEPS = \"\\\";\n" +
+			"	                LDDEPS = \"\\\\\";\n" +
 			"	                LIBS = \"-lm\";\n" +
 			"	                NIOS2_SYS_CONFIG = \"Debug\";\n" +
 			"	                NIOS2_APP_CONFIG = \"Debug\";\n" +
@@ -62,7 +62,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 			"	                SCHEDULE = FULL;\n" +
 			"	                AUTOSTART = FALSE;\n" +
 			"	                STACK = SHARED;\n" +
-			"	                RESOURCE = \"Resource\";\n" +
+			"	                RESOURCE = Resource;\n" +
 			"	    };\n" +
 			"\n" +
 			"	    TASK HighTask {\n" +
@@ -70,9 +70,9 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 			"	                PRIORITY = 0x02;\n" +
 			"	                ACTIVATION = 1;\n" +
 			"	                SCHEDULE = FULL;\n" +
-			"	                AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };  \n" +
+			"	                AUTOSTART = TRUE { APPMODE=ModeIncrement; };  \n" +
 			"	                STACK = SHARED;\n" +
-			"	                RESOURCE = \"Resource\";\n" +
+			"	                RESOURCE = Resource;\n" +
 			"	    };\n" +
 			"\n" +
 			"	    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -87,7 +87,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 			"		CFLAGS = \"-Wall\";\n" +
 			"		ASFLAGS = \"-g\";\n" +
 			"		LDFLAGS = \"-Wl,-Map -Wl,project.map\";\n" +
-			"		LDDEPS = \"\\\";\n" +
+			"		LDDEPS = \"\\\\\";\n" +
 			"		LIBS = \"-lm\";\n" +
 			"		NIOS2_SYS_CONFIG = \"Debug\";\n" +
 			"		NIOS2_APP_CONFIG = \"Debug\";\n" +
@@ -132,16 +132,16 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 			"		SCHEDULE = FULL;\n" +
 			"		AUTOSTART = FALSE;\n" +
 			"		STACK = PRIVATE { SYS_SIZE = 0x300; };\n" +
-			"		RESOURCE = \"Resource\";\n" +
+			"		RESOURCE = Resource;\n" +
 			"	};\n" +
 			"	\n" +
 			"	TASK HighTask {\n" +
 			"		PRIORITY = 0x02;\n" +
 			"		ACTIVATION = 1;\n" +
 			"		SCHEDULE = FULL;\n" +
-			"		AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };  \n" +
+			"		AUTOSTART = TRUE { APPMODE=ModeIncrement; };  \n" +
 			"		STACK = PRIVATE { SYS_SIZE = 0x300; };\n" +
-			"		RESOURCE = \"Resource\";\n" +
+			"		RESOURCE = Resource;\n" +
 			"	};\n" +
 			"	\n" +
 			"	RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -164,7 +164,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 			+ "        CFLAGS = \"-DALT_DEBUG -G0 -O0 -g\";\n"
 			+ "        CFLAGS = \"-Wall -Wl,-Map -Wl,project.map\";\n"
 			+ "        ASFLAGS = \"-g\";\n"
-			+ "        LDDEPS = \"\\\";\n"
+			+ "        LDDEPS = \"\\\\\";\n"
 			+ "        LIBS = \"-lm\";\n"
 			+ "        NIOS2_SYS_CONFIG = \"DEBUG\";\n"
 			+ "        NIOS2_APP_CONFIG = \"DEBUG\";\n"
@@ -184,7 +184,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 			"			\n" +
 			"			APP_SRC = \"code_1.c\";\n" +
 			"	\n" 
-			+ "        STACK_TOP = 0x20004000;\n"
+			+ "        STACK_TOP = \"0x20004000\";\n"
 		//	+ "        STACK_BOTTOM = 0x20001800;\n"
 			+ "        SYS_SIZE = 0x1000;\n" 
 			+ "        SYSTEM_LIBRARY_NAME = \"library_name\";\n"
@@ -203,7 +203,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 			"			\n" +
 			"			APP_SRC = \"code_2.c\";\n" +
 			"	\n" 
-			+ "        STACK_TOP = 0x20008000;\n"
+			+ "        STACK_TOP = \"0x20008000\";\n"
 			//+ "        STACK_BOTTOM = 0x20004000;\n"
 			+ "        SYS_SIZE = 0x1000;\n"
 			+ "        SYSTEM_LIBRARY_NAME = \"library_name\";\n"
@@ -283,7 +283,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"			\n" +
 		"			APP_SRC = \"code_1.c\";\n" +
 		"	\n" 
-		+ "        STACK_TOP = 0x20004000;\n"
+		+ "        STACK_TOP = \"0x20004000\";\n"
 	//	+ "        STACK_BOTTOM = 0x20001800;\n"
 		+ "        SYS_SIZE = 0x1000;\n" 
 		+ "        SYSTEM_LIBRARY_NAME = \"library_name_1\";\n"
@@ -311,7 +311,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"			\n" +
 		"			APP_SRC = \"code_2.c\";\n" +
 		"	\n" 
-		+ "        STACK_TOP = 0x20008000;\n"
+		+ "        STACK_TOP = \"0x20008000\";\n"
 		//+ "        STACK_BOTTOM = 0x20004000;\n"
 		+ "        SYS_SIZE = 0x1000;\n"
 		+ "        SYSTEM_LIBRARY_NAME = \"library_name_2\";\n"
@@ -338,7 +338,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"			\n" +
 		"			APP_SRC = \"code_def.c\";\n" +
 		"	\n" 
-		+ "        STACK_TOP = 0x20004000;\n"
+		+ "        STACK_TOP = \"0x20004000\";\n"
 	//	+ "        STACK_BOTTOM = 0x20001800;\n"
 		+ "        SYS_SIZE = 0x1000;\n" 
 		+ "        SYSTEM_LIBRARY_NAME = \"library_name_d\";\n"
@@ -435,8 +435,8 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"	COUNTER myCounter;" +
 		"" +
 		"	ALARM AcquireAlarm {" +
-		"		COUNTER = \"myCounter\";" +
-		"		ACTION = ACTIVATETASK { TASK = \"T1\"; };" +
+		"		COUNTER = myCounter;" +
+		"		ACTION = ACTIVATETASK { TASK = T1; };" +
 		"	};" +
 		"};		";
 		commonWriterTest(test, 3);
@@ -452,7 +452,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"		CFLAGS = \"-Wall\";\n" +
 		"		LDFLAGS = \"-Wl,-Map -Wl,project.map\";\n" +
 		"		ASFLAGS = \"-g\";\n" +
-		"		LDDEPS = \"\\\";\n" +
+		"		LDDEPS = \"\\\\\";\n" +
 		"		LIBS = \"-lm\";\n" +
 		"		NIOS2_SYS_CONFIG = \"Debug\";\n" +
 		"		NIOS2_APP_CONFIG = \"Debug\";\n" +
@@ -677,8 +677,8 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"		STACK = PRIVATE {\n" +
 		"			SYS_SIZE = 1024;\n" +
 		"		};\n" +
-		"		RESOURCE = \"myRes\";\n" +
-		"		RESOURCE = \"myRes2\";\n" +
+		"		RESOURCE = myRes;\n" +
+		"		RESOURCE = myRes2;\n" +
 		"    };\n" +
 		"\n" +
 		"    TASK Task2 {\n" +
@@ -716,7 +716,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"		STACK = PRIVATE {\n" +
 		"			SYS_SIZE = 1024;\n" +
 		"		};\n" +
-		"		RESOURCE = \"myRes\";\n" +
+		"		RESOURCE = myRes;\n" +
 		"    };\n" +
 		"\n" +
 		"    TASK mytask1 {\n" +
@@ -765,7 +765,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"		CFLAGS = \"-Wall\";\n" +
 		"		ASFLAGS = \"-g\";\n" +
 		"		LDFLAGS = \"-Wl,-Map -Wl,project.map\";\n" +
-		"		LDDEPS = \"\\\";\n" +
+		"		LDDEPS = \"\\\\\";\n" +
 		"		LIBS = \"-lm\";\n" +
 		"		NIOS2_SYS_CONFIG = \"Debug\";\n" +
 		"		NIOS2_APP_CONFIG = \"Debug\";\n" +
@@ -858,8 +858,8 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"		STACK = PRIVATE {\n" +
 		"			SYS_SIZE = 1024;\n" +
 		"		};\n" +
-		"		RESOURCE = \"myRes\";\n" +
-		"		RESOURCE = \"myRes2\";\n" +
+		"		RESOURCE = myRes;\n" +
+		"		RESOURCE = myRes2;\n" +
 		"    };\n" +
 		"\n" +
 		"    TASK Task2 {\n" +
@@ -892,16 +892,16 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		"    COUNTER Counter1;\n" +
 		"\n" +
 		"    ALARM AlarmTask2 {\n" +
-		"                COUNTER = \"Counter1\";\n" +
-		"                ACTION = ACTIVATETASK { TASK = \"Task2\"; };\n" +
+		"                COUNTER = Counter1;\n" +
+		"                ACTION = ACTIVATETASK { TASK = Task2; };\n" +
 		"    };\n" +
 		"    ALARM AlarmTask3 {\n" +
-		"                COUNTER = \"Counter1\";\n" +
-		"                ACTION = ACTIVATETASK { TASK = \"Task3\"; };\n" +
+		"                COUNTER = Counter1;\n" +
+		"                ACTION = ACTIVATETASK { TASK = Task3; };\n" +
 		"    };\n" +
 		"    ALARM AlarmTask4 {\n" +
-		"                COUNTER = \"Counter1\";\n" +
-		"                ACTION = ACTIVATETASK { TASK = \"Task4\"; };\n" +
+		"                COUNTER = Counter1;\n" +
+		"                ACTION = ACTIVATETASK { TASK = Task4; };\n" +
 		"    };\n" +
 		"\n" +
 		"};\n";

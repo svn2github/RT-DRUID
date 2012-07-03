@@ -23,6 +23,5 @@ IMPLEMENTATION a {
 	};
 };
 CPU s {
-	ALARM alarm1 {
-	};
+	ALARM alarm1;
 };

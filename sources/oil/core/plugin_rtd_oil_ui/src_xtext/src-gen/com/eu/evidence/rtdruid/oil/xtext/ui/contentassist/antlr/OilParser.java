@@ -38,8 +38,13 @@ public class OilParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getParameterTypeAccess().getAlternatives(), "rule__ParameterType__Alternatives");
-					put(grammarAccess.getValueTypeAccess().getAlternatives_5_1(), "rule__ValueType__Alternatives_5_1");
-					put(grammarAccess.getValueTypeAccess().getDefaultValueAlternatives_5_1_1_0(), "rule__ValueType__DefaultValueAlternatives_5_1_1_0");
+					put(grammarAccess.getValueTypeAccess().getAlternatives_3_1(), "rule__ValueType__Alternatives_3_1");
+					put(grammarAccess.getValueTypeAccess().getAlternatives_3_1_0_0(), "rule__ValueType__Alternatives_3_1_0_0");
+					put(grammarAccess.getValueTypeAccess().getAlternatives_3_1_0_2(), "rule__ValueType__Alternatives_3_1_0_2");
+					put(grammarAccess.getValueTypeAccess().getAlternatives_3_1_1_0(), "rule__ValueType__Alternatives_3_1_1_0");
+					put(grammarAccess.getValueTypeAccess().getAlternatives_3_1_1_1_1(), "rule__ValueType__Alternatives_3_1_1_1_1");
+					put(grammarAccess.getValueTypeAccess().getAlternatives_6_1(), "rule__ValueType__Alternatives_6_1");
+					put(grammarAccess.getValueTypeAccess().getDefaultValueAlternatives_6_1_1_0(), "rule__ValueType__DefaultValueAlternatives_6_1_1_0");
 					put(grammarAccess.getVariantTypeAccess().getAlternatives_6_1(), "rule__VariantType__Alternatives_6_1");
 					put(grammarAccess.getReferenceTypeAccess().getAlternatives_5_1(), "rule__ReferenceType__Alternatives_5_1");
 					put(grammarAccess.getParameterAccess().getAlternatives_3(), "rule__Parameter__Alternatives_3");
@@ -64,8 +69,12 @@ public class OilParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOilApplicationAccess().getGroup(), "rule__OilApplication__Group__0");
 					put(grammarAccess.getOilApplicationAccess().getGroup_5(), "rule__OilApplication__Group_5__0");
 					put(grammarAccess.getValueTypeAccess().getGroup(), "rule__ValueType__Group__0");
-					put(grammarAccess.getValueTypeAccess().getGroup_5(), "rule__ValueType__Group_5__0");
+					put(grammarAccess.getValueTypeAccess().getGroup_3(), "rule__ValueType__Group_3__0");
+					put(grammarAccess.getValueTypeAccess().getGroup_3_1_0(), "rule__ValueType__Group_3_1_0__0");
+					put(grammarAccess.getValueTypeAccess().getGroup_3_1_1(), "rule__ValueType__Group_3_1_1__0");
+					put(grammarAccess.getValueTypeAccess().getGroup_3_1_1_1(), "rule__ValueType__Group_3_1_1_1__0");
 					put(grammarAccess.getValueTypeAccess().getGroup_6(), "rule__ValueType__Group_6__0");
+					put(grammarAccess.getValueTypeAccess().getGroup_7(), "rule__ValueType__Group_7__0");
 					put(grammarAccess.getVariantTypeAccess().getGroup(), "rule__VariantType__Group__0");
 					put(grammarAccess.getVariantTypeAccess().getGroup_3(), "rule__VariantType__Group_3__0");
 					put(grammarAccess.getVariantTypeAccess().getGroup_3_1(), "rule__VariantType__Group_3_1__0");
@@ -79,7 +88,8 @@ public class OilParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferenceTypeAccess().getGroup_5(), "rule__ReferenceType__Group_5__0");
 					put(grammarAccess.getReferenceTypeAccess().getGroup_6(), "rule__ReferenceType__Group_6__0");
 					put(grammarAccess.getOilObjectAccess().getGroup(), "rule__OilObject__Group__0");
-					put(grammarAccess.getOilObjectAccess().getGroup_5(), "rule__OilObject__Group_5__0");
+					put(grammarAccess.getOilObjectAccess().getGroup_2(), "rule__OilObject__Group_2__0");
+					put(grammarAccess.getOilObjectAccess().getGroup_3(), "rule__OilObject__Group_3__0");
 					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getParameterAccess().getGroup_4(), "rule__Parameter__Group_4__0");
 					put(grammarAccess.getParameterAccess().getGroup_5(), "rule__Parameter__Group_5__0");
@@ -100,11 +110,11 @@ public class OilParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOilApplicationAccess().getDescriptionAssignment_5_1(), "rule__OilApplication__DescriptionAssignment_5_1");
 					put(grammarAccess.getValueTypeAccess().getTypeAssignment_1(), "rule__ValueType__TypeAssignment_1");
 					put(grammarAccess.getValueTypeAccess().getWithAutoAssignment_2(), "rule__ValueType__WithAutoAssignment_2");
-					put(grammarAccess.getValueTypeAccess().getNameAssignment_3(), "rule__ValueType__NameAssignment_3");
-					put(grammarAccess.getValueTypeAccess().getMultiValueAssignment_4(), "rule__ValueType__MultiValueAssignment_4");
-					put(grammarAccess.getValueTypeAccess().getDefaultAutoAssignment_5_1_0(), "rule__ValueType__DefaultAutoAssignment_5_1_0");
-					put(grammarAccess.getValueTypeAccess().getDefaultValueAssignment_5_1_1(), "rule__ValueType__DefaultValueAssignment_5_1_1");
-					put(grammarAccess.getValueTypeAccess().getDescriptionAssignment_6_1(), "rule__ValueType__DescriptionAssignment_6_1");
+					put(grammarAccess.getValueTypeAccess().getNameAssignment_4(), "rule__ValueType__NameAssignment_4");
+					put(grammarAccess.getValueTypeAccess().getMultiValueAssignment_5(), "rule__ValueType__MultiValueAssignment_5");
+					put(grammarAccess.getValueTypeAccess().getDefaultAutoAssignment_6_1_0(), "rule__ValueType__DefaultAutoAssignment_6_1_0");
+					put(grammarAccess.getValueTypeAccess().getDefaultValueAssignment_6_1_1(), "rule__ValueType__DefaultValueAssignment_6_1_1");
+					put(grammarAccess.getValueTypeAccess().getDescriptionAssignment_7_1(), "rule__ValueType__DescriptionAssignment_7_1");
 					put(grammarAccess.getVariantTypeAccess().getTypeAssignment_1(), "rule__VariantType__TypeAssignment_1");
 					put(grammarAccess.getVariantTypeAccess().getWithAutoAssignment_2(), "rule__VariantType__WithAutoAssignment_2");
 					put(grammarAccess.getVariantTypeAccess().getValuesAssignment_3_1_0(), "rule__VariantType__ValuesAssignment_3_1_0");
@@ -126,8 +136,8 @@ public class OilParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferenceTypeAccess().getDescriptionAssignment_6_1(), "rule__ReferenceType__DescriptionAssignment_6_1");
 					put(grammarAccess.getOilObjectAccess().getTypeAssignment_0(), "rule__OilObject__TypeAssignment_0");
 					put(grammarAccess.getOilObjectAccess().getNameAssignment_1(), "rule__OilObject__NameAssignment_1");
-					put(grammarAccess.getOilObjectAccess().getParametersAssignment_3(), "rule__OilObject__ParametersAssignment_3");
-					put(grammarAccess.getOilObjectAccess().getDescriptionAssignment_5_1(), "rule__OilObject__DescriptionAssignment_5_1");
+					put(grammarAccess.getOilObjectAccess().getParametersAssignment_2_1(), "rule__OilObject__ParametersAssignment_2_1");
+					put(grammarAccess.getOilObjectAccess().getDescriptionAssignment_3_1(), "rule__OilObject__DescriptionAssignment_3_1");
 					put(grammarAccess.getParameterAccess().getTypeAssignment_1(), "rule__Parameter__TypeAssignment_1");
 					put(grammarAccess.getParameterAccess().getAutoAssignment_3_0(), "rule__Parameter__AutoAssignment_3_0");
 					put(grammarAccess.getParameterAccess().getValueAssignment_3_1(), "rule__Parameter__ValueAssignment_3_1");

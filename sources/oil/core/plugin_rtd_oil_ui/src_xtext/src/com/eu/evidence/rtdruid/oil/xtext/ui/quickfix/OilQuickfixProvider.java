@@ -32,7 +32,10 @@ public class OilQuickfixProvider extends DefaultQuickfixProvider {
 		acceptor.accept(issue, "Remove quotes", "Transform the string to reference removing quotes.", null, new IModification() {
 			public void apply(IModificationContext context) throws BadLocationException {
 				IXtextDocument xtextDocument = context.getXtextDocument();
-				String txt = xtextDocument.get(issue.getOffset()+1, issue.getLength()-1);
+				String txt_orig = xtextDocument.get(issue.getOffset(), issue.getLength());
+				int init_offset = txt_orig.startsWith("\"") ? 1 : 0;
+				int end_offset = txt_orig.endsWith("\"") ? 1 : 0;
+				String txt = xtextDocument.get(issue.getOffset()+init_offset, issue.getLength()-(init_offset+end_offset));
 				xtextDocument.replace(issue.getOffset(), issue.getLength(), txt);
 			}
 		});

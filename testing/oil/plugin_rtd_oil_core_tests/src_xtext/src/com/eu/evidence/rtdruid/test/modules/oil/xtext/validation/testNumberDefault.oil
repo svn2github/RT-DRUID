@@ -19,17 +19,18 @@ IMPLEMENTATION a {
 			t_uint32 {
 				UINT32 a1 = 1;
 				UINT32 a2 = -1;
-				UINT32 a3 = 1.0; // ERROR
-				UINT32 a4 = -1.0; // ERROR
-				UINT32 a5 = 0x1;
-				UINT32 a6 = -0x1; // ERROR
-				UINT32 a7 = 0xFFFFFFFFFFFF; // ERROR
-				UINT32 a8 = 0x7fffffff;
-				UINT32 a9 = AUTO ; // ERROR
-				UINT32 WITH_AUTO a10 = AUTO ;
-				UINT32 a11 = a1;
-				UINT32 a12 = alarm;
-				UINT32 a13 = "abc";
+				UINT32 a3 = -2;
+				UINT32 a4 = 1.0; // ERROR
+				UINT32 a5 = -1.0; // ERROR
+				UINT32 a6 = 0x1;
+				UINT32 a7 = -0x1; // ERROR
+				UINT32 a8 = 0xFFFFFFFFFFFF; // ERROR
+				UINT32 a9 = 0x7fffffff;
+				UINT32 a10 = AUTO ; // ERROR
+				UINT32 WITH_AUTO a11 = AUTO ;
+				UINT32 a12 = a1;
+				UINT32 a13 = alarm;
+				UINT32 a14 = "abc";
 			},
 			t_int64 {
 				INT64 a1 = 1;
@@ -49,17 +50,18 @@ IMPLEMENTATION a {
 			t_uint64 {
 				UINT64 a1 = 1;
 				UINT64 a2 = -1;
-				UINT64 a3 = 1.0; // ERROR
-				UINT64 a4 = -1.0; // ERROR
-				UINT64 a5 = 0x1;
-				UINT64 a6 = -0x1; // ERROR
-				UINT64 a7 = 0xFFFFFFFFFFFF; // ERROR
-				UINT64 a8 = 0x7fffffff;
-				UINT64 a9 = AUTO ; // ERROR
-				UINT64 WITH_AUTO a10 = AUTO ;
-				UINT64 a11 = a1;
-				UINT64 a12 = alarm;
-				UINT64 a13 = "abc";
+				UINT64 a3 = -2;
+				UINT64 a4 = 1.0; // ERROR
+				UINT64 a5 = -1.0; // ERROR
+				UINT64 a6 = 0x1;
+				UINT64 a7 = -0x1; // ERROR
+				UINT64 a8 = 0xFFFFFFFFFFFF; // ERROR
+				UINT64 a9 = 0x7fffffff;
+				UINT64 a10 = AUTO ; // ERROR
+				UINT64 WITH_AUTO a11 = AUTO ;
+				UINT64 a12 = a1;
+				UINT64 a13 = alarm;
+				UINT64 a14 = "abc";
 			},
 			t_float {
 				FLOAT a1 = 1;
@@ -98,6 +100,5 @@ IMPLEMENTATION a {
 	};
 };
 CPU s {
-	ALARM alarm1 {
-	};
+	ALARM alarm1;
 };

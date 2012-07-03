@@ -65,32 +65,32 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"ABS\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = ABS;\n" +
 				"	};\n" +
 				"	TASK Task1 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER1\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER1;\n" +
 				"	};\n" +
 				"	TASK Task2 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	TASK Task3 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	\n" +
 				"	COUNTER myCounter {\n" +
@@ -100,8 +100,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM AlarmTask0 {\n" +
-				"		COUNTER = \"myCounter\";\n" +
-				"		ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+				"		COUNTER = myCounter;\n" +
+				"		ACTION = ACTIVATETASK { TASK = Task0; };\n" +
 				"	};\n" +
 				"	\n" +
 				"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -115,22 +115,22 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	\n" +
 				"	MESSAGE RECEIVER1 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0;\n" +
 				"		};\n" +
-				"		NOTIFICATION = ACTIVATETASK { TASK = \"Task1\"; }; \n" +
+				"		NOTIFICATION = ACTIVATETASK { TASK = Task1; }; \n" +
 				"	};\n" +
 				"	\n" +
 				"	MESSAGE RECEIVER2 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0;\n" +
 				"		};\n" +
 				"		NOTIFICATION = COMCALLBACK { \n" +
 				"			CALLBACKROUTINENAME = \"callback\"; \n" +
-				"			MESSAGE = \"RECEIVER2\";\n" +
+				"			MESSAGE = RECEIVER2;\n" +
 				"		};\n" +
 				"	};\n" +
 				"};";
@@ -200,32 +200,32 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"ABS\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = ABS;\n" +
 				"	};\n" +
 				"	TASK Task1 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER1\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER1;\n" +
 				"	};\n" +
 				"	TASK Task2 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	TASK Task3 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	\n" +
 				"	COUNTER myCounter {\n" +
@@ -235,8 +235,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM AlarmTask0 {\n" +
-				"		COUNTER = \"myCounter\";\n" +
-				"		ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+				"		COUNTER = myCounter;\n" +
+				"		ACTION = ACTIVATETASK { TASK = Task0; };\n" +
 				"	};\n" +
 				"	\n" +
 				"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -250,22 +250,22 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	\n" +
 				"	MESSAGE RECEIVER1 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0;\n" +
 				"		};\n" +
-				"		NOTIFICATION = ACTIVATETASK { TASK = \"Task1\"; }; \n" +
+				"		NOTIFICATION = ACTIVATETASK { TASK = Task1; }; \n" +
 				"	};\n" +
 				"	\n" +
 				"	MESSAGE RECEIVER2 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0;\n" +
 				"		};\n" +
 				"		NOTIFICATION = COMCALLBACK { \n" +
 				"			CALLBACKROUTINENAME = \"callback\"; \n" +
-				"			MESSAGE = \"RECEIVER2\";\n" +
+				"			MESSAGE = RECEIVER2;\n" +
 				"		};\n" +
 				"	};\n" +
 				"};";
@@ -335,32 +335,32 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"ABS\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = ABS;\n" +
 				"	};\n" +
 				"	TASK Task1 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER1\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER1;\n" +
 				"	};\n" +
 				"	TASK Task2 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	TASK Task3 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	\n" +
 				"	COUNTER myCounter {\n" +
@@ -370,8 +370,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM AlarmTask0 {\n" +
-				"		COUNTER = \"myCounter\";\n" +
-				"		ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+				"		COUNTER = myCounter;\n" +
+				"		ACTION = ACTIVATETASK { TASK = Task0; };\n" +
 				"	};\n" +
 				"	\n" +
 				"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -385,22 +385,22 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	\n" +
 				"	MESSAGE RECEIVER1 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0x1;\n" +
 				"		};\n" +
-				"		NOTIFICATION = ACTIVATETASK { TASK = \"Task1\"; }; \n" +
+				"		NOTIFICATION = ACTIVATETASK { TASK = Task1; }; \n" +
 				"	};\n" +
 				"	\n" +
 				"	MESSAGE RECEIVER2 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0;\n" +
 				"		};\n" +
 				"		NOTIFICATION = COMCALLBACK { \n" +
 				"			CALLBACKROUTINENAME = \"callback\"; \n" +
-				"			MESSAGE = \"RECEIVER2\";\n" +
+				"			MESSAGE = RECEIVER2;\n" +
 				"		};\n" +
 				"	};\n" +
 				"};";
@@ -470,32 +470,32 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"ABS\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = ABS;\n" +
 				"	};\n" +
 				"	TASK Task1 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER1\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER1;\n" +
 				"	};\n" +
 				"	TASK Task2 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	TASK Task3 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	\n" +
 				"	COUNTER myCounter {\n" +
@@ -505,8 +505,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM AlarmTask0 {\n" +
-				"		COUNTER = \"myCounter\";\n" +
-				"		ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+				"		COUNTER = myCounter;\n" +
+				"		ACTION = ACTIVATETASK { TASK = Task0; };\n" +
 				"	};\n" +
 				"	\n" +
 				"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -520,22 +520,22 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	\n" +
 				"	MESSAGE RECEIVER1 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0x1;\n" +
 				"		};\n" +
-				"		NOTIFICATION = ACTIVATETASK { TASK = \"Task1\"; }; \n" +
+				"		NOTIFICATION = ACTIVATETASK { TASK = Task1; }; \n" +
 				"	};\n" +
 				"	\n" +
 				"	MESSAGE RECEIVER2 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0;\n" +
 				"		};\n" +
 				"		NOTIFICATION = COMCALLBACK { \n" +
 				"			CALLBACKROUTINENAME = \"callback\"; \n" +
-				"			MESSAGE = \"RECEIVER2\";\n" +
+				"			MESSAGE = RECEIVER2;\n" +
 				"		};\n" +
 				"	};\n" +
 				"};";
@@ -605,32 +605,32 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"ABS\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = ABS;\n" +
 				"	};\n" +
 				"	TASK Task1 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER1\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER1;\n" +
 				"	};\n" +
 				"	TASK Task2 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	TASK Task3 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	\n" +
 				"	COUNTER myCounter {\n" +
@@ -640,8 +640,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM AlarmTask0 {\n" +
-				"		COUNTER = \"myCounter\";\n" +
-				"		ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+				"		COUNTER = myCounter;\n" +
+				"		ACTION = ACTIVATETASK { TASK = Task0; };\n" +
 				"	};\n" +
 				"	\n" +
 				"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -655,22 +655,22 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	\n" +
 				"	MESSAGE RECEIVER1 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0x1;\n" +
 				"		};\n" +
-				"		NOTIFICATION = ACTIVATETASK { TASK = \"Task1\"; }; \n" +
+				"		NOTIFICATION = ACTIVATETASK { TASK = Task1; }; \n" +
 				"	};\n" +
 				"	\n" +
 				"	MESSAGE RECEIVER2 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0;\n" +
 				"		};\n" +
 				"		NOTIFICATION = COMCALLBACK { \n" +
 				"			CALLBACKROUTINENAME = \"callback\"; \n" +
-				"			MESSAGE = \"RECEIVER2\";\n" +
+				"			MESSAGE = RECEIVER2;\n" +
 				"		};\n" +
 				"	};\n" +
 				"};";
@@ -743,32 +743,32 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"ABS\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = ABS;\n" +
 				"	};\n" +
 				"	TASK Task1 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER1\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER1;\n" +
 				"	};\n" +
 				"	TASK Task2 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	TASK Task3 {\n" +
 				"		PRIORITY = 0x03; \n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-				"		MESSAGE = \"RECEIVER2\";\n" +
+				"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+				"		MESSAGE = RECEIVER2;\n" +
 				"	};\n" +
 				"	\n" +
 				"	COUNTER myCounter {\n" +
@@ -778,8 +778,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM AlarmTask0 {\n" +
-				"		COUNTER = \"myCounter\";\n" +
-				"		ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+				"		COUNTER = myCounter;\n" +
+				"		ACTION = ACTIVATETASK { TASK = Task0; };\n" +
 				"	};\n" +
 				"	\n" +
 				"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -793,22 +793,22 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 				"	\n" +
 				"	MESSAGE RECEIVER1 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0x1;\n" +
 				"		};\n" +
-				"		NOTIFICATION = ACTIVATETASK { TASK = \"Task1\"; }; \n" +
+				"		NOTIFICATION = ACTIVATETASK { TASK = Task1; }; \n" +
 				"	};\n" +
 				"	\n" +
 				"	MESSAGE RECEIVER2 {\n" +
 				"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-				"			SENDINGMESSAGE = \"ABS\";\n" +
+				"			SENDINGMESSAGE = ABS;\n" +
 				"			FILTER = ALWAYS;\n" +
 				"			INITIALVALUE = 0;\n" +
 				"		};\n" +
 				"		NOTIFICATION = COMCALLBACK { \n" +
 				"			CALLBACKROUTINENAME = \"callback\"; \n" +
-				"			MESSAGE = \"RECEIVER2\";\n" +
+				"			MESSAGE = RECEIVER2;\n" +
 				"		};\n" +
 				"	};\n" +
 				"};";
@@ -887,8 +887,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"		AUTOSTART = FALSE;\n" +
 			"		ACTIVATION = 1;    /* only one pending activation */\n" +
 			"		STACK = SHARED;\n" +
-			"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-			"		MESSAGE = \"ABS\";\n" +
+			"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+			"		MESSAGE = ABS;\n" +
 			"	};\n" +
 			"	/* this is the OIL part for the task */\n" +
 			"	TASK Task1 {\n" +
@@ -896,8 +896,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"		AUTOSTART = FALSE;\n" +
 			"		ACTIVATION = 1;    /* only one pending activation */\n" +
 			"		STACK = SHARED;\n" +
-			"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-			"		MESSAGE = \"RECEIVER2\";\n" +
+			"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+			"		MESSAGE = RECEIVER2;\n" +
 			"	};\n" +
 			"	\n" +
 			"	TASK Task2 {\n" +
@@ -905,8 +905,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"		AUTOSTART = FALSE;\n" +
 			"		ACTIVATION = 1;    /* only one pending activation */\n" +
 			"		STACK = SHARED;\n" +
-			"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-			"		MESSAGE = \"RECEIVER1\";\n" +
+			"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+			"		MESSAGE = RECEIVER1;\n" +
 			"		\n" +
 			"	};\n" +
 			"	\n" +
@@ -919,13 +919,13 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"\n" +
 			"	/* Alarm to that cyclically activate Kitt effect */\n" +
 			"	ALARM AlarmTask0 {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"	    ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"	    ACTION = ACTIVATETASK { TASK = Task0; };\n" +
 			"	};\n" +
 			"	\n" +
 			"	ALARM AlarmTask1 {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"	    ACTION = ACTIVATETASK { TASK = \"Task1\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"	    ACTION = ACTIVATETASK { TASK = Task1; };\n" +
 			"	};\n" +
 			"	\n" +
 			"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -959,16 +959,16 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"	\n" +
 			"	MESSAGE RECEIVER1 {\n" +
 			"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-			"			SENDINGMESSAGE = \"ABS\";\n" +
+			"			SENDINGMESSAGE = ABS;\n" +
 			"			FILTER = ALWAYS;\n" +
 			"			INITIALVALUE = 0;\n" +
 			"		};\n" +
-			"		NOTIFICATION = ACTIVATETASK { TASK = \"Task2\"; }; \n" +
+			"		NOTIFICATION = ACTIVATETASK { TASK = Task2; }; \n" +
 			"	};\n" +
 			"	\n" +
 			"	MESSAGE RECEIVER2 {\n" +
 			"		MESSAGEPROPERTY = RECEIVE_QUEUED_INTERNAL {\n" +
-			"			SENDINGMESSAGE = \"ABS\";\n" +
+			"			SENDINGMESSAGE = ABS;\n" +
 			"			FILTER = ALWAYS;\n" +
 			"			INITIALVALUE = 0;\n" +
 			"			QUEUESIZE = 2;\n" +
@@ -1039,8 +1039,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"		AUTOSTART = FALSE;\n" +
 			"		ACTIVATION = 1;    /* only one pending activation */\n" +
 			"		STACK = SHARED;\n" +
-			"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-			"		MESSAGE = \"ABS\";\n" +
+			"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+			"		MESSAGE = ABS;\n" +
 			"	};\n" +
 			"	/* this is the OIL part for the task */\n" +
 			"	TASK Task1 {\n" +
@@ -1048,8 +1048,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"		AUTOSTART = FALSE;\n" +
 			"		ACTIVATION = 1;    /* only one pending activation */\n" +
 			"		STACK = SHARED;\n" +
-			"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-			"		MESSAGE = \"RECEIVER2\";\n" +
+			"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+			"		MESSAGE = RECEIVER2;\n" +
 			"		EVENT = Event12;\n" +
 			"		EVENT = Event22;\n" +
 			"		EVENT = Event13;\n" +
@@ -1067,8 +1067,8 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"		AUTOSTART = FALSE;\n" +
 			"		ACTIVATION = 1;    /* only one pending activation */\n" +
 			"		STACK = SHARED;\n" +
-			"		RESOURCE = \"EE_MUTEX_COM_MSG\";\n" +
-			"		MESSAGE = \"RECEIVER1\";\n" +
+			"		RESOURCE = EE_MUTEX_COM_MSG;\n" +
+			"		MESSAGE = RECEIVER1;\n" +
 			"		\n" +
 			"	};\n" +
 			"	\n" +
@@ -1081,13 +1081,13 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"\n" +
 			"	/* Alarm to that cyclically activate Kitt effect */\n" +
 			"	ALARM AlarmTask0 {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"	    ACTION = ACTIVATETASK { TASK = \"Task0\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"	    ACTION = ACTIVATETASK { TASK = Task0; };\n" +
 			"	};\n" +
 			"	\n" +
 			"	ALARM AlarmTask1 {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"	    ACTION = ACTIVATETASK { TASK = \"Task1\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"	    ACTION = ACTIVATETASK { TASK = Task1; };\n" +
 			"	};\n" +
 			"	\n" +
 			"	RESOURCE EE_MUTEX_COM_MSG { RESOURCEPROPERTY = STANDARD; };\n" +
@@ -1121,37 +1121,37 @@ public class CodeWriterComTest extends AbstractCodeWriterTest {
 			"	\n" +
 			"	MESSAGE RECEIVER1 {\n" +
 			"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-			"			SENDINGMESSAGE = \"ABS\";\n" +
+			"			SENDINGMESSAGE = ABS;\n" +
 			"			FILTER = ALWAYS;\n" +
 			"			INITIALVALUE = 0;\n" +
 			"		};\n" +
-			"		NOTIFICATION = SETEVENT { TASK = \"Task1\"; EVENT = Event13; }; \n" +
+			"		NOTIFICATION = SETEVENT { TASK = Task1; EVENT = Event13; }; \n" +
 			"	};\n" +
 			"	MESSAGE RECEIVER3 {\n" +
 			"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-			"			SENDINGMESSAGE = \"ABS\";\n" +
+			"			SENDINGMESSAGE = ABS;\n" +
 			"			FILTER = ALWAYS;\n" +
 			"			INITIALVALUE = 0;\n" +
 			"		};\n" +
-			"		NOTIFICATION = SETEVENT { TASK = \"Task1\"; EVENT = Event12; }; \n" +
+			"		NOTIFICATION = SETEVENT { TASK = Task1; EVENT = Event12; }; \n" +
 			"	};\n" +
 			"	MESSAGE RECEIVER4 {\n" +
 			"		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {\n" +
-			"			SENDINGMESSAGE = \"ABS\";\n" +
+			"			SENDINGMESSAGE = ABS;\n" +
 			"			FILTER = ALWAYS;\n" +
 			"			INITIALVALUE = 0;\n" +
 			"		};\n" +
-			"		NOTIFICATION = SETEVENT { TASK = \"Task1\"; EVENT = Event13; }; \n" +
+			"		NOTIFICATION = SETEVENT { TASK = Task1; EVENT = Event13; }; \n" +
 			"	};\n" +
 			"	\n" +
 			"	MESSAGE RECEIVER2 {\n" +
 			"		MESSAGEPROPERTY = RECEIVE_QUEUED_INTERNAL {\n" +
-			"			SENDINGMESSAGE = \"ABS\";\n" +
+			"			SENDINGMESSAGE = ABS;\n" +
 			"			FILTER = ALWAYS;\n" +
 			"			INITIALVALUE = 0;\n" +
 			"			QUEUESIZE = 2;\n" +
 			"		};\n" +
-			"		NOTIFICATION = SETEVENT { TASK = \"Task1\"; EVENT = Event23; }; \n" +
+			"		NOTIFICATION = SETEVENT { TASK = Task1; EVENT = Event23; }; \n" +
 			"	};\n" +
 			"\n" +
 			"};";

@@ -315,7 +315,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 64;\n" + 
 				"		};\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"\n" + 
 				"    TASK Task1 {\n" + 
@@ -377,7 +377,7 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 64;\n" + 
 				"		};\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"\n" + 
 				"    TASK Task1 {\n" + 
@@ -585,8 +585,8 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 			"	};\n" +
 
 			"	ALARM AcquireAlarm {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 			"};";
 		commonWriterTest(text, 1);

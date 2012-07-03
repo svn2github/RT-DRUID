@@ -54,7 +54,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 		    	"	/* this is the OIL part for the first task */\n" +
 		    	"    TASK Task1 {\n" +
 		    	"		PRIORITY = 0x01;   /* Low priority */\n" +
-				"		AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };	\n"+
+				"		AUTOSTART = TRUE { APPMODE=ModeIncrement; };	\n"+
 		    	"		STACK = SHARED;\n" +
 		    	"		ACTIVATION = 1;    /* only one pending activation */\n" +
 		    	"	};	\n" +
@@ -115,7 +115,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	    	"	/* this is the OIL part for the first task */\n" +
 	    	"    TASK Task1 {\n" +
 	    	"		PRIORITY = 0x01;   /* Low priority */\n" +
-			"		AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };	\n"+
+			"		AUTOSTART = TRUE { APPMODE=ModeIncrement; };	\n"+
 	    	"		STACK = SHARED;\n" +
 	    	"		ACTIVATION = 1;    /* only one pending activation */\n" +
 	    	"	};	\n" +
@@ -306,7 +306,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 		    	"	/* this is the OIL part for the first task */\n" +
 		    	"    TASK Task1 {\n" +
 		    	"		PRIORITY = 0x01;   /* Low priority */\n" +
-				"		AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };	\n"+
+				"		AUTOSTART = TRUE { APPMODE=ModeIncrement; };	\n"+
 		    	"		STACK = SHARED;\n" +
 		    	"		ACTIVATION = 1;    /* only one pending activation */\n" +
 		    	"	};	\n" +
@@ -369,7 +369,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	    	"	/* this is the OIL part for the first task */\n" +
 	    	"    TASK Task1 {\n" +
 	    	"		PRIORITY = 0x01;   /* Low priority */\n" +
-			"		AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };	\n"+
+			"		AUTOSTART = TRUE { APPMODE=ModeIncrement; };	\n"+
 	    	"		STACK = SHARED;\n" +
 	    	"		ACTIVATION = 1;    /* only one pending activation */\n" +
 	    	"	};	\n" +
@@ -616,8 +616,8 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 				"		STACK = PRIVATE {\n"+
 				"			SYS_SIZE = 1024;\n"+
 				"		};\n"+
-				"		EVENT = \"TimerEvent\";\n"+
-				"		EVENT = \"ButtonEvent\";\n"+
+				"		EVENT = TimerEvent;\n"+
+				"		EVENT = ButtonEvent;\n"+
 				"    };\n"+
 				"\n"+
 				"    TASK Task2 {\n"+
@@ -638,14 +638,14 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 				"    };\n"+
 				"\n"+
 				"    ALARM AlarmTask1 {\n"+
-				"                COUNTER = \"Counter1\";\n"+
-				"                ACTION = SETEVENT { TASK = \"Task1\"; EVENT = \"TimerEvent\"; };\n"+
+				"                COUNTER = Counter1;\n"+
+				"                ACTION = SETEVENT { TASK = Task1; EVENT = TimerEvent; };\n"+
 				"                AUTOSTART = TRUE { ALARMTIME = 250; CYCLETIME = 500; };\n"+
 				"    };\n"+
 				"\n"+
 				"    ALARM AlarmTask2 {\n"+
-				"                COUNTER = \"Counter1\";\n"+
-				"                ACTION = ACTIVATETASK { TASK = \"Task2\"; };\n"+
+				"                COUNTER = Counter1;\n"+
+				"                ACTION = ACTIVATETASK { TASK = Task2; };\n"+
 				"                AUTOSTART = FALSE;\n"+
 				"    };\n"+
 				"};";
@@ -703,8 +703,8 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 			"		STACK = PRIVATE {\n"+
 			"			SYS_SIZE = 1024;\n"+
 			"		};\n"+
-			"		EVENT = \"TimerEvent\";\n"+
-			"		EVENT = \"ButtonEvent\";\n"+
+			"		EVENT = TimerEvent;\n"+
+			"		EVENT = ButtonEvent;\n"+
 			"    };\n"+
 			"\n"+
 			"    TASK Task2 {\n"+
@@ -725,14 +725,14 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 			"    };\n"+
 			"\n"+
 			"    ALARM AlarmTask1 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = SETEVENT { TASK = \"Task1\"; EVENT = \"TimerEvent\"; };\n"+
+			"                COUNTER = Counter1;\n"+
+			"                ACTION = SETEVENT { TASK = Task1; EVENT = TimerEvent; };\n"+
 			"                AUTOSTART = TRUE { ALARMTIME = 250; CYCLETIME = 500; };\n"+
 			"    };\n"+
 			"\n"+
 			"    ALARM AlarmTask2 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = ACTIVATETASK { TASK = \"Task2\"; };\n"+
+			"                COUNTER = Counter1;\n"+
+			"                ACTION = ACTIVATETASK { TASK = Task2; };\n"+
 			"                AUTOSTART = FALSE;\n"+
 			"    };\n"+
 			"};";
@@ -800,8 +800,8 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 				"		STACK = PRIVATE {\n"+
 				"			SYS_SIZE = 1024;\n"+
 				"		};\n"+
-				"		EVENT = \"TimerEvent\";\n"+
-				"		EVENT = \"ButtonEvent\";\n"+
+				"		EVENT = TimerEvent;\n"+
+				"		EVENT = ButtonEvent;\n"+
 				"    };\n"+
 				"\n"+
 				"    TASK Task2 {\n"+
@@ -822,14 +822,14 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 				"    };\n"+
 				"\n"+
 				"    ALARM AlarmTask1 {\n"+
-				"                COUNTER = \"Counter1\";\n"+
-				"                ACTION = SETEVENT { TASK = \"Task1\"; EVENT = \"TimerEvent\"; };\n"+
+				"                COUNTER = Counter1;\n"+
+				"                ACTION = SETEVENT { TASK = Task1; EVENT = TimerEvent; };\n"+
 				"                AUTOSTART = FALSE;\n"+
 				"    };\n"+
 				"\n"+
 				"    ALARM AlarmTask2 {\n"+
-				"                COUNTER = \"Counter1\";\n"+
-				"                ACTION = ACTIVATETASK { TASK = \"Task2\"; };\n"+
+				"                COUNTER = Counter1;\n"+
+				"                ACTION = ACTIVATETASK { TASK = Task2; };\n"+
 //				"                AUTOSTART = FALSE;\n"+
 				"    };\n"+
 				"};";
@@ -887,8 +887,8 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 			"		STACK = PRIVATE {\n"+
 			"			SYS_SIZE = 1024;\n"+
 			"		};\n"+
-			"		EVENT = \"TimerEvent\";\n"+
-			"		EVENT = \"ButtonEvent\";\n"+
+			"		EVENT = TimerEvent;\n"+
+			"		EVENT = ButtonEvent;\n"+
 			"    };\n"+
 			"\n"+
 			"    TASK Task2 {\n"+
@@ -909,14 +909,14 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 			"    };\n"+
 			"\n"+
 			"    ALARM AlarmTask1 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = SETEVENT { TASK = \"Task1\"; EVENT = \"TimerEvent\"; };\n"+
+			"                COUNTER = Counter1;\n"+
+			"                ACTION = SETEVENT { TASK = Task1; EVENT = TimerEvent; };\n"+
 			"                AUTOSTART = FALSE;\n"+
 			"    };\n"+
 			"\n"+
 			"    ALARM AlarmTask2 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = ACTIVATETASK { TASK = \"Task2\"; };\n"+
+			"                COUNTER = Counter1;\n"+
+			"                ACTION = ACTIVATETASK { TASK = Task2; };\n"+
 //			"                AUTOSTART = FALSE;\n"+
 			"    };\n"+
 			"};";
@@ -980,8 +980,8 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 			"		STACK = PRIVATE {\n"+
 			"			SYS_SIZE = 1024;\n"+
 			"		};\n"+
-			"		EVENT = \"TimerEvent\";\n"+
-			"		EVENT = \"ButtonEvent\";\n"+
+			"		EVENT = TimerEvent;\n"+
+			"		EVENT = ButtonEvent;\n"+
 			"    };\n"+
 			"\n"+
 			"    TASK Task2 {\n"+
@@ -1002,14 +1002,14 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 			"    };\n"+
 			"\n"+
 			"    ALARM AlarmTask1 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = SETEVENT { TASK = \"Task1\"; EVENT = \"TimerEvent\"; };\n"+
+			"                COUNTER = Counter1;\n"+
+			"                ACTION = SETEVENT { TASK = Task1; EVENT = TimerEvent; };\n"+
 			"                AUTOSTART = FALSE;\n"+
 			"    };\n"+
 			"\n"+
 			"    ALARM AlarmTask2 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = ACTIVATETASK { TASK = \"Task2\"; };\n"+
+			"                COUNTER = Counter1;\n"+
+			"                ACTION = ACTIVATETASK { TASK = Task2; };\n"+
 //			"                AUTOSTART = FALSE;\n"+
 			"    };\n"+
 			"};";
@@ -1068,8 +1068,8 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 			"		STACK = PRIVATE {\n"+
 			"			SYS_SIZE = 1024;\n"+
 			"		};\n"+
-			"		EVENT = \"TimerEvent\";\n"+
-			"		EVENT = \"ButtonEvent\";\n"+
+			"		EVENT = TimerEvent;\n"+
+			"		EVENT = ButtonEvent;\n"+
 			"    };\n"+
 			"\n"+
 			"    TASK Task2 {\n"+
@@ -1090,14 +1090,14 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 			"    };\n"+
 			"\n"+
 			"    ALARM AlarmTask1 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = SETEVENT { TASK = \"Task1\"; EVENT = \"TimerEvent\"; };\n"+
+			"                COUNTER = Counter1;\n"+
+			"                ACTION = SETEVENT { TASK = Task1; EVENT = TimerEvent; };\n"+
 			"                AUTOSTART = FALSE;\n"+
 			"    };\n"+
 			"\n"+
 			"    ALARM AlarmTask2 {\n"+
-			"                COUNTER = \"Counter1\";\n"+
-			"                ACTION = ACTIVATETASK { TASK = \"Task2\"; };\n"+
+			"                COUNTER = Counter1;\n"+
+			"                ACTION = ACTIVATETASK { TASK = Task2; };\n"+
 			"                AUTOSTART = FALSE { ALARMTIME = 55; CYCLETIME = 66; };\n"+
 			"    };\n"+
 			"};";
@@ -1105,7 +1105,7 @@ public class CodeWriterCosmicS12Test extends AbstractCodeWriterTest {
 	    boolean ok = false;
 	    try {
 	    	commonWriterTest(text_new, 1);
-	    } catch (Exception e) {
+	    } catch (Throwable e) {
 	    	ok = true;
 	    }
 	    assertTrue(ok);

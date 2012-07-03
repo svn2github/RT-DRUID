@@ -394,9 +394,9 @@ public class CodeWriterMico32Test extends AbstractCodeWriterTest {
 			"	COUNTER MainTimer;\n" +
 			"	\n" +
 			"	ALARM MyAlarm {\n" +
-			"		COUNTER = \"MainTimer\";\n" +
+			"		COUNTER = MainTimer;\n" +
 			"		ACTION = ACTIVATETASK {\n" +
-			"			TASK = \"Task1\";\n" +
+			"			TASK = Task1;\n" +
 			"		};\n" +
 			"		/* Autstart is not supported on FP kernel! */\n" +
 			"		AUTOSTART = FALSE;\n" +

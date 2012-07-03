@@ -146,7 +146,15 @@ public enum ObjectType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	TASK(6, "TASK", "TASK");
+	TASK(6, "TASK", "TASK"), /**
+	 * The '<em><b>APPLICATION</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #APPLICATION_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	APPLICATION(13, "APPLICATION", "APPLICATION");
 
 	/**
 	 * The '<em><b>OS</b></em>' literal value.
@@ -344,6 +352,21 @@ public enum ObjectType implements Enumerator {
 	public static final int TASK_VALUE = 6;
 
 	/**
+	 * The '<em><b>APPLICATION</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>APPLICATION</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #APPLICATION
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int APPLICATION_VALUE = 13;
+
+	/**
 	 * An array of all the '<em><b>Object Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -364,6 +387,7 @@ public enum ObjectType implements Enumerator {
 			NM,
 			RESOURCE,
 			TASK,
+			APPLICATION,
 		};
 
 	/**
@@ -427,6 +451,7 @@ public enum ObjectType implements Enumerator {
 			case NM_VALUE: return NM;
 			case RESOURCE_VALUE: return RESOURCE;
 			case TASK_VALUE: return TASK;
+			case APPLICATION_VALUE: return APPLICATION;
 		}
 		return null;
 	}

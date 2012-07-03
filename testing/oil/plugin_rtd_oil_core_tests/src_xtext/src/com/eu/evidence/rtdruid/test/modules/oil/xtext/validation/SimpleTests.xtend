@@ -19,7 +19,6 @@ class SimpleTests extends XtextTest {
 		super(path)
 	}
 
-
 	@Test
 	def void simpleNegativeTest001() {
 		ignoreSerializationDifferences()

@@ -23,5 +23,15 @@ class DefaultTypesTests extends XtextTest {
 		suppressSerialization()
 		testFile("complexDefaultImpl001.oil")
 	}
+
+	@Test
+	def void complexTestTiming() {
+		suppressSerialization()
+		var int i = 0;
+		do { 
+			testFile("complexDefaultImpl001.oil")
+			i = i+1
+		} while (i<100);
+	}
 	
 }

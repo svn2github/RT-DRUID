@@ -28,6 +28,5 @@ asdasd";
 	COM aa1 {
 		d = "qw";
 	};
-	ALARM aaa {
-	};
+	ALARM aaa;
 };

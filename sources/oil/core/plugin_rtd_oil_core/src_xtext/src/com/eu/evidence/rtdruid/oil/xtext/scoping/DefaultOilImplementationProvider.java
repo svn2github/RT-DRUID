@@ -13,16 +13,13 @@ import java.util.List;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplCollector;
 import com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilImplCollector.InputNamedStream;
-import com.eu.evidence.rtdruid.oil.xtext.OilStandaloneSetup;
 import com.eu.evidence.rtdruid.oil.xtext.model.OilFile;
 import com.eu.evidence.rtdruid.oil.xtext.model.OilImplementation;
+import com.eu.evidence.rtdruid.oil.xtext.services.OilModelLoader;
 
 /**
  *
@@ -36,9 +33,6 @@ public class DefaultOilImplementationProvider {
 	private List<OilImplementation> oilImplementations = new ArrayList<OilImplementation>();
 	
 	public final static DefaultOilImplementationProvider instance = initDefaultValues();
-	static {
-		OilStandaloneSetup.doSetup();
-	}
 	
 	public static DefaultOilImplementationProvider initDefaultValues() {
 		DefaultOilImplementationProvider answer = new DefaultOilImplementationProvider();
@@ -56,16 +50,9 @@ public class DefaultOilImplementationProvider {
 	}
 	
 	
-	public void load(URI path, InputStream in, HashMap<?, ?> options) {
-		ResourceSet resourceSet = new ResourceSetImpl();
-//		Resource resource = Resource.Factory.Registry.INSTANCE.getFactory(path, "oil").createResource(path);
-
-		Resource resource = resourceSet.createResource(path);
-		resourceSet.getResources().add(resource);
+	protected void load(URI path, InputStream in, HashMap<?, ?> options) {
 		try {
-			resource.load(options);
-			//resource.load(in, options);
-			final OilFile root = (OilFile) (resource.getContents().isEmpty() ? null : resource.getContents().get(0));
+			final OilFile root = OilModelLoader.instance.load(path, in, options);
 			OilImplementation impl = root.getImplementation();
 			if (impl != null) {
 				oilImplementations.add(impl);

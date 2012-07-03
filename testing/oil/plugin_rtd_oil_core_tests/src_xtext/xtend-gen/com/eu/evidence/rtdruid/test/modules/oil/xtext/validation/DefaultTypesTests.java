@@ -4,6 +4,7 @@ import com.eu.evidence.rtdruid.test.modules.oil.xtext.OilInjectorProvider;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.PackageProvider;
 import org.eclipse.xtext.junit4.InjectWith;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
+import org.eclipse.xtext.xbase.lib.IntegerExtensions;
 import org.eclipselabs.xtext.utils.unittesting.XtextRunner2;
 import org.eclipselabs.xtext.utils.unittesting.XtextTest;
 import org.junit.Test;
@@ -28,5 +29,21 @@ public class DefaultTypesTests extends XtextTest {
   public void complexTest() {
       this.suppressSerialization();
       this.testFile("complexDefaultImpl001.oil");
+  }
+  
+  @Test
+  public void complexTestTiming() {
+      this.suppressSerialization();
+      int i = 0;
+      boolean _dowhile = false;
+      do {
+        {
+          this.testFile("complexDefaultImpl001.oil");
+          int _operator_plus = IntegerExtensions.operator_plus(i, 1);
+          i = _operator_plus;
+        }
+        boolean _operator_lessThan = IntegerExtensions.operator_lessThan(i, 100);
+        _dowhile = _operator_lessThan;
+      } while(_dowhile);
   }
 }

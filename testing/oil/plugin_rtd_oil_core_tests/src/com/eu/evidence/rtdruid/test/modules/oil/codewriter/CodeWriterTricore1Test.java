@@ -133,7 +133,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"        STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
-				"        RESOURCE = \"res\";\n" + 
+				"        RESOURCE = res;\n" + 
 				"    };\n" + 
 				"    TASK Task1 {\n" + 
 				"        PRIORITY = 1;\n" + 
@@ -141,7 +141,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"		 STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
 				"        AUTOSTART = TRUE;\n" + 
-				"        RESOURCE = \"res\";\n" + 
+				"        RESOURCE = res;\n" + 
 				"    };\n" + 
 				"    RESOURCE res { RESOURCEPROPERTY = STANDARD; };\n" + 
 				"};\n";

@@ -27,7 +27,8 @@ import com.eu.evidence.rtdruid.oil.xtext.model.ReferenceType;
 import com.eu.evidence.rtdruid.oil.xtext.model.VType;
 import com.eu.evidence.rtdruid.oil.xtext.model.ValueType;
 import com.eu.evidence.rtdruid.oil.xtext.model.VariantType;
-import com.eu.evidence.rtdruid.oil.xtext.scoping.OilTypesHelper;
+import com.eu.evidence.rtdruid.oil.xtext.scoping.OilTypesFastHelper;
+import com.eu.evidence.rtdruid.oil.xtext.services.IOilTypesHelper;
 
  
 
@@ -35,11 +36,13 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 
 	private final Logger logger = Logger.getLogger(getClass());
 	
-	private final OilTypesHelper helper = new OilTypesHelper();
+	private final IOilTypesHelper helper = new OilTypesFastHelper();
 	
 	private static final String STR_EXPECTED_A_VALID = "Expected a valid ";
 	private static final String STR_EXPECTED_A_POSITIVE_VALUE = "Expected a positive value";
 	private static final String STR_PROVIDED_VALUE_DOES_NOT_FIT = "Provided value does not fit in a ";
+	
+	private static final BigInteger MAX_INT = BigInteger.ONE.negate();
 
 
 	@Check
@@ -214,7 +217,9 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 						error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 					}
 					if (decimal != null) {
-						if (decimal.signum() == -1) {
+						if (MAX_INT.compareTo(decimal)==0) {
+							warning("Assign -1 to an " + vType.getName()+" means assign the maximum value", attribute);
+						} else if (decimal.signum() == -1) {
 							error(STR_EXPECTED_A_POSITIVE_VALUE +": " + value, attribute);
 						} else {
 							if (decimal.bitLength() > 32) {
@@ -236,7 +241,9 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 						error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 					}
 					if (decimal != null) {
-						if (decimal.signum() == -1) {
+						if (MAX_INT.compareTo(decimal)==0) {
+							warning("Assign -1 to an " + vType.getName()+" means assign the maximum value", attribute);
+						} else if (decimal.signum() == -1) {
 							error(STR_EXPECTED_A_POSITIVE_VALUE +": " + value, attribute);
 						} else {
 							if (decimal.bitLength() > 64) {
@@ -317,7 +324,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 
 	private void checkParameterUniqueness(List<OilObject> objects) {
 		if (objects.size()>0) {
-			final OilTypesHelper helper = new OilTypesHelper();
+//			final OilTypesHelper helper = new OilTypesHelper();
 			final List<OilImplementation> oilImplementation = helper.getOilImplementation(objects.get(0));
 		
 			List<String> path = helper.computePath(objects.get(0), false);
@@ -341,7 +348,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 
 
 
-	private void checkParameterUniquenessNextLevel(final OilTypesHelper helper,
+	private void checkParameterUniquenessNextLevel(final IOilTypesHelper helper,
 			final List<OilImplementation> oilImplementation, 
 			Map<String, List<Parameter>> allParameters) {
 		

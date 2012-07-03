@@ -4,6 +4,11 @@
 package com.eu.evidence.rtdruid.oil.xtext.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
+import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
+
+import com.eu.evidence.rtdruid.oil.xtext.ui.hover.OilEObjectDocumentationProvider;
+import com.eu.evidence.rtdruid.oil.xtext.ui.hover.OilEObjectHoverProvider;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -11,5 +16,13 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class OilUiModule extends com.eu.evidence.rtdruid.oil.xtext.ui.AbstractOilUiModule {
 	public OilUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
+	}
+	
+	public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
+		return OilEObjectHoverProvider.class;
+	}
+
+	public Class<? extends IEObjectDocumentationProvider> bindIEObjectDocumentationProviderr() {
+		return OilEObjectDocumentationProvider.class;
 	}
 }

@@ -62,8 +62,8 @@ public class CodeWriterMultiPic30Test extends AbstractCodeWriterTest {
 		"   };\n" + 
 		"   \n" + 
 		"   ALARM AlarmSend {\n" + 
-		"      COUNTER = \"myCounter\";\n" + 
-		"      ACTION = ACTIVATETASK { TASK = \"TaskSend\"; };\n" + 
+		"      COUNTER = myCounter;\n" + 
+		"      ACTION = ACTIVATETASK { TASK = TaskSend; };\n" + 
 		"   };\n" + 
 		"   \n" + 
 		"   TASK TaskSend {\n" + 

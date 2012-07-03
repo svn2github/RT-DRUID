@@ -41,6 +41,14 @@ public class EnumTests extends XtextTest {
   @Inject
   private ValidationTestHelper tester;
   
+  public ParseHelper<OilFile> getParser() {
+    return this.parser;
+  }
+  
+  public ValidationTestHelper getTester() {
+    return this.tester;
+  }
+  
   @Test
   public void booleanDefinition() {
     try {

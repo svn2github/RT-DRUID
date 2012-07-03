@@ -112,7 +112,7 @@ public class CodeWriterMpc5Test extends AbstractCodeWriterTest {
 			+ "        SCHEDULE = FULL;\n"
 			+ "        AUTOSTART = FALSE;\n"
 			+ "        STACK = PRIVATE { SYS_SIZE = 512; };\n"
-			+ "        RESOURCE = \"MUTEX_sync\";"
+			+ "        RESOURCE = MUTEX_sync;"
 			+ "    };\n"
 			+ "    TASK thread3 {\n"
 			+ "        PRIORITY = 0x19;\n"

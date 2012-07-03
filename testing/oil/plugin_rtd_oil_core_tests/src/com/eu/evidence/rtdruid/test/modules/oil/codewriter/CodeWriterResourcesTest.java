@@ -57,23 +57,23 @@ public class CodeWriterResourcesTest extends AbstractCodeWriterTest {
 				"		SCHEDULE = FULL;\n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"Resource\";\n" +
-				"		RESOURCE = \"ResourceA\";\n" +
+				"		RESOURCE = Resource;\n" +
+				"		RESOURCE = ResourceA;\n" +
 				"    };\n" +
 				"\n" +
 				"    TASK HighTask {\n" +
 				"		PRIORITY = 0x02;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		SCHEDULE = FULL;\n" +
-				"		AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };	\n" +
+				"		AUTOSTART = TRUE { APPMODE=ModeIncrement; };	\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"ResourceB\";\n" +
-				"		RESOURCE = \"ResourceC\";\n" +
+				"		RESOURCE = ResourceB;\n" +
+				"		RESOURCE = ResourceC;\n" +
 				"    };\n" +
 				"\n" +
-				"    RESOURCE Resource { RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = \"RES_SCHEDULER\"; }; };\n" +
+				"    RESOURCE Resource { RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = RES_SCHEDULER; }; };\n" +
 				"    RESOURCE ResourceA { RESOURCEPROPERTY = STANDARD; };\n" +
-				"    RESOURCE ResourceB { RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = \"ResourceA\"; }; };\n" +
+				"    RESOURCE ResourceB { RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = ResourceA; }; };\n" +
 				"    RESOURCE ResourceC { RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = RES_SCHEDULER; }; };\n";
 	    
 	    final String wrongText = base + 
@@ -116,7 +116,7 @@ public class CodeWriterResourcesTest extends AbstractCodeWriterTest {
 			"    TASK LowTask {\n" +
 			"		PRIORITY = 0x01;\n" +
 			"		SCHEDULE = FULL;\n" +
-			"		RESOURCE = \"Resource\";\n" +
+			"		RESOURCE = Resource;\n" +
 			"    };\n" +
 			"\n" +
 			"    RESOURCE Resource { RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = RES_SCHEDULER; }; };\n";

@@ -20,6 +20,5 @@ CPU s {
 			b1 = 1222123;
 		} : " aa ";
 	};
-	ALARM aaa {
-	};
+	ALARM aaa;
 };

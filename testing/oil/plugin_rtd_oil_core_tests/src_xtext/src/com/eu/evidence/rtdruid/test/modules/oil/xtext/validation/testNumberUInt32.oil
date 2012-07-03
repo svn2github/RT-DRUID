@@ -1,7 +1,7 @@
 IMPLEMENTATION a {
 	OS {
 		UINT32 a1;
-		UINT32 a2;
+		UINT32 a2; UINT32 a11;
 		UINT32 a3;
 		UINT32 a4;
 		UINT32 a5;
@@ -15,7 +15,7 @@ IMPLEMENTATION a {
 CPU s {
 	OS aa {
 		a1 = 1;
-		a2 = -1; // ERROR
+		a2 = -1; // WARNING
 		a3 = 1.0; // ERROR
 		a4 = -1.0; // ERROR
 		a5 = 0x1;
@@ -24,5 +24,6 @@ CPU s {
 		a8 = 0xFFFFFFFF;
 		a9 = AUTO; // ERROR
 		a10 = AUTO;
+		a11 = -2; // ERROR
 	};
 };

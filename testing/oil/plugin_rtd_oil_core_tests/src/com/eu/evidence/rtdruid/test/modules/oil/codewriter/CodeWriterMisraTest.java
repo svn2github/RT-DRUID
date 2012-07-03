@@ -44,7 +44,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 	    		"		AUTOSTART = FALSE;\n" +
 	    		"		STACK = SHARED;\n" +
 	    		"		ACTIVATION = 1;\n" +
-	    		"		RESOURCE = \"MyResource\";\n" +
+	    		"		RESOURCE = MyResource;\n" +
 	    		"	};\n" +
 	    		"\n" +
 	    		"	TASK Task2 {\n" +
@@ -52,10 +52,10 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 	    		"		SCHEDULE = FULL;\n" +
 	    		"		AUTOSTART = TRUE;\n" +
 	    		"		STACK = SHARED;\n" +
-	    		"		RESOURCE = \"MyResource\";\n" +
-	    		"		EVENT = \"MyEvent\";\n" +
+	    		"		RESOURCE = MyResource;\n" +
+	    		"		EVENT = MyEvent;\n" +
 	    		"	};\n" +
-	    		"\n" +
+	    		"	EVENT MyEvent;\n" +
 	    		"\n" +
 	    		"	RESOURCE MyResource { RESOURCEPROPERTY = STANDARD; };\n" +
 	    		"\n" +
@@ -66,9 +66,9 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 	    		"	};\n" +
 	    		"\n" +
 	    		"	ALARM MyAlarm {\n" +
-	    		"		COUNTER = \"MainTimer\";\n" +
+	    		"		COUNTER = MainTimer;\n" +
 	    		"		ACTION = ACTIVATETASK {\n" +
-	    		"			TASK = \"Task1\";\n" +
+	    		"			TASK = Task1;\n" +
 	    		"		};\n" +
 	    		"		AUTOSTART = FALSE;\n" +
 	    		"	};\n" +
@@ -176,7 +176,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		STACK = SHARED;\n" +
 				"		ACTIVATION = 1;\n" +
-				"		RESOURCE = \"MyResource\";\n" +
+				"		RESOURCE = MyResource;\n" +
 				"	};\n" +
 				"\n" +
 				"	TASK Task2 {\n" +
@@ -186,8 +186,8 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		STACK = PRIVATE {\n" +
 				"			SYS_SIZE = 1024;\n" +
 				"		};\n" +
-				"		RESOURCE = \"MyResource\";\n" +
-				"		EVENT = \"MyEvent\";\n" +
+				"		RESOURCE = MyResource;\n" +
+				"		EVENT = MyEvent;\n" +
 				"	};\n" +
 				"\n" +
 				"	EVENT MyEvent { MASK = AUTO; };\n" +
@@ -201,9 +201,9 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM MyAlarm {\n" +
-				"		COUNTER = \"MainTimer\";\n" +
+				"		COUNTER = MainTimer;\n" +
 				"		ACTION = ACTIVATETASK {\n" +
-				"			TASK = \"Task1\";\n" +
+				"			TASK = Task1;\n" +
 				"		};\n" +
 				"		AUTOSTART = TRUE {" +
 				"			ALARMTIME = 1;\n" +
@@ -255,7 +255,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		STACK = SHARED;\n" +
 				"		ACTIVATION = 1;\n" +
-				"		RESOURCE = \"MyResource\";\n" +
+				"		RESOURCE = MyResource;\n" +
 				"	};\n" +
 				"\n" +
 				"	TASK Task2 {\n" +
@@ -265,8 +265,8 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		STACK = PRIVATE {\n" +
 				"			SYS_SIZE = 1024;\n" +
 				"		};\n" +
-				"		RESOURCE = \"MyResource\";\n" +
-				"		EVENT = \"MyEvent\";\n" +
+				"		RESOURCE = MyResource;\n" +
+				"		EVENT = MyEvent;\n" +
 				"	};\n" +
 				"\n" +
 				"	EVENT MyEvent { MASK = AUTO; };\n" +
@@ -280,9 +280,9 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM MyAlarm {\n" +
-				"		COUNTER = \"MainTimer\";\n" +
+				"		COUNTER = MainTimer;\n" +
 				"		ACTION = ACTIVATETASK {\n" +
-				"			TASK = \"Task1\";\n" +
+				"			TASK = Task1;\n" +
 				"		};\n" +
 				"		AUTOSTART = TRUE {" +
 				"			ALARMTIME = 1;\n" +
@@ -324,7 +324,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		STACK = SHARED;\n" +
 				"		ACTIVATION = 1;\n" +
-				"		RESOURCE = \"MyResource\";\n" +
+				"		RESOURCE = MyResource;\n" +
 				"	};\n" +
 				"\n" +
 				"	TASK Task2 {\n" +
@@ -332,7 +332,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		SCHEDULE = FULL;\n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"MyResource\";\n" +
+				"		RESOURCE = MyResource;\n" +
 				"	};\n" +
 				"\n" +
 				"\n" +
@@ -345,9 +345,9 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM MyAlarm {\n" +
-				"		COUNTER = \"MainTimer\";\n" +
+				"		COUNTER = MainTimer;\n" +
 				"		ACTION = ACTIVATETASK {\n" +
-				"			TASK = \"Task1\";\n" +
+				"			TASK = Task1;\n" +
 				"		};\n" +
 				"		/* Autstart is not supported on FP kernel! */\n" +
 				"		AUTOSTART = FALSE;\n" +
@@ -413,7 +413,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = FALSE;\n" +
 				"		STACK = SHARED;\n" +
 				"		ACTIVATION = 1;\n" +
-				"		RESOURCE = \"MyResource\";\n" +
+				"		RESOURCE = MyResource;\n" +
 				"		CPU_ID = \"master\";\n" +
 				"	};\n" +
 				"\n" +
@@ -423,7 +423,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = TRUE;\n" +
 				"		STACK = SHARED;\n" +
 				"		ACTIVATION = 1;\n" +
-				"		RESOURCE = \"MyResource\";\n" +
+				"		RESOURCE = MyResource;\n" +
 				"		CPU_ID = \"master\";\n" +
 				"	};\n" +
 				"\n" +
@@ -433,7 +433,7 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"		AUTOSTART = TRUE;\n" +
 				"		STACK = SHARED;\n" +
 				"		ACTIVATION = 1;\n" +
-				"		RESOURCE = \"MyOtherResource\";\n" +
+				"		RESOURCE = MyOtherResource;\n" +
 				"		CPU_ID = \"slave\";\n" +
 				"	};\n" +
 				"\n" +
@@ -450,9 +450,9 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM MyAlarm {\n" +
-				"		COUNTER = \"MainTimer\";\n" +
+				"		COUNTER = MainTimer;\n" +
 				"		ACTION = ACTIVATETASK {\n" +
-				"			TASK = \"Task1\";\n" +
+				"			TASK = Task1;\n" +
 				"		};\n" +
 				"		AUTOSTART = FALSE;\n" +
 				"	};\n" +
@@ -465,9 +465,9 @@ public class CodeWriterMisraTest extends AbstractCodeWriterTest {
 				"	};\n" +
 				"\n" +
 				"	ALARM OtherAlarm {\n" +
-				"		COUNTER = \"OtherTimer\";\n" +
+				"		COUNTER = OtherTimer;\n" +
 				"		ACTION = ACTIVATETASK {\n" +
-				"			TASK = \"Task1\";\n" +
+				"			TASK = Task1;\n" +
 				"		};\n" +
 				"		AUTOSTART = FALSE;\n" +
 				"	};\n" +

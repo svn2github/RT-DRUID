@@ -230,11 +230,11 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 				+ "    TASK LedTaskLow {" + "  PRIORITY = 0x01;"
 				+ "  ACTIVATION = 1;" + "  SCHEDULE = FULL;"
 				+ "  AUTOSTART = FALSE;" + "  STACK = SHARED;"
-				+ "  RESOURCE = \"Resource\";" + "    };" + ""
+				+ "  RESOURCE = Resource;" + "    };" + ""
 				+ "    TASK LCDTask {" + "  PRIORITY = 0x02;"
 				+ "  ACTIVATION = 1;" + "  SCHEDULE = FULL;"
 				+ "  AUTOSTART = TRUE;" + "  STACK = SHARED;"
-				+ "  RESOURCE = \"Resource\";" + "    };" + ""
+				+ "  RESOURCE = Resource;" + "    };" + ""
 				+ "    TASK LedTaskHigh {" + "  PRIORITY = 0x03;"
 				+ "  ACTIVATION = 1;" + "  SCHEDULE = FULL;"
 				+ "  AUTOSTART = TRUE;" + "  STACK = SHARED;" + "    };" + ""
@@ -295,7 +295,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			"		SYS_SIZE = 512;\n" + 
 			"	};\n" + 
 			"        SCHEDULE = FULL;\n" + 
-			"	RESOURCE = \"MUTEX_sync\";\n" + 
+			"	RESOURCE = MUTEX_sync;\n" + 
 			"    };\n" + 
 			"\n" + 
 			"    TASK thread1 {\n" + 
@@ -310,7 +310,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			"        ACTIVATION = 4;\n" + 
 			"	STACK = SHARED;\n" + 
 			"        SCHEDULE = FULL;\n" + 
-			"	RESOURCE= \"MUTEX_sync\";\n" + 
+			"	RESOURCE= MUTEX_sync;\n" + 
 			"    };\n" + 
 			"\n" + 
 			"    TASK thread3 {\n" + 
@@ -398,8 +398,8 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			"};\n" +
 			"\n" +
 			"ALARM AlarmTask2 {\n" +
-			"            COUNTER = \"Counter1\";\n" +
-			"            ACTION = ACTIVATETASK { TASK = \"Task1\"; };\n" +
+			"            COUNTER = Counter1;\n" +
+			"            ACTION = ACTIVATETASK { TASK = Task1; };\n" +
 			"		AUTOSTART = TRUE {" +
 			"			ALARMTIME = 1;\n" +
 			"			CYCLETIME = 1;\n" +
@@ -502,7 +502,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			+ "            SYS_SIZE = 0x100;\n"
 		//	+ "            IRQ_SIZE = 0x100;\n"
 			+ "        };\n"
-			+ "        EVENT = \"evento1\";\n"
+			+ "        EVENT = evento1;\n"
 			+ "    };\n"
 			+ "    TASK Task2 {\n"
 			+ "        PRIORITY = 0x02;\n"
@@ -582,14 +582,14 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			+ "    };\n"
 		
 			+ "    ALARM Alarm1 {\n"
-			+ "    	COUNTER = \"Counter1\";\n"
-			+ "    	ACTION = SETEVENT { TASK = Task2; EVENT = \"Event1\"; };\n"
+			+ "    	COUNTER = Counter1;\n"
+			+ "    	ACTION = SETEVENT { TASK = Task2; EVENT = Event1; };\n"
 			+ "    	AUTOSTART = FALSE;\n"
 			+ "    };\n"
 			
 			+ "    ALARM Alarm2 {\n"
-			+ "     COUNTER = \"Counter1\";\n"
-			+ "    	ACTION = ACTIVATETASK { TASK = \"Task1\"; };\n"
+			+ "     COUNTER = Counter1;\n"
+			+ "    	ACTION = ACTIVATETASK { TASK = Task1; };\n"
 			+ "    	AUTOSTART = FALSE;\n"
 			+ "    };\n"
 			
@@ -656,7 +656,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			+ "        PRIORITY = 0x04;\n"
 			+ "        ACTIVATION = 1;\n"
 			+ "        SCHEDULE = FULL;\n"
-			+ "        AUTOSTART = TRUE { APPMODE=\"ModeEdge\";};\n"
+			+ "        AUTOSTART = TRUE { APPMODE=ModeEdge;};\n"
 			+ "        STACK = SHARED;\n"
 			+ "    };\n"
 			+ "    COUNTER Counter1 {\n"
@@ -669,14 +669,14 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			+ "    APPMODE ModeEdge;"
 		
 			+ "    ALARM Alarm1 {\n"
-			+ "    	COUNTER = \"Counter1\";\n"
-			+ "    	ACTION = SETEVENT { TASK = Task2; EVENT = \"Event1\"; };\n"
+			+ "    	COUNTER = Counter1;\n"
+			+ "    	ACTION = SETEVENT { TASK = Task2; EVENT = Event1; };\n"
 			+ "    	AUTOSTART = TRUE { ALARMTIME=5; CYCLETIME=10; };\n"
 			+ "    };\n"
 			
 			+ "    ALARM Alarm2 {\n"
-			+ "     COUNTER = \"Counter1\";\n"
-			+ "    	ACTION = ACTIVATETASK { TASK = \"Task1\"; };\n"
+			+ "     COUNTER = Counter1;\n"
+			+ "    	ACTION = ACTIVATETASK { TASK = Task1; };\n"
 			+ "    	AUTOSTART = TRUE { ALARMTIME=20; CYCLETIME=1; APPMODE=ModeIncremental; APPMODE=ModeEdge; };\n"
 			+ "    };\n"
 			
@@ -794,10 +794,10 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			+ "        SCHEDULE = FULL;\n"
 			+ "        AUTOSTART = TRUE;\n"
 			+ "        STACK = SHARED;\n"
-			+ "        RESOURCE = \"res1\";\n"
-			+ "        RESOURCE = \"res2\";\n"
-			+ "        RESOURCE = \"res5\";\n"
-			+ "        RESOURCE = \"res5_a\";\n"
+			+ "        RESOURCE = res1;\n"
+			+ "        RESOURCE = res2;\n"
+			+ "        RESOURCE = res5;\n"
+			+ "        RESOURCE = res5_a;\n"
 			+ "    };\n"
 			+ "    TASK Task2 {\n"
 			+ "        PRIORITY = 0x02;\n"
@@ -805,15 +805,15 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			+ "        SCHEDULE = FULL;\n"
 			+ "        AUTOSTART = TRUE;\n"
 			+ "        STACK = SHARED;\n"
-			+ "        RESOURCE = \"res3\";\n"
-			+ "        RESOURCE = \"res5\";\n"
-			+ "        RESOURCE = \"res5_b\";\n"
+			+ "        RESOURCE = res3;\n"
+			+ "        RESOURCE = res5;\n"
+			+ "        RESOURCE = res5_b;\n"
 			+ "    };\n"
 			+ "    RESOURCE res1 {\n"
 			+ "        RESOURCEPROPERTY = STANDARD { APP_SRC=\"res1_src.c\"; };\n"
 			+ "    };\n"
 			+ "    RESOURCE res2L {\n"
-			+ "        RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = \"res2\"; } ;\n"
+			+ "        RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = res2; } ;\n"
 			+ "    };\n"
 			+ "    RESOURCE res2 {\n"
 			+ "        RESOURCEPROPERTY = STANDARD { APP_SRC=\"res2_src.c\"; };\n"
@@ -822,7 +822,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			+ "        RESOURCEPROPERTY = STANDARD;\n"
 			+ "    };\n"
 			+ "    RESOURCE res4 {\n"
-			+ "        RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = \"res2\"; } ;\n"
+			+ "        RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = res2; } ;\n"
 			+ "    };\n"
 			+ "    RESOURCE res_unused {\n"
 			+ "        RESOURCEPROPERTY = STANDARD;\n"
@@ -834,7 +834,7 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 			+ "        RESOURCEPROPERTY = STANDARD { APP_SRC=\"res5_a_src.c\"; };\n"
 			+ "    };\n"
 			+ "    RESOURCE res5_b {\n"
-			+ "        RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = \"res5_a\"; } ;\n"
+			+ "        RESOURCEPROPERTY = LINKED { LINKEDRESOURCE = res5_a; } ;\n"
 			+ "    };\n"
 			+ "};\n";
 

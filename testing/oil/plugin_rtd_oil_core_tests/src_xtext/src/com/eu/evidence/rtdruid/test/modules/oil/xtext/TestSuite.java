@@ -12,6 +12,8 @@ import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.NumberTests;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.SimpleTests;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.SplittedElementsTests;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.StringTests;
+import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.ValidationOilWriterTests;
+import com.eu.evidence.rtdruid.vartree.variables.OilVar;
 
 
 
@@ -25,7 +27,8 @@ import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.StringTests;
 	EnumTests.class,
 	StringTests.class,
 	SplittedElementsTests.class,
-	DefaultTypesTests.class
+	DefaultTypesTests.class,
+	ValidationOilWriterTests.class
 	})
 public class TestSuite {
 

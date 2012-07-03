@@ -1,7 +1,7 @@
 IMPLEMENTATION a {
 	OS {
 		UINT64 a1;
-		UINT64 a2;
+		UINT64 a2; UINT64 a11;
 		UINT64 a3;
 		UINT64 a4;
 		UINT64 a5;
@@ -24,5 +24,6 @@ CPU s {
 		a8 = 0xFFFFFFFFFFFFFFFF;
 		a9 = AUTO; // ERROR
 		a10 = AUTO;
+		a11 = -2; // ERROR
 	};
 };

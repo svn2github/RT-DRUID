@@ -527,9 +527,9 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"\n"+
 	    		"	APPLICATION TrustedApp {\n"+
 	    		"		TRUSTED = TRUE;\n"+
-	    		"		ISR = \"TrustedIsr\";\n"+
-	    		"		TASK = \"MainTask\";\n"+
-	    		"		TASK = \"TrustedTask1\";\n"+
+	    		"		ISR = TrustedIsr;\n"+
+	    		"		TASK = MainTask;\n"+
+	    		"		TASK = TrustedTask1;\n"+
 	    		"		MEMORY_BASE = 0x40010000;\n"+
 	    		"		MEMORY_SIZE = 0x10000;\n"+
 	    		"		SHARED_STACK_SIZE = 512;\n"+
@@ -538,8 +538,8 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"\n"+
 	    		"	APPLICATION App1 {\n"+
 	    		"		TRUSTED = FALSE;\n"+
-	    		"		ISR = \"App1Isr\";\n"+
-	    		"		TASK = \"App1Task\";\n"+
+	    		"		ISR = App1Isr;\n"+
+	    		"		TASK = App1Task;\n"+
 	    		"		MEMORY_BASE = 0x40020000;\n"+
 	    		"		MEMORY_SIZE = 0x10000;\n"+
 	    		"		SHARED_STACK_SIZE = 512;\n"+
@@ -548,8 +548,8 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"\n"+
 	    		"	APPLICATION App2 {\n"+
 	    		"		TRUSTED = FALSE;\n"+
-	    		"		ISR = \"App2Isr\";\n"+
-	    		"		TASK = \"App2Task\";\n"+
+	    		"		ISR = App2Isr;\n"+
+	    		"		TASK = App2Task;\n"+
 	    		"		MEMORY_BASE = 0x40030000;\n"+
 	    		"		MEMORY_SIZE = 0x4000;\n"+
 	    		"		SHARED_STACK_SIZE = 512;\n"+
@@ -947,8 +947,8 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		};\n" +
 			"		ACTIVATION = 1;\n" +
 			"		SCHEDULE = FULL;\n" +
-			"		EVENT = \"Event1\";\n" +
-			"		EVENT = \"Event2\";\n" +
+			"		EVENT = Event1;\n" +
+			"		EVENT = Event2;\n" +
 			"	};\n" +
 			"\n" +
 			"	TASK TaskZ0Bkg {\n" +
@@ -1033,7 +1033,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		STACK = PRIVATE {\n" +
 			"			SYS_SIZE = 512;\n" +
 			"		};\n" +
-			"		EVENT = \"Event2\";\n" +
+			"		EVENT = Event2;\n" +
 
 			"	};\n" +
 			"\n" +
@@ -1047,8 +1047,8 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		};\n" +
 			"		ACTIVATION = 1;\n" +
 			"		SCHEDULE = FULL;\n" +
-			"		EVENT = \"Event1\";\n" +
-			"		EVENT = \"Event2\";\n" +
+			"		EVENT = Event1;\n" +
+			"		EVENT = Event2;\n" +
 			"	};\n" +
 			"\n" +
 			"	TASK TaskZ0Bkg {\n" +
@@ -1218,10 +1218,10 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"				NAME = \"MyQuickTrustedService\";\n" +
 				"			};\n" +
 				"		};\n" +
-				"		ISR = \"TrustedIsr\";\n" +
-				"		TASK = \"MainTask\";\n" +
-				"		TASK = \"TrustedTask1\";\n" +
-				"		TASK = \"ErrorTask\";\n" +
+				"		ISR = TrustedIsr;\n" +
+				"		TASK = MainTask;\n" +
+				"		TASK = TrustedTask1;\n" +
+				"		TASK = ErrorTask;\n" +
 				"		MEMORY_BASE = 0x40010000;\n" +
 				"		MEMORY_SIZE = 0x10000;\n" +
 				"		SHARED_STACK_SIZE = 512;\n" +
@@ -1230,11 +1230,11 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"\n" +
 				"	APPLICATION App1 {\n" +
 				"		TRUSTED = FALSE;\n" +
-				"		ISR = \"App1Isr\";\n" +
-				"		TASK = \"App1Init\";\n" +
-				"		TASK = \"App1Task\";\n" +
-				"		TASK = \"App1Ack\";\n" +
-				"		TASK = \"App1Bkg\";\n" +
+				"		ISR = App1Isr;\n" +
+				"		TASK = App1Init;\n" +
+				"		TASK = App1Task;\n" +
+				"		TASK = App1Ack;\n" +
+				"		TASK = App1Bkg;\n" +
 				"		MEMORY_BASE = 0x40020000;\n" +
 				"		MEMORY_SIZE = 0x10000;\n" +
 				"		SHARED_STACK_SIZE = 512;\n" +
@@ -1243,11 +1243,11 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"\n" +
 				"	APPLICATION App2 {\n" +
 				"		TRUSTED = FALSE;\n" +
-				"		ISR = \"App2Isr\";\n" +
-				"		TASK = \"App2Init\";\n" +
-				"		TASK = \"App2Task\";\n" +
-				"		TASK = \"App2Ack\";\n" +
-				"		TASK = \"App2HiPriTask\";\n" +
+				"		ISR = App2Isr;\n" +
+				"		TASK = App2Init;\n" +
+				"		TASK = App2Task;\n" +
+				"		TASK = App2Ack;\n" +
+				"		TASK = App2HiPriTask;\n" +
 				"		MEMORY_BASE = 0x40030000;\n" +
 				"		MEMORY_SIZE = 0x4000;\n" +
 				"		SHARED_STACK_SIZE = 512;\n" +
@@ -1402,8 +1402,8 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"	};\n" +
 
 			"	ALARM AcquireAlarm {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 			"};";
 		commonWriterTest(text, 1);
@@ -1480,8 +1480,8 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		TICKSPERBASE = 1;\n" +
 			"	};\n" +
 			"	ALARM AcquireAlarm {\n" +
-			"		COUNTER = \"myCounter1\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter1;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 
 			"};";
@@ -1565,13 +1565,13 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		TICKSPERBASE = 1;\n" +
 			"	};\n" +
 			"	ALARM AcquireAlarm {\n" +
-			"		COUNTER = \"myCounter1\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter\"; };\n" +
+			"		COUNTER = myCounter1;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter; };\n" +
 			"	};\n" +
 
 			"	ALARM AcquireAlarm2 {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 			"};";
 	    boolean ok = false;
@@ -1665,21 +1665,21 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		TICKSPERBASE = 1;\n" +
 			"	};\n" +
 			"	ALARM alarm1 {\n" +
-			"		COUNTER = \"myCounter1\";\n" +
-			"		ACTION = ACTIVATETASK { TASK = \"Task1\"; };\n" +
+			"		COUNTER = myCounter1;\n" +
+			"		ACTION = ACTIVATETASK { TASK = Task1; };\n" +
 			"	};\n" +
 
 			"	ALARM AcquireAlarm2 {\n" +
-			"		COUNTER = \"myCounter2\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter2;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 			"	ALARM AcquireAlarm3 {\n" +
-			"		COUNTER = \"myCounter3\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter2\"; };\n" +
+			"		COUNTER = myCounter3;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter2; };\n" +
 			"	};\n" +
 			"	ALARM AcquireAlarm4 {\n" +
-			"		COUNTER = \"myCounter4\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter4;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 			"};";
     	commonWriterTest(text, 1);
@@ -1772,8 +1772,8 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"	};\n" +
 
 			"	ALARM AcquireAlarm {\n" +
-			"		COUNTER = \"myCounter\";\n" +
-			"		ACTION = INCREMENTCOUNTER { COUNTER = \"myCounter1\"; };\n" +
+			"		COUNTER = myCounter;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
 			"	};\n" +
 			"};";
 		commonWriterTest(text, 1);
@@ -1831,16 +1831,16 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"     SCHEDULE = FULL;\n" + 
 	    		"     AUTOSTART = FALSE;\n" + 
 	    		"     STACK = SHARED;\n" + 
-	    		"     RESOURCE = \"Resource1\";\n" + 
-	    		"     RESOURCE = \"ResourceA\";\n" + 
-	    		"     RESOURCE = \"ResourceB\";\n" + 
+	    		"     RESOURCE = Resource1;\n" + 
+	    		"     RESOURCE = ResourceA;\n" + 
+	    		"     RESOURCE = ResourceB;\n" + 
 	    		"   };\n" + 
 	    		" \n" + 
 	    		"   ISR IsrLow {\n" + 
 	    		"     CATEGORY = 2;\n" + 
 	    		"     PRIORITY = 1;\n" + 
-	    		"     RESOURCE = \"ResourceA\";\n" + 
-	    		"     RESOURCE = \"ResourceB\";\n" + 
+	    		"     RESOURCE = ResourceA;\n" + 
+	    		"     RESOURCE = ResourceB;\n" + 
 	    	    "     ENTRY = \"0\";\n" +
 	    		"   };\n" + 
 	    		" \n" + 
@@ -1853,7 +1853,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"   ISR IsrHigh {\n" + 
 	    		"     CATEGORY = 2;\n" + 
 	    		"     PRIORITY = 3;\n" + 
-	    		"     RESOURCE = \"ResourceB\";\n" + 
+	    		"     RESOURCE = ResourceB;\n" + 
 	    	    "     ENTRY = \"2\";\n" +
 	    		"   };\n" + 
 	    		" \n" + 
@@ -1916,16 +1916,16 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"		SCHEDULE = FULL;\n" +
 				"		AUTOSTART = FALSE;\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"Resource\";\n" +
+				"		RESOURCE = Resource;\n" +
 				"    };\n" +
 				"\n" +
 				"    TASK HighTask {\n" +
 				"		PRIORITY = 0x02;\n" +
 				"		ACTIVATION = 1;\n" +
 				"		SCHEDULE = FULL;\n" +
-				"		AUTOSTART = TRUE { APPMODE=\"ModeIncrement\"; };	\n" +
+				"		AUTOSTART = TRUE { APPMODE=ModeIncrement; };	\n" +
 				"		STACK = SHARED;\n" +
-				"		RESOURCE = \"Resource\";\n" +
+				"		RESOURCE = Resource;\n" +
 				"    };\n" +
 				"\n" +
 				"    RESOURCE Resource { RESOURCEPROPERTY = STANDARD; };\n" +

@@ -48,8 +48,8 @@ public class CodeWriterMultiEcuTest extends AbstractCodeWriterTest {
 		"   };\n" + 
 		"   \n" + 
 		"   ALARM AlarmSend {\n" + 
-		"      COUNTER = \"myCounter\";\n" + 
-		"      ACTION = ACTIVATETASK { TASK = \"TaskSend\"; };\n" + 
+		"      COUNTER = myCounter;\n" + 
+		"      ACTION = ACTIVATETASK { TASK = TaskSend; };\n" + 
 		"   };\n" + 
 		"   \n" + 
 		"   TASK TaskSend {\n" + 
@@ -87,8 +87,8 @@ public class CodeWriterMultiEcuTest extends AbstractCodeWriterTest {
 		"   };\n" + 
 		"   \n" + 
 		"   ALARM AlarmSend1 {\n" + 
-		"      COUNTER = \"myCounter1\";\n" + 
-		"      ACTION = ACTIVATETASK { TASK = \"TaskSend1\"; };\n" + 
+		"      COUNTER = myCounter1;\n" + 
+		"      ACTION = ACTIVATETASK { TASK = TaskSend1; };\n" + 
 		"   };\n" + 
 		"   \n" + 
 		"   TASK TaskSend1 {\n" + 
@@ -143,8 +143,8 @@ public class CodeWriterMultiEcuTest extends AbstractCodeWriterTest {
 		"   };\n" + 
 		"   \n" + 
 		"   ALARM AlarmSend {\n" + 
-		"      COUNTER = \"myCounter\";\n" + 
-		"      ACTION = ACTIVATETASK { TASK = \"TaskSend\"; };\n" + 
+		"      COUNTER = myCounter;\n" + 
+		"      ACTION = ACTIVATETASK { TASK = TaskSend; };\n" + 
 		"   };\n" + 
 		"   \n" + 
 		"   TASK TaskSend {\n" + 
@@ -158,8 +158,8 @@ public class CodeWriterMultiEcuTest extends AbstractCodeWriterTest {
 		"   };\n" + 
 		"   \n" + 
 		"   ALARM AlarmSend1 {\n" + 
-		"      COUNTER = \"myCounter1\";\n" + 
-		"      ACTION = ACTIVATETASK { TASK = \"TaskSend1\"; };\n" + 
+		"      COUNTER = myCounter1;\n" + 
+		"      ACTION = ACTIVATETASK { TASK = TaskSend1; };\n" + 
 		"   };\n" + 
 		"   \n" + 
 		"   TASK TaskSend1 {\n" + 

@@ -52,7 +52,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"        STACK = SHARED;\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"\n" + 
 				"    TASK Task1 {\n" + 
@@ -67,7 +67,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"		STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
-				"        RESOURCE = \"MUTEX_sync\";\n" + 
+				"        RESOURCE = MUTEX_sync;\n" + 
 				"    };\n" + 
 				"\n" + 
 				"    TASK Task3 {\n" + 
@@ -118,7 +118,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 65;\n" + 
 				"		};\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"\n" + 
 				"    TASK Task1 {\n" + 
@@ -133,7 +133,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"		 STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
-				"        RESOURCE = \"MUTEX_sync\";\n" + 
+				"        RESOURCE = MUTEX_sync;\n" + 
 				"    };\n" + 
 				"\n" + 
 				"    TASK Task3 {\n" + 
@@ -232,7 +232,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"        STACK = SHARED;\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"    RESOURCE MUTEX_sync { RESOURCEPROPERTY = STANDARD; };\n" + 
 				"};\n";
@@ -275,7 +275,7 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"        STACK = SHARED;\n" + 
 				"		SCHEDULE = FULL;\n" + 
-				"		RESOURCE = \"MUTEX_sync\";\n" + 
+				"		RESOURCE = MUTEX_sync;\n" + 
 				"	};\n" + 
 				"    RESOURCE MUTEX_sync { RESOURCEPROPERTY = STANDARD; };\n" + 
 				"};\n";
@@ -422,8 +422,8 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 			"		};\n" +
 			"		COUNTER myCounter;\n" +
 			"		ALARM myAlarm {\n" +
-			"			COUNTER = \"myCounter\";\n" +
-			"		    ACTION = ACTIVATETASK { TASK = \"myTask\"; };\n" +
+			"			COUNTER = myCounter;\n" +
+			"		    ACTION = ACTIVATETASK { TASK = myTask; };\n" +
 			"		};\n" +
 			"	};\n";
 		commonWriterTest(text, 1);
@@ -454,8 +454,8 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 			"		};\n" +
 			"		COUNTER myCounter;\n" +
 			"		ALARM myAlarm {\n" +
-			"			COUNTER = \"myCounter\";\n" +
-			"		    ACTION = ACTIVATETASK { TASK = \"myTask\"; };\n" +
+			"			COUNTER = myCounter;\n" +
+			"		    ACTION = ACTIVATETASK { TASK = myTask; };\n" +
 			"		};\n" +
 			"	};\n";
 		commonWriterTest(text, 1);
@@ -492,8 +492,8 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 			"		};\n" +
 			"		COUNTER myCounter;\n" +
 			"		ALARM myAlarm {\n" +
-			"			COUNTER = \"myCounter\";\n" +
-			"		    ACTION = ACTIVATETASK { TASK = \"myTask\"; };\n" +
+			"			COUNTER = myCounter;\n" +
+			"		    ACTION = ACTIVATETASK { TASK = myTask; };\n" +
 			"		};\n" +
 			"	};\n";
 		commonWriterTest(text, 1);
