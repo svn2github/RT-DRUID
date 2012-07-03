@@ -27,6 +27,17 @@ IMPLEMENTATION ee {
                 ENUM [
                     CUSTOM {
                         STRING MODEL;
+                    },
+                    MSP430_1611 {
+                    	ENUM [
+                    		PORT0,
+                    		PORT1
+                    	] ENABLE_PORTS[] = PORT0;
+                    	BOOLEAN USE_UART;
+                    	BOOLEAN USE_I2C;
+                    	BOOLEAN USE_SPI;
+                    	BOOLEAN USE_TIMER;
+	                    BOOLEAN ENABLE_INTERRUPTS;
                     }
              	] MODEL;
        		}

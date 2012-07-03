@@ -76,6 +76,76 @@ LDFLAGS += <xsl:value-of select="parameter[@Name='MODEL']/@CurrValue"/>
 </xsl:if>
 #
 </xsl:template>
+
+<xsl:template match="object[@Type='OS']/parameter[@Name='MCU_DATA']/enumerator[@Name='MSP430']/parameter[@Name='MODEL']/enumerator[@Name='MSP430_1611']" mode="build_makefile">
+EEOPT  += __MSP430_1611__
+EEOPT  += __MSP430x16__
+<xsl:if test="parameter[@Name='USE_UART']/enumerator[@Name='TRUE']">
+<xsl:if      test="parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0'] or not(parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1'])">EEOPT  += __USE_EE_UART_0__
+</xsl:if>
+<xsl:if      test="parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1']">EEOPT  += __USE_EE_UART_1__
+</xsl:if>
+</xsl:if>
+<xsl:if test="parameter[@Name='USE_SPI']/enumerator[@Name='TRUE']">
+<xsl:if      test="parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0'] or not(parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1'])">EEOPT  += __USE_EE_SPI_0__
+</xsl:if>
+<xsl:if      test="parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1']">EEOPT  += __USE_EE_SPI_1__
+</xsl:if>
+</xsl:if>
+<xsl:if test="parameter[@Name='USE_I2C']/enumerator[@Name='TRUE']">
+<xsl:if      test="parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0'] or not(parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1'])">EEOPT  += __USE_EE_I2C__
+</xsl:if>
+<xsl:if      test="parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1'] and not(parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0'])">$(warning i2c disabled because it requires port0)
+</xsl:if>
+</xsl:if>
+
+
+<xsl:if test="parameter[@Name='ENABLE_INTERRUPTS']/enumerator[@Name='TRUE']">
+<xsl:if   test="parameter[@Name='USE_UART']/enumerator[@Name='TRUE'] or parameter[@Name='USE_SPI']/enumerator[@Name='TRUE']">
+<xsl:if      test="parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0'] or not(parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1'])">EEOPT  += __EE_USART_PORT_0_ISR_ENABLE__
+</xsl:if>
+<xsl:if      test="parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1']">EEOPT  += __EE_USART_PORT_1_ISR_ENABLE__
+</xsl:if>
+</xsl:if>
+<xsl:if   test="parameter[@Name='USE_I2C']/enumerator[@Name='TRUE']">
+<xsl:if      test="parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0'] or not(parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1'])">EEOPT  += __EE_I2C_PORT_0_ISR_ENABLE__
+</xsl:if>
+</xsl:if>
+</xsl:if>
+#
+</xsl:template>
+
+<!--
+EEOPT  += __EE_USART_PORT_0_ISR_ENABLE__
+</xsl:if>
+<xsl:if         test="parameter[@Name='ENABLE_INTERRUPTS']/enumerator[@Name='TRUE']">EEOPT  += __EE_USART_PORT_1_ISR_ENABLE__</xsl:if>
+
+
+<xsl:if test="parameter[@Name='USE_I2C']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0']">
+EEOPT  += __USE_EE_I2C__</xsl:if>
+<xsl:if test="parameter[@Name='USE_I2C']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1']">
+SEGNALARE UN ERRORE !!!!</xsl:if>
+<xsl:if test="parameter[@Name='USE_SPI']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0']">
+EEOPT  += __USE_EE_SPI_0_</xsl:if>
+<xsl:if test="parameter[@Name='USE_SPI']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1']">
+EEOPT  += __USE_EE_SPI_1__</xsl:if>
+<xsl:if test="parameter[@Name='USE_TIMER']/enumerator[@Name='TRUE']">
+EEOPT  += __USE_EE_TIMER__</xsl:if>
+
+<xsl:if test="parameter[@Name='USE_UART']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0'] and parameter[@Name='ENABLE_INTERRUPTS']/enumerator[@Name='TRUE']">
+EEOPT  += __EE_USART_PORT_0_ISR_ENABLE__</xsl:if>
+<xsl:if test="parameter[@Name='USE_UART']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1'] and parameter[@Name='ENABLE_INTERRUPTS']/enumerator[@Name='TRUE']">
+EEOPT  += __EE_USART_PORT_1_ISR_ENABLE__</xsl:if>
+<xsl:if test="parameter[@Name='USE_I2C']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0'] and parameter[@Name='ENABLE_INTERRUPTS']/enumerator[@Name='TRUE']">
+EEOPT  += __EE_I2C_PORT_0_ISR_ENABLE__</xsl:if>
+<xsl:if test="parameter[@Name='USE_I2C']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1'] and parameter[@Name='ENABLE_INTERRUPTS']/enumerator[@Name='TRUE']">
+SEGNALARE UN ERRORE !!!!</xsl:if>
+<xsl:if test="parameter[@Name='USE_SPI']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT0'] and parameter[@Name='ENABLE_INTERRUPTS']/enumerator[@Name='TRUE']">
+EEOPT  += __EE_USART_PORT_0_ISR_ENABLE__</xsl:if>
+<xsl:if test="parameter[@Name='USE_SPI']/enumerator[@Name='TRUE'] and parameter[@Name='ENABLE_PORTS']/enumerator[@Name='PORT1'] and parameter[@Name='ENABLE_INTERRUPTS']/enumerator[@Name='TRUE']">
+EEOPT  += __EE_USART_PORT_1_ISR_ENABLE__</xsl:if>
+ 	-->
+
     
 
     <!-- ============================================================================================================ -->

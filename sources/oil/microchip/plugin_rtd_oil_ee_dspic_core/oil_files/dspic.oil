@@ -251,7 +251,7 @@ IMPLEMENTATION ee {
 							ALL 				// EE_OPT = "__USE_ANALOG_IN__"; EE_OPT = "__USE_ACCELEROMETER__"; EE_OPT = "__USE_LIGHT__";
 												// EE_OPT = "__USE_BUZZER__"; EE_OPT = "__USE_RTC__";
 						] OPTIONS[];
-				    }
+				    }, STANDARD
 				] TYPE = STANDARD;
 			},
 
