@@ -1,0 +1,34 @@
+IMPLEMENTATION ee {
+	TASK {
+		ENUM [ 
+			abc {
+				INT32 int1;
+			}
+		] COUNTER;
+		ENUM [ 
+			ALARM {
+				INT32 ALARM_TYPE;
+			}
+		] COUNTER;
+		ENUM [ 
+			ALARM {
+				DOUBLE d3[];
+			}
+		] COUNTER;
+	};
+};
+
+CPU ab {
+	TASK myTask1 {
+		COUNTER = abc {
+			int1 = 0;
+		};
+	};
+	TASK myTask2 {
+		COUNTER = ALARM {
+			ALARM_TYPE =1;
+			d3 = 0;
+			d3 = 0.0;
+		};
+	};
+};

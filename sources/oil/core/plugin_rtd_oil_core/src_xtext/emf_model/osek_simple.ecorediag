@@ -324,6 +324,10 @@
   <children xmi:type="notation:Node" xmi:id="_eHL8y7VIEeGVUZKdMZRAJQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_eHL8zrVIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eHL8z7VIEeGVUZKdMZRAJQ" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_FAMowL4JEeGFxc-rjhfx6Q" type="2001">
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilFile/OilVersion"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_FAMowb4JEeGFxc-rjhfx6Q"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eHL80LVIEeGVUZKdMZRAJQ"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_eHL80bVIEeGVUZKdMZRAJQ"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_eHL80rVIEeGVUZKdMZRAJQ"/>

@@ -65,13 +65,43 @@
 					<exclude name="**/*.java"/>
 				<exclude name="**/package.htm*"/>
 			</fileset>
+			<fileset dir="src_xtext/model-model" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+			<fileset dir="src_xtext/model-edit" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+			<fileset dir="src_xtext/src" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+			<fileset dir="src_xtext/src-gen" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+			<fileset dir="src_xtext/xtend-gen" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
 		</resources>	
 
 		<antcall target="common_build.jar">
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
 			<param name="jar_name" value="rtdruid_oil_core"/>
-			<param name="common_build_sources" value="src/internal/:src/public/:old_internal/:old_public/"/>
+			<param name="common_build_sources" value="src/internal/:src/public/:old_internal/:old_public/:src_xtext/model-model/:src_xtext/model-edit/:src_xtext/src/:src_xtext/src-gen/:src_xtext/xtend-gen/"/>
 			<reference refid="common_build_classpath"/>
 			<reference refid="common_build_binary_files"/>
 		</antcall>

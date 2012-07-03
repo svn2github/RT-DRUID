@@ -20,6 +20,7 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
@@ -78,12 +79,23 @@ public class OilScopeProvider extends AbstractDeclarativeScopeProvider {
       IScope _xifexpression = null;
       ParameterType _type = prop.getType();
       if ((_type instanceof ReferenceType)) {
-        Resource _eResource = prop.eResource();
-        ParameterType _type_1 = prop.getType();
-        ObjectType _type_2 = ((ReferenceType) _type_1).getType();
-        List<OilObject> _mainObjects = this._oilTypesHelper.getMainObjects(_eResource, _type_2);
-        IScope _oilScope = this.getOilScope(_mainObjects);
-        _xifexpression = _oilScope;
+        IScope _xblockexpression_1 = null;
+        {
+          ParameterType _type_1 = prop.getType();
+          ObjectType _type_2 = ((ReferenceType) _type_1).getType();
+          boolean _operator_equals = ObjectExtensions.operator_equals(_type_2, ObjectType.APPMODE);
+          if (_operator_equals) {
+            Resource _eResource = prop.eResource();
+            this._oilTypesHelper.addDefaultAppMode(_eResource);
+          }
+          Resource _eResource_1 = prop.eResource();
+          ParameterType _type_3 = prop.getType();
+          ObjectType _type_4 = ((ReferenceType) _type_3).getType();
+          List<OilObject> _mainObjects = this._oilTypesHelper.getMainObjects(_eResource_1, _type_4);
+          IScope _oilScope = this.getOilScope(_mainObjects);
+          _xblockexpression_1 = (_oilScope);
+        }
+        _xifexpression = _xblockexpression_1;
       } else {
         List<String> _computePath = this._oilTypesHelper.computePath(prop, false);
         List<OilImplementation> _oilImplementation = this._oilTypesHelper.getOilImplementation(prop);

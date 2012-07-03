@@ -1,19 +1,67 @@
 
 package com.eu.evidence.rtdruid.oil.xtext.ui.quickfix;
 
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.FindReplaceDocumentAdapter;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.ui.editor.model.edit.IModification;
+import org.eclipse.xtext.ui.editor.model.edit.IModificationContext;
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
+import org.eclipse.xtext.ui.editor.quickfix.Fix;
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
+import org.eclipse.xtext.validation.Issue;
+
+import com.eu.evidence.rtdruid.oil.xtext.validation.IValidationCodes;
 
 public class OilQuickfixProvider extends DefaultQuickfixProvider {
 
-//	@Fix(MyJavaValidator.INVALID_NAME)
-//	public void capitalizeName(final Issue issue, IssueResolutionAcceptor acceptor) {
-//		acceptor.accept(issue, "Capitalize name", "Capitalize the name.", "upcase.png", new IModification() {
-//			public void apply(IModificationContext context) throws BadLocationException {
-//				IXtextDocument xtextDocument = context.getXtextDocument();
-//				String firstLetter = xtextDocument.get(issue.getOffset(), 1);
-//				xtextDocument.replace(issue.getOffset(), 1, firstLetter.toUpperCase());
-//			}
-//		});
-//	}
+	@Fix(IValidationCodes.AddQuotesToReferce_parametervalue)
+	public void addQuotesToParameterValue(final Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, "Add quotes", "Transform the reference to a String adding quotes.", null, new IModification() {
+			public void apply(IModificationContext context) throws BadLocationException {
+				IXtextDocument xtextDocument = context.getXtextDocument();
+				String txt = xtextDocument.get(issue.getOffset(), issue.getLength());
+				xtextDocument.replace(issue.getOffset(), issue.getLength(), "\""+txt+"\"");
+			}
+		});
+	}
+	
+	@Fix(IValidationCodes.RemoveQuotesToReferce_parametervalue)
+	public void removeQuotesFromParameterValue(final Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, "Remove quotes", "Transform the string to reference removing quotes.", null, new IModification() {
+			public void apply(IModificationContext context) throws BadLocationException {
+				IXtextDocument xtextDocument = context.getXtextDocument();
+				String txt = xtextDocument.get(issue.getOffset()+1, issue.getLength()-1);
+				xtextDocument.replace(issue.getOffset(), issue.getLength(), txt);
+			}
+		});
+	}
+	
+	
+	@Fix(IValidationCodes.MissingWithAuto_valueType)
+	public void capitalizeName(final Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, "Remove AUTO", "Remove AUTO keyword.", null, new IModification() {
+			public void apply(IModificationContext context) throws BadLocationException {
+				IXtextDocument xtextDocument = context.getXtextDocument();
+				xtextDocument.replace(issue.getOffset(), issue.getLength(), "");
+			}
+		});
+	}
 
+	@Fix(IValidationCodes.MissingCpuSection) 
+	public void addCpuSection(final Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, "Add CPU", "Add CPU Section.", null, new IModification() {
+			public void apply(IModificationContext context) throws BadLocationException {
+				IXtextDocument xtextDocument = context.getXtextDocument();
+				FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(xtextDocument); 
+				IRegion reg = finder.find(-1, ";", false, false, false, false);
+				int position = xtextDocument.getLength()-1;
+				if (reg != null) {
+					position = reg.getOffset()+1;
+				}
+				xtextDocument.replace(position, 0, "\nCPU ee {\n};" );
+			}
+		});
+	}
 }

@@ -55,7 +55,7 @@ public class EnumTests extends XtextTest {
         _builder.append("BOOLEAN a;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("BOOLEAN b {");
+        _builder.append("BOOLEAN [");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("TRUE,");
@@ -64,10 +64,10 @@ public class EnumTests extends XtextTest {
         _builder.append("FALSE");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("};");
+        _builder.append("] b;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("BOOLEAN c {");
+        _builder.append("BOOLEAN [");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("TRUE {");
@@ -85,19 +85,19 @@ public class EnumTests extends XtextTest {
         _builder.append("FALSE");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("};");
+        _builder.append("] c;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("BOOLEAN d {");
+        _builder.append("BOOLEAN [");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("a1");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("};");
+        _builder.append("] d;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("BOOLEAN e {");
+        _builder.append("BOOLEAN [");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("TRUE,");
@@ -109,7 +109,7 @@ public class EnumTests extends XtextTest {
         _builder.append("a2");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("};");
+        _builder.append("] e;");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("};");
@@ -136,12 +136,12 @@ public class EnumTests extends XtextTest {
         FluentIssueCollection _errorsOnly = this.issues.errorsOnly();
         FluentIssueCollection _inLine = _errorsOnly.inLine(16);
         FluentIssueCollection _under = _inLine.under(com.eu.evidence.rtdruid.oil.xtext.model.EnumeratorType.class);
-        FluentIssueCollection _oneOfThemContains = _under.oneOfThemContains("a1");
+        FluentIssueCollection _oneOfThemContains = _under.oneOfThemContains("TRUE");
         this.assertConstraints(_oneOfThemContains);
         FluentIssueCollection _errorsOnly_1 = this.issues.errorsOnly();
         FluentIssueCollection _inLine_1 = _errorsOnly_1.inLine(21);
         FluentIssueCollection _under_1 = _inLine_1.under(com.eu.evidence.rtdruid.oil.xtext.model.EnumeratorType.class);
-        FluentIssueCollection _oneOfThemContains_1 = _under_1.oneOfThemContains("a2");
+        FluentIssueCollection _oneOfThemContains_1 = _under_1.oneOfThemContains("TRUE");
         this.assertConstraints(_oneOfThemContains_1);
       }
     } catch (Exception _e) {

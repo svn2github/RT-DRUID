@@ -42,13 +42,13 @@ class SplittedElementsTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a;
 					ALARM_TYPE WITH_AUTO at;
 				};
 				ALARM {
@@ -113,13 +113,13 @@ class SplittedElementsTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a;
 				};
 			};
 			CPU s {
@@ -142,13 +142,13 @@ class SplittedElementsTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a;
 				};
 			};
 			CPU s {
@@ -174,27 +174,27 @@ class SplittedElementsTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b1;
 						},
 						FALSE
-					};
-					BOOLEAN a {
+					] a;
+					BOOLEAN [
 						TRUE {
 							INT32 b2;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a;
 				};
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b3;
 						},
 						FALSE
-					};
+					] a;
 				};
 			};
 			CPU s {
@@ -224,27 +224,27 @@ class SplittedElementsTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b1[];
 						},
 						FALSE
-					};
-					BOOLEAN a {
+					] a;
+					BOOLEAN [
 						TRUE {
 							INT32 b2;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a;
 				};
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b3;
 						},
 						FALSE
-					};
+					] a;
 				};
 			};
 			CPU s {
@@ -277,27 +277,27 @@ class SplittedElementsTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					BOOLEAN a[] {
+					BOOLEAN [
 						TRUE {
 							INT32 b1[];
 						},
 						FALSE
-					};
-					BOOLEAN a[] {
+					] a[];
+					BOOLEAN [
 						TRUE {
 							INT32 b2;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a[];
 				};
 				OS {
-					BOOLEAN a[] {
+					BOOLEAN [
 						TRUE {
 							INT32 b3;
 						},
 						FALSE
-					};
+					] a[];
 				};
 			};
 			CPU s {

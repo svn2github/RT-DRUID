@@ -1,0 +1,34 @@
+IMPLEMENTATION ee {
+	TASK {
+		ENUM [ 
+			abc {
+				INT32 int1;
+			}
+		] enum;
+		ENUM [ 
+			def {
+				INT32 int2;
+			}
+		] enum;
+		ENUM [ 
+			def {
+				DOUBLE d3[];
+			}
+		] enum;
+	};
+};
+
+CPU ab {
+	TASK myTask1 {
+		enum = abc {
+			int1 = 0;
+		};
+	};
+	TASK myTask2 {
+		enum = def{
+			int2=1;
+			d3 = 0;
+			d3 = 0.0;
+		};
+	};
+};

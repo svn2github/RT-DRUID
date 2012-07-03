@@ -11,6 +11,7 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import com.eu.evidence.rtdruid.oil.xtext.model.OilObject
 import com.eu.evidence.rtdruid.oil.xtext.model.Parameter
 import com.eu.evidence.rtdruid.oil.xtext.model.ReferenceType
+import com.eu.evidence.rtdruid.oil.xtext.model.ObjectType
 
 class OilScopeProvider extends AbstractDeclarativeScopeProvider {
 	
@@ -36,6 +37,9 @@ class OilScopeProvider extends AbstractDeclarativeScopeProvider {
 		logger.debug("Scope PV " + prop + " -> " + ref)
 		
 		if (prop.type instanceof ReferenceType) {
+			if ((prop.type as ReferenceType).type == ObjectType::APPMODE) {
+				addDefaultAppMode(prop.eResource)
+			}
 			getOilScope(getMainObjects(prop.eResource, (prop.type as ReferenceType).type))
 			
 		} else {

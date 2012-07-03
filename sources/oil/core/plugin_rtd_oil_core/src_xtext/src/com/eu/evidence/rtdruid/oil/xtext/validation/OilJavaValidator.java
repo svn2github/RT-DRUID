@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.ValidationMessageAcceptor;
 
@@ -33,6 +35,8 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 
 	private final Logger logger = Logger.getLogger(getClass());
 	
+	private final OilTypesHelper helper = new OilTypesHelper();
+	
 	private static final String STR_EXPECTED_A_VALID = "Expected a valid ";
 	private static final String STR_EXPECTED_A_POSITIVE_VALUE = "Expected a positive value";
 	private static final String STR_PROVIDED_VALUE_DOES_NOT_FIT = "Provided value does not fit in a ";
@@ -43,7 +47,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 		
 		logger.debug("Check Model " + parameter);
 		if (parameter.getApplication() == null) {
-			warning("Expected a CPU section", OilPackage.Literals.OIL_FILE__APPLICATION);
+			warning("Expected a CPU section",parameter, OilPackage.Literals.OIL_FILE__APPLICATION, IValidationCodes.MissingCpuSection);
 		}
 		
 		for (Map<String, List<OilObject>> map : groupOilObjects(parameter).values()) {
@@ -53,7 +57,38 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 		}
 	}
 
+	@Check
+	public void checkEnumeratorType(EnumeratorType parameter) {
+		logger.debug("Check Enumerator " + parameter);
+		
+		EObject parent = parameter.eContainer();
+		if (parent != null && parent instanceof VariantType && ((VariantType) parent).getType() == EType.BOOLEAN) {
+			if (!("TRUE".equals(parameter.getName()) || "FALSE".equals(parameter.getName()))) {
+				error("Only TRUE and FALSE are valid Boolean values", OilPackage.Literals.ENUMERATOR_TYPE__NAME);
+			}
+		}
+	}
 
+	
+	@Check
+	public void checkValueType(ValueType parameter) {
+		logger.debug("Check ValueType " + parameter);
+		
+		VType type = parameter.getType();
+		if (type == null) {
+			error("Invalid type", OilPackage.Literals.VALUE_TYPE__TYPE);
+		} else {
+			
+			if (parameter.isDefaultAuto()) {
+				// = AUTO
+				if (!parameter.isWithAuto()) {
+					error("Default value AUTO requires the WITH_AUTO keyword", parameter,  OilPackage.Literals.PARAMETER_TYPE__DEFAULT_AUTO, IValidationCodes.MissingWithAuto_valueType);
+				}
+			} else {
+				checkValueConformance(parameter.getDefaultValue(), OilPackage.Literals.PARAMETER_TYPE__DEFAULT_VALUE, type);
+			}
+		}
+	}
 	
 	@Check
 	public void checkParameter(Parameter parameter) {
@@ -101,51 +136,70 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 	}
 		
 	private void checkParameterValue(Parameter parameter, ValueType type) {
+		VType vType = type.getType();
 		
 		if (parameter.getValueRef() != null) {
-			error("A value cannot have references", OilPackage.Literals.PARAMETER__VALUE_REF);
+			final String what;
+			if (vType == VType.STRING) {
+				what = IValidationCodes.AddQuotesToReferce_parametervalue;
+			} else {
+				what = IValidationCodes.FixReference_parametervalue;
+			}
+			error("Expected a " + vType.getName() + ", not a reference", parameter, OilPackage.Literals.PARAMETER__VALUE_REF, what);
 		}
 		
 		if (parameter.getParameters().size()>0) {
 			error("A value cannot contain sub-elements", OilPackage.Literals.PARAMETER__PARAMETERS);
 		}
 
-
 		// = ....
 		String value = parameter.getValue();
+		final EAttribute parameterValue = OilPackage.Literals.PARAMETER__VALUE;
 		if (value == null)  {
 			// = null
-			error("Missing the value", OilPackage.Literals.PARAMETER__VALUE);
+			if (parameter.getValueRef() == null) {
+				error("Missing the value", parameterValue);
+			}
 		} else {
 
-			VType vType = type.getType();
+			checkValueConformance(value, parameterValue, vType);
+		}
+	}
+
+	/**
+	 * @param value
+	 * @param attribute
+	 * @param vType
+	 */
+	protected void checkValueConformance(String value, final EAttribute attribute, VType vType) {
+		if (value != null) {
 			switch (vType) {
 			case DOUBLE:
 				try {
 					Double.parseDouble(value);
 				} catch (NumberFormatException e) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, OilPackage.Literals.PARAMETER__VALUE);
+					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
 			case FLOAT:
 				try {
 					Float.parseFloat(value);
 				} catch (NumberFormatException e) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, OilPackage.Literals.PARAMETER__VALUE);
+					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
 			case INT32:
 				try {
 					Integer.decode(value);
 				} catch (NumberFormatException e) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, OilPackage.Literals.PARAMETER__VALUE);
+					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
 			case INT64:
 				try {
 					Long.decode(value);
 				} catch (NumberFormatException e) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, OilPackage.Literals.PARAMETER__VALUE);
+					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
 			case UINT32: {
@@ -157,14 +211,14 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 							decimal = new BigInteger(value);
 						}
 					} catch (NumberFormatException e) {
-						error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, OilPackage.Literals.PARAMETER__VALUE);
+						error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 					}
 					if (decimal != null) {
 						if (decimal.signum() == -1) {
-							error(STR_EXPECTED_A_POSITIVE_VALUE +": " + value, OilPackage.Literals.PARAMETER__VALUE);
+							error(STR_EXPECTED_A_POSITIVE_VALUE +": " + value, attribute);
 						} else {
 							if (decimal.bitLength() > 32) {
-								error(STR_PROVIDED_VALUE_DOES_NOT_FIT + vType.getName()+" (" + value + ")", OilPackage.Literals.PARAMETER__VALUE);
+								error(STR_PROVIDED_VALUE_DOES_NOT_FIT + vType.getName()+" (" + value + ")", attribute);
 							}
 						}
 					}
@@ -179,14 +233,14 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 							decimal = new BigInteger(value);
 						}
 					} catch (NumberFormatException e) {
-						error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, OilPackage.Literals.PARAMETER__VALUE);
+						error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 					}
 					if (decimal != null) {
 						if (decimal.signum() == -1) {
-							error(STR_EXPECTED_A_POSITIVE_VALUE +": " + value, OilPackage.Literals.PARAMETER__VALUE);
+							error(STR_EXPECTED_A_POSITIVE_VALUE +": " + value, attribute);
 						} else {
 							if (decimal.bitLength() > 64) {
-								error(STR_PROVIDED_VALUE_DOES_NOT_FIT + vType.getName()+" (" + value + ")", OilPackage.Literals.PARAMETER__VALUE);
+								error(STR_PROVIDED_VALUE_DOES_NOT_FIT + vType.getName()+" (" + value + ")", attribute);
 							}
 						}
 					}
@@ -194,10 +248,10 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 				break;
 			case STRING:
 				if (!(value.startsWith("\"") && value.endsWith("\""))) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, OilPackage.Literals.PARAMETER__VALUE);
+					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
-//					default:
+	//					default:
 				// undefined type
 			};
 		}
@@ -206,7 +260,12 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 	private void checkParameterReference(Parameter parameter, ReferenceType type) {
 
 		if (parameter.getValue() != null) {
-			error(STR_EXPECTED_A_VALID + " reference", OilPackage.Literals.PARAMETER__VALUE);
+			String value = parameter.getValue();
+			if (value.startsWith("\"") && value.endsWith("\"")) {
+				error(STR_EXPECTED_A_VALID + "reference, not a String", parameter, OilPackage.Literals.PARAMETER__VALUE, IValidationCodes.RemoveQuotesToReferce_parametervalue);
+			} else {
+				error(STR_EXPECTED_A_VALID + "reference, not a String or a number", OilPackage.Literals.PARAMETER__VALUE);
+			}
 		}
 
 //		if (parameter.isStructured()) {
@@ -220,14 +279,14 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 		ParameterRef gRefValue = parameter.getValueRef();
 		ObjectType refType = type.getType();
 		if (gRefValue == null) {
-			error(STR_EXPECTED_A_VALID + " reference", OilPackage.Literals.PARAMETER__VALUE_REF);
+			error(STR_EXPECTED_A_VALID + "reference", OilPackage.Literals.PARAMETER__VALUE_REF);
 		} else {
 			if (gRefValue instanceof OilObject) {
 				if ( ((OilObject) gRefValue).getType() != refType) {
-					error(STR_EXPECTED_A_VALID + " reference to a " + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
+					error(STR_EXPECTED_A_VALID + "reference to a " + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
 				}
 			} else {
-				error(STR_EXPECTED_A_VALID + " reference to a " + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
+				error(STR_EXPECTED_A_VALID + "reference to a " + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
 			}
 		}
 		
@@ -243,7 +302,13 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 		if (gRefValue == null) {
 			error(STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
 		} else {
-			if (!(gRefValue instanceof EnumeratorType) || ((EnumeratorType) gRefValue).eContainer() != type) {
+			if (gRefValue instanceof EnumeratorType) {
+				if (((EnumeratorType) gRefValue).eContainer() != type) {
+					if (!(helper.getEnumeratorType(helper.computePath(parameter, false), helper.getOilImplementation(parameter)).contains(gRefValue))) {
+						error(STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
+					}
+				}
+			} else {
 				error(STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
 			}
 		}
@@ -344,12 +409,12 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 				final boolean multiValue = parameterType.isMultiValue();
 				if (parameterType instanceof VariantType){
 					Map<String, List<Parameter>> enumTypes = new HashMap<String, List<Parameter>>();
-					for (Parameter p: valueList) {
-						final ParameterRef valueRef = p.getValueRef();
-						if (valueRef instanceof EnumeratorType) {
-							addToMapList(map, p, ((EnumeratorType) valueRef).getName());
-						}
-					}
+//					for (Parameter p: valueList) {
+//						final ParameterRef valueRef = p.getValueRef();
+//						if (valueRef instanceof EnumeratorType) {
+//							addToMapList(map, p, ((EnumeratorType) valueRef).getName());
+//						}
+//					}
 					if (multiValue) {
 //							for (List<Parameter> list: enumTypes.values()) {
 //								if (list.size()>1) {

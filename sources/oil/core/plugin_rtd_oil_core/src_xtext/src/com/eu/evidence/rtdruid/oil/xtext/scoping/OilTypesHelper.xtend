@@ -1,26 +1,37 @@
 package com.eu.evidence.rtdruid.oil.xtext.scoping
 
+import com.eu.evidence.rtdruid.oil.xtext.model.EType
+import com.eu.evidence.rtdruid.oil.xtext.model.EnumeratorType
+import com.eu.evidence.rtdruid.oil.xtext.model.ObjectType
+import com.eu.evidence.rtdruid.oil.xtext.model.OilFactory
+import com.eu.evidence.rtdruid.oil.xtext.model.OilFile
+import com.eu.evidence.rtdruid.oil.xtext.model.OilImplementation
+import com.eu.evidence.rtdruid.oil.xtext.model.OilObject
+import com.eu.evidence.rtdruid.oil.xtext.model.OilObjectImpl
+import com.eu.evidence.rtdruid.oil.xtext.model.Parameter
+import com.eu.evidence.rtdruid.oil.xtext.model.ParameterType
+import com.eu.evidence.rtdruid.oil.xtext.model.VariantType
 import com.sun.istack.internal.NotNull
 import com.sun.istack.internal.Nullable
 import java.util.ArrayList
 import java.util.Collections
+import java.util.HashMap
 import java.util.List
+import java.util.Map
+import java.util.WeakHashMap
 import org.apache.log4j.Logger
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
-import com.eu.evidence.rtdruid.oil.xtext.model.ParameterType
-import com.eu.evidence.rtdruid.oil.xtext.model.OilImplementation
-import com.eu.evidence.rtdruid.oil.xtext.model.EnumeratorType
-import com.eu.evidence.rtdruid.oil.xtext.model.VariantType
-import com.eu.evidence.rtdruid.oil.xtext.model.EType
-import com.eu.evidence.rtdruid.oil.xtext.model.OilFactory
-import com.eu.evidence.rtdruid.oil.xtext.model.OilObjectImpl
-import com.eu.evidence.rtdruid.oil.xtext.model.Parameter
-import com.eu.evidence.rtdruid.oil.xtext.model.OilObject
-import com.eu.evidence.rtdruid.oil.xtext.model.OilFile
-import com.eu.evidence.rtdruid.oil.xtext.model.ObjectType
+
+import static com.eu.evidence.rtdruid.oil.xtext.scoping.OilTypesHelper.*
+import java.util.LinkedList
 
 class OilTypesHelper {
+	public static String DEFAULT_APP_MODE = "OSDEFAULTAPPMODE"
+	public static boolean USECACHE = false
+	
+	private static WeakHashMap<OilImplementation, Map<String, List<? extends EObject>>> implCache = new WeakHashMap<OilImplementation, Map<String, List<? extends EObject>>>()
 	
 	Logger logger = Logger::getLogger(typeof(OilTypesHelper))
 
@@ -37,14 +48,54 @@ class OilTypesHelper {
 		logger.debug("Parameters for path " + path + " = " + answer)
 		answer
 	}
-	
+
 	def protected List<? extends EObject> getElmentsType(List<String> path, @NotNull List<OilImplementation> roots) {
 		if (path == null) return emptyList()
 		var List<? extends EObject> values = new ArrayList<EObject>() 
 		for (obj : roots) 
-			(values as List).addAll(obj.oilObjects)
- 		
-		for (pElem : path) {
+			(values as List).addAll(getElmentsType(path, obj))
+			
+		values
+	}
+	
+	def protected List<? extends EObject> getElmentsType(List<String> path, @NotNull OilImplementation root) {
+		var List<? extends EObject> values = null 
+		var LinkedList<String> remaningPath = new LinkedList<String>()
+		var LinkedList<String> handledPath = new LinkedList<String>()
+		var Map<String, List<? extends EObject>> map = null
+		if (implCache.containsKey(root)) {
+			handledPath.addAll(path)
+			map = implCache.get(root) 
+			{
+				val String pathString = handledPath.toPathString 
+				if (map.containsKey(pathString)) {
+					return map.get(pathString)
+				}
+			}
+			
+			// searching already computed values 
+			{
+				remaningPath.addFirst(handledPath.removeLast)
+				while (values == null && !handledPath.empty) {
+					
+					val String pathString = handledPath.toPathString 
+					if (map.containsKey(pathString)) {
+						values = map.get(pathString)
+					} else {
+						remaningPath.addFirst(handledPath.removeLast)
+					}
+				} 
+			}
+		} else {
+			remaningPath.addAll(path)
+		}
+		
+		if (values == null) {
+			values = new ArrayList<EObject>()
+			(values as List).addAll(root.oilObjects)
+		}
+	 		
+		for (pElem : remaningPath) {
 			
 			var t = new ArrayList<EObject>()
 			for (fElem : values.filter[
@@ -67,6 +118,10 @@ class OilTypesHelper {
 				) 
 			}
 			values = t
+			handledPath.addLast(pElem)
+			if (map != null) {
+				map.put(handledPath.toPathString, values)
+			}
 		}
 		
 		logger.debug("Object for path " + path + " = " + values)
@@ -91,7 +146,6 @@ class OilTypesHelper {
 		
 		fElem.values
 	}
-
 
 	/** Compute Path */
 	def public List<String> computePath( EObject o, boolean addEnum) {
@@ -135,7 +189,7 @@ class OilTypesHelper {
 	}
 	
 	/** Compute Path Element for OilObject */
-	def dispatch EObject computePathElement(@NotNull  OilObject it, boolean addEnum, @NotNull List<String> path) {
+	def dispatch  EObject computePathElement(@NotNull  OilObject it, boolean addEnum, @NotNull List<String> path) {
 		val ObjectType type = it.getType()
 		if (type == null) {
 			path.clear
@@ -148,11 +202,23 @@ class OilTypesHelper {
 
 
 	def public List<OilImplementation> getOilImplementation(@Nullable EObject o) {
-		var answer = new ArrayList<OilImplementation>()
+		var List<OilImplementation> answer = new ArrayList<OilImplementation>()
 		
 		for (obj: o?.eResource.contents){
-			if (obj instanceof OilFile) 
-				answer.add((obj as OilFile).implementation)
+			if (obj instanceof OilFile) {
+				if (obj != null && (obj as OilFile).implementation != null) {
+					answer.add((obj as OilFile).implementation)
+				}
+			}
+		}
+		
+		if (answer.empty) {
+			answer = DefaultOilImplementationProvider::instance.implementations
+			if (implCache.empty) {
+				for (OilImplementation impl : answer) {
+					implCache.put(impl, new HashMap<String, List<? extends EObject>>())
+				}
+			}
 		}
 		
 		answer
@@ -174,4 +240,40 @@ class OilTypesHelper {
 		answer
 	}
 
+	def public OilObject addDefaultAppMode(@Nullable Resource res) {
+		var EList<OilObject> oilObjectList = null
+		for (ofile: res?.contents){
+			if (ofile instanceof OilFile) {
+			 oilObjectList = (ofile as OilFile).application.oilObjects
+				for (obj: oilObjectList) {
+					if (obj.type == ObjectType::APPMODE) {
+						if (DEFAULT_APP_MODE.equals(obj.name)) {
+							return obj
+						}
+					}
+				}
+			}
+		}
+			
+		if (oilObjectList != null) {
+			val answer = OilFactory::eINSTANCE.createOilObject
+			answer.setType(ObjectType::APPMODE)
+			answer.setName(DEFAULT_APP_MODE)
+			oilObjectList.add(answer)
+			return answer
+		}
+		
+		return null
+	}
+	
+	def private String toPathString(List<String> path) {
+		val StringBuffer buff = new StringBuffer()
+		
+		for (String s : path) {
+			buff.append("/")
+			buff.append(s)
+		}
+		
+		buff.toString
+	}
 }

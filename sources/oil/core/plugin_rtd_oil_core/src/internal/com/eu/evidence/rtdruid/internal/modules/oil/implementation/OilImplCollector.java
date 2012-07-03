@@ -23,15 +23,40 @@ import com.eu.evidence.rtdruid.modules.oil.transform.OilTransformFactory;
  */
 
 public class OilImplCollector {
+	
 	private static OilImplementation[] oilImplementationArray;
 	
-	private static class InputNamedStream {
-		final String name;
-		final InputStream stream;
-		public InputNamedStream(String n, InputStream in) {
+	public static class InputNamedStream {
+		private final String name;
+		private final Bundle bundle;
+		private final InputStream stream;
+		public InputNamedStream(String n, Bundle bundle, InputStream in) {
 			this.name = n;
 			this.stream = in;
+			this.bundle = bundle;
 		}
+		
+		/**
+		 * @return the name
+		 */
+		public String getName() {
+			return name;
+		}
+		
+		/**
+		 * @return the stream
+		 */
+		public InputStream getStream() {
+			return stream;
+		}
+		
+		/**
+		 * @return the bundle
+		 */
+		public Bundle getBundle() {
+			return bundle;
+		}
+		
 	}
 
 	static { // load oil implementations from disk the first time
@@ -48,7 +73,7 @@ public class OilImplCollector {
 			oilImplementationArray[v] = t[v];
 	}
 
-	private static InputNamedStream[] getAllInputStream() {
+	public static InputNamedStream[] getAllInputStream() {
 		InputNamedStream[] x = null;
 			IConfigurationElement[] config = Platform.getExtensionRegistry()
 					.getConfigurationElementsFor("com.eu.evidence.rtdruid.oil.core.oil_implementation");
@@ -62,7 +87,7 @@ public class OilImplCollector {
 						assert(fileName != null);
 						Bundle bundle = Platform.getBundle(config[i].getContributor().getName());
 						assert(bundle != null);
-						x[i] = new InputNamedStream(fileName, FileLocator.openStream(bundle, new Path(fileName), false));
+						x[i] = new InputNamedStream(fileName, bundle, FileLocator.openStream(bundle, new Path(fileName), false));
 					}
 					catch (Throwable e) {
 						RtdruidLog.log(OilImplCollector.class.getName() + ": " +
@@ -71,7 +96,7 @@ public class OilImplCollector {
 				}
 		return x;
 	}
-
+	
 	private static OilImplementation getOilImplementation(InputNamedStream in) {
 		if (in == null || in.stream == null)
 			return null;

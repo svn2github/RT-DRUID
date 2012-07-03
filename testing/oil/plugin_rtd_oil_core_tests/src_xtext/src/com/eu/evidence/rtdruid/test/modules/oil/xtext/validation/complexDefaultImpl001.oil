@@ -1,0 +1,260 @@
+CPU test_application {
+
+	OS EE {
+		EE_OPT = "__ASSERT__";
+		CFLAGS = "-g2";
+		ASFLAGS = "";
+		LDFLAGS = "";
+
+		EE_OPT = "__ASSERT__";
+		EE_OPT = "__USE_LEDS__";
+		EE_OPT = "__USE_BUTTONS__";
+
+		EE_OPT = "__E200ZX_EXECUTE_FROM_RAM__";
+
+		MASTER_CPU = "master";
+
+		CPU_DATA = PPCE200ZX {
+			ID = "master";
+			MODEL = E200Z6;
+			APP_SRC = "master.c";
+			MULTI_STACK = FALSE;
+			VLE = TRUE;
+			SYS_STACK_SIZE = 4096;
+			APP_SRC = "../../rte/rte_z6/Rte_IoHwAbstr.c";
+			APP_SRC = "../../rte/rte_z6/Rte_acam.c";
+			APP_SRC = "../../rte/rte_z6/Rte_dcam.c";
+			APP_SRC = "../../rte/rte_z6/Rte_rvrs.c";
+			APP_SRC = "../../rte/rte_z6/Rte_skey.c";
+			APP_SRC = "../../rte/rte_z6/Rte_syncdvrs.c";
+			APP_SRC = "../../rte/rte_z6/Rte_vbat.c";
+			APP_SRC = "../../rte/rte_z6/Rte_syncmgm.c";
+			APP_SRC = "../../rte/rte_z6/Rte_apresint.c";
+			APP_SRC = "../../rte/rte_z6/Rte.c";
+			APP_SRC = "../../source/apresint.c";
+			APP_SRC = "../../source/vbat.c";
+			APP_SRC = "../../source/syncdvrs.c";
+			APP_SRC = "../../source/rvrs.c";
+			APP_SRC = "../../source/IoHwAbstr.c";
+			APP_SRC = "../../source/acam.c";
+			APP_SRC = "../../source/skey.c";
+			APP_SRC = "../../source/syncmgm.c";
+			APP_SRC = "../../source/dcam.c";
+/*			APP_SRC = "dry2.c"; */
+		};
+
+		CPU_DATA = PPCE200ZX {
+			MODEL = E200Z0;
+			ID = "slave";
+			APP_SRC = "slave.c";
+			MULTI_STACK = FALSE;
+			VLE = TRUE;
+			SYS_STACK_SIZE = 4096;
+			APP_SRC = "../../source/smot.c";		
+			APP_SRC = "../../rte/rte_z0/Rte_IoHwAbstr_Z0.c";
+			APP_SRC = "../../rte/rte_z0/Rte_smot.c";
+			APP_SRC = "../../rte/rte_z0/Rte.c";
+		};
+
+		MCU_DATA = PPCE200ZX {
+			MODEL = MPC5668G;
+		};
+
+		STATUS = EXTENDED;
+		STARTUPHOOK = FALSE;
+		ERRORHOOK = FALSE;
+		SHUTDOWNHOOK = FALSE;
+		PRETASKHOOK = FALSE;
+		POSTTASKHOOK = FALSE;
+		USEGETSERVICEID = FALSE;
+		USEPARAMETERACCESS = FALSE;
+		USERESSCHEDULER = FALSE;
+
+		USEREMOTETASK = ALWAYS;
+
+		KERNEL_TYPE = BCC1;
+	
+		ORTI_SECTIONS = ALL;
+		CFLAGS = "-I$(if $(call iseeopt,__PPCE200Z6__),../../rte/rte_z6,../../rte/rte_z0)";
+		CFLAGS = "-I$(if $(call iseeopt,__PPCE200Z6__),../../rte/rte_z6/StandardFiles,../../rte/rte_z0/StandardFiles)";
+		CFLAGS = "-I../../source";
+		CFLAGS = "-I../../sd";
+		CFLAGS = "-I$(EEBASE)/pkg/kernel/as/inc";	
+		CFLAGS = "-I../../Boot";
+	};
+
+
+	/* ================================ */
+	/*  			MASTER 				*/
+	/* ================================ */
+	
+	TASK int_cam /*Minimum Interarrival Time: 5-30ms depending on engine speed*/ {
+	  CPU_ID = "master";
+	      PRIORITY = 60;
+	      SCHEDULE = FULL;
+	      ACTIVATION = 1;
+	      AUTOSTART = TRUE { 
+	          APPMODE = OSDEFAULTAPPMODE;
+	      };
+	 };
+	 TASK power_on /*Minimum Interarrival Time: 5s*/ {
+	  CPU_ID = "master";
+	      PRIORITY = 5;
+	      SCHEDULE = FULL;
+	      ACTIVATION = 1;
+	      AUTOSTART = TRUE { 
+	          APPMODE = OSDEFAULTAPPMODE;
+	      };
+	 };
+	 TASK time_medium /*12 ms*/ {
+	  CPU_ID = "master";
+	      PRIORITY = 30;
+	      SCHEDULE = FULL;
+	      ACTIVATION = 1;
+	      AUTOSTART = TRUE { 
+	          APPMODE = OSDEFAULTAPPMODE;
+	      };
+	 };
+	 TASK key_on /*Minimum Interarrival Time: 1s */ {
+	  CPU_ID = "master";
+	      PRIORITY = 10;
+	      SCHEDULE = FULL;
+	      ACTIVATION = 1;
+	      AUTOSTART = TRUE { 
+	          APPMODE = OSDEFAULTAPPMODE;
+	      };
+	 };
+	 TASK pms_high /*Minimum Interarrival Time: 5-30ms depending on engine speed*/ {
+	  CPU_ID = "master";
+	      PRIORITY = 50;
+	      SCHEDULE = FULL;
+	      ACTIVATION = 1;
+	      AUTOSTART = TRUE { 
+	          APPMODE = OSDEFAULTAPPMODE;
+	      };
+	 };
+	 TASK BSWTask /**/ {
+	  CPU_ID = "master";
+	      PRIORITY = 1;
+	      SCHEDULE = NON;
+	      ACTIVATION = 1;
+	      AUTOSTART = TRUE { 
+	          APPMODE = OSDEFAULTAPPMODE;
+	      };
+	 };
+	 TASK time_fast /*4 ms*/ {
+	  CPU_ID = "master";
+	      PRIORITY = 40;
+	      SCHEDULE = FULL;
+	      ACTIVATION = 1;
+	      AUTOSTART = TRUE { 
+	          APPMODE = OSDEFAULTAPPMODE;
+	      };
+	 };
+	 TASK time_slow /*100 ms*/ {
+	  	  CPU_ID = "master";
+	      PRIORITY = 20;
+	      SCHEDULE = FULL;
+	      ACTIVATION = 1;
+	      AUTOSTART = TRUE { 
+	          APPMODE = OSDEFAULTAPPMODE;
+	      };
+	 };
+	  
+	 COUNTER SystemTimer /**/ {
+	  	CPU_ID = "master";
+	    MINCYCLE = 2;
+	    MAXALLOWEDVALUE = 0xFFFF ;
+	    TICKSPERBASE = 1;
+	 };
+	 ALARM OSAlarm_12ms /**/ {
+	    COUNTER = SystemTimer;
+	    ACTION = ACTIVATETASK{
+	        TASK = time_medium;
+	    };
+	    AUTOSTART = TRUE {
+	        ALARMTIME = 20;
+	        CYCLETIME =  12;
+	        APPMODE = OSDEFAULTAPPMODE;
+	    };
+	 };
+	
+	 ALARM OSAlarm_4ms /**/ {
+        COUNTER = SystemTimer;
+        ACTION = ACTIVATETASK{
+            TASK = time_fast;
+        };
+        AUTOSTART = TRUE {
+            ALARMTIME = 20;
+            CYCLETIME =  4;
+            APPMODE = OSDEFAULTAPPMODE;
+        };
+	  };
+	        
+	  ALARM OSAlarm_100ms {
+  		COUNTER = SystemTimer;
+		ACTION = ACTIVATETASK { 
+			TASK = time_slow; 
+		};
+		AUTOSTART = TRUE { 
+		      ALARMTIME = 200; 
+		      CYCLETIME = 100; 
+		      APPMODE = OSDEFAULTAPPMODE;
+		};
+	  }; 
+ 
+ 	/* ================================ */
+	/*  			SLAVE 				*/
+	/* ================================ */
+  
+	TASK power_on_z0 {
+		CPU_ID = "slave";
+		PRIORITY = 5;
+		AUTOSTART = TRUE;
+		STACK = SHARED;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+	};
+
+	TASK time_fast_z0 {
+		CPU_ID = "slave";
+	      PRIORITY = 10;
+	      SCHEDULE = FULL;
+	      ACTIVATION = 1;
+	      AUTOSTART = TRUE { 
+	          APPMODE = OSDEFAULTAPPMODE;
+	      };
+	};
+ 
+	COUNTER SystemTimer_z0  {
+	  	CPU_ID = "slave";
+	    MINCYCLE = 2;
+	    MAXALLOWEDVALUE = 0xFFFF ;
+	    TICKSPERBASE = 1;
+	};
+	
+	ALARM OSAlarm_4ms_z0  {
+        COUNTER = SystemTimer_z0;
+        ACTION = ACTIVATETASK{
+            TASK = time_fast_z0;
+        };
+        AUTOSTART = TRUE {
+            ALARMTIME = 20;
+            CYCLETIME =  4;
+            APPMODE = OSDEFAULTAPPMODE;
+        };
+	 };        
+	 
+	 
+     NETWORKMESSAGE CAN_SIG_FORCE_SYSTPHAS {
+        MESSAGEPROPERTY = STATIC {
+                SIZEINBITS = 8;
+        };
+    };
+    NETWORKMESSAGE CAN_SIG_SYSTPHAS {
+        MESSAGEPROPERTY = STATIC {
+                SIZEINBITS = 8;
+        };
+    };
+
+};

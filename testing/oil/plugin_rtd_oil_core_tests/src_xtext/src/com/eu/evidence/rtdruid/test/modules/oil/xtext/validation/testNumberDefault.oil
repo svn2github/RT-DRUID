@@ -1,6 +1,6 @@
 IMPLEMENTATION a {
 	OS {
-		ENUM types {
+		ENUM [
 			t_int32 {
 				INT32 a1 = 1;
 				INT32 a2 = -1;
@@ -91,7 +91,7 @@ IMPLEMENTATION a {
 				DOUBLE a12 = alarm;
 				DOUBLE a13 = "abc";
 			}
-		};
+		] types;
 		ALARM_TYPE at;
 	};
 	ALARM {

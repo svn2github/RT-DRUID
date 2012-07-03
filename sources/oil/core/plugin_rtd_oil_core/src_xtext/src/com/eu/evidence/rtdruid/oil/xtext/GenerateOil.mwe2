@@ -92,8 +92,8 @@ Workflow {
 			fragment = labeling.LabelProviderFragment {}
 
 			// outline API 
-            fragment = outline.OutlineTreeProviderFragment {}
-            fragment = outline.QuickOutlineFragment {}
+//            fragment = outline.OutlineTreeProviderFragment {}
+//            fragment = outline.QuickOutlineFragment {}
 
 			// java-based API for content assistance 
 			fragment = contentAssist.JavaBasedContentAssistFragment {}

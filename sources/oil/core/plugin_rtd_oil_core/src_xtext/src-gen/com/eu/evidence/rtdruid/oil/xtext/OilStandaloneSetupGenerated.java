@@ -43,6 +43,5 @@ public class OilStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

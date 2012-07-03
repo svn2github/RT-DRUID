@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link com.eu.evidence.rtdruid.oil.xtext.model.OilFile#getImplementation <em>Implementation</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.oil.xtext.model.OilFile#getApplication <em>Application</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.oil.xtext.model.OilFile#getOilVersion <em>Oil Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,5 +74,31 @@ public interface OilFile extends EObject {
 	 * @generated
 	 */
 	void setApplication(OilApplication value);
+
+	/**
+	 * Returns the value of the '<em><b>Oil Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Oil Version</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Oil Version</em>' attribute.
+	 * @see #setOilVersion(String)
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.OilPackage#getOilFile_OilVersion()
+	 * @model
+	 * @generated
+	 */
+	String getOilVersion();
+
+	/**
+	 * Sets the value of the '{@link com.eu.evidence.rtdruid.oil.xtext.model.OilFile#getOilVersion <em>Oil Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Oil Version</em>' attribute.
+	 * @see #getOilVersion()
+	 * @generated
+	 */
+	void setOilVersion(String value);
 
 } // OilFile

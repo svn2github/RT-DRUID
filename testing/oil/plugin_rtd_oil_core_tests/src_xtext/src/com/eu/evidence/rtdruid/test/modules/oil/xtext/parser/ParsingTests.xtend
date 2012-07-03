@@ -30,13 +30,13 @@ class ParsingTests extends XtextTest {
 			IMPLEMENTATION a {
 				OS {
 				// 112;
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a;
 					ALARM_TYPE WITH_AUTO at;
 				};
 				ALARM {
@@ -115,13 +115,13 @@ class ParsingTests extends XtextTest {
 				IMPLEMENTATION a {
 					OS {
 					// 112;
-						BOOLEAN a {
+						BOOLEAN [
 							TRUE {
 								INT32 b1;
 								BOOLEAN d;
 							},
 							FALSE
-						};
+						] a;
 						ALARM_TYPE at;
 					};
 					ALARM {
@@ -130,8 +130,8 @@ class ParsingTests extends XtextTest {
 	    ''')
 		
 		val resource = model.eResource
-		System::out.println(resource.errors);
-		assertEquals(1, resource.errors.size)
+//		System::out.println(resource.errors);
+		assertEquals(0, resource.errors.size)
 		assertEquals(0, resource.warnings.size)
 	}
 	

@@ -31,13 +31,13 @@ class ScopingTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a;
 					ALARM_TYPE WITH_AUTO at;
 				};
 				ALARM {
@@ -62,13 +62,13 @@ class ScopingTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a;
 					ALARM_TYPE WITH_AUTO at;
 				};
 				ALARM {
@@ -115,13 +115,13 @@ class ScopingTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					BOOLEAN a {
+					BOOLEAN [
 						TRUE {
 							INT32 b;
 							BOOLEAN d;
 						},
 						FALSE
-					};
+					] a;
 					ALARM_TYPE WITH_AUTO at;
 				};
 				ALARM {

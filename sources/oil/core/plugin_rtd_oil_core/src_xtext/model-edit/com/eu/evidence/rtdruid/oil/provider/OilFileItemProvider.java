@@ -17,12 +17,14 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -61,8 +63,31 @@ public class OilFileItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addOilVersionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Oil Version feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addOilVersionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_OilFile_OilVersion_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OilFile_OilVersion_feature", "_UI_OilFile_type"),
+				 OilPackage.Literals.OIL_FILE__OIL_VERSION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -115,7 +140,10 @@ public class OilFileItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_OilFile_type");
+		String label = ((OilFile)object).getOilVersion();
+		return label == null || label.length() == 0 ?
+			getString("_UI_OilFile_type") :
+			getString("_UI_OilFile_type") + " " + label;
 	}
 
 	/**
@@ -130,6 +158,9 @@ public class OilFileItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(OilFile.class)) {
+			case OilPackage.OIL_FILE__OIL_VERSION:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 			case OilPackage.OIL_FILE__IMPLEMENTATION:
 			case OilPackage.OIL_FILE__APPLICATION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));

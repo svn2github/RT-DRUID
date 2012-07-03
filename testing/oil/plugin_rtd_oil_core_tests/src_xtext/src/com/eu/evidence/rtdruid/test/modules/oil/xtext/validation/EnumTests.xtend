@@ -43,25 +43,25 @@ class EnumTests extends XtextTest {
 			IMPLEMENTATION a {
 				OS {
 					BOOLEAN a;
-					BOOLEAN b {
+					BOOLEAN [
 						TRUE,
 						FALSE
-					};
-					BOOLEAN c {
+					] b;
+					BOOLEAN [
 						TRUE {
 							INT32 b;
 							BOOLEAN d;
 						},
 						FALSE
-					};
-					BOOLEAN d {
+					] c;
+					BOOLEAN [
 						a1
-					};
-					BOOLEAN e {
+					] d;
+					BOOLEAN [
 						TRUE,
 						FALSE,
 						a2
-					};
+					] e;
 				};
 				ALARM {
 				};
@@ -73,12 +73,12 @@ class EnumTests extends XtextTest {
 		assertConstraints(issues.errorsOnly
 			.inLine(16)
 			.under(typeof(EnumeratorType))
-			.oneOfThemContains("a1")
+			.oneOfThemContains("TRUE")
 		)
 		assertConstraints(issues.errorsOnly
 			.inLine(21)
 			.under(typeof(EnumeratorType))
-			.oneOfThemContains("a2")
+			.oneOfThemContains("TRUE")
 		)
 	}
 	

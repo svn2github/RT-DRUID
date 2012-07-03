@@ -8,8 +8,10 @@ import "http://com.eu.evidence.rtdruid.oil.xtext.model"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 OilFile:
+	{OilFile}
+	("OIL_VERSION" "=" OilVersion=STRING ";")?
 	(Implementation = OilImplementation)?
-	(Application = OilApplication)
+	(Application = OilApplication)?
 ;
 
 OilImplementation :
@@ -39,7 +41,7 @@ ValueType returns ValueType:
 	{ValueType}
 	Type=VType
 	(WithAuto?='WITH_AUTO')?
-	Name=ID
+	Name= SpecialId
 	(MultiValue?='[]')?
 	('=' (=> DefaultAuto?="AUTO" | DefaultValue=(GenericValue|ID)))?
 	(':' Description=STRING)?
@@ -50,11 +52,11 @@ VariantType returns VariantType:
 	{VariantType}
 	Type=EType
 	(WithAuto?='WITH_AUTO')?
-	Name=ID
-	(MultiValue?='[]')?
-	('{'
+	('['
 		(Values+=EnumeratorType ( "," Values+=EnumeratorType)* )?
-    '}')?
+    ']')?
+	Name= SpecialId
+	(MultiValue?='[]')?
     ('=' (=> DefaultAuto?="AUTO" | DefaultValue=ID))?
 	(':' Description=STRING)?
 	";"
@@ -62,7 +64,7 @@ VariantType returns VariantType:
    
 EnumeratorType returns EnumeratorType:
 	{EnumeratorType}
-	Name=ID
+	Name= SpecialId
 	('{' (Parameters+=ParameterType)*  '}')?
 	(':' Description=STRING)?
 ;
@@ -71,7 +73,7 @@ ReferenceType returns ReferenceType:
 	{ReferenceType}
 	Type=ObjectTypeRef
 	(WithAuto?='WITH_AUTO')?
-	Name=ID
+	Name= SpecialId
 	(MultiValue?='[]')?
 	('=' (=> DefaultAuto?="AUTO" | DefaultValue=(ID)))?
 	(':' Description=STRING)?
@@ -88,8 +90,8 @@ OilObject :
 
 Parameter returns Parameter:
 	{Parameter}
-	Type=[ParameterType|ID]
-	'=' ( => Auto?="AUTO" | Value= GenericValue | ValueRef=[ParameterRef|ID] )
+	Type=[ParameterType|SpecialId]
+	'=' ( => Auto?="AUTO" | Value= GenericValue | ValueRef=[ParameterRef|SpecialId] )
 	("{" (Parameters+=Parameter)* "}")?
 	(':' Description=STRING)?
 	";"
@@ -141,6 +143,13 @@ Enumerator returns Enumerator:
 //	";"
 //    ;
 
+SpecialId returns ecore::EString:
+	ID | 'STRING' | 'UINT32' | 'INT32' | 'UINT64' | 'INT64' | 'FLOAT' | 'DOUBLE' |
+	'BOOLEAN' | 'ENUM' |
+	'OS' | 'ALARM' | 'APPMODE' | 'COUNTER' | 'COM' | 'EVENT' | 'IPDU' | 'ISR' | 'MESSAGE' | 'NETWORKMESSAGE' | 'NM' | 'RESOURCE' | 'TASK' |
+	'OS_TYPE' | 'ALARM_TYPE' | 'APPMODE_TYPE' | 'COUNTER_TYPE' | 'COM_TYPE' | 'EVENT_TYPE' | 'IPDU_TYPE' | 'ISR_TYPE' | 'MESSAGE_TYPE' | 'NETWORKMESSAGE_TYPE' | 'NM_TYPE' | 'RESOURCE_TYPE' | 'TASK_TYPE'
+;
+
 enum VType returns VType:
 	STRING = 'STRING' | UINT32 = 'UINT32' | INT32 = 'INT32' | UINT64 = 'UINT64' | INT64 = 'INT64' | FLOAT = 'FLOAT' | DOUBLE = 'DOUBLE';
 
@@ -160,8 +169,8 @@ enum ObjectTypeRef returns ObjectType:
 	
 
 // Aggiungere la gestione dei numeri esadecimali
-INT returns ecore::EInt: ('+'|'-')? (( NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)* ) | HEX);
-DOUBLE returns ecore::EDouble: ('+'|'-')? NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)* =>'.' (ZERO_INT | NON_ZERO_INT)+;
+INT returns ecore::EInt: ('+'|'-')? (( NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)* ) | ZERO_INT | HEX);
+DOUBLE returns ecore::EDouble: ('+'|'-')? (ZERO_INT | (NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)*)) =>'.' (ZERO_INT | NON_ZERO_INT)+;
 	
 	
 terminal ID  		: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;

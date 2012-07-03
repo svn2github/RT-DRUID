@@ -26,21 +26,76 @@ class SimpleTests extends XtextTest {
 		testFile("test001.oil")
 		
 		assertConstraints(issues.errorsOnly
-			.inLine(20)
+			.inLine(18)
 			.under(typeof(Parameter))
 			.oneOfThemContains("Couldn't resolve reference")
 			.oneOfThemContains("'not_existing_id'")
 		)
 		assertConstraints(issues.errorsOnly
-			.inLine(27)
+			.inLine(18)
 			.under(typeof(Parameter))
-			.oneOfThemContains("Couldn't resolve reference")
-			.oneOfThemContains("'b'")
+			.oneOfThemContains("Expected a valid")
 		)
 		assertConstraints(issues.errorsOnly
-			.inLine(30)
+			.inLine(21)
 			.under(typeof(Parameter))
-			.oneOfThemContains("does not support AUTO")
+			.oneOfThemContains("Couldn't resolve reference")
+			.oneOfThemContains("'TRUE'")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(21)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Expected a valid")
+			.oneOfThemContains("ALARM")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(21).under(typeof(Parameter)).oneOfThemContains("Only one value")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(26).under(typeof(Parameter)).oneOfThemContains("Only one value")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(27).under(typeof(Parameter)).oneOfThemContains("Only one value")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(29).under(typeof(Parameter)).oneOfThemContains("Only one value")
+		)
+
+		assertConstraints(issues.errorsOnly
+			.inLine(25)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Expected a valid")
+			.oneOfThemContains("STRING")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(25)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Couldn't resolve reference")
+			.oneOfThemContains("'b1'")
+		)
+		
+		assertConstraints(issues.errorsOnly
+			.inLine(26)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Expected a valid reference")
+			.oneOfThemContains("ALARM")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(26)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Couldn't resolve reference")
+			.oneOfThemContains("'aaaasd'")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(29)
+			.under(typeof(Parameter))
+			.oneOfThemContains("does not support AUTO value")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(36)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Couldn't resolve reference")
+			.oneOfThemContains("'d'")
 		)
 	}
 
@@ -60,6 +115,61 @@ class SimpleTests extends XtextTest {
 			.under(typeof(Parameter))
 			.oneOfThemContains("Couldn't resolve reference")
 			.oneOfThemContains("'b'")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(18)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Couldn't resolve reference")
+			.oneOfThemContains("'FALSE'")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(18)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Expected a valid")
+			.oneOfThemContains("ALARM")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(21)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Couldn't resolve reference")
+			.oneOfThemContains("'TRUE'")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(21)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Expected a valid")
+			.oneOfThemContains("ALARM")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(18).under(typeof(Parameter)).oneOfThemContains("Only one value")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(21).under(typeof(Parameter)).oneOfThemContains("Only one value")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(24).under(typeof(Parameter)).oneOfThemContains("Only one value")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(26).under(typeof(Parameter)).oneOfThemContains("Only one value")
+		)
+		
+		assertConstraints(issues.errorsOnly
+			.inLine(24)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Expected a valid reference")
+			.oneOfThemContains("ALARM")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(24)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Couldn't resolve reference")
+			.oneOfThemContains("'aaaasd'")
+		)
+		assertConstraints(issues.errorsOnly
+			.inLine(29)
+			.under(typeof(Parameter))
+			.oneOfThemContains("Couldn't resolve reference")
+			.oneOfThemContains("'d'")
 		)
 	}
 
@@ -92,4 +202,17 @@ class SimpleTests extends XtextTest {
 			.oneOfThemContains("Only one value expected")
 		)
 	}
+	
+	@Test
+	def void positiveTest006() {
+		suppressSerialization()
+		testFile("test006.oil")
+	}
+	
+	@Test
+	def void positiveTest007() {
+		ignoreSerializationDifferences()
+		testFile("test007.oil")
+	}
+	
 }

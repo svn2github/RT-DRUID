@@ -1,13 +1,13 @@
 IMPLEMENTATION a {
 	OS {
 	// 112;
-		BOOLEAN a {
+		BOOLEAN [
 			TRUE {
 				INT32 b1;
 				BOOLEAN d;
 			},
 			FALSE
-		};
+		] a;
 		ALARM_TYPE WITH_AUTO at;
 	};
 	ALARM {

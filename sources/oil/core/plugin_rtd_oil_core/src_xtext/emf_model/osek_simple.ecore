@@ -92,6 +92,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Application" eType="#//OilApplication"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="OilVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReferenceType" eSuperTypes="#//ParameterType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//ObjectType"/>

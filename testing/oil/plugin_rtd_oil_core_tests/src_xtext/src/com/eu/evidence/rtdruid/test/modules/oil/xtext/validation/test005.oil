@@ -1,24 +1,24 @@
 IMPLEMENTATION ee {
 	OS {
 		INT32 WITH_AUTO MyName [] : "asda";
-		ENUM enum { 
+		ENUM [ 
 			abc {
 				INT32 WITH_AUTO MyName2 [] = AUTO : "asda";
 			},
 			abc2
-		};
+		] enum;
 		TASK_TYPE t;
 	};
 	
 	TASK {
 		INT32 WITH_AUTO MyNamee = 1 : "asda";
-		ENUM enum1 {
+		ENUM [
 			abc {
 				INT32 WITH_AUTO multi [] = 1 : "asda";
 				INT32 WITH_AUTO mono;
 			},
 			abc2
-		};
+		] enum1;
 	};
 };
 

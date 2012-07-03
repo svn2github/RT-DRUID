@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <ul>
  *   <li>{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilFileImpl#getImplementation <em>Implementation</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilFileImpl#getApplication <em>Application</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilFileImpl#getOilVersion <em>Oil Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,6 +51,26 @@ public class OilFileImpl extends EObjectImpl implements OilFile {
 	 * @ordered
 	 */
 	protected OilApplication application;
+
+	/**
+	 * The default value of the '{@link #getOilVersion() <em>Oil Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOilVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String OIL_VERSION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getOilVersion() <em>Oil Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOilVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String oilVersion = OIL_VERSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -161,6 +182,27 @@ public class OilFileImpl extends EObjectImpl implements OilFile {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getOilVersion() {
+		return oilVersion;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOilVersion(String newOilVersion) {
+		String oldOilVersion = oilVersion;
+		oilVersion = newOilVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OilPackage.OIL_FILE__OIL_VERSION, oldOilVersion, oilVersion));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -184,6 +226,8 @@ public class OilFileImpl extends EObjectImpl implements OilFile {
 				return getImplementation();
 			case OilPackage.OIL_FILE__APPLICATION:
 				return getApplication();
+			case OilPackage.OIL_FILE__OIL_VERSION:
+				return getOilVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -201,6 +245,9 @@ public class OilFileImpl extends EObjectImpl implements OilFile {
 				return;
 			case OilPackage.OIL_FILE__APPLICATION:
 				setApplication((OilApplication)newValue);
+				return;
+			case OilPackage.OIL_FILE__OIL_VERSION:
+				setOilVersion((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -220,6 +267,9 @@ public class OilFileImpl extends EObjectImpl implements OilFile {
 			case OilPackage.OIL_FILE__APPLICATION:
 				setApplication((OilApplication)null);
 				return;
+			case OilPackage.OIL_FILE__OIL_VERSION:
+				setOilVersion(OIL_VERSION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -236,8 +286,26 @@ public class OilFileImpl extends EObjectImpl implements OilFile {
 				return implementation != null;
 			case OilPackage.OIL_FILE__APPLICATION:
 				return application != null;
+			case OilPackage.OIL_FILE__OIL_VERSION:
+				return OIL_VERSION_EDEFAULT == null ? oilVersion != null : !OIL_VERSION_EDEFAULT.equals(oilVersion);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (OilVersion: ");
+		result.append(oilVersion);
+		result.append(')');
+		return result.toString();
 	}
 
 } //OilFileImpl

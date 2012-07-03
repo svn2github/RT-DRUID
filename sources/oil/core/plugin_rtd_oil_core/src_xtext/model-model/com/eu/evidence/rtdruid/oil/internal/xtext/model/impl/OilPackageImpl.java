@@ -592,6 +592,15 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getOilFile_OilVersion() {
+		return (EAttribute)oilFileEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getReferenceType() {
 		return referenceTypeEClass;
 	}
@@ -729,6 +738,7 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 		oilFileEClass = createEClass(OIL_FILE);
 		createEReference(oilFileEClass, OIL_FILE__IMPLEMENTATION);
 		createEReference(oilFileEClass, OIL_FILE__APPLICATION);
+		createEAttribute(oilFileEClass, OIL_FILE__OIL_VERSION);
 
 		referenceTypeEClass = createEClass(REFERENCE_TYPE);
 		createEAttribute(referenceTypeEClass, REFERENCE_TYPE__TYPE);
@@ -828,6 +838,7 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 		initEClass(oilFileEClass, OilFile.class, "OilFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getOilFile_Implementation(), this.getOilImplementation(), null, "Implementation", null, 0, 1, OilFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getOilFile_Application(), this.getOilApplication(), null, "Application", null, 0, 1, OilFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getOilFile_OilVersion(), ecorePackage.getEString(), "OilVersion", null, 0, 1, OilFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(referenceTypeEClass, ReferenceType.class, "ReferenceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getReferenceType_Type(), this.getObjectType(), "Type", null, 0, 1, ReferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

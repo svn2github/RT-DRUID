@@ -12,7 +12,10 @@ Require-Bundle: com.eu.evidence.rtdruid.core,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
- org.eclipse.compare
+ org.eclipse.compare,
+ org.eclipse.ui.editors,
+ org.eclipse.ui,
+ org.antlr.runtime
 Bundle-Vendor: Evidence S.r.l.
 Bundle-ActivationPolicy: lazy
 Export-Package: com.eu.evidence.rtdruid.modules.oil.ui.views,

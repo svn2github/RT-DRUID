@@ -51,7 +51,7 @@ public class ScopingTests extends XtextTest {
         _builder.append("OS {");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("BOOLEAN a {");
+        _builder.append("BOOLEAN [");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("TRUE {");
@@ -69,7 +69,7 @@ public class ScopingTests extends XtextTest {
         _builder.append("FALSE");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("};");
+        _builder.append("] a;");
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("ALARM_TYPE WITH_AUTO at;");
@@ -149,7 +149,7 @@ public class ScopingTests extends XtextTest {
         _builder.append("OS {");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("BOOLEAN a {");
+        _builder.append("BOOLEAN [");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("TRUE {");
@@ -167,7 +167,7 @@ public class ScopingTests extends XtextTest {
         _builder.append("FALSE");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("};");
+        _builder.append("] a;");
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("ALARM_TYPE WITH_AUTO at;");
@@ -333,7 +333,7 @@ public class ScopingTests extends XtextTest {
         _builder.append("OS {");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("BOOLEAN a {");
+        _builder.append("BOOLEAN [");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("TRUE {");
@@ -351,7 +351,7 @@ public class ScopingTests extends XtextTest {
         _builder.append("FALSE");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("};");
+        _builder.append("] a;");
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("ALARM_TYPE WITH_AUTO at;");

@@ -53,16 +53,6 @@ public abstract class AbstractOilUiModule extends DefaultUiModule {
 		binder.bind(org.eclipse.jface.viewers.ILabelProvider.class).annotatedWith(org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider.class).to(com.eu.evidence.rtdruid.oil.xtext.ui.labeling.OilDescriptionLabelProvider.class);
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.outline.OutlineTreeProviderFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.outline.IOutlineTreeProvider> bindIOutlineTreeProvider() {
-		return com.eu.evidence.rtdruid.oil.xtext.ui.outline.OilOutlineTreeProvider.class;
-	}
-
-	// contributed by org.eclipse.xtext.ui.generator.outline.OutlineTreeProviderFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.outline.impl.IOutlineTreeStructureProvider> bindIOutlineTreeStructureProvider() {
-		return com.eu.evidence.rtdruid.oil.xtext.ui.outline.OilOutlineTreeProvider.class;
-	}
-
 	// contributed by org.eclipse.xtext.ui.generator.contentAssist.JavaBasedContentAssistFragment
 	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
 		return com.eu.evidence.rtdruid.oil.xtext.ui.contentassist.OilProposalProvider.class;

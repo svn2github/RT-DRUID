@@ -653,13 +653,22 @@ public interface OilPackage extends EPackage {
 	int OIL_FILE__APPLICATION = 1;
 
 	/**
+	 * The feature id for the '<em><b>Oil Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OIL_FILE__OIL_VERSION = 2;
+
+	/**
 	 * The number of structural features of the '<em>File</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OIL_FILE_FEATURE_COUNT = 2;
+	int OIL_FILE_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.ReferenceTypeImpl <em>Reference Type</em>}' class.
@@ -1237,6 +1246,17 @@ public interface OilPackage extends EPackage {
 	EReference getOilFile_Application();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.eu.evidence.rtdruid.oil.xtext.model.OilFile#getOilVersion <em>Oil Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Oil Version</em>'.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.OilFile#getOilVersion()
+	 * @see #getOilFile()
+	 * @generated
+	 */
+	EAttribute getOilFile_OilVersion();
+
+	/**
 	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.oil.xtext.model.ReferenceType <em>Reference Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1684,6 +1704,14 @@ public interface OilPackage extends EPackage {
 		 * @generated
 		 */
 		EReference OIL_FILE__APPLICATION = eINSTANCE.getOilFile_Application();
+
+		/**
+		 * The meta object literal for the '<em><b>Oil Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute OIL_FILE__OIL_VERSION = eINSTANCE.getOilFile_OilVersion();
 
 		/**
 		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.ReferenceTypeImpl <em>Reference Type</em>}' class.

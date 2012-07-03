@@ -52,7 +52,7 @@ public class ParsingTests extends XtextTest {
         _builder.append("// 112;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("BOOLEAN a {");
+        _builder.append("BOOLEAN [");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("TRUE {");
@@ -70,7 +70,7 @@ public class ParsingTests extends XtextTest {
         _builder.append("FALSE");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("};");
+        _builder.append("] a;");
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("ALARM_TYPE WITH_AUTO at;");
@@ -301,7 +301,7 @@ public class ParsingTests extends XtextTest {
         _builder.append("// 112;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("BOOLEAN a {");
+        _builder.append("BOOLEAN [");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("TRUE {");
@@ -319,7 +319,7 @@ public class ParsingTests extends XtextTest {
         _builder.append("FALSE");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("};");
+        _builder.append("] a;");
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("ALARM_TYPE at;");
@@ -340,10 +340,8 @@ public class ParsingTests extends XtextTest {
         Resource _eResource = model.eResource();
         final Resource resource = _eResource;
         EList<Diagnostic> _errors = resource.getErrors();
-        System.out.println(_errors);
-        EList<Diagnostic> _errors_1 = resource.getErrors();
-        int _size = _errors_1.size();
-        Assert.assertEquals(1, _size);
+        int _size = _errors.size();
+        Assert.assertEquals(0, _size);
         EList<Diagnostic> _warnings = resource.getWarnings();
         int _size_1 = _warnings.size();
         Assert.assertEquals(0, _size_1);

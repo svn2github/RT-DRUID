@@ -13,10 +13,15 @@ import com.eu.evidence.rtdruid.oil.xtext.model.Parameter;
 import com.eu.evidence.rtdruid.oil.xtext.model.ParameterRef;
 import com.eu.evidence.rtdruid.oil.xtext.model.ParameterType;
 import com.eu.evidence.rtdruid.oil.xtext.model.VariantType;
+import com.eu.evidence.rtdruid.oil.xtext.scoping.DefaultOilImplementationProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -33,6 +38,17 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class OilTypesHelper {
+  public static String DEFAULT_APP_MODE = "OSDEFAULTAPPMODE";
+  
+  public static boolean USECACHE = false;
+  
+  private static WeakHashMap<OilImplementation,Map<String,List<? extends EObject>>> implCache = new Function0<WeakHashMap<OilImplementation,Map<String,List<? extends EObject>>>>() {
+    public WeakHashMap<OilImplementation,Map<String,List<? extends EObject>>> apply() {
+      WeakHashMap<OilImplementation,Map<String,List<? extends EObject>>> _weakHashMap = new WeakHashMap<OilImplementation,Map<String,List<? extends EObject>>>();
+      return _weakHashMap;
+    }
+  }.apply();
+  
   private Logger logger = new Function0<Logger>() {
     public Logger apply() {
       Logger _logger = Logger.getLogger(com.eu.evidence.rtdruid.oil.xtext.scoping.OilTypesHelper.class);
@@ -85,10 +101,90 @@ public class OilTypesHelper {
       ArrayList<EObject> _arrayList = new ArrayList<EObject>();
       List<? extends EObject> values = _arrayList;
       for (final OilImplementation obj : roots) {
-        EList<OilObjectImpl> _oilObjects = obj.getOilObjects();
-        ((List) values).addAll(_oilObjects);
+        List<? extends EObject> _elmentsType = this.getElmentsType(path, obj);
+        ((List) values).addAll(_elmentsType);
       }
-      for (final String pElem : path) {
+      _xblockexpression = (values);
+    }
+    return _xblockexpression;
+  }
+  
+  protected List<? extends EObject> getElmentsType(final List<String> path, final OilImplementation root) {
+    List<? extends EObject> _xblockexpression = null;
+    {
+      List<? extends EObject> values = null;
+      LinkedList<String> _linkedList = new LinkedList<String>();
+      LinkedList<String> remaningPath = _linkedList;
+      LinkedList<String> _linkedList_1 = new LinkedList<String>();
+      LinkedList<String> handledPath = _linkedList_1;
+      Map<String,List<? extends EObject>> map = null;
+      boolean _containsKey = OilTypesHelper.implCache.containsKey(root);
+      if (_containsKey) {
+        {
+          handledPath.addAll(path);
+          Map<String,List<? extends EObject>> _get = OilTypesHelper.implCache.get(root);
+          map = _get;
+          {
+            String _pathString = this.toPathString(handledPath);
+            final String pathString = _pathString;
+            boolean _containsKey_1 = map.containsKey(pathString);
+            if (_containsKey_1) {
+              List<? extends EObject> _get_1 = map.get(pathString);
+              return _get_1;
+            }
+          }
+          {
+            String _removeLast = handledPath.removeLast();
+            remaningPath.addFirst(_removeLast);
+            boolean _operator_and = false;
+            boolean _operator_equals = ObjectExtensions.operator_equals(values, null);
+            if (!_operator_equals) {
+              _operator_and = false;
+            } else {
+              boolean _isEmpty = handledPath.isEmpty();
+              boolean _operator_not = BooleanExtensions.operator_not(_isEmpty);
+              _operator_and = BooleanExtensions.operator_and(_operator_equals, _operator_not);
+            }
+            boolean _while = _operator_and;
+            while (_while) {
+              {
+                String _pathString_1 = this.toPathString(handledPath);
+                final String pathString_1 = _pathString_1;
+                boolean _containsKey_2 = map.containsKey(pathString_1);
+                if (_containsKey_2) {
+                  List<? extends EObject> _get_2 = map.get(pathString_1);
+                  values = _get_2;
+                } else {
+                  String _removeLast_1 = handledPath.removeLast();
+                  remaningPath.addFirst(_removeLast_1);
+                }
+              }
+              boolean _operator_and_1 = false;
+              boolean _operator_equals_1 = ObjectExtensions.operator_equals(values, null);
+              if (!_operator_equals_1) {
+                _operator_and_1 = false;
+              } else {
+                boolean _isEmpty_1 = handledPath.isEmpty();
+                boolean _operator_not_1 = BooleanExtensions.operator_not(_isEmpty_1);
+                _operator_and_1 = BooleanExtensions.operator_and(_operator_equals_1, _operator_not_1);
+              }
+              _while = _operator_and_1;
+            }
+          }
+        }
+      } else {
+        remaningPath.addAll(path);
+      }
+      boolean _operator_equals_1 = ObjectExtensions.operator_equals(values, null);
+      if (_operator_equals_1) {
+        {
+          ArrayList<EObject> _arrayList = new ArrayList<EObject>();
+          values = _arrayList;
+          EList<OilObjectImpl> _oilObjects = root.getOilObjects();
+          ((List) values).addAll(_oilObjects);
+        }
+      }
+      for (final String pElem : remaningPath) {
         {
           ArrayList<EObject> _arrayList_1 = new ArrayList<EObject>();
           ArrayList<EObject> t = _arrayList_1;
@@ -162,6 +258,12 @@ public class OilTypesHelper {
             CollectionExtensions.<EObject>addAll(t, _switchResult);
           }
           values = t;
+          handledPath.addLast(pElem);
+          boolean _operator_notEquals = ObjectExtensions.operator_notEquals(map, null);
+          if (_operator_notEquals) {
+            String _pathString_1 = this.toPathString(handledPath);
+            map.put(_pathString_1, values);
+          }
         }
       }
       String _operator_plus = StringExtensions.operator_plus("Object for path ", path);
@@ -322,16 +424,41 @@ public class OilTypesHelper {
   }
   
   public List<OilImplementation> getOilImplementation(final EObject o) {
-    ArrayList<OilImplementation> _xblockexpression = null;
+    List<OilImplementation> _xblockexpression = null;
     {
       ArrayList<OilImplementation> _arrayList = new ArrayList<OilImplementation>();
-      ArrayList<OilImplementation> answer = _arrayList;
+      List<OilImplementation> answer = _arrayList;
       Resource _eResource = o==null?(Resource)null:o.eResource();
       EList<EObject> _contents = _eResource.getContents();
       for (final EObject obj : _contents) {
         if ((obj instanceof OilFile)) {
-          OilImplementation _implementation = ((OilFile) obj).getImplementation();
-          answer.add(_implementation);
+          boolean _operator_and = false;
+          boolean _operator_notEquals = ObjectExtensions.operator_notEquals(obj, null);
+          if (!_operator_notEquals) {
+            _operator_and = false;
+          } else {
+            OilImplementation _implementation = ((OilFile) obj).getImplementation();
+            boolean _operator_notEquals_1 = ObjectExtensions.operator_notEquals(_implementation, null);
+            _operator_and = BooleanExtensions.operator_and(_operator_notEquals, _operator_notEquals_1);
+          }
+          if (_operator_and) {
+            OilImplementation _implementation_1 = ((OilFile) obj).getImplementation();
+            answer.add(_implementation_1);
+          }
+        }
+      }
+      boolean _isEmpty = answer.isEmpty();
+      if (_isEmpty) {
+        {
+          List<OilImplementation> _implementations = DefaultOilImplementationProvider.instance.getImplementations();
+          answer = _implementations;
+          boolean _isEmpty_1 = OilTypesHelper.implCache.isEmpty();
+          if (_isEmpty_1) {
+            for (final OilImplementation impl : answer) {
+              HashMap<String,List<? extends EObject>> _hashMap = new HashMap<String,List<? extends EObject>>();
+              OilTypesHelper.implCache.put(impl, _hashMap);
+            }
+          }
         }
       }
       _xblockexpression = (answer);
@@ -364,6 +491,60 @@ public class OilTypesHelper {
         }
       }
       _xblockexpression = (answer);
+    }
+    return _xblockexpression;
+  }
+  
+  public OilObject addDefaultAppMode(final Resource res) {
+      EList<OilObject> oilObjectList = null;
+      EList<EObject> _contents = res==null?(EList<EObject>)null:res.getContents();
+      for (final EObject ofile : _contents) {
+        if ((ofile instanceof OilFile)) {
+          {
+            OilApplication _application = ((OilFile) ofile).getApplication();
+            EList<OilObject> _oilObjects = _application.getOilObjects();
+            oilObjectList = _oilObjects;
+            for (final OilObject obj : oilObjectList) {
+              ObjectType _type = obj.getType();
+              boolean _operator_equals = ObjectExtensions.operator_equals(_type, ObjectType.APPMODE);
+              if (_operator_equals) {
+                String _name = obj.getName();
+                boolean _equals = OilTypesHelper.DEFAULT_APP_MODE.equals(_name);
+                if (_equals) {
+                  return obj;
+                }
+              }
+            }
+          }
+        }
+      }
+      boolean _operator_notEquals = ObjectExtensions.operator_notEquals(oilObjectList, null);
+      if (_operator_notEquals) {
+        {
+          OilObject _createOilObject = OilFactory.eINSTANCE.createOilObject();
+          final OilObject answer = _createOilObject;
+          answer.setType(ObjectType.APPMODE);
+          answer.setName(OilTypesHelper.DEFAULT_APP_MODE);
+          oilObjectList.add(answer);
+          return answer;
+        }
+      }
+      return null;
+  }
+  
+  private String toPathString(final List<String> path) {
+    String _xblockexpression = null;
+    {
+      StringBuffer _stringBuffer = new StringBuffer();
+      final StringBuffer buff = _stringBuffer;
+      for (final String s : path) {
+        {
+          buff.append("/");
+          buff.append(s);
+        }
+      }
+      String _string = buff.toString();
+      _xblockexpression = (_string);
     }
     return _xblockexpression;
   }
