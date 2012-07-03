@@ -61,11 +61,45 @@
 		</antcall>
 	</target>
 
+	<target name="rtdruid_jscan_core_ant.jar" unless="rtd_jscan_ant_task.jar" description="Create jars: ${bundleId} rtdruid_jscan_core.jar.">
+		<path id="common_build_classpath">
+			<fileset dir="${eclipsePlugins}/" includes="**/*.jar"			/>
+			
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core.jar"/>
+			<pathelement path="${plugin.temp.folder}/*/rtdruid_core.jar"/>
+
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.jscan.core_${rtd_jscan_core_v}.${build_number}/rtdruid_jscan_core.jar"/>
+			<pathelement path="${plugin.temp.folder}/*/rtdruid_jscan_core.jar"/>
+
+			<pathelement path="${plugin.temp.folder}/com.eu.evidence.rtdruid.core_${rtd_core_v}.${build_number}/rtdruid_core_ant.jar"/>
+			<pathelement path="${plugin.temp.folder}/*/rtdruid_core_ant.jar"/>
+
+		</path>
+		<resources id="common_build_binary_files">
+			<fileset dir="src_ant" >
+				<include name="**/*"/>
+				<exclude name="**/.svn/"/>
+					<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+		</resources>	
+
+		<antcall target="common_build.jar">
+			<param name="plugin_id" value="${bundleId}"/>
+			<param name="plugin_vers" value="${bundleVersion}"/>
+			<param name="jar_name" value="rtd_jscan_ant_task"/>
+			<param name="common_build_sources" value="src_ant/"/>
+			<reference refid="common_build_classpath"/>
+			<reference refid="common_build_binary_files"/>
+		</antcall>
+	</target>
+
+	
 	<target name="publish.bin.parts">
 		<antcall target="common_publish.bin.parts">
 			<param name="plugin_id" value="${bundleId}"/>
 			<param name="plugin_vers" value="${bundleVersion}"/>
-			<param name="jar_name" value="rtdruid_jscan_core"/>
+			<param name="jar_name" value="rtd_jscan_ant_task"/>
 		</antcall>
 	</target>
 
@@ -79,7 +113,7 @@
 			<include name="about.ini"/>
 			<include name="rtdruid.png"/>
 			<include name="rtdruid_jscan_core.jar"/>
-<!--			<include name="rtdruid_jscan_ant.jar"/>-->
+			<include name="rtd_jscan_ant_task.jar"/>
 		</fileset>
 
 		<antcall target="common_gather.bin.parts">
@@ -95,6 +129,8 @@
 		<delete file="${compilation.problem.marker}" quiet="true"/>
 		<available property="rtdruid_jscan_core.jar" file="${build.result.folder}/rtdruid_jscan_core.jar"/>
 		<antcall target="rtdruid_jscan_core.jar"/>
+		<available property="rtd_jscan_ant_task.jar" file="${build.result.folder}/rtd_jscan_ant_task.jar"/>
+		<antcall target="rtdruid_jscan_core_ant.jar"/>
 	</target>
 
 </project>

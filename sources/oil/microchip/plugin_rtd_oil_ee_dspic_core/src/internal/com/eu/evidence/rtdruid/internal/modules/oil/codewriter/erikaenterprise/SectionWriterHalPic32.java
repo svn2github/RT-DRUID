@@ -477,7 +477,7 @@ public class SectionWriterHalPic32 extends SectionWriter
 		        String appBase = "..";
 		        // Get Default values 
 		        String gcc = wrapper.wrapPath(PicConstants.DEFAULT_PIC32_CONF_GCC);
-		        String asm = wrapper.wrapPath(PicConstants.DEFAULT_PIC32_CONF_ASM);
+		        String asm = null; //wrapper.wrapPath(PicConstants.DEFAULT_PIC32_CONF_ASM);
 		        
 		    	if (options.containsKey(IWritersKeywords.WRITER_OUTPUT_DIR_SET)) {
 					outputDir = (String) options.get(IWritersKeywords.WRITER_LAST_OUTPUT_DIR);
@@ -507,7 +507,7 @@ public class SectionWriterHalPic32 extends SectionWriter
 		        sbMakefile.append(
 		                "APPBASE := " + appBase + "\n" +
 		                "OUTBASE := " + outputDir + "\n\n" + 
-		                "PIC32_ASMDIR := "+asm+"\n"+
+		                (asm != null ? "PIC32_ASMDIR := "+asm+"\n" : "")+
 		                "PIC32_GCCDIR := "+gcc+"\n"
 		        );
 		    }

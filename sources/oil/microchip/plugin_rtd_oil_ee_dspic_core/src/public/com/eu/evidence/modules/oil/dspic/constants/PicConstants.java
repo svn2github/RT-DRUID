@@ -55,7 +55,7 @@ public interface PicConstants {
 	 * Default values PIC 32
 	 *  
 	 **************************************************************************/
-	public static final String DEFAULT_PIC32_CONF_ASM = "c:\\Programmi\\Microchip\\MPLAB ASM32 Suite";
+	public static final String DEFAULT_PIC32_CONF_ASM = "";
 	public static final String DEFAULT_PIC32_CONF_GCC = "c:\\Programmi\\Microchip\\MPLAB C32";
 
 }
