@@ -72,7 +72,7 @@ public class RtdOilProjectCompilerPathTest extends AbstractSwtBotTest implements
 		
 		// create a new project
 		project = new RtdOilProjectHelper(bot);
-		project.newRtdProject();
+		project.newRtdProject().pressNext();
 		assertFalse(project.isFinishAvailable());
 		assertFalse(project.isNextAvailable());
 		project.setProjectName(projectName);

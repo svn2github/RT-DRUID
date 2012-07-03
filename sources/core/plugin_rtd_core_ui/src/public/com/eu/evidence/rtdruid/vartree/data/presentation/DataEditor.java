@@ -1313,8 +1313,13 @@ public class DataEditor
 					throw new RuntimeException(e.getMessage(),e);
 				}
 
-				
-				editingDomain.getResourceSet().getResources().add(res);
+				EList<Resource> resources = editingDomain.getResourceSet().getResources();
+				if (resources.size()==0) {
+					resources.add(res);
+				} else {
+					resources.set(0, res);
+				}
+					
 //			} else {
 //				editingDomain.loadResource(path.toFileString());
 //					(URI.createPlatformResourceURI(path, true).toString());

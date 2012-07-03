@@ -119,7 +119,7 @@ public class ViewHelper implements StandardWidgetTexts {
 	 * @return the opened view (if exist)
 	 */
 	public SWTBotView getView() {
-		return bot.viewByTitle(viewName);
+		return bot.view(getMatcher());
 	}
 
 	/**
@@ -129,9 +129,9 @@ public class ViewHelper implements StandardWidgetTexts {
 	 * @return the list of all opened view with the provided name
 	 */
 	public List<SWTBotView> getViews() {
-		Matcher<IViewReference> match = withPartName(viewName);
-		return bot.views(match);
+		return bot.views(getMatcher());
 	}
+	
 	
 	/**
 	 * This method ensure that the view is visible. 
@@ -158,5 +158,10 @@ public class ViewHelper implements StandardWidgetTexts {
 			view.close();
 		}
 		return this;
+	}
+	
+	protected Matcher<IViewReference> getMatcher() {
+		Matcher<IViewReference> match = withPartName(viewName);
+		return match;
 	}
 }

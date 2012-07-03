@@ -1,7 +1,7 @@
 /**
  * 31/mag/2012
  */
-package com.eu.evidence.rtdruid.modules.oil.cdt.ui.project;
+package com.eu.evidence.rtdruid.tests.ui.swtbot;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 
@@ -14,16 +14,16 @@ import com.eu.evidence.rtdruid.tests.ui.swtbot.RtdProjectHelper;
  * @since 2.0
  *
  */
-public class RtdOilProjectHelper extends RtdProjectHelper  {
+public class SimpleProjectHelper extends RtdProjectHelper  {
 
-	public RtdOilProjectHelper(SWTWorkbenchBot bot) {
+	public SimpleProjectHelper(SWTWorkbenchBot bot) {
 		super(bot);
 	}
 	
-	public RtdOilProjectHelper newRtdProject() {
+	public SimpleProjectHelper newRtdProject() {
 		bot.menu("File").menu("New").menu("Project...").click();
+		bot.tree().expandNode("General", "Project").select();
 		setWizardShell(bot.shell("New Project"));
-		bot.tree().expandNode("Evidence", "RT-Druid Oil and C/C++ Project").select();
 		return this;
 	}
 	

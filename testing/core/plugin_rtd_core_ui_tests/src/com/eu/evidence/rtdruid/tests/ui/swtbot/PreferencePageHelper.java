@@ -4,8 +4,10 @@
 package com.eu.evidence.rtdruid.tests.ui.swtbot;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.utils.SWTUtils;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
@@ -59,7 +61,14 @@ public class PreferencePageHelper implements StandardWidgetTexts {
 	 * @return
 	 */
 	public PreferencePageHelper openPreferences() {
-		bot.menu(MENU_WINDOW).menu("Preferences").click();
+		SWTBotShell main = AbstractSwtBotTest.getMainShell(bot);
+		SWTBotMenu menu = null;
+		try {
+			menu = main.bot().menu(MENU_WINDOW).menu("Preferences");
+		} catch (WidgetNotFoundException e) {
+			menu = main.bot().menu("Preferences");
+		}
+		menu.click();
 		preferenceShell = bot.shell("Preferences");
 		return this;
 	}

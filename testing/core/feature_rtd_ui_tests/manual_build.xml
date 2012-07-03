@@ -25,10 +25,10 @@
 				<property name="bundleId" value="com.eu.evidence.rtdruid.core.ui.tests"/>
 				<property name="bundleVersion" value="${rtd_tests_v}.${build_number}"/>
 			</ant>
-<!--			<ant antfile="manual_build.xml" dir="../../analysis/plugin_rtd_sched_analysis_core_tests" target="${target}">
-				<property name="bundleId" value="com.eu.evidence.rtdruid.jscan.core.tests"/>
+			<ant antfile="manual_build.xml" dir="../../analysis/plugin_rtd_sched_analysis_ui_tests" target="${target}">
+				<property name="bundleId" value="com.eu.evidence.rtdruid.jscan.ui.tests"/>
 				<property name="bundleVersion" value="${rtd_tests_v}.${build_number}"/>
-			</ant>-->
+			</ant>
 			<ant antfile="manual_build.xml" dir="../../oil/plugin_rtd_oil_cdt_ui_tests" target="${target}">
 				<property name="bundleId" value="com.eu.evidence.rtdruid.oil.cdt.ui.tests"/>
 				<property name="bundleVersion" value="${rtd_tests_v}.${build_number}"/>
@@ -56,7 +56,7 @@
 				<param name="feature_id" value="${bundleId}"/>
 				<param name="feature_version" value="${bundleVersion}"/>
 				<param name="feature_featureIds" value=""/>
-				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.core.ui.tests:0.0.0,${rtd_tests_v}.${build_number},com.eu.evidence.rtdruid.oil.cdt.ui.tests:0.0.0,${rtd_tests_v}.${build_number}"/>
+				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.core.ui.tests:0.0.0,${rtd_tests_v}.${build_number},com.eu.evidence.rtdruid.oil.cdt.ui.tests:0.0.0,${rtd_tests_v}.${build_number},com.eu.evidence.rtdruid.jscan.ui.tests:0.0.0,${rtd_tests_v}.${build_number}"/>
 			</antcall>
 		</target>
 		
@@ -65,7 +65,7 @@
 				<param name="feature_id" value="${bundleId}"/>
 				<param name="feature_version" value="${bundleVersion}"/>
 				<param name="feature_featureIds" value=""/>
-				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.core.ui.tests:0.0.0,${rtd_tests_v}.${build_number},com.eu.evidence.rtdruid.oil.cdt.ui.tests:0.0.0,${rtd_tests_v}.${build_number}"/>
+				<param name="feature_pluginIds" value="com.eu.evidence.rtdruid.core.ui.tests:0.0.0,${rtd_tests_v}.${build_number},com.eu.evidence.rtdruid.oil.cdt.ui.tests:0.0.0,${rtd_tests_v}.${build_number},com.eu.evidence.rtdruid.jscan.ui.tests:0.0.0,${rtd_tests_v}.${build_number}"/>
 			</antcall>
 		</target>
 </project>

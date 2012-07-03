@@ -92,4 +92,30 @@ public class TreeHelper {
 		tree.expandNode(path).select().click();
 		return this;
 	}
+	
+	public int getChildrenNumber(String... path) {
+		if (path.length == 0) {
+			return tree.getAllItems().length;
+		} else {
+			return tree.expandNode(path).getItems().length;
+		}
+	}
+	
+	public SWTBotTreeItem[] getChildren(String... path) {
+		if (path.length == 0) {
+			return tree.getAllItems();
+		} else {
+			return tree.expandNode(path).getItems();
+		}
+	}
+	
+
+	public String[] getChildrenNames(String... path) {
+		SWTBotTreeItem[] items = getChildren(path);
+		String[] answer = new String[items.length];
+		for (int i=0; i<items.length; i++) {
+			answer[i] = items[i].getText();
+		}
+		return answer;
+	}
 }

@@ -11,6 +11,8 @@ import com.eu.evidence.rtdruid.modules.oil.cdt.ui.cygwin.MyMakeBuilderTest;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.linkvariable.LinkVariableTest;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.preferences.PreferencesTestSuite;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.ProjectTestSuite;
+import com.eu.evidence.rtdruid.modules.oil.cdt.ui.views.ActiveOilImplementationsTest;
+import com.eu.evidence.rtdruid.modules.oil.cdt.ui.views.OilGeneratorsTest;
 
 /**
  *
@@ -22,6 +24,8 @@ import com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.ProjectTestSuite;
 @Suite.SuiteClasses( {
 	PreferencesTestSuite.class,
 	ProjectTestSuite.class,
+	ActiveOilImplementationsTest.class,
+	OilGeneratorsTest.class,
 	
 	// pure junit tests
 	AutoCygwindSearchTest.class,
