@@ -48,9 +48,10 @@ public class WorkerOilConfWriter extends WorkerConfReader {
 	public WorkerOilConfWriter(Logger logger) {
 		super(logger);
 		
-//		if ("TRUE".equalsIgnoreCase(System.getenv("enableValidation"))) {
-			setValidator(new OilModelValidator());
-//		}
+		setValidator(new OilModelValidator());
+		if ("TRUE".equalsIgnoreCase(System.getenv("failOnValidationError"))) {
+			setFailOnValidatorError(true);
+		}
 	}
 	
 	/**

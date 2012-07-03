@@ -61,7 +61,8 @@ public class WorkerConfReader {
 
 	protected Logger logger;
 	
-	protected IModelValidator validator = null;
+	private IModelValidator validator = null;
+	private boolean failOnValidatorError = false;
 
 	public WorkerConfReader(Logger logger) {
 		this.logger = logger;
@@ -97,6 +98,20 @@ public class WorkerConfReader {
 	}
 	
 	/**
+	 * @param failOnValidatorError the failOnValidatorError to set
+	 */
+	public void setFailOnValidatorError(boolean failOnValidatorError) {
+		this.failOnValidatorError = failOnValidatorError;
+	}
+	
+	/**
+	 * @return the failOnValidatorError
+	 */
+	public boolean isFailOnValidatorError() {
+		return failOnValidatorError;
+	}
+	
+	/**
 	 * Add the specified file in the input list
 	 * 
 	 * @param fileName
@@ -127,8 +142,9 @@ public class WorkerConfReader {
 			try {
 				if (!validator.validate(new FileInputStream(inputFiles.get(0)))) {
 					logger.log(validator.getReport());
-					return  VarTreeUtil.newVarTree();
-//					throw new VtReaderException("Input file validation fail. (" + inputFiles.get(0) + ")" );
+					if (failOnValidatorError) {
+						throw new VtReaderException("Input file validation fail. (" + inputFiles.get(0) + ")" );
+					}
 				}
 			} catch (IOException e) {
 				throw new VtReaderException(e);
