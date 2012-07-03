@@ -109,5 +109,12 @@
           pkg_id="RT-Druid Oil - Oil implementations">
     </loader>
  </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://com.eu.evidence.rtdruid.oil.xtext.model"
+            class="com.eu.evidence.rtdruid.oil.xtext.model.OilPackage"
+            genModel="src_xtext/emf_model/osek_simple.genmodel"/>
+   </extension>
  
 </plugin>

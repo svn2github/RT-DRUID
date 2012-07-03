@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src_xtext/model-edit"/>
+	<classpathentry kind="src" path="src_xtext/model-model"/>
+	<classpathentry kind="src" path="src_xtext/src"/>
+	<classpathentry kind="src" path="src_xtext/src-gen"/>
+	<classpathentry kind="src" path="src_xtext/xtend-gen"/>
 	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" output="bin_ant" path="src_ant"/>
 	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" path="src/internal"/>
 	<classpathentry excluding="**/.svn/|**/CVS/*" kind="src" path="src/public"/>

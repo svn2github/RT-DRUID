@@ -1,0 +1,33 @@
+IMPLEMENTATION a {
+	OS {
+	// 112;
+		BOOLEAN a {
+			TRUE {
+				INT32 b1;
+				BOOLEAN d;
+			},
+			FALSE
+		};
+		ALARM_TYPE WITH_AUTO at;
+	};
+	ALARM {
+	};
+};
+CPU s {
+	OS aa {
+		at = FALSE;
+		
+		not_existing_id = 122 2 123123 . 4;
+		at = TRUE : "a
+asdasd";
+		b = "1";
+		at = aaaasd;
+		
+		at = AUTO;
+	};
+	COM aa1 {
+		d = "qw";
+	};
+	ALARM aaa {
+	};
+};

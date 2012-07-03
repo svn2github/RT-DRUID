@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/plugin_rtd_oil_core/src_xtext/model-model" editDirectory="/plugin_rtd_oil_core/src_xtext/model-edit"
+    editorDirectory="" modelPluginID="com.eu.evidence.rtdruid.oil.core" modelName="Osek_simple"
+    modelPluginClass="" editorPluginClass="" testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="com.eu.evidence.rtdruid.oil.core"
+    editorPluginID="altra.prova.editor" testsPluginID="altra.prova.editor">
+  <foreignModel>osek_simple.ecore</foreignModel>
+  <genPackages prefix="Oil" basePackage="com.eu.evidence.rtdruid" disposableProviderFactory="true"
+      interfacePackageSuffix="xtext.model" metaDataPackageSuffix="xtext.model" classPackageSuffix="internal.xtext.model.impl"
+      generateExampleClass="false" generateModelWizard="false" fileExtensions="xoil"
+      ecorePackage="osek_simple.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="osek_simple.ecore#//ObjectType">
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/OS"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/ALARM"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/APPMODE"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/COUNTER"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/COM"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/EVENT"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/IPDU"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/ISR"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/MESSAGE"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/NETWORKMESSAGE"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/NM"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/RESOURCE"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//ObjectType/TASK"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="osek_simple.ecore#//VType">
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//VType/STRING"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//VType/UINT32"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//VType/INT32"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//VType/UINT64"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//VType/INT64"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//VType/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//VType/DOUBLE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="osek_simple.ecore#//EType">
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//EType/BOOLEAN"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//EType/ENUM"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="osek_simple.ecore#//PType">
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//PType/Undefined"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//PType/Value"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//PType/Reference"/>
+      <genEnumLiterals ecoreEnumLiteral="osek_simple.ecore#//PType/Variant"/>
+    </genEnums>
+    <genClasses ecoreClass="osek_simple.ecore#//OilObject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osek_simple.ecore#//OilObject/Parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//OilObject/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//OilObject/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//OilObject/Description"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="osek_simple.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//Parameter/Description"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference osek_simple.ecore#//Parameter/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//Parameter/Auto"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//Parameter/Value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osek_simple.ecore#//Parameter/Parameters"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference osek_simple.ecore#//Parameter/ValueRef"/>
+    </genClasses>
+    <genClasses ecoreClass="osek_simple.ecore#//OilApplication">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//OilApplication/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osek_simple.ecore#//OilApplication/OilObjects"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//OilApplication/Description"/>
+    </genClasses>
+    <genClasses ecoreClass="osek_simple.ecore#//OilImplementation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//OilImplementation/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osek_simple.ecore#//OilImplementation/OilObjects"/>
+    </genClasses>
+    <genClasses ecoreClass="osek_simple.ecore#//OilObjectImpl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osek_simple.ecore#//OilObjectImpl/Parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//OilObjectImpl/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//OilObjectImpl/Description"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="osek_simple.ecore#//ParameterType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//ParameterType/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//ParameterType/DefaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//ParameterType/MultiValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//ParameterType/WithAuto"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//ParameterType/Description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//ParameterType/DefaultAuto"/>
+    </genClasses>
+    <genClasses ecoreClass="osek_simple.ecore#//ValueType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//ValueType/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="osek_simple.ecore#//EnumeratorType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//EnumeratorType/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osek_simple.ecore#//EnumeratorType/Parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//EnumeratorType/Description"/>
+    </genClasses>
+    <genClasses ecoreClass="osek_simple.ecore#//VariantType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//VariantType/Type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osek_simple.ecore#//VariantType/Values"/>
+    </genClasses>
+    <genClasses ecoreClass="osek_simple.ecore#//OilFile">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osek_simple.ecore#//OilFile/Implementation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference osek_simple.ecore#//OilFile/Application"/>
+    </genClasses>
+    <genClasses ecoreClass="osek_simple.ecore#//ReferenceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute osek_simple.ecore#//ReferenceType/Type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="osek_simple.ecore#//ParameterRef"/>
+  </genPackages>
+</genmodel:GenModel>

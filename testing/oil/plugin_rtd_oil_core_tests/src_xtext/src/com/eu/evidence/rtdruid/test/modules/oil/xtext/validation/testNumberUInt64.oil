@@ -1,0 +1,28 @@
+IMPLEMENTATION a {
+	OS {
+		UINT64 a1;
+		UINT64 a2;
+		UINT64 a3;
+		UINT64 a4;
+		UINT64 a5;
+		UINT64 a6;
+		UINT64 a7;
+		UINT64 a8;
+		UINT64 a9;
+		UINT64 WITH_AUTO a10;
+	};
+};
+CPU s {
+	OS aa {
+		a1 = 1;
+		a2 = -1; // ERROR
+		a3 = 1.0; // ERROR
+		a4 = -1.0; // ERROR
+		a5 = 0x1; // ERROR
+		a6 = -0x1; // ERROR
+		a7 = 0xFFFFFFFFFFFFFFFFF; // ERROR
+		a8 = 0xFFFFFFFFFFFFFFFF;
+		a9 = AUTO; // ERROR
+		a10 = AUTO;
+	};
+};

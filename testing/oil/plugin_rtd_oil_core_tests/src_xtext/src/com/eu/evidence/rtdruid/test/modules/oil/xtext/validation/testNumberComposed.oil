@@ -1,0 +1,37 @@
+IMPLEMENTATION a {
+	OS {
+		INT32 a1;
+		UINT32 a2;
+		INT64 a3;
+		UINT64 a4;
+		DOUBLE a5;
+		FLOAT a6;
+
+		INT32 WITH_AUTO b1;
+		UINT32 WITH_AUTO b2;
+		INT64 WITH_AUTO b3;
+		UINT64 WITH_AUTO b4;
+		DOUBLE WITH_AUTO  b5;
+		FLOAT WITH_AUTO b6;
+		
+		INT32 c;
+	};
+};
+CPU s {
+	OS aa {
+		a1 = 1 { c = 1;	};
+		a2 = 1 { c = 1;	};
+		a3 = 1 { c = 1;	};
+		a4 = 1 { c = 1;	};
+		a5 = 1 { c = 1;	};
+		a6 = 1 { c = 1;	};
+		
+		b1 = AUTO { c = 1;	};
+		b2 = AUTO { c = 1;	};
+		b3 = AUTO { c = 1;	};
+		b4 = AUTO { c = 1;	};
+		b5 = AUTO { c = 1;	};
+		b6 = AUTO { c = 1;	};
+		
+	};
+};

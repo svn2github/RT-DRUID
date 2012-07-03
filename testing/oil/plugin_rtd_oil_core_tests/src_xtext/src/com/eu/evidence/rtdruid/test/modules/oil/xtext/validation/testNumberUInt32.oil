@@ -1,0 +1,28 @@
+IMPLEMENTATION a {
+	OS {
+		UINT32 a1;
+		UINT32 a2;
+		UINT32 a3;
+		UINT32 a4;
+		UINT32 a5;
+		UINT32 a6;
+		UINT32 a7;
+		UINT32 a8;
+		UINT32 a9;
+		UINT32 WITH_AUTO a10;
+	};
+};
+CPU s {
+	OS aa {
+		a1 = 1;
+		a2 = -1; // ERROR
+		a3 = 1.0; // ERROR
+		a4 = -1.0; // ERROR
+		a5 = 0x1;
+		a6 = -0x1; // ERROR
+		a7 = 0xFFFFFFFFFFFF; // ERROR
+		a8 = 0xFFFFFFFF;
+		a9 = AUTO; // ERROR
+		a10 = AUTO;
+	};
+};

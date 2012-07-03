@@ -12,12 +12,13 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.oil.xtext.ui.internal.OilActivator;
 import com.eu.evidence.rtdruid.ui.common.ShowLogo;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class Rtd_oil_uiPlugin extends AbstractUIPlugin {
+public class Rtd_oil_uiPlugin extends OilActivator {//AbstractUIPlugin {
 
 	final public static String PLUGIN_ID = "com.eu.evidence.rtdruid.oil.ui";
 	

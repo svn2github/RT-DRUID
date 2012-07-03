@@ -1,0 +1,26 @@
+IMPLEMENTATION a {
+	OS {
+		FLOAT a1;
+		FLOAT a2;
+		FLOAT a3;
+		FLOAT a4;
+		FLOAT a5;
+		FLOAT a6;
+		FLOAT a7;
+		FLOAT a8;
+		FLOAT WITH_AUTO a9;
+	};
+};
+CPU s {
+	OS aa {
+		a1 = 1;
+		a2 = -1;
+		a3 = 1.0;
+		a4 = -1.0;
+		a5 = 0x1; // ERROR
+		a6 = 0xFFFFFFFFFFFFFFFFFF; // ERROR
+		a7 = 0xAFFFFFFF; // ERROR
+		a8 = AUTO; // ERROR
+		a9 = AUTO;
+	};
+};

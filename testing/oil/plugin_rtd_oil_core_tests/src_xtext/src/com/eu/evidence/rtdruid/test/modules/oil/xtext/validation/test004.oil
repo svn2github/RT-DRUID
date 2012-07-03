@@ -1,0 +1,10 @@
+IMPLEMENTATION a {
+	OS {
+		INT32 b1;
+	};
+};
+CPU s {
+	OS aa {
+		b1 = -0x1;
+	};
+};

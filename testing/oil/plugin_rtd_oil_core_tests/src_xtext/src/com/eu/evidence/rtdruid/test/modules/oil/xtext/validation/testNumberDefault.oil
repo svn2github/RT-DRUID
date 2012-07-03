@@ -1,0 +1,103 @@
+IMPLEMENTATION a {
+	OS {
+		ENUM types {
+			t_int32 {
+				INT32 a1 = 1;
+				INT32 a2 = -1;
+				INT32 a3 = 1.0; // ERROR
+				INT32 a4 = -1.0; // ERROR
+				INT32 a5 = 0x1;
+				INT32 a6 = -0x1; // ERROR
+				INT32 a7 = 0xFFFFFFFFFFFF; // ERROR
+				INT32 a8 = 0x7fffffff;
+				INT32 a9 = AUTO ; // ERROR
+				INT32 WITH_AUTO a10 = AUTO ;
+				INT32 a11 = a1;
+				INT32 a12 = alarm;
+				INT32 a13 = "abc";
+			},
+			t_uint32 {
+				UINT32 a1 = 1;
+				UINT32 a2 = -1;
+				UINT32 a3 = 1.0; // ERROR
+				UINT32 a4 = -1.0; // ERROR
+				UINT32 a5 = 0x1;
+				UINT32 a6 = -0x1; // ERROR
+				UINT32 a7 = 0xFFFFFFFFFFFF; // ERROR
+				UINT32 a8 = 0x7fffffff;
+				UINT32 a9 = AUTO ; // ERROR
+				UINT32 WITH_AUTO a10 = AUTO ;
+				UINT32 a11 = a1;
+				UINT32 a12 = alarm;
+				UINT32 a13 = "abc";
+			},
+			t_int64 {
+				INT64 a1 = 1;
+				INT64 a2 = -1;
+				INT64 a3 = 1.0; // ERROR
+				INT64 a4 = -1.0; // ERROR
+				INT64 a5 = 0x1;
+				INT64 a6 = -0x1; // ERROR
+				INT64 a7 = 0xFFFFFFFFFFFF; // ERROR
+				INT64 a8 = 0x7fffffff;
+				INT64 a9 = AUTO ; // ERROR
+				INT64 WITH_AUTO a10 = AUTO ;
+				INT64 a11 = a1;
+				INT64 a12 = alarm;
+				INT64 a13 = "abc";
+			},
+			t_uint64 {
+				UINT64 a1 = 1;
+				UINT64 a2 = -1;
+				UINT64 a3 = 1.0; // ERROR
+				UINT64 a4 = -1.0; // ERROR
+				UINT64 a5 = 0x1;
+				UINT64 a6 = -0x1; // ERROR
+				UINT64 a7 = 0xFFFFFFFFFFFF; // ERROR
+				UINT64 a8 = 0x7fffffff;
+				UINT64 a9 = AUTO ; // ERROR
+				UINT64 WITH_AUTO a10 = AUTO ;
+				UINT64 a11 = a1;
+				UINT64 a12 = alarm;
+				UINT64 a13 = "abc";
+			},
+			t_float {
+				FLOAT a1 = 1;
+				FLOAT a2 = -1;
+				FLOAT a3 = 1.0; // ERROR
+				FLOAT a4 = -1.0; // ERROR
+				FLOAT a5 = 0x1;
+				FLOAT a6 = -0x1; // ERROR
+				FLOAT a7 = 0xFFFFFFFFFFFF; // ERROR
+				FLOAT a8 = 0x7fffffff;
+				FLOAT a9 = AUTO ; // ERROR
+				FLOAT WITH_AUTO a10 = AUTO ;
+				FLOAT a11 = a1;
+				FLOAT a12 = alarm;
+				FLOAT a13 = "abc";
+			},
+			t_double {
+				DOUBLE a1 = 1;
+				DOUBLE a2 = -1;
+				DOUBLE a3 = 1.0; // ERROR
+				DOUBLE a4 = -1.0; // ERROR
+				DOUBLE a5 = 0x1;
+				DOUBLE a6 = -0x1; // ERROR
+				DOUBLE a7 = 0xFFFFFFFFFFFF; // ERROR
+				DOUBLE a8 = 0x7fffffff;
+				DOUBLE a9 = AUTO ; // ERROR
+				DOUBLE WITH_AUTO a10 = AUTO ;
+				DOUBLE a11 = a1;
+				DOUBLE a12 = alarm;
+				DOUBLE a13 = "abc";
+			}
+		};
+		ALARM_TYPE at;
+	};
+	ALARM {
+	};
+};
+CPU s {
+	ALARM alarm1 {
+	};
+};

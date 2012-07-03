@@ -8,7 +8,9 @@ Require-Bundle: com.eu.evidence.rtdruid.core,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
  com.eu.evidence.templates.core,
- org.eclipse.emf.ecore.xmi
+ org.apache.log4j;bundle-version="1.2.15";visibility:=reexport,
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional
 Bundle-Vendor: Evidence S.r.l.
 Export-Package: com.eu.evidence.rtdruid.internal.modules.oil.exceptions,
  com.eu.evidence.rtdruid.internal.modules.oil.keywords,
@@ -20,7 +22,16 @@ Export-Package: com.eu.evidence.rtdruid.internal.modules.oil.exceptions,
  com.eu.evidence.rtdruid.modules.oil.implementation,
  com.eu.evidence.rtdruid.modules.oil.interfaces,
  com.eu.evidence.rtdruid.modules.oil.keywords,
- com.eu.evidence.rtdruid.modules.oil.transform
+ com.eu.evidence.rtdruid.modules.oil.transform,
+ com.eu.evidence.rtdruid.oil.xtext,
+ com.eu.evidence.rtdruid.oil.xtext.formatting,
+ com.eu.evidence.rtdruid.oil.xtext.model,
+ com.eu.evidence.rtdruid.oil.xtext.parseTreeConstruction,
+ com.eu.evidence.rtdruid.oil.xtext.parser.antlr,
+ com.eu.evidence.rtdruid.oil.xtext.parser.antlr.internal,
+ com.eu.evidence.rtdruid.oil.xtext.services,
+ com.eu.evidence.rtdruid.oil.xtext.validation
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: rtdruid_oil_core.jar
+Import-Package: org.apache.log4j

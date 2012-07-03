@@ -1,0 +1,127 @@
+module com.eu.evidence.rtdruid.oil.xtext
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.xtext.generator.*
+import org.eclipse.xtext.ui.generator.*
+
+var grammarURI = "classpath:/com/eu/evidence/rtdruid/oil/xtext/Oil.xtext"
+var file.extensions = "oil"
+var projectName = "plugin_rtd_oil_core"
+var runtimeProject = "../${projectName}"
+var projectName_ui = "plugin_rtd_oil_ui"
+var runtimeProject_ui = "../${projectName_ui}"
+
+Workflow {
+	bean = StandaloneSetup {
+		scanClassPath  = true
+		platformUri = "${runtimeProject}/.."
+		registerGeneratedEPackage = "com.eu.evidence.rtdruid.oil.xtext.model.OilPackage"
+	
+		registerGenModelFile = "platform:/resource/plugin_rtd_oil_core/src_xtext/emf_model/osek_simple.genmodel"
+	
+	}
+
+	component = DirectoryCleaner {
+		directory = "${runtimeProject}/src_xtext/src-gen"
+	}
+
+	component = DirectoryCleaner {
+		directory = "${runtimeProject_ui}/src_xtext/src-gen"
+	}
+
+	component = Generator {
+		pathRtProject = runtimeProject
+		pathUiProject = "${runtimeProject_ui}"
+		srcPath = "/src_xtext/src"
+		srcGenPath = "/src_xtext/src-gen"
+		projectNameRt = projectName
+		projectNameUi = "${projectName_ui}"
+		language = {
+			uri = grammarURI
+			fileExtensions = file.extensions
+
+			// Java API to access grammar elements (required by several other fragments)
+			fragment = grammarAccess.GrammarAccessFragment {}
+
+			// generates Java API for the generated EPackages
+			// fragment = ecore.EcoreGeneratorFragment {}
+
+			// the serialization component
+			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+
+			// a custom ResourceFactory for use with EMF 
+			fragment = resourceFactory.ResourceFactoryFragment {
+				fileExtensions = file.extensions
+			}
+
+			// the Antlr parser
+			fragment = parser.antlr.XtextAntlrGeneratorFragment {
+				options = {
+					classSplitting = true
+				}
+			}
+
+			// the Ecore2Xtext specific terminal converter
+			fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment {}
+
+			// java-based API for validation 
+			fragment = validation.JavaValidatorFragment {
+			// composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+			// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+			}
+
+			// scoping and exporting API
+//			fragment = scoping.ImportURIScopingFragment {}
+//			fragment = exporting.SimpleNamesFragment {
+//			}
+			fragment = com.eu.evidence.rtdruid.oil.xtext.scoping.OilNamesFragment {}
+				
+
+			// scoping and exporting API 
+
+			 fragment = scoping.ImportNamespacesScopingFragment {
+			 	generateStub = false
+			 }
+			// fragment = exporting.QualifiedNamesFragment {}
+
+
+			// formatter API 
+			fragment = ecore2xtext.FormatterFragment {}
+
+			// labeling API 
+			fragment = labeling.LabelProviderFragment {}
+
+			// outline API 
+            fragment = outline.OutlineTreeProviderFragment {}
+            fragment = outline.QuickOutlineFragment {}
+
+			// java-based API for content assistance 
+			fragment = contentAssist.JavaBasedContentAssistFragment {}
+
+			// antlr parser generator tailored for content assist 
+			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
+				options = {
+					classSplitting = true
+				}
+			}
+
+			// provides a compare view
+            fragment = compare.CompareFragment {
+                fileExtensions = file.extensions
+            }
+
+//			fragment = builder.BuilderIntegrationFragment {}
+
+			// project wizard (optional) 
+
+//			 fragment = projectWizard.SimpleProjectWizardFragment {
+//			 	
+//					generatorProjectName = "${projectName}.generator" 
+//					modelFileExtension = file.extensions
+//			 }
+
+			// quickfix API 
+			fragment = quickfix.QuickfixProviderFragment {}
+		}
+	}
+}
