@@ -243,8 +243,6 @@ public class ValidationOilWriterTests {
 	
 	// ----------------------------------------------------------------------
 
-
-		
 	public static void validateTest(String oil_text) {
 		ValidationTestHelper tester = new ValidationTestHelper();
 		

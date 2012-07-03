@@ -19,6 +19,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterExce
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
+import com.eu.evidence.rtdruid.oil.xtext.services.OilModelValidator;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
@@ -46,6 +47,10 @@ public class WorkerOilConfWriter extends WorkerConfReader {
 	
 	public WorkerOilConfWriter(Logger logger) {
 		super(logger);
+		
+//		if ("TRUE".equalsIgnoreCase(System.getenv("enableValidation"))) {
+			setValidator(new OilModelValidator());
+//		}
 	}
 	
 	/**

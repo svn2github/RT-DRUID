@@ -13,7 +13,8 @@ Require-Bundle: com.eu.evidence.rtdruid.core,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.xtext,
  org.eclipse.xtext.util,
- org.antlr.runtime
+ org.antlr.runtime,
+ org.eclipse.xtext.xbase.lib
 Bundle-Vendor: Evidence S.r.l.
 Export-Package: com.eu.evidence.rtdruid.internal.modules.oil.exceptions,
  com.eu.evidence.rtdruid.internal.modules.oil.keywords,

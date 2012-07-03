@@ -7,6 +7,7 @@ package com.eu.evidence.rtdruid.desk;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -59,6 +60,8 @@ public class WorkerConfReader {
 	protected ArrayList<String> inputFiles;
 
 	protected Logger logger;
+	
+	protected IModelValidator validator = null;
 
 	public WorkerConfReader(Logger logger) {
 		this.logger = logger;
@@ -78,7 +81,21 @@ public class WorkerConfReader {
 			inputFiles.add(fileName);
 		}
 	}
-
+	
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(IModelValidator validator) {
+		this.validator = validator;
+	}
+	
+	/**
+	 * @return the validator
+	 */
+	public IModelValidator getValidator() {
+		return validator;
+	}
+	
 	/**
 	 * Add the specified file in the input list
 	 * 
@@ -106,6 +123,19 @@ public class WorkerConfReader {
 	 * @throws VtReaderException
 	 */
 	public IVarTree load() throws VtReaderException {
+		if (validator != null && inputFiles.size() == 1) {
+			try {
+				if (!validator.validate(new FileInputStream(inputFiles.get(0)))) {
+					logger.log(validator.getReport());
+					return  VarTreeUtil.newVarTree();
+//					throw new VtReaderException("Input file validation fail. (" + inputFiles.get(0) + ")" );
+				}
+			} catch (IOException e) {
+				throw new VtReaderException(e);
+			}
+		}
+		
+		
 		IVarTree vt = VarTreeUtil.newVarTree();
 
 		try {

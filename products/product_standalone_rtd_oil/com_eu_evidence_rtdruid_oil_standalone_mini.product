@@ -23,27 +23,8 @@
    </vm>
 
    <plugins>
-      <plugin id="com.eu.evidence.rtdruid.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.arm.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.avr.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.cortex.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.dspic.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.ee.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.esirisc.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.fp_edf.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.frsh.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.mico32.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.msp430.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.nios2.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.osek.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.ppc.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.renesas.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.s12.core"/>
-      <plugin id="com.eu.evidence.rtdruid.oil.tricore.core"/>
-      <plugin id="com.eu.evidence.templates.core"/>
-      <plugin id="org.antlr.runtime"/>
-      <plugin id="org.apache.log4j"/>
+      <plugin id="org.apache.commons.cli"/>
+      <plugin id="org.apache.commons.logging"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.expressions"/>
       <plugin id="org.eclipse.core.filesystem"/>
@@ -61,9 +42,7 @@
       <plugin id="org.eclipse.equinox.preferences"/>
       <plugin id="org.eclipse.equinox.registry"/>
       <plugin id="org.eclipse.osgi"/>
-      <plugin id="org.eclipse.xtext"/>
-      <plugin id="org.eclipse.xtext.logging" fragment="true"/>
-      <plugin id="org.eclipse.xtext.util"/>
+      <plugin id="org.eclipse.text"/>
    </plugins>
 
 

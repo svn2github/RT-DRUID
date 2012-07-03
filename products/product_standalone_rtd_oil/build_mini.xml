@@ -7,6 +7,7 @@
 	<property file="build_mini.properties"/>
 	<import file="build_common.xml"/>
 	
+	
 	<target name="main" depends="-init">
 			
 		<!-- copy the product file (it is expected to be there) -->
@@ -14,7 +15,7 @@
 		<copy todir="${buildDirectory}/features/product_standalone_rtd_oil" file="com_eu_evidence_rtdruid_oil_standalone_mini.product"/>
 		
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
-	
+
 		<antcall target="complete_all">
 			<param name="input.file.dir" value="${buildDirectory}/${buildLabel}"/>
 		</antcall>
@@ -23,3 +24,8 @@
 		
 	</target>
 </project>
+
+
+
+
+

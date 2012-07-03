@@ -56,12 +56,6 @@
             <separator name="actions"/>
             <separator name="additions"/>
          </menu>
-         <action
-               label="Oil Configurator"
-               class="com.eu.evidence.rtdruid.modules.oil.ui.actions.OilWriteAction"
-               tooltip="Convert an Oil file into configuration&apos;s files"
-               menubarPath="com.eu.evidence.rtdruid.vartree.dataMenuID/com.eu.evidence.rtdruid.vartree.dataMenuID.oilID/actions"
-               id="com.eu.evidence.rtdruid.vartree.data.oil.actions.ImportID"/>
                
          <action
                label="Trace Analysis"
@@ -73,30 +67,6 @@
    </extension> 
 -->
    
-   <!-- Oil Editor -->
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            name="Oil Editor"
-            extensions="oil"
-            icon="icons/oil_icon.gif"
-            contributorClass="com.eu.evidence.rtdruid.modules.oil.ui.editor.text.OilActionContributor"
-            class="com.eu.evidence.rtdruid.modules.oil.ui.editor.text.OilTextEditor"
-            id="com.eu.evidence.rtdruid.modules.oil.ui.editor.text.OilTextEditor">
-      </editor>
-   </extension>
-
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            class="com.eu.evidence.rtdruid.vartree.data.presentation.DataEditor"
-            contributorClass="com.eu.evidence.rtdruid.vartree.data.presentation.DataActionBarContributor"
-            default="false"
-            extensions="oil"
-            id="com.eu.evidence.rtdruid.oil.editor"
-            name="RT-Druid editor">
-      </editor>
-   </extension>
 
 <!--
 	The view
@@ -289,40 +259,6 @@
 
 
 
-	<!-- Quick Outline -->
-	<extension
-		point="org.eclipse.ui.handlers">
-		<handler 
-			class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
-			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
-			<activeWhen>
-				<reference
-					definitionId="com.eu.evidence.rtdruid.oil.xtext.Oil.Editor.opened">
-				</reference>
-			</activeWhen>
-		</handler>
-	</extension>
-	<extension
-		point="org.eclipse.ui.commands">
-		<command
-			description="Open the quick outline."
-			id="org.eclipse.xtext.ui.editor.outline.QuickOutline"
-			name="Quick Outline">
-		</command>
-	</extension>
-	<extension point="org.eclipse.ui.menus">
-		<menuContribution
-			locationURI="popup:#TextEditorContext?after=group.open">
-			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
-				style="push"
-				tooltip="Open Quick Outline">
-				<visibleWhen checkEnabled="false">
-					<reference definitionId="com.eu.evidence.rtdruid.oil.xtext.Oil.Editor.opened"/>
-				</visibleWhen>
-			</command>
-		</menuContribution>
-	</extension>
-
   <extension point="org.eclipse.compare.contentViewers">
     <viewer id="com.eu.evidence.rtdruid.oil.xtext.Oil.compare.contentViewers"
             class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
@@ -347,6 +283,22 @@
       <markerResolutionGenerator
             class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
+   </extension>
+
+
+   <!-- Data Oil Editor -->
+
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.eu.evidence.rtdruid.vartree.data.presentation.DataEditor"
+            contributorClass="com.eu.evidence.rtdruid.vartree.data.presentation.DataActionBarContributor"
+            default="false"
+            extensions="oil"
+            id="com.eu.evidence.rtdruid.oil.editor"
+            name="RT-Druid editor">
+      </editor>
    </extension>
 
 </plugin>

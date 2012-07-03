@@ -1,6 +1,12 @@
 				
 <project>
 
+	<property name="rtdruid.iu" value="com.eu.evidence.rtdruid.core,com.eu.evidence.rtdruid.jscan.core,com.eu.evidence.rtdruid.oil.arm.core,com.eu.evidence.rtdruid.oil.avr.core,com.eu.evidence.rtdruid.oil.core,com.eu.evidence.rtdruid.oil.cortex.core,com.eu.evidence.rtdruid.oil.dspic.core,com.eu.evidence.rtdruid.oil.ee.core,com.eu.evidence.rtdruid.oil.esirisc.core,com.eu.evidence.rtdruid.oil.fp_edf.core,com.eu.evidence.rtdruid.oil.frsh.core,com.eu.evidence.rtdruid.oil.mico32.core,com.eu.evidence.rtdruid.oil.msp430.core,com.eu.evidence.rtdruid.oil.nios2.core,com.eu.evidence.rtdruid.oil.osek.core,com.eu.evidence.rtdruid.oil.ppc.core,com.eu.evidence.rtdruid.oil.renesas.core,com.eu.evidence.rtdruid.oil.s12.core,com.eu.evidence.rtdruid.oil.tricore.core,com.eu.evidence.rtdruid.xtc.core,com.eu.evidence.templates.core"/>
+
+	<property name="SITE_emft_2" value="emft-mwe-Update-2.3.0.zip"/>
+	<property name="SITE_xtext" value="tmf-xtext-Update-2.3.0.zip"/>
+	
+	
 	<target name="-init">
 		
 		<echo>
@@ -72,6 +78,35 @@
 	</target>
 
 	
+	<target name="-install.rtdruid.iu" if="rtdruid.iu">
+		<p2.director 
+				roaming="true" 
+				metadataRepository="jar:file:${ECLIPSE_CACHE}/${SITE_emft_2}!/" 
+				artifactRepository="jar:file:${ECLIPSE_CACHE}/${SITE_emft_2}!/" 
+				destination="${TEMP_DIR}/zip/${archivePrefix}" 
+				>
+				<iu id="org.apache.commons.lang,org.eclipse.emf.mwe.core,org.eclipse.emf.mwe2.runtime"/>
+			</p2.director>
+		
+		<p2.director 
+				roaming="true" 
+				metadataRepository="jar:file:${ECLIPSE_CACHE}/${SITE_xtext}!/" 
+				artifactRepository="jar:file:${ECLIPSE_CACHE}/${SITE_xtext}!/" 
+				destination="${TEMP_DIR}/zip/${archivePrefix}" 
+				>
+				<iu id="org.eclipse.xtext,org.eclipse.xtext.util,org.eclipse.xtext.xbase.lib"/>
+			</p2.director>
+
+			<p2.director 
+				roaming="true" 
+				metadataRepository="file://${prebuild.rtdruid.site}" 
+				artifactRepository="file://${prebuild.rtdruid.site}" 
+				destination="${TEMP_DIR}/zip/${archivePrefix}" 
+				>
+				<iu id="${rtdruid.iu}"/>
+			</p2.director>
+		</target>
+	
 	<target name="-install.iu" if="required.iu">
 		<p2.director 
 			roaming="true" 
@@ -108,6 +143,7 @@
 		<unzip dest="${TEMP_DIR}/zip" src="${input.file}"/>
 		
 		<antcall target="saveSpace_compl"/>
+		<antcall target="-install.rtdruid.iu"/>
 		<antcall target="-install.iu"/>
 <!--		<antcall target="-remove_launchers"/>-->
 		

@@ -34,7 +34,8 @@ import com.eu.evidence.rtdruid.oil.xtext.services.IOilTypesHelper;
 
 public class OilJavaValidator extends AbstractOilJavaValidator {
 
-	private final Logger logger = Logger.getLogger(getClass());
+	private final static Logger logger = Logger.getLogger(OilJavaValidator.class);
+	private final static boolean enableDebug = logger.isDebugEnabled();
 	
 	private final IOilTypesHelper helper = new OilTypesFastHelper();
 	
@@ -48,7 +49,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 	@Check
 	public void checkModel(OilFile parameter) {
 		
-		logger.debug("Check Model " + parameter);
+		if (enableDebug) logger.debug("Check Model " + parameter);
 		if (parameter.getApplication() == null) {
 			warning("Expected a CPU section",parameter, OilPackage.Literals.OIL_FILE__APPLICATION, IValidationCodes.MissingCpuSection);
 		}
@@ -62,7 +63,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 
 	@Check
 	public void checkEnumeratorType(EnumeratorType parameter) {
-		logger.debug("Check Enumerator " + parameter);
+		if (enableDebug) logger.debug("Check Enumerator " + parameter);
 		
 		EObject parent = parameter.eContainer();
 		if (parent != null && parent instanceof VariantType && ((VariantType) parent).getType() == EType.BOOLEAN) {
@@ -75,37 +76,39 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 	
 	@Check
 	public void checkValueType(ValueType parameter) {
-		logger.debug("Check ValueType " + parameter);
+		if (enableDebug) logger.debug("Check ValueType " + parameter);
 		
+		String prefix = (parameter.getName() != null ? parameter.getName() + ": " : "") ;
 		VType type = parameter.getType();
 		if (type == null) {
-			error("Invalid type", OilPackage.Literals.VALUE_TYPE__TYPE);
+			error(prefix + "Invalid type", OilPackage.Literals.VALUE_TYPE__TYPE);
 		} else {
 			
 			if (parameter.isDefaultAuto()) {
 				// = AUTO
 				if (!parameter.isWithAuto()) {
-					error("Default value AUTO requires the WITH_AUTO keyword", parameter,  OilPackage.Literals.PARAMETER_TYPE__DEFAULT_AUTO, IValidationCodes.MissingWithAuto_valueType);
+					error(prefix + "Default value AUTO requires the WITH_AUTO keyword", parameter,  OilPackage.Literals.PARAMETER_TYPE__DEFAULT_AUTO, IValidationCodes.MissingWithAuto_valueType);
 				}
 			} else {
-				checkValueConformance(parameter.getDefaultValue(), OilPackage.Literals.PARAMETER_TYPE__DEFAULT_VALUE, type);
+				checkValueConformance(prefix, parameter.getDefaultValue(), OilPackage.Literals.PARAMETER_TYPE__DEFAULT_VALUE, type);
 			}
 		}
 	}
 	
 	@Check
 	public void checkParameter(Parameter parameter) {
-		logger.debug("Check Parameter " + parameter);
+		if (enableDebug) logger.debug("Check Parameter " + parameter);
 		
 		ParameterType type = parameter.getType();
 		if (type == null) {
 			error("Invalid parameter name", OilPackage.Literals.PARAMETER__TYPE);
 		} else {
+			String prefix = (type.getName() != null ? type.getName() + ": " : "") ;
 			
 			if (parameter.isAuto()) {
 				// = AUTO
 				if (!type.isWithAuto()) {
-					error("This parameter does not support AUTO value", OilPackage.Literals.PARAMETER__AUTO);
+					error(prefix +"This parameter does not support AUTO value", OilPackage.Literals.PARAMETER__AUTO);
 				}
 				
 
@@ -114,7 +117,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 //				}
 				
 				if (parameter.getParameters().size()>0) {
-					error("This parameter is set to AUTO and cannot contain sub-elements", OilPackage.Literals.PARAMETER__PARAMETERS);
+					error(prefix +"This parameter is set to AUTO and cannot contain sub-elements", OilPackage.Literals.PARAMETER__PARAMETERS);
 				}
 				
 			} else {
@@ -140,6 +143,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 		
 	private void checkParameterValue(Parameter parameter, ValueType type) {
 		VType vType = type.getType();
+		String prefix = (type.getName() != null ? type.getName() + ": " : "") ;
 		
 		if (parameter.getValueRef() != null) {
 			final String what;
@@ -148,11 +152,11 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 			} else {
 				what = IValidationCodes.FixReference_parametervalue;
 			}
-			error("Expected a " + vType.getName() + ", not a reference", parameter, OilPackage.Literals.PARAMETER__VALUE_REF, what);
+			error(prefix +"Expected a " + vType.getName() + ", not a reference", parameter, OilPackage.Literals.PARAMETER__VALUE_REF, what);
 		}
 		
 		if (parameter.getParameters().size()>0) {
-			error("A value cannot contain sub-elements", OilPackage.Literals.PARAMETER__PARAMETERS);
+			error(prefix +"A value cannot contain sub-elements", OilPackage.Literals.PARAMETER__PARAMETERS);
 		}
 
 		// = ....
@@ -161,11 +165,11 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 		if (value == null)  {
 			// = null
 			if (parameter.getValueRef() == null) {
-				error("Missing the value", parameterValue);
+				error(prefix +"Missing the value", parameterValue);
 			}
 		} else {
 
-			checkValueConformance(value, parameterValue, vType);
+			checkValueConformance(prefix, value, parameterValue, vType);
 		}
 	}
 
@@ -174,35 +178,35 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 	 * @param attribute
 	 * @param vType
 	 */
-	protected void checkValueConformance(String value, final EAttribute attribute, VType vType) {
+	protected void checkValueConformance(String prefix, String value, final EAttribute attribute, VType vType) {
 		if (value != null) {
 			switch (vType) {
 			case DOUBLE:
 				try {
 					Double.parseDouble(value);
 				} catch (NumberFormatException e) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
+					error(prefix+ STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
 			case FLOAT:
 				try {
 					Float.parseFloat(value);
 				} catch (NumberFormatException e) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
+					error(prefix+ STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
 			case INT32:
 				try {
 					Integer.decode(value);
 				} catch (NumberFormatException e) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
+					error(prefix+ STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
 			case INT64:
 				try {
 					Long.decode(value);
 				} catch (NumberFormatException e) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
+					error(prefix+ STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
 			case UINT32: {
@@ -214,16 +218,16 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 							decimal = new BigInteger(value);
 						}
 					} catch (NumberFormatException e) {
-						error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
+						error(prefix+ STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 					}
 					if (decimal != null) {
 						if (MAX_INT.compareTo(decimal)==0) {
 							warning("Assign -1 to an " + vType.getName()+" means assign the maximum value", attribute);
 						} else if (decimal.signum() == -1) {
-							error(STR_EXPECTED_A_POSITIVE_VALUE +": " + value, attribute);
+							error(prefix+ STR_EXPECTED_A_POSITIVE_VALUE +": " + value, attribute);
 						} else {
 							if (decimal.bitLength() > 32) {
-								error(STR_PROVIDED_VALUE_DOES_NOT_FIT + vType.getName()+" (" + value + ")", attribute);
+								error(prefix+ STR_PROVIDED_VALUE_DOES_NOT_FIT + vType.getName()+" (" + value + ")", attribute);
 							}
 						}
 					}
@@ -238,16 +242,16 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 							decimal = new BigInteger(value);
 						}
 					} catch (NumberFormatException e) {
-						error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
+						error(prefix+ STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 					}
 					if (decimal != null) {
 						if (MAX_INT.compareTo(decimal)==0) {
-							warning("Assign -1 to an " + vType.getName()+" means assign the maximum value", attribute);
+							warning(prefix+ "Assign -1 to an " + vType.getName()+" means assign the maximum value", attribute);
 						} else if (decimal.signum() == -1) {
-							error(STR_EXPECTED_A_POSITIVE_VALUE +": " + value, attribute);
+							error(prefix+ STR_EXPECTED_A_POSITIVE_VALUE +": " + value, attribute);
 						} else {
 							if (decimal.bitLength() > 64) {
-								error(STR_PROVIDED_VALUE_DOES_NOT_FIT + vType.getName()+" (" + value + ")", attribute);
+								error(prefix+ STR_PROVIDED_VALUE_DOES_NOT_FIT + vType.getName()+" (" + value + ")", attribute);
 							}
 						}
 					}
@@ -255,7 +259,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 				break;
 			case STRING:
 				if (!(value.startsWith("\"") && value.endsWith("\""))) {
-					error(STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
+					error(prefix+ STR_EXPECTED_A_VALID + vType.getName()+": " + value, attribute);
 				}
 				break;
 	//					default:
@@ -266,12 +270,13 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 	
 	private void checkParameterReference(Parameter parameter, ReferenceType type) {
 
+		final String prefix = parameter.getType().getName() + ": ";
 		if (parameter.getValue() != null) {
 			String value = parameter.getValue();
 			if (value.startsWith("\"") && value.endsWith("\"")) {
-				error(STR_EXPECTED_A_VALID + "reference, not a String", parameter, OilPackage.Literals.PARAMETER__VALUE, IValidationCodes.RemoveQuotesToReferce_parametervalue);
+				error(prefix + STR_EXPECTED_A_VALID + "reference, not a String (" + value+")", parameter, OilPackage.Literals.PARAMETER__VALUE, IValidationCodes.RemoveQuotesToReferce_parametervalue);
 			} else {
-				error(STR_EXPECTED_A_VALID + "reference, not a String or a number", OilPackage.Literals.PARAMETER__VALUE);
+				error(prefix + STR_EXPECTED_A_VALID + "reference, not a String or a number (" + value+")", OilPackage.Literals.PARAMETER__VALUE);
 			}
 		}
 
@@ -280,20 +285,20 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 //		}
 		
 		if (parameter.getParameters().size()>0) {
-			error("A reference cannot contain sub-elements", OilPackage.Literals.PARAMETER__PARAMETERS);
+			error(prefix + "A reference cannot contain sub-elements", OilPackage.Literals.PARAMETER__PARAMETERS);
 		}
 		
 		ParameterRef gRefValue = parameter.getValueRef();
 		ObjectType refType = type.getType();
 		if (gRefValue == null) {
-			error(STR_EXPECTED_A_VALID + "reference", OilPackage.Literals.PARAMETER__VALUE_REF);
+			error(prefix + STR_EXPECTED_A_VALID + "reference", OilPackage.Literals.PARAMETER__VALUE_REF);
 		} else {
 			if (gRefValue instanceof OilObject) {
 				if ( ((OilObject) gRefValue).getType() != refType) {
-					error(STR_EXPECTED_A_VALID + "reference to a " + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
+					error(prefix + STR_EXPECTED_A_VALID + "reference to a " + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
 				}
 			} else {
-				error(STR_EXPECTED_A_VALID + "reference to a " + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
+				error(prefix + STR_EXPECTED_A_VALID + "reference to a " + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
 			}
 		}
 		
@@ -301,22 +306,23 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 	private void checkParameterVariant(Parameter parameter, VariantType type) {
 		final EType refType = type.getType();
 
+		final String prefix = parameter.getType().getName() + ": ";
 		if (parameter.getValue() != null) {
-			error(STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE);
+			error(prefix + STR_EXPECTED_A_VALID + refType.getName() + "(" + parameter.getValue() + ")", OilPackage.Literals.PARAMETER__VALUE);
 		}
 			
 		ParameterRef gRefValue = parameter.getValueRef();
 		if (gRefValue == null) {
-			error(STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
+			error(prefix + STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
 		} else {
 			if (gRefValue instanceof EnumeratorType) {
 				if (((EnumeratorType) gRefValue).eContainer() != type) {
 					if (!(helper.getEnumeratorType(helper.computePath(parameter, false), helper.getOilImplementation(parameter)).contains(gRefValue))) {
-						error(STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
+						error(prefix + STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
 					}
 				}
 			} else {
-				error(STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
+				error(prefix + STR_EXPECTED_A_VALID + refType.getName(), OilPackage.Literals.PARAMETER__VALUE_REF);
 			}
 		}
 			
@@ -433,7 +439,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 					} else {
 						if (enumTypes.size()>1) {
 							for (Parameter p: valueList) {
-								error("Only one distinct value expected", p, OilPackage.Literals.PARAMETER__VALUE_REF, ValidationMessageAcceptor.INSIGNIFICANT_INDEX);
+								error(p.getType().getName() + ": " + "Only one distinct value expected", p, OilPackage.Literals.PARAMETER__VALUE_REF, ValidationMessageAcceptor.INSIGNIFICANT_INDEX);
 							}
 						} else {
 //								if (entry.getValue().size()>1) {
@@ -446,7 +452,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 				} else {
 					if (!multiValue) { 
 						for (Parameter p: valueList) {
-							error("Only one value expected", p, OilPackage.Literals.PARAMETER__TYPE, ValidationMessageAcceptor.INSIGNIFICANT_INDEX);
+							error(p.getType().getName() + ": " + "Only one value expected", p, OilPackage.Literals.PARAMETER__TYPE, ValidationMessageAcceptor.INSIGNIFICANT_INDEX);
 						}
 					}
 				}
