@@ -39,3 +39,4 @@ Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: rtdruid_oil_core.jar
 Import-Package: org.apache.log4j
+Eclipse-RegisterBuddy: org.apache.log4j

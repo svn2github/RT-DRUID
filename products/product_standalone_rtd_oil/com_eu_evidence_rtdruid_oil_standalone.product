@@ -23,8 +23,6 @@
    </vm>
 
    <plugins>
-      <plugin id="org.apache.commons.cli"/>
-      <plugin id="org.apache.commons.logging"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.expressions"/>
       <plugin id="org.eclipse.core.filesystem"/>
@@ -42,7 +40,6 @@
       <plugin id="org.eclipse.equinox.preferences"/>
       <plugin id="org.eclipse.equinox.registry"/>
       <plugin id="org.eclipse.osgi"/>
-      <plugin id="org.eclipse.text"/>
    </plugins>
 
 

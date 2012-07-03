@@ -79,14 +79,14 @@
 
 	
 	<target name="-install.rtdruid.iu" if="rtdruid.iu">
-		<p2.director 
+<!--		<p2.director 
 				roaming="true" 
 				metadataRepository="jar:file:${ECLIPSE_CACHE}/${SITE_emft_2}!/" 
 				artifactRepository="jar:file:${ECLIPSE_CACHE}/${SITE_emft_2}!/" 
 				destination="${TEMP_DIR}/zip/${archivePrefix}" 
 				>
 				<iu id="org.apache.commons.lang,org.eclipse.emf.mwe.core,org.eclipse.emf.mwe2.runtime"/>
-			</p2.director>
+			</p2.director>-->
 		
 		<p2.director 
 				roaming="true" 
@@ -145,7 +145,7 @@
 		<antcall target="saveSpace_compl"/>
 		<antcall target="-install.rtdruid.iu"/>
 		<antcall target="-install.iu"/>
-<!--		<antcall target="-remove_launchers"/>-->
+		<antcall target="-remove_launchers"/>
 		
 		<mkdir dir="${TEMP_DIR}/scripts"/>
 		<copy todir="${TEMP_DIR}/scripts">

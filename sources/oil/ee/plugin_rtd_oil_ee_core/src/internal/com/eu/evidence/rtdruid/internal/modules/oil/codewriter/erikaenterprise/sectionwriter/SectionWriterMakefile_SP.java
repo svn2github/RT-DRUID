@@ -219,7 +219,10 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 						"else # ERIKA_FILES\n"+
 						"\n"+
 						"ifndef EEBASE\n"+
-						"        EEBASE := "+wrapper.wrapPath(eeBasePath)+"\n"+
+						(eeBasePath == null? 
+								  "        ${error RT-Druid was not able to find a default value for erika file. Please set ERIKA_FILES before run the makefile}"
+								: "        EEBASE := "+wrapper.wrapPath(eeBasePath)
+						) +"\n"+
 						"else\n"+
 						"        $(warning The usage of EEBASE is deprecated. Please use ERIKA_FILES)\n"+
 						"endif\n"+
