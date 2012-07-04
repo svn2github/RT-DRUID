@@ -194,7 +194,7 @@ public class CompilerData {
 				(new CompilerDataBuilder(PIC32)).setPreferenceTreePath(new String[] { "RT-Druid", "Oil", "Pic32" })
 						.addCompiler(new CompilerPath("Gcc path", "c:\\Programmi\\Microchip\\MPLAB C32", "new_pic32_gcc_path",
 								ExamplesLoader.safeLoad("pic32_gcc")))
-						.addCompiler(new CompilerPath("Asm path", "c:\\Programmi\\Microchip\\MPLAB ASM32 Suite", "new_pic32_asm_path")).makeCompilerData());
+						.addCompiler(new CompilerPath("Asm path", "", "new_pic32_asm_path")).makeCompilerData());
 		AllCompilerData.put(RENESAS,
 				(new CompilerDataBuilder(RENESAS)).setPreferenceTreePath(new String[] { "RT-Druid", "Oil", "Renesas" })
 						.addCompiler(new CompilerPath("CCRX path", "C:\\Programmi\\Renesas\\Hew\\Tools\\Renesas\\RX\\1_2_0", "new_renesas_path",

@@ -9,6 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.DefaultTypesTests.*
+import org.junit.Ignore
 
 @RunWith(typeof(XtextRunner2))
 @InjectWith(typeof(OilInjectorProvider))
@@ -25,6 +26,7 @@ class DefaultTypesTests extends XtextTest {
 	}
 
 	@Test
+	@Ignore
 	def void complexTestTiming() {
 		suppressSerialization()
 		var int i = 0;

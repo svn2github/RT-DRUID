@@ -7,6 +7,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.IntegerExtensions;
 import org.eclipselabs.xtext.utils.unittesting.XtextRunner2;
 import org.eclipselabs.xtext.utils.unittesting.XtextTest;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -32,6 +33,7 @@ public class DefaultTypesTests extends XtextTest {
   }
   
   @Test
+  @Ignore
   public void complexTestTiming() {
       this.suppressSerialization();
       int i = 0;
