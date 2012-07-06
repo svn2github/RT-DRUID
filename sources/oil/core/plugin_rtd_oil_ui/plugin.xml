@@ -104,6 +104,22 @@
    </extension>
 
 
+   <!-- Data Oil Editor -->
+
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.eu.evidence.rtdruid.vartree.data.presentation.DataEditor"
+            contributorClass="com.eu.evidence.rtdruid.vartree.data.presentation.DataActionBarContributor"
+            default="false"
+            extensions="oil"
+            id="com.eu.evidence.rtdruid.oil.editor"
+            name="RT-Druid editor">
+      </editor>
+   </extension>
+
+
 	<!--
 	*
 	* XTEXT
@@ -286,19 +302,5 @@
    </extension>
 
 
-   <!-- Data Oil Editor -->
-
-
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            class="com.eu.evidence.rtdruid.vartree.data.presentation.DataEditor"
-            contributorClass="com.eu.evidence.rtdruid.vartree.data.presentation.DataActionBarContributor"
-            default="false"
-            extensions="oil"
-            id="com.eu.evidence.rtdruid.oil.editor"
-            name="RT-Druid editor">
-      </editor>
-   </extension>
 
 </plugin>

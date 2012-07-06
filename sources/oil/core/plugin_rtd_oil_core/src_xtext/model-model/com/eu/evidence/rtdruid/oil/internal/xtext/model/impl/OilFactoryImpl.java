@@ -13,8 +13,10 @@ import com.eu.evidence.rtdruid.oil.xtext.model.OilObject;
 import com.eu.evidence.rtdruid.oil.xtext.model.OilPackage;
 import com.eu.evidence.rtdruid.oil.xtext.model.PType;
 import com.eu.evidence.rtdruid.oil.xtext.model.Parameter;
+import com.eu.evidence.rtdruid.oil.xtext.model.Range;
 import com.eu.evidence.rtdruid.oil.xtext.model.ReferenceType;
 import com.eu.evidence.rtdruid.oil.xtext.model.VType;
+import com.eu.evidence.rtdruid.oil.xtext.model.ValueList;
 import com.eu.evidence.rtdruid.oil.xtext.model.ValueType;
 import com.eu.evidence.rtdruid.oil.xtext.model.VariantType;
 
@@ -81,6 +83,8 @@ public class OilFactoryImpl extends EFactoryImpl implements OilFactory {
 			case OilPackage.VARIANT_TYPE: return createVariantType();
 			case OilPackage.OIL_FILE: return createOilFile();
 			case OilPackage.REFERENCE_TYPE: return createReferenceType();
+			case OilPackage.RANGE: return createRange();
+			case OilPackage.VALUE_LIST: return createValueList();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -226,6 +230,26 @@ public class OilFactoryImpl extends EFactoryImpl implements OilFactory {
 	public ReferenceType createReferenceType() {
 		ReferenceTypeImpl referenceType = new ReferenceTypeImpl();
 		return referenceType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Range createRange() {
+		RangeImpl range = new RangeImpl();
+		return range;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ValueList createValueList() {
+		ValueListImpl valueList = new ValueListImpl();
+		return valueList;
 	}
 
 	/**

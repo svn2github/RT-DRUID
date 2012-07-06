@@ -302,6 +302,52 @@ public class OilItemProviderAdapterFactory extends OilAdapterFactory implements 
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.eu.evidence.rtdruid.oil.xtext.model.Range} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RangeItemProvider rangeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.eu.evidence.rtdruid.oil.xtext.model.Range}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRangeAdapter() {
+		if (rangeItemProvider == null) {
+			rangeItemProvider = new RangeItemProvider(this);
+		}
+
+		return rangeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link com.eu.evidence.rtdruid.oil.xtext.model.ValueList} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ValueListItemProvider valueListItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.eu.evidence.rtdruid.oil.xtext.model.ValueList}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createValueListAdapter() {
+		if (valueListItemProvider == null) {
+			valueListItemProvider = new ValueListItemProvider(this);
+		}
+
+		return valueListItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -410,6 +456,8 @@ public class OilItemProviderAdapterFactory extends OilAdapterFactory implements 
 		if (variantTypeItemProvider != null) variantTypeItemProvider.dispose();
 		if (oilFileItemProvider != null) oilFileItemProvider.dispose();
 		if (referenceTypeItemProvider != null) referenceTypeItemProvider.dispose();
+		if (rangeItemProvider != null) rangeItemProvider.dispose();
+		if (valueListItemProvider != null) valueListItemProvider.dispose();
 	}
 
 }

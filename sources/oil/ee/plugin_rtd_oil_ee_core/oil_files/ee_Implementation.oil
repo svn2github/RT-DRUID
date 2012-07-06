@@ -104,7 +104,7 @@ IMPLEMENTATION ee {
     };
 
 	ISR {
-		UINT32 [1, 2] CATEGORY;
+		UINT32 [1, 2, 3] CATEGORY : "Isr category. <br/> 1 = internal interrupt<br/> 2 = standard interrupt<br/> 3 = trap";
 		RESOURCE_TYPE RESOURCE[];
 		MESSAGE_TYPE MESSAGE[];
 		STRING ENTRY: "the interrupt source id or source number (arch. dependent)"; 

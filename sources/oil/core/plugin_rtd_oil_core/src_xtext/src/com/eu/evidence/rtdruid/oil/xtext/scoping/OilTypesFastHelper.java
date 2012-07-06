@@ -3,6 +3,7 @@
  */
 package com.eu.evidence.rtdruid.oil.xtext.scoping;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,6 +29,7 @@ import com.eu.evidence.rtdruid.oil.xtext.model.OilObjectImpl;
 import com.eu.evidence.rtdruid.oil.xtext.model.Parameter;
 import com.eu.evidence.rtdruid.oil.xtext.model.ParameterRef;
 import com.eu.evidence.rtdruid.oil.xtext.model.ParameterType;
+import com.eu.evidence.rtdruid.oil.xtext.model.VType;
 import com.eu.evidence.rtdruid.oil.xtext.model.VariantType;
 import com.eu.evidence.rtdruid.oil.xtext.services.IOilTypesHelper;
 
@@ -468,6 +470,64 @@ public class OilTypesFastHelper implements IOilTypesHelper {
 		}
 		path.addFirst(type.getName());
 		return type.eContainer();
+	}
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public Class<? extends Comparable> getType(VType vType) {
+		Class<? extends Comparable> answer = null;
+		switch (vType) {
+		case FLOAT:  answer = Float.class;		break;
+		case INT32:  answer = Integer.class;		break;
+		case INT64:  answer = Long.class;		break;
+		case UINT32:
+		case UINT64: answer = BigInteger.class;		break;
+		case STRING: answer = String.class;		break;
+		}
+		return answer;
+	}
+
+	
+	/**
+	 * This method transforms a String in the corresponding number/string, depending on VType
+	 * 
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T extends Comparable<T>> T computeValue(String value, VType type, Class<T> vType) {
+		T answer = null;
+		if (value != null) {
+			try {
+
+				if (vType == Float.class) {
+					answer = (T) new Float(Float.parseFloat(value));
+				} else if (vType == Integer.class) {
+					answer = (T) Integer.decode(value);
+				} else if (vType == Long.class) {
+					answer = (T) Long.decode(value);
+				} else if (vType == BigInteger.class) {
+					if (MAX_INT_TXT.equals(value)) {
+						if (type == VType.UINT32) {
+							answer = (T) MAX_UINT32;
+						} else if (type == VType.UINT64) {
+							answer = (T) MAX_UINT64;
+						} else {
+							answer = (T) MAX_INT;
+						}
+						
+					} else if (value.startsWith("0x")) {
+						answer = (T) new BigInteger(value.substring(2), 16);
+					} else {
+						answer = (T) new BigInteger(value);
+					}
+				} else if (vType == String.class) {
+					answer = (T) value;
+				}
+			} catch (NumberFormatException e) {
+				// if this method is called on a validated model, it should not throw exceptions
+			}
+		}
+		return answer;
 	}
 
 }

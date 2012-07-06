@@ -4,12 +4,15 @@ package com.eu.evidence.rtdruid.oil.internal.xtext.model.impl;
 
 import com.eu.evidence.rtdruid.oil.xtext.model.OilPackage;
 import com.eu.evidence.rtdruid.oil.xtext.model.VType;
+import com.eu.evidence.rtdruid.oil.xtext.model.ValidValues;
 import com.eu.evidence.rtdruid.oil.xtext.model.ValueType;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -20,6 +23,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.ValueTypeImpl#getType <em>Type</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.ValueTypeImpl#getValidValues <em>Valid Values</em>}</li>
  * </ul>
  * </p>
  *
@@ -45,6 +49,16 @@ public class ValueTypeImpl extends ParameterTypeImpl implements ValueType {
 	 * @ordered
 	 */
 	protected VType type = TYPE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getValidValues() <em>Valid Values</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValidValues()
+	 * @generated
+	 * @ordered
+	 */
+	protected ValidValues validValues;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -91,11 +105,70 @@ public class ValueTypeImpl extends ParameterTypeImpl implements ValueType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ValidValues getValidValues() {
+		return validValues;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetValidValues(ValidValues newValidValues, NotificationChain msgs) {
+		ValidValues oldValidValues = validValues;
+		validValues = newValidValues;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OilPackage.VALUE_TYPE__VALID_VALUES, oldValidValues, newValidValues);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setValidValues(ValidValues newValidValues) {
+		if (newValidValues != validValues) {
+			NotificationChain msgs = null;
+			if (validValues != null)
+				msgs = ((InternalEObject)validValues).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OilPackage.VALUE_TYPE__VALID_VALUES, null, msgs);
+			if (newValidValues != null)
+				msgs = ((InternalEObject)newValidValues).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - OilPackage.VALUE_TYPE__VALID_VALUES, null, msgs);
+			msgs = basicSetValidValues(newValidValues, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OilPackage.VALUE_TYPE__VALID_VALUES, newValidValues, newValidValues));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case OilPackage.VALUE_TYPE__VALID_VALUES:
+				return basicSetValidValues(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case OilPackage.VALUE_TYPE__TYPE:
 				return getType();
+			case OilPackage.VALUE_TYPE__VALID_VALUES:
+				return getValidValues();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -110,6 +183,9 @@ public class ValueTypeImpl extends ParameterTypeImpl implements ValueType {
 		switch (featureID) {
 			case OilPackage.VALUE_TYPE__TYPE:
 				setType((VType)newValue);
+				return;
+			case OilPackage.VALUE_TYPE__VALID_VALUES:
+				setValidValues((ValidValues)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -126,6 +202,9 @@ public class ValueTypeImpl extends ParameterTypeImpl implements ValueType {
 			case OilPackage.VALUE_TYPE__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
+			case OilPackage.VALUE_TYPE__VALID_VALUES:
+				setValidValues((ValidValues)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -140,6 +219,8 @@ public class ValueTypeImpl extends ParameterTypeImpl implements ValueType {
 		switch (featureID) {
 			case OilPackage.VALUE_TYPE__TYPE:
 				return type != TYPE_EDEFAULT;
+			case OilPackage.VALUE_TYPE__VALID_VALUES:
+				return validValues != null;
 		}
 		return super.eIsSet(featureID);
 	}

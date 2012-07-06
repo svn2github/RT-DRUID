@@ -479,13 +479,22 @@ public interface OilPackage extends EPackage {
 	int VALUE_TYPE__TYPE = PARAMETER_TYPE_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Valid Values</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_TYPE__VALID_VALUES = PARAMETER_TYPE_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Value Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_TYPE_FEATURE_COUNT = PARAMETER_TYPE_FEATURE_COUNT + 1;
+	int VALUE_TYPE_FEATURE_COUNT = PARAMETER_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.EnumeratorTypeImpl <em>Enumerator Type</em>}' class.
@@ -753,6 +762,90 @@ public interface OilPackage extends EPackage {
 	int REFERENCE_TYPE_FEATURE_COUNT = PARAMETER_TYPE_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link com.eu.evidence.rtdruid.oil.xtext.model.ValidValues <em>Valid Values</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.ValidValues
+	 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getValidValues()
+	 * @generated
+	 */
+	int VALID_VALUES = 12;
+
+	/**
+	 * The number of structural features of the '<em>Valid Values</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALID_VALUES_FEATURE_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.RangeImpl <em>Range</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.RangeImpl
+	 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getRange()
+	 * @generated
+	 */
+	int RANGE = 13;
+
+	/**
+	 * The feature id for the '<em><b>Min</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RANGE__MIN = VALID_VALUES_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Max</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RANGE__MAX = VALID_VALUES_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Range</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RANGE_FEATURE_COUNT = VALID_VALUES_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.ValueListImpl <em>Value List</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.ValueListImpl
+	 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getValueList()
+	 * @generated
+	 */
+	int VALUE_LIST = 14;
+
+	/**
+	 * The feature id for the '<em><b>Values</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_LIST__VALUES = VALID_VALUES_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Value List</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_LIST_FEATURE_COUNT = VALID_VALUES_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link com.eu.evidence.rtdruid.oil.xtext.model.ObjectType <em>Object Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -760,7 +853,7 @@ public interface OilPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getObjectType()
 	 * @generated
 	 */
-	int OBJECT_TYPE = 12;
+	int OBJECT_TYPE = 15;
 
 	/**
 	 * The meta object id for the '{@link com.eu.evidence.rtdruid.oil.xtext.model.VType <em>VType</em>}' enum.
@@ -770,7 +863,7 @@ public interface OilPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getVType()
 	 * @generated
 	 */
-	int VTYPE = 13;
+	int VTYPE = 16;
 
 	/**
 	 * The meta object id for the '{@link com.eu.evidence.rtdruid.oil.xtext.model.EType <em>EType</em>}' enum.
@@ -780,7 +873,7 @@ public interface OilPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getEType()
 	 * @generated
 	 */
-	int ETYPE = 14;
+	int ETYPE = 17;
 
 	/**
 	 * The meta object id for the '{@link com.eu.evidence.rtdruid.oil.xtext.model.PType <em>PType</em>}' enum.
@@ -790,7 +883,7 @@ public interface OilPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getPType()
 	 * @generated
 	 */
-	int PTYPE = 15;
+	int PTYPE = 18;
 
 
 	/**
@@ -1139,6 +1232,17 @@ public interface OilPackage extends EPackage {
 	EAttribute getValueType_Type();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link com.eu.evidence.rtdruid.oil.xtext.model.ValueType#getValidValues <em>Valid Values</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Valid Values</em>'.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.ValueType#getValidValues()
+	 * @see #getValueType()
+	 * @generated
+	 */
+	EReference getValueType_ValidValues();
+
+	/**
 	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.oil.xtext.model.EnumeratorType <em>Enumerator Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1286,6 +1390,69 @@ public interface OilPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getParameterRef();
+
+	/**
+	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.oil.xtext.model.ValidValues <em>Valid Values</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Valid Values</em>'.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.ValidValues
+	 * @generated
+	 */
+	EClass getValidValues();
+
+	/**
+	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.oil.xtext.model.Range <em>Range</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Range</em>'.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.Range
+	 * @generated
+	 */
+	EClass getRange();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.eu.evidence.rtdruid.oil.xtext.model.Range#getMin <em>Min</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Min</em>'.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.Range#getMin()
+	 * @see #getRange()
+	 * @generated
+	 */
+	EAttribute getRange_Min();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.eu.evidence.rtdruid.oil.xtext.model.Range#getMax <em>Max</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Max</em>'.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.Range#getMax()
+	 * @see #getRange()
+	 * @generated
+	 */
+	EAttribute getRange_Max();
+
+	/**
+	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.oil.xtext.model.ValueList <em>Value List</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Value List</em>'.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.ValueList
+	 * @generated
+	 */
+	EClass getValueList();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link com.eu.evidence.rtdruid.oil.xtext.model.ValueList#getValues <em>Values</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Values</em>'.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.ValueList#getValues()
+	 * @see #getValueList()
+	 * @generated
+	 */
+	EAttribute getValueList_Values();
 
 	/**
 	 * Returns the meta object for enum '{@link com.eu.evidence.rtdruid.oil.xtext.model.ObjectType <em>Object Type</em>}'.
@@ -1620,6 +1787,14 @@ public interface OilPackage extends EPackage {
 		EAttribute VALUE_TYPE__TYPE = eINSTANCE.getValueType_Type();
 
 		/**
+		 * The meta object literal for the '<em><b>Valid Values</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VALUE_TYPE__VALID_VALUES = eINSTANCE.getValueType_ValidValues();
+
+		/**
 		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.EnumeratorTypeImpl <em>Enumerator Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1740,6 +1915,60 @@ public interface OilPackage extends EPackage {
 		 * @generated
 		 */
 		EClass PARAMETER_REF = eINSTANCE.getParameterRef();
+
+		/**
+		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.oil.xtext.model.ValidValues <em>Valid Values</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.eu.evidence.rtdruid.oil.xtext.model.ValidValues
+		 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getValidValues()
+		 * @generated
+		 */
+		EClass VALID_VALUES = eINSTANCE.getValidValues();
+
+		/**
+		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.RangeImpl <em>Range</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.RangeImpl
+		 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getRange()
+		 * @generated
+		 */
+		EClass RANGE = eINSTANCE.getRange();
+
+		/**
+		 * The meta object literal for the '<em><b>Min</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RANGE__MIN = eINSTANCE.getRange_Min();
+
+		/**
+		 * The meta object literal for the '<em><b>Max</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RANGE__MAX = eINSTANCE.getRange_Max();
+
+		/**
+		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.ValueListImpl <em>Value List</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.ValueListImpl
+		 * @see com.eu.evidence.rtdruid.oil.internal.xtext.model.impl.OilPackageImpl#getValueList()
+		 * @generated
+		 */
+		EClass VALUE_LIST = eINSTANCE.getValueList();
+
+		/**
+		 * The meta object literal for the '<em><b>Values</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VALUE_LIST__VALUES = eINSTANCE.getValueList_Values();
 
 		/**
 		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.oil.xtext.model.ObjectType <em>Object Type</em>}' enum.

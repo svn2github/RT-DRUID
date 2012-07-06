@@ -116,6 +116,18 @@ public class OilAdapterFactory extends AdapterFactoryImpl {
 				return createParameterRefAdapter();
 			}
 			@Override
+			public Adapter caseValidValues(ValidValues object) {
+				return createValidValuesAdapter();
+			}
+			@Override
+			public Adapter caseRange(Range object) {
+				return createRangeAdapter();
+			}
+			@Override
+			public Adapter caseValueList(ValueList object) {
+				return createValueListAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -300,6 +312,48 @@ public class OilAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createParameterRefAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.eu.evidence.rtdruid.oil.xtext.model.ValidValues <em>Valid Values</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.ValidValues
+	 * @generated
+	 */
+	public Adapter createValidValuesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.eu.evidence.rtdruid.oil.xtext.model.Range <em>Range</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.Range
+	 * @generated
+	 */
+	public Adapter createRangeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.eu.evidence.rtdruid.oil.xtext.model.ValueList <em>Value List</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.ValueList
+	 * @generated
+	 */
+	public Adapter createValueListAdapter() {
 		return null;
 	}
 

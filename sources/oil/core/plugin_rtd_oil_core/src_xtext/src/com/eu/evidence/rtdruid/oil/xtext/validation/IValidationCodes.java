@@ -19,4 +19,10 @@ public interface IValidationCodes {
 	String RemoveQuotesToReferce_parametervalue = "remove quotes from a String (parameter value)";
 
 	String FixReference_parametervalue = "fix/remove a reference (parameter value)";
+
+	String StringRestrictions_valueType = "string cannot have value range/list";
+
+	String ReplaceWithAValidValue = "replace current value with a valid one";
+
+	String InvertRangeBoundaries = "Invert range boundaries";
 }

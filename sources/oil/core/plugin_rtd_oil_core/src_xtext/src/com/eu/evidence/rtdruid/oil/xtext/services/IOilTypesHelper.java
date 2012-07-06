@@ -3,6 +3,7 @@
  */
 package com.eu.evidence.rtdruid.oil.xtext.services;
 
+import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.eu.evidence.rtdruid.oil.xtext.model.ObjectType;
 import com.eu.evidence.rtdruid.oil.xtext.model.OilImplementation;
 import com.eu.evidence.rtdruid.oil.xtext.model.OilObject;
 import com.eu.evidence.rtdruid.oil.xtext.model.ParameterType;
+import com.eu.evidence.rtdruid.oil.xtext.model.VType;
 import com.eu.evidence.rtdruid.oil.xtext.scoping.OilTypesFastHelper;
 
 /**
@@ -25,27 +27,44 @@ import com.eu.evidence.rtdruid.oil.xtext.scoping.OilTypesFastHelper;
 public interface IOilTypesHelper {
 	
 	public static String DEFAULT_APP_MODE = "OSDEFAULTAPPMODE";
+	public static BigInteger MAX_INT = BigInteger.ONE.negate();
+	public static String MAX_INT_TXT = MAX_INT.toString();
+
+	public static BigInteger MAX_UINT32 = new BigInteger("FFFFFFFF", 16);
+	public static BigInteger MAX_UINT64 = new BigInteger("FFFFFFFFFFFFFFFF", 16);
+
 	
 	public static IOilTypesHelper DefaulHelper = new OilTypesFastHelper();
 
 
-	public List<ParameterType> getParameterType(List<String> path, List<OilImplementation> roots);
+	public abstract List<ParameterType> getParameterType(List<String> path, List<OilImplementation> roots);
 
-	public List<EnumeratorType> getEnumeratorType(List<String> path, List<OilImplementation> roots);
+	public abstract List<EnumeratorType> getEnumeratorType(List<String> path, List<OilImplementation> roots);
 
 	/**
 	 * Compute Path
 	 */
-	public List<String> computePath(EObject o, boolean addEnum);
+	public abstract List<String> computePath(EObject o, boolean addEnum);
 
-	public List<OilImplementation> getOilImplementation(EObject o);
+	public abstract List<OilImplementation> getOilImplementation(EObject o);
 
-	public List<OilObject> getMainObjects(Resource res, ObjectType type);
+	public abstract List<OilObject> getMainObjects(Resource res, ObjectType type);
 
-	public OilObject addDefaultAppMode(Resource res);
+	public abstract OilObject addDefaultAppMode(Resource res);
 	
-	public OilObject addResScheduler(Resource res);
+	public abstract OilObject addResScheduler(Resource res);
 
-	public EObject computePathElement(EObject it, boolean addEnum, LinkedList<String> path);
+	public abstract EObject computePathElement(EObject it, boolean addEnum, LinkedList<String> path);
 
+	
+
+	@SuppressWarnings("rawtypes")
+	public Class<? extends Comparable> getType(VType vType);
+
+	
+	/**
+	 * This method transforms a String in the corresponding number/string, depending on VType
+	 * 
+	 */
+	public <T extends Comparable<T>> T computeValue(String value, VType vType, Class<T> type);
 }

@@ -12,7 +12,7 @@ IMPLEMENTATION ee {
 		] enum;
 		ENUM [ 
 			def {
-				DOUBLE d3[];
+				FLOAT d3[];
 			}
 		] enum;
 	};

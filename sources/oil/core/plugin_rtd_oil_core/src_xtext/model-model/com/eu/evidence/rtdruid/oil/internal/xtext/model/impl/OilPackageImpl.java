@@ -16,8 +16,11 @@ import com.eu.evidence.rtdruid.oil.xtext.model.PType;
 import com.eu.evidence.rtdruid.oil.xtext.model.Parameter;
 import com.eu.evidence.rtdruid.oil.xtext.model.ParameterRef;
 import com.eu.evidence.rtdruid.oil.xtext.model.ParameterType;
+import com.eu.evidence.rtdruid.oil.xtext.model.Range;
 import com.eu.evidence.rtdruid.oil.xtext.model.ReferenceType;
 import com.eu.evidence.rtdruid.oil.xtext.model.VType;
+import com.eu.evidence.rtdruid.oil.xtext.model.ValidValues;
+import com.eu.evidence.rtdruid.oil.xtext.model.ValueList;
 import com.eu.evidence.rtdruid.oil.xtext.model.ValueType;
 import com.eu.evidence.rtdruid.oil.xtext.model.VariantType;
 
@@ -119,6 +122,27 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 	 * @generated
 	 */
 	private EClass parameterRefEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass validValuesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass rangeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass valueListEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -502,6 +526,15 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getValueType_ValidValues() {
+		return (EReference)valueTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getEnumeratorType() {
 		return enumeratorTypeEClass;
 	}
@@ -628,6 +661,60 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getValidValues() {
+		return validValuesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRange() {
+		return rangeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRange_Min() {
+		return (EAttribute)rangeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRange_Max() {
+		return (EAttribute)rangeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getValueList() {
+		return valueListEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getValueList_Values() {
+		return (EAttribute)valueListEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getObjectType() {
 		return objectTypeEEnum;
 	}
@@ -725,6 +812,7 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 
 		valueTypeEClass = createEClass(VALUE_TYPE);
 		createEAttribute(valueTypeEClass, VALUE_TYPE__TYPE);
+		createEReference(valueTypeEClass, VALUE_TYPE__VALID_VALUES);
 
 		enumeratorTypeEClass = createEClass(ENUMERATOR_TYPE);
 		createEAttribute(enumeratorTypeEClass, ENUMERATOR_TYPE__NAME);
@@ -744,6 +832,15 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 		createEAttribute(referenceTypeEClass, REFERENCE_TYPE__TYPE);
 
 		parameterRefEClass = createEClass(PARAMETER_REF);
+
+		validValuesEClass = createEClass(VALID_VALUES);
+
+		rangeEClass = createEClass(RANGE);
+		createEAttribute(rangeEClass, RANGE__MIN);
+		createEAttribute(rangeEClass, RANGE__MAX);
+
+		valueListEClass = createEClass(VALUE_LIST);
+		createEAttribute(valueListEClass, VALUE_LIST__VALUES);
 
 		// Create enums
 		objectTypeEEnum = createEEnum(OBJECT_TYPE);
@@ -785,6 +882,8 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 		enumeratorTypeEClass.getESuperTypes().add(this.getParameterRef());
 		variantTypeEClass.getESuperTypes().add(this.getParameterType());
 		referenceTypeEClass.getESuperTypes().add(this.getParameterType());
+		rangeEClass.getESuperTypes().add(this.getValidValues());
+		valueListEClass.getESuperTypes().add(this.getValidValues());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(oilObjectEClass, OilObject.class, "OilObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -825,6 +924,7 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 
 		initEClass(valueTypeEClass, ValueType.class, "ValueType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getValueType_Type(), this.getVType(), "Type", null, 0, 1, ValueType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getValueType_ValidValues(), this.getValidValues(), null, "ValidValues", null, 0, 1, ValueType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(enumeratorTypeEClass, EnumeratorType.class, "EnumeratorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEnumeratorType_Name(), ecorePackage.getEString(), "Name", null, 0, 1, EnumeratorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -844,6 +944,15 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 		initEAttribute(getReferenceType_Type(), this.getObjectType(), "Type", null, 0, 1, ReferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterRefEClass, ParameterRef.class, "ParameterRef", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(validValuesEClass, ValidValues.class, "ValidValues", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(rangeEClass, Range.class, "Range", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRange_Min(), ecorePackage.getEString(), "Min", null, 0, 1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRange_Max(), ecorePackage.getEString(), "Max", null, 0, 1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(valueListEClass, ValueList.class, "ValueList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getValueList_Values(), ecorePackage.getEString(), "Values", null, 0, -1, ValueList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(objectTypeEEnum, ObjectType.class, "ObjectType");
@@ -869,7 +978,6 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 		addEEnumLiteral(vTypeEEnum, VType.UINT64);
 		addEEnumLiteral(vTypeEEnum, VType.INT64);
 		addEEnumLiteral(vTypeEEnum, VType.FLOAT);
-		addEEnumLiteral(vTypeEEnum, VType.DOUBLE);
 
 		initEEnum(eTypeEEnum, EType.class, "EType");
 		addEEnumLiteral(eTypeEEnum, EType.BOOLEAN);

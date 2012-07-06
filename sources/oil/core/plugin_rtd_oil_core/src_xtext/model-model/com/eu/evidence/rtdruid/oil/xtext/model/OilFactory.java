@@ -112,6 +112,24 @@ public interface OilFactory extends EFactory {
 	ReferenceType createReferenceType();
 
 	/**
+	 * Returns a new object of class '<em>Range</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Range</em>'.
+	 * @generated
+	 */
+	Range createRange();
+
+	/**
+	 * Returns a new object of class '<em>Value List</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Value List</em>'.
+	 * @generated
+	 */
+	ValueList createValueList();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

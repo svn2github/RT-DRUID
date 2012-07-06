@@ -11,6 +11,9 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
 import com.eu.evidence.rtdruid.oil.xtext.services.OilGrammarAccess;
+import com.eu.evidence.rtdruid.oil.xtext.services.OilGrammarAccess.ValueListElements;
+import com.eu.evidence.rtdruid.oil.xtext.services.OilGrammarAccess.ValueTypeElements;
+import com.eu.evidence.rtdruid.oil.xtext.services.OilGrammarAccess.VariantTypeElements;
 
 /**
  * This class contains custom formatting description.
@@ -30,11 +33,51 @@ public class OilFormatter extends AbstractDeclarativeFormatter {
 			c.setLinewrap(1).after(pair.getFirst());
 			c.setLinewrap(1).before(pair.getSecond());
 		}
-		for(Keyword comma: f.findKeywords(",", ";")) {
+		
+		{ // ENUM - BOOLEAN
+			final VariantTypeElements variantTypeAccess = f.getVariantTypeAccess();
+			{ // handle [ ]
+				Keyword first = variantTypeAccess.getLeftSquareBracketKeyword_3_0();
+				Keyword second = variantTypeAccess.getRightSquareBracketKeyword_3_2();
+				c.setIndentation(first, second);
+				c.setLinewrap(1).after(first);
+				c.setLinewrap(1).before(second);
+			}
+			{ // Handle ,
+				Keyword comma = variantTypeAccess.getCommaKeyword_3_1_1_0();
+				c.setNoLinewrap().before(comma);
+				c.setNoSpace().before(comma);
+				c.setLinewrap().after(comma);
+			}
+		}
+		{ // NUMBER range/list
+			{ // handle [ ]
+				final ValueTypeElements validTypeAccess = f.getValueTypeAccess();
+				Keyword first = validTypeAccess.getLeftSquareBracketKeyword_3_0();
+				Keyword second = validTypeAccess.getRightSquareBracketKeyword_3_2();
+
+				c.setNoLinewrap().after(first);
+				c.setNoSpace().after(first);
+				
+				c.setNoLinewrap().before(second);
+				c.setNoSpace().before(second);
+			}
+			{ // handle ,
+				final ValueListElements valueListAccess = f.getValueListAccess();
+				Keyword comma = valueListAccess.getCommaKeyword_2_0();
+				c.setNoLinewrap().before(comma);
+				c.setNoSpace().before(comma);
+			}
+		}
+		
+		// all ;
+		for(Keyword comma: f.findKeywords(";")) {
 			c.setNoLinewrap().before(comma);
 			c.setNoSpace().before(comma);
 			c.setLinewrap().after(comma);
 		}
+		
+		// comments
 		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
 		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
 		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());

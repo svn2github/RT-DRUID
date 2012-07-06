@@ -20,6 +20,11 @@ import com.eu.evidence.rtdruid.oil.xtext.model.OilObject;
 import com.eu.evidence.rtdruid.oil.xtext.model.OilObjectImpl;
 import com.eu.evidence.rtdruid.oil.xtext.model.Parameter;
 import com.eu.evidence.rtdruid.oil.xtext.model.ParameterType;
+import com.eu.evidence.rtdruid.oil.xtext.model.Range;
+import com.eu.evidence.rtdruid.oil.xtext.model.VType;
+import com.eu.evidence.rtdruid.oil.xtext.model.ValidValues;
+import com.eu.evidence.rtdruid.oil.xtext.model.ValueList;
+import com.eu.evidence.rtdruid.oil.xtext.model.ValueType;
 import com.eu.evidence.rtdruid.oil.xtext.model.VariantType;
 import com.eu.evidence.rtdruid.oil.xtext.services.IOilTypesHelper;
 
@@ -55,6 +60,7 @@ public class OilEObjectDocumentationProvider extends MultiLineCommentDocumentati
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String getDocumentation(EObject o) {
 		String descr = null;
@@ -73,8 +79,44 @@ public class OilEObjectDocumentationProvider extends MultiLineCommentDocumentati
 			
 			if (o instanceof VariantType) {
 				append = computeEnumeratorTypes((VariantType) o);
-				
-
+			} else if (o instanceof ValueType) {
+				ValidValues vv = ((ValueType)o).getValidValues();
+				if (vv != null) {
+					
+					final VType vt = ((ValueType)o).getType();
+					@SuppressWarnings("rawtypes")
+					final Class<? extends Comparable> cType = typeHelper.getType(vt);
+					
+					if (vv instanceof Range) {
+						final Range r = (Range) vv;
+						if (typeHelper.computeValue(r.getMin(), vt, cType) != null &&
+								typeHelper.computeValue(r.getMax(), vt, cType) != null) {
+							append = "Valid values are in the range <b>" + r.getMin() + "</b>..<b>" +  r.getMax() + "</b>";
+						}
+						
+					} else if (vv instanceof ValueList) {
+						Set<String> values = new TreeSet<String>();
+						StringBuffer tmp = new StringBuffer("Valid values are: ");
+						
+						for (String v : ((ValueList) vv).getValues()) {
+							if (typeHelper.computeValue(v, vt, cType) != null) {
+								values.add(v);
+							}
+						}
+						
+						if (values.size()>0) {
+							String comma = "";
+							for (String name: values) {
+								tmp.append(comma);
+								tmp.append("<b>");
+								tmp.append(name);
+								tmp.append("</b>");
+								comma = ", ";
+							}
+							append = tmp.toString();
+						}
+					}
+				}
 			}
 			
 		} else if (o instanceof OilObjectImpl) {

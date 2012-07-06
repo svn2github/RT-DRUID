@@ -177,6 +177,5 @@ class ParsingTests extends XtextTest {
 		assertEquals(0, resource.errors.size)
 		assertEquals(0, resource.warnings.size)
 	}
-	
 }
 

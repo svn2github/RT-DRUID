@@ -37,14 +37,26 @@ OilApplication :
 ParameterType returns ParameterType:
 	ValueType | VariantType | ReferenceType;
 
+ValidValues: 
+	Range | ValueList
+;
+
+ValueList: 
+	{ValueList}
+	Values+=GenericNumber ( "," Values+=GenericNumber)*
+;
+
+Range :
+	{Range}
+	Min=GenericNumber ".."  Max=GenericNumber
+;
+
+
 ValueType returns ValueType:
 	{ValueType}
 	Type=VType
 	(WithAuto?='WITH_AUTO')?
-	("[" (
-			(( INT | DOUBLE) ".."  ( INT | DOUBLE))  // range
-		| 	(( INT | DOUBLE) ( "," ( INT | DOUBLE))*) // list
-	) "]")?
+	("[" ValidValues =ValidValues "]")?
 	Name= SpecialId
 	(MultiValue?='[]')?
 	('=' (=> DefaultAuto?="AUTO" | DefaultValue=(GenericValue|ID)))?
@@ -76,7 +88,6 @@ EnumeratorType returns EnumeratorType:
 ReferenceType returns ReferenceType:
 	{ReferenceType}
 	Type=ObjectTypeRef
-	(WithAuto?='WITH_AUTO')?
 	Name= SpecialId
 	(MultiValue?='[]')?
 	('=' (=> DefaultAuto?="AUTO" | DefaultValue=(ID)))?
@@ -147,20 +158,23 @@ Enumerator returns Enumerator:
 //    ;
 
 SpecialId returns ecore::EString:
-	ID | 'STRING' | 'UINT32' | 'INT32' | 'UINT64' | 'INT64' | 'FLOAT' | 'DOUBLE' |
+	ID | 'STRING' | 'UINT32' | 'INT32' | 'UINT64' | 'INT64' | 'FLOAT' | 
 	'BOOLEAN' | 'ENUM' |
 	'OS' | 'ALARM' | 'APPMODE' | 'COUNTER' | 'COM' | 'EVENT' | 'IPDU' | 'ISR' | 'MESSAGE' | 'NETWORKMESSAGE' | 'NM' | 'RESOURCE' | 'TASK' |
 	'OS_TYPE' | 'ALARM_TYPE' | 'APPMODE_TYPE' | 'COUNTER_TYPE' | 'COM_TYPE' | 'EVENT_TYPE' | 'IPDU_TYPE' | 'ISR_TYPE' | 'MESSAGE_TYPE' | 'NETWORKMESSAGE_TYPE' | 'NM_TYPE' | 'RESOURCE_TYPE' | 'TASK_TYPE'
 ;
 
 enum VType returns VType:
-	STRING = 'STRING' | UINT32 = 'UINT32' | INT32 = 'INT32' | UINT64 = 'UINT64' | INT64 = 'INT64' | FLOAT = 'FLOAT' | DOUBLE = 'DOUBLE';
+	STRING = 'STRING' | UINT32 = 'UINT32' | INT32 = 'INT32' | UINT64 = 'UINT64' | INT64 = 'INT64' | FLOAT = 'FLOAT';
 
 enum EType returns EType:
 	BOOLEAN = 'BOOLEAN' | ENUM = 'ENUM';
 	
 GenericValue returns ecore::EString:
-	STRING|INT|DOUBLE
+	STRING|INT|FLOAT
+;
+GenericNumber returns ecore::EString:
+	INT|FLOAT
 ;
 
 
@@ -173,7 +187,7 @@ enum ObjectTypeRef returns ObjectType:
 
 // Aggiungere la gestione dei numeri esadecimali
 INT returns ecore::EInt: ('+'|'-')? (( NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)* ) | ZERO_INT | HEX);
-DOUBLE returns ecore::EDouble: ('+'|'-')? (ZERO_INT | (NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)*)) =>'.' (ZERO_INT | NON_ZERO_INT)+;
+FLOAT returns ecore::EFloat: ('+'|'-')? (ZERO_INT | (NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)*)) =>'.' (ZERO_INT | NON_ZERO_INT)+;
 	
 	
 terminal ID  		: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;

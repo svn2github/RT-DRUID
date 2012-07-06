@@ -63,6 +63,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValueType" eSuperTypes="#//ParameterType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//VType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ValidValues" eType="#//ValidValues"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EnumeratorType" eSuperTypes="#//ParameterRef">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -82,7 +84,6 @@
     <eLiterals name="UINT64" value="5" literal="UINT64"/>
     <eLiterals name="INT64" value="6" literal="INT64"/>
     <eLiterals name="FLOAT" value="3" literal="FLOAT"/>
-    <eLiterals name="DOUBLE" value="4" literal="DOUBLE"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="EType">
     <eLiterals name="BOOLEAN"/>
@@ -104,5 +105,14 @@
     <eLiterals name="Value"/>
     <eLiterals name="Reference" value="2"/>
     <eLiterals name="Variant" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValidValues" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Range" eSuperTypes="#//ValidValues">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Min" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Max" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueList" eSuperTypes="#//ValidValues">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Values" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

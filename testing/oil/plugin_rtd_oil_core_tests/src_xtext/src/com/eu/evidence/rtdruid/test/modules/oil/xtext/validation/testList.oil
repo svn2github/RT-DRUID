@@ -1,0 +1,133 @@
+IMPLEMENTATION a {
+	OS {
+		ENUM [
+			t_int32 {
+				INT32[-1] 	a1;
+				INT32[0] 	a2;
+				INT32[0, -1] 	a3; // ERROR
+				INT32[-1, -1, -1] 	a4;
+				INT32[1,2,3] 	a5; // ERROR
+				INT32[1,0.2,3] 	a6; // ERROR
+				INT32[0x1] a7; // ERROR
+				INT32[0x1,0x5] 	a8;
+				INT32[-1] 		a9  = 0;
+				INT32[-1]	 	a10 = -1;
+				INT32[-1,4,-2] a11 = 4;
+				INT32[1,0x5] 	a12 = 5;
+				INT32[1,5,0x3] 	a13 = 1;
+				INT32[1,0,2] 	a14 = 0x2;
+			},
+			t_uint32 {
+				UINT32[-1] 	a1;
+				UINT32[0] 	a2;
+				UINT32[0, -1] 	a3; // ERROR
+				UINT32[-1, -1, -1] 	a4;
+				UINT32[1,2,3] 	a5; // ERROR
+				UINT32[1,0.2,3] 	a6; // ERROR
+				UINT32[0x1] a7; // ERROR
+				UINT32[0x1,0x5] 	a8;
+				UINT32[-1] 		a9  = 0;
+				UINT32[-1]	 	a10 = -1;
+				UINT32[-1,4,-2] a11 = 4;
+				UINT32[1,0x5] 	a12 = 5;
+				UINT32[1,5,0x3] 	a13 = 1;
+				UINT32[1,0,2] 	a14 = 0x2;
+			},
+			t_int64 {
+				INT64[-1] 	a1;
+				INT64[0] 	a2;
+				INT64[0, -1] 	a3; // ERROR
+				INT64[-1, -1, -1] 	a4;
+				INT64[1,2,3] 	a5; // ERROR
+				INT64[1,0.2,3] 	a6; // ERROR
+				INT64[0x1] a7; // ERROR
+				INT64[0x1,0x5] 	a8;
+				INT64[-1] 		a9  = 0;
+				INT64[-1]	 	a10 = -1;
+				INT64[-1,4,-2] a11 = 4;
+				INT64[1,0x5] 	a12 = 5;
+				INT64[1,5,0x3] 	a13 = 1;
+				INT64[1,0,2] 	a14 = 0x2;
+			},
+			t_uint64 {
+				UINT64[-1] 	a1;
+				UINT64[0] 	a2;
+				UINT64[0, -1] 	a3; // ERROR
+				UINT64[-1, -1, -1] 	a4;
+				UINT64[1,2,3] 	a5; // ERROR
+				UINT64[1,0.2,3] 	a6; // ERROR
+				UINT64[0x1] a7; // ERROR
+				UINT64[0x1,0x5] 	a8;
+				UINT64[-1] 		a9  = 0;
+				UINT64[-1]	 	a10 = -1;
+				UINT64[-1,4,-2] a11 = 4;
+				UINT64[1,0x5] 	a12 = 5;
+				UINT64[1,5,0x3] 	a13 = 1;
+				UINT64[1,0,2] 	a14 = 0x2;
+			},
+			t_float {
+				FLOAT[-1.4] 	a1;
+				FLOAT[0] 	a2;
+				FLOAT[0, -1] 	a3; // ERROR
+				FLOAT[-1, -1, -1] 	a4;
+				FLOAT[1,2,3] 	a5; // ERROR
+				FLOAT[1.1,0.2,3] 	a6; // ERROR
+				FLOAT[0x1] a7; // ERROR
+				FLOAT[0x1,0x5] 	a8;
+				FLOAT[-1] 		a9  = 0;
+				FLOAT[-1]	 	a10 = -1;
+				FLOAT[-1,4,-2] a11 = 4;
+				FLOAT[1,0x5] 	a12 = 5;
+				FLOAT[1,5,0x3] 	a13 = 1;
+				FLOAT[1,0,2] 	a14 = 0x2;
+
+			}
+		] types[];
+	};
+};
+CPU s {
+	OS os1 {
+		types = t_int32 {
+			a1 = 0;
+			a2 = 0;
+			a4 = 0;
+			a12 = 1;
+			a13 = 2;
+			a14 = -5;
+		};
+		
+		types = t_uint32 {
+			a1 = 0;
+			a2 = 0;
+			a4 = 0;
+			a12 = 1;
+			a13 = 2;
+			a14 = 0;
+		};
+		types = t_int64 {
+			a1 = 0;
+			a2 = 0;
+			a4 = 0;
+			a12 = 1;
+			a13 = 2;
+			a14 = -5;
+		};
+		
+		types = t_uint64 {
+			a1 = 0;
+			a2 = 0;
+			a4 = 0;
+			a12 = 1;
+			a13 = 2;
+			a14 = 0;
+		};
+		types = t_float {
+			a1 = 0;
+			a2 = 0.0;
+			a6 = 0.2;
+			a12 = 4;
+			a13 = 0x3;
+			a14 = 1;
+		};
+	};
+};

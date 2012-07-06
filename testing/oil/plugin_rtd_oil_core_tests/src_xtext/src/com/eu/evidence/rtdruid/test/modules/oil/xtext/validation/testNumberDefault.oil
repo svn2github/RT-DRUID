@@ -77,21 +77,6 @@ IMPLEMENTATION a {
 				FLOAT a11 = a1;
 				FLOAT a12 = alarm;
 				FLOAT a13 = "abc";
-			},
-			t_double {
-				DOUBLE a1 = 1;
-				DOUBLE a2 = -1;
-				DOUBLE a3 = 1.0; // ERROR
-				DOUBLE a4 = -1.0; // ERROR
-				DOUBLE a5 = 0x1;
-				DOUBLE a6 = -0x1; // ERROR
-				DOUBLE a7 = 0xFFFFFFFFFFFF; // ERROR
-				DOUBLE a8 = 0x7fffffff;
-				DOUBLE a9 = AUTO ; // ERROR
-				DOUBLE WITH_AUTO a10 = AUTO ;
-				DOUBLE a11 = a1;
-				DOUBLE a12 = alarm;
-				DOUBLE a13 = "abc";
 			}
 		] types;
 		ALARM_TYPE at;

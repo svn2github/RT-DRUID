@@ -12,7 +12,7 @@ IMPLEMENTATION ee {
 		] COUNTER;
 		ENUM [ 
 			ALARM {
-				DOUBLE d3[];
+				FLOAT d3[];
 			}
 		] COUNTER;
 	};

@@ -143,6 +143,26 @@ public class OilSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case OilPackage.VALID_VALUES: {
+				ValidValues validValues = (ValidValues)theEObject;
+				T result = caseValidValues(validValues);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case OilPackage.RANGE: {
+				Range range = (Range)theEObject;
+				T result = caseRange(range);
+				if (result == null) result = caseValidValues(range);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case OilPackage.VALUE_LIST: {
+				ValueList valueList = (ValueList)theEObject;
+				T result = caseValueList(valueList);
+				if (result == null) result = caseValidValues(valueList);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -324,6 +344,51 @@ public class OilSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseParameterRef(ParameterRef object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Valid Values</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Valid Values</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseValidValues(ValidValues object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Range</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Range</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRange(Range object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Value List</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Value List</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseValueList(ValueList object) {
 		return null;
 	}
 

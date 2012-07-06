@@ -76,17 +76,7 @@ public enum VType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	FLOAT(3, "FLOAT", "FLOAT"),
-
-	/**
-	 * The '<em><b>DOUBLE</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #DOUBLE_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	DOUBLE(4, "DOUBLE", "DOUBLE");
+	FLOAT(3, "FLOAT", "FLOAT");
 
 	/**
 	 * The '<em><b>STRING</b></em>' literal value.
@@ -179,21 +169,6 @@ public enum VType implements Enumerator {
 	public static final int FLOAT_VALUE = 3;
 
 	/**
-	 * The '<em><b>DOUBLE</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>DOUBLE</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #DOUBLE
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
-	public static final int DOUBLE_VALUE = 4;
-
-	/**
 	 * An array of all the '<em><b>VType</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -207,7 +182,6 @@ public enum VType implements Enumerator {
 			UINT64,
 			INT64,
 			FLOAT,
-			DOUBLE,
 		};
 
 	/**
@@ -264,7 +238,6 @@ public enum VType implements Enumerator {
 			case UINT64_VALUE: return UINT64;
 			case INT64_VALUE: return INT64;
 			case FLOAT_VALUE: return FLOAT;
-			case DOUBLE_VALUE: return DOUBLE;
 		}
 		return null;
 	}

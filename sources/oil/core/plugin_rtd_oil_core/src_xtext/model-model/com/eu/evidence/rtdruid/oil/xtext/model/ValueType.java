@@ -12,6 +12,7 @@ package com.eu.evidence.rtdruid.oil.xtext.model;
  * The following features are supported:
  * <ul>
  *   <li>{@link com.eu.evidence.rtdruid.oil.xtext.model.ValueType#getType <em>Type</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.oil.xtext.model.ValueType#getValidValues <em>Valid Values</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,5 +49,31 @@ public interface ValueType extends ParameterType {
 	 * @generated
 	 */
 	void setType(VType value);
+
+	/**
+	 * Returns the value of the '<em><b>Valid Values</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Valid Values</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Valid Values</em>' containment reference.
+	 * @see #setValidValues(ValidValues)
+	 * @see com.eu.evidence.rtdruid.oil.xtext.model.OilPackage#getValueType_ValidValues()
+	 * @model containment="true"
+	 * @generated
+	 */
+	ValidValues getValidValues();
+
+	/**
+	 * Sets the value of the '{@link com.eu.evidence.rtdruid.oil.xtext.model.ValueType#getValidValues <em>Valid Values</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Valid Values</em>' containment reference.
+	 * @see #getValidValues()
+	 * @generated
+	 */
+	void setValidValues(ValidValues value);
 
 } // ValueType

@@ -32,7 +32,7 @@ IMPLEMENTATION ee {
     };
     
     ISR {
-    	UINT32 CATEGORY; // category 1 & 2 -> ISR. category 3 -> trap 
+    	//UINT32 CATEGORY; // category 1 & 2 -> ISR. category 3 -> trap 
 		STRING LEVEL;
 		STRING HANDLER;
 	};

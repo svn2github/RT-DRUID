@@ -3,6 +3,7 @@ package com.eu.evidence.rtdruid.test.modules.oil.xtext;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import com.eu.evidence.rtdruid.test.modules.oil.xtext.parser.ParsingNumberRangeTests;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.parser.ParsingTests;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.parser.ScopingDefaultTypesTests;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.parser.ScopingTests;
@@ -28,7 +29,8 @@ import com.eu.evidence.rtdruid.vartree.variables.OilVar;
 	StringTests.class,
 	SplittedElementsTests.class,
 	DefaultTypesTests.class,
-	ValidationOilWriterTests.class
+	ValidationOilWriterTests.class,
+	ParsingNumberRangeTests.class
 	})
 public class TestSuite {
 
