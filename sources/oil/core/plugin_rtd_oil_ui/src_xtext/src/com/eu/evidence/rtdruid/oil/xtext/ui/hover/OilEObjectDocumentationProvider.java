@@ -60,7 +60,6 @@ public class OilEObjectDocumentationProvider extends MultiLineCommentDocumentati
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public String getDocumentation(EObject o) {
 		String descr = null;
@@ -84,13 +83,11 @@ public class OilEObjectDocumentationProvider extends MultiLineCommentDocumentati
 				if (vv != null) {
 					
 					final VType vt = ((ValueType)o).getType();
-					@SuppressWarnings("rawtypes")
-					final Class<? extends Comparable> cType = typeHelper.getType(vt);
 					
 					if (vv instanceof Range) {
 						final Range r = (Range) vv;
-						if (typeHelper.computeValue(r.getMin(), vt, cType) != null &&
-								typeHelper.computeValue(r.getMax(), vt, cType) != null) {
+						if (typeHelper.computeValue(r.getMin(), vt) != null &&
+								typeHelper.computeValue(r.getMax(), vt) != null) {
 							append = "Valid values are in the range <b>" + r.getMin() + "</b>..<b>" +  r.getMax() + "</b>";
 						}
 						
@@ -99,7 +96,7 @@ public class OilEObjectDocumentationProvider extends MultiLineCommentDocumentati
 						StringBuffer tmp = new StringBuffer("Valid values are: ");
 						
 						for (String v : ((ValueList) vv).getValues()) {
-							if (typeHelper.computeValue(v, vt, cType) != null) {
+							if (typeHelper.computeValue(v, vt) != null) {
 								values.add(v);
 							}
 						}
