@@ -72,7 +72,7 @@ public class ScopingTests extends XtextTest {
         _builder.append("] a;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("ALARM_TYPE WITH_AUTO at;");
+        _builder.append("ALARM_TYPE at;");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("};");
@@ -170,7 +170,7 @@ public class ScopingTests extends XtextTest {
         _builder.append("] a;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("ALARM_TYPE WITH_AUTO at;");
+        _builder.append("ALARM_TYPE at;");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("};");
@@ -354,7 +354,7 @@ public class ScopingTests extends XtextTest {
         _builder.append("] a;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("ALARM_TYPE WITH_AUTO at;");
+        _builder.append("ALARM_TYPE at;");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("};");

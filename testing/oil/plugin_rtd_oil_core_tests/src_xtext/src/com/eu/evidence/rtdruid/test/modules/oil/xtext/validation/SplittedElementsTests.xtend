@@ -49,7 +49,7 @@ class SplittedElementsTests extends XtextTest {
 						},
 						FALSE
 					] a;
-					ALARM_TYPE WITH_AUTO at;
+					ALARM_TYPE at;
 				};
 				ALARM {
 				};
@@ -79,7 +79,7 @@ class SplittedElementsTests extends XtextTest {
 		val model = parser.parse('''
 			IMPLEMENTATION a {
 				OS {
-					ALARM_TYPE WITH_AUTO at;
+					ALARM_TYPE at;
 				};
 				ALARM {};
 			};

@@ -73,7 +73,7 @@ public class ParsingTests extends XtextTest {
         _builder.append("] a;");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("ALARM_TYPE WITH_AUTO at;");
+        _builder.append("ALARM_TYPE at;");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("};");
@@ -342,6 +342,70 @@ public class ParsingTests extends XtextTest {
         EList<Diagnostic> _errors = resource.getErrors();
         int _size = _errors.size();
         Assert.assertEquals(0, _size);
+        EList<Diagnostic> _warnings = resource.getWarnings();
+        int _size_1 = _warnings.size();
+        Assert.assertEquals(0, _size_1);
+      }
+    } catch (Exception _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void implementationOnlyTestBis() {
+    try {
+      {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("IMPLEMENTATION a {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("OS {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("// 112;");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("BOOLEAN [");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("TRUE {");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("INT32 b1;");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("BOOLEAN d;");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("},");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("FALSE");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("] a;");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("ALARM_TYPE WITH_AUTO at;");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("};");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("ALARM {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("};");
+        _builder.newLine();
+        _builder.append("};");
+        _builder.newLine();
+        OilFile _parse = this.parser.parse(_builder);
+        final OilFile model = _parse;
+        Resource _eResource = model.eResource();
+        final Resource resource = _eResource;
+        EList<Diagnostic> _errors = resource.getErrors();
+        int _size = _errors.size();
+        Assert.assertEquals(1, _size);
         EList<Diagnostic> _warnings = resource.getWarnings();
         int _size_1 = _warnings.size();
         Assert.assertEquals(0, _size_1);

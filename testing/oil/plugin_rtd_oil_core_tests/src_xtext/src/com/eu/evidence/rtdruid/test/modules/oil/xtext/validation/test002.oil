@@ -8,7 +8,7 @@ IMPLEMENTATION a {
 			},
 			FALSE
 		] a;
-		ALARM_TYPE WITH_AUTO at;
+		ALARM_TYPE at;
 	};
 	ALARM {
 	};

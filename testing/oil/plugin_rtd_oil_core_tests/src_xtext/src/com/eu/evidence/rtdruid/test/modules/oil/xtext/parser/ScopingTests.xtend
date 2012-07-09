@@ -38,7 +38,7 @@ class ScopingTests extends XtextTest {
 						},
 						FALSE
 					] a;
-					ALARM_TYPE WITH_AUTO at;
+					ALARM_TYPE at;
 				};
 				ALARM {
 				};
@@ -69,7 +69,7 @@ class ScopingTests extends XtextTest {
 						},
 						FALSE
 					] a;
-					ALARM_TYPE WITH_AUTO at;
+					ALARM_TYPE at;
 				};
 				ALARM {
 				};
@@ -122,7 +122,7 @@ class ScopingTests extends XtextTest {
 						},
 						FALSE
 					] a;
-					ALARM_TYPE WITH_AUTO at;
+					ALARM_TYPE at;
 				};
 				ALARM {
 				};

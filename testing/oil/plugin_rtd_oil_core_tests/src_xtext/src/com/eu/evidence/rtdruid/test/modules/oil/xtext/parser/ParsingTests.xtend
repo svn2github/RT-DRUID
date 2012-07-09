@@ -37,7 +37,7 @@ class ParsingTests extends XtextTest {
 						},
 						FALSE
 					] a;
-					ALARM_TYPE WITH_AUTO at;
+					ALARM_TYPE at;
 				};
 				ALARM {
 				};
@@ -132,6 +132,32 @@ class ParsingTests extends XtextTest {
 		val resource = model.eResource
 //		System::out.println(resource.errors);
 		assertEquals(0, resource.errors.size)
+		assertEquals(0, resource.warnings.size)
+	}
+
+	@Test
+	def void implementationOnlyTestBis() {
+	    val model = parser.parse('''
+				IMPLEMENTATION a {
+					OS {
+					// 112;
+						BOOLEAN [
+							TRUE {
+								INT32 b1;
+								BOOLEAN d;
+							},
+							FALSE
+						] a;
+						ALARM_TYPE WITH_AUTO at;
+					};
+					ALARM {
+					};
+				};
+	    ''')
+		
+		val resource = model.eResource
+//		System::out.println(resource.errors);
+		assertEquals(1, resource.errors.size)
 		assertEquals(0, resource.warnings.size)
 	}
 	
