@@ -66,5 +66,5 @@ public interface IOilTypesHelper {
 	 * This method transforms a String in the corresponding number/string, depending on VType
 	 * 
 	 */
-	public <T extends Comparable<T>> T computeValue(String value, VType vType, Class<T> type);
+	public Comparable<?> computeValue(String value, VType vType);
 }

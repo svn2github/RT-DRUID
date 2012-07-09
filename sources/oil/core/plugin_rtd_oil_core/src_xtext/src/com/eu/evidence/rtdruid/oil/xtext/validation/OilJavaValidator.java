@@ -96,11 +96,10 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 						checkValueConformance(((Range)vv).getMin(), type, prefix, vv, OilPackage.Literals.RANGE__MIN);
 						checkValueConformance(((Range)vv).getMax(), type, prefix, vv, OilPackage.Literals.RANGE__MAX);
 
-						final Class<? extends Comparable> cType = helper.getType(type);
 						String sMin = ((Range) vv).getMin();
-						Comparable cMin = helper.computeValue(sMin, type, cType);
+						Comparable cMin = helper.computeValue(sMin, type);
 						String sMax = ((Range) vv).getMax();
-						Comparable cMax = helper.computeValue(sMax, type,cType);
+						Comparable cMax = helper.computeValue(sMax, type);
 						if (cMin != null && cMax != null) {
 							if (cMax.compareTo(cMin) <0) {
 								error(prefix + "The minimum valid value ("+sMin+") is bigger than maximum valid value ("+sMax+")", vv,  OilPackage.Literals.RANGE__MIN, ValidationMessageAcceptor.INSIGNIFICANT_INDEX, IValidationCodes.InvertRangeBoundaries);
@@ -138,14 +137,13 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 			return;
 		}
 		
-		final Class<? extends Comparable> cType = helper.getType(type);
-		Comparable cValue = helper.computeValue(value, type, cType);
+		Comparable cValue = helper.computeValue(value, type);
 		if (cValue != null) {
 			if (range instanceof Range) {
 				String sMin = ((Range) range).getMin();
-				Comparable cMin = helper.computeValue(sMin, type, cType);
+				Comparable cMin = helper.computeValue(sMin, type);
 				String sMax = ((Range) range).getMax();
-				Comparable cMax = helper.computeValue(sMax, type, cType);
+				Comparable cMax = helper.computeValue(sMax, type);
 				
 				if (cMin != null && cValue.compareTo(cMin) <0) {
 					error(prefix + "Value ("+value+") is smaller than minimum valid value ("+sMin+")", obj,  attribute, ValidationMessageAcceptor.INSIGNIFICANT_INDEX);
@@ -158,7 +156,7 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 				boolean found = false;
 				ArrayList<String> vvalues = new ArrayList<String>();
 				for (String sV : ((ValueList)range).getValues()) {
-					Comparable cV = helper.computeValue(sV, type, cType);
+					Comparable cV = helper.computeValue(sV, type);
 					if (cV != null) {
 						if (cValue.compareTo(cV) ==0) {
 							found = true;

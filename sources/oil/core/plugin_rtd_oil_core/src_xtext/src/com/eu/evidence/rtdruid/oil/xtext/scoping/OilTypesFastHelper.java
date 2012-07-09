@@ -493,36 +493,36 @@ public class OilTypesFastHelper implements IOilTypesHelper {
 	 * 
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends Comparable<T>> T computeValue(String value, VType type, Class<T> vType) {
-		T answer = null;
+	public Comparable<?> computeValue(String value, VType type) {
+		Comparable<?> answer = null;
 		if (value != null) {
 			try {
 
-				if (vType == Float.class) {
-					answer = (T) new Float(Float.parseFloat(value));
-				} else if (vType == Integer.class) {
-					answer = (T) Integer.decode(value);
-				} else if (vType == Long.class) {
-					answer = (T) Long.decode(value);
-				} else if (vType == BigInteger.class) {
-					if (MAX_INT_TXT.equals(value)) {
-						if (type == VType.UINT32) {
-							answer = (T) MAX_UINT32;
-						} else if (type == VType.UINT64) {
-							answer = (T) MAX_UINT64;
-						} else {
-							answer = (T) MAX_INT;
-						}
+				switch (type) {
+					case FLOAT : answer = new Float(value); break;
+					case INT32 : answer = Integer.decode(value); break;
+					case INT64 : answer = Long.decode(value); break;
+					case UINT32 :
+					case UINT64 :
+						{
+							if (MAX_INT_TXT.equals(value)) {
+								if (type == VType.UINT32) {
+									answer = MAX_UINT32;
+								} else if (type == VType.UINT64) {
+									answer = MAX_UINT64;
+								} else {
+									answer = MAX_INT;
+								}
 						
-					} else if (value.startsWith("0x")) {
-						answer = (T) new BigInteger(value.substring(2), 16);
-					} else {
-						answer = (T) new BigInteger(value);
-					}
-				} else if (vType == String.class) {
-					answer = (T) value;
-				}
+							} else if (value.startsWith("0x")) {
+								answer = new BigInteger(value.substring(2), 16);
+							} else {
+								answer = new BigInteger(value);
+							}
+						}
+						break;
+					case STRING : answer = value;
+				};
 			} catch (NumberFormatException e) {
 				// if this method is called on a validated model, it should not throw exceptions
 			}
