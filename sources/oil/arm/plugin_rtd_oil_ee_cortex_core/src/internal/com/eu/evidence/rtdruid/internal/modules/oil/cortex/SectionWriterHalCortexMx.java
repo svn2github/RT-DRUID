@@ -73,9 +73,11 @@ public class SectionWriterHalCortexMx extends SectionWriter
 	final protected String CUSTOM_MCU = "CUSTOM";
 	final protected static HashMap<String, Mcu_Model> LPCX_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
 	final protected static HashMap<String, Mcu_Model> STELLARIS_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
+	final protected static HashMap<String, Mcu_Model> STM32_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
 	final protected static LinkedHashSet<String> ISR_LIST = new LinkedHashSet<String>();
 	private static final String LPCX_MCU = "LPCXPRESSO";
 	private static final String STELLARIS_MCU = "STELLARIS";
+	private static final String STM32_MCU = "STM32";
 	
 	static {
 		loadMCU_properties();
@@ -720,6 +722,40 @@ public class SectionWriterHalCortexMx extends SectionWriter
 								mcu_model = model_type;
 							}
 						}
+					} else if (STM32_MCU.equals(mcu_type)) {
+						prefix = "STM32_";
+						// ... and compete it 
+		
+						String[] child = new String[1];
+						String model_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+						
+						/* CUSTOM */
+						if (CUSTOM_MCU.equals(model_type)) {
+							// read also LINKERSCRIPT, DEV_LIB, INCLUDE_C, INCLUDE_S
+							currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+							String[] model = CommonUtils.getValue(vt, currentMcuPrefix+"MODEL");
+							String[] linker = CommonUtils.getValue(vt, currentMcuPrefix+"LINKERSCRIPT");
+							String[] inc_c  = CommonUtils.getValue(vt, currentMcuPrefix+"INCLUDE_C");
+							String[] inc_s  = CommonUtils.getValue(vt, currentMcuPrefix+"INCLUDE_S");
+							String[] startup  = CommonUtils.getValue(vt, currentMcuPrefix+"STARTUP");
+	
+							mcu_properties = new Mcu_Model(
+									CUSTOM_MCU,
+									clean(model),
+									"__"+clean(model)+"__",
+									clean(linker),
+									clean(inc_c),
+									clean(inc_s),
+									clean(startup)
+							);
+							mcu_model = CUSTOM_MCU;
+						} else {
+								/* STANDARD MCU */
+							mcu_properties = STM32_MCU_PROPERTIES.get(model_type);
+							if (mcu_properties != null) {
+								mcu_model = model_type;
+							}
+						}
 					}
 				}
 			}
@@ -865,6 +901,47 @@ public class SectionWriterHalCortexMx extends SectionWriter
 								}
 							}
 						}
+					} else if (STM32_MCU.equals(mcu_type)) {
+						{
+							String t = "__STM32__";
+							if (!ee_opts.contains(t)) {
+								ee_opts.add(t);
+							}
+						}
+		
+						String[] child = new String[1];
+						String model_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+						
+						/* CUSTOM */
+						if (CUSTOM_MCU.equals(model_type)) {
+							
+							// read only MODEL
+							currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+							String model = clean(CommonUtils.getValue(vt, currentMcuPrefix+"MODEL"));
+							if (model != null) {
+								if (!ee_opts.contains("__"+model+"__")) {
+									ee_opts.add("__"+model+"__");
+								}
+								
+								String linkscript = clean(CommonUtils.getValue(vt, currentMcuPrefix+"LINKERSCRIPT"));
+								if (linkscript != null && !ee_opts.contains("__USE_CUSTOM_LINKER_SCRIPT__")) {
+									ee_opts.add("__USE_CUSTOM_LINKER_SCRIPT__");
+								}
+							}
+		
+						} else {
+								/* STANDARD MCU */
+							mcu_properties = STM32_MCU_PROPERTIES.get(model_type);
+							if (mcu_properties != null) {
+								
+								String[] splitted = mcu_properties.ee_opt == null ? new String[0] : mcu_properties.ee_opt.split(" ");
+								for (String t : splitted) {
+									if (!ee_opts.contains(t)) {
+										ee_opts.add(t);
+									}
+								}
+							}
+						}
 					}
 				}
 				
@@ -897,6 +974,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 	protected static void loadMCU_properties() {
 		final String LPCX_MCU_filename = com.eu.evidence.rtdruid.modules.oil.cortex.Activator.TEMPLATES_PATH + "/cortex_lpcx_id.csv";
 		final String STELLARIS_MCU_filename = com.eu.evidence.rtdruid.modules.oil.cortex.Activator.TEMPLATES_PATH + "/cortex_stellaris_id.csv";
+		final String STM32_MCU_filename = com.eu.evidence.rtdruid.modules.oil.cortex.Activator.TEMPLATES_PATH + "/cortex_stm32_id.csv";
 		
 		class PropertyMaker {
 			final char COMMENT = '#';
@@ -958,6 +1036,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 		
 		(new PropertyMaker(LPCX_MCU_PROPERTIES)).loadFile(LPCX_MCU_filename);
 		(new PropertyMaker(STELLARIS_MCU_PROPERTIES)).loadFile(STELLARIS_MCU_filename);
+		(new PropertyMaker(STM32_MCU_PROPERTIES)).loadFile(STM32_MCU_filename);
 	}
 	
 	/**

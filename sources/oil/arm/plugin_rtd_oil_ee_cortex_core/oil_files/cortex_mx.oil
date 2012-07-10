@@ -60,6 +60,18 @@ IMPLEMENTATION ee {
                     },
                     LM4F232xxxx
              	] MODEL;
+       		},
+       		STM32 {
+                ENUM [
+                    CUSTOM {
+                        STRING MODEL;
+						STRING LINKERSCRIPT;
+						STRING INCLUDE_C;
+						STRING INCLUDE_S;
+						STRING STARTUP;
+                    },
+                    STM32F4xx
+             	] MODEL;
        		}
        		
      	] MCU_DATA[];
