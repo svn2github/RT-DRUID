@@ -70,6 +70,8 @@ public class SectionWriterHalCortexMx extends SectionWriter
 
 	private static final String EE_CORTEX_SYSTEM_TIMER_HANDLER = "EE_cortex_system_timer_handler";
 	
+	static final String SGR_OS_CPU_SYS_STACK_SIZE = "sgr__os_cpu_system_stack_size";
+
 	final protected String CUSTOM_MCU = "CUSTOM";
 	final protected static HashMap<String, Mcu_Model> LPCX_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
 	final protected static HashMap<String, Mcu_Model> STELLARIS_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
@@ -247,6 +249,35 @@ public class SectionWriterHalCortexMx extends SectionWriter
 				}
 	
 				sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS, tmp.toArray(new String[tmp.size()]));
+				
+				/***********************************************************************
+				 * 
+				 * System stack size
+				 *  
+				 **********************************************************************/
+				{
+					String[] stack_size = parent.getCpuDataValue(ool, "SYS_STACK_SIZE");
+					if (stack_size != null && stack_size.length>0 && stack_size[0] != null) {
+						
+						boolean valid = false;
+						int value = -1;
+						try {
+							value = Integer.decode(stack_size[0]);
+							valid = true;
+						} catch (NumberFormatException e) {
+							Messages.sendWarningNl("Invalid value for System stack size : " + stack_size[0]);
+						}
+						
+						if (valid && value <0) {
+							Messages.sendWarningNl("System stack size cannot be negative (" + value + ")");
+						} else {
+							
+							sgrCpu.setProperty(SGR_OS_CPU_SYS_STACK_SIZE, ""+value);
+						}
+						
+					}
+
+				}
 			}
 			
 		}
@@ -291,6 +322,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 			
 			// ------------- Requirement --------------------
 			StringBuffer sbInithal_c = answer.get(FILE_EE_CFG_C);
+			StringBuffer sbInithal_h = answer.get(FILE_EE_CFG_H);
 			
 			final IOilObjectList ool = oilObjects[currentRtosId];
 			final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
@@ -313,7 +345,19 @@ public class SectionWriterHalCortexMx extends SectionWriter
 			counterHwWriter.writeCounterHw(currentRtosId, ool, answer);
 			
 			sbInithal_c.append("\n#include \"ee.h\"\n");
-	
+
+			
+			/***********************************************************************
+			 * SYSTEM STACK SIZE
+			 **********************************************************************/
+			{
+				String s = AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE); 
+				if (s != null) {
+					sbInithal_h.append(getCommentWriter(ool, FileTypes.H).writerBanner("System stack size") + 
+								"#define EE_SYS_STACK_SIZE     " + s + "\n\n");
+				}
+			}
+			
 	//		/***********************************************************************
 	//         * 
 	//         * EE OPTS

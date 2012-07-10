@@ -718,4 +718,133 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	
+	@Test
+	public void testCortex_multiLibsSysStack() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {\n" +
+			"\n" +
+			"		EE_OPT = \"DEBUG\";\n" +
+			"		EE_OPT = \"__ASSERT__\";\n" +
+			"\n" +
+			"		CPU_DATA = CORTEX_MX {\n" +
+			"			MODEL = M4;\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			APP_SRC = \"Dio_Cfg.c\";\n" +
+			"			APP_SRC = \"Icu_Cfg.c\";\n" +
+			"			APP_SRC = \"Mcu_Cfg.c\";\n" +
+			"			APP_SRC = \"Port_Cfg.c\";\n" +
+			"			COMPILER_TYPE = KEIL;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"			SYS_STACK_SIZE = 0xFFFF;\n" +			
+			"		};\n" +
+			"		\n" +
+			"\n" +
+			"		MCU_DATA = STELLARIS {\n" +
+			"			MODEL = LM4F232xxxx;\n" +
+			"		};\n" +
+			"\n" +
+			"		EE_OPT = \"__AUTOSAR_R4_0__\";\n" +
+			"		EE_OPT = \"__AS_DIO_DRIVER__\";\n" +
+			"		EE_OPT = \"__AS_MCU_DRIVER__\";\n" +
+			"		EE_OPT = \"__AS_PORT_DRIVER__\";\n" +
+			"\n" +
+			"		EE_OPT = \"__AS_ICU_DRIVER__\";\n" +
+			"\n" +
+			"		/*\n" +
+			"		 * Used to build separate libas.a and libassg.a without\n" +
+			"		 * configuration.\n" +
+			"		 */\n" +
+			"		EE_OPT = \"__ADD_LIBS__\";\n" +
+			"		LIB = ENABLE {\n" +
+			"			NAME = \"AUTOSAR\";\n" +
+			"		};\n" +
+			"		LIB = ENABLE {\n" +
+			"			NAME = \"AUTOSAR_SSG\";\n" +
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"\n" +
+			"		KERNEL_TYPE = FP;\n" +
+			"\n" +
+			"	};\n" +
+			"\n" +
+			"	/* this is the OIL part for the task */\n" +
+			"	TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		SCHEDULE = FULL;\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"		STACK = SHARED;\n" +
+			"	};\n" +
+			"\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+
+	
+	@Test
+	public void testM4KeilStm32SyStack() {
+	    final String text =
+	    		"CPU mySystem {\n"+
+	    				"\n"+
+	    				"	OS myOs {\n"+
+	    				"\n"+
+	    				"		EE_OPT = \"DEBUG\";\n"+
+	    				"		EE_OPT = \"__ASSERT__\";\n"+
+	    				"\n"+
+	    				"		CPU_DATA = CORTEX_MX {\n"+
+	    				"			MODEL = M4;\n"+
+	    				"			APP_SRC = \"code.c\";\n"+
+	    				"			COMPILER_TYPE = KEIL; \n"+
+	    				"			MULTI_STACK = FALSE;\n"+
+	    				"			SYS_STACK_SIZE = 4000;\n" +			
+	    				"		};\n"+
+	    				"\n"+
+	    				"		MCU_DATA = STM32 {\n"+
+	    				"			MODEL = STM32F4xx;\n"+
+	    				"		};\n"+
+	    				"\n"+
+	    				"		EE_OPT = \"__USE_USER_LED__\";\n"+
+	    				"		EE_OPT = \"__USE_SYSTICK__\";\n"+
+	    				"\n"+
+	    				"		STATUS = EXTENDED;\n"+
+	    				"		STARTUPHOOK = FALSE;\n"+
+	    				"		ERRORHOOK = FALSE;\n"+
+	    				"		SHUTDOWNHOOK = FALSE;\n"+
+	    				"		PRETASKHOOK = FALSE;\n"+
+	    				"		POSTTASKHOOK = FALSE;\n"+
+	    				"		USEGETSERVICEID = FALSE;\n"+
+	    				"		USEPARAMETERACCESS = FALSE;\n"+
+	    				"		USERESSCHEDULER = FALSE;\n"+
+	    				"\n"+
+	    				"		KERNEL_TYPE = FP;\n"+
+	    				"\n"+
+	    				"	};\n"+
+	    				"\n"+
+	    				"	TASK Task1 {\n"+
+	    				"		PRIORITY = 0x01;   /* Low priority */\n"+
+	    				"		AUTOSTART = FALSE;\n"+
+	    				"		STACK = SHARED;\n"+
+	    				"		ACTIVATION = 1;    /* only one pending activation */\n"+
+	    				"	};\n"+
+	    				"\n"+
+	    				"	ISR systick_handler {\n"+
+	    				"	  CATEGORY = 2;\n"+
+	    				"	  ENTRY = \"SYSTICK\";\n"+
+	    				"	};\n"+
+	    				"\n"+
+	    				"};";
+		commonWriterTest(text, 1);
+	}
+
 }
