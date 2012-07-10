@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import org.eclipse.core.runtime.IStatus;
+import org.junit.Assume;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -324,8 +325,7 @@ public class AutosarOilWriterTests {
 	
 	
 	public static DefaultTestResult[] writerAutosarTest(DirectWriter test, String oil_text, int expected_cpu) {
-		System.out.println("Ciao");
-		System.out.flush();
+		checkIfAutosarIsAvailable();
 		DefaultTestResult[] answer = new DefaultTestResult[2];
 		IVarTree vt1 = AbstractCodeWriterTest.loadVt(oil_text);
 		answer[0] = test.doWrite(oil_text, expected_cpu);
@@ -353,28 +353,7 @@ public class AutosarOilWriterTests {
 	
 	
 	public static DefaultTestResult commonAutosarWriterTest(DirectWriter test, String oil_text, int expected_cpu) throws Throwable {
-		{
-			String[] exp =RTD_XMI_Factory.getAllExportTypes(); 
-			assertNotNull(exp);
-			boolean ok = false;
-			for (String s: exp) {
-				if ("arxml".equalsIgnoreCase(s)) {
-					ok = true;
-				}
-			}
-			assertTrue("arxml file export is not supported", ok);
-		}
-		{
-			String[] exp =RTD_XMI_Factory.getAllImportTypes(); 
-			assertNotNull(exp);
-			boolean ok = false;
-			for (String s: exp) {
-				if ("arxml".equalsIgnoreCase(s)) {
-					ok = true;
-				}
-			}
-			assertTrue("arxml file import is not supported", ok);
-		}
+		checkIfAutosarIsAvailable();
 		
 		
 		// convert OIL to AUTOSAR
@@ -419,6 +398,39 @@ public class AutosarOilWriterTests {
 		
 		return answer;
 		
+	}
+
+
+
+
+	/**
+	 * 
+	 */
+	protected static void checkIfAutosarIsAvailable() {
+		{
+			String[] exp =RTD_XMI_Factory.getAllExportTypes(); 
+			assertNotNull(exp);
+			boolean ok = false;
+			for (String s: exp) {
+				if ("arxml".equalsIgnoreCase(s)) {
+					ok = true;
+				}
+			}
+			// "arxml file export is not supported"
+			Assume.assumeTrue(ok);
+		}
+		{
+			String[] exp =RTD_XMI_Factory.getAllImportTypes(); 
+			assertNotNull(exp);
+			boolean ok = false;
+			for (String s: exp) {
+				if ("arxml".equalsIgnoreCase(s)) {
+					ok = true;
+				}
+			}
+			// "arxml file import is not supported"
+			Assume.assumeTrue(ok);
+		}
 	}
 
 }
