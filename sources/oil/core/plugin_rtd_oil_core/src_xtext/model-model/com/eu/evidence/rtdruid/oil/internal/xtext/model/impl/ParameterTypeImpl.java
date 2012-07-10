@@ -414,17 +414,17 @@ public abstract class ParameterTypeImpl extends EObjectImpl implements Parameter
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (Name: ");
+		result.append(" (name: ");
 		result.append(name);
-		result.append(", DefaultValue: ");
+		result.append(", defaultValue: ");
 		result.append(defaultValue);
-		result.append(", MultiValue: ");
+		result.append(", multiValue: ");
 		result.append(multiValue);
-		result.append(", WithAuto: ");
+		result.append(", withAuto: ");
 		result.append(withAuto);
-		result.append(", Description: ");
+		result.append(", description: ");
 		result.append(description);
-		result.append(", DefaultAuto: ");
+		result.append(", defaultAuto: ");
 		result.append(defaultAuto);
 		result.append(')');
 		return result.toString();

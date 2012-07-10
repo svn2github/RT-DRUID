@@ -81,8 +81,8 @@ public class OilObjectImplItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OilObjectImpl_Type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OilObjectImpl_Type_feature", "_UI_OilObjectImpl_type"),
+				 getString("_UI_OilObjectImpl_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OilObjectImpl_type_feature", "_UI_OilObjectImpl_type"),
 				 OilPackage.Literals.OIL_OBJECT_IMPL__TYPE,
 				 true,
 				 false,
@@ -103,8 +103,8 @@ public class OilObjectImplItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OilObjectImpl_Description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OilObjectImpl_Description_feature", "_UI_OilObjectImpl_type"),
+				 getString("_UI_OilObjectImpl_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OilObjectImpl_description_feature", "_UI_OilObjectImpl_type"),
 				 OilPackage.Literals.OIL_OBJECT_IMPL__DESCRIPTION,
 				 true,
 				 false,

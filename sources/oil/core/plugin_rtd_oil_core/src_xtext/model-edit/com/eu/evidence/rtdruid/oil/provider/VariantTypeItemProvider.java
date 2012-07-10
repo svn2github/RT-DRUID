@@ -76,8 +76,8 @@ public class VariantTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_VariantType_Type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VariantType_Type_feature", "_UI_VariantType_type"),
+				 getString("_UI_VariantType_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_VariantType_type_feature", "_UI_VariantType_type"),
 				 OilPackage.Literals.VARIANT_TYPE__TYPE,
 				 true,
 				 false,

@@ -83,8 +83,8 @@ public class ParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Parameter_Description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Parameter_Description_feature", "_UI_Parameter_type"),
+				 getString("_UI_Parameter_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Parameter_description_feature", "_UI_Parameter_type"),
 				 OilPackage.Literals.PARAMETER__DESCRIPTION,
 				 true,
 				 false,
@@ -127,8 +127,8 @@ public class ParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Parameter_Auto_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Parameter_Auto_feature", "_UI_Parameter_type"),
+				 getString("_UI_Parameter_auto_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Parameter_auto_feature", "_UI_Parameter_type"),
 				 OilPackage.Literals.PARAMETER__AUTO,
 				 true,
 				 false,
@@ -149,8 +149,8 @@ public class ParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Parameter_Value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Parameter_Value_feature", "_UI_Parameter_type"),
+				 getString("_UI_Parameter_value_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Parameter_value_feature", "_UI_Parameter_type"),
 				 OilPackage.Literals.PARAMETER__VALUE,
 				 true,
 				 false,

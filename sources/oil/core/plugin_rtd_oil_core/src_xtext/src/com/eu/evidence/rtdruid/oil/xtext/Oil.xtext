@@ -9,29 +9,29 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 OilFile:
 	{OilFile}
-	("OIL_VERSION" "=" OilVersion=STRING ";")?
+	("OIL_VERSION" "=" oilVersion=STRING ";")?
 	(Implementation = OilImplementation)?
 	(Application = OilApplication)?
 ;
 
 OilImplementation :
-	"IMPLEMENTATION" Name = ID "{" (OilObjects+=OilObjectImpl)* "}" ";"
+	"IMPLEMENTATION" name = ID "{" (OilObjects+=OilObjectImpl)* "}" ";"
 	// (":" description=STRING)? 
 ;
 
 
 OilObjectImpl :
-	Type=ObjectType "{" 
+	type=ObjectType "{" 
 		(Parameters+=ParameterType)*
-	 "}" (":" Description=STRING)? ";"
+	 "}" (":" description=STRING)? ";"
 ;
 
 
 
 OilApplication :
-	"CPU" Name=ID "{"
+	"CPU" name=ID "{"
 		(OilObjects+=OilObject)*
-	"}" (":" Description=STRING)? ";"
+	"}" (":" description=STRING)? ";"
 ;
 
 ParameterType returns ParameterType:
@@ -43,71 +43,71 @@ ValidValues:
 
 ValueList: 
 	{ValueList}
-	Values+=GenericNumber ( "," Values+=GenericNumber)*
+	values+=GenericNumber ( "," values+=GenericNumber)*
 ;
 
 Range :
 	{Range}
-	Min=GenericNumber ".."  Max=GenericNumber
+	min=GenericNumber ".."  max=GenericNumber
 ;
 
 
 ValueType returns ValueType:
 	{ValueType}
-	Type=VType
-	(WithAuto?='WITH_AUTO')?
+	type=VType
+	(withAuto?='WITH_AUTO')?
 	("[" ValidValues =ValidValues "]")?
-	Name= SpecialId
-	(MultiValue?='[]')?
-	('=' (=> DefaultAuto?="AUTO" | DefaultValue=(GenericValue|ID)))?
-	(':' Description=STRING)?
+	name= SpecialId
+	(multiValue?='[]')?
+	('=' (=> defaultAuto?="AUTO" | defaultValue=(GenericValue|ID)))?
+	(':' description=STRING)?
 	";"
 ;
 
 VariantType returns VariantType:
 	{VariantType}
-	Type=EType
-	(WithAuto?='WITH_AUTO')?
+	type=EType
+	(withAuto?='WITH_AUTO')?
 	('['
 		(Values+=EnumeratorType ( "," Values+=EnumeratorType)* )?
     ']')?
-	Name= SpecialId
-	(MultiValue?='[]')?
-    ('=' (=> DefaultAuto?="AUTO" | DefaultValue=ID))?
-	(':' Description=STRING)?
+	name= SpecialId
+	(multiValue?='[]')?
+    ('=' (=> defaultAuto?="AUTO" | defaultValue=ID))?
+	(':' description=STRING)?
 	";"
     ;
    
 EnumeratorType returns EnumeratorType:
 	{EnumeratorType}
-	Name= SpecialId
+	name= SpecialId
 	('{' (Parameters+=ParameterType)*  '}')?
-	(':' Description=STRING)?
+	(':' description=STRING)?
 ;
 
 ReferenceType returns ReferenceType:
 	{ReferenceType}
-	Type=ObjectTypeRef
-	Name= SpecialId
-	(MultiValue?='[]')?
-	('=' (=> DefaultAuto?="AUTO" | DefaultValue=(ID)))?
-	(':' Description=STRING)?
+	type=ObjectTypeRef
+	name= SpecialId
+	(multiValue?='[]')?
+	('=' (=> defaultAuto?="AUTO" | defaultValue=(ID)))?
+	(':' description=STRING)?
 	";"
     ;
 
 OilObject :
-	Type=ObjectType Name=ID 
+	type=ObjectType name=ID 
 	("{" (Parameters+=Parameter)* "}")?
-	(':' Description=STRING)?
+	(':' description=STRING)?
 	";"
 ;
 
 Parameter returns Parameter:
 	{Parameter}
 	Type=[ParameterType|SpecialId]
-	'=' ( => Auto?="AUTO" | Value= GenericValue | ValueRef=[ParameterRef|SpecialId] )
+	'=' ( => auto?="AUTO" | value= GenericValue | ValueRef=[ParameterRef|SpecialId] )
 	("{" (Parameters+=Parameter)* "}")?
-	(':' Description=STRING)?
+	(':' description=STRING)?
 	";"
 ;
 
@@ -117,21 +117,21 @@ Parameter returns Parameter:
 //Value returns Value:
 //	{Value}
 //	Type=[ValueType|ID]
-////	Name=ID
+////	name=ID
 //	'=' ( => Auto?="AUTO" | => Value=GenericValue )
-//	(':' Description=STRING)?
+//	(':' description=STRING)?
 //	";"
 //;
 //
 //VariantReference returns VariantReference:
 //	{VariantReference}
 //	Type=[ParameterType|ID]
-////	Name=ID
+////	name=ID
 //	"=" ( => Auto?="AUTO" | Value=[ParameterRef|ID])
 //	(Structured?='{'
 //		(Parameters+=Parameter ( "," Parameters+=Parameter)* )?
 //    '}')?
-//	(':' Description=STRING)?
+//	(':' description=STRING)?
 //	";"
 //;
 
@@ -139,21 +139,21 @@ Parameter returns Parameter:
 Enumerator returns Enumerator:
 	{Enumerator}
 	Type=[ParameterType|EString]
-//	Name=ID
+//	name=ID
 	"=" Value=[EnumeratorType|EString]
 	('{'
 		(Parameters+=Parameter ( "," Parameters+=Parameter)* )?
     '}')?
-	(':' Description=STRING)?
+	(':' description=STRING)?
 	";"
 ;*/
 
 //Reference returns Reference:
 //	{Reference}
 //	Type=[ReferenceType|ID]
-////	Name=ID
+////	name=ID
 //	'=' (=> Value=[OilObject|ID])
-//	(':' Description=STRING)?
+//	(':' description=STRING)?
 //	";"
 //    ;
 

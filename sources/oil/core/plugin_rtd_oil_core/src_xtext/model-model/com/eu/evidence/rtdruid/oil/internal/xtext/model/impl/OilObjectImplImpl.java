@@ -266,9 +266,9 @@ public class OilObjectImplImpl extends EObjectImpl implements OilObjectImpl {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (Type: ");
+		result.append(" (type: ");
 		result.append(type);
-		result.append(", Description: ");
+		result.append(", description: ");
 		result.append(description);
 		result.append(')');
 		return result.toString();

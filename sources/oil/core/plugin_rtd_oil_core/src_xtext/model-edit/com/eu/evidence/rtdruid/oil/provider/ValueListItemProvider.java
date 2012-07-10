@@ -76,8 +76,8 @@ public class ValueListItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueList_Values_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueList_Values_feature", "_UI_ValueList_type"),
+				 getString("_UI_ValueList_values_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueList_values_feature", "_UI_ValueList_type"),
 				 OilPackage.Literals.VALUE_LIST__VALUES,
 				 true,
 				 false,

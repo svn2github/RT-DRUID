@@ -302,7 +302,7 @@ public class OilFileImpl extends EObjectImpl implements OilFile {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (OilVersion: ");
+		result.append(" (oilVersion: ");
 		result.append(oilVersion);
 		result.append(')');
 		return result.toString();

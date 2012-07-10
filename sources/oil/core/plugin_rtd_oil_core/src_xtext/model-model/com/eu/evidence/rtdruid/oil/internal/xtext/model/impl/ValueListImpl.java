@@ -140,7 +140,7 @@ public class ValueListImpl extends EObjectImpl implements ValueList {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (Values: ");
+		result.append(" (values: ");
 		result.append(values);
 		result.append(')');
 		return result.toString();

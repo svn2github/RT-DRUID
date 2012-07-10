@@ -79,8 +79,8 @@ public class OilFileItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OilFile_OilVersion_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OilFile_OilVersion_feature", "_UI_OilFile_type"),
+				 getString("_UI_OilFile_oilVersion_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OilFile_oilVersion_feature", "_UI_OilFile_type"),
 				 OilPackage.Literals.OIL_FILE__OIL_VERSION,
 				 true,
 				 false,

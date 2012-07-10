@@ -4,15 +4,15 @@
     <children xmi:type="notation:Node" xmi:id="_eGv3w7VIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eGv3xLVIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eGv3zLVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObject/Name"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObject/name"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eGv3zbVIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_eGv3zrVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObject/Type"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObject/type"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eGv3z7VIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_eGv30LVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObject/Description"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObject/description"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eGv30bVIEeGVUZKdMZRAJQ"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eGv3xbVIEeGVUZKdMZRAJQ"/>
@@ -32,15 +32,15 @@
     <children xmi:type="notation:Node" xmi:id="_eGv31bVIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eGv31rVIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eGv34LVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Parameter/Description"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Parameter/description"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eGv34bVIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_w2e34LVJEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Parameter/Auto"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Parameter/auto"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_w2e34bVJEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_ttyCULq_EeGf9PsxEKit3A" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Parameter/Value"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Parameter/value"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_ttyCUbq_EeGf9PsxEKit3A"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eGv317VIEeGVUZKdMZRAJQ"/>
@@ -127,11 +127,11 @@
     <children xmi:type="notation:Node" xmi:id="_eG5B7bVIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eG5B7rVIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eG5B9rVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilApplication/Name"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilApplication/name"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eG5B97VIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_eG5B-LVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilApplication/Description"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilApplication/description"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eG5B-bVIEeGVUZKdMZRAJQ"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eG5B77VIEeGVUZKdMZRAJQ"/>
@@ -151,7 +151,7 @@
     <children xmi:type="notation:Node" xmi:id="_eG5B_bVIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eG5B_rVIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eHCytLVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilImplementation/Name"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilImplementation/name"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCytbVIEeGVUZKdMZRAJQ"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eG5B_7VIEeGVUZKdMZRAJQ"/>
@@ -171,11 +171,11 @@
     <children xmi:type="notation:Node" xmi:id="_eHCyubVIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eHCyurVIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eHCywrVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObjectImpl/Type"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObjectImpl/type"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCyw7VIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_eHCyxLVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObjectImpl/Description"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilObjectImpl/description"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCyxbVIEeGVUZKdMZRAJQ"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eHCyu7VIEeGVUZKdMZRAJQ"/>
@@ -195,27 +195,27 @@
     <children xmi:type="notation:Node" xmi:id="_eHCyybVIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eHCyyrVIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eHCy0rVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/Name"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/name"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCy07VIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_eHCy1LVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/DefaultValue"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/defaultValue"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCy1bVIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_eHCy1rVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/MultiValue"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/multiValue"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCy17VIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_eHCy2LVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/WithAuto"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/withAuto"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCy2bVIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_eHCy2rVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/Description"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/description"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCy27VIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_nqJQgLxiEeG7OuXi1bW1FA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/DefaultAuto"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ParameterType/defaultAuto"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_nqJQgbxiEeG7OuXi1bW1FA"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eHCyy7VIEeGVUZKdMZRAJQ"/>
@@ -235,7 +235,7 @@
     <children xmi:type="notation:Node" xmi:id="_eHCy37VIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eHCy4LVIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eHCy6LVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ValueType/Type"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ValueType/type"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCy6bVIEeGVUZKdMZRAJQ"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eHCy4bVIEeGVUZKdMZRAJQ"/>
@@ -255,11 +255,11 @@
     <children xmi:type="notation:Node" xmi:id="_eHCy7bVIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eHCy7rVIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eHCy9rVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//EnumeratorType/Name"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//EnumeratorType/name"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCy97VIEeGVUZKdMZRAJQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_KrvokLuTEeGf9PsxEKit3A" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//EnumeratorType/Description"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//EnumeratorType/description"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_KrvokbuTEeGf9PsxEKit3A"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eHCy77VIEeGVUZKdMZRAJQ"/>
@@ -279,7 +279,7 @@
     <children xmi:type="notation:Node" xmi:id="_eHCy-7VIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eHCy_LVIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eHCzBLVIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//VariantType/Type"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//VariantType/type"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHCzBbVIEeGVUZKdMZRAJQ"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eHCy_bVIEeGVUZKdMZRAJQ"/>
@@ -329,7 +329,7 @@
     <children xmi:type="notation:Node" xmi:id="_eHL8zrVIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eHL8z7VIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_FAMowL4JEeGFxc-rjhfx6Q" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilFile/OilVersion"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//OilFile/oilVersion"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_FAMowb4JEeGFxc-rjhfx6Q"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eHL80LVIEeGVUZKdMZRAJQ"/>
@@ -349,7 +349,7 @@
     <children xmi:type="notation:Node" xmi:id="_eHL82rVIEeGVUZKdMZRAJQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_eHL827VIEeGVUZKdMZRAJQ" type="5001">
       <children xmi:type="notation:Node" xmi:id="_eHL847VIEeGVUZKdMZRAJQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ReferenceType/Type"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ReferenceType/type"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eHL85LVIEeGVUZKdMZRAJQ"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eHL83LVIEeGVUZKdMZRAJQ"/>
@@ -428,11 +428,11 @@
     <children xmi:type="notation:Node" xmi:id="_wgmH0MaqEeGebcXlebKgyg" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_wgmH0caqEeGebcXlebKgyg" type="5001">
       <children xmi:type="notation:Node" xmi:id="_xldeIMaqEeGebcXlebKgyg" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Range/Min"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Range/min"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_xldeIcaqEeGebcXlebKgyg"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_zu1lcMaqEeGebcXlebKgyg" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Range/Max"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//Range/max"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_zu1lccaqEeGebcXlebKgyg"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_wgmu4MaqEeGebcXlebKgyg"/>
@@ -452,7 +452,7 @@
     <children xmi:type="notation:Node" xmi:id="_53088MaqEeGebcXlebKgyg" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_53088caqEeGebcXlebKgyg" type="5001">
       <children xmi:type="notation:Node" xmi:id="_Dbsf4MarEeGebcXlebKgyg" type="2001">
-        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ValueList/Values"/>
+        <element xmi:type="ecore:EAttribute" href="osek_simple.ecore#//ValueList/values"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_Dbsf4carEeGebcXlebKgyg"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_53088saqEeGebcXlebKgyg"/>

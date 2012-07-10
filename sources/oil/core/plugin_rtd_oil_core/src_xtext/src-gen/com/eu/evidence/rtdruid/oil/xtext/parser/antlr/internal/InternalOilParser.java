@@ -169,13 +169,13 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOilFile"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:77:1: ruleOilFile returns [EObject current=null] : ( () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_OilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )? ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:77:1: ruleOilFile returns [EObject current=null] : ( () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_oilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )? ) ;
     public final EObject ruleOilFile() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
         Token otherlv_2=null;
-        Token lv_OilVersion_3_0=null;
+        Token lv_oilVersion_3_0=null;
         Token otherlv_4=null;
         EObject lv_Implementation_5_0 = null;
 
@@ -185,11 +185,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:80:28: ( ( () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_OilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )? ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:81:1: ( () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_OilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )? )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:80:28: ( ( () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_oilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )? ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:81:1: ( () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_oilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )? )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:81:1: ( () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_OilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )? )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:81:2: () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_OilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:81:1: ( () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_oilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )? )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:81:2: () (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_oilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )? ( (lv_Implementation_5_0= ruleOilImplementation ) )? ( (lv_Application_6_0= ruleOilApplication ) )?
             {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:81:2: ()
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:82:5: 
@@ -204,7 +204,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:87:2: (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_OilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:87:2: (otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_oilVersion_3_0= RULE_STRING ) ) otherlv_4= ';' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -213,7 +213,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt1) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:87:4: otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_OilVersion_3_0= RULE_STRING ) ) otherlv_4= ';'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:87:4: otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_oilVersion_3_0= RULE_STRING ) ) otherlv_4= ';'
                     {
                     otherlv_1=(Token)match(input,13,FollowSets000.FOLLOW_13_in_ruleOilFile132); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -227,16 +227,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_2, grammarAccess.getOilFileAccess().getEqualsSignKeyword_1_1());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:95:1: ( (lv_OilVersion_3_0= RULE_STRING ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:96:1: (lv_OilVersion_3_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:95:1: ( (lv_oilVersion_3_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:96:1: (lv_oilVersion_3_0= RULE_STRING )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:96:1: (lv_OilVersion_3_0= RULE_STRING )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:97:3: lv_OilVersion_3_0= RULE_STRING
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:96:1: (lv_oilVersion_3_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:97:3: lv_oilVersion_3_0= RULE_STRING
                     {
-                    lv_OilVersion_3_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleOilFile161); if (state.failed) return current;
+                    lv_oilVersion_3_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleOilFile161); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_OilVersion_3_0, grammarAccess.getOilFileAccess().getOilVersionSTRINGTerminalRuleCall_1_2_0()); 
+                      			newLeafNode(lv_oilVersion_3_0, grammarAccess.getOilFileAccess().getOilVersionSTRINGTerminalRuleCall_1_2_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -246,8 +246,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"OilVersion",
-                              		lv_OilVersion_3_0, 
+                             			"oilVersion",
+                              		lv_oilVersion_3_0, 
                               		"STRING");
                       	    
                     }
@@ -424,12 +424,12 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOilImplementation"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:170:1: ruleOilImplementation returns [EObject current=null] : (otherlv_0= 'IMPLEMENTATION' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';' ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:170:1: ruleOilImplementation returns [EObject current=null] : (otherlv_0= 'IMPLEMENTATION' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';' ) ;
     public final EObject ruleOilImplementation() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token lv_Name_1_0=null;
+        Token lv_name_1_0=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
@@ -439,11 +439,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:173:28: ( (otherlv_0= 'IMPLEMENTATION' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:174:1: (otherlv_0= 'IMPLEMENTATION' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:173:28: ( (otherlv_0= 'IMPLEMENTATION' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:174:1: (otherlv_0= 'IMPLEMENTATION' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';' )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:174:1: (otherlv_0= 'IMPLEMENTATION' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:174:3: otherlv_0= 'IMPLEMENTATION' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:174:1: (otherlv_0= 'IMPLEMENTATION' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:174:3: otherlv_0= 'IMPLEMENTATION' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';'
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleOilImplementation307); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -451,16 +451,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_0, grammarAccess.getOilImplementationAccess().getIMPLEMENTATIONKeyword_0());
                   
             }
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:178:1: ( (lv_Name_1_0= RULE_ID ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:179:1: (lv_Name_1_0= RULE_ID )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:178:1: ( (lv_name_1_0= RULE_ID ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:179:1: (lv_name_1_0= RULE_ID )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:179:1: (lv_Name_1_0= RULE_ID )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:180:3: lv_Name_1_0= RULE_ID
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:179:1: (lv_name_1_0= RULE_ID )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:180:3: lv_name_1_0= RULE_ID
             {
-            lv_Name_1_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleOilImplementation324); if (state.failed) return current;
+            lv_name_1_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleOilImplementation324); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_Name_1_0, grammarAccess.getOilImplementationAccess().getNameIDTerminalRuleCall_1_0()); 
+              			newLeafNode(lv_name_1_0, grammarAccess.getOilImplementationAccess().getNameIDTerminalRuleCall_1_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -470,8 +470,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		setWithLastConsumed(
                      			current, 
-                     			"Name",
-                      		lv_Name_1_0, 
+                     			"name",
+                      		lv_name_1_0, 
                       		"ID");
               	    
             }
@@ -615,16 +615,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOilObjectImpl"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:243:1: ruleOilObjectImpl returns [EObject current=null] : ( ( (lv_Type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_Description_5_0= RULE_STRING ) ) )? otherlv_6= ';' ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:243:1: ruleOilObjectImpl returns [EObject current=null] : ( ( (lv_type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_description_5_0= RULE_STRING ) ) )? otherlv_6= ';' ) ;
     public final EObject ruleOilObjectImpl() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
-        Token lv_Description_5_0=null;
+        Token lv_description_5_0=null;
         Token otherlv_6=null;
-        Enumerator lv_Type_0_0 = null;
+        Enumerator lv_type_0_0 = null;
 
         EObject lv_Parameters_2_0 = null;
 
@@ -632,17 +632,17 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:246:28: ( ( ( (lv_Type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_Description_5_0= RULE_STRING ) ) )? otherlv_6= ';' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:247:1: ( ( (lv_Type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_Description_5_0= RULE_STRING ) ) )? otherlv_6= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:246:28: ( ( ( (lv_type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_description_5_0= RULE_STRING ) ) )? otherlv_6= ';' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:247:1: ( ( (lv_type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_description_5_0= RULE_STRING ) ) )? otherlv_6= ';' )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:247:1: ( ( (lv_Type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_Description_5_0= RULE_STRING ) ) )? otherlv_6= ';' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:247:2: ( (lv_Type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_Description_5_0= RULE_STRING ) ) )? otherlv_6= ';'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:247:1: ( ( (lv_type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_description_5_0= RULE_STRING ) ) )? otherlv_6= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:247:2: ( (lv_type_0_0= ruleObjectType ) ) otherlv_1= '{' ( (lv_Parameters_2_0= ruleParameterType ) )* otherlv_3= '}' (otherlv_4= ':' ( (lv_description_5_0= RULE_STRING ) ) )? otherlv_6= ';'
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:247:2: ( (lv_Type_0_0= ruleObjectType ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:248:1: (lv_Type_0_0= ruleObjectType )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:247:2: ( (lv_type_0_0= ruleObjectType ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:248:1: (lv_type_0_0= ruleObjectType )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:248:1: (lv_Type_0_0= ruleObjectType )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:249:3: lv_Type_0_0= ruleObjectType
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:248:1: (lv_type_0_0= ruleObjectType )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:249:3: lv_type_0_0= ruleObjectType
             {
             if ( state.backtracking==0 ) {
                
@@ -650,7 +650,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleObjectType_in_ruleOilObjectImpl479);
-            lv_Type_0_0=ruleObjectType();
+            lv_type_0_0=ruleObjectType();
 
             state._fsp--;
             if (state.failed) return current;
@@ -661,8 +661,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Type",
-                      		lv_Type_0_0, 
+                     			"type",
+                      		lv_type_0_0, 
                       		"ObjectType");
               	        afterParserOrEnumRuleCall();
               	    
@@ -738,7 +738,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_3, grammarAccess.getOilObjectImplAccess().getRightCurlyBracketKeyword_3());
                   
             }
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:291:1: (otherlv_4= ':' ( (lv_Description_5_0= RULE_STRING ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:291:1: (otherlv_4= ':' ( (lv_description_5_0= RULE_STRING ) ) )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -747,7 +747,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt6) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:291:3: otherlv_4= ':' ( (lv_Description_5_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:291:3: otherlv_4= ':' ( (lv_description_5_0= RULE_STRING ) )
                     {
                     otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilObjectImpl538); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -755,16 +755,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_4, grammarAccess.getOilObjectImplAccess().getColonKeyword_4_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:295:1: ( (lv_Description_5_0= RULE_STRING ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:296:1: (lv_Description_5_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:295:1: ( (lv_description_5_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:296:1: (lv_description_5_0= RULE_STRING )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:296:1: (lv_Description_5_0= RULE_STRING )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:297:3: lv_Description_5_0= RULE_STRING
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:296:1: (lv_description_5_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:297:3: lv_description_5_0= RULE_STRING
                     {
-                    lv_Description_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleOilObjectImpl555); if (state.failed) return current;
+                    lv_description_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleOilObjectImpl555); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_Description_5_0, grammarAccess.getOilObjectImplAccess().getDescriptionSTRINGTerminalRuleCall_4_1_0()); 
+                      			newLeafNode(lv_description_5_0, grammarAccess.getOilObjectImplAccess().getDescriptionSTRINGTerminalRuleCall_4_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -774,8 +774,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"Description",
-                              		lv_Description_5_0, 
+                             			"description",
+                              		lv_description_5_0, 
                               		"STRING");
                       	    
                     }
@@ -860,16 +860,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOilApplication"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:334:1: ruleOilApplication returns [EObject current=null] : (otherlv_0= 'CPU' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';' ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:334:1: ruleOilApplication returns [EObject current=null] : (otherlv_0= 'CPU' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';' ) ;
     public final EObject ruleOilApplication() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token lv_Name_1_0=null;
+        Token lv_name_1_0=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
-        Token lv_Description_6_0=null;
+        Token lv_description_6_0=null;
         Token otherlv_7=null;
         EObject lv_OilObjects_3_0 = null;
 
@@ -877,11 +877,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:337:28: ( (otherlv_0= 'CPU' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:338:1: (otherlv_0= 'CPU' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:337:28: ( (otherlv_0= 'CPU' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:338:1: (otherlv_0= 'CPU' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';' )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:338:1: (otherlv_0= 'CPU' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:338:3: otherlv_0= 'CPU' ( (lv_Name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:338:1: (otherlv_0= 'CPU' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:338:3: otherlv_0= 'CPU' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';'
             {
             otherlv_0=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleOilApplication657); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -889,16 +889,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_0, grammarAccess.getOilApplicationAccess().getCPUKeyword_0());
                   
             }
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:342:1: ( (lv_Name_1_0= RULE_ID ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:343:1: (lv_Name_1_0= RULE_ID )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:342:1: ( (lv_name_1_0= RULE_ID ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:343:1: (lv_name_1_0= RULE_ID )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:343:1: (lv_Name_1_0= RULE_ID )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:344:3: lv_Name_1_0= RULE_ID
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:343:1: (lv_name_1_0= RULE_ID )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:344:3: lv_name_1_0= RULE_ID
             {
-            lv_Name_1_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleOilApplication674); if (state.failed) return current;
+            lv_name_1_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleOilApplication674); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_Name_1_0, grammarAccess.getOilApplicationAccess().getNameIDTerminalRuleCall_1_0()); 
+              			newLeafNode(lv_name_1_0, grammarAccess.getOilApplicationAccess().getNameIDTerminalRuleCall_1_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -908,8 +908,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		setWithLastConsumed(
                      			current, 
-                     			"Name",
-                      		lv_Name_1_0, 
+                     			"name",
+                      		lv_name_1_0, 
                       		"ID");
               	    
             }
@@ -984,7 +984,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_4, grammarAccess.getOilApplicationAccess().getRightCurlyBracketKeyword_4());
                   
             }
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:386:1: (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:386:1: (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -993,7 +993,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt8) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:386:3: otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:386:3: otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) )
                     {
                     otherlv_5=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilApplication738); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -1001,16 +1001,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_5, grammarAccess.getOilApplicationAccess().getColonKeyword_5_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:390:1: ( (lv_Description_6_0= RULE_STRING ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:391:1: (lv_Description_6_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:390:1: ( (lv_description_6_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:391:1: (lv_description_6_0= RULE_STRING )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:391:1: (lv_Description_6_0= RULE_STRING )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:392:3: lv_Description_6_0= RULE_STRING
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:391:1: (lv_description_6_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:392:3: lv_description_6_0= RULE_STRING
                     {
-                    lv_Description_6_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleOilApplication755); if (state.failed) return current;
+                    lv_description_6_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleOilApplication755); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_Description_6_0, grammarAccess.getOilApplicationAccess().getDescriptionSTRINGTerminalRuleCall_5_1_0()); 
+                      			newLeafNode(lv_description_6_0, grammarAccess.getOilApplicationAccess().getDescriptionSTRINGTerminalRuleCall_5_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -1020,8 +1020,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"Description",
-                              		lv_Description_6_0, 
+                             			"description",
+                              		lv_description_6_0, 
                               		"STRING");
                       	    
                     }
@@ -1424,24 +1424,24 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValueList"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:519:1: ruleValueList returns [EObject current=null] : ( () ( (lv_Values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_Values_3_0= ruleGenericNumber ) ) )* ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:519:1: ruleValueList returns [EObject current=null] : ( () ( (lv_values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleGenericNumber ) ) )* ) ;
     public final EObject ruleValueList() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_2=null;
-        AntlrDatatypeRuleToken lv_Values_1_0 = null;
+        AntlrDatatypeRuleToken lv_values_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_Values_3_0 = null;
+        AntlrDatatypeRuleToken lv_values_3_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:522:28: ( ( () ( (lv_Values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_Values_3_0= ruleGenericNumber ) ) )* ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:523:1: ( () ( (lv_Values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_Values_3_0= ruleGenericNumber ) ) )* )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:522:28: ( ( () ( (lv_values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleGenericNumber ) ) )* ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:523:1: ( () ( (lv_values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleGenericNumber ) ) )* )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:523:1: ( () ( (lv_Values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_Values_3_0= ruleGenericNumber ) ) )* )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:523:2: () ( (lv_Values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_Values_3_0= ruleGenericNumber ) ) )*
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:523:1: ( () ( (lv_values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleGenericNumber ) ) )* )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:523:2: () ( (lv_values_1_0= ruleGenericNumber ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleGenericNumber ) ) )*
             {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:523:2: ()
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:524:5: 
@@ -1456,11 +1456,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:529:2: ( (lv_Values_1_0= ruleGenericNumber ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:530:1: (lv_Values_1_0= ruleGenericNumber )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:529:2: ( (lv_values_1_0= ruleGenericNumber ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:530:1: (lv_values_1_0= ruleGenericNumber )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:530:1: (lv_Values_1_0= ruleGenericNumber )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:531:3: lv_Values_1_0= ruleGenericNumber
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:530:1: (lv_values_1_0= ruleGenericNumber )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:531:3: lv_values_1_0= ruleGenericNumber
             {
             if ( state.backtracking==0 ) {
                
@@ -1468,7 +1468,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleGenericNumber_in_ruleValueList1140);
-            lv_Values_1_0=ruleGenericNumber();
+            lv_values_1_0=ruleGenericNumber();
 
             state._fsp--;
             if (state.failed) return current;
@@ -1479,8 +1479,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		add(
                      			current, 
-                     			"Values",
-                      		lv_Values_1_0, 
+                     			"values",
+                      		lv_values_1_0, 
                       		"GenericNumber");
               	        afterParserOrEnumRuleCall();
               	    
@@ -1491,7 +1491,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:547:2: (otherlv_2= ',' ( (lv_Values_3_0= ruleGenericNumber ) ) )*
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:547:2: (otherlv_2= ',' ( (lv_values_3_0= ruleGenericNumber ) ) )*
             loop11:
             do {
                 int alt11=2;
@@ -1504,7 +1504,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
                 switch (alt11) {
             	case 1 :
-            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:547:4: otherlv_2= ',' ( (lv_Values_3_0= ruleGenericNumber ) )
+            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:547:4: otherlv_2= ',' ( (lv_values_3_0= ruleGenericNumber ) )
             	    {
             	    otherlv_2=(Token)match(input,21,FollowSets000.FOLLOW_21_in_ruleValueList1153); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -1512,11 +1512,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_2, grammarAccess.getValueListAccess().getCommaKeyword_2_0());
             	          
             	    }
-            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:551:1: ( (lv_Values_3_0= ruleGenericNumber ) )
-            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:552:1: (lv_Values_3_0= ruleGenericNumber )
+            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:551:1: ( (lv_values_3_0= ruleGenericNumber ) )
+            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:552:1: (lv_values_3_0= ruleGenericNumber )
             	    {
-            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:552:1: (lv_Values_3_0= ruleGenericNumber )
-            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:553:3: lv_Values_3_0= ruleGenericNumber
+            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:552:1: (lv_values_3_0= ruleGenericNumber )
+            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:553:3: lv_values_3_0= ruleGenericNumber
             	    {
             	    if ( state.backtracking==0 ) {
             	       
@@ -1524,7 +1524,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_ruleGenericNumber_in_ruleValueList1174);
-            	    lv_Values_3_0=ruleGenericNumber();
+            	    lv_values_3_0=ruleGenericNumber();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -1535,8 +1535,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"Values",
-            	              		lv_Values_3_0, 
+            	             			"values",
+            	              		lv_values_3_0, 
             	              		"GenericNumber");
             	      	        afterParserOrEnumRuleCall();
             	      	    
@@ -1619,24 +1619,24 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRange"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:586:1: ruleRange returns [EObject current=null] : ( () ( (lv_Min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_Max_3_0= ruleGenericNumber ) ) ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:586:1: ruleRange returns [EObject current=null] : ( () ( (lv_min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_max_3_0= ruleGenericNumber ) ) ) ;
     public final EObject ruleRange() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_2=null;
-        AntlrDatatypeRuleToken lv_Min_1_0 = null;
+        AntlrDatatypeRuleToken lv_min_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_Max_3_0 = null;
+        AntlrDatatypeRuleToken lv_max_3_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:589:28: ( ( () ( (lv_Min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_Max_3_0= ruleGenericNumber ) ) ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:590:1: ( () ( (lv_Min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_Max_3_0= ruleGenericNumber ) ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:589:28: ( ( () ( (lv_min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_max_3_0= ruleGenericNumber ) ) ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:590:1: ( () ( (lv_min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_max_3_0= ruleGenericNumber ) ) )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:590:1: ( () ( (lv_Min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_Max_3_0= ruleGenericNumber ) ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:590:2: () ( (lv_Min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_Max_3_0= ruleGenericNumber ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:590:1: ( () ( (lv_min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_max_3_0= ruleGenericNumber ) ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:590:2: () ( (lv_min_1_0= ruleGenericNumber ) ) otherlv_2= '..' ( (lv_max_3_0= ruleGenericNumber ) )
             {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:590:2: ()
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:591:5: 
@@ -1651,11 +1651,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:596:2: ( (lv_Min_1_0= ruleGenericNumber ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:597:1: (lv_Min_1_0= ruleGenericNumber )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:596:2: ( (lv_min_1_0= ruleGenericNumber ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:597:1: (lv_min_1_0= ruleGenericNumber )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:597:1: (lv_Min_1_0= ruleGenericNumber )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:598:3: lv_Min_1_0= ruleGenericNumber
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:597:1: (lv_min_1_0= ruleGenericNumber )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:598:3: lv_min_1_0= ruleGenericNumber
             {
             if ( state.backtracking==0 ) {
                
@@ -1663,7 +1663,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleGenericNumber_in_ruleRange1277);
-            lv_Min_1_0=ruleGenericNumber();
+            lv_min_1_0=ruleGenericNumber();
 
             state._fsp--;
             if (state.failed) return current;
@@ -1674,8 +1674,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Min",
-                      		lv_Min_1_0, 
+                     			"min",
+                      		lv_min_1_0, 
                       		"GenericNumber");
               	        afterParserOrEnumRuleCall();
               	    
@@ -1692,11 +1692,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_2, grammarAccess.getRangeAccess().getFullStopFullStopKeyword_2());
                   
             }
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:618:1: ( (lv_Max_3_0= ruleGenericNumber ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:619:1: (lv_Max_3_0= ruleGenericNumber )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:618:1: ( (lv_max_3_0= ruleGenericNumber ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:619:1: (lv_max_3_0= ruleGenericNumber )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:619:1: (lv_Max_3_0= ruleGenericNumber )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:620:3: lv_Max_3_0= ruleGenericNumber
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:619:1: (lv_max_3_0= ruleGenericNumber )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:620:3: lv_max_3_0= ruleGenericNumber
             {
             if ( state.backtracking==0 ) {
                
@@ -1704,7 +1704,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleGenericNumber_in_ruleRange1310);
-            lv_Max_3_0=ruleGenericNumber();
+            lv_max_3_0=ruleGenericNumber();
 
             state._fsp--;
             if (state.failed) return current;
@@ -1715,8 +1715,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Max",
-                      		lv_Max_3_0, 
+                     			"max",
+                      		lv_max_3_0, 
                       		"GenericNumber");
               	        afterParserOrEnumRuleCall();
               	    
@@ -1790,37 +1790,37 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValueType"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:653:1: ruleValueType returns [EObject current=null] : ( () ( (lv_Type_1_0= ruleVType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_Name_6_0= ruleSpecialId ) ) ( (lv_MultiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_Description_12_0= RULE_STRING ) ) )? otherlv_13= ';' ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:653:1: ruleValueType returns [EObject current=null] : ( () ( (lv_type_1_0= ruleVType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_name_6_0= ruleSpecialId ) ) ( (lv_multiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_description_12_0= RULE_STRING ) ) )? otherlv_13= ';' ) ;
     public final EObject ruleValueType() throws RecognitionException {
         EObject current = null;
 
-        Token lv_WithAuto_2_0=null;
+        Token lv_withAuto_2_0=null;
         Token otherlv_3=null;
         Token otherlv_5=null;
-        Token lv_MultiValue_7_0=null;
+        Token lv_multiValue_7_0=null;
         Token otherlv_8=null;
-        Token lv_DefaultAuto_9_0=null;
-        Token lv_DefaultValue_10_2=null;
+        Token lv_defaultAuto_9_0=null;
+        Token lv_defaultValue_10_2=null;
         Token otherlv_11=null;
-        Token lv_Description_12_0=null;
+        Token lv_description_12_0=null;
         Token otherlv_13=null;
-        Enumerator lv_Type_1_0 = null;
+        Enumerator lv_type_1_0 = null;
 
         EObject lv_ValidValues_4_0 = null;
 
-        AntlrDatatypeRuleToken lv_Name_6_0 = null;
+        AntlrDatatypeRuleToken lv_name_6_0 = null;
 
-        AntlrDatatypeRuleToken lv_DefaultValue_10_1 = null;
+        AntlrDatatypeRuleToken lv_defaultValue_10_1 = null;
 
 
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:656:28: ( ( () ( (lv_Type_1_0= ruleVType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_Name_6_0= ruleSpecialId ) ) ( (lv_MultiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_Description_12_0= RULE_STRING ) ) )? otherlv_13= ';' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:657:1: ( () ( (lv_Type_1_0= ruleVType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_Name_6_0= ruleSpecialId ) ) ( (lv_MultiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_Description_12_0= RULE_STRING ) ) )? otherlv_13= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:656:28: ( ( () ( (lv_type_1_0= ruleVType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_name_6_0= ruleSpecialId ) ) ( (lv_multiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_description_12_0= RULE_STRING ) ) )? otherlv_13= ';' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:657:1: ( () ( (lv_type_1_0= ruleVType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_name_6_0= ruleSpecialId ) ) ( (lv_multiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_description_12_0= RULE_STRING ) ) )? otherlv_13= ';' )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:657:1: ( () ( (lv_Type_1_0= ruleVType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_Name_6_0= ruleSpecialId ) ) ( (lv_MultiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_Description_12_0= RULE_STRING ) ) )? otherlv_13= ';' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:657:2: () ( (lv_Type_1_0= ruleVType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_Name_6_0= ruleSpecialId ) ) ( (lv_MultiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_Description_12_0= RULE_STRING ) ) )? otherlv_13= ';'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:657:1: ( () ( (lv_type_1_0= ruleVType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_name_6_0= ruleSpecialId ) ) ( (lv_multiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_description_12_0= RULE_STRING ) ) )? otherlv_13= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:657:2: () ( (lv_type_1_0= ruleVType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']' )? ( (lv_name_6_0= ruleSpecialId ) ) ( (lv_multiValue_7_0= '[]' ) )? (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) ) ) )? (otherlv_11= ':' ( (lv_description_12_0= RULE_STRING ) ) )? otherlv_13= ';'
             {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:657:2: ()
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:658:5: 
@@ -1835,11 +1835,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:663:2: ( (lv_Type_1_0= ruleVType ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:664:1: (lv_Type_1_0= ruleVType )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:663:2: ( (lv_type_1_0= ruleVType ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:664:1: (lv_type_1_0= ruleVType )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:664:1: (lv_Type_1_0= ruleVType )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:665:3: lv_Type_1_0= ruleVType
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:664:1: (lv_type_1_0= ruleVType )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:665:3: lv_type_1_0= ruleVType
             {
             if ( state.backtracking==0 ) {
                
@@ -1847,7 +1847,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleVType_in_ruleValueType1411);
-            lv_Type_1_0=ruleVType();
+            lv_type_1_0=ruleVType();
 
             state._fsp--;
             if (state.failed) return current;
@@ -1858,8 +1858,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Type",
-                      		lv_Type_1_0, 
+                     			"type",
+                      		lv_type_1_0, 
                       		"VType");
               	        afterParserOrEnumRuleCall();
               	    
@@ -1870,7 +1870,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:681:2: ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:681:2: ( (lv_withAuto_2_0= 'WITH_AUTO' ) )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1879,15 +1879,15 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt12) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:682:1: (lv_WithAuto_2_0= 'WITH_AUTO' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:682:1: (lv_withAuto_2_0= 'WITH_AUTO' )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:682:1: (lv_WithAuto_2_0= 'WITH_AUTO' )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:683:3: lv_WithAuto_2_0= 'WITH_AUTO'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:682:1: (lv_withAuto_2_0= 'WITH_AUTO' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:683:3: lv_withAuto_2_0= 'WITH_AUTO'
                     {
-                    lv_WithAuto_2_0=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleValueType1429); if (state.failed) return current;
+                    lv_withAuto_2_0=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleValueType1429); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_WithAuto_2_0, grammarAccess.getValueTypeAccess().getWithAutoWITH_AUTOKeyword_2_0());
+                              newLeafNode(lv_withAuto_2_0, grammarAccess.getValueTypeAccess().getWithAutoWITH_AUTOKeyword_2_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -1895,7 +1895,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getValueTypeRule());
                       	        }
-                             		setWithLastConsumed(current, "WithAuto", true, "WITH_AUTO");
+                             		setWithLastConsumed(current, "withAuto", true, "WITH_AUTO");
                       	    
                     }
 
@@ -1971,11 +1971,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:722:3: ( (lv_Name_6_0= ruleSpecialId ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:723:1: (lv_Name_6_0= ruleSpecialId )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:722:3: ( (lv_name_6_0= ruleSpecialId ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:723:1: (lv_name_6_0= ruleSpecialId )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:723:1: (lv_Name_6_0= ruleSpecialId )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:724:3: lv_Name_6_0= ruleSpecialId
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:723:1: (lv_name_6_0= ruleSpecialId )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:724:3: lv_name_6_0= ruleSpecialId
             {
             if ( state.backtracking==0 ) {
                
@@ -1983,7 +1983,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleSpecialId_in_ruleValueType1512);
-            lv_Name_6_0=ruleSpecialId();
+            lv_name_6_0=ruleSpecialId();
 
             state._fsp--;
             if (state.failed) return current;
@@ -1994,8 +1994,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Name",
-                      		lv_Name_6_0, 
+                     			"name",
+                      		lv_name_6_0, 
                       		"SpecialId");
               	        afterParserOrEnumRuleCall();
               	    
@@ -2006,7 +2006,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:740:2: ( (lv_MultiValue_7_0= '[]' ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:740:2: ( (lv_multiValue_7_0= '[]' ) )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -2015,15 +2015,15 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt14) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:741:1: (lv_MultiValue_7_0= '[]' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:741:1: (lv_multiValue_7_0= '[]' )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:741:1: (lv_MultiValue_7_0= '[]' )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:742:3: lv_MultiValue_7_0= '[]'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:741:1: (lv_multiValue_7_0= '[]' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:742:3: lv_multiValue_7_0= '[]'
                     {
-                    lv_MultiValue_7_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleValueType1530); if (state.failed) return current;
+                    lv_multiValue_7_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleValueType1530); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_MultiValue_7_0, grammarAccess.getValueTypeAccess().getMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0());
+                              newLeafNode(lv_multiValue_7_0, grammarAccess.getValueTypeAccess().getMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -2031,7 +2031,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getValueTypeRule());
                       	        }
-                             		setWithLastConsumed(current, "MultiValue", true, "[]");
+                             		setWithLastConsumed(current, "multiValue", true, "[]");
                       	    
                     }
 
@@ -2043,7 +2043,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:755:3: (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:755:3: (otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) ) ) )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -2052,7 +2052,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt17) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:755:5: otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:755:5: otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) ) )
                     {
                     otherlv_8=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleValueType1557); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -2060,7 +2060,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_8, grammarAccess.getValueTypeAccess().getEqualsSignKeyword_6_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:759:1: ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:759:1: ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) ) )
                     int alt16=2;
                     int LA16_0 = input.LA(1);
 
@@ -2079,18 +2079,18 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt16) {
                         case 1 :
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:759:2: ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:759:2: ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:759:2: ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' ) )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:759:3: ( ( 'AUTO' ) )=> (lv_DefaultAuto_9_0= 'AUTO' )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:759:2: ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:759:3: ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:766:1: (lv_DefaultAuto_9_0= 'AUTO' )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:767:3: lv_DefaultAuto_9_0= 'AUTO'
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:766:1: (lv_defaultAuto_9_0= 'AUTO' )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:767:3: lv_defaultAuto_9_0= 'AUTO'
                             {
-                            lv_DefaultAuto_9_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleValueType1591); if (state.failed) return current;
+                            lv_defaultAuto_9_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleValueType1591); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                                      newLeafNode(lv_DefaultAuto_9_0, grammarAccess.getValueTypeAccess().getDefaultAutoAUTOKeyword_6_1_0_0());
+                                      newLeafNode(lv_defaultAuto_9_0, grammarAccess.getValueTypeAccess().getDefaultAutoAUTOKeyword_6_1_0_0());
                                   
                             }
                             if ( state.backtracking==0 ) {
@@ -2098,7 +2098,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                               	        if (current==null) {
                               	            current = createModelElement(grammarAccess.getValueTypeRule());
                               	        }
-                                     		setWithLastConsumed(current, "DefaultAuto", true, "AUTO");
+                                     		setWithLastConsumed(current, "defaultAuto", true, "AUTO");
                               	    
                             }
 
@@ -2111,15 +2111,15 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:781:6: ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:781:6: ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:781:6: ( ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) ) )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:782:1: ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:781:6: ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:782:1: ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:782:1: ( (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID ) )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:783:1: (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:782:1: ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:783:1: (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:783:1: (lv_DefaultValue_10_1= ruleGenericValue | lv_DefaultValue_10_2= RULE_ID )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:783:1: (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID )
                             int alt15=2;
                             int LA15_0 = input.LA(1);
 
@@ -2138,7 +2138,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                             }
                             switch (alt15) {
                                 case 1 :
-                                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:784:3: lv_DefaultValue_10_1= ruleGenericValue
+                                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:784:3: lv_defaultValue_10_1= ruleGenericValue
                                     {
                                     if ( state.backtracking==0 ) {
                                        
@@ -2146,7 +2146,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                                       	    
                                     }
                                     pushFollow(FollowSets000.FOLLOW_ruleGenericValue_in_ruleValueType1633);
-                                    lv_DefaultValue_10_1=ruleGenericValue();
+                                    lv_defaultValue_10_1=ruleGenericValue();
 
                                     state._fsp--;
                                     if (state.failed) return current;
@@ -2157,8 +2157,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                                       	        }
                                              		set(
                                              			current, 
-                                             			"DefaultValue",
-                                              		lv_DefaultValue_10_1, 
+                                             			"defaultValue",
+                                              		lv_defaultValue_10_1, 
                                               		"GenericValue");
                                       	        afterParserOrEnumRuleCall();
                                       	    
@@ -2167,12 +2167,12 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                                     }
                                     break;
                                 case 2 :
-                                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:799:8: lv_DefaultValue_10_2= RULE_ID
+                                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:799:8: lv_defaultValue_10_2= RULE_ID
                                     {
-                                    lv_DefaultValue_10_2=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleValueType1648); if (state.failed) return current;
+                                    lv_defaultValue_10_2=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleValueType1648); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
-                                      			newLeafNode(lv_DefaultValue_10_2, grammarAccess.getValueTypeAccess().getDefaultValueIDTerminalRuleCall_6_1_1_0_1()); 
+                                      			newLeafNode(lv_defaultValue_10_2, grammarAccess.getValueTypeAccess().getDefaultValueIDTerminalRuleCall_6_1_1_0_1()); 
                                       		
                                     }
                                     if ( state.backtracking==0 ) {
@@ -2182,8 +2182,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                                       	        }
                                              		setWithLastConsumed(
                                              			current, 
-                                             			"DefaultValue",
-                                              		lv_DefaultValue_10_2, 
+                                             			"defaultValue",
+                                              		lv_defaultValue_10_2, 
                                               		"ID");
                                       	    
                                     }
@@ -2211,7 +2211,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:817:5: (otherlv_11= ':' ( (lv_Description_12_0= RULE_STRING ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:817:5: (otherlv_11= ':' ( (lv_description_12_0= RULE_STRING ) ) )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -2220,7 +2220,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt18) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:817:7: otherlv_11= ':' ( (lv_Description_12_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:817:7: otherlv_11= ':' ( (lv_description_12_0= RULE_STRING ) )
                     {
                     otherlv_11=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleValueType1672); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -2228,16 +2228,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_11, grammarAccess.getValueTypeAccess().getColonKeyword_7_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:821:1: ( (lv_Description_12_0= RULE_STRING ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:822:1: (lv_Description_12_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:821:1: ( (lv_description_12_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:822:1: (lv_description_12_0= RULE_STRING )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:822:1: (lv_Description_12_0= RULE_STRING )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:823:3: lv_Description_12_0= RULE_STRING
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:822:1: (lv_description_12_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:823:3: lv_description_12_0= RULE_STRING
                     {
-                    lv_Description_12_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleValueType1689); if (state.failed) return current;
+                    lv_description_12_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleValueType1689); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_Description_12_0, grammarAccess.getValueTypeAccess().getDescriptionSTRINGTerminalRuleCall_7_1_0()); 
+                      			newLeafNode(lv_description_12_0, grammarAccess.getValueTypeAccess().getDescriptionSTRINGTerminalRuleCall_7_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -2247,8 +2247,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"Description",
-                              		lv_Description_12_0, 
+                             			"description",
+                              		lv_description_12_0, 
                               		"STRING");
                       	    
                     }
@@ -2333,38 +2333,38 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVariantType"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:860:1: ruleVariantType returns [EObject current=null] : ( () ( (lv_Type_1_0= ruleEType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_Name_8_0= ruleSpecialId ) ) ( (lv_MultiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) ) | ( (lv_DefaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_Description_14_0= RULE_STRING ) ) )? otherlv_15= ';' ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:860:1: ruleVariantType returns [EObject current=null] : ( () ( (lv_type_1_0= ruleEType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_name_8_0= ruleSpecialId ) ) ( (lv_multiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) ) | ( (lv_defaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_description_14_0= RULE_STRING ) ) )? otherlv_15= ';' ) ;
     public final EObject ruleVariantType() throws RecognitionException {
         EObject current = null;
 
-        Token lv_WithAuto_2_0=null;
+        Token lv_withAuto_2_0=null;
         Token otherlv_3=null;
         Token otherlv_5=null;
         Token otherlv_7=null;
-        Token lv_MultiValue_9_0=null;
+        Token lv_multiValue_9_0=null;
         Token otherlv_10=null;
-        Token lv_DefaultAuto_11_0=null;
-        Token lv_DefaultValue_12_0=null;
+        Token lv_defaultAuto_11_0=null;
+        Token lv_defaultValue_12_0=null;
         Token otherlv_13=null;
-        Token lv_Description_14_0=null;
+        Token lv_description_14_0=null;
         Token otherlv_15=null;
-        Enumerator lv_Type_1_0 = null;
+        Enumerator lv_type_1_0 = null;
 
         EObject lv_Values_4_0 = null;
 
         EObject lv_Values_6_0 = null;
 
-        AntlrDatatypeRuleToken lv_Name_8_0 = null;
+        AntlrDatatypeRuleToken lv_name_8_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:863:28: ( ( () ( (lv_Type_1_0= ruleEType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_Name_8_0= ruleSpecialId ) ) ( (lv_MultiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) ) | ( (lv_DefaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_Description_14_0= RULE_STRING ) ) )? otherlv_15= ';' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:864:1: ( () ( (lv_Type_1_0= ruleEType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_Name_8_0= ruleSpecialId ) ) ( (lv_MultiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) ) | ( (lv_DefaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_Description_14_0= RULE_STRING ) ) )? otherlv_15= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:863:28: ( ( () ( (lv_type_1_0= ruleEType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_name_8_0= ruleSpecialId ) ) ( (lv_multiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) ) | ( (lv_defaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_description_14_0= RULE_STRING ) ) )? otherlv_15= ';' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:864:1: ( () ( (lv_type_1_0= ruleEType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_name_8_0= ruleSpecialId ) ) ( (lv_multiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) ) | ( (lv_defaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_description_14_0= RULE_STRING ) ) )? otherlv_15= ';' )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:864:1: ( () ( (lv_Type_1_0= ruleEType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_Name_8_0= ruleSpecialId ) ) ( (lv_MultiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) ) | ( (lv_DefaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_Description_14_0= RULE_STRING ) ) )? otherlv_15= ';' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:864:2: () ( (lv_Type_1_0= ruleEType ) ) ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_Name_8_0= ruleSpecialId ) ) ( (lv_MultiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) ) | ( (lv_DefaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_Description_14_0= RULE_STRING ) ) )? otherlv_15= ';'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:864:1: ( () ( (lv_type_1_0= ruleEType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_name_8_0= ruleSpecialId ) ) ( (lv_multiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) ) | ( (lv_defaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_description_14_0= RULE_STRING ) ) )? otherlv_15= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:864:2: () ( (lv_type_1_0= ruleEType ) ) ( (lv_withAuto_2_0= 'WITH_AUTO' ) )? (otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']' )? ( (lv_name_8_0= ruleSpecialId ) ) ( (lv_multiValue_9_0= '[]' ) )? (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) ) | ( (lv_defaultValue_12_0= RULE_ID ) ) ) )? (otherlv_13= ':' ( (lv_description_14_0= RULE_STRING ) ) )? otherlv_15= ';'
             {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:864:2: ()
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:865:5: 
@@ -2379,11 +2379,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:870:2: ( (lv_Type_1_0= ruleEType ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:871:1: (lv_Type_1_0= ruleEType )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:870:2: ( (lv_type_1_0= ruleEType ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:871:1: (lv_type_1_0= ruleEType )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:871:1: (lv_Type_1_0= ruleEType )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:872:3: lv_Type_1_0= ruleEType
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:871:1: (lv_type_1_0= ruleEType )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:872:3: lv_type_1_0= ruleEType
             {
             if ( state.backtracking==0 ) {
                
@@ -2391,7 +2391,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleEType_in_ruleVariantType1809);
-            lv_Type_1_0=ruleEType();
+            lv_type_1_0=ruleEType();
 
             state._fsp--;
             if (state.failed) return current;
@@ -2402,8 +2402,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Type",
-                      		lv_Type_1_0, 
+                     			"type",
+                      		lv_type_1_0, 
                       		"EType");
               	        afterParserOrEnumRuleCall();
               	    
@@ -2414,7 +2414,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:888:2: ( (lv_WithAuto_2_0= 'WITH_AUTO' ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:888:2: ( (lv_withAuto_2_0= 'WITH_AUTO' ) )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -2423,15 +2423,15 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt19) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:889:1: (lv_WithAuto_2_0= 'WITH_AUTO' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:889:1: (lv_withAuto_2_0= 'WITH_AUTO' )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:889:1: (lv_WithAuto_2_0= 'WITH_AUTO' )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:890:3: lv_WithAuto_2_0= 'WITH_AUTO'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:889:1: (lv_withAuto_2_0= 'WITH_AUTO' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:890:3: lv_withAuto_2_0= 'WITH_AUTO'
                     {
-                    lv_WithAuto_2_0=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleVariantType1827); if (state.failed) return current;
+                    lv_withAuto_2_0=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleVariantType1827); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_WithAuto_2_0, grammarAccess.getVariantTypeAccess().getWithAutoWITH_AUTOKeyword_2_0());
+                              newLeafNode(lv_withAuto_2_0, grammarAccess.getVariantTypeAccess().getWithAutoWITH_AUTOKeyword_2_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -2439,7 +2439,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getVariantTypeRule());
                       	        }
-                             		setWithLastConsumed(current, "WithAuto", true, "WITH_AUTO");
+                             		setWithLastConsumed(current, "withAuto", true, "WITH_AUTO");
                       	    
                     }
 
@@ -2597,11 +2597,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:951:3: ( (lv_Name_8_0= ruleSpecialId ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:952:1: (lv_Name_8_0= ruleSpecialId )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:951:3: ( (lv_name_8_0= ruleSpecialId ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:952:1: (lv_name_8_0= ruleSpecialId )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:952:1: (lv_Name_8_0= ruleSpecialId )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:953:3: lv_Name_8_0= ruleSpecialId
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:952:1: (lv_name_8_0= ruleSpecialId )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:953:3: lv_name_8_0= ruleSpecialId
             {
             if ( state.backtracking==0 ) {
                
@@ -2609,7 +2609,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleSpecialId_in_ruleVariantType1949);
-            lv_Name_8_0=ruleSpecialId();
+            lv_name_8_0=ruleSpecialId();
 
             state._fsp--;
             if (state.failed) return current;
@@ -2620,8 +2620,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Name",
-                      		lv_Name_8_0, 
+                     			"name",
+                      		lv_name_8_0, 
                       		"SpecialId");
               	        afterParserOrEnumRuleCall();
               	    
@@ -2632,7 +2632,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:969:2: ( (lv_MultiValue_9_0= '[]' ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:969:2: ( (lv_multiValue_9_0= '[]' ) )?
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -2641,15 +2641,15 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt23) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:970:1: (lv_MultiValue_9_0= '[]' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:970:1: (lv_multiValue_9_0= '[]' )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:970:1: (lv_MultiValue_9_0= '[]' )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:971:3: lv_MultiValue_9_0= '[]'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:970:1: (lv_multiValue_9_0= '[]' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:971:3: lv_multiValue_9_0= '[]'
                     {
-                    lv_MultiValue_9_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleVariantType1967); if (state.failed) return current;
+                    lv_multiValue_9_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleVariantType1967); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_MultiValue_9_0, grammarAccess.getVariantTypeAccess().getMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0());
+                              newLeafNode(lv_multiValue_9_0, grammarAccess.getVariantTypeAccess().getMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -2657,7 +2657,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getVariantTypeRule());
                       	        }
-                             		setWithLastConsumed(current, "MultiValue", true, "[]");
+                             		setWithLastConsumed(current, "multiValue", true, "[]");
                       	    
                     }
 
@@ -2669,7 +2669,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:984:3: (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) ) | ( (lv_DefaultValue_12_0= RULE_ID ) ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:984:3: (otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) ) | ( (lv_defaultValue_12_0= RULE_ID ) ) ) )?
             int alt25=2;
             int LA25_0 = input.LA(1);
 
@@ -2678,7 +2678,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt25) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:984:5: otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) ) | ( (lv_DefaultValue_12_0= RULE_ID ) ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:984:5: otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) ) | ( (lv_defaultValue_12_0= RULE_ID ) ) )
                     {
                     otherlv_10=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleVariantType1994); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -2686,7 +2686,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_10, grammarAccess.getVariantTypeAccess().getEqualsSignKeyword_6_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:988:1: ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) ) | ( (lv_DefaultValue_12_0= RULE_ID ) ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:988:1: ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) ) | ( (lv_defaultValue_12_0= RULE_ID ) ) )
                     int alt24=2;
                     int LA24_0 = input.LA(1);
 
@@ -2705,18 +2705,18 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt24) {
                         case 1 :
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:988:2: ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:988:2: ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:988:2: ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' ) )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:988:3: ( ( 'AUTO' ) )=> (lv_DefaultAuto_11_0= 'AUTO' )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:988:2: ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:988:3: ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:995:1: (lv_DefaultAuto_11_0= 'AUTO' )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:996:3: lv_DefaultAuto_11_0= 'AUTO'
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:995:1: (lv_defaultAuto_11_0= 'AUTO' )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:996:3: lv_defaultAuto_11_0= 'AUTO'
                             {
-                            lv_DefaultAuto_11_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleVariantType2028); if (state.failed) return current;
+                            lv_defaultAuto_11_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleVariantType2028); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                                      newLeafNode(lv_DefaultAuto_11_0, grammarAccess.getVariantTypeAccess().getDefaultAutoAUTOKeyword_6_1_0_0());
+                                      newLeafNode(lv_defaultAuto_11_0, grammarAccess.getVariantTypeAccess().getDefaultAutoAUTOKeyword_6_1_0_0());
                                   
                             }
                             if ( state.backtracking==0 ) {
@@ -2724,7 +2724,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                               	        if (current==null) {
                               	            current = createModelElement(grammarAccess.getVariantTypeRule());
                               	        }
-                                     		setWithLastConsumed(current, "DefaultAuto", true, "AUTO");
+                                     		setWithLastConsumed(current, "defaultAuto", true, "AUTO");
                               	    
                             }
 
@@ -2737,18 +2737,18 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1010:6: ( (lv_DefaultValue_12_0= RULE_ID ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1010:6: ( (lv_defaultValue_12_0= RULE_ID ) )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1010:6: ( (lv_DefaultValue_12_0= RULE_ID ) )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1011:1: (lv_DefaultValue_12_0= RULE_ID )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1010:6: ( (lv_defaultValue_12_0= RULE_ID ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1011:1: (lv_defaultValue_12_0= RULE_ID )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1011:1: (lv_DefaultValue_12_0= RULE_ID )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1012:3: lv_DefaultValue_12_0= RULE_ID
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1011:1: (lv_defaultValue_12_0= RULE_ID )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1012:3: lv_defaultValue_12_0= RULE_ID
                             {
-                            lv_DefaultValue_12_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleVariantType2064); if (state.failed) return current;
+                            lv_defaultValue_12_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleVariantType2064); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              			newLeafNode(lv_DefaultValue_12_0, grammarAccess.getVariantTypeAccess().getDefaultValueIDTerminalRuleCall_6_1_1_0()); 
+                              			newLeafNode(lv_defaultValue_12_0, grammarAccess.getVariantTypeAccess().getDefaultValueIDTerminalRuleCall_6_1_1_0()); 
                               		
                             }
                             if ( state.backtracking==0 ) {
@@ -2758,8 +2758,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                               	        }
                                      		setWithLastConsumed(
                                      			current, 
-                                     			"DefaultValue",
-                                      		lv_DefaultValue_12_0, 
+                                     			"defaultValue",
+                                      		lv_defaultValue_12_0, 
                                       		"ID");
                               	    
                             }
@@ -2781,7 +2781,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1028:5: (otherlv_13= ':' ( (lv_Description_14_0= RULE_STRING ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1028:5: (otherlv_13= ':' ( (lv_description_14_0= RULE_STRING ) ) )?
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -2790,7 +2790,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt26) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1028:7: otherlv_13= ':' ( (lv_Description_14_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1028:7: otherlv_13= ':' ( (lv_description_14_0= RULE_STRING ) )
                     {
                     otherlv_13=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleVariantType2085); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -2798,16 +2798,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_13, grammarAccess.getVariantTypeAccess().getColonKeyword_7_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1032:1: ( (lv_Description_14_0= RULE_STRING ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1033:1: (lv_Description_14_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1032:1: ( (lv_description_14_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1033:1: (lv_description_14_0= RULE_STRING )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1033:1: (lv_Description_14_0= RULE_STRING )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1034:3: lv_Description_14_0= RULE_STRING
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1033:1: (lv_description_14_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1034:3: lv_description_14_0= RULE_STRING
                     {
-                    lv_Description_14_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleVariantType2102); if (state.failed) return current;
+                    lv_description_14_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleVariantType2102); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_Description_14_0, grammarAccess.getVariantTypeAccess().getDescriptionSTRINGTerminalRuleCall_7_1_0()); 
+                      			newLeafNode(lv_description_14_0, grammarAccess.getVariantTypeAccess().getDescriptionSTRINGTerminalRuleCall_7_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -2817,8 +2817,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"Description",
-                              		lv_Description_14_0, 
+                             			"description",
+                              		lv_description_14_0, 
                               		"STRING");
                       	    
                     }
@@ -2903,15 +2903,15 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEnumeratorType"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1071:1: ruleEnumeratorType returns [EObject current=null] : ( () ( (lv_Name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1071:1: ruleEnumeratorType returns [EObject current=null] : ( () ( (lv_name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? ) ;
     public final EObject ruleEnumeratorType() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_2=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
-        Token lv_Description_6_0=null;
-        AntlrDatatypeRuleToken lv_Name_1_0 = null;
+        Token lv_description_6_0=null;
+        AntlrDatatypeRuleToken lv_name_1_0 = null;
 
         EObject lv_Parameters_3_0 = null;
 
@@ -2919,11 +2919,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1074:28: ( ( () ( (lv_Name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1075:1: ( () ( (lv_Name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1074:28: ( ( () ( (lv_name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1075:1: ( () ( (lv_name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1075:1: ( () ( (lv_Name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1075:2: () ( (lv_Name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1075:1: ( () ( (lv_name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1075:2: () ( (lv_name_1_0= ruleSpecialId ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )?
             {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1075:2: ()
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1076:5: 
@@ -2938,11 +2938,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1081:2: ( (lv_Name_1_0= ruleSpecialId ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1082:1: (lv_Name_1_0= ruleSpecialId )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1081:2: ( (lv_name_1_0= ruleSpecialId ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1082:1: (lv_name_1_0= ruleSpecialId )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1082:1: (lv_Name_1_0= ruleSpecialId )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1083:3: lv_Name_1_0= ruleSpecialId
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1082:1: (lv_name_1_0= ruleSpecialId )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1083:3: lv_name_1_0= ruleSpecialId
             {
             if ( state.backtracking==0 ) {
                
@@ -2950,7 +2950,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleSpecialId_in_ruleEnumeratorType2222);
-            lv_Name_1_0=ruleSpecialId();
+            lv_name_1_0=ruleSpecialId();
 
             state._fsp--;
             if (state.failed) return current;
@@ -2961,8 +2961,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Name",
-                      		lv_Name_1_0, 
+                     			"name",
+                      		lv_name_1_0, 
                       		"SpecialId");
               	        afterParserOrEnumRuleCall();
               	    
@@ -3055,7 +3055,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1125:3: (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1125:3: (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )?
             int alt29=2;
             int LA29_0 = input.LA(1);
 
@@ -3064,7 +3064,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt29) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1125:5: otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1125:5: otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) )
                     {
                     otherlv_5=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleEnumeratorType2284); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -3072,16 +3072,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_5, grammarAccess.getEnumeratorTypeAccess().getColonKeyword_3_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1129:1: ( (lv_Description_6_0= RULE_STRING ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1130:1: (lv_Description_6_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1129:1: ( (lv_description_6_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1130:1: (lv_description_6_0= RULE_STRING )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1130:1: (lv_Description_6_0= RULE_STRING )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1131:3: lv_Description_6_0= RULE_STRING
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1130:1: (lv_description_6_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1131:3: lv_description_6_0= RULE_STRING
                     {
-                    lv_Description_6_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleEnumeratorType2301); if (state.failed) return current;
+                    lv_description_6_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleEnumeratorType2301); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_Description_6_0, grammarAccess.getEnumeratorTypeAccess().getDescriptionSTRINGTerminalRuleCall_3_1_0()); 
+                      			newLeafNode(lv_description_6_0, grammarAccess.getEnumeratorTypeAccess().getDescriptionSTRINGTerminalRuleCall_3_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -3091,8 +3091,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"Description",
-                              		lv_Description_6_0, 
+                             			"description",
+                              		lv_description_6_0, 
                               		"STRING");
                       	    
                     }
@@ -3171,30 +3171,30 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReferenceType"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1164:1: ruleReferenceType returns [EObject current=null] : ( () ( (lv_Type_1_0= ruleObjectTypeRef ) ) ( (lv_Name_2_0= ruleSpecialId ) ) ( (lv_MultiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) ) | ( (lv_DefaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_Description_8_0= RULE_STRING ) ) )? otherlv_9= ';' ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1164:1: ruleReferenceType returns [EObject current=null] : ( () ( (lv_type_1_0= ruleObjectTypeRef ) ) ( (lv_name_2_0= ruleSpecialId ) ) ( (lv_multiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) ) | ( (lv_defaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_description_8_0= RULE_STRING ) ) )? otherlv_9= ';' ) ;
     public final EObject ruleReferenceType() throws RecognitionException {
         EObject current = null;
 
-        Token lv_MultiValue_3_0=null;
+        Token lv_multiValue_3_0=null;
         Token otherlv_4=null;
-        Token lv_DefaultAuto_5_0=null;
-        Token lv_DefaultValue_6_0=null;
+        Token lv_defaultAuto_5_0=null;
+        Token lv_defaultValue_6_0=null;
         Token otherlv_7=null;
-        Token lv_Description_8_0=null;
+        Token lv_description_8_0=null;
         Token otherlv_9=null;
-        Enumerator lv_Type_1_0 = null;
+        Enumerator lv_type_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_Name_2_0 = null;
+        AntlrDatatypeRuleToken lv_name_2_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1167:28: ( ( () ( (lv_Type_1_0= ruleObjectTypeRef ) ) ( (lv_Name_2_0= ruleSpecialId ) ) ( (lv_MultiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) ) | ( (lv_DefaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_Description_8_0= RULE_STRING ) ) )? otherlv_9= ';' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1168:1: ( () ( (lv_Type_1_0= ruleObjectTypeRef ) ) ( (lv_Name_2_0= ruleSpecialId ) ) ( (lv_MultiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) ) | ( (lv_DefaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_Description_8_0= RULE_STRING ) ) )? otherlv_9= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1167:28: ( ( () ( (lv_type_1_0= ruleObjectTypeRef ) ) ( (lv_name_2_0= ruleSpecialId ) ) ( (lv_multiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) ) | ( (lv_defaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_description_8_0= RULE_STRING ) ) )? otherlv_9= ';' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1168:1: ( () ( (lv_type_1_0= ruleObjectTypeRef ) ) ( (lv_name_2_0= ruleSpecialId ) ) ( (lv_multiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) ) | ( (lv_defaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_description_8_0= RULE_STRING ) ) )? otherlv_9= ';' )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1168:1: ( () ( (lv_Type_1_0= ruleObjectTypeRef ) ) ( (lv_Name_2_0= ruleSpecialId ) ) ( (lv_MultiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) ) | ( (lv_DefaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_Description_8_0= RULE_STRING ) ) )? otherlv_9= ';' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1168:2: () ( (lv_Type_1_0= ruleObjectTypeRef ) ) ( (lv_Name_2_0= ruleSpecialId ) ) ( (lv_MultiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) ) | ( (lv_DefaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_Description_8_0= RULE_STRING ) ) )? otherlv_9= ';'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1168:1: ( () ( (lv_type_1_0= ruleObjectTypeRef ) ) ( (lv_name_2_0= ruleSpecialId ) ) ( (lv_multiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) ) | ( (lv_defaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_description_8_0= RULE_STRING ) ) )? otherlv_9= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1168:2: () ( (lv_type_1_0= ruleObjectTypeRef ) ) ( (lv_name_2_0= ruleSpecialId ) ) ( (lv_multiValue_3_0= '[]' ) )? (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) ) | ( (lv_defaultValue_6_0= RULE_ID ) ) ) )? (otherlv_7= ':' ( (lv_description_8_0= RULE_STRING ) ) )? otherlv_9= ';'
             {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1168:2: ()
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1169:5: 
@@ -3209,11 +3209,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1174:2: ( (lv_Type_1_0= ruleObjectTypeRef ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1175:1: (lv_Type_1_0= ruleObjectTypeRef )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1174:2: ( (lv_type_1_0= ruleObjectTypeRef ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1175:1: (lv_type_1_0= ruleObjectTypeRef )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1175:1: (lv_Type_1_0= ruleObjectTypeRef )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1176:3: lv_Type_1_0= ruleObjectTypeRef
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1175:1: (lv_type_1_0= ruleObjectTypeRef )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1176:3: lv_type_1_0= ruleObjectTypeRef
             {
             if ( state.backtracking==0 ) {
                
@@ -3221,7 +3221,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleObjectTypeRef_in_ruleReferenceType2409);
-            lv_Type_1_0=ruleObjectTypeRef();
+            lv_type_1_0=ruleObjectTypeRef();
 
             state._fsp--;
             if (state.failed) return current;
@@ -3232,8 +3232,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Type",
-                      		lv_Type_1_0, 
+                     			"type",
+                      		lv_type_1_0, 
                       		"ObjectTypeRef");
               	        afterParserOrEnumRuleCall();
               	    
@@ -3244,11 +3244,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1192:2: ( (lv_Name_2_0= ruleSpecialId ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1193:1: (lv_Name_2_0= ruleSpecialId )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1192:2: ( (lv_name_2_0= ruleSpecialId ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1193:1: (lv_name_2_0= ruleSpecialId )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1193:1: (lv_Name_2_0= ruleSpecialId )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1194:3: lv_Name_2_0= ruleSpecialId
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1193:1: (lv_name_2_0= ruleSpecialId )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1194:3: lv_name_2_0= ruleSpecialId
             {
             if ( state.backtracking==0 ) {
                
@@ -3256,7 +3256,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleSpecialId_in_ruleReferenceType2430);
-            lv_Name_2_0=ruleSpecialId();
+            lv_name_2_0=ruleSpecialId();
 
             state._fsp--;
             if (state.failed) return current;
@@ -3267,8 +3267,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Name",
-                      		lv_Name_2_0, 
+                     			"name",
+                      		lv_name_2_0, 
                       		"SpecialId");
               	        afterParserOrEnumRuleCall();
               	    
@@ -3279,7 +3279,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1210:2: ( (lv_MultiValue_3_0= '[]' ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1210:2: ( (lv_multiValue_3_0= '[]' ) )?
             int alt30=2;
             int LA30_0 = input.LA(1);
 
@@ -3288,15 +3288,15 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt30) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1211:1: (lv_MultiValue_3_0= '[]' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1211:1: (lv_multiValue_3_0= '[]' )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1211:1: (lv_MultiValue_3_0= '[]' )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1212:3: lv_MultiValue_3_0= '[]'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1211:1: (lv_multiValue_3_0= '[]' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1212:3: lv_multiValue_3_0= '[]'
                     {
-                    lv_MultiValue_3_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleReferenceType2448); if (state.failed) return current;
+                    lv_multiValue_3_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleReferenceType2448); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_MultiValue_3_0, grammarAccess.getReferenceTypeAccess().getMultiValueLeftSquareBracketRightSquareBracketKeyword_3_0());
+                              newLeafNode(lv_multiValue_3_0, grammarAccess.getReferenceTypeAccess().getMultiValueLeftSquareBracketRightSquareBracketKeyword_3_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -3304,7 +3304,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getReferenceTypeRule());
                       	        }
-                             		setWithLastConsumed(current, "MultiValue", true, "[]");
+                             		setWithLastConsumed(current, "multiValue", true, "[]");
                       	    
                     }
 
@@ -3316,7 +3316,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1225:3: (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) ) | ( (lv_DefaultValue_6_0= RULE_ID ) ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1225:3: (otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) ) | ( (lv_defaultValue_6_0= RULE_ID ) ) ) )?
             int alt32=2;
             int LA32_0 = input.LA(1);
 
@@ -3325,7 +3325,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt32) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1225:5: otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) ) | ( (lv_DefaultValue_6_0= RULE_ID ) ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1225:5: otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) ) | ( (lv_defaultValue_6_0= RULE_ID ) ) )
                     {
                     otherlv_4=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleReferenceType2475); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -3333,7 +3333,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_4, grammarAccess.getReferenceTypeAccess().getEqualsSignKeyword_4_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1229:1: ( ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) ) | ( (lv_DefaultValue_6_0= RULE_ID ) ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1229:1: ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) ) | ( (lv_defaultValue_6_0= RULE_ID ) ) )
                     int alt31=2;
                     int LA31_0 = input.LA(1);
 
@@ -3352,18 +3352,18 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt31) {
                         case 1 :
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1229:2: ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1229:2: ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1229:2: ( ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' ) )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1229:3: ( ( 'AUTO' ) )=> (lv_DefaultAuto_5_0= 'AUTO' )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1229:2: ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1229:3: ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1236:1: (lv_DefaultAuto_5_0= 'AUTO' )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1237:3: lv_DefaultAuto_5_0= 'AUTO'
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1236:1: (lv_defaultAuto_5_0= 'AUTO' )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1237:3: lv_defaultAuto_5_0= 'AUTO'
                             {
-                            lv_DefaultAuto_5_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleReferenceType2509); if (state.failed) return current;
+                            lv_defaultAuto_5_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleReferenceType2509); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                                      newLeafNode(lv_DefaultAuto_5_0, grammarAccess.getReferenceTypeAccess().getDefaultAutoAUTOKeyword_4_1_0_0());
+                                      newLeafNode(lv_defaultAuto_5_0, grammarAccess.getReferenceTypeAccess().getDefaultAutoAUTOKeyword_4_1_0_0());
                                   
                             }
                             if ( state.backtracking==0 ) {
@@ -3371,7 +3371,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                               	        if (current==null) {
                               	            current = createModelElement(grammarAccess.getReferenceTypeRule());
                               	        }
-                                     		setWithLastConsumed(current, "DefaultAuto", true, "AUTO");
+                                     		setWithLastConsumed(current, "defaultAuto", true, "AUTO");
                               	    
                             }
 
@@ -3384,18 +3384,18 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1251:6: ( (lv_DefaultValue_6_0= RULE_ID ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1251:6: ( (lv_defaultValue_6_0= RULE_ID ) )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1251:6: ( (lv_DefaultValue_6_0= RULE_ID ) )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1252:1: (lv_DefaultValue_6_0= RULE_ID )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1251:6: ( (lv_defaultValue_6_0= RULE_ID ) )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1252:1: (lv_defaultValue_6_0= RULE_ID )
                             {
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1252:1: (lv_DefaultValue_6_0= RULE_ID )
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1253:3: lv_DefaultValue_6_0= RULE_ID
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1252:1: (lv_defaultValue_6_0= RULE_ID )
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1253:3: lv_defaultValue_6_0= RULE_ID
                             {
-                            lv_DefaultValue_6_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleReferenceType2545); if (state.failed) return current;
+                            lv_defaultValue_6_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleReferenceType2545); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              			newLeafNode(lv_DefaultValue_6_0, grammarAccess.getReferenceTypeAccess().getDefaultValueIDTerminalRuleCall_4_1_1_0()); 
+                              			newLeafNode(lv_defaultValue_6_0, grammarAccess.getReferenceTypeAccess().getDefaultValueIDTerminalRuleCall_4_1_1_0()); 
                               		
                             }
                             if ( state.backtracking==0 ) {
@@ -3405,8 +3405,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                               	        }
                                      		setWithLastConsumed(
                                      			current, 
-                                     			"DefaultValue",
-                                      		lv_DefaultValue_6_0, 
+                                     			"defaultValue",
+                                      		lv_defaultValue_6_0, 
                                       		"ID");
                               	    
                             }
@@ -3428,7 +3428,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1269:5: (otherlv_7= ':' ( (lv_Description_8_0= RULE_STRING ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1269:5: (otherlv_7= ':' ( (lv_description_8_0= RULE_STRING ) ) )?
             int alt33=2;
             int LA33_0 = input.LA(1);
 
@@ -3437,7 +3437,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt33) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1269:7: otherlv_7= ':' ( (lv_Description_8_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1269:7: otherlv_7= ':' ( (lv_description_8_0= RULE_STRING ) )
                     {
                     otherlv_7=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleReferenceType2566); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -3445,16 +3445,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_7, grammarAccess.getReferenceTypeAccess().getColonKeyword_5_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1273:1: ( (lv_Description_8_0= RULE_STRING ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1274:1: (lv_Description_8_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1273:1: ( (lv_description_8_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1274:1: (lv_description_8_0= RULE_STRING )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1274:1: (lv_Description_8_0= RULE_STRING )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1275:3: lv_Description_8_0= RULE_STRING
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1274:1: (lv_description_8_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1275:3: lv_description_8_0= RULE_STRING
                     {
-                    lv_Description_8_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleReferenceType2583); if (state.failed) return current;
+                    lv_description_8_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleReferenceType2583); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_Description_8_0, grammarAccess.getReferenceTypeAccess().getDescriptionSTRINGTerminalRuleCall_5_1_0()); 
+                      			newLeafNode(lv_description_8_0, grammarAccess.getReferenceTypeAccess().getDescriptionSTRINGTerminalRuleCall_5_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -3464,8 +3464,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"Description",
-                              		lv_Description_8_0, 
+                             			"description",
+                              		lv_description_8_0, 
                               		"STRING");
                       	    
                     }
@@ -3550,17 +3550,17 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOilObject"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1312:1: ruleOilObject returns [EObject current=null] : ( ( (lv_Type_0_0= ruleObjectType ) ) ( (lv_Name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';' ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1312:1: ruleOilObject returns [EObject current=null] : ( ( (lv_type_0_0= ruleObjectType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';' ) ;
     public final EObject ruleOilObject() throws RecognitionException {
         EObject current = null;
 
-        Token lv_Name_1_0=null;
+        Token lv_name_1_0=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
-        Token lv_Description_6_0=null;
+        Token lv_description_6_0=null;
         Token otherlv_7=null;
-        Enumerator lv_Type_0_0 = null;
+        Enumerator lv_type_0_0 = null;
 
         EObject lv_Parameters_3_0 = null;
 
@@ -3568,17 +3568,17 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1315:28: ( ( ( (lv_Type_0_0= ruleObjectType ) ) ( (lv_Name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1316:1: ( ( (lv_Type_0_0= ruleObjectType ) ) ( (lv_Name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1315:28: ( ( ( (lv_type_0_0= ruleObjectType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1316:1: ( ( (lv_type_0_0= ruleObjectType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';' )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1316:1: ( ( (lv_Type_0_0= ruleObjectType ) ) ( (lv_Name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1316:2: ( (lv_Type_0_0= ruleObjectType ) ) ( (lv_Name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )? otherlv_7= ';'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1316:1: ( ( (lv_type_0_0= ruleObjectType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1316:2: ( (lv_type_0_0= ruleObjectType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}' )? (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';'
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1316:2: ( (lv_Type_0_0= ruleObjectType ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1317:1: (lv_Type_0_0= ruleObjectType )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1316:2: ( (lv_type_0_0= ruleObjectType ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1317:1: (lv_type_0_0= ruleObjectType )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1317:1: (lv_Type_0_0= ruleObjectType )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1318:3: lv_Type_0_0= ruleObjectType
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1317:1: (lv_type_0_0= ruleObjectType )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1318:3: lv_type_0_0= ruleObjectType
             {
             if ( state.backtracking==0 ) {
                
@@ -3586,7 +3586,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleObjectType_in_ruleOilObject2694);
-            lv_Type_0_0=ruleObjectType();
+            lv_type_0_0=ruleObjectType();
 
             state._fsp--;
             if (state.failed) return current;
@@ -3597,8 +3597,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"Type",
-                      		lv_Type_0_0, 
+                     			"type",
+                      		lv_type_0_0, 
                       		"ObjectType");
               	        afterParserOrEnumRuleCall();
               	    
@@ -3609,16 +3609,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1334:2: ( (lv_Name_1_0= RULE_ID ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1335:1: (lv_Name_1_0= RULE_ID )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1334:2: ( (lv_name_1_0= RULE_ID ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1335:1: (lv_name_1_0= RULE_ID )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1335:1: (lv_Name_1_0= RULE_ID )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1336:3: lv_Name_1_0= RULE_ID
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1335:1: (lv_name_1_0= RULE_ID )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1336:3: lv_name_1_0= RULE_ID
             {
-            lv_Name_1_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleOilObject2711); if (state.failed) return current;
+            lv_name_1_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleOilObject2711); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_Name_1_0, grammarAccess.getOilObjectAccess().getNameIDTerminalRuleCall_1_0()); 
+              			newLeafNode(lv_name_1_0, grammarAccess.getOilObjectAccess().getNameIDTerminalRuleCall_1_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -3628,8 +3628,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
               	        }
                      		setWithLastConsumed(
                      			current, 
-                     			"Name",
-                      		lv_Name_1_0, 
+                     			"name",
+                      		lv_name_1_0, 
                       		"ID");
               	    
             }
@@ -3721,7 +3721,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1378:3: (otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1378:3: (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )?
             int alt36=2;
             int LA36_0 = input.LA(1);
 
@@ -3730,7 +3730,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt36) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1378:5: otherlv_5= ':' ( (lv_Description_6_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1378:5: otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) )
                     {
                     otherlv_5=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilObject2778); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -3738,16 +3738,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_5, grammarAccess.getOilObjectAccess().getColonKeyword_3_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1382:1: ( (lv_Description_6_0= RULE_STRING ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1383:1: (lv_Description_6_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1382:1: ( (lv_description_6_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1383:1: (lv_description_6_0= RULE_STRING )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1383:1: (lv_Description_6_0= RULE_STRING )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1384:3: lv_Description_6_0= RULE_STRING
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1383:1: (lv_description_6_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1384:3: lv_description_6_0= RULE_STRING
                     {
-                    lv_Description_6_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleOilObject2795); if (state.failed) return current;
+                    lv_description_6_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleOilObject2795); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_Description_6_0, grammarAccess.getOilObjectAccess().getDescriptionSTRINGTerminalRuleCall_3_1_0()); 
+                      			newLeafNode(lv_description_6_0, grammarAccess.getOilObjectAccess().getDescriptionSTRINGTerminalRuleCall_3_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -3757,8 +3757,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"Description",
-                              		lv_Description_6_0, 
+                             			"description",
+                              		lv_description_6_0, 
                               		"STRING");
                       	    
                     }
@@ -3843,18 +3843,18 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParameter"
-    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1421:1: ruleParameter returns [EObject current=null] : ( () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_Auto_3_0= 'AUTO' ) ) | ( (lv_Value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_Description_10_0= RULE_STRING ) ) )? otherlv_11= ';' ) ;
+    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1421:1: ruleParameter returns [EObject current=null] : ( () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_auto_3_0= 'AUTO' ) ) | ( (lv_value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_description_10_0= RULE_STRING ) ) )? otherlv_11= ';' ) ;
     public final EObject ruleParameter() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_2=null;
-        Token lv_Auto_3_0=null;
+        Token lv_auto_3_0=null;
         Token otherlv_6=null;
         Token otherlv_8=null;
         Token otherlv_9=null;
-        Token lv_Description_10_0=null;
+        Token lv_description_10_0=null;
         Token otherlv_11=null;
-        AntlrDatatypeRuleToken lv_Value_4_0 = null;
+        AntlrDatatypeRuleToken lv_value_4_0 = null;
 
         EObject lv_Parameters_7_0 = null;
 
@@ -3862,11 +3862,11 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1424:28: ( ( () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_Auto_3_0= 'AUTO' ) ) | ( (lv_Value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_Description_10_0= RULE_STRING ) ) )? otherlv_11= ';' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1425:1: ( () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_Auto_3_0= 'AUTO' ) ) | ( (lv_Value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_Description_10_0= RULE_STRING ) ) )? otherlv_11= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1424:28: ( ( () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_auto_3_0= 'AUTO' ) ) | ( (lv_value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_description_10_0= RULE_STRING ) ) )? otherlv_11= ';' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1425:1: ( () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_auto_3_0= 'AUTO' ) ) | ( (lv_value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_description_10_0= RULE_STRING ) ) )? otherlv_11= ';' )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1425:1: ( () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_Auto_3_0= 'AUTO' ) ) | ( (lv_Value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_Description_10_0= RULE_STRING ) ) )? otherlv_11= ';' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1425:2: () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_Auto_3_0= 'AUTO' ) ) | ( (lv_Value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_Description_10_0= RULE_STRING ) ) )? otherlv_11= ';'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1425:1: ( () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_auto_3_0= 'AUTO' ) ) | ( (lv_value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_description_10_0= RULE_STRING ) ) )? otherlv_11= ';' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1425:2: () ( ( ruleSpecialId ) ) otherlv_2= '=' ( ( ( ( 'AUTO' ) )=> (lv_auto_3_0= 'AUTO' ) ) | ( (lv_value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) ) (otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}' )? (otherlv_9= ':' ( (lv_description_10_0= RULE_STRING ) ) )? otherlv_11= ';'
             {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1425:2: ()
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1426:5: 
@@ -3921,7 +3921,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_2, grammarAccess.getParameterAccess().getEqualsSignKeyword_2());
                   
             }
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1450:1: ( ( ( ( 'AUTO' ) )=> (lv_Auto_3_0= 'AUTO' ) ) | ( (lv_Value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1450:1: ( ( ( ( 'AUTO' ) )=> (lv_auto_3_0= 'AUTO' ) ) | ( (lv_value_4_0= ruleGenericValue ) ) | ( ( ruleSpecialId ) ) )
             int alt37=3;
             int LA37_0 = input.LA(1);
 
@@ -3943,18 +3943,18 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt37) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1450:2: ( ( ( 'AUTO' ) )=> (lv_Auto_3_0= 'AUTO' ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1450:2: ( ( ( 'AUTO' ) )=> (lv_auto_3_0= 'AUTO' ) )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1450:2: ( ( ( 'AUTO' ) )=> (lv_Auto_3_0= 'AUTO' ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1450:3: ( ( 'AUTO' ) )=> (lv_Auto_3_0= 'AUTO' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1450:2: ( ( ( 'AUTO' ) )=> (lv_auto_3_0= 'AUTO' ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1450:3: ( ( 'AUTO' ) )=> (lv_auto_3_0= 'AUTO' )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1457:1: (lv_Auto_3_0= 'AUTO' )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1458:3: lv_Auto_3_0= 'AUTO'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1457:1: (lv_auto_3_0= 'AUTO' )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1458:3: lv_auto_3_0= 'AUTO'
                     {
-                    lv_Auto_3_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleParameter2963); if (state.failed) return current;
+                    lv_auto_3_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleParameter2963); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_Auto_3_0, grammarAccess.getParameterAccess().getAutoAUTOKeyword_3_0_0());
+                              newLeafNode(lv_auto_3_0, grammarAccess.getParameterAccess().getAutoAUTOKeyword_3_0_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -3962,7 +3962,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getParameterRule());
                       	        }
-                             		setWithLastConsumed(current, "Auto", true, "AUTO");
+                             		setWithLastConsumed(current, "auto", true, "AUTO");
                       	    
                     }
 
@@ -3975,13 +3975,13 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1472:6: ( (lv_Value_4_0= ruleGenericValue ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1472:6: ( (lv_value_4_0= ruleGenericValue ) )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1472:6: ( (lv_Value_4_0= ruleGenericValue ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1473:1: (lv_Value_4_0= ruleGenericValue )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1472:6: ( (lv_value_4_0= ruleGenericValue ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1473:1: (lv_value_4_0= ruleGenericValue )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1473:1: (lv_Value_4_0= ruleGenericValue )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1474:3: lv_Value_4_0= ruleGenericValue
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1473:1: (lv_value_4_0= ruleGenericValue )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1474:3: lv_value_4_0= ruleGenericValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -3989,7 +3989,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_ruleGenericValue_in_ruleParameter3003);
-                    lv_Value_4_0=ruleGenericValue();
+                    lv_value_4_0=ruleGenericValue();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -4000,8 +4000,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		set(
                              			current, 
-                             			"Value",
-                              		lv_Value_4_0, 
+                             			"value",
+                              		lv_value_4_0, 
                               		"GenericValue");
                       	        afterParserOrEnumRuleCall();
                       	    
@@ -4140,7 +4140,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1532:3: (otherlv_9= ':' ( (lv_Description_10_0= RULE_STRING ) ) )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1532:3: (otherlv_9= ':' ( (lv_description_10_0= RULE_STRING ) ) )?
             int alt40=2;
             int LA40_0 = input.LA(1);
 
@@ -4149,7 +4149,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             }
             switch (alt40) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1532:5: otherlv_9= ':' ( (lv_Description_10_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1532:5: otherlv_9= ':' ( (lv_description_10_0= RULE_STRING ) )
                     {
                     otherlv_9=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleParameter3095); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -4157,16 +4157,16 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_9, grammarAccess.getParameterAccess().getColonKeyword_5_0());
                           
                     }
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1536:1: ( (lv_Description_10_0= RULE_STRING ) )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1537:1: (lv_Description_10_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1536:1: ( (lv_description_10_0= RULE_STRING ) )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1537:1: (lv_description_10_0= RULE_STRING )
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1537:1: (lv_Description_10_0= RULE_STRING )
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1538:3: lv_Description_10_0= RULE_STRING
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1537:1: (lv_description_10_0= RULE_STRING )
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1538:3: lv_description_10_0= RULE_STRING
                     {
-                    lv_Description_10_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleParameter3112); if (state.failed) return current;
+                    lv_description_10_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleParameter3112); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_Description_10_0, grammarAccess.getParameterAccess().getDescriptionSTRINGTerminalRuleCall_5_1_0()); 
+                      			newLeafNode(lv_description_10_0, grammarAccess.getParameterAccess().getDescriptionSTRINGTerminalRuleCall_5_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -4176,8 +4176,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"Description",
-                              		lv_Description_10_0, 
+                             			"description",
+                              		lv_description_10_0, 
                               		"STRING");
                       	    
                     }

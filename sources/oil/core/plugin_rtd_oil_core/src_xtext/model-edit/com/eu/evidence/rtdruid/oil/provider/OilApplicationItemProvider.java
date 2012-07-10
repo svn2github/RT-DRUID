@@ -80,8 +80,8 @@ public class OilApplicationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OilApplication_Name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OilApplication_Name_feature", "_UI_OilApplication_type"),
+				 getString("_UI_OilApplication_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OilApplication_name_feature", "_UI_OilApplication_type"),
 				 OilPackage.Literals.OIL_APPLICATION__NAME,
 				 true,
 				 false,
@@ -102,8 +102,8 @@ public class OilApplicationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OilApplication_Description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OilApplication_Description_feature", "_UI_OilApplication_type"),
+				 getString("_UI_OilApplication_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OilApplication_description_feature", "_UI_OilApplication_type"),
 				 OilPackage.Literals.OIL_APPLICATION__DESCRIPTION,
 				 true,
 				 false,

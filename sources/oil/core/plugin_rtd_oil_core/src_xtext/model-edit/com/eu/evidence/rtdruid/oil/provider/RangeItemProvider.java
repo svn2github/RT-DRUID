@@ -77,8 +77,8 @@ public class RangeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Range_Min_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Range_Min_feature", "_UI_Range_type"),
+				 getString("_UI_Range_min_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Range_min_feature", "_UI_Range_type"),
 				 OilPackage.Literals.RANGE__MIN,
 				 true,
 				 false,
@@ -99,8 +99,8 @@ public class RangeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Range_Max_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Range_Max_feature", "_UI_Range_type"),
+				 getString("_UI_Range_max_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Range_max_feature", "_UI_Range_type"),
 				 OilPackage.Literals.RANGE__MAX,
 				 true,
 				 false,

@@ -438,11 +438,11 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (Description: ");
+		result.append(" (description: ");
 		result.append(description);
-		result.append(", Auto: ");
+		result.append(", auto: ");
 		result.append(auto);
-		result.append(", Value: ");
+		result.append(", value: ");
 		result.append(value);
 		result.append(')');
 		return result.toString();

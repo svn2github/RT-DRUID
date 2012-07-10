@@ -73,8 +73,8 @@ public class ReferenceTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ReferenceType_Type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ReferenceType_Type_feature", "_UI_ReferenceType_type"),
+				 getString("_UI_ReferenceType_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ReferenceType_type_feature", "_UI_ReferenceType_type"),
 				 OilPackage.Literals.REFERENCE_TYPE__TYPE,
 				 true,
 				 false,

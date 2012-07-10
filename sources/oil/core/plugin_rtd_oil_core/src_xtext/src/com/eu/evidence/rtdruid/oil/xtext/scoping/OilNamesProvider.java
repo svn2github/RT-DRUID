@@ -9,7 +9,7 @@ import org.eclipse.xtext.util.SimpleAttributeResolver;
 import com.google.inject.Inject;
 
 public class OilNamesProvider extends IQualifiedNameProvider.AbstractImpl  {
-	public static SimpleAttributeResolver<EObject, String> resolver = SimpleAttributeResolver.newResolver(String.class, "Name");
+	public static SimpleAttributeResolver<EObject, String> resolver = SimpleAttributeResolver.newResolver(String.class, "name");
 	
 	
 	@Inject

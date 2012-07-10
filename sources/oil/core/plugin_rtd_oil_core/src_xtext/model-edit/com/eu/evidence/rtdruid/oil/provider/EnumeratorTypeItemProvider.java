@@ -80,8 +80,8 @@ public class EnumeratorTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EnumeratorType_Name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EnumeratorType_Name_feature", "_UI_EnumeratorType_type"),
+				 getString("_UI_EnumeratorType_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EnumeratorType_name_feature", "_UI_EnumeratorType_type"),
 				 OilPackage.Literals.ENUMERATOR_TYPE__NAME,
 				 true,
 				 false,
@@ -102,8 +102,8 @@ public class EnumeratorTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EnumeratorType_Description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EnumeratorType_Description_feature", "_UI_EnumeratorType_type"),
+				 getString("_UI_EnumeratorType_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EnumeratorType_description_feature", "_UI_EnumeratorType_type"),
 				 OilPackage.Literals.ENUMERATOR_TYPE__DESCRIPTION,
 				 true,
 				 false,

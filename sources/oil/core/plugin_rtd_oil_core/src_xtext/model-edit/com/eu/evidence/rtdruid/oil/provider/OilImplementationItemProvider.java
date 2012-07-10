@@ -79,8 +79,8 @@ public class OilImplementationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OilImplementation_Name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OilImplementation_Name_feature", "_UI_OilImplementation_type"),
+				 getString("_UI_OilImplementation_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OilImplementation_name_feature", "_UI_OilImplementation_type"),
 				 OilPackage.Literals.OIL_IMPLEMENTATION__NAME,
 				 true,
 				 false,

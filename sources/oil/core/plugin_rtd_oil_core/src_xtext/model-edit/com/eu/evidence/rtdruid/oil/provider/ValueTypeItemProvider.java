@@ -75,8 +75,8 @@ public class ValueTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueType_Type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_Type_feature", "_UI_ValueType_type"),
+				 getString("_UI_ValueType_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_type_feature", "_UI_ValueType_type"),
 				 OilPackage.Literals.VALUE_TYPE__TYPE,
 				 true,
 				 false,

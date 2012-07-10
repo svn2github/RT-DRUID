@@ -154,7 +154,7 @@ public class ReferenceTypeImpl extends ParameterTypeImpl implements ReferenceTyp
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (Type: ");
+		result.append(" (type: ");
 		result.append(type);
 		result.append(')');
 		return result.toString();

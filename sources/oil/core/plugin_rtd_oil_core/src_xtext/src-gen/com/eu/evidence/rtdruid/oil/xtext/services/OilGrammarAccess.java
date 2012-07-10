@@ -32,16 +32,16 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cApplicationOilApplicationParserRuleCall_3_0 = (RuleCall)cApplicationAssignment_3.eContents().get(0);
 		
 		//OilFile:
-		//	{OilFile} ("OIL_VERSION" "=" OilVersion=STRING ";")? Implementation=OilImplementation? Application=OilApplication?;
+		//	{OilFile} ("OIL_VERSION" "=" oilVersion=STRING ";")? Implementation=OilImplementation? Application=OilApplication?;
 		public ParserRule getRule() { return rule; }
 
-		//{OilFile} ("OIL_VERSION" "=" OilVersion=STRING ";")? Implementation=OilImplementation? Application=OilApplication?
+		//{OilFile} ("OIL_VERSION" "=" oilVersion=STRING ";")? Implementation=OilImplementation? Application=OilApplication?
 		public Group getGroup() { return cGroup; }
 
 		//{OilFile}
 		public Action getOilFileAction_0() { return cOilFileAction_0; }
 
-		//("OIL_VERSION" "=" OilVersion=STRING ";")?
+		//("OIL_VERSION" "=" oilVersion=STRING ";")?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//"OIL_VERSION"
@@ -50,7 +50,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"="
 		public Keyword getEqualsSignKeyword_1_1() { return cEqualsSignKeyword_1_1; }
 
-		//OilVersion=STRING
+		//oilVersion=STRING
 		public Assignment getOilVersionAssignment_1_2() { return cOilVersionAssignment_1_2; }
 
 		//STRING
@@ -87,16 +87,16 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//// (":" description=STRING)? 
 		//
 		//OilImplementation:
-		//	"IMPLEMENTATION" Name=ID "{" OilObjects+=OilObjectImpl* "}" ";";
+		//	"IMPLEMENTATION" name=ID "{" OilObjects+=OilObjectImpl* "}" ";";
 		public ParserRule getRule() { return rule; }
 
-		//"IMPLEMENTATION" Name=ID "{" OilObjects+=OilObjectImpl* "}" ";"
+		//"IMPLEMENTATION" name=ID "{" OilObjects+=OilObjectImpl* "}" ";"
 		public Group getGroup() { return cGroup; }
 
 		//"IMPLEMENTATION"
 		public Keyword getIMPLEMENTATIONKeyword_0() { return cIMPLEMENTATIONKeyword_0; }
 
-		//Name=ID
+		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
 		//ID
@@ -134,13 +134,13 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//OilObjectImpl:
-		//	Type=ObjectType "{" Parameters+=ParameterType* "}" (":" Description=STRING)? ";";
+		//	type=ObjectType "{" Parameters+=ParameterType* "}" (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//Type=ObjectType "{" Parameters+=ParameterType* "}" (":" Description=STRING)? ";"
+		//type=ObjectType "{" Parameters+=ParameterType* "}" (":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
-		//Type=ObjectType
+		//type=ObjectType
 		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 
 		//ObjectType
@@ -158,13 +158,13 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 
-		//(":" Description=STRING)?
+		//(":" description=STRING)?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//":"
 		public Keyword getColonKeyword_4_0() { return cColonKeyword_4_0; }
 
-		//Description=STRING
+		//description=STRING
 		public Assignment getDescriptionAssignment_4_1() { return cDescriptionAssignment_4_1; }
 
 		//STRING
@@ -191,16 +191,16 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//OilApplication:
-		//	"CPU" Name=ID "{" OilObjects+=OilObject* "}" (":" Description=STRING)? ";";
+		//	"CPU" name=ID "{" OilObjects+=OilObject* "}" (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//"CPU" Name=ID "{" OilObjects+=OilObject* "}" (":" Description=STRING)? ";"
+		//"CPU" name=ID "{" OilObjects+=OilObject* "}" (":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//"CPU"
 		public Keyword getCPUKeyword_0() { return cCPUKeyword_0; }
 
-		//Name=ID
+		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
 		//ID
@@ -218,13 +218,13 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
 
-		//(":" Description=STRING)?
+		//(":" description=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
 
 		//":"
 		public Keyword getColonKeyword_5_0() { return cColonKeyword_5_0; }
 
-		//Description=STRING
+		//description=STRING
 		public Assignment getDescriptionAssignment_5_1() { return cDescriptionAssignment_5_1; }
 
 		//STRING
@@ -290,28 +290,28 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuesGenericNumberParserRuleCall_2_1_0 = (RuleCall)cValuesAssignment_2_1.eContents().get(0);
 		
 		//ValueList:
-		//	{ValueList} Values+=GenericNumber ("," Values+=GenericNumber)*;
+		//	{ValueList} values+=GenericNumber ("," values+=GenericNumber)*;
 		public ParserRule getRule() { return rule; }
 
-		//{ValueList} Values+=GenericNumber ("," Values+=GenericNumber)*
+		//{ValueList} values+=GenericNumber ("," values+=GenericNumber)*
 		public Group getGroup() { return cGroup; }
 
 		//{ValueList}
 		public Action getValueListAction_0() { return cValueListAction_0; }
 
-		//Values+=GenericNumber
+		//values+=GenericNumber
 		public Assignment getValuesAssignment_1() { return cValuesAssignment_1; }
 
 		//GenericNumber
 		public RuleCall getValuesGenericNumberParserRuleCall_1_0() { return cValuesGenericNumberParserRuleCall_1_0; }
 
-		//("," Values+=GenericNumber)*
+		//("," values+=GenericNumber)*
 		public Group getGroup_2() { return cGroup_2; }
 
 		//","
 		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
 
-		//Values+=GenericNumber
+		//values+=GenericNumber
 		public Assignment getValuesAssignment_2_1() { return cValuesAssignment_2_1; }
 
 		//GenericNumber
@@ -329,16 +329,16 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cMaxGenericNumberParserRuleCall_3_0 = (RuleCall)cMaxAssignment_3.eContents().get(0);
 		
 		//Range:
-		//	{Range} Min=GenericNumber ".." Max=GenericNumber;
+		//	{Range} min=GenericNumber ".." max=GenericNumber;
 		public ParserRule getRule() { return rule; }
 
-		//{Range} Min=GenericNumber ".." Max=GenericNumber
+		//{Range} min=GenericNumber ".." max=GenericNumber
 		public Group getGroup() { return cGroup; }
 
 		//{Range}
 		public Action getRangeAction_0() { return cRangeAction_0; }
 
-		//Min=GenericNumber
+		//min=GenericNumber
 		public Assignment getMinAssignment_1() { return cMinAssignment_1; }
 
 		//GenericNumber
@@ -347,7 +347,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//".."
 		public Keyword getFullStopFullStopKeyword_2() { return cFullStopFullStopKeyword_2; }
 
-		//Max=GenericNumber
+		//max=GenericNumber
 		public Assignment getMaxAssignment_3() { return cMaxAssignment_3; }
 
 		//GenericNumber
@@ -387,24 +387,24 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//ValueType:
-		//	{ValueType} Type=VType WithAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? Name=SpecialId MultiValue?="[]"? ("="
-		//	(=> DefaultAuto?="AUTO" | DefaultValue=(GenericValue | ID)))? (":" Description=STRING)? ";";
+		//	{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"? ("="
+		//	(=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{ValueType} Type=VType WithAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? Name=SpecialId MultiValue?="[]"? ("="
-		//(=> DefaultAuto?="AUTO" | DefaultValue=(GenericValue | ID)))? (":" Description=STRING)? ";"
+		//{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"? ("="
+		//(=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{ValueType}
 		public Action getValueTypeAction_0() { return cValueTypeAction_0; }
 
-		//Type=VType
+		//type=VType
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
 		//VType
 		public RuleCall getTypeVTypeEnumRuleCall_1_0() { return cTypeVTypeEnumRuleCall_1_0; }
 
-		//WithAuto?="WITH_AUTO"?
+		//withAuto?="WITH_AUTO"?
 		public Assignment getWithAutoAssignment_2() { return cWithAutoAssignment_2; }
 
 		//"WITH_AUTO"
@@ -425,34 +425,34 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_3_2() { return cRightSquareBracketKeyword_3_2; }
 
-		//Name=SpecialId
+		//name=SpecialId
 		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
 
 		//SpecialId
 		public RuleCall getNameSpecialIdParserRuleCall_4_0() { return cNameSpecialIdParserRuleCall_4_0; }
 
-		//MultiValue?="[]"?
+		//multiValue?="[]"?
 		public Assignment getMultiValueAssignment_5() { return cMultiValueAssignment_5; }
 
 		//"[]"
 		public Keyword getMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0() { return cMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0; }
 
-		//("=" (=> DefaultAuto?="AUTO" | DefaultValue=(GenericValue | ID)))?
+		//("=" (=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))?
 		public Group getGroup_6() { return cGroup_6; }
 
 		//"="
 		public Keyword getEqualsSignKeyword_6_0() { return cEqualsSignKeyword_6_0; }
 
-		//=> DefaultAuto?="AUTO" | DefaultValue=(GenericValue | ID)
+		//=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)
 		public Alternatives getAlternatives_6_1() { return cAlternatives_6_1; }
 
-		//=> DefaultAuto?="AUTO"
+		//=> defaultAuto?="AUTO"
 		public Assignment getDefaultAutoAssignment_6_1_0() { return cDefaultAutoAssignment_6_1_0; }
 
 		//"AUTO"
 		public Keyword getDefaultAutoAUTOKeyword_6_1_0_0() { return cDefaultAutoAUTOKeyword_6_1_0_0; }
 
-		//DefaultValue=(GenericValue | ID)
+		//defaultValue=(GenericValue | ID)
 		public Assignment getDefaultValueAssignment_6_1_1() { return cDefaultValueAssignment_6_1_1; }
 
 		//GenericValue | ID
@@ -464,13 +464,13 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getDefaultValueIDTerminalRuleCall_6_1_1_0_1() { return cDefaultValueIDTerminalRuleCall_6_1_1_0_1; }
 
-		//(":" Description=STRING)?
+		//(":" description=STRING)?
 		public Group getGroup_7() { return cGroup_7; }
 
 		//":"
 		public Keyword getColonKeyword_7_0() { return cColonKeyword_7_0; }
 
-		//Description=STRING
+		//description=STRING
 		public Assignment getDescriptionAssignment_7_1() { return cDescriptionAssignment_7_1; }
 
 		//STRING
@@ -516,24 +516,24 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//VariantType:
-		//	{VariantType} Type=EType WithAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
-		//	Name=SpecialId MultiValue?="[]"? ("=" (=> DefaultAuto?="AUTO" | DefaultValue=ID))? (":" Description=STRING)? ";";
+		//	{VariantType} type=EType withAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
+		//	name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))? (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{VariantType} Type=EType WithAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
-		//Name=SpecialId MultiValue?="[]"? ("=" (=> DefaultAuto?="AUTO" | DefaultValue=ID))? (":" Description=STRING)? ";"
+		//{VariantType} type=EType withAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
+		//name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))? (":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{VariantType}
 		public Action getVariantTypeAction_0() { return cVariantTypeAction_0; }
 
-		//Type=EType
+		//type=EType
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
 		//EType
 		public RuleCall getTypeETypeEnumRuleCall_1_0() { return cTypeETypeEnumRuleCall_1_0; }
 
-		//WithAuto?="WITH_AUTO"?
+		//withAuto?="WITH_AUTO"?
 		public Assignment getWithAutoAssignment_2() { return cWithAutoAssignment_2; }
 
 		//"WITH_AUTO"
@@ -569,46 +569,46 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_3_2() { return cRightSquareBracketKeyword_3_2; }
 
-		//Name=SpecialId
+		//name=SpecialId
 		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
 
 		//SpecialId
 		public RuleCall getNameSpecialIdParserRuleCall_4_0() { return cNameSpecialIdParserRuleCall_4_0; }
 
-		//MultiValue?="[]"?
+		//multiValue?="[]"?
 		public Assignment getMultiValueAssignment_5() { return cMultiValueAssignment_5; }
 
 		//"[]"
 		public Keyword getMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0() { return cMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0; }
 
-		//("=" (=> DefaultAuto?="AUTO" | DefaultValue=ID))?
+		//("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
 		public Group getGroup_6() { return cGroup_6; }
 
 		//"="
 		public Keyword getEqualsSignKeyword_6_0() { return cEqualsSignKeyword_6_0; }
 
-		//=> DefaultAuto?="AUTO" | DefaultValue=ID
+		//=> defaultAuto?="AUTO" | defaultValue=ID
 		public Alternatives getAlternatives_6_1() { return cAlternatives_6_1; }
 
-		//=> DefaultAuto?="AUTO"
+		//=> defaultAuto?="AUTO"
 		public Assignment getDefaultAutoAssignment_6_1_0() { return cDefaultAutoAssignment_6_1_0; }
 
 		//"AUTO"
 		public Keyword getDefaultAutoAUTOKeyword_6_1_0_0() { return cDefaultAutoAUTOKeyword_6_1_0_0; }
 
-		//DefaultValue=ID
+		//defaultValue=ID
 		public Assignment getDefaultValueAssignment_6_1_1() { return cDefaultValueAssignment_6_1_1; }
 
 		//ID
 		public RuleCall getDefaultValueIDTerminalRuleCall_6_1_1_0() { return cDefaultValueIDTerminalRuleCall_6_1_1_0; }
 
-		//(":" Description=STRING)?
+		//(":" description=STRING)?
 		public Group getGroup_7() { return cGroup_7; }
 
 		//":"
 		public Keyword getColonKeyword_7_0() { return cColonKeyword_7_0; }
 
-		//Description=STRING
+		//description=STRING
 		public Assignment getDescriptionAssignment_7_1() { return cDescriptionAssignment_7_1; }
 
 		//STRING
@@ -635,16 +635,16 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDescriptionSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cDescriptionAssignment_3_1.eContents().get(0);
 		
 		//EnumeratorType:
-		//	{EnumeratorType} Name=SpecialId ("{" Parameters+=ParameterType* "}")? (":" Description=STRING)?;
+		//	{EnumeratorType} name=SpecialId ("{" Parameters+=ParameterType* "}")? (":" description=STRING)?;
 		public ParserRule getRule() { return rule; }
 
-		//{EnumeratorType} Name=SpecialId ("{" Parameters+=ParameterType* "}")? (":" Description=STRING)?
+		//{EnumeratorType} name=SpecialId ("{" Parameters+=ParameterType* "}")? (":" description=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{EnumeratorType}
 		public Action getEnumeratorTypeAction_0() { return cEnumeratorTypeAction_0; }
 
-		//Name=SpecialId
+		//name=SpecialId
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
 		//SpecialId
@@ -665,13 +665,13 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 
-		//(":" Description=STRING)?
+		//(":" description=STRING)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//":"
 		public Keyword getColonKeyword_3_0() { return cColonKeyword_3_0; }
 
-		//Description=STRING
+		//description=STRING
 		public Assignment getDescriptionAssignment_3_1() { return cDescriptionAssignment_3_1; }
 
 		//STRING
@@ -702,63 +702,63 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//ReferenceType:
-		//	{ReferenceType} Type=ObjectTypeRef Name=SpecialId MultiValue?="[]"? ("=" (=> DefaultAuto?="AUTO" | DefaultValue=ID))?
-		//	(":" Description=STRING)? ";";
+		//	{ReferenceType} type=ObjectTypeRef name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
+		//	(":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{ReferenceType} Type=ObjectTypeRef Name=SpecialId MultiValue?="[]"? ("=" (=> DefaultAuto?="AUTO" | DefaultValue=ID))?
-		//(":" Description=STRING)? ";"
+		//{ReferenceType} type=ObjectTypeRef name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
+		//(":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{ReferenceType}
 		public Action getReferenceTypeAction_0() { return cReferenceTypeAction_0; }
 
-		//Type=ObjectTypeRef
+		//type=ObjectTypeRef
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
 		//ObjectTypeRef
 		public RuleCall getTypeObjectTypeRefEnumRuleCall_1_0() { return cTypeObjectTypeRefEnumRuleCall_1_0; }
 
-		//Name=SpecialId
+		//name=SpecialId
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
 		//SpecialId
 		public RuleCall getNameSpecialIdParserRuleCall_2_0() { return cNameSpecialIdParserRuleCall_2_0; }
 
-		//MultiValue?="[]"?
+		//multiValue?="[]"?
 		public Assignment getMultiValueAssignment_3() { return cMultiValueAssignment_3; }
 
 		//"[]"
 		public Keyword getMultiValueLeftSquareBracketRightSquareBracketKeyword_3_0() { return cMultiValueLeftSquareBracketRightSquareBracketKeyword_3_0; }
 
-		//("=" (=> DefaultAuto?="AUTO" | DefaultValue=ID))?
+		//("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//"="
 		public Keyword getEqualsSignKeyword_4_0() { return cEqualsSignKeyword_4_0; }
 
-		//=> DefaultAuto?="AUTO" | DefaultValue=ID
+		//=> defaultAuto?="AUTO" | defaultValue=ID
 		public Alternatives getAlternatives_4_1() { return cAlternatives_4_1; }
 
-		//=> DefaultAuto?="AUTO"
+		//=> defaultAuto?="AUTO"
 		public Assignment getDefaultAutoAssignment_4_1_0() { return cDefaultAutoAssignment_4_1_0; }
 
 		//"AUTO"
 		public Keyword getDefaultAutoAUTOKeyword_4_1_0_0() { return cDefaultAutoAUTOKeyword_4_1_0_0; }
 
-		//DefaultValue=ID
+		//defaultValue=ID
 		public Assignment getDefaultValueAssignment_4_1_1() { return cDefaultValueAssignment_4_1_1; }
 
 		//ID
 		public RuleCall getDefaultValueIDTerminalRuleCall_4_1_1_0() { return cDefaultValueIDTerminalRuleCall_4_1_1_0; }
 
-		//(":" Description=STRING)?
+		//(":" description=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
 
 		//":"
 		public Keyword getColonKeyword_5_0() { return cColonKeyword_5_0; }
 
-		//Description=STRING
+		//description=STRING
 		public Assignment getDescriptionAssignment_5_1() { return cDescriptionAssignment_5_1; }
 
 		//STRING
@@ -787,19 +787,19 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//OilObject:
-		//	Type=ObjectType Name=ID ("{" Parameters+=Parameter* "}")? (":" Description=STRING)? ";";
+		//	type=ObjectType name=ID ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//Type=ObjectType Name=ID ("{" Parameters+=Parameter* "}")? (":" Description=STRING)? ";"
+		//type=ObjectType name=ID ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
-		//Type=ObjectType
+		//type=ObjectType
 		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 
 		//ObjectType
 		public RuleCall getTypeObjectTypeEnumRuleCall_0_0() { return cTypeObjectTypeEnumRuleCall_0_0; }
 
-		//Name=ID
+		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
 		//ID
@@ -820,13 +820,13 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 
-		//(":" Description=STRING)?
+		//(":" description=STRING)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//":"
 		public Keyword getColonKeyword_3_0() { return cColonKeyword_3_0; }
 
-		//Description=STRING
+		//description=STRING
 		public Assignment getDescriptionAssignment_3_1() { return cDescriptionAssignment_3_1; }
 
 		//STRING
@@ -864,12 +864,12 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Parameter:
-		//	{Parameter} Type=[ParameterType|SpecialId] "=" (=> Auto?="AUTO" | Value=GenericValue |
-		//	ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" Description=STRING)? ";";
+		//	{Parameter} Type=[ParameterType|SpecialId] "=" (=> auto?="AUTO" | value=GenericValue |
+		//	ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{Parameter} Type=[ParameterType|SpecialId] "=" (=> Auto?="AUTO" | Value=GenericValue |
-		//ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" Description=STRING)? ";"
+		//{Parameter} Type=[ParameterType|SpecialId] "=" (=> auto?="AUTO" | value=GenericValue |
+		//ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{Parameter}
@@ -887,16 +887,16 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"="
 		public Keyword getEqualsSignKeyword_2() { return cEqualsSignKeyword_2; }
 
-		//=> Auto?="AUTO" | Value=GenericValue | ValueRef=[ParameterRef|SpecialId]
+		//=> auto?="AUTO" | value=GenericValue | ValueRef=[ParameterRef|SpecialId]
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
-		//=> Auto?="AUTO"
+		//=> auto?="AUTO"
 		public Assignment getAutoAssignment_3_0() { return cAutoAssignment_3_0; }
 
 		//"AUTO"
 		public Keyword getAutoAUTOKeyword_3_0_0() { return cAutoAUTOKeyword_3_0_0; }
 
-		//Value=GenericValue
+		//value=GenericValue
 		public Assignment getValueAssignment_3_1() { return cValueAssignment_3_1; }
 
 		//GenericValue
@@ -926,13 +926,13 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_4_2() { return cRightCurlyBracketKeyword_4_2; }
 
-		//(":" Description=STRING)?
+		//(":" description=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
 
 		//":"
 		public Keyword getColonKeyword_5_0() { return cColonKeyword_5_0; }
 
-		//Description=STRING
+		//description=STRING
 		public Assignment getDescriptionAssignment_5_1() { return cDescriptionAssignment_5_1; }
 
 		//STRING
@@ -993,11 +993,11 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		////	Type=[ValueType|ID]
 		//
-		//////	Name=ID
+		//////	name=ID
 		//
 		////	'=' ( => Auto?="AUTO" | => Value=GenericValue )
 		//
-		////	(':' Description=STRING)?
+		////	(':' description=STRING)?
 		//
 		////	";"
 		//
@@ -1011,7 +1011,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		////	Type=[ParameterType|ID]
 		//
-		//////	Name=ID
+		//////	name=ID
 		//
 		////	"=" ( => Auto?="AUTO" | Value=[ParameterRef|ID])
 		//
@@ -1021,7 +1021,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		////    '}')?
 		//
-		////	(':' Description=STRING)?
+		////	(':' description=STRING)?
 		//
 		////	";"
 		//
@@ -1035,7 +1035,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	Type=[ParameterType|EString]
 		//
-		////	Name=ID
+		////	name=ID
 		//
 		//	"=" Value=[EnumeratorType|EString]
 		//
@@ -1045,7 +1045,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//    '}')?
 		//
-		//	(':' Description=STRING)?
+		//	(':' description=STRING)?
 		//
 		//	";"
 		//
@@ -1055,11 +1055,11 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		////	Type=[ReferenceType|ID]
 		//
-		//////	Name=ID
+		//////	name=ID
 		//
 		////	'=' (=> Value=[OilObject|ID])
 		//
-		////	(':' Description=STRING)?
+		////	(':' description=STRING)?
 		//
 		////	";"
 		//
@@ -1744,7 +1744,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//OilFile:
-	//	{OilFile} ("OIL_VERSION" "=" OilVersion=STRING ";")? Implementation=OilImplementation? Application=OilApplication?;
+	//	{OilFile} ("OIL_VERSION" "=" oilVersion=STRING ";")? Implementation=OilImplementation? Application=OilApplication?;
 	public OilFileElements getOilFileAccess() {
 		return (pOilFile != null) ? pOilFile : (pOilFile = new OilFileElements());
 	}
@@ -1756,7 +1756,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//// (":" description=STRING)? 
 	//
 	//OilImplementation:
-	//	"IMPLEMENTATION" Name=ID "{" OilObjects+=OilObjectImpl* "}" ";";
+	//	"IMPLEMENTATION" name=ID "{" OilObjects+=OilObjectImpl* "}" ";";
 	public OilImplementationElements getOilImplementationAccess() {
 		return (pOilImplementation != null) ? pOilImplementation : (pOilImplementation = new OilImplementationElements());
 	}
@@ -1766,7 +1766,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OilObjectImpl:
-	//	Type=ObjectType "{" Parameters+=ParameterType* "}" (":" Description=STRING)? ";";
+	//	type=ObjectType "{" Parameters+=ParameterType* "}" (":" description=STRING)? ";";
 	public OilObjectImplElements getOilObjectImplAccess() {
 		return (pOilObjectImpl != null) ? pOilObjectImpl : (pOilObjectImpl = new OilObjectImplElements());
 	}
@@ -1776,7 +1776,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OilApplication:
-	//	"CPU" Name=ID "{" OilObjects+=OilObject* "}" (":" Description=STRING)? ";";
+	//	"CPU" name=ID "{" OilObjects+=OilObject* "}" (":" description=STRING)? ";";
 	public OilApplicationElements getOilApplicationAccess() {
 		return (pOilApplication != null) ? pOilApplication : (pOilApplication = new OilApplicationElements());
 	}
@@ -1806,7 +1806,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValueList:
-	//	{ValueList} Values+=GenericNumber ("," Values+=GenericNumber)*;
+	//	{ValueList} values+=GenericNumber ("," values+=GenericNumber)*;
 	public ValueListElements getValueListAccess() {
 		return (pValueList != null) ? pValueList : (pValueList = new ValueListElements());
 	}
@@ -1816,7 +1816,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Range:
-	//	{Range} Min=GenericNumber ".." Max=GenericNumber;
+	//	{Range} min=GenericNumber ".." max=GenericNumber;
 	public RangeElements getRangeAccess() {
 		return (pRange != null) ? pRange : (pRange = new RangeElements());
 	}
@@ -1826,8 +1826,8 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValueType:
-	//	{ValueType} Type=VType WithAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? Name=SpecialId MultiValue?="[]"? ("="
-	//	(=> DefaultAuto?="AUTO" | DefaultValue=(GenericValue | ID)))? (":" Description=STRING)? ";";
+	//	{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"? ("="
+	//	(=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";";
 	public ValueTypeElements getValueTypeAccess() {
 		return (pValueType != null) ? pValueType : (pValueType = new ValueTypeElements());
 	}
@@ -1837,8 +1837,8 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VariantType:
-	//	{VariantType} Type=EType WithAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
-	//	Name=SpecialId MultiValue?="[]"? ("=" (=> DefaultAuto?="AUTO" | DefaultValue=ID))? (":" Description=STRING)? ";";
+	//	{VariantType} type=EType withAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
+	//	name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))? (":" description=STRING)? ";";
 	public VariantTypeElements getVariantTypeAccess() {
 		return (pVariantType != null) ? pVariantType : (pVariantType = new VariantTypeElements());
 	}
@@ -1848,7 +1848,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//EnumeratorType:
-	//	{EnumeratorType} Name=SpecialId ("{" Parameters+=ParameterType* "}")? (":" Description=STRING)?;
+	//	{EnumeratorType} name=SpecialId ("{" Parameters+=ParameterType* "}")? (":" description=STRING)?;
 	public EnumeratorTypeElements getEnumeratorTypeAccess() {
 		return (pEnumeratorType != null) ? pEnumeratorType : (pEnumeratorType = new EnumeratorTypeElements());
 	}
@@ -1858,8 +1858,8 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceType:
-	//	{ReferenceType} Type=ObjectTypeRef Name=SpecialId MultiValue?="[]"? ("=" (=> DefaultAuto?="AUTO" | DefaultValue=ID))?
-	//	(":" Description=STRING)? ";";
+	//	{ReferenceType} type=ObjectTypeRef name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
+	//	(":" description=STRING)? ";";
 	public ReferenceTypeElements getReferenceTypeAccess() {
 		return (pReferenceType != null) ? pReferenceType : (pReferenceType = new ReferenceTypeElements());
 	}
@@ -1869,7 +1869,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OilObject:
-	//	Type=ObjectType Name=ID ("{" Parameters+=Parameter* "}")? (":" Description=STRING)? ";";
+	//	type=ObjectType name=ID ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
 	public OilObjectElements getOilObjectAccess() {
 		return (pOilObject != null) ? pOilObject : (pOilObject = new OilObjectElements());
 	}
@@ -1879,8 +1879,8 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Parameter:
-	//	{Parameter} Type=[ParameterType|SpecialId] "=" (=> Auto?="AUTO" | Value=GenericValue |
-	//	ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" Description=STRING)? ";";
+	//	{Parameter} Type=[ParameterType|SpecialId] "=" (=> auto?="AUTO" | value=GenericValue |
+	//	ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
 	public ParameterElements getParameterAccess() {
 		return (pParameter != null) ? pParameter : (pParameter = new ParameterElements());
 	}
@@ -1901,11 +1901,11 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	////	Type=[ValueType|ID]
 	//
-	//////	Name=ID
+	//////	name=ID
 	//
 	////	'=' ( => Auto?="AUTO" | => Value=GenericValue )
 	//
-	////	(':' Description=STRING)?
+	////	(':' description=STRING)?
 	//
 	////	";"
 	//
@@ -1919,7 +1919,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	////	Type=[ParameterType|ID]
 	//
-	//////	Name=ID
+	//////	name=ID
 	//
 	////	"=" ( => Auto?="AUTO" | Value=[ParameterRef|ID])
 	//
@@ -1929,7 +1929,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	////    '}')?
 	//
-	////	(':' Description=STRING)?
+	////	(':' description=STRING)?
 	//
 	////	";"
 	//
@@ -1943,7 +1943,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	Type=[ParameterType|EString]
 	//
-	////	Name=ID
+	////	name=ID
 	//
 	//	"=" Value=[EnumeratorType|EString]
 	//
@@ -1953,7 +1953,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//    '}')?
 	//
-	//	(':' Description=STRING)?
+	//	(':' description=STRING)?
 	//
 	//	";"
 	//
@@ -1963,11 +1963,11 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	////	Type=[ReferenceType|ID]
 	//
-	//////	Name=ID
+	//////	name=ID
 	//
 	////	'=' (=> Value=[OilObject|ID])
 	//
-	////	(':' Description=STRING)?
+	////	(':' description=STRING)?
 	//
 	////	";"
 	//
