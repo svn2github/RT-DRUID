@@ -5,8 +5,10 @@ package com.eu.evidence.rtdruid.oil.xtext.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
+import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
 
+import com.eu.evidence.rtdruid.oil.xtext.ui.contentassist.OilEditStrategyProvider;
 import com.eu.evidence.rtdruid.oil.xtext.ui.hover.OilEObjectDocumentationProvider;
 import com.eu.evidence.rtdruid.oil.xtext.ui.hover.OilEObjectHoverProvider;
 
@@ -25,4 +27,9 @@ public class OilUiModule extends com.eu.evidence.rtdruid.oil.xtext.ui.AbstractOi
 	public Class<? extends IEObjectDocumentationProvider> bindIEObjectDocumentationProviderr() {
 		return OilEObjectDocumentationProvider.class;
 	}
+	
+	public Class<? extends AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
+		return OilEditStrategyProvider.class;
+	}
+
 }

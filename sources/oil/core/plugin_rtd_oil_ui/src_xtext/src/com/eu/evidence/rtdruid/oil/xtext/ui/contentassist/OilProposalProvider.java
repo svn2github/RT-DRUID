@@ -16,6 +16,7 @@ import com.eu.evidence.rtdruid.oil.xtext.model.OilObject;
 import com.eu.evidence.rtdruid.oil.xtext.model.OilPackage;
 import com.eu.evidence.rtdruid.oil.xtext.model.Parameter;
 import com.eu.evidence.rtdruid.oil.xtext.model.ParameterType;
+import com.eu.evidence.rtdruid.oil.xtext.model.VariantType;
 import com.google.inject.Inject;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
@@ -65,6 +66,22 @@ public class OilProposalProvider extends AbstractOilProposalProvider {
 			if (obj != null && obj instanceof Parameter) {
 				ParameterType type = ((Parameter) obj).getType();
 				if (type != null && type.isWithAuto()) {
+					super.completeKeyword(keyword, contentAssistContext, acceptor);
+				}
+			}
+		} else if ("=".equalsIgnoreCase(keyword.getValue())) {
+			EObject obj = contentAssistContext.getCurrentModel();
+			if (obj != null && obj instanceof Parameter) {
+				ParameterType type = ((Parameter) obj).getType();
+				if (type != null && !type.eIsProxy()) {
+					super.completeKeyword(keyword, contentAssistContext, acceptor);
+				}
+			}
+		} else if ("{".equalsIgnoreCase(keyword.getValue())) {
+			EObject obj = contentAssistContext.getCurrentModel();
+			if (obj != null && obj instanceof Parameter) {
+				ParameterType type = ((Parameter) obj).getType();
+				if (type != null && !type.eIsProxy() && type instanceof VariantType) {
 					super.completeKeyword(keyword, contentAssistContext, acceptor);
 				}
 			}
