@@ -23,10 +23,11 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalOilParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_NON_ZERO_INT", "RULE_ZERO_INT", "RULE_HEX", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'OIL_VERSION'", "'='", "';'", "'IMPLEMENTATION'", "'{'", "'}'", "':'", "'CPU'", "','", "'..'", "'WITH_AUTO'", "'['", "']'", "'[]'", "'AUTO'", "'STRING'", "'UINT32'", "'INT32'", "'UINT64'", "'INT64'", "'FLOAT'", "'BOOLEAN'", "'ENUM'", "'OS'", "'ALARM'", "'APPMODE'", "'COUNTER'", "'COM'", "'EVENT'", "'IPDU'", "'ISR'", "'MESSAGE'", "'NETWORKMESSAGE'", "'NM'", "'RESOURCE'", "'TASK'", "'OS_TYPE'", "'ALARM_TYPE'", "'APPMODE_TYPE'", "'COUNTER_TYPE'", "'COM_TYPE'", "'EVENT_TYPE'", "'IPDU_TYPE'", "'ISR_TYPE'", "'MESSAGE_TYPE'", "'NETWORKMESSAGE_TYPE'", "'NM_TYPE'", "'RESOURCE_TYPE'", "'TASK_TYPE'", "'+'", "'-'", "'.'", "'APPLICATION'", "'APPLICATION_TYPE'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_NON_ZERO_INT", "RULE_ZERO_INT", "RULE_HEX", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_INCLUDE", "RULE_WS", "RULE_ANY_OTHER", "'OIL_VERSION'", "'='", "';'", "'IMPLEMENTATION'", "'{'", "'}'", "':'", "'CPU'", "','", "'..'", "'WITH_AUTO'", "'['", "']'", "'[]'", "'AUTO'", "'STRING'", "'UINT32'", "'INT32'", "'UINT64'", "'INT64'", "'FLOAT'", "'BOOLEAN'", "'ENUM'", "'OS'", "'ALARM'", "'APPMODE'", "'COUNTER'", "'COM'", "'EVENT'", "'IPDU'", "'ISR'", "'MESSAGE'", "'NETWORKMESSAGE'", "'NM'", "'RESOURCE'", "'TASK'", "'OS_TYPE'", "'ALARM_TYPE'", "'APPMODE_TYPE'", "'COUNTER_TYPE'", "'COM_TYPE'", "'EVENT_TYPE'", "'IPDU_TYPE'", "'ISR_TYPE'", "'MESSAGE_TYPE'", "'NETWORKMESSAGE_TYPE'", "'NM_TYPE'", "'RESOURCE_TYPE'", "'TASK_TYPE'", "'+'", "'-'", "'.'", "'APPLICATION'", "'APPLICATION_TYPE'"
     };
     public static final int RULE_ID=5;
     public static final int T__66=66;
+    public static final int T__67=67;
     public static final int T__64=64;
     public static final int T__29=29;
     public static final int T__65=65;
@@ -39,7 +40,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
     public static final int T__24=24;
     public static final int T__23=23;
     public static final int T__22=22;
-    public static final int RULE_ANY_OTHER=12;
+    public static final int RULE_ANY_OTHER=13;
     public static final int T__21=21;
     public static final int RULE_ZERO_INT=7;
     public static final int T__20=20;
@@ -56,13 +57,12 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
     public static final int T__51=51;
     public static final int T__15=15;
     public static final int T__52=52;
-    public static final int T__53=53;
     public static final int T__18=18;
+    public static final int T__53=53;
     public static final int T__54=54;
     public static final int T__17=17;
     public static final int RULE_NON_ZERO_INT=6;
     public static final int T__14=14;
-    public static final int T__13=13;
     public static final int T__59=59;
     public static final int T__50=50;
     public static final int T__42=42;
@@ -88,7 +88,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
     public static final int T__37=37;
     public static final int T__38=38;
     public static final int T__39=39;
-    public static final int RULE_WS=11;
+    public static final int RULE_INCLUDE=11;
+    public static final int RULE_WS=12;
 
     // delegates
     // delegators
@@ -208,20 +209,20 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt1=2;
             int LA1_0 = input.LA(1);
 
-            if ( (LA1_0==13) ) {
+            if ( (LA1_0==14) ) {
                 alt1=1;
             }
             switch (alt1) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:87:4: otherlv_1= 'OIL_VERSION' otherlv_2= '=' ( (lv_oilVersion_3_0= RULE_STRING ) ) otherlv_4= ';'
                     {
-                    otherlv_1=(Token)match(input,13,FollowSets000.FOLLOW_13_in_ruleOilFile132); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleOilFile132); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getOilFileAccess().getOIL_VERSIONKeyword_1_0());
                           
                     }
-                    otherlv_2=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleOilFile144); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleOilFile144); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getOilFileAccess().getEqualsSignKeyword_1_1());
@@ -257,7 +258,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_4=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleOilFile178); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleOilFile178); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getOilFileAccess().getSemicolonKeyword_1_3());
@@ -273,7 +274,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt2=2;
             int LA2_0 = input.LA(1);
 
-            if ( (LA2_0==16) ) {
+            if ( (LA2_0==17) ) {
                 alt2=1;
             }
             switch (alt2) {
@@ -319,7 +320,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt3=2;
             int LA3_0 = input.LA(1);
 
-            if ( (LA3_0==20) ) {
+            if ( (LA3_0==21) ) {
                 alt3=1;
             }
             switch (alt3) {
@@ -445,7 +446,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:174:1: (otherlv_0= 'IMPLEMENTATION' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';' )
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:174:3: otherlv_0= 'IMPLEMENTATION' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObjectImpl ) )* otherlv_4= '}' otherlv_5= ';'
             {
-            otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleOilImplementation307); if (state.failed) return current;
+            otherlv_0=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleOilImplementation307); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getOilImplementationAccess().getIMPLEMENTATIONKeyword_0());
@@ -481,7 +482,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleOilImplementation341); if (state.failed) return current;
+            otherlv_2=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleOilImplementation341); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getOilImplementationAccess().getLeftCurlyBracketKeyword_2());
@@ -493,7 +494,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( ((LA4_0>=36 && LA4_0<=48)||LA4_0==65) ) {
+                if ( ((LA4_0>=37 && LA4_0<=49)||LA4_0==66) ) {
                     alt4=1;
                 }
 
@@ -540,13 +541,13 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleOilImplementation375); if (state.failed) return current;
+            otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilImplementation375); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getOilImplementationAccess().getRightCurlyBracketKeyword_4());
                   
             }
-            otherlv_5=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleOilImplementation387); if (state.failed) return current;
+            otherlv_5=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleOilImplementation387); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_5, grammarAccess.getOilImplementationAccess().getSemicolonKeyword_5());
@@ -673,7 +674,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleOilObjectImpl491); if (state.failed) return current;
+            otherlv_1=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleOilObjectImpl491); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getOilObjectImplAccess().getLeftCurlyBracketKeyword_1());
@@ -685,7 +686,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 int alt5=2;
                 int LA5_0 = input.LA(1);
 
-                if ( ((LA5_0>=28 && LA5_0<=35)||(LA5_0>=49 && LA5_0<=61)||LA5_0==66) ) {
+                if ( ((LA5_0>=29 && LA5_0<=36)||(LA5_0>=50 && LA5_0<=62)||LA5_0==67) ) {
                     alt5=1;
                 }
 
@@ -732,7 +733,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleOilObjectImpl525); if (state.failed) return current;
+            otherlv_3=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilObjectImpl525); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getOilObjectImplAccess().getRightCurlyBracketKeyword_3());
@@ -742,14 +743,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt6=2;
             int LA6_0 = input.LA(1);
 
-            if ( (LA6_0==19) ) {
+            if ( (LA6_0==20) ) {
                 alt6=1;
             }
             switch (alt6) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:291:3: otherlv_4= ':' ( (lv_description_5_0= RULE_STRING ) )
                     {
-                    otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilObjectImpl538); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleOilObjectImpl538); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getOilObjectImplAccess().getColonKeyword_4_0());
@@ -791,7 +792,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_6=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleOilObjectImpl574); if (state.failed) return current;
+            otherlv_6=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleOilObjectImpl574); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_6, grammarAccess.getOilObjectImplAccess().getSemicolonKeyword_5());
@@ -883,7 +884,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:338:1: (otherlv_0= 'CPU' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';' )
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:338:3: otherlv_0= 'CPU' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_OilObjects_3_0= ruleOilObject ) )* otherlv_4= '}' (otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) ) )? otherlv_7= ';'
             {
-            otherlv_0=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleOilApplication657); if (state.failed) return current;
+            otherlv_0=(Token)match(input,21,FollowSets000.FOLLOW_21_in_ruleOilApplication657); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getOilApplicationAccess().getCPUKeyword_0());
@@ -919,7 +920,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleOilApplication691); if (state.failed) return current;
+            otherlv_2=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleOilApplication691); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getOilApplicationAccess().getLeftCurlyBracketKeyword_2());
@@ -931,7 +932,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 int alt7=2;
                 int LA7_0 = input.LA(1);
 
-                if ( ((LA7_0>=36 && LA7_0<=48)||LA7_0==65) ) {
+                if ( ((LA7_0>=37 && LA7_0<=49)||LA7_0==66) ) {
                     alt7=1;
                 }
 
@@ -978,7 +979,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleOilApplication725); if (state.failed) return current;
+            otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilApplication725); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getOilApplicationAccess().getRightCurlyBracketKeyword_4());
@@ -988,14 +989,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt8=2;
             int LA8_0 = input.LA(1);
 
-            if ( (LA8_0==19) ) {
+            if ( (LA8_0==20) ) {
                 alt8=1;
             }
             switch (alt8) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:386:3: otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) )
                     {
-                    otherlv_5=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilApplication738); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleOilApplication738); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getOilApplicationAccess().getColonKeyword_5_0());
@@ -1037,7 +1038,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_7=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleOilApplication774); if (state.failed) return current;
+            otherlv_7=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleOilApplication774); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_7, grammarAccess.getOilApplicationAccess().getSemicolonKeyword_6());
@@ -1126,23 +1127,22 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:433:1: (this_ValueType_0= ruleValueType | this_VariantType_1= ruleVariantType | this_ReferenceType_2= ruleReferenceType )
             int alt9=3;
             switch ( input.LA(1) ) {
-            case 28:
             case 29:
             case 30:
             case 31:
             case 32:
             case 33:
+            case 34:
                 {
                 alt9=1;
                 }
                 break;
-            case 34:
             case 35:
+            case 36:
                 {
                 alt9=2;
                 }
                 break;
-            case 49:
             case 50:
             case 51:
             case 52:
@@ -1155,7 +1155,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             case 59:
             case 60:
             case 61:
-            case 66:
+            case 62:
+            case 67:
                 {
                 alt9=3;
                 }
@@ -1497,7 +1498,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 int alt11=2;
                 int LA11_0 = input.LA(1);
 
-                if ( (LA11_0==21) ) {
+                if ( (LA11_0==22) ) {
                     alt11=1;
                 }
 
@@ -1506,7 +1507,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:547:4: otherlv_2= ',' ( (lv_values_3_0= ruleGenericNumber ) )
             	    {
-            	    otherlv_2=(Token)match(input,21,FollowSets000.FOLLOW_21_in_ruleValueList1153); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,22,FollowSets000.FOLLOW_22_in_ruleValueList1153); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getValueListAccess().getCommaKeyword_2_0());
@@ -1686,7 +1687,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,22,FollowSets000.FOLLOW_22_in_ruleRange1289); if (state.failed) return current;
+            otherlv_2=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleRange1289); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getRangeAccess().getFullStopFullStopKeyword_2());
@@ -1874,7 +1875,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt12=2;
             int LA12_0 = input.LA(1);
 
-            if ( (LA12_0==23) ) {
+            if ( (LA12_0==24) ) {
                 alt12=1;
             }
             switch (alt12) {
@@ -1884,7 +1885,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:682:1: (lv_withAuto_2_0= 'WITH_AUTO' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:683:3: lv_withAuto_2_0= 'WITH_AUTO'
                     {
-                    lv_withAuto_2_0=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleValueType1429); if (state.failed) return current;
+                    lv_withAuto_2_0=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleValueType1429); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_withAuto_2_0, grammarAccess.getValueTypeAccess().getWithAutoWITH_AUTOKeyword_2_0());
@@ -1911,14 +1912,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt13=2;
             int LA13_0 = input.LA(1);
 
-            if ( (LA13_0==24) ) {
+            if ( (LA13_0==25) ) {
                 alt13=1;
             }
             switch (alt13) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:696:5: otherlv_3= '[' ( (lv_ValidValues_4_0= ruleValidValues ) ) otherlv_5= ']'
                     {
-                    otherlv_3=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleValueType1456); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleValueType1456); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getValueTypeAccess().getLeftSquareBracketKeyword_3_0());
@@ -1959,7 +1960,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleValueType1489); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleValueType1489); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getValueTypeAccess().getRightSquareBracketKeyword_3_2());
@@ -2010,7 +2011,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt14=2;
             int LA14_0 = input.LA(1);
 
-            if ( (LA14_0==26) ) {
+            if ( (LA14_0==27) ) {
                 alt14=1;
             }
             switch (alt14) {
@@ -2020,7 +2021,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:741:1: (lv_multiValue_7_0= '[]' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:742:3: lv_multiValue_7_0= '[]'
                     {
-                    lv_multiValue_7_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleValueType1530); if (state.failed) return current;
+                    lv_multiValue_7_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleValueType1530); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_multiValue_7_0, grammarAccess.getValueTypeAccess().getMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0());
@@ -2047,14 +2048,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt17=2;
             int LA17_0 = input.LA(1);
 
-            if ( (LA17_0==14) ) {
+            if ( (LA17_0==15) ) {
                 alt17=1;
             }
             switch (alt17) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:755:5: otherlv_8= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_9_0= 'AUTO' ) ) | ( ( (lv_defaultValue_10_1= ruleGenericValue | lv_defaultValue_10_2= RULE_ID ) ) ) )
                     {
-                    otherlv_8=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleValueType1557); if (state.failed) return current;
+                    otherlv_8=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleValueType1557); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_8, grammarAccess.getValueTypeAccess().getEqualsSignKeyword_6_0());
@@ -2064,10 +2065,10 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     int alt16=2;
                     int LA16_0 = input.LA(1);
 
-                    if ( (LA16_0==27) && (synpred1_InternalOil())) {
+                    if ( (LA16_0==28) && (synpred1_InternalOil())) {
                         alt16=1;
                     }
-                    else if ( ((LA16_0>=RULE_STRING && LA16_0<=RULE_HEX)||(LA16_0>=62 && LA16_0<=63)) ) {
+                    else if ( ((LA16_0>=RULE_STRING && LA16_0<=RULE_HEX)||(LA16_0>=63 && LA16_0<=64)) ) {
                         alt16=2;
                     }
                     else {
@@ -2087,7 +2088,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:766:1: (lv_defaultAuto_9_0= 'AUTO' )
                             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:767:3: lv_defaultAuto_9_0= 'AUTO'
                             {
-                            lv_defaultAuto_9_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleValueType1591); if (state.failed) return current;
+                            lv_defaultAuto_9_0=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleValueType1591); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_defaultAuto_9_0, grammarAccess.getValueTypeAccess().getDefaultAutoAUTOKeyword_6_1_0_0());
@@ -2123,7 +2124,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                             int alt15=2;
                             int LA15_0 = input.LA(1);
 
-                            if ( (LA15_0==RULE_STRING||(LA15_0>=RULE_NON_ZERO_INT && LA15_0<=RULE_HEX)||(LA15_0>=62 && LA15_0<=63)) ) {
+                            if ( (LA15_0==RULE_STRING||(LA15_0>=RULE_NON_ZERO_INT && LA15_0<=RULE_HEX)||(LA15_0>=63 && LA15_0<=64)) ) {
                                 alt15=1;
                             }
                             else if ( (LA15_0==RULE_ID) ) {
@@ -2215,14 +2216,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt18=2;
             int LA18_0 = input.LA(1);
 
-            if ( (LA18_0==19) ) {
+            if ( (LA18_0==20) ) {
                 alt18=1;
             }
             switch (alt18) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:817:7: otherlv_11= ':' ( (lv_description_12_0= RULE_STRING ) )
                     {
-                    otherlv_11=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleValueType1672); if (state.failed) return current;
+                    otherlv_11=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleValueType1672); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_11, grammarAccess.getValueTypeAccess().getColonKeyword_7_0());
@@ -2264,7 +2265,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_13=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleValueType1708); if (state.failed) return current;
+            otherlv_13=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleValueType1708); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_13, grammarAccess.getValueTypeAccess().getSemicolonKeyword_8());
@@ -2418,7 +2419,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt19=2;
             int LA19_0 = input.LA(1);
 
-            if ( (LA19_0==23) ) {
+            if ( (LA19_0==24) ) {
                 alt19=1;
             }
             switch (alt19) {
@@ -2428,7 +2429,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:889:1: (lv_withAuto_2_0= 'WITH_AUTO' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:890:3: lv_withAuto_2_0= 'WITH_AUTO'
                     {
-                    lv_withAuto_2_0=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleVariantType1827); if (state.failed) return current;
+                    lv_withAuto_2_0=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleVariantType1827); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_withAuto_2_0, grammarAccess.getVariantTypeAccess().getWithAutoWITH_AUTOKeyword_2_0());
@@ -2455,14 +2456,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt22=2;
             int LA22_0 = input.LA(1);
 
-            if ( (LA22_0==24) ) {
+            if ( (LA22_0==25) ) {
                 alt22=1;
             }
             switch (alt22) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:903:5: otherlv_3= '[' ( ( (lv_Values_4_0= ruleEnumeratorType ) ) (otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) ) )* )? otherlv_7= ']'
                     {
-                    otherlv_3=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleVariantType1854); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleVariantType1854); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getVariantTypeAccess().getLeftSquareBracketKeyword_3_0());
@@ -2472,7 +2473,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     int alt21=2;
                     int LA21_0 = input.LA(1);
 
-                    if ( (LA21_0==RULE_ID||(LA21_0>=28 && LA21_0<=61)) ) {
+                    if ( (LA21_0==RULE_ID||(LA21_0>=29 && LA21_0<=62)) ) {
                         alt21=1;
                     }
                     switch (alt21) {
@@ -2520,7 +2521,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                                 int alt20=2;
                                 int LA20_0 = input.LA(1);
 
-                                if ( (LA20_0==21) ) {
+                                if ( (LA20_0==22) ) {
                                     alt20=1;
                                 }
 
@@ -2529,7 +2530,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                             	case 1 :
                             	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:925:4: otherlv_5= ',' ( (lv_Values_6_0= ruleEnumeratorType ) )
                             	    {
-                            	    otherlv_5=(Token)match(input,21,FollowSets000.FOLLOW_21_in_ruleVariantType1889); if (state.failed) return current;
+                            	    otherlv_5=(Token)match(input,22,FollowSets000.FOLLOW_22_in_ruleVariantType1889); if (state.failed) return current;
                             	    if ( state.backtracking==0 ) {
 
                             	          	newLeafNode(otherlv_5, grammarAccess.getVariantTypeAccess().getCommaKeyword_3_1_1_0());
@@ -2585,7 +2586,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_7=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleVariantType1926); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleVariantType1926); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_7, grammarAccess.getVariantTypeAccess().getRightSquareBracketKeyword_3_2());
@@ -2636,7 +2637,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt23=2;
             int LA23_0 = input.LA(1);
 
-            if ( (LA23_0==26) ) {
+            if ( (LA23_0==27) ) {
                 alt23=1;
             }
             switch (alt23) {
@@ -2646,7 +2647,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:970:1: (lv_multiValue_9_0= '[]' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:971:3: lv_multiValue_9_0= '[]'
                     {
-                    lv_multiValue_9_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleVariantType1967); if (state.failed) return current;
+                    lv_multiValue_9_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleVariantType1967); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_multiValue_9_0, grammarAccess.getVariantTypeAccess().getMultiValueLeftSquareBracketRightSquareBracketKeyword_5_0());
@@ -2673,14 +2674,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt25=2;
             int LA25_0 = input.LA(1);
 
-            if ( (LA25_0==14) ) {
+            if ( (LA25_0==15) ) {
                 alt25=1;
             }
             switch (alt25) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:984:5: otherlv_10= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_11_0= 'AUTO' ) ) | ( (lv_defaultValue_12_0= RULE_ID ) ) )
                     {
-                    otherlv_10=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleVariantType1994); if (state.failed) return current;
+                    otherlv_10=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleVariantType1994); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_10, grammarAccess.getVariantTypeAccess().getEqualsSignKeyword_6_0());
@@ -2690,7 +2691,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     int alt24=2;
                     int LA24_0 = input.LA(1);
 
-                    if ( (LA24_0==27) && (synpred2_InternalOil())) {
+                    if ( (LA24_0==28) && (synpred2_InternalOil())) {
                         alt24=1;
                     }
                     else if ( (LA24_0==RULE_ID) ) {
@@ -2713,7 +2714,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:995:1: (lv_defaultAuto_11_0= 'AUTO' )
                             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:996:3: lv_defaultAuto_11_0= 'AUTO'
                             {
-                            lv_defaultAuto_11_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleVariantType2028); if (state.failed) return current;
+                            lv_defaultAuto_11_0=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleVariantType2028); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_defaultAuto_11_0, grammarAccess.getVariantTypeAccess().getDefaultAutoAUTOKeyword_6_1_0_0());
@@ -2785,14 +2786,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt26=2;
             int LA26_0 = input.LA(1);
 
-            if ( (LA26_0==19) ) {
+            if ( (LA26_0==20) ) {
                 alt26=1;
             }
             switch (alt26) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1028:7: otherlv_13= ':' ( (lv_description_14_0= RULE_STRING ) )
                     {
-                    otherlv_13=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleVariantType2085); if (state.failed) return current;
+                    otherlv_13=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleVariantType2085); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_13, grammarAccess.getVariantTypeAccess().getColonKeyword_7_0());
@@ -2834,7 +2835,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_15=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleVariantType2121); if (state.failed) return current;
+            otherlv_15=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleVariantType2121); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_15, grammarAccess.getVariantTypeAccess().getSemicolonKeyword_8());
@@ -2977,14 +2978,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt28=2;
             int LA28_0 = input.LA(1);
 
-            if ( (LA28_0==17) ) {
+            if ( (LA28_0==18) ) {
                 alt28=1;
             }
             switch (alt28) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1099:4: otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameterType ) )* otherlv_4= '}'
                     {
-                    otherlv_2=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleEnumeratorType2235); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleEnumeratorType2235); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getEnumeratorTypeAccess().getLeftCurlyBracketKeyword_2_0());
@@ -2996,7 +2997,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                         int alt27=2;
                         int LA27_0 = input.LA(1);
 
-                        if ( ((LA27_0>=28 && LA27_0<=35)||(LA27_0>=49 && LA27_0<=61)||LA27_0==66) ) {
+                        if ( ((LA27_0>=29 && LA27_0<=36)||(LA27_0>=50 && LA27_0<=62)||LA27_0==67) ) {
                             alt27=1;
                         }
 
@@ -3043,7 +3044,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_4=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleEnumeratorType2269); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleEnumeratorType2269); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getEnumeratorTypeAccess().getRightCurlyBracketKeyword_2_2());
@@ -3059,14 +3060,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt29=2;
             int LA29_0 = input.LA(1);
 
-            if ( (LA29_0==19) ) {
+            if ( (LA29_0==20) ) {
                 alt29=1;
             }
             switch (alt29) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1125:5: otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) )
                     {
-                    otherlv_5=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleEnumeratorType2284); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleEnumeratorType2284); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getEnumeratorTypeAccess().getColonKeyword_3_0());
@@ -3283,7 +3284,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt30=2;
             int LA30_0 = input.LA(1);
 
-            if ( (LA30_0==26) ) {
+            if ( (LA30_0==27) ) {
                 alt30=1;
             }
             switch (alt30) {
@@ -3293,7 +3294,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1211:1: (lv_multiValue_3_0= '[]' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1212:3: lv_multiValue_3_0= '[]'
                     {
-                    lv_multiValue_3_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleReferenceType2448); if (state.failed) return current;
+                    lv_multiValue_3_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleReferenceType2448); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_multiValue_3_0, grammarAccess.getReferenceTypeAccess().getMultiValueLeftSquareBracketRightSquareBracketKeyword_3_0());
@@ -3320,14 +3321,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt32=2;
             int LA32_0 = input.LA(1);
 
-            if ( (LA32_0==14) ) {
+            if ( (LA32_0==15) ) {
                 alt32=1;
             }
             switch (alt32) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1225:5: otherlv_4= '=' ( ( ( ( 'AUTO' ) )=> (lv_defaultAuto_5_0= 'AUTO' ) ) | ( (lv_defaultValue_6_0= RULE_ID ) ) )
                     {
-                    otherlv_4=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleReferenceType2475); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleReferenceType2475); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getReferenceTypeAccess().getEqualsSignKeyword_4_0());
@@ -3337,7 +3338,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     int alt31=2;
                     int LA31_0 = input.LA(1);
 
-                    if ( (LA31_0==27) && (synpred3_InternalOil())) {
+                    if ( (LA31_0==28) && (synpred3_InternalOil())) {
                         alt31=1;
                     }
                     else if ( (LA31_0==RULE_ID) ) {
@@ -3360,7 +3361,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1236:1: (lv_defaultAuto_5_0= 'AUTO' )
                             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1237:3: lv_defaultAuto_5_0= 'AUTO'
                             {
-                            lv_defaultAuto_5_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleReferenceType2509); if (state.failed) return current;
+                            lv_defaultAuto_5_0=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleReferenceType2509); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_defaultAuto_5_0, grammarAccess.getReferenceTypeAccess().getDefaultAutoAUTOKeyword_4_1_0_0());
@@ -3432,14 +3433,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt33=2;
             int LA33_0 = input.LA(1);
 
-            if ( (LA33_0==19) ) {
+            if ( (LA33_0==20) ) {
                 alt33=1;
             }
             switch (alt33) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1269:7: otherlv_7= ':' ( (lv_description_8_0= RULE_STRING ) )
                     {
-                    otherlv_7=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleReferenceType2566); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleReferenceType2566); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_7, grammarAccess.getReferenceTypeAccess().getColonKeyword_5_0());
@@ -3481,7 +3482,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_9=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleReferenceType2602); if (state.failed) return current;
+            otherlv_9=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleReferenceType2602); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_9, grammarAccess.getReferenceTypeAccess().getSemicolonKeyword_6());
@@ -3643,14 +3644,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt35=2;
             int LA35_0 = input.LA(1);
 
-            if ( (LA35_0==17) ) {
+            if ( (LA35_0==18) ) {
                 alt35=1;
             }
             switch (alt35) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1352:4: otherlv_2= '{' ( (lv_Parameters_3_0= ruleParameter ) )* otherlv_4= '}'
                     {
-                    otherlv_2=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleOilObject2729); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleOilObject2729); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getOilObjectAccess().getLeftCurlyBracketKeyword_2_0());
@@ -3662,7 +3663,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                         int alt34=2;
                         int LA34_0 = input.LA(1);
 
-                        if ( (LA34_0==RULE_ID||(LA34_0>=28 && LA34_0<=61)) ) {
+                        if ( (LA34_0==RULE_ID||(LA34_0>=29 && LA34_0<=62)) ) {
                             alt34=1;
                         }
 
@@ -3709,7 +3710,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_4=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleOilObject2763); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilObject2763); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getOilObjectAccess().getRightCurlyBracketKeyword_2_2());
@@ -3725,14 +3726,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt36=2;
             int LA36_0 = input.LA(1);
 
-            if ( (LA36_0==19) ) {
+            if ( (LA36_0==20) ) {
                 alt36=1;
             }
             switch (alt36) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1378:5: otherlv_5= ':' ( (lv_description_6_0= RULE_STRING ) )
                     {
-                    otherlv_5=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleOilObject2778); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleOilObject2778); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getOilObjectAccess().getColonKeyword_3_0());
@@ -3774,7 +3775,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_7=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleOilObject2814); if (state.failed) return current;
+            otherlv_7=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleOilObject2814); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_7, grammarAccess.getOilObjectAccess().getSemicolonKeyword_4());
@@ -3915,7 +3916,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleParameter2929); if (state.failed) return current;
+            otherlv_2=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleParameter2929); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getParameterAccess().getEqualsSignKeyword_2());
@@ -3925,13 +3926,13 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt37=3;
             int LA37_0 = input.LA(1);
 
-            if ( (LA37_0==27) && (synpred4_InternalOil())) {
+            if ( (LA37_0==28) && (synpred4_InternalOil())) {
                 alt37=1;
             }
-            else if ( (LA37_0==RULE_STRING||(LA37_0>=RULE_NON_ZERO_INT && LA37_0<=RULE_HEX)||(LA37_0>=62 && LA37_0<=63)) ) {
+            else if ( (LA37_0==RULE_STRING||(LA37_0>=RULE_NON_ZERO_INT && LA37_0<=RULE_HEX)||(LA37_0>=63 && LA37_0<=64)) ) {
                 alt37=2;
             }
-            else if ( (LA37_0==RULE_ID||(LA37_0>=28 && LA37_0<=61)) ) {
+            else if ( (LA37_0==RULE_ID||(LA37_0>=29 && LA37_0<=62)) ) {
                 alt37=3;
             }
             else {
@@ -3951,7 +3952,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1457:1: (lv_auto_3_0= 'AUTO' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1458:3: lv_auto_3_0= 'AUTO'
                     {
-                    lv_auto_3_0=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleParameter2963); if (state.failed) return current;
+                    lv_auto_3_0=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleParameter2963); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_auto_3_0, grammarAccess.getParameterAccess().getAutoAUTOKeyword_3_0_0());
@@ -4062,14 +4063,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt39=2;
             int LA39_0 = input.LA(1);
 
-            if ( (LA39_0==17) ) {
+            if ( (LA39_0==18) ) {
                 alt39=1;
             }
             switch (alt39) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1506:5: otherlv_6= '{' ( (lv_Parameters_7_0= ruleParameter ) )* otherlv_8= '}'
                     {
-                    otherlv_6=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleParameter3046); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleParameter3046); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_6, grammarAccess.getParameterAccess().getLeftCurlyBracketKeyword_4_0());
@@ -4081,7 +4082,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                         int alt38=2;
                         int LA38_0 = input.LA(1);
 
-                        if ( (LA38_0==RULE_ID||(LA38_0>=28 && LA38_0<=61)) ) {
+                        if ( (LA38_0==RULE_ID||(LA38_0>=29 && LA38_0<=62)) ) {
                             alt38=1;
                         }
 
@@ -4128,7 +4129,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_8=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleParameter3080); if (state.failed) return current;
+                    otherlv_8=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleParameter3080); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_8, grammarAccess.getParameterAccess().getRightCurlyBracketKeyword_4_2());
@@ -4144,14 +4145,14 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt40=2;
             int LA40_0 = input.LA(1);
 
-            if ( (LA40_0==19) ) {
+            if ( (LA40_0==20) ) {
                 alt40=1;
             }
             switch (alt40) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1532:5: otherlv_9= ':' ( (lv_description_10_0= RULE_STRING ) )
                     {
-                    otherlv_9=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleParameter3095); if (state.failed) return current;
+                    otherlv_9=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleParameter3095); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_9, grammarAccess.getParameterAccess().getColonKeyword_5_0());
@@ -4193,7 +4194,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_11=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleParameter3131); if (state.failed) return current;
+            otherlv_11=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleParameter3131); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_11, grammarAccess.getParameterAccess().getSemicolonKeyword_6());
@@ -4283,172 +4284,172 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 alt41=1;
                 }
                 break;
-            case 28:
+            case 29:
                 {
                 alt41=2;
                 }
                 break;
-            case 29:
+            case 30:
                 {
                 alt41=3;
                 }
                 break;
-            case 30:
+            case 31:
                 {
                 alt41=4;
                 }
                 break;
-            case 31:
+            case 32:
                 {
                 alt41=5;
                 }
                 break;
-            case 32:
+            case 33:
                 {
                 alt41=6;
                 }
                 break;
-            case 33:
+            case 34:
                 {
                 alt41=7;
                 }
                 break;
-            case 34:
+            case 35:
                 {
                 alt41=8;
                 }
                 break;
-            case 35:
+            case 36:
                 {
                 alt41=9;
                 }
                 break;
-            case 36:
+            case 37:
                 {
                 alt41=10;
                 }
                 break;
-            case 37:
+            case 38:
                 {
                 alt41=11;
                 }
                 break;
-            case 38:
+            case 39:
                 {
                 alt41=12;
                 }
                 break;
-            case 39:
+            case 40:
                 {
                 alt41=13;
                 }
                 break;
-            case 40:
+            case 41:
                 {
                 alt41=14;
                 }
                 break;
-            case 41:
+            case 42:
                 {
                 alt41=15;
                 }
                 break;
-            case 42:
+            case 43:
                 {
                 alt41=16;
                 }
                 break;
-            case 43:
+            case 44:
                 {
                 alt41=17;
                 }
                 break;
-            case 44:
+            case 45:
                 {
                 alt41=18;
                 }
                 break;
-            case 45:
+            case 46:
                 {
                 alt41=19;
                 }
                 break;
-            case 46:
+            case 47:
                 {
                 alt41=20;
                 }
                 break;
-            case 47:
+            case 48:
                 {
                 alt41=21;
                 }
                 break;
-            case 48:
+            case 49:
                 {
                 alt41=22;
                 }
                 break;
-            case 49:
+            case 50:
                 {
                 alt41=23;
                 }
                 break;
-            case 50:
+            case 51:
                 {
                 alt41=24;
                 }
                 break;
-            case 51:
+            case 52:
                 {
                 alt41=25;
                 }
                 break;
-            case 52:
+            case 53:
                 {
                 alt41=26;
                 }
                 break;
-            case 53:
+            case 54:
                 {
                 alt41=27;
                 }
                 break;
-            case 54:
+            case 55:
                 {
                 alt41=28;
                 }
                 break;
-            case 55:
+            case 56:
                 {
                 alt41=29;
                 }
                 break;
-            case 56:
+            case 57:
                 {
                 alt41=30;
                 }
                 break;
-            case 57:
+            case 58:
                 {
                 alt41=31;
                 }
                 break;
-            case 58:
+            case 59:
                 {
                 alt41=32;
                 }
                 break;
-            case 59:
+            case 60:
                 {
                 alt41=33;
                 }
                 break;
-            case 60:
+            case 61:
                 {
                 alt41=34;
                 }
                 break;
-            case 61:
+            case 62:
                 {
                 alt41=35;
                 }
@@ -4482,7 +4483,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1588:2: kw= 'STRING'
                     {
-                    kw=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleSpecialId3243); if (state.failed) return current;
+                    kw=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleSpecialId3243); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4495,7 +4496,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 3 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1595:2: kw= 'UINT32'
                     {
-                    kw=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleSpecialId3262); if (state.failed) return current;
+                    kw=(Token)match(input,30,FollowSets000.FOLLOW_30_in_ruleSpecialId3262); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4508,7 +4509,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 4 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1602:2: kw= 'INT32'
                     {
-                    kw=(Token)match(input,30,FollowSets000.FOLLOW_30_in_ruleSpecialId3281); if (state.failed) return current;
+                    kw=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleSpecialId3281); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4521,7 +4522,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 5 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1609:2: kw= 'UINT64'
                     {
-                    kw=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleSpecialId3300); if (state.failed) return current;
+                    kw=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleSpecialId3300); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4534,7 +4535,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 6 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1616:2: kw= 'INT64'
                     {
-                    kw=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleSpecialId3319); if (state.failed) return current;
+                    kw=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleSpecialId3319); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4547,7 +4548,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 7 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1623:2: kw= 'FLOAT'
                     {
-                    kw=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleSpecialId3338); if (state.failed) return current;
+                    kw=(Token)match(input,34,FollowSets000.FOLLOW_34_in_ruleSpecialId3338); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4560,7 +4561,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 8 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1630:2: kw= 'BOOLEAN'
                     {
-                    kw=(Token)match(input,34,FollowSets000.FOLLOW_34_in_ruleSpecialId3357); if (state.failed) return current;
+                    kw=(Token)match(input,35,FollowSets000.FOLLOW_35_in_ruleSpecialId3357); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4573,7 +4574,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 9 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1637:2: kw= 'ENUM'
                     {
-                    kw=(Token)match(input,35,FollowSets000.FOLLOW_35_in_ruleSpecialId3376); if (state.failed) return current;
+                    kw=(Token)match(input,36,FollowSets000.FOLLOW_36_in_ruleSpecialId3376); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4586,7 +4587,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 10 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1644:2: kw= 'OS'
                     {
-                    kw=(Token)match(input,36,FollowSets000.FOLLOW_36_in_ruleSpecialId3395); if (state.failed) return current;
+                    kw=(Token)match(input,37,FollowSets000.FOLLOW_37_in_ruleSpecialId3395); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4599,7 +4600,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 11 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1651:2: kw= 'ALARM'
                     {
-                    kw=(Token)match(input,37,FollowSets000.FOLLOW_37_in_ruleSpecialId3414); if (state.failed) return current;
+                    kw=(Token)match(input,38,FollowSets000.FOLLOW_38_in_ruleSpecialId3414); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4612,7 +4613,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 12 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1658:2: kw= 'APPMODE'
                     {
-                    kw=(Token)match(input,38,FollowSets000.FOLLOW_38_in_ruleSpecialId3433); if (state.failed) return current;
+                    kw=(Token)match(input,39,FollowSets000.FOLLOW_39_in_ruleSpecialId3433); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4625,7 +4626,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 13 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1665:2: kw= 'COUNTER'
                     {
-                    kw=(Token)match(input,39,FollowSets000.FOLLOW_39_in_ruleSpecialId3452); if (state.failed) return current;
+                    kw=(Token)match(input,40,FollowSets000.FOLLOW_40_in_ruleSpecialId3452); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4638,7 +4639,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 14 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1672:2: kw= 'COM'
                     {
-                    kw=(Token)match(input,40,FollowSets000.FOLLOW_40_in_ruleSpecialId3471); if (state.failed) return current;
+                    kw=(Token)match(input,41,FollowSets000.FOLLOW_41_in_ruleSpecialId3471); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4651,7 +4652,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 15 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1679:2: kw= 'EVENT'
                     {
-                    kw=(Token)match(input,41,FollowSets000.FOLLOW_41_in_ruleSpecialId3490); if (state.failed) return current;
+                    kw=(Token)match(input,42,FollowSets000.FOLLOW_42_in_ruleSpecialId3490); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4664,7 +4665,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 16 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1686:2: kw= 'IPDU'
                     {
-                    kw=(Token)match(input,42,FollowSets000.FOLLOW_42_in_ruleSpecialId3509); if (state.failed) return current;
+                    kw=(Token)match(input,43,FollowSets000.FOLLOW_43_in_ruleSpecialId3509); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4677,7 +4678,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 17 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1693:2: kw= 'ISR'
                     {
-                    kw=(Token)match(input,43,FollowSets000.FOLLOW_43_in_ruleSpecialId3528); if (state.failed) return current;
+                    kw=(Token)match(input,44,FollowSets000.FOLLOW_44_in_ruleSpecialId3528); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4690,7 +4691,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 18 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1700:2: kw= 'MESSAGE'
                     {
-                    kw=(Token)match(input,44,FollowSets000.FOLLOW_44_in_ruleSpecialId3547); if (state.failed) return current;
+                    kw=(Token)match(input,45,FollowSets000.FOLLOW_45_in_ruleSpecialId3547); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4703,7 +4704,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 19 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1707:2: kw= 'NETWORKMESSAGE'
                     {
-                    kw=(Token)match(input,45,FollowSets000.FOLLOW_45_in_ruleSpecialId3566); if (state.failed) return current;
+                    kw=(Token)match(input,46,FollowSets000.FOLLOW_46_in_ruleSpecialId3566); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4716,7 +4717,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 20 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1714:2: kw= 'NM'
                     {
-                    kw=(Token)match(input,46,FollowSets000.FOLLOW_46_in_ruleSpecialId3585); if (state.failed) return current;
+                    kw=(Token)match(input,47,FollowSets000.FOLLOW_47_in_ruleSpecialId3585); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4729,7 +4730,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 21 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1721:2: kw= 'RESOURCE'
                     {
-                    kw=(Token)match(input,47,FollowSets000.FOLLOW_47_in_ruleSpecialId3604); if (state.failed) return current;
+                    kw=(Token)match(input,48,FollowSets000.FOLLOW_48_in_ruleSpecialId3604); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4742,7 +4743,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 22 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1728:2: kw= 'TASK'
                     {
-                    kw=(Token)match(input,48,FollowSets000.FOLLOW_48_in_ruleSpecialId3623); if (state.failed) return current;
+                    kw=(Token)match(input,49,FollowSets000.FOLLOW_49_in_ruleSpecialId3623); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4755,7 +4756,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 23 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1735:2: kw= 'OS_TYPE'
                     {
-                    kw=(Token)match(input,49,FollowSets000.FOLLOW_49_in_ruleSpecialId3642); if (state.failed) return current;
+                    kw=(Token)match(input,50,FollowSets000.FOLLOW_50_in_ruleSpecialId3642); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4768,7 +4769,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 24 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1742:2: kw= 'ALARM_TYPE'
                     {
-                    kw=(Token)match(input,50,FollowSets000.FOLLOW_50_in_ruleSpecialId3661); if (state.failed) return current;
+                    kw=(Token)match(input,51,FollowSets000.FOLLOW_51_in_ruleSpecialId3661); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4781,7 +4782,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 25 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1749:2: kw= 'APPMODE_TYPE'
                     {
-                    kw=(Token)match(input,51,FollowSets000.FOLLOW_51_in_ruleSpecialId3680); if (state.failed) return current;
+                    kw=(Token)match(input,52,FollowSets000.FOLLOW_52_in_ruleSpecialId3680); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4794,7 +4795,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 26 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1756:2: kw= 'COUNTER_TYPE'
                     {
-                    kw=(Token)match(input,52,FollowSets000.FOLLOW_52_in_ruleSpecialId3699); if (state.failed) return current;
+                    kw=(Token)match(input,53,FollowSets000.FOLLOW_53_in_ruleSpecialId3699); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4807,7 +4808,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 27 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1763:2: kw= 'COM_TYPE'
                     {
-                    kw=(Token)match(input,53,FollowSets000.FOLLOW_53_in_ruleSpecialId3718); if (state.failed) return current;
+                    kw=(Token)match(input,54,FollowSets000.FOLLOW_54_in_ruleSpecialId3718); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4820,7 +4821,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 28 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1770:2: kw= 'EVENT_TYPE'
                     {
-                    kw=(Token)match(input,54,FollowSets000.FOLLOW_54_in_ruleSpecialId3737); if (state.failed) return current;
+                    kw=(Token)match(input,55,FollowSets000.FOLLOW_55_in_ruleSpecialId3737); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4833,7 +4834,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 29 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1777:2: kw= 'IPDU_TYPE'
                     {
-                    kw=(Token)match(input,55,FollowSets000.FOLLOW_55_in_ruleSpecialId3756); if (state.failed) return current;
+                    kw=(Token)match(input,56,FollowSets000.FOLLOW_56_in_ruleSpecialId3756); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4846,7 +4847,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 30 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1784:2: kw= 'ISR_TYPE'
                     {
-                    kw=(Token)match(input,56,FollowSets000.FOLLOW_56_in_ruleSpecialId3775); if (state.failed) return current;
+                    kw=(Token)match(input,57,FollowSets000.FOLLOW_57_in_ruleSpecialId3775); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4859,7 +4860,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 31 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1791:2: kw= 'MESSAGE_TYPE'
                     {
-                    kw=(Token)match(input,57,FollowSets000.FOLLOW_57_in_ruleSpecialId3794); if (state.failed) return current;
+                    kw=(Token)match(input,58,FollowSets000.FOLLOW_58_in_ruleSpecialId3794); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4872,7 +4873,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 32 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1798:2: kw= 'NETWORKMESSAGE_TYPE'
                     {
-                    kw=(Token)match(input,58,FollowSets000.FOLLOW_58_in_ruleSpecialId3813); if (state.failed) return current;
+                    kw=(Token)match(input,59,FollowSets000.FOLLOW_59_in_ruleSpecialId3813); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4885,7 +4886,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 33 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1805:2: kw= 'NM_TYPE'
                     {
-                    kw=(Token)match(input,59,FollowSets000.FOLLOW_59_in_ruleSpecialId3832); if (state.failed) return current;
+                    kw=(Token)match(input,60,FollowSets000.FOLLOW_60_in_ruleSpecialId3832); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4898,7 +4899,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 34 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1812:2: kw= 'RESOURCE_TYPE'
                     {
-                    kw=(Token)match(input,60,FollowSets000.FOLLOW_60_in_ruleSpecialId3851); if (state.failed) return current;
+                    kw=(Token)match(input,61,FollowSets000.FOLLOW_61_in_ruleSpecialId3851); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4911,7 +4912,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 35 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1819:2: kw= 'TASK_TYPE'
                     {
-                    kw=(Token)match(input,61,FollowSets000.FOLLOW_61_in_ruleSpecialId3870); if (state.failed) return current;
+                    kw=(Token)match(input,62,FollowSets000.FOLLOW_62_in_ruleSpecialId3870); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5294,17 +5295,17 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt44=3;
             int LA44_0 = input.LA(1);
 
-            if ( (LA44_0==62) ) {
+            if ( (LA44_0==63) ) {
                 alt44=1;
             }
-            else if ( (LA44_0==63) ) {
+            else if ( (LA44_0==64) ) {
                 alt44=2;
             }
             switch (alt44) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1942:2: kw= '+'
                     {
-                    kw=(Token)match(input,62,FollowSets000.FOLLOW_62_in_ruleINT4261); if (state.failed) return current;
+                    kw=(Token)match(input,63,FollowSets000.FOLLOW_63_in_ruleINT4261); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5317,7 +5318,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1949:2: kw= '-'
                     {
-                    kw=(Token)match(input,63,FollowSets000.FOLLOW_63_in_ruleINT4280); if (state.failed) return current;
+                    kw=(Token)match(input,64,FollowSets000.FOLLOW_64_in_ruleINT4280); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5560,17 +5561,17 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt47=3;
             int LA47_0 = input.LA(1);
 
-            if ( (LA47_0==62) ) {
+            if ( (LA47_0==63) ) {
                 alt47=1;
             }
-            else if ( (LA47_0==63) ) {
+            else if ( (LA47_0==64) ) {
                 alt47=2;
             }
             switch (alt47) {
                 case 1 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2014:2: kw= '+'
                     {
-                    kw=(Token)match(input,62,FollowSets000.FOLLOW_62_in_ruleFLOAT4498); if (state.failed) return current;
+                    kw=(Token)match(input,63,FollowSets000.FOLLOW_63_in_ruleFLOAT4498); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5583,7 +5584,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2021:2: kw= '-'
                     {
-                    kw=(Token)match(input,63,FollowSets000.FOLLOW_63_in_ruleFLOAT4517); if (state.failed) return current;
+                    kw=(Token)match(input,64,FollowSets000.FOLLOW_64_in_ruleFLOAT4517); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5715,7 +5716,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2056:5: ( ( '.' )=>kw= '.' )
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2056:6: ( '.' )=>kw= '.'
             {
-            kw=(Token)match(input,64,FollowSets000.FOLLOW_64_in_ruleFLOAT4640); if (state.failed) return current;
+            kw=(Token)match(input,65,FollowSets000.FOLLOW_65_in_ruleFLOAT4640); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -5828,32 +5829,32 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2090:1: ( (enumLiteral_0= 'STRING' ) | (enumLiteral_1= 'UINT32' ) | (enumLiteral_2= 'INT32' ) | (enumLiteral_3= 'UINT64' ) | (enumLiteral_4= 'INT64' ) | (enumLiteral_5= 'FLOAT' ) )
             int alt51=6;
             switch ( input.LA(1) ) {
-            case 28:
+            case 29:
                 {
                 alt51=1;
                 }
                 break;
-            case 29:
+            case 30:
                 {
                 alt51=2;
                 }
                 break;
-            case 30:
+            case 31:
                 {
                 alt51=3;
                 }
                 break;
-            case 31:
+            case 32:
                 {
                 alt51=4;
                 }
                 break;
-            case 32:
+            case 33:
                 {
                 alt51=5;
                 }
                 break;
-            case 33:
+            case 34:
                 {
                 alt51=6;
                 }
@@ -5873,7 +5874,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2090:2: (enumLiteral_0= 'STRING' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2090:4: enumLiteral_0= 'STRING'
                     {
-                    enumLiteral_0=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleVType4744); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleVType4744); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getVTypeAccess().getSTRINGEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -5892,7 +5893,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2096:6: (enumLiteral_1= 'UINT32' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2096:8: enumLiteral_1= 'UINT32'
                     {
-                    enumLiteral_1=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleVType4761); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,30,FollowSets000.FOLLOW_30_in_ruleVType4761); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getVTypeAccess().getUINT32EnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -5911,7 +5912,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2102:6: (enumLiteral_2= 'INT32' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2102:8: enumLiteral_2= 'INT32'
                     {
-                    enumLiteral_2=(Token)match(input,30,FollowSets000.FOLLOW_30_in_ruleVType4778); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleVType4778); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getVTypeAccess().getINT32EnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -5930,7 +5931,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2108:6: (enumLiteral_3= 'UINT64' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2108:8: enumLiteral_3= 'UINT64'
                     {
-                    enumLiteral_3=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleVType4795); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleVType4795); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getVTypeAccess().getUINT64EnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -5949,7 +5950,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2114:6: (enumLiteral_4= 'INT64' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2114:8: enumLiteral_4= 'INT64'
                     {
-                    enumLiteral_4=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleVType4812); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleVType4812); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getVTypeAccess().getINT64EnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -5968,7 +5969,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2120:6: (enumLiteral_5= 'FLOAT' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2120:8: enumLiteral_5= 'FLOAT'
                     {
-                    enumLiteral_5=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleVType4829); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,34,FollowSets000.FOLLOW_34_in_ruleVType4829); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getVTypeAccess().getFLOATEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -6020,10 +6021,10 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             int alt52=2;
             int LA52_0 = input.LA(1);
 
-            if ( (LA52_0==34) ) {
+            if ( (LA52_0==35) ) {
                 alt52=1;
             }
-            else if ( (LA52_0==35) ) {
+            else if ( (LA52_0==36) ) {
                 alt52=2;
             }
             else {
@@ -6040,7 +6041,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2133:2: (enumLiteral_0= 'BOOLEAN' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2133:4: enumLiteral_0= 'BOOLEAN'
                     {
-                    enumLiteral_0=(Token)match(input,34,FollowSets000.FOLLOW_34_in_ruleEType4874); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,35,FollowSets000.FOLLOW_35_in_ruleEType4874); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getETypeAccess().getBOOLEANEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -6059,7 +6060,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2139:6: (enumLiteral_1= 'ENUM' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2139:8: enumLiteral_1= 'ENUM'
                     {
-                    enumLiteral_1=(Token)match(input,35,FollowSets000.FOLLOW_35_in_ruleEType4891); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,36,FollowSets000.FOLLOW_36_in_ruleEType4891); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getETypeAccess().getENUMEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -6122,72 +6123,72 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2152:1: ( (enumLiteral_0= 'OS' ) | (enumLiteral_1= 'ALARM' ) | (enumLiteral_2= 'APPMODE' ) | (enumLiteral_3= 'COUNTER' ) | (enumLiteral_4= 'COM' ) | (enumLiteral_5= 'EVENT' ) | (enumLiteral_6= 'IPDU' ) | (enumLiteral_7= 'ISR' ) | (enumLiteral_8= 'MESSAGE' ) | (enumLiteral_9= 'NETWORKMESSAGE' ) | (enumLiteral_10= 'NM' ) | (enumLiteral_11= 'RESOURCE' ) | (enumLiteral_12= 'TASK' ) | (enumLiteral_13= 'APPLICATION' ) )
             int alt53=14;
             switch ( input.LA(1) ) {
-            case 36:
+            case 37:
                 {
                 alt53=1;
                 }
                 break;
-            case 37:
+            case 38:
                 {
                 alt53=2;
                 }
                 break;
-            case 38:
+            case 39:
                 {
                 alt53=3;
                 }
                 break;
-            case 39:
+            case 40:
                 {
                 alt53=4;
                 }
                 break;
-            case 40:
+            case 41:
                 {
                 alt53=5;
                 }
                 break;
-            case 41:
+            case 42:
                 {
                 alt53=6;
                 }
                 break;
-            case 42:
+            case 43:
                 {
                 alt53=7;
                 }
                 break;
-            case 43:
+            case 44:
                 {
                 alt53=8;
                 }
                 break;
-            case 44:
+            case 45:
                 {
                 alt53=9;
                 }
                 break;
-            case 45:
+            case 46:
                 {
                 alt53=10;
                 }
                 break;
-            case 46:
+            case 47:
                 {
                 alt53=11;
                 }
                 break;
-            case 47:
+            case 48:
                 {
                 alt53=12;
                 }
                 break;
-            case 48:
+            case 49:
                 {
                 alt53=13;
                 }
                 break;
-            case 65:
+            case 66:
                 {
                 alt53=14;
                 }
@@ -6207,7 +6208,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2152:2: (enumLiteral_0= 'OS' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2152:4: enumLiteral_0= 'OS'
                     {
-                    enumLiteral_0=(Token)match(input,36,FollowSets000.FOLLOW_36_in_ruleObjectType4936); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,37,FollowSets000.FOLLOW_37_in_ruleObjectType4936); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getOSEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -6226,7 +6227,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2158:6: (enumLiteral_1= 'ALARM' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2158:8: enumLiteral_1= 'ALARM'
                     {
-                    enumLiteral_1=(Token)match(input,37,FollowSets000.FOLLOW_37_in_ruleObjectType4953); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,38,FollowSets000.FOLLOW_38_in_ruleObjectType4953); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getALARMEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -6245,7 +6246,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2164:6: (enumLiteral_2= 'APPMODE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2164:8: enumLiteral_2= 'APPMODE'
                     {
-                    enumLiteral_2=(Token)match(input,38,FollowSets000.FOLLOW_38_in_ruleObjectType4970); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,39,FollowSets000.FOLLOW_39_in_ruleObjectType4970); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getAPPMODEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -6264,7 +6265,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2170:6: (enumLiteral_3= 'COUNTER' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2170:8: enumLiteral_3= 'COUNTER'
                     {
-                    enumLiteral_3=(Token)match(input,39,FollowSets000.FOLLOW_39_in_ruleObjectType4987); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,40,FollowSets000.FOLLOW_40_in_ruleObjectType4987); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getCOUNTEREnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -6283,7 +6284,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2176:6: (enumLiteral_4= 'COM' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2176:8: enumLiteral_4= 'COM'
                     {
-                    enumLiteral_4=(Token)match(input,40,FollowSets000.FOLLOW_40_in_ruleObjectType5004); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,41,FollowSets000.FOLLOW_41_in_ruleObjectType5004); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getCOMEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -6302,7 +6303,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2182:6: (enumLiteral_5= 'EVENT' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2182:8: enumLiteral_5= 'EVENT'
                     {
-                    enumLiteral_5=(Token)match(input,41,FollowSets000.FOLLOW_41_in_ruleObjectType5021); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,42,FollowSets000.FOLLOW_42_in_ruleObjectType5021); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getEVENTEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -6321,7 +6322,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2188:6: (enumLiteral_6= 'IPDU' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2188:8: enumLiteral_6= 'IPDU'
                     {
-                    enumLiteral_6=(Token)match(input,42,FollowSets000.FOLLOW_42_in_ruleObjectType5038); if (state.failed) return current;
+                    enumLiteral_6=(Token)match(input,43,FollowSets000.FOLLOW_43_in_ruleObjectType5038); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getIPDUEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -6340,7 +6341,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2194:6: (enumLiteral_7= 'ISR' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2194:8: enumLiteral_7= 'ISR'
                     {
-                    enumLiteral_7=(Token)match(input,43,FollowSets000.FOLLOW_43_in_ruleObjectType5055); if (state.failed) return current;
+                    enumLiteral_7=(Token)match(input,44,FollowSets000.FOLLOW_44_in_ruleObjectType5055); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getISREnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -6359,7 +6360,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2200:6: (enumLiteral_8= 'MESSAGE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2200:8: enumLiteral_8= 'MESSAGE'
                     {
-                    enumLiteral_8=(Token)match(input,44,FollowSets000.FOLLOW_44_in_ruleObjectType5072); if (state.failed) return current;
+                    enumLiteral_8=(Token)match(input,45,FollowSets000.FOLLOW_45_in_ruleObjectType5072); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getMESSAGEEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
@@ -6378,7 +6379,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2206:6: (enumLiteral_9= 'NETWORKMESSAGE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2206:8: enumLiteral_9= 'NETWORKMESSAGE'
                     {
-                    enumLiteral_9=(Token)match(input,45,FollowSets000.FOLLOW_45_in_ruleObjectType5089); if (state.failed) return current;
+                    enumLiteral_9=(Token)match(input,46,FollowSets000.FOLLOW_46_in_ruleObjectType5089); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getNETWORKMESSAGEEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
@@ -6397,7 +6398,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2212:6: (enumLiteral_10= 'NM' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2212:8: enumLiteral_10= 'NM'
                     {
-                    enumLiteral_10=(Token)match(input,46,FollowSets000.FOLLOW_46_in_ruleObjectType5106); if (state.failed) return current;
+                    enumLiteral_10=(Token)match(input,47,FollowSets000.FOLLOW_47_in_ruleObjectType5106); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getNMEnumLiteralDeclaration_10().getEnumLiteral().getInstance();
@@ -6416,7 +6417,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2218:6: (enumLiteral_11= 'RESOURCE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2218:8: enumLiteral_11= 'RESOURCE'
                     {
-                    enumLiteral_11=(Token)match(input,47,FollowSets000.FOLLOW_47_in_ruleObjectType5123); if (state.failed) return current;
+                    enumLiteral_11=(Token)match(input,48,FollowSets000.FOLLOW_48_in_ruleObjectType5123); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getRESOURCEEnumLiteralDeclaration_11().getEnumLiteral().getInstance();
@@ -6435,7 +6436,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2224:6: (enumLiteral_12= 'TASK' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2224:8: enumLiteral_12= 'TASK'
                     {
-                    enumLiteral_12=(Token)match(input,48,FollowSets000.FOLLOW_48_in_ruleObjectType5140); if (state.failed) return current;
+                    enumLiteral_12=(Token)match(input,49,FollowSets000.FOLLOW_49_in_ruleObjectType5140); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getTASKEnumLiteralDeclaration_12().getEnumLiteral().getInstance();
@@ -6454,7 +6455,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2230:6: (enumLiteral_13= 'APPLICATION' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2230:8: enumLiteral_13= 'APPLICATION'
                     {
-                    enumLiteral_13=(Token)match(input,65,FollowSets000.FOLLOW_65_in_ruleObjectType5157); if (state.failed) return current;
+                    enumLiteral_13=(Token)match(input,66,FollowSets000.FOLLOW_66_in_ruleObjectType5157); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_13().getEnumLiteral().getInstance();
@@ -6517,72 +6518,72 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
             // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2243:1: ( (enumLiteral_0= 'OS_TYPE' ) | (enumLiteral_1= 'ALARM_TYPE' ) | (enumLiteral_2= 'APPMODE_TYPE' ) | (enumLiteral_3= 'COUNTER_TYPE' ) | (enumLiteral_4= 'COM_TYPE' ) | (enumLiteral_5= 'EVENT_TYPE' ) | (enumLiteral_6= 'IPDU_TYPE' ) | (enumLiteral_7= 'ISR_TYPE' ) | (enumLiteral_8= 'MESSAGE_TYPE' ) | (enumLiteral_9= 'NETWORKMESSAGE_TYPE' ) | (enumLiteral_10= 'NM_TYPE' ) | (enumLiteral_11= 'RESOURCE_TYPE' ) | (enumLiteral_12= 'TASK_TYPE' ) | (enumLiteral_13= 'APPLICATION_TYPE' ) )
             int alt54=14;
             switch ( input.LA(1) ) {
-            case 49:
+            case 50:
                 {
                 alt54=1;
                 }
                 break;
-            case 50:
+            case 51:
                 {
                 alt54=2;
                 }
                 break;
-            case 51:
+            case 52:
                 {
                 alt54=3;
                 }
                 break;
-            case 52:
+            case 53:
                 {
                 alt54=4;
                 }
                 break;
-            case 53:
+            case 54:
                 {
                 alt54=5;
                 }
                 break;
-            case 54:
+            case 55:
                 {
                 alt54=6;
                 }
                 break;
-            case 55:
+            case 56:
                 {
                 alt54=7;
                 }
                 break;
-            case 56:
+            case 57:
                 {
                 alt54=8;
                 }
                 break;
-            case 57:
+            case 58:
                 {
                 alt54=9;
                 }
                 break;
-            case 58:
+            case 59:
                 {
                 alt54=10;
                 }
                 break;
-            case 59:
+            case 60:
                 {
                 alt54=11;
                 }
                 break;
-            case 60:
+            case 61:
                 {
                 alt54=12;
                 }
                 break;
-            case 61:
+            case 62:
                 {
                 alt54=13;
                 }
                 break;
-            case 66:
+            case 67:
                 {
                 alt54=14;
                 }
@@ -6602,7 +6603,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2243:2: (enumLiteral_0= 'OS_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2243:4: enumLiteral_0= 'OS_TYPE'
                     {
-                    enumLiteral_0=(Token)match(input,49,FollowSets000.FOLLOW_49_in_ruleObjectTypeRef5202); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,50,FollowSets000.FOLLOW_50_in_ruleObjectTypeRef5202); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getOSEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -6621,7 +6622,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2249:6: (enumLiteral_1= 'ALARM_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2249:8: enumLiteral_1= 'ALARM_TYPE'
                     {
-                    enumLiteral_1=(Token)match(input,50,FollowSets000.FOLLOW_50_in_ruleObjectTypeRef5219); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,51,FollowSets000.FOLLOW_51_in_ruleObjectTypeRef5219); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getALARMEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -6640,7 +6641,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2255:6: (enumLiteral_2= 'APPMODE_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2255:8: enumLiteral_2= 'APPMODE_TYPE'
                     {
-                    enumLiteral_2=(Token)match(input,51,FollowSets000.FOLLOW_51_in_ruleObjectTypeRef5236); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,52,FollowSets000.FOLLOW_52_in_ruleObjectTypeRef5236); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getAPPMODEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -6659,7 +6660,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2261:6: (enumLiteral_3= 'COUNTER_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2261:8: enumLiteral_3= 'COUNTER_TYPE'
                     {
-                    enumLiteral_3=(Token)match(input,52,FollowSets000.FOLLOW_52_in_ruleObjectTypeRef5253); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,53,FollowSets000.FOLLOW_53_in_ruleObjectTypeRef5253); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getCOUNTEREnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -6678,7 +6679,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2267:6: (enumLiteral_4= 'COM_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2267:8: enumLiteral_4= 'COM_TYPE'
                     {
-                    enumLiteral_4=(Token)match(input,53,FollowSets000.FOLLOW_53_in_ruleObjectTypeRef5270); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,54,FollowSets000.FOLLOW_54_in_ruleObjectTypeRef5270); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getCOMEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -6697,7 +6698,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2273:6: (enumLiteral_5= 'EVENT_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2273:8: enumLiteral_5= 'EVENT_TYPE'
                     {
-                    enumLiteral_5=(Token)match(input,54,FollowSets000.FOLLOW_54_in_ruleObjectTypeRef5287); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,55,FollowSets000.FOLLOW_55_in_ruleObjectTypeRef5287); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getEVENTEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -6716,7 +6717,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2279:6: (enumLiteral_6= 'IPDU_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2279:8: enumLiteral_6= 'IPDU_TYPE'
                     {
-                    enumLiteral_6=(Token)match(input,55,FollowSets000.FOLLOW_55_in_ruleObjectTypeRef5304); if (state.failed) return current;
+                    enumLiteral_6=(Token)match(input,56,FollowSets000.FOLLOW_56_in_ruleObjectTypeRef5304); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getIPDUEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -6735,7 +6736,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2285:6: (enumLiteral_7= 'ISR_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2285:8: enumLiteral_7= 'ISR_TYPE'
                     {
-                    enumLiteral_7=(Token)match(input,56,FollowSets000.FOLLOW_56_in_ruleObjectTypeRef5321); if (state.failed) return current;
+                    enumLiteral_7=(Token)match(input,57,FollowSets000.FOLLOW_57_in_ruleObjectTypeRef5321); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getISREnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -6754,7 +6755,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2291:6: (enumLiteral_8= 'MESSAGE_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2291:8: enumLiteral_8= 'MESSAGE_TYPE'
                     {
-                    enumLiteral_8=(Token)match(input,57,FollowSets000.FOLLOW_57_in_ruleObjectTypeRef5338); if (state.failed) return current;
+                    enumLiteral_8=(Token)match(input,58,FollowSets000.FOLLOW_58_in_ruleObjectTypeRef5338); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getMESSAGEEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
@@ -6773,7 +6774,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2297:6: (enumLiteral_9= 'NETWORKMESSAGE_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2297:8: enumLiteral_9= 'NETWORKMESSAGE_TYPE'
                     {
-                    enumLiteral_9=(Token)match(input,58,FollowSets000.FOLLOW_58_in_ruleObjectTypeRef5355); if (state.failed) return current;
+                    enumLiteral_9=(Token)match(input,59,FollowSets000.FOLLOW_59_in_ruleObjectTypeRef5355); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getNETWORKMESSAGEEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
@@ -6792,7 +6793,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2303:6: (enumLiteral_10= 'NM_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2303:8: enumLiteral_10= 'NM_TYPE'
                     {
-                    enumLiteral_10=(Token)match(input,59,FollowSets000.FOLLOW_59_in_ruleObjectTypeRef5372); if (state.failed) return current;
+                    enumLiteral_10=(Token)match(input,60,FollowSets000.FOLLOW_60_in_ruleObjectTypeRef5372); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getNMEnumLiteralDeclaration_10().getEnumLiteral().getInstance();
@@ -6811,7 +6812,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2309:6: (enumLiteral_11= 'RESOURCE_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2309:8: enumLiteral_11= 'RESOURCE_TYPE'
                     {
-                    enumLiteral_11=(Token)match(input,60,FollowSets000.FOLLOW_60_in_ruleObjectTypeRef5389); if (state.failed) return current;
+                    enumLiteral_11=(Token)match(input,61,FollowSets000.FOLLOW_61_in_ruleObjectTypeRef5389); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getRESOURCEEnumLiteralDeclaration_11().getEnumLiteral().getInstance();
@@ -6830,7 +6831,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2315:6: (enumLiteral_12= 'TASK_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2315:8: enumLiteral_12= 'TASK_TYPE'
                     {
-                    enumLiteral_12=(Token)match(input,61,FollowSets000.FOLLOW_61_in_ruleObjectTypeRef5406); if (state.failed) return current;
+                    enumLiteral_12=(Token)match(input,62,FollowSets000.FOLLOW_62_in_ruleObjectTypeRef5406); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getTASKEnumLiteralDeclaration_12().getEnumLiteral().getInstance();
@@ -6849,7 +6850,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2321:6: (enumLiteral_13= 'APPLICATION_TYPE' )
                     // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2321:8: enumLiteral_13= 'APPLICATION_TYPE'
                     {
-                    enumLiteral_13=(Token)match(input,66,FollowSets000.FOLLOW_66_in_ruleObjectTypeRef5423); if (state.failed) return current;
+                    enumLiteral_13=(Token)match(input,67,FollowSets000.FOLLOW_67_in_ruleObjectTypeRef5423); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getObjectTypeRefAccess().getAPPLICATIONEnumLiteralDeclaration_13().getEnumLiteral().getInstance();
@@ -6891,7 +6892,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
         // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:760:1: ( 'AUTO' )
         // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:761:2: 'AUTO'
         {
-        match(input,27,FollowSets000.FOLLOW_27_in_synpred1_InternalOil1573); if (state.failed) return ;
+        match(input,28,FollowSets000.FOLLOW_28_in_synpred1_InternalOil1573); if (state.failed) return ;
 
         }
 
@@ -6908,7 +6909,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
         // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:989:1: ( 'AUTO' )
         // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:990:2: 'AUTO'
         {
-        match(input,27,FollowSets000.FOLLOW_27_in_synpred2_InternalOil2010); if (state.failed) return ;
+        match(input,28,FollowSets000.FOLLOW_28_in_synpred2_InternalOil2010); if (state.failed) return ;
 
         }
 
@@ -6925,7 +6926,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
         // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1230:1: ( 'AUTO' )
         // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1231:2: 'AUTO'
         {
-        match(input,27,FollowSets000.FOLLOW_27_in_synpred3_InternalOil2491); if (state.failed) return ;
+        match(input,28,FollowSets000.FOLLOW_28_in_synpred3_InternalOil2491); if (state.failed) return ;
 
         }
 
@@ -6942,7 +6943,7 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
         // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1451:1: ( 'AUTO' )
         // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:1452:2: 'AUTO'
         {
-        match(input,27,FollowSets000.FOLLOW_27_in_synpred4_InternalOil2945); if (state.failed) return ;
+        match(input,28,FollowSets000.FOLLOW_28_in_synpred4_InternalOil2945); if (state.failed) return ;
 
         }
 
@@ -7019,27 +7020,27 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
     static final String DFA10_eofS =
         "\3\uffff\5\12\3\uffff\2\12";
     static final String DFA10_minS =
-        "\4\6\2\25\2\6\1\uffff\1\6\1\uffff\2\6";
+        "\4\6\2\26\2\6\1\uffff\1\6\1\uffff\2\6";
     static final String DFA10_maxS =
-        "\1\77\2\10\2\100\1\31\2\100\1\uffff\1\7\1\uffff\2\31";
+        "\1\100\2\10\2\101\1\32\2\101\1\uffff\1\7\1\uffff\2\32";
     static final String DFA10_acceptS =
         "\10\uffff\1\1\1\uffff\1\2\2\uffff";
     static final String DFA10_specialS =
         "\15\uffff}>";
     static final String[] DFA10_transitionS = {
-            "\1\3\1\4\1\5\65\uffff\1\1\1\2",
+            "\1\3\1\4\1\5\66\uffff\1\1\1\2",
             "\1\3\1\4\1\5",
             "\1\3\1\4\1\5",
-            "\1\7\1\6\15\uffff\1\12\1\10\2\uffff\1\12\46\uffff\1\11",
+            "\1\7\1\6\16\uffff\1\12\1\10\2\uffff\1\12\46\uffff\1\11",
             "\1\12\1\10\2\uffff\1\12\46\uffff\1\11",
             "\1\12\1\10\2\uffff\1\12",
-            "\1\7\1\6\15\uffff\1\12\1\10\2\uffff\1\12\46\uffff\1\11",
-            "\1\7\1\6\15\uffff\1\12\1\10\2\uffff\1\12\46\uffff\1\11",
+            "\1\7\1\6\16\uffff\1\12\1\10\2\uffff\1\12\46\uffff\1\11",
+            "\1\7\1\6\16\uffff\1\12\1\10\2\uffff\1\12\46\uffff\1\11",
             "",
             "\1\14\1\13",
             "",
-            "\1\14\1\13\15\uffff\1\12\1\10\2\uffff\1\12",
-            "\1\14\1\13\15\uffff\1\12\1\10\2\uffff\1\12"
+            "\1\14\1\13\16\uffff\1\12\1\10\2\uffff\1\12",
+            "\1\14\1\13\16\uffff\1\12\1\10\2\uffff\1\12"
     };
 
     static final short[] DFA10_eot = DFA.unpackEncodedString(DFA10_eotS);
@@ -7080,23 +7081,26 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
     static final String DFA42_eofS =
         "\4\uffff\2\6\1\uffff\2\6\1\uffff";
     static final String DFA42_minS =
-        "\1\4\1\uffff\3\6\1\17\1\uffff\2\6\1\uffff";
+        "\1\4\1\uffff\3\6\1\20\1\uffff\2\6\1\uffff";
     static final String DFA42_maxS =
-        "\1\77\1\uffff\2\10\2\100\1\uffff\2\100\1\uffff";
+        "\1\100\1\uffff\2\10\2\101\1\uffff\2\101\1\uffff";
     static final String DFA42_acceptS =
         "\1\uffff\1\1\4\uffff\1\2\2\uffff\1\3";
     static final String DFA42_specialS =
         "\12\uffff}>";
     static final String[] DFA42_transitionS = {
-            "\1\1\1\uffff\1\4\1\5\1\6\65\uffff\1\2\1\3",
+            "\1\1\1\uffff\1\4\1\5\1\6\66\uffff\1\2\1\3",
             "",
             "\1\4\1\5\1\6",
             "\1\4\1\5\1\6",
-            "\1\10\1\7\7\uffff\1\6\1\uffff\1\6\1\uffff\1\6\54\uffff\1\11",
+            "\1\10\1\7\10\uffff\1\6\1\uffff\1\6\1\uffff\1\6\54\uffff\1"+
+            "\11",
             "\1\6\1\uffff\1\6\1\uffff\1\6\54\uffff\1\11",
             "",
-            "\1\10\1\7\7\uffff\1\6\1\uffff\1\6\1\uffff\1\6\54\uffff\1\11",
-            "\1\10\1\7\7\uffff\1\6\1\uffff\1\6\1\uffff\1\6\54\uffff\1\11",
+            "\1\10\1\7\10\uffff\1\6\1\uffff\1\6\1\uffff\1\6\54\uffff\1"+
+            "\11",
+            "\1\10\1\7\10\uffff\1\6\1\uffff\1\6\1\uffff\1\6\54\uffff\1"+
+            "\11",
             ""
     };
 
@@ -7138,22 +7142,22 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
     static final String DFA43_eofS =
         "\3\uffff\2\5\1\uffff\2\5\1\uffff";
     static final String DFA43_minS =
-        "\4\6\1\25\1\uffff\2\6\1\uffff";
+        "\4\6\1\26\1\uffff\2\6\1\uffff";
     static final String DFA43_maxS =
-        "\1\77\2\10\2\100\1\uffff\2\100\1\uffff";
+        "\1\100\2\10\2\101\1\uffff\2\101\1\uffff";
     static final String DFA43_acceptS =
         "\5\uffff\1\1\2\uffff\1\2";
     static final String DFA43_specialS =
         "\11\uffff}>";
     static final String[] DFA43_transitionS = {
-            "\1\3\1\4\1\5\65\uffff\1\1\1\2",
+            "\1\3\1\4\1\5\66\uffff\1\1\1\2",
             "\1\3\1\4\1\5",
             "\1\3\1\4\1\5",
-            "\1\7\1\6\15\uffff\2\5\2\uffff\1\5\46\uffff\1\10",
+            "\1\7\1\6\16\uffff\2\5\2\uffff\1\5\46\uffff\1\10",
             "\2\5\2\uffff\1\5\46\uffff\1\10",
             "",
-            "\1\7\1\6\15\uffff\2\5\2\uffff\1\5\46\uffff\1\10",
-            "\1\7\1\6\15\uffff\2\5\2\uffff\1\5\46\uffff\1\10",
+            "\1\7\1\6\16\uffff\2\5\2\uffff\1\5\46\uffff\1\10",
+            "\1\7\1\6\16\uffff\2\5\2\uffff\1\5\46\uffff\1\10",
             ""
     };
 
@@ -7196,39 +7200,39 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
     private static class FollowSets000 {
         public static final BitSet FOLLOW_ruleOilFile_in_entryRuleOilFile75 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleOilFile85 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_13_in_ruleOilFile132 = new BitSet(new long[]{0x0000000000004000L});
-        public static final BitSet FOLLOW_14_in_ruleOilFile144 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleOilFile161 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleOilFile178 = new BitSet(new long[]{0x0000000000110002L});
-        public static final BitSet FOLLOW_ruleOilImplementation_in_ruleOilFile201 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_14_in_ruleOilFile132 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_15_in_ruleOilFile144 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleOilFile161 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_16_in_ruleOilFile178 = new BitSet(new long[]{0x0000000000220002L});
+        public static final BitSet FOLLOW_ruleOilImplementation_in_ruleOilFile201 = new BitSet(new long[]{0x0000000000200002L});
         public static final BitSet FOLLOW_ruleOilApplication_in_ruleOilFile223 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleOilImplementation_in_entryRuleOilImplementation260 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleOilImplementation270 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_ruleOilImplementation307 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleOilImplementation324 = new BitSet(new long[]{0x0000000000020000L});
-        public static final BitSet FOLLOW_17_in_ruleOilImplementation341 = new BitSet(new long[]{0x0001FFF000040000L,0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleOilObjectImpl_in_ruleOilImplementation362 = new BitSet(new long[]{0x0001FFF000040000L,0x0000000000000002L});
-        public static final BitSet FOLLOW_18_in_ruleOilImplementation375 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleOilImplementation387 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_17_in_ruleOilImplementation307 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleOilImplementation324 = new BitSet(new long[]{0x0000000000040000L});
+        public static final BitSet FOLLOW_18_in_ruleOilImplementation341 = new BitSet(new long[]{0x0003FFE000080000L,0x0000000000000004L});
+        public static final BitSet FOLLOW_ruleOilObjectImpl_in_ruleOilImplementation362 = new BitSet(new long[]{0x0003FFE000080000L,0x0000000000000004L});
+        public static final BitSet FOLLOW_19_in_ruleOilImplementation375 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_16_in_ruleOilImplementation387 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleOilObjectImpl_in_entryRuleOilObjectImpl423 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleOilObjectImpl433 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleObjectType_in_ruleOilObjectImpl479 = new BitSet(new long[]{0x0000000000020000L});
-        public static final BitSet FOLLOW_17_in_ruleOilObjectImpl491 = new BitSet(new long[]{0x3FFE000FF0040000L,0x0000000000000004L});
-        public static final BitSet FOLLOW_ruleParameterType_in_ruleOilObjectImpl512 = new BitSet(new long[]{0x3FFE000FF0040000L,0x0000000000000004L});
-        public static final BitSet FOLLOW_18_in_ruleOilObjectImpl525 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_19_in_ruleOilObjectImpl538 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleOilObjectImpl555 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleOilObjectImpl574 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleObjectType_in_ruleOilObjectImpl479 = new BitSet(new long[]{0x0000000000040000L});
+        public static final BitSet FOLLOW_18_in_ruleOilObjectImpl491 = new BitSet(new long[]{0x7FFC001FE0080000L,0x0000000000000008L});
+        public static final BitSet FOLLOW_ruleParameterType_in_ruleOilObjectImpl512 = new BitSet(new long[]{0x7FFC001FE0080000L,0x0000000000000008L});
+        public static final BitSet FOLLOW_19_in_ruleOilObjectImpl525 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_20_in_ruleOilObjectImpl538 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleOilObjectImpl555 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_16_in_ruleOilObjectImpl574 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleOilApplication_in_entryRuleOilApplication610 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleOilApplication620 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_20_in_ruleOilApplication657 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleOilApplication674 = new BitSet(new long[]{0x0000000000020000L});
-        public static final BitSet FOLLOW_17_in_ruleOilApplication691 = new BitSet(new long[]{0x0001FFF000040000L,0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleOilObject_in_ruleOilApplication712 = new BitSet(new long[]{0x0001FFF000040000L,0x0000000000000002L});
-        public static final BitSet FOLLOW_18_in_ruleOilApplication725 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_19_in_ruleOilApplication738 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleOilApplication755 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleOilApplication774 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_21_in_ruleOilApplication657 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleOilApplication674 = new BitSet(new long[]{0x0000000000040000L});
+        public static final BitSet FOLLOW_18_in_ruleOilApplication691 = new BitSet(new long[]{0x0003FFE000080000L,0x0000000000000004L});
+        public static final BitSet FOLLOW_ruleOilObject_in_ruleOilApplication712 = new BitSet(new long[]{0x0003FFE000080000L,0x0000000000000004L});
+        public static final BitSet FOLLOW_19_in_ruleOilApplication725 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_20_in_ruleOilApplication738 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleOilApplication755 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_16_in_ruleOilApplication774 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleParameterType_in_entryRuleParameterType810 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleParameterType820 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValueType_in_ruleParameterType867 = new BitSet(new long[]{0x0000000000000002L});
@@ -7240,126 +7244,126 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleValueList_in_ruleValidValues1040 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValueList_in_entryRuleValueList1075 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleValueList1085 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleGenericNumber_in_ruleValueList1140 = new BitSet(new long[]{0x0000000000200002L});
-        public static final BitSet FOLLOW_21_in_ruleValueList1153 = new BitSet(new long[]{0xC0000000000001C0L});
-        public static final BitSet FOLLOW_ruleGenericNumber_in_ruleValueList1174 = new BitSet(new long[]{0x0000000000200002L});
+        public static final BitSet FOLLOW_ruleGenericNumber_in_ruleValueList1140 = new BitSet(new long[]{0x0000000000400002L});
+        public static final BitSet FOLLOW_22_in_ruleValueList1153 = new BitSet(new long[]{0x80000000000001C0L,0x0000000000000001L});
+        public static final BitSet FOLLOW_ruleGenericNumber_in_ruleValueList1174 = new BitSet(new long[]{0x0000000000400002L});
         public static final BitSet FOLLOW_ruleRange_in_entryRuleRange1212 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleRange1222 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleGenericNumber_in_ruleRange1277 = new BitSet(new long[]{0x0000000000400000L});
-        public static final BitSet FOLLOW_22_in_ruleRange1289 = new BitSet(new long[]{0xC0000000000001C0L});
+        public static final BitSet FOLLOW_ruleGenericNumber_in_ruleRange1277 = new BitSet(new long[]{0x0000000000800000L});
+        public static final BitSet FOLLOW_23_in_ruleRange1289 = new BitSet(new long[]{0x80000000000001C0L,0x0000000000000001L});
         public static final BitSet FOLLOW_ruleGenericNumber_in_ruleRange1310 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValueType_in_entryRuleValueType1346 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleValueType1356 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleVType_in_ruleValueType1411 = new BitSet(new long[]{0x3FFFFFFFF1800020L});
-        public static final BitSet FOLLOW_23_in_ruleValueType1429 = new BitSet(new long[]{0x3FFFFFFFF1800020L});
-        public static final BitSet FOLLOW_24_in_ruleValueType1456 = new BitSet(new long[]{0xC0000000000001C0L});
-        public static final BitSet FOLLOW_ruleValidValues_in_ruleValueType1477 = new BitSet(new long[]{0x0000000002000000L});
-        public static final BitSet FOLLOW_25_in_ruleValueType1489 = new BitSet(new long[]{0x3FFFFFFFF1800020L});
-        public static final BitSet FOLLOW_ruleSpecialId_in_ruleValueType1512 = new BitSet(new long[]{0x000000000408C000L});
-        public static final BitSet FOLLOW_26_in_ruleValueType1530 = new BitSet(new long[]{0x000000000008C000L});
-        public static final BitSet FOLLOW_14_in_ruleValueType1557 = new BitSet(new long[]{0xC0000000080001F0L});
-        public static final BitSet FOLLOW_27_in_ruleValueType1591 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_ruleGenericValue_in_ruleValueType1633 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleValueType1648 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_19_in_ruleValueType1672 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleValueType1689 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleValueType1708 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleVType_in_ruleValueType1411 = new BitSet(new long[]{0x7FFFFFFFE3000020L});
+        public static final BitSet FOLLOW_24_in_ruleValueType1429 = new BitSet(new long[]{0x7FFFFFFFE3000020L});
+        public static final BitSet FOLLOW_25_in_ruleValueType1456 = new BitSet(new long[]{0x80000000000001C0L,0x0000000000000001L});
+        public static final BitSet FOLLOW_ruleValidValues_in_ruleValueType1477 = new BitSet(new long[]{0x0000000004000000L});
+        public static final BitSet FOLLOW_26_in_ruleValueType1489 = new BitSet(new long[]{0x7FFFFFFFE3000020L});
+        public static final BitSet FOLLOW_ruleSpecialId_in_ruleValueType1512 = new BitSet(new long[]{0x0000000008118000L});
+        public static final BitSet FOLLOW_27_in_ruleValueType1530 = new BitSet(new long[]{0x0000000000118000L});
+        public static final BitSet FOLLOW_15_in_ruleValueType1557 = new BitSet(new long[]{0x80000000100001F0L,0x0000000000000001L});
+        public static final BitSet FOLLOW_28_in_ruleValueType1591 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_ruleGenericValue_in_ruleValueType1633 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleValueType1648 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_20_in_ruleValueType1672 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleValueType1689 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_16_in_ruleValueType1708 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleVariantType_in_entryRuleVariantType1744 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleVariantType1754 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEType_in_ruleVariantType1809 = new BitSet(new long[]{0x3FFFFFFFF1800020L});
-        public static final BitSet FOLLOW_23_in_ruleVariantType1827 = new BitSet(new long[]{0x3FFFFFFFF1800020L});
-        public static final BitSet FOLLOW_24_in_ruleVariantType1854 = new BitSet(new long[]{0x3FFFFFFFF3800020L});
-        public static final BitSet FOLLOW_ruleEnumeratorType_in_ruleVariantType1876 = new BitSet(new long[]{0x0000000002200000L});
-        public static final BitSet FOLLOW_21_in_ruleVariantType1889 = new BitSet(new long[]{0x3FFFFFFFF1800020L});
-        public static final BitSet FOLLOW_ruleEnumeratorType_in_ruleVariantType1910 = new BitSet(new long[]{0x0000000002200000L});
-        public static final BitSet FOLLOW_25_in_ruleVariantType1926 = new BitSet(new long[]{0x3FFFFFFFF1800020L});
-        public static final BitSet FOLLOW_ruleSpecialId_in_ruleVariantType1949 = new BitSet(new long[]{0x000000000408C000L});
-        public static final BitSet FOLLOW_26_in_ruleVariantType1967 = new BitSet(new long[]{0x000000000008C000L});
-        public static final BitSet FOLLOW_14_in_ruleVariantType1994 = new BitSet(new long[]{0x0000000008000020L});
-        public static final BitSet FOLLOW_27_in_ruleVariantType2028 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleVariantType2064 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_19_in_ruleVariantType2085 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleVariantType2102 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleVariantType2121 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEType_in_ruleVariantType1809 = new BitSet(new long[]{0x7FFFFFFFE3000020L});
+        public static final BitSet FOLLOW_24_in_ruleVariantType1827 = new BitSet(new long[]{0x7FFFFFFFE3000020L});
+        public static final BitSet FOLLOW_25_in_ruleVariantType1854 = new BitSet(new long[]{0x7FFFFFFFE7000020L});
+        public static final BitSet FOLLOW_ruleEnumeratorType_in_ruleVariantType1876 = new BitSet(new long[]{0x0000000004400000L});
+        public static final BitSet FOLLOW_22_in_ruleVariantType1889 = new BitSet(new long[]{0x7FFFFFFFE3000020L});
+        public static final BitSet FOLLOW_ruleEnumeratorType_in_ruleVariantType1910 = new BitSet(new long[]{0x0000000004400000L});
+        public static final BitSet FOLLOW_26_in_ruleVariantType1926 = new BitSet(new long[]{0x7FFFFFFFE3000020L});
+        public static final BitSet FOLLOW_ruleSpecialId_in_ruleVariantType1949 = new BitSet(new long[]{0x0000000008118000L});
+        public static final BitSet FOLLOW_27_in_ruleVariantType1967 = new BitSet(new long[]{0x0000000000118000L});
+        public static final BitSet FOLLOW_15_in_ruleVariantType1994 = new BitSet(new long[]{0x0000000010000020L});
+        public static final BitSet FOLLOW_28_in_ruleVariantType2028 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleVariantType2064 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_20_in_ruleVariantType2085 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleVariantType2102 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_16_in_ruleVariantType2121 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleEnumeratorType_in_entryRuleEnumeratorType2157 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleEnumeratorType2167 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSpecialId_in_ruleEnumeratorType2222 = new BitSet(new long[]{0x00000000000A0002L});
-        public static final BitSet FOLLOW_17_in_ruleEnumeratorType2235 = new BitSet(new long[]{0x3FFE000FF0040000L,0x0000000000000004L});
-        public static final BitSet FOLLOW_ruleParameterType_in_ruleEnumeratorType2256 = new BitSet(new long[]{0x3FFE000FF0040000L,0x0000000000000004L});
-        public static final BitSet FOLLOW_18_in_ruleEnumeratorType2269 = new BitSet(new long[]{0x0000000000080002L});
-        public static final BitSet FOLLOW_19_in_ruleEnumeratorType2284 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_ruleSpecialId_in_ruleEnumeratorType2222 = new BitSet(new long[]{0x0000000000140002L});
+        public static final BitSet FOLLOW_18_in_ruleEnumeratorType2235 = new BitSet(new long[]{0x7FFC001FE0080000L,0x0000000000000008L});
+        public static final BitSet FOLLOW_ruleParameterType_in_ruleEnumeratorType2256 = new BitSet(new long[]{0x7FFC001FE0080000L,0x0000000000000008L});
+        public static final BitSet FOLLOW_19_in_ruleEnumeratorType2269 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_20_in_ruleEnumeratorType2284 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_RULE_STRING_in_ruleEnumeratorType2301 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleReferenceType_in_entryRuleReferenceType2344 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleReferenceType2354 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleObjectTypeRef_in_ruleReferenceType2409 = new BitSet(new long[]{0x3FFFFFFFF1800020L});
-        public static final BitSet FOLLOW_ruleSpecialId_in_ruleReferenceType2430 = new BitSet(new long[]{0x000000000408C000L});
-        public static final BitSet FOLLOW_26_in_ruleReferenceType2448 = new BitSet(new long[]{0x000000000008C000L});
-        public static final BitSet FOLLOW_14_in_ruleReferenceType2475 = new BitSet(new long[]{0x0000000008000020L});
-        public static final BitSet FOLLOW_27_in_ruleReferenceType2509 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleReferenceType2545 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_19_in_ruleReferenceType2566 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleReferenceType2583 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleReferenceType2602 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleObjectTypeRef_in_ruleReferenceType2409 = new BitSet(new long[]{0x7FFFFFFFE3000020L});
+        public static final BitSet FOLLOW_ruleSpecialId_in_ruleReferenceType2430 = new BitSet(new long[]{0x0000000008118000L});
+        public static final BitSet FOLLOW_27_in_ruleReferenceType2448 = new BitSet(new long[]{0x0000000000118000L});
+        public static final BitSet FOLLOW_15_in_ruleReferenceType2475 = new BitSet(new long[]{0x0000000010000020L});
+        public static final BitSet FOLLOW_28_in_ruleReferenceType2509 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleReferenceType2545 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_20_in_ruleReferenceType2566 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleReferenceType2583 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_16_in_ruleReferenceType2602 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleOilObject_in_entryRuleOilObject2638 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleOilObject2648 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleObjectType_in_ruleOilObject2694 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleOilObject2711 = new BitSet(new long[]{0x00000000000A8000L});
-        public static final BitSet FOLLOW_17_in_ruleOilObject2729 = new BitSet(new long[]{0x3FFFFFFFF1840020L});
-        public static final BitSet FOLLOW_ruleParameter_in_ruleOilObject2750 = new BitSet(new long[]{0x3FFFFFFFF1840020L});
-        public static final BitSet FOLLOW_18_in_ruleOilObject2763 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_19_in_ruleOilObject2778 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleOilObject2795 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleOilObject2814 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleOilObject2711 = new BitSet(new long[]{0x0000000000150000L});
+        public static final BitSet FOLLOW_18_in_ruleOilObject2729 = new BitSet(new long[]{0x7FFFFFFFE3080020L});
+        public static final BitSet FOLLOW_ruleParameter_in_ruleOilObject2750 = new BitSet(new long[]{0x7FFFFFFFE3080020L});
+        public static final BitSet FOLLOW_19_in_ruleOilObject2763 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_20_in_ruleOilObject2778 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleOilObject2795 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_16_in_ruleOilObject2814 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleParameter_in_entryRuleParameter2850 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleParameter2860 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSpecialId_in_ruleParameter2917 = new BitSet(new long[]{0x0000000000004000L});
-        public static final BitSet FOLLOW_14_in_ruleParameter2929 = new BitSet(new long[]{0xFFFFFFFFF98001F0L});
-        public static final BitSet FOLLOW_27_in_ruleParameter2963 = new BitSet(new long[]{0x00000000000A8000L});
-        public static final BitSet FOLLOW_ruleGenericValue_in_ruleParameter3003 = new BitSet(new long[]{0x00000000000A8000L});
-        public static final BitSet FOLLOW_ruleSpecialId_in_ruleParameter3032 = new BitSet(new long[]{0x00000000000A8000L});
-        public static final BitSet FOLLOW_17_in_ruleParameter3046 = new BitSet(new long[]{0x3FFFFFFFF1840020L});
-        public static final BitSet FOLLOW_ruleParameter_in_ruleParameter3067 = new BitSet(new long[]{0x3FFFFFFFF1840020L});
-        public static final BitSet FOLLOW_18_in_ruleParameter3080 = new BitSet(new long[]{0x0000000000088000L});
-        public static final BitSet FOLLOW_19_in_ruleParameter3095 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleParameter3112 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleParameter3131 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSpecialId_in_ruleParameter2917 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_15_in_ruleParameter2929 = new BitSet(new long[]{0xFFFFFFFFF30001F0L,0x0000000000000001L});
+        public static final BitSet FOLLOW_28_in_ruleParameter2963 = new BitSet(new long[]{0x0000000000150000L});
+        public static final BitSet FOLLOW_ruleGenericValue_in_ruleParameter3003 = new BitSet(new long[]{0x0000000000150000L});
+        public static final BitSet FOLLOW_ruleSpecialId_in_ruleParameter3032 = new BitSet(new long[]{0x0000000000150000L});
+        public static final BitSet FOLLOW_18_in_ruleParameter3046 = new BitSet(new long[]{0x7FFFFFFFE3080020L});
+        public static final BitSet FOLLOW_ruleParameter_in_ruleParameter3067 = new BitSet(new long[]{0x7FFFFFFFE3080020L});
+        public static final BitSet FOLLOW_19_in_ruleParameter3080 = new BitSet(new long[]{0x0000000000110000L});
+        public static final BitSet FOLLOW_20_in_ruleParameter3095 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleParameter3112 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_16_in_ruleParameter3131 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleSpecialId_in_entryRuleSpecialId3168 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleSpecialId3179 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_ruleSpecialId3219 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_28_in_ruleSpecialId3243 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_29_in_ruleSpecialId3262 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_30_in_ruleSpecialId3281 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_31_in_ruleSpecialId3300 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_32_in_ruleSpecialId3319 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_33_in_ruleSpecialId3338 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_34_in_ruleSpecialId3357 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_35_in_ruleSpecialId3376 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_36_in_ruleSpecialId3395 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_37_in_ruleSpecialId3414 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_38_in_ruleSpecialId3433 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_39_in_ruleSpecialId3452 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_40_in_ruleSpecialId3471 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_41_in_ruleSpecialId3490 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_42_in_ruleSpecialId3509 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_43_in_ruleSpecialId3528 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_44_in_ruleSpecialId3547 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_45_in_ruleSpecialId3566 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_46_in_ruleSpecialId3585 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_47_in_ruleSpecialId3604 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_48_in_ruleSpecialId3623 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_49_in_ruleSpecialId3642 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_50_in_ruleSpecialId3661 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_51_in_ruleSpecialId3680 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_52_in_ruleSpecialId3699 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_53_in_ruleSpecialId3718 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_54_in_ruleSpecialId3737 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_ruleSpecialId3756 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_56_in_ruleSpecialId3775 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_57_in_ruleSpecialId3794 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_58_in_ruleSpecialId3813 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_59_in_ruleSpecialId3832 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_60_in_ruleSpecialId3851 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_61_in_ruleSpecialId3870 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_29_in_ruleSpecialId3243 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_30_in_ruleSpecialId3262 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_31_in_ruleSpecialId3281 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_32_in_ruleSpecialId3300 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_33_in_ruleSpecialId3319 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_34_in_ruleSpecialId3338 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_35_in_ruleSpecialId3357 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_36_in_ruleSpecialId3376 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_37_in_ruleSpecialId3395 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_38_in_ruleSpecialId3414 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_39_in_ruleSpecialId3433 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_40_in_ruleSpecialId3452 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_41_in_ruleSpecialId3471 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_42_in_ruleSpecialId3490 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_43_in_ruleSpecialId3509 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_44_in_ruleSpecialId3528 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_45_in_ruleSpecialId3547 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_46_in_ruleSpecialId3566 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_47_in_ruleSpecialId3585 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_48_in_ruleSpecialId3604 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_49_in_ruleSpecialId3623 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_50_in_ruleSpecialId3642 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_51_in_ruleSpecialId3661 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_52_in_ruleSpecialId3680 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_53_in_ruleSpecialId3699 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_54_in_ruleSpecialId3718 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_ruleSpecialId3737 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_56_in_ruleSpecialId3756 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_57_in_ruleSpecialId3775 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_58_in_ruleSpecialId3794 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_59_in_ruleSpecialId3813 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_60_in_ruleSpecialId3832 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_61_in_ruleSpecialId3851 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_ruleSpecialId3870 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleGenericValue_in_entryRuleGenericValue3911 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleGenericValue3922 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_STRING_in_ruleGenericValue3962 = new BitSet(new long[]{0x0000000000000002L});
@@ -7371,8 +7375,8 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleFLOAT_in_ruleGenericNumber4165 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleINT_in_entryRuleINT4211 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleINT4222 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_ruleINT4261 = new BitSet(new long[]{0x00000000000001C0L});
-        public static final BitSet FOLLOW_63_in_ruleINT4280 = new BitSet(new long[]{0x00000000000001C0L});
+        public static final BitSet FOLLOW_63_in_ruleINT4261 = new BitSet(new long[]{0x00000000000001C0L});
+        public static final BitSet FOLLOW_64_in_ruleINT4280 = new BitSet(new long[]{0x00000000000001C0L});
         public static final BitSet FOLLOW_RULE_NON_ZERO_INT_in_ruleINT4299 = new BitSet(new long[]{0x00000000000000C2L});
         public static final BitSet FOLLOW_RULE_ZERO_INT_in_ruleINT4320 = new BitSet(new long[]{0x00000000000000C2L});
         public static final BitSet FOLLOW_RULE_NON_ZERO_INT_in_ruleINT4346 = new BitSet(new long[]{0x00000000000000C2L});
@@ -7380,55 +7384,55 @@ public class InternalOilParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_RULE_HEX_in_ruleINT4401 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleFLOAT_in_entryRuleFLOAT4448 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleFLOAT4459 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_ruleFLOAT4498 = new BitSet(new long[]{0x00000000000000C0L});
-        public static final BitSet FOLLOW_63_in_ruleFLOAT4517 = new BitSet(new long[]{0x00000000000000C0L});
-        public static final BitSet FOLLOW_RULE_ZERO_INT_in_ruleFLOAT4535 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-        public static final BitSet FOLLOW_RULE_NON_ZERO_INT_in_ruleFLOAT4562 = new BitSet(new long[]{0x00000000000000C0L,0x0000000000000001L});
-        public static final BitSet FOLLOW_RULE_ZERO_INT_in_ruleFLOAT4583 = new BitSet(new long[]{0x00000000000000C0L,0x0000000000000001L});
-        public static final BitSet FOLLOW_RULE_NON_ZERO_INT_in_ruleFLOAT4609 = new BitSet(new long[]{0x00000000000000C0L,0x0000000000000001L});
-        public static final BitSet FOLLOW_64_in_ruleFLOAT4640 = new BitSet(new long[]{0x00000000000000C0L});
+        public static final BitSet FOLLOW_63_in_ruleFLOAT4498 = new BitSet(new long[]{0x00000000000000C0L});
+        public static final BitSet FOLLOW_64_in_ruleFLOAT4517 = new BitSet(new long[]{0x00000000000000C0L});
+        public static final BitSet FOLLOW_RULE_ZERO_INT_in_ruleFLOAT4535 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_NON_ZERO_INT_in_ruleFLOAT4562 = new BitSet(new long[]{0x00000000000000C0L,0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ZERO_INT_in_ruleFLOAT4583 = new BitSet(new long[]{0x00000000000000C0L,0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_NON_ZERO_INT_in_ruleFLOAT4609 = new BitSet(new long[]{0x00000000000000C0L,0x0000000000000002L});
+        public static final BitSet FOLLOW_65_in_ruleFLOAT4640 = new BitSet(new long[]{0x00000000000000C0L});
         public static final BitSet FOLLOW_RULE_ZERO_INT_in_ruleFLOAT4657 = new BitSet(new long[]{0x00000000000000C2L});
         public static final BitSet FOLLOW_RULE_NON_ZERO_INT_in_ruleFLOAT4683 = new BitSet(new long[]{0x00000000000000C2L});
-        public static final BitSet FOLLOW_28_in_ruleVType4744 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_29_in_ruleVType4761 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_30_in_ruleVType4778 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_31_in_ruleVType4795 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_32_in_ruleVType4812 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_33_in_ruleVType4829 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_34_in_ruleEType4874 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_35_in_ruleEType4891 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_36_in_ruleObjectType4936 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_37_in_ruleObjectType4953 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_38_in_ruleObjectType4970 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_39_in_ruleObjectType4987 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_40_in_ruleObjectType5004 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_41_in_ruleObjectType5021 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_42_in_ruleObjectType5038 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_43_in_ruleObjectType5055 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_44_in_ruleObjectType5072 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_45_in_ruleObjectType5089 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_46_in_ruleObjectType5106 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_47_in_ruleObjectType5123 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_48_in_ruleObjectType5140 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_65_in_ruleObjectType5157 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_49_in_ruleObjectTypeRef5202 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_50_in_ruleObjectTypeRef5219 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_51_in_ruleObjectTypeRef5236 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_52_in_ruleObjectTypeRef5253 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_53_in_ruleObjectTypeRef5270 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_54_in_ruleObjectTypeRef5287 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_ruleObjectTypeRef5304 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_56_in_ruleObjectTypeRef5321 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_57_in_ruleObjectTypeRef5338 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_58_in_ruleObjectTypeRef5355 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_59_in_ruleObjectTypeRef5372 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_60_in_ruleObjectTypeRef5389 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_61_in_ruleObjectTypeRef5406 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_66_in_ruleObjectTypeRef5423 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_27_in_synpred1_InternalOil1573 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_27_in_synpred2_InternalOil2010 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_27_in_synpred3_InternalOil2491 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_27_in_synpred4_InternalOil2945 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_29_in_ruleVType4744 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_30_in_ruleVType4761 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_31_in_ruleVType4778 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_32_in_ruleVType4795 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_33_in_ruleVType4812 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_34_in_ruleVType4829 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_35_in_ruleEType4874 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_36_in_ruleEType4891 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_37_in_ruleObjectType4936 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_38_in_ruleObjectType4953 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_39_in_ruleObjectType4970 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_40_in_ruleObjectType4987 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_41_in_ruleObjectType5004 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_42_in_ruleObjectType5021 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_43_in_ruleObjectType5038 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_44_in_ruleObjectType5055 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_45_in_ruleObjectType5072 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_46_in_ruleObjectType5089 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_47_in_ruleObjectType5106 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_48_in_ruleObjectType5123 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_49_in_ruleObjectType5140 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_66_in_ruleObjectType5157 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_50_in_ruleObjectTypeRef5202 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_51_in_ruleObjectTypeRef5219 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_52_in_ruleObjectTypeRef5236 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_53_in_ruleObjectTypeRef5253 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_54_in_ruleObjectTypeRef5270 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_ruleObjectTypeRef5287 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_56_in_ruleObjectTypeRef5304 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_57_in_ruleObjectTypeRef5321 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_58_in_ruleObjectTypeRef5338 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_59_in_ruleObjectTypeRef5355 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_60_in_ruleObjectTypeRef5372 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_61_in_ruleObjectTypeRef5389 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_ruleObjectTypeRef5406 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_67_in_ruleObjectTypeRef5423 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_28_in_synpred1_InternalOil1573 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_28_in_synpred2_InternalOil2010 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_28_in_synpred3_InternalOil2491 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_28_in_synpred4_InternalOil2945 = new BitSet(new long[]{0x0000000000000002L});
     }
 
 

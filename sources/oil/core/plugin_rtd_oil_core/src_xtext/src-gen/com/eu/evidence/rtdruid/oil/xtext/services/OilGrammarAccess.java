@@ -1727,6 +1727,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	private TerminalRule tSTRING;
 	private TerminalRule tML_COMMENT;
 	private TerminalRule tSL_COMMENT;
+	private TerminalRule tINCLUDE;
 	private TerminalRule tWS;
 	private TerminalRule tANY_OTHER;
 	
@@ -2112,6 +2113,13 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
 		return (tSL_COMMENT != null) ? tSL_COMMENT : (tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "SL_COMMENT"));
+	} 
+
+	//terminal INCLUDE:
+	//	"#include" (" " | "\t")* ("<" ("\\" ("\"" | "\\") | !("\\" | "\"" | "\n" | "\r" | "<" | ">"))* ">" | "\"" ("\\" ("\""
+	//	| "\\") | !("\\" | "\"" | "\n" | "\r" | "<" | ">"))* "\"");
+	public TerminalRule getINCLUDERule() {
+		return (tINCLUDE != null) ? tINCLUDE : (tINCLUDE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INCLUDE"));
 	} 
 
 	//terminal WS:
