@@ -17,6 +17,9 @@
   <property name="class-tests" value="test1.Test1Test"/>
   <property name="plugin-path" value="${eclipse-home}/plugins/${plugin-name}_${plugin_version}"/>
 -->
+	
+	<!-- Set ${DSTAMP} and ${TSTAMP} -->
+	<tstamp/>
 
 	<property name="eclipse-home" value="${basedir}/../.." />
 	<property name="library-file" value="${eclipse-home}/plugins/org.eclipse.test_${org.eclipse.test}/library.xml" />
@@ -54,6 +57,14 @@
 			<include name="com.eu.evidence.rtdruid.*test*/**/*.class"/>
 		</fileset>
 
+		<!-- rtdruid sources -->
+		<dirset dir="${src.path}" id="code_src" >
+			<present targetdir="${src.path}">
+			        <mapper type="glob" from="*" to="*/com" />
+			   </present>
+		</dirset>
+
+
 		<pathconvert pathsep="&#xA;" property="sounds1" refid="code_jars">
 			 <map from="${eclipse-home}" to="."/>
 		</pathconvert>
@@ -87,11 +98,10 @@
 					</classfiles>
 				</group>
 -->
-<!--
+				
 				<sourcefiles encoding="UTF-8">
-					<fileset dir="src" />
+					<fileset dir="code_src" />
 				</sourcefiles>
--->				
 			</structure>
 
 			<html destdir="${coverage-output}/html_report" />
@@ -126,11 +136,14 @@
 	<!-- This target defines the tests that need to be run. -->
 	<target name="suite" unless="performance">
 		<property name="data" value="${eclipse-home}/test-workspace" />
+		<property name="jvmOption" value="" />
+		<property name="vmAgent" value="-javaagent:${eclipse-home}/plugins/org.eclipse.test_${org.eclipse.test}/lib/jacocoagent.jar=destfile=${coverage-output}/jacoco_${class-tests}${DSTAMP}_${TSTAMP}.exec"/>
 		<!--<delete dir="${location1}" quiet="true"/> -->
 		<ant target="core-test" antfile="${library-file}" dir="${eclipse-home}">
 			<property name="data-dir" value="${data}" />
 			<property name="plugin-name" value="${plugin-name}" />
 			<property name="classname" value="${class-tests}" />
+			<property name="vmargs" value=" -Xms512M -Xmx1024M -XX:MaxPermSize=512M ${jvmOption} ${vmAgent}" />
 		</ant>
 	</target>
 	
@@ -138,7 +151,7 @@
 	<target name="sbot_suite" unless="performance">
 		<property name="data" value="${eclipse-home}/test-workspace" />
 		<property name="jvmOption" value="" />
-		<property name="vmAgent" value="-javaagent:${eclipse-home}/plugins/org.eclipse.test_${org.eclipse.test}/lib/jacocoagent.jar=destfile=${coverage-output}/jacoco_swtbot_${class-tests}${NOW.DSTAMP}_${NOW.TSTAMP}.exec"/>
+		<property name="vmAgent" value="-javaagent:${eclipse-home}/plugins/org.eclipse.test_${org.eclipse.test}/lib/jacocoagent.jar=destfile=${coverage-output}/jacoco_swtbot_${class-tests}${DSTAMP}_${TSTAMP}.exec"/>
 		<!--<delete dir="${location1}" quiet="true"/> -->
 		<ant target="swtbot-test" antfile="${sbot-library-file}" dir="${eclipse-home}">
 			<property name="data-dir" value="${data}" />
@@ -187,5 +200,4 @@
 			<property name="output-file" value="${plugin-name}.xml" />
 		</ant>
 	</target>
-
 </project>
