@@ -57,27 +57,29 @@
 			<include name="com.eu.evidence.rtdruid.*test*/**/*.class"/>
 		</fileset>
 
-		<!-- rtdruid sources -->
-		<dirset dir="${src.path}" id="code_src" >
-			<present targetdir="${src.path}">
-			        <mapper type="glob" from="*" to="*/com" />
-			   </present>
-		</dirset>
-
-
 		<pathconvert pathsep="&#xA;" property="sounds1" refid="code_jars">
 			 <map from="${eclipse-home}" to="."/>
 		</pathconvert>
-
 		<echo>--- CODE ${eclipse-home} ---</echo>
 		<echo>${sounds1}</echo>
+		
 		<pathconvert pathsep="&#xA;" property="sounds2" refid="test_jars">
 			 <map from="${eclipse-home}" to=""/>
-		</pathconvert>
-		
+		</pathconvert>		
 		<echo>--- TEST ---</echo>
 		<echo>${sounds2}</echo>
-		
+
+		<!-- rtdruid sources 
+		<fileset dir="${src.path}" id="code_src" >
+			<include name="**/*.java"/>
+		</fileset>
+		<pathconvert pathsep="&#xA;" property="sounds3" refid="code_src">
+			 <map from="${src.path}" to=""/>
+		</pathconvert>		
+		<echo>- - - SOURCE - - -</echo>
+		<echo>${sounds3}</echo>
+		-->
+
 		<jacoco:report>
 
 			<executiondata>
@@ -99,9 +101,13 @@
 				</group>
 -->
 				
-				<sourcefiles encoding="UTF-8">
-					<fileset dir="code_src" />
-				</sourcefiles>
+<!--			<sourcefiles encoding="UTF-8">
+					<fileset refid="code_src" />
+					<fileset dir="${src.path}/core/plugin_rtd_core/src/public"/>
+					<fileset dir="${src.path}/core/plugin_rtd_core/src/internal"/>
+					<fileset dir="${src.path}/core/plugin_rtd_core/src/e_model"/>
+					<fileset dir="${src.path}/core/plugin_rtd_core/src/e_edit"/>
+				</sourcefiles>-->
 			</structure>
 
 			<html destdir="${coverage-output}/html_report" />
