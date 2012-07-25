@@ -620,7 +620,7 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 			    {	// PATHs
 		        	HashMap<String, ?> options = parent.getOptions();
 
-			        String gcc = wrapper.wrapPath("c:/set/arm7/gcc/path"); 
+		        	String cleanPath = "c:/set/arm7/gcc/path";
 
 			        String outputDir = "Debug";
 			        String appBase = "";
@@ -640,13 +640,14 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 
 			    	if (options.containsKey(Arm7Constants.PREF_ARM7_GCC_PATH)) {
 						String tmp = (String) options.get(Arm7Constants.PREF_ARM7_GCC_PATH);
-						if (tmp.length()>0) gcc = wrapper.wrapPath(tmp);
+						if (tmp.length()>0) cleanPath = tmp;
 					}
-
 			        sbMakefile.append(
+			        		CommonUtils.addMakefileDefinesInclude() +
 			                "APPBASE := " + appBase + "\n" +
 			                "OUTBASE := " + outputDir + "\n" +
-			                "ARM7_GCCDIR := "+gcc+"\n\n" + 
+							"\n" +			                	
+			                CommonUtils.compilerMakefileDefines(cleanPath, "ARM7_GCCDIR", wrapper) + 
 			                "ARM7_GCCPREFIX := arm-elf\n\n"
 			                
 			        );

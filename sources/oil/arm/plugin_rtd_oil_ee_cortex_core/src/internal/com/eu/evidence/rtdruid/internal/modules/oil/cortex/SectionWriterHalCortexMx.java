@@ -621,6 +621,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 			    	
 			    	
 			        sbMakefile.append(
+			        		CommonUtils.addMakefileDefinesInclude() +
 			                "APPBASE := " + appBase + "\n" +
 			                "OUTBASE := " + outputDir + "\n\n");
 			        
@@ -634,30 +635,22 @@ public class SectionWriterHalCortexMx extends SectionWriter
 							String tmp = (String) options.get(CortexConstants.PREF_CORTEXM0_CC_PATH);
 							if (tmp.length()>0) gcc = tmp;
 						} 
-				        sbMakefile.append(
-				        	"ifndef IAR_CCDIR\n" +
-				        	IWritersKeywords.INDENT + "IAR_CCDIR := " + wrapper.wrapPath(gcc) + "\n" +
-			                "endif\n\n");
+				        sbMakefile.append( CommonUtils.compilerMakefileDefines(gcc, "IAR_CCDIR", wrapper) );
 			        } else if (CortexConstants.SGRK__CCS_COMPILER__.equalsIgnoreCase(compiler_type)) {
 				        String gcc = CortexConstants.DEFAULT_CORTEXMX_CONF_CCS_CC;
 				    	if (options.containsKey(CortexConstants.PREF_CORTEXMx_CCS_CC_PATH)) {
 							String tmp = (String) options.get(CortexConstants.PREF_CORTEXMx_CCS_CC_PATH);
 							if (tmp.length()>0) gcc = tmp;
 						} 
-				        sbMakefile.append(
-				        	"ifndef CCS_INSTALL_ROOT\n" +
-				        	IWritersKeywords.INDENT + "CCS_INSTALL_ROOT := " + wrapper.wrapPath(gcc) + "\n" +
-			                "endif\n\n");
+
+				        sbMakefile.append( CommonUtils.compilerMakefileDefines(gcc, "CCS_INSTALL_ROOT", wrapper) );
 			        } else if (CortexConstants.SGRK__KEIL_COMPILER__.equalsIgnoreCase(compiler_type)) {
 				        String gcc = CortexConstants.DEFAULT_CORTEXMX_CONF_KEIL_CC;
 				    	if (options.containsKey(CortexConstants.PREF_CORTEXMx_KEIL_CC_PATH)) {
 							String tmp = (String) options.get(CortexConstants.PREF_CORTEXMx_KEIL_CC_PATH);
 							if (tmp.length()>0) gcc = tmp;
 						} 
-				        sbMakefile.append(
-				        	"ifndef ARM_ROOT\n" +
-				        	IWritersKeywords.INDENT + "ARM_ROOT := " + wrapper.wrapPath(gcc) + "\n" +
-			                "endif\n\n");
+				        sbMakefile.append( CommonUtils.compilerMakefileDefines(gcc, "ARM_ROOT", wrapper) );
 			        } 
 			    }
 	

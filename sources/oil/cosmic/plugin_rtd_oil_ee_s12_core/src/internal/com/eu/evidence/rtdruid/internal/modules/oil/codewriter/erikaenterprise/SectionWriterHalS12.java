@@ -530,7 +530,7 @@ public class SectionWriterHalS12 extends SectionWriter
 
 		        String outputDir = "Debug";
 		        String appBase = "..";
-		        String gcc = wrapper.wrapPath(found_codewarrior ? S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC : S12Constants.DEFAULT_S12_COSMIC_CONF_GCC);
+		        String gcc = found_codewarrior ? S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC : S12Constants.DEFAULT_S12_COSMIC_CONF_GCC;
 //		        String asm = wrapper.wrapPath(found_codewarrior ? S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC : S12Constants.DEFAULT_S12_COSMIC_CONF_GCC);
 		        
 		    	if (options.containsKey(IWritersKeywords.WRITER_OUTPUT_DIR_SET)) {
@@ -548,38 +548,24 @@ public class SectionWriterHalS12 extends SectionWriter
 		    	}
 
 		        sbMakefile.append(
+		        		CommonUtils.addMakefileDefinesInclude() +
 		                "APPBASE := " + appBase + "\n" +
 		                "OUTBASE := " + outputDir + "\n\n"); 
 
 		    	if (found_codewarrior) {
 			    	if (options.containsKey(S12Constants.PREF_S12_CODEWARRIOR_PATH) ) {
 						String tmp = (String) options.get(S12Constants.PREF_S12_CODEWARRIOR_PATH);
-						if (tmp.length()>0) gcc = wrapper.wrapPath(tmp);
+						if (tmp.length()>0) gcc = tmp;
 					}
-			    	String asm = gcc;
-			        sbMakefile.append(
-			                "ifndef S12_ASMDIR\n" +
-			                "S12_ASMDIR := "+asm+"\n" +
-			                "endif\n" +
-			                "ifndef S12_CCDIR\n" +
-			                "S12_CCDIR := "+gcc+"\n" +
-			                "endif\n"
-					        );
 		    	} else {
 			    	if (options.containsKey(S12Constants.PREF_S12_COSMIC_PATH) ) {
 						String tmp = (String) options.get(S12Constants.PREF_S12_COSMIC_PATH);
 						if (tmp.length()>0) gcc = wrapper.wrapPath(tmp);
 					}
-			    	String asm = gcc;
-			        sbMakefile.append(
-			                "ifndef S12_ASMDIR\n" +
-			                "S12_ASMDIR := "+asm+"\n" +
-			                "endif\n" +
-			                "ifndef S12_CCDIR\n" +
-			                "S12_CCDIR := "+gcc+"\n" +
-			                "endif\n"
-					        );
 		    	}
+	    		sbMakefile.append( 
+	    				CommonUtils.compilerMakefileDefines(gcc, "S12_ASMDIR", wrapper) +
+	    				CommonUtils.compilerMakefileDefines(gcc, "S12_CCDIR", wrapper) );
 
 		    }
 

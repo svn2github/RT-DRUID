@@ -476,7 +476,7 @@ public class SectionWriterHalPic32 extends SectionWriter
 		        String outputDir = "Debug";
 		        String appBase = "..";
 		        // Get Default values 
-		        String gcc = wrapper.wrapPath(PicConstants.DEFAULT_PIC32_CONF_GCC);
+		        String gcc = PicConstants.DEFAULT_PIC32_CONF_GCC;
 		        String asm = null; //wrapper.wrapPath(PicConstants.DEFAULT_PIC32_CONF_ASM);
 		        
 		    	if (options.containsKey(IWritersKeywords.WRITER_OUTPUT_DIR_SET)) {
@@ -496,19 +496,20 @@ public class SectionWriterHalPic32 extends SectionWriter
 		    	
 		    	if (options.containsKey(PicConstants.PREF_PIC32_GCC_PATH)) {
 					String tmp = (String) options.get(PicConstants.PREF_PIC32_GCC_PATH);
-					if (tmp.length()>0) gcc = wrapper.wrapPath(tmp);
+					if (tmp.length()>0) gcc = tmp;
 				}
 		    	if (options.containsKey(PicConstants.PREF_PIC32_ASM_PATH)) {
 					String tmp = (String) options.get(PicConstants.PREF_PIC32_ASM_PATH);
-					if (tmp.length()>0) asm = wrapper.wrapPath(tmp);
+					if (tmp.length()>0) asm = tmp;
 				}
 
 		    	
 		        sbMakefile.append(
+		        		CommonUtils.addMakefileDefinesInclude() +
 		                "APPBASE := " + appBase + "\n" +
 		                "OUTBASE := " + outputDir + "\n\n" + 
-		                (asm != null ? "PIC32_ASMDIR := "+asm+"\n" : "")+
-		                "PIC32_GCCDIR := "+gcc+"\n"
+				        CommonUtils.compilerMakefileDefines(asm, "PIC32_ASMDIR", wrapper) +
+				        CommonUtils.compilerMakefileDefines(gcc, "PIC32_GCCDIR", wrapper) 
 		        );
 		    }
 

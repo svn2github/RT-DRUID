@@ -527,4 +527,23 @@ public final class CommonUtils {
 
 	/** The default suffix of oil files */
 	public static final String OIL_SUFFIX = ".oil";
+	
+	
+	
+	/**
+	 * 
+	 */
+	public static String addMakefileDefinesInclude() {
+		
+		return 	"include $(EEBASE)/pkg/cfg/path_helper.mk\n";
+	}
+	/**
+	 * 
+	 */
+	public static String compilerMakefileDefines(String cleanPath, String compilerDefine, OsType os) {
+		
+		final String template = (os == OsType.Cygwin) ? "check_and_set_cygwin_compiler_path" : "check_and_set_linux_compiler_path";
+		
+		return 	"$(eval $(call "+template+","+compilerDefine+","+cleanPath+"))\n";
+	}
 }

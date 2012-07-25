@@ -795,6 +795,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 		    	
 		    	
 		        sbMakefile_variables.append(
+		        		CommonUtils.addMakefileDefinesInclude() +
 		                "APPBASE := " + appBase + "\n" +
 		                "OUTBASE := " + outputDir + "\n\n"
 		                
@@ -807,10 +808,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 						String tmp = (String) options.get(RenesasConstants.PREF_RX200_CCRX_CC_PATH);
 						if (tmp.length()>0) gcc = tmp;
 					} 
-			    	sbMakefile_variables.append(
-			        	"ifndef CCRX_ROOT\n" +
-			        	IWritersKeywords.INDENT + "CCRX_ROOT := " + wrapper.wrapPath(gcc) + "\n" +
-		                "endif\n\n");
+		    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(gcc, "CCRX_ROOT", wrapper) );
 		        } 
 
 		    }

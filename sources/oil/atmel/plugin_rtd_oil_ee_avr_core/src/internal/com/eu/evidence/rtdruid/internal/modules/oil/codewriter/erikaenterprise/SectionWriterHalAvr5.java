@@ -739,9 +739,12 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 			    	}
 
 			        sbMakefile.append(
+			        		CommonUtils.addMakefileDefinesInclude() +
 			                "APPBASE := " + appBase + "\n" +
 			                "OUTBASE := " + outputDir + "\n" +
-			                "AVR5_DIR:= "+wrapper.wrapPath(avr5_gcc_Path)+"\n" +
+			                		
+							"\n" +			                		
+			                CommonUtils.compilerMakefileDefines(avr5_gcc_Path, "AVR5_DIR", wrapper) + 
 			                "AVR5_MODEL := atmega128\n\n"
 			        );
 			    }

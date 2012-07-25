@@ -937,6 +937,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			    	
 			    	
 			        sbMakefile_variables.append(
+			        		CommonUtils.addMakefileDefinesInclude() +
 			                "APPBASE := " + appBase + "\n" +
 			                "OUTBASE := " + outputDir + "\n\n"
 			                
@@ -953,26 +954,12 @@ public class SectionWriterHalMpc567 extends SectionWriter
 							String tmp = (String) options.get(PpcConstants.PREF_PPC_CODEWARRIOR_PATH);
 							if (tmp.length()>0) gcc = tmp;
 						}
-				    	if (gcc.length()>0) {
-					    	wrapper.wrapPath(gcc);
-					    	sbMakefile_variables.append(
-					                "ifndef PPC_CW_BASEDIR\n" +
-					                "PPC_CW_BASEDIR := "+gcc+"\n" +
-					                "endif\n"
-							        );
-				    	}
+			    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(gcc, "PPC_CW_BASEDIR", wrapper) );
 			    	} else {
 				    	if (options.containsKey(PpcConstants.PREF_PPC_DIAB_PATH) ) {
 							gcc = (String) options.get(PpcConstants.PREF_PPC_DIAB_PATH);
 						}
-						if (gcc.length()>0) {
-							gcc = wrapper.wrapPath(gcc);
-					    	sbMakefile_variables.append(
-					                "ifndef PPC_DIAB_BASEDIR\n" +
-					                "PPC_DIAB_BASEDIR := "+gcc+"\n" +
-					                "endif\n"
-							        );
-						}
+			    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(gcc, "PPC_DIAB_BASEDIR", wrapper) );
 			    	}
 			        
 	        	}		        
