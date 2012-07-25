@@ -28,9 +28,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+@RunWith(value = XtextRunner2.class)
+@InjectWith(value = OilInjectorProvider.class)
 @SuppressWarnings("all")
-@RunWith(XtextRunner2.class)
-@InjectWith(OilInjectorProvider.class)
 public class ScopingDefaultTypesTests extends XtextTest {
   @Inject
   private IScopeProvider scopeProvider;
@@ -41,55 +41,50 @@ public class ScopingDefaultTypesTests extends XtextTest {
   @Test
   public void cpuData() {
     try {
-      {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("CPU s {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("OS aa {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("};");
-        _builder.newLine();
-        _builder.append("};");
-        _builder.newLine();
-        OilFile _parse = this.parser.parse(_builder);
-        final OilFile model = _parse;
-        OilApplication _application = model.getApplication();
-        EList<OilObject> _oilObjects = _application.getOilObjects();
-        OilObject _get = _oilObjects.get(0);
-        final OilObject os = _get;
-        ObjectType _type = os.getType();
-        Assert.assertSame(ObjectType.OS, _type);
-        EReference _oilObject_Parameters = OilPackage.eINSTANCE.getOilObject_Parameters();
-        IScope _scope = this.scopeProvider.getScope(os, _oilObject_Parameters);
-        final IScope scope = _scope;
-        Iterable<IEObjectDescription> _allElements = scope.getAllElements();
-        final Function1<IEObjectDescription,String> _function = new Function1<IEObjectDescription,String>() {
-            public String apply(final IEObjectDescription it) {
-              QualifiedName _name = it.getName();
-              String _string = _name.toString();
-              return _string;
-            }
-          };
-        Iterable<String> _map = IterableExtensions.<IEObjectDescription, String>map(_allElements, _function);
-        InputOutput.<Iterable<String>>println(_map);
-        Iterable<IEObjectDescription> _allElements_1 = scope.getAllElements();
-        int _size = IterableExtensions.size(_allElements_1);
-        Matcher<Integer> _greaterThan = Matchers.<Integer>greaterThan(Integer.valueOf(0));
-        Assert.<Integer>assertThat(Integer.valueOf(_size), _greaterThan);
-        Iterable<IEObjectDescription> _allElements_2 = scope.getAllElements();
-        final Function1<IEObjectDescription,String> _function_1 = new Function1<IEObjectDescription,String>() {
-            public String apply(final IEObjectDescription it) {
-              QualifiedName _name = it.getName();
-              String _string = _name.toString();
-              return _string;
-            }
-          };
-        Iterable<String> _map_1 = IterableExtensions.<IEObjectDescription, String>map(_allElements_2, _function_1);
-        Matcher<Iterable<String>> _hasItem = Matchers.<String>hasItem("CPU_DATA");
-        Assert.<Iterable<String>>assertThat(_map_1, _hasItem);
-      }
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("CPU s {");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("OS aa {");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("};");
+      _builder.newLine();
+      _builder.append("};");
+      _builder.newLine();
+      final OilFile model = this.parser.parse(_builder);
+      OilApplication _application = model.getApplication();
+      EList<OilObject> _oilObjects = _application.getOilObjects();
+      final OilObject os = _oilObjects.get(0);
+      ObjectType _type = os.getType();
+      Assert.assertSame(ObjectType.OS, _type);
+      EReference _oilObject_Parameters = OilPackage.eINSTANCE.getOilObject_Parameters();
+      final IScope scope = this.scopeProvider.getScope(os, _oilObject_Parameters);
+      Iterable<IEObjectDescription> _allElements = scope.getAllElements();
+      final Function1<IEObjectDescription,String> _function = new Function1<IEObjectDescription,String>() {
+          public String apply(final IEObjectDescription it) {
+            QualifiedName _name = it.getName();
+            String _string = _name.toString();
+            return _string;
+          }
+        };
+      Iterable<String> _map = IterableExtensions.<IEObjectDescription, String>map(_allElements, _function);
+      InputOutput.<Iterable<String>>println(_map);
+      Iterable<IEObjectDescription> _allElements_1 = scope.getAllElements();
+      int _size = IterableExtensions.size(_allElements_1);
+      Matcher<Integer> _greaterThan = Matchers.<Integer>greaterThan(Integer.valueOf(0));
+      Assert.<Integer>assertThat(Integer.valueOf(_size), _greaterThan);
+      Iterable<IEObjectDescription> _allElements_2 = scope.getAllElements();
+      final Function1<IEObjectDescription,String> _function_1 = new Function1<IEObjectDescription,String>() {
+          public String apply(final IEObjectDescription it) {
+            QualifiedName _name = it.getName();
+            String _string = _name.toString();
+            return _string;
+          }
+        };
+      Iterable<String> _map_1 = IterableExtensions.<IEObjectDescription, String>map(_allElements_2, _function_1);
+      Matcher<Iterable<String>> _hasItem = Matchers.<String>hasItem("CPU_DATA");
+      Assert.<Iterable<String>>assertThat(_map_1, _hasItem);
     } catch (Exception _e) {
       throw Exceptions.sneakyThrow(_e);
     }
