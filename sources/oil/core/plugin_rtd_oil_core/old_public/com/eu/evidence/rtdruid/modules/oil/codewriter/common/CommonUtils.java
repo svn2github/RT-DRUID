@@ -541,6 +541,9 @@ public final class CommonUtils {
 	 * 
 	 */
 	public static String compilerMakefileDefines(String cleanPath, String compilerDefine, OsType os) {
+		if (cleanPath == null) {
+			cleanPath = "";
+		}
 		
 		final String template = (os == OsType.Cygwin) ? "check_and_set_cygwin_compiler_path" : "check_and_set_linux_compiler_path";
 		
