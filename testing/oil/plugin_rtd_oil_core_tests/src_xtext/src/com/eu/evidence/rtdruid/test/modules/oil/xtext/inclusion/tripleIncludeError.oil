@@ -1,0 +1,4 @@
+CPU a {
+#include "tripleIncludeError_sub1.oil"
+
+};

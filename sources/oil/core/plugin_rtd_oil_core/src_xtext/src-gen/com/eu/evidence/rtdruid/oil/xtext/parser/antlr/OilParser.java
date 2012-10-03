@@ -3,10 +3,10 @@
 */
 package com.eu.evidence.rtdruid.oil.xtext.parser.antlr;
 
-import com.google.inject.Inject;
-
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+
 import com.eu.evidence.rtdruid.oil.xtext.services.OilGrammarAccess;
+import com.google.inject.Inject;
 
 public class OilParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 	
@@ -35,5 +35,4 @@ public class OilParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	public void setGrammarAccess(OilGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
 }

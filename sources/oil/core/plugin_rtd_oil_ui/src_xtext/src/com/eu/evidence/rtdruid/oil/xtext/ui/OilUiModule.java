@@ -3,14 +3,41 @@
  */
 package com.eu.evidence.rtdruid.oil.xtext.ui;
 
+import org.eclipse.jface.text.rules.IPartitionTokenScanner;
+import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
+import org.eclipse.xtext.resource.ILocationInFileProvider;
+import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider;
+import org.eclipse.xtext.ui.editor.contentassist.IProposalConflictHelper;
+import org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory.StatefulFactory;
+import org.eclipse.xtext.ui.editor.hover.IEObjectHover;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
+import org.eclipse.xtext.ui.editor.hyperlinking.IHyperlinkHelper;
+import org.eclipse.xtext.ui.editor.model.DocumentTokenSource;
+import org.eclipse.xtext.ui.editor.model.TerminalsTokenTypeToPartitionMapper;
+import org.eclipse.xtext.ui.editor.model.XtextDocument;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultAntlrTokenToAttributeIdMapper;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 
+import com.eu.evidence.rtdruid.oil.xtext.parser.IncldeLocationInFileProvider;
+import com.eu.evidence.rtdruid.oil.xtext.services.OilGrammarAccess;
 import com.eu.evidence.rtdruid.oil.xtext.ui.contentassist.OilEditStrategyProvider;
+import com.eu.evidence.rtdruid.oil.xtext.ui.contentassist.OilProposalConflictHelper;
+import com.eu.evidence.rtdruid.oil.xtext.ui.contentassist.OilStatefulFactory;
+import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilDocument;
+import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilDocumentTokenProvider;
+import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilHighlightingConfiguration;
+import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilPartitionTokenScanner;
+import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilTokenScanner;
+import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilTokenToAttributeIdMapper;
+import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilTokenTypeToPartitionMapper;
 import com.eu.evidence.rtdruid.oil.xtext.ui.hover.OilEObjectDocumentationProvider;
+import com.eu.evidence.rtdruid.oil.xtext.ui.hover.OilEObjectHover;
 import com.eu.evidence.rtdruid.oil.xtext.ui.hover.OilEObjectHoverProvider;
+import com.eu.evidence.rtdruid.oil.xtext.ui.hover.OilHyperlinkHelper;
+import com.eu.evidence.rtdruid.oil.xtext.ui.hover.OilURIEditorOpener;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -19,6 +46,11 @@ public class OilUiModule extends com.eu.evidence.rtdruid.oil.xtext.ui.AbstractOi
 	public OilUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
+	
+	public Class<? extends DocumentTokenSource> bindDocumentTokenSource() {
+		return OilDocumentTokenProvider.class;
+	}
+
 	
 	public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
 		return OilEObjectHoverProvider.class;
@@ -31,5 +63,57 @@ public class OilUiModule extends com.eu.evidence.rtdruid.oil.xtext.ui.AbstractOi
 	public Class<? extends AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
 		return OilEditStrategyProvider.class;
 	}
+	
+	public Class<? extends IEObjectHover> bindIEObjectHover() {
+		return OilEObjectHover.class;
+	}
+	
+	
+	public Class<? extends IHyperlinkHelper> bindIHyperlinkHelper() {
+		return OilHyperlinkHelper.class;
+	}
+	
+	
+	public  Class<? extends ILocationInFileProvider> bindILocationInFileProvider() {
+		return IncldeLocationInFileProvider.class;
+	}
 
+	public  Class<? extends IURIEditorOpener> bindIURIEditorOpener() {
+		return OilURIEditorOpener.class;
+	}
+	
+	public  Class<? extends ITokenScanner> bindITokenScanner() {
+		return OilTokenScanner.class;
+	}
+	
+	public  Class<? extends IPartitionTokenScanner> bindIPartitionTokenScanner() {
+		return OilPartitionTokenScanner.class;
+	}
+	
+	
+	public  Class<? extends XtextDocument> bindXtextDocument() {
+		return OilDocument.class;
+	}
+
+	public  Class<? extends StatefulFactory> bindStatefulFactory() {
+		return OilStatefulFactory.class;
+	}
+	
+	public  Class<? extends IProposalConflictHelper> bindIProposalConflictHelper() {
+		return OilProposalConflictHelper.class;
+	}
+
+	public Class<? extends OilGrammarAccess> bindOilGrammarAccess() {
+		return OilGrammarAccess.class;
+	}
+	public Class<? extends TerminalsTokenTypeToPartitionMapper> bindTerminalsTokenTypeToPartitionMapper() {
+		return OilTokenTypeToPartitionMapper.class;
+	}
+	
+	public Class<? extends DefaultHighlightingConfiguration> bindDefaultHighlightingConfiguration() {
+		return OilHighlightingConfiguration.class;
+	}
+	public Class<? extends DefaultAntlrTokenToAttributeIdMapper> bindDefaultAntlrTokenToAttributeIdMapper() {
+		return OilTokenToAttributeIdMapper.class;
+	}
 }

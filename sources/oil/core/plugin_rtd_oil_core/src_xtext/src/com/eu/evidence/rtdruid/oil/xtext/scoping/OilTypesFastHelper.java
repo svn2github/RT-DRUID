@@ -181,17 +181,19 @@ public class OilTypesFastHelper implements IOilTypesHelper {
 	}
 
 	private boolean compareElementAndPath(EObject it, String path) {
-		if (it instanceof OilObjectImpl) {
-			final OilObjectImpl _oilObjectImpl = (OilObjectImpl) it;
-			ObjectType _type = _oilObjectImpl.getType();
-			String _name = _type == null ? null :  _type.name();
-			return path.equals(_name);
-			
-		} else if (it instanceof VariantType) {
-			return path.equals( ((VariantType) it).getName());
-			
-		} else  if (it instanceof EnumeratorType) {
-			return path.equals( ((EnumeratorType) it).getName());
+		if (path != null) {
+			if (it instanceof OilObjectImpl) {
+				final OilObjectImpl _oilObjectImpl = (OilObjectImpl) it;
+				ObjectType _type = _oilObjectImpl.getType();
+				String _name = _type == null ? null :  _type.name();
+				return path.equals(_name);
+				
+			} else if (it instanceof VariantType) {
+				return path.equals( ((VariantType) it).getName());
+				
+			} else  if (it instanceof EnumeratorType) {
+				return path.equals( ((EnumeratorType) it).getName());
+			}
 		}
 		return false;
 	}

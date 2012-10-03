@@ -10,5 +10,7 @@ public class OilStandaloneSetup extends OilStandaloneSetupGenerated{
 	public static void doSetup() {
 		new OilStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
+	
+	
 }
 
