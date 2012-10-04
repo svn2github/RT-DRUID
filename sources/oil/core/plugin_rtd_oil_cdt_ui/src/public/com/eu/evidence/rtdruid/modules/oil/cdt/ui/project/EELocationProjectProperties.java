@@ -231,7 +231,8 @@ public class EELocationProjectProperties extends PropertyPage implements IListen
 	@Override
 	public void dispose() {
 		super.dispose();
-		body.removeListener(this);
+		if (body != null) 
+			body.removeListener(this);
 	}
 	
 		
@@ -247,7 +248,7 @@ public class EELocationProjectProperties extends PropertyPage implements IListen
 		composite.setLayout(layout);
 
 		IProject project = getProject();
-		if (!project.isOpen()) {
+		if (project == null || !project.isOpen()) {
 			contentForClosedProject(composite);
 		} else {
 			contentForCProject(composite);

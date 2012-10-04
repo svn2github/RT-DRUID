@@ -61,7 +61,7 @@ public class OilProjectProperties extends PropertyPage {
      * or null if it's all ok.
      */
     private String configFileError = null;
-    private int problemType = super.NONE;
+    private int problemType = PropertyPage.NONE;
     
 	public OilProjectProperties() {
 		super();
@@ -96,7 +96,7 @@ public class OilProjectProperties extends PropertyPage {
 		composite.setLayout(layout);
 
 		IProject project = getProject();
-		if (!project.isOpen()) {
+		if (project == null || !project.isOpen()) {
 			contentForClosedProject(composite);
 		} else {
 			contentForCProject(composite);
