@@ -267,12 +267,5 @@ IMPLEMENTATION ee {
 			
 		] BOARD_DATA = NO_BOARD;
 
-// maybe pic-only, please verify!
-		ENUM [
-			ENABLE {
-				STRING NAME[];
-			}
-		] LIB[];
-
     };
 };

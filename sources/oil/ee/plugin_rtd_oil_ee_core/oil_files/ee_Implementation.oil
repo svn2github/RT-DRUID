@@ -53,6 +53,12 @@ IMPLEMENTATION ee {
 		] BOARD_DATA = NO_BOARD;
         // -------------------------------------
 
+		ENUM [
+			ENABLE {
+				STRING NAME[];
+			}
+		] LIB[];
+ 
 
         ENUM [
         ] KERNEL_TYPE;
