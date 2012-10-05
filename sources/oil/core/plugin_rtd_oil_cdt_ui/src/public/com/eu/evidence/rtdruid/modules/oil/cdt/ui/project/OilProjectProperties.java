@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
+import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
@@ -95,7 +96,6 @@ public class OilProjectProperties extends PropertyPage {
 		layout.verticalSpacing = 5;
 		composite.setLayout(layout);
 
-		IProject project = getProject();
 		if (project == null || !project.isOpen()) {
 			contentForClosedProject(composite);
 		} else {
@@ -261,7 +261,7 @@ public class OilProjectProperties extends PropertyPage {
 				Rtd_oil_cdt_Plugin.getString("OilProjectProperties.ConfFile_Selection"),
 				Rtd_oil_cdt_Plugin.getFormattedString(
 						"OilProjectProperties.Choose_configuration_file_for_NAME", project.getName()),
-				getProject(),
+				project,
 				MultipleResourceSelectionDialog.getStandardValidator(Rtd_oil_cdt_Plugin.PLUGIN_ID, RTD_XMI_Factory.getAllImportTypes())
 			).getDialog();
 
@@ -299,8 +299,8 @@ public class OilProjectProperties extends PropertyPage {
 	protected void enableOk() {
 		
 		// disable previous Error and warning messages
-        setMessage("", super.WARNING);
-        setMessage("", super.ERROR);
+        setMessage("", OilProjectProperties.WARNING);
+        setMessage("", OilProjectProperties.ERROR);
 
 		
 		String messg = null;
@@ -319,7 +319,7 @@ public class OilProjectProperties extends PropertyPage {
 		 */
 		
 		// enable next only if it's all ok
-		setValid(problemType != super.ERROR);
+		setValid(problemType != OilProjectProperties.ERROR);
     	
         // print error message 
         setMessage(messg, problemType);
@@ -348,23 +348,16 @@ public class OilProjectProperties extends PropertyPage {
         		fileList.add(s);
         }
     }
-
-	public IProject getProject() {
-		Object element = getElement();
-		if (element instanceof IProject) {
-			return (IProject) element;
-		}
-		return null;
-	}
 	
 	/* (non-Javadoc)
      * @see org.eclipse.ui.dialogs.PropertyPage#setElement(org.eclipse.core.runtime.IAdaptable)
      */
     public void setElement(IAdaptable element) {
-        // TODO Auto-generated method stub
         super.setElement(element);
 		if (element instanceof IProject) {
 			project = (IProject) element;
+		} else if (element instanceof ICProject) {
+			project = ((ICProject) element).getProject();
 		}
         
         init();

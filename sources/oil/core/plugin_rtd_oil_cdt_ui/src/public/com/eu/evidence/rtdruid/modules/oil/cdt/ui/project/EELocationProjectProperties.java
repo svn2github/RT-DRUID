@@ -16,6 +16,7 @@ package com.eu.evidence.rtdruid.modules.oil.cdt.ui.project;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.cdt.core.CCorePlugin;
+import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.WorkspaceJob;
@@ -247,7 +248,6 @@ public class EELocationProjectProperties extends PropertyPage implements IListen
 		layout.verticalSpacing = 5;
 		composite.setLayout(layout);
 
-		IProject project = getProject();
 		if (project == null || !project.isOpen()) {
 			contentForClosedProject(composite);
 		} else {
@@ -428,23 +428,16 @@ public class EELocationProjectProperties extends PropertyPage implements IListen
         elb.performDefaults();
         enableOk();
     }
-
-	public IProject getProject() {
-		Object element = getElement();
-		if (element instanceof IProject) {
-			return (IProject) element;
-		}
-		return null;
-	}
 	
 	/* (non-Javadoc)
      * @see org.eclipse.ui.dialogs.PropertyPage#setElement(org.eclipse.core.runtime.IAdaptable)
      */
     public void setElement(IAdaptable element) {
-        // TODO Auto-generated method stub
         super.setElement(element);
 		if (element instanceof IProject) {
 			project = (IProject) element;
+		} else if (element instanceof ICProject) {
+			project = ((ICProject) element).getProject();
 		}
         
         init();
