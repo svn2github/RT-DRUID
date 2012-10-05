@@ -61,6 +61,14 @@ public class StreamLineConverter implements ILineConverterHelper {
 		public int compareTo(Integer value) {
 			return key - value;
 		}
+		
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "{"+key+"->"+offset+", " + line + ", " +charPositionInLine +"}";
+		}
 	}
 	
 	public static class Range implements Comparable<Integer> {
@@ -173,7 +181,8 @@ public class StreamLineConverter implements ILineConverterHelper {
 		if (index > -1) {
 			return fullToMain.get(index);
 		}
-		return null;
+		if (debug) System.out.println("--- Unknown offset "+ globalPosition + " " +fullToMain);
+		return new Data(globalPosition, globalPosition, 1, 0);
 	}
 
 	/* (non-Javadoc)
@@ -185,7 +194,10 @@ public class StreamLineConverter implements ILineConverterHelper {
 		if (index > -1) {
 			return mainToFull.get(index).computeOffset(localPosition);
 		}
-		return -1;
+		if (mainToFull.isEmpty()) {
+			return localPosition;
+		}
+		return mainToFull.get(mainToFull.size()-1).computeOffset(localPosition);
 	}
 
 	

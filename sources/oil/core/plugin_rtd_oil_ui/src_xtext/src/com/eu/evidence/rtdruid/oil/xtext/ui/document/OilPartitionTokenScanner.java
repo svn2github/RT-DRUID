@@ -89,7 +89,7 @@ public class OilPartitionTokenScanner extends PartitionTokenScanner {
 		// skip "hidden" tokens
 		IToken token = super.nextToken();
 		updateOffsetLenght();
-		while (getTokenLength() == 0) {
+		while (getTokenLength() == 0 && !token.isEOF()) {
 			token = super.nextToken();
 			updateOffsetLenght();
 		}

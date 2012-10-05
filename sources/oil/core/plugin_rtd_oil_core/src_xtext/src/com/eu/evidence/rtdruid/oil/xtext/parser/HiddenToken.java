@@ -82,7 +82,6 @@ public class HiddenToken extends CommonToken {
 			return null;
 		}
 		text = input.substring(fullStart,fullStop);
-		System.out.println("Htoken = "+text);
 		return text;
 	}
 }
