@@ -733,7 +733,10 @@ public class SectionWriterHalMico32 extends SectionWriter
 		    	
 		        sbMakefile_variables.append(
 		                "APPBASE := " + appBase + "\n" +
-		                "OUTBASE := " + outputDir + "\n\n"
+		                "OUTBASE := " + outputDir + "\n\n" +
+		                "ifndef OUTPUT_DIR\n" +
+		                "OUTPUT_DIR := .\n" +
+		                "endif\n\n"
 		                
 //		                "LD_FILE = $(OUTPUT_DIR)/linker.ld\n\n"
 		        );
