@@ -273,6 +273,21 @@ public class OilIncludedLexer extends InternalOilLexer {
 		super.mTokens();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.xtext.parser.antlr.Lexer#nextToken()
+	 */
+	@Override
+	public Token nextToken() {
+		Token answer = super.nextToken();
+		if (answer == Token.EOF_TOKEN) {
+			if (input instanceof CharStreamWithInclude) {
+	    		((CharStreamWithInclude) input).storePosition();
+			}
+		}
+		
+		return answer;
+	}
+	
 	/**
 	 * @return the lineConverterHelper
 	 */

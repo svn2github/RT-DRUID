@@ -181,8 +181,24 @@ public class StreamLineConverter implements ILineConverterHelper {
 		if (index > -1) {
 			return fullToMain.get(index);
 		}
-		if (debug) System.out.println("--- Unknown offset "+ globalPosition + " " +fullToMain);
-		return new Data(globalPosition, globalPosition, 1, 0);
+		if (debug) System.out.println("--- Unknown global offset "+ globalPosition + " " +fullToMain);
+		return new Data(globalPosition, computeMainIndex(globalPosition), 1, 0);
+	}
+	
+	protected int computeMainIndex(int globalPosition) {
+		if (mainToFull.size() <=1) {
+			return globalPosition;
+		}
+		
+		int proposal = globalPosition;
+		for (Range range : mainToFull) {
+			if (range.globalStart<=globalPosition && (range.globalStart + range.size)>globalPosition) {
+				return globalPosition - range.globalStart + range.start;
+			}
+			proposal = range.end;
+		}
+		
+		return proposal;
 	}
 
 	/* (non-Javadoc)
@@ -197,6 +213,7 @@ public class StreamLineConverter implements ILineConverterHelper {
 		if (mainToFull.isEmpty()) {
 			return localPosition;
 		}
+		if (debug) System.out.println("--- Unknown local offset "+ localPosition + " " +fullToMain);
 		return mainToFull.get(mainToFull.size()-1).computeOffset(localPosition);
 	}
 
