@@ -346,9 +346,10 @@ public class Mico32McuLattice implements IEEWriterKeywords {
 		buffer.append("# Platform-specific settings\n"+
 				"#\n"+
 				"\n"+
+				CommonUtils.addMakefileDefinesInclude() +
 				commentWriter.writerBanner("Variable part, automatically generated from 'conf.oil'")+
 				"PLATFORM_NAME=" + platform_name + "\n"+
-				"PLATFORM_LIB_PATH=" + platform_lib_path + "\n"+
+				"$(eval $(call check_and_set_mico32_platform_path,PLATFORM_LIB_PATH," + platform_lib_path + "))\n" +
 				"PLATFORM_BLD_CFG=" + platform_cfg + "\n"+
 				"\n\n");
 		
