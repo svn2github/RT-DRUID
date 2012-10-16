@@ -502,7 +502,9 @@ public class SectionWriterHalPic32 extends SectionWriter
 					String tmp = (String) options.get(PicConstants.PREF_PIC32_ASM_PATH);
 					if (tmp.length()>0) asm = tmp;
 				}
-
+		    	if (asm == null) {
+		    		asm = gcc;
+		    	}
 		    	
 		        sbMakefile.append(
 		        		CommonUtils.addMakefileDefinesInclude() +
