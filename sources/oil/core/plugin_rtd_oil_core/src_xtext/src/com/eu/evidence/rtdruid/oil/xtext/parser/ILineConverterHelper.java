@@ -23,6 +23,44 @@ public interface ILineConverterHelper extends Adapter {
 	}
 
 	/**
+	 *
+	 * @author Nicola Serreli
+	 * @since 2.0
+	 *
+	 */
+	public interface IRange {
+
+		/**
+		 * @param localPosition
+		 * @return
+		 */
+		public int computeOffset(int localPosition);
+
+		/**
+		 * @return the start
+		 */
+		public int getStart();
+
+		/**
+		 * @return the end
+		 */
+		public int getEnd();
+
+		/**
+		 * @return the size
+		 */
+		public int getSize();
+
+		/**
+		 * @return the globalStart
+		 */
+		public int getGlobalStart();
+
+		public boolean inMainRange(int mainOffset);
+		public boolean inGlobalRange(int globalOffset);
+	}
+	
+	/**
 	 * 
 	 * @param globalPosition
 	 * @return
@@ -36,5 +74,11 @@ public interface ILineConverterHelper extends Adapter {
 	 */
 	public int getFullIndex(int localPosition);
 
+	/**
+	 * 
+	 * @param localPosition
+	 * @return
+	 */
+	public IRange[] getMainSections();
 
 }

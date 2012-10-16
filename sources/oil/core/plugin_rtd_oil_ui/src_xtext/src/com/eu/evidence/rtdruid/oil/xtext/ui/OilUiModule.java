@@ -12,6 +12,8 @@ import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider;
 import org.eclipse.xtext.ui.editor.contentassist.IProposalConflictHelper;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory.StatefulFactory;
+import org.eclipse.xtext.ui.editor.doubleClicking.LexerTokenAndCharacterPairAwareStrategy;
+import org.eclipse.xtext.ui.editor.formatting.IContentFormatterFactory;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHover;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
 import org.eclipse.xtext.ui.editor.hyperlinking.IHyperlinkHelper;
@@ -26,9 +28,11 @@ import com.eu.evidence.rtdruid.oil.xtext.services.OilGrammarAccess;
 import com.eu.evidence.rtdruid.oil.xtext.ui.contentassist.OilEditStrategyProvider;
 import com.eu.evidence.rtdruid.oil.xtext.ui.contentassist.OilProposalConflictHelper;
 import com.eu.evidence.rtdruid.oil.xtext.ui.contentassist.OilStatefulFactory;
+import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilContentFormatterFactory;
 import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilDocument;
 import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilDocumentTokenProvider;
 import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilHighlightingConfiguration;
+import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilLexerTokenAndCharacterPairAwareStrategy;
 import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilPartitionTokenScanner;
 import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilTokenScanner;
 import com.eu.evidence.rtdruid.oil.xtext.ui.document.OilTokenToAttributeIdMapper;
@@ -116,4 +120,13 @@ public class OilUiModule extends com.eu.evidence.rtdruid.oil.xtext.ui.AbstractOi
 	public Class<? extends DefaultAntlrTokenToAttributeIdMapper> bindDefaultAntlrTokenToAttributeIdMapper() {
 		return OilTokenToAttributeIdMapper.class;
 	}
+	public Class<? extends IContentFormatterFactory> bindIContentFormatterFactory() {
+		return OilContentFormatterFactory.class;
+	}
+
+	public Class<? extends LexerTokenAndCharacterPairAwareStrategy> bindLexerTokenAndCharacterPairAwareStrategy() {
+		return OilLexerTokenAndCharacterPairAwareStrategy.class;
+	}
+	
+	
 }

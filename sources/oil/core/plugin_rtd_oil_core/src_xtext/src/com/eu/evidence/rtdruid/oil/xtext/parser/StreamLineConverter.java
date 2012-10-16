@@ -71,7 +71,7 @@ public class StreamLineConverter implements ILineConverterHelper {
 		}
 	}
 	
-	public static class Range implements Comparable<Integer> {
+	public static class Range implements Comparable<Integer>, IRange {
 		final int start;
 		final int end;
 		final int size;
@@ -106,15 +106,67 @@ public class StreamLineConverter implements ILineConverterHelper {
 			return 0;
 		}
 
-		/**
-		 * @param localPosition
-		 * @return
+		/* (non-Javadoc)
+		 * @see com.eu.evidence.rtdruid.oil.xtext.parser.IRange#computeOffset(int)
 		 */
+		@Override
 		public int computeOffset(int localPosition) {
 			return 	globalStart + (localPosition - start);
 		}
 		
+		/* (non-Javadoc)
+		 * @see com.eu.evidence.rtdruid.oil.xtext.parser.IRange#getStart()
+		 */
+		@Override
+		public int getStart() {
+			return start;
+		}
+		/* (non-Javadoc)
+		 * @see com.eu.evidence.rtdruid.oil.xtext.parser.IRange#getEnd()
+		 */
+		@Override
+		public int getEnd() {
+			return end;
+		}
+		/* (non-Javadoc)
+		 * @see com.eu.evidence.rtdruid.oil.xtext.parser.IRange#getSize()
+		 */
+		@Override
+		public int getSize() {
+			return size;
+		}
+		/* (non-Javadoc)
+		 * @see com.eu.evidence.rtdruid.oil.xtext.parser.IRange#getGlobalStart()
+		 */
+		@Override
+		public int getGlobalStart() {
+			return globalStart;
+		}
 		
+		/* (non-Javadoc)
+		 * @see com.eu.evidence.rtdruid.oil.xtext.parser.ILineConverterHelper.IRange#inGlobalRange(int)
+		 */
+		@Override
+		public boolean inGlobalRange(int globalOffset) {
+			return (globalStart<= globalOffset) &&  (globalOffset < (globalStart+size));
+		}
+		
+		/* (non-Javadoc)
+		 * @see com.eu.evidence.rtdruid.oil.xtext.parser.ILineConverterHelper.IRange#inMainRange(int)
+		 */
+		@Override
+		public boolean inMainRange(int mainOffset) {
+			return (start<= mainOffset) &&  (mainOffset < end);
+		}
+		
+		
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "[L"+start + "->"+end + " | G" + globalStart + "->" + (globalStart+size)+", "+size + "]";
+		}
 	}
 	
 	protected ArrayList<Data> fullToMain = new ArrayList<StreamLineConverter.Data>();
@@ -217,7 +269,13 @@ public class StreamLineConverter implements ILineConverterHelper {
 		return mainToFull.get(mainToFull.size()-1).computeOffset(localPosition);
 	}
 
-	
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.oil.xtext.parser.ILineConverterHelper#getMainSections()
+	 */
+	@Override
+	public IRange[] getMainSections() {
+		return (IRange[]) mainToFull.toArray(new IRange[mainToFull.size()]);
+	}
 	
 	// --------------------------------------------------
 	
