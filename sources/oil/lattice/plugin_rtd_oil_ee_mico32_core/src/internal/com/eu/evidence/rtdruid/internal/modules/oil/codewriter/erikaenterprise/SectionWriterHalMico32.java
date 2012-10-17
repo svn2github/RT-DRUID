@@ -736,6 +736,8 @@ public class SectionWriterHalMico32 extends SectionWriter
 		                "OUTBASE := " + outputDir + "\n\n" +
 		                "ifndef OUTPUT_DIR\n" +
 		                "OUTPUT_DIR := .\n" +
+		                "else\n" +
+		                "APPBASE := .\n" +
 		                "endif\n\n"
 		                
 //		                "LD_FILE = $(OUTPUT_DIR)/linker.ld\n\n"

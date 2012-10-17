@@ -290,11 +290,15 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 			    
 			    String cfgPath = "";
 				if (parent.checkKeyword(IWritersKeywords.CPU_PIC_30)
-						|| parent.checkKeyword(IWritersKeywords.CPU_MICO_32)
 						//|| parent.checkKeyword(IWritersKeywords.CPU_S12)
 						) {
 				    cfgPath = "$(OUTBASE)/";
+				} else if (parent.checkKeyword(IWritersKeywords.CPU_MICO_32)
+						//|| parent.checkKeyword(IWritersKeywords.CPU_S12)
+						) {
+				    cfgPath = "$(OUTPUT_DIR)/";
 				}
+
 			    
 				sbMakefile.append("APP_SRCS += " + cfgPath
 						+ answer[0].getFileName(FILE_EE_CFG_C));

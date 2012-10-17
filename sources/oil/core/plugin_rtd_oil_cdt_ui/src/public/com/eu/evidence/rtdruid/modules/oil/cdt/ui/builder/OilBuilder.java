@@ -954,7 +954,7 @@ class ProjectBuilder implements IProjectBuilder {
 					options.put(IWritersKeywords.WRITER_LAST_OUTPUT_DIR, last);
 				}
 				String base = "";
-				for (int i=0; i<outputPrjPath.segmentCount()-1; i++) {
+				for (int i=0; i<outputPrjPath.segmentCount(); i++) {
 					if (i>0) base += "/";
 					base += "..";
 				}
