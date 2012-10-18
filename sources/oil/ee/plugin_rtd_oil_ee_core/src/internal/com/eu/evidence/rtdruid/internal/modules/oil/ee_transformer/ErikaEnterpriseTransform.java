@@ -11,6 +11,7 @@ import static com.eu.evidence.rtdruid.vartree.VarTreeUtil.storeAVar;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -405,6 +406,89 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 		}
 	}
 	
+
+	/**
+	 * This method stores all isr inside the given IVarTreePointer
+	 * 
+	 * @param vtp
+	 *            point to the system
+	 * @param parent
+	 *            the parent node
+	 * @param id
+	 *            contains the hw and rtos id of this data
+	 * @param rtos
+	 *            the name of RT-OS. Required for the mapping between Isr and
+	 *            RT-OS.
+	 * 
+	 * @throws OilTransformException
+	 *             if there are some problems
+	 */
+	protected void storeIsr(IVarTreePointer vtp, Element parent, IOilImplID id, String rtos)
+			throws OilTransformException {
+		// get only the name of rtos without cpu
+		rtos = extractRtosName(rtos);
+
+		// prepare where store all data
+		Element[] isrList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT,
+				new String[] { IOilXMLLabels.ATTR_TYPE }, new String[] { IOilXMLLabels.OBJ_ISR });
+
+		// aggregate instances of the same task
+		ArrayList<Element> unamedIsr = new ArrayList<Element>();
+		ArrayList<ArrayList<Element>> namedIsr = new ArrayList<ArrayList<Element>>();
+		{
+			// namedTasksKeys is used to group together all objects with the
+			// same name
+			LinkedHashMap<String, ArrayList<Element>> namedIsrKeys = new LinkedHashMap<String, ArrayList<Element>>();
+			for (int i = 0; i < isrList.length; i++) {
+				String tmp = getAttribute(isrList[i], IOilXMLLabels.ATTR_NAME);
+
+				if (tmp == null) {
+					unamedIsr.add(isrList[i]);
+				} else {
+					if (namedIsrKeys.containsKey(tmp)) {
+						namedIsrKeys.get(tmp).add(isrList[i]);
+					} else {
+						ArrayList<Element> ar = new ArrayList<Element>();
+						ar.add(isrList[i]);
+						namedIsrKeys.put(tmp, ar);
+						namedIsr.add(ar);
+					}
+				}
+			}
+		}
+
+		// first the task without a name (set id to null)
+		// it isn't possible in a oil file !!
+		if (unamedIsr.size() > 0) {
+			String cpu = getTaskCpuMap(unamedIsr);
+			if (cpu == null) {
+				cpu = DEFAULT_CPU_NAME;
+			}
+
+			storeAnIsr((IVarTreePointer) vtp.clone(), unamedIsr, id);
+
+			// also store mapping
+			storeIsrMap((IVarTreePointer) vtp.clone(), null, makeRtosId(cpu, rtos));
+		}
+
+		// parse all tasks. If there're more than one instance for the same
+		// task, that task is parsed more than one time
+		for (Iterator<ArrayList<Element>> iter = namedIsr.iterator(); iter.hasNext();) {
+			ArrayList<Element> ar = iter.next();
+			String cpu = getTaskCpuMap(ar);
+			if (cpu == null) {
+				cpu = DEFAULT_CPU_NAME;
+			}
+
+			storeAnIsr((IVarTreePointer) vtp.clone(), ar, id);
+
+			// also store mapping
+			storeIsrMap((IVarTreePointer) vtp.clone(), getAttribute(ar.get(0), "Name"), DataPath.makeSlashedId(new String[] {cpu, rtos}));
+
+		}
+
+	}
+	
 	/**
 	 * Searchs inside one or more XML elements that describes a task some info
 	 * about the mapping between task and a cpu.
@@ -645,6 +729,22 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 						}
 			
 		}
+		break;		
+			
+		case IOilObjectList.ISR: {
+			
+			// CPU_ID
+						String path = (new OilPath(OilObjectType.ISR, null)).getPath() + "CPU_ID";
+						IVarTreePointer vtp = vt.newVarTreePointer();
+						vtp.goAbsolute(object.getPath());
+						if (vtp.go(path)) {
+							// System.out.println("TROVATO CPU_ID");
+							
+						} else {
+							object.setProperty(ISR_FORCE_MAPPING, Boolean.TRUE.toString());
+						}
+			
+		}
 		}
 		super.writeApplicationObject(buffer, oilVarPrefix, object, objType, rtosPath);
 	}
@@ -667,6 +767,18 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 					&& "TRUE".equalsIgnoreCase(object.getString(TASK_FORCE_MAPPING))
 					&& object.containsProperty(TASK_MAPPING)) {
 				String cpu_name = extractCpuName(object.getString(TASK_MAPPING));
+				
+				buffer.append(indent + "CPU_ID = \"" + cpu_name + "\"; // auto value\n");
+			}
+			
+		}
+		case IOilObjectList.ISR: {
+			
+			// CPU_ID
+			if (object.containsProperty(ISR_FORCE_MAPPING) 
+					&& "TRUE".equalsIgnoreCase(object.getString(ISR_FORCE_MAPPING))
+					&& object.containsProperty(ISR_MAPPING)) {
+				String cpu_name = extractCpuName(object.getString(ISR_MAPPING));
 				
 				buffer.append(indent + "CPU_ID = \"" + cpu_name + "\"; // auto value\n");
 			}

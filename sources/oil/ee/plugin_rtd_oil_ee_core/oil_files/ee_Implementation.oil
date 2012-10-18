@@ -116,6 +116,8 @@ IMPLEMENTATION ee {
 		STRING ENTRY: "the interrupt source id or source number (arch. dependent)"; 
 		UINT32 PRIORITY: "the interrupt priority";
 		STRING HANDLER: "if defined, this is the name of the function, otherwise the isr name is used as function name";
+
+        STRING CPU_ID = "default_cpu";
 	};
 
     COUNTER {

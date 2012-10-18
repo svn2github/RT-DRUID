@@ -81,6 +81,8 @@ public class SimpleTransform implements IOilTransform {
 
 	protected static final String TASK_MAPPING = "sgrk_task_mapping";
 	protected static final String TASK_FORCE_MAPPING = "sgrk_task_add_mapping";
+	protected static final String ISR_MAPPING = "sgrk_isr_mapping";
+	protected static final String ISR_FORCE_MAPPING = "sgrk_isr_add_mapping";
 
 	public static final String SGR_ADDITIONAL = "sgr__map_additional_text";
 
@@ -2275,6 +2277,13 @@ public class SimpleTransform implements IOilTransform {
 									Object ttt = current.getCollection(Task.STR_RESOURCE_LIST);
 									if (ttt != null && (ttt.toString()).length() > 0) {
 										object.setObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST, ttt);
+									}
+								}
+								// ----------- MAPPING ------------
+								{
+									String rtos_name = ts.getCpuItem(i) != null ? ts.getCpuItem(i).getName() : null;
+									if (rtos_name != null && rtos_name.length() > 0) {
+										object.setProperty(ISR_MAPPING, "" + rtos_name);
 									}
 								}
 
