@@ -548,7 +548,6 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				 */
 			{
 				// reorder: first HW counters
-				boolean foundSysTimer = false;
 				ArrayList<ISimpleGenRes> hw = new ArrayList<ISimpleGenRes>();
 				ArrayList<ISimpleGenRes> sw = new ArrayList<ISimpleGenRes>();
 				for (ISimpleGenRes sgr : answer) {
@@ -589,12 +588,6 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 							if (systimer!= null && "true".equalsIgnoreCase(systimer)) {
 								sgr.setObject(ISimpleGenResKeywords.COUNTER_SYSTIMER, Boolean.TRUE);
 								first = true;
-								
-								if (foundSysTimer) {
-									Messages.sendWarningNl("Found more than one System Time for a single cpu");
-								}
-								
-								foundSysTimer = true;
 							}
 
 							if (first) {

@@ -176,10 +176,10 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						sysTimer = sgr;
 					
 						if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_USER_HANDLER)) {
-							throw new OilCodeWriterException("System time does not support handler redefinition");
+							throw new OilCodeWriterException("System timer does not support handler redefinition");
 						}
 						if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
-							throw new OilCodeWriterException("System time does not support priority redefinition");
+							throw new OilCodeWriterException("System timer does not support priority redefinition");
 						}
 						
 						sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, systimer_handler);
