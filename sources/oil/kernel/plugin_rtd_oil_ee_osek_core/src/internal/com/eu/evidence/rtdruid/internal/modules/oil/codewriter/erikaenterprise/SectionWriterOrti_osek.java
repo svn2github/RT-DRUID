@@ -801,7 +801,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
         	
         	ICommentWriter commentWriter = getCommentWriter(oilObjects[RTOS_ID___COMMON_DATA], FileTypes.MAKEFILE);
         	
-    		String value = commentWriter.writerBanner("Orti") + "EE_ORTI_SUPPORT := 1\n";
+    		String value = commentWriter.writerBanner("Orti") + "export EE_ORTI_SUPPORT := 1\n";
 			CommonUtils.updateSgrProperty(sgrOs, SGRK__MAKEFILE_MP_EXT_VARS__, value);
             
         }

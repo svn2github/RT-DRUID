@@ -426,7 +426,7 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
          */
         		
         sbMakefile.append(commentWriter.writerSingleLineComment("Current Project")
-                + "PROJECT := " + projectName + "\n\n");
+                + "export PROJECT := " + projectName + "\n\n");
 
         /*
          * VARIABLES for Each CPU
@@ -435,10 +435,10 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
         StringBuffer sbSlavesList = new StringBuffer(commentWriter.writerBanner("Slave CPUs"));
     	        
         StringBuffer sbSlavesDirs = new StringBuffer(commentWriter.writerSingleLineComment("List of all the slave CPU dirs") +
-        		"CPU_DIRS := ");
+        		"export CPU_DIRS := ");
 
         StringBuffer sbCpuList = new StringBuffer(commentWriter.writerSingleLineComment("List of all CPU") +
-				"CPU_LIST := CPU_MASTER ");
+				"export CPU_LIST := CPU_MASTER ");
         
         // CPUs Directories
         int portNumber = 10000;
@@ -448,18 +448,18 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
             
             if (i==0) {
             	sbMakefile.append(commentWriter.writerBanner("Master CPU") +
-            			"CPU_MASTER_NAME := "+cpuName+"\n" +
-						"CPU_MASTER_PORT := "+portNumber+"\n" +
-						"CPU_MASTER_ID   := "+(i)+"\n" +
-						"CPU_MASTER_ELF  := $(PROJECT)_"+cpuName+".elf\n" +
-            			"CPU_MASTER_DIR  := "+cpuName+"\n\n");
+						"export CPU_MASTER_NAME := "+cpuName+"\n" +
+						"export CPU_MASTER_PORT := "+portNumber+"\n" +
+						"export CPU_MASTER_ID   := "+(i)+"\n" +
+						"export CPU_MASTER_ELF  := $(PROJECT)_"+cpuName+".elf\n" +
+						"export CPU_MASTER_DIR  := "+cpuName+"\n\n");
             } else {
                 sbSlavesList.append(commentWriter.writerSingleLineComment("Slave cpu " + cpuName) +
-                		"CPU"+i+"_NAME := "+cpuName+"\n" +
-						"CPU"+i+"_PORT := "+portNumber+"\n" +
-						"CPU"+i+"_ID   := "+(i)+"\n" +
-            			"CPU"+i+"_ELF  := $(PROJECT)_"+cpuName+".elf\n" +
-                		"CPU"+i+"_DIR  := "+cpuName+"\n\n");
+						"export CPU"+i+"_NAME := "+cpuName+"\n" +
+						"export CPU"+i+"_PORT := "+portNumber+"\n" +
+						"export CPU"+i+"_ID   := "+(i)+"\n" +
+						"export CPU"+i+"_ELF  := $(PROJECT)_"+cpuName+".elf\n" +
+						"export CPU"+i+"_DIR  := "+cpuName+"\n\n");
             	sbSlavesDirs.append(" $(CPU"+i+"_DIR)");
 	            sbCpuList.append(" CPU"+i);
             }

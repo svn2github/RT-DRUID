@@ -839,7 +839,7 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
         	final ISimpleGenRes sgrOs = oilObjects[RTOS_ID___COMMON_DATA].getList(IOilObjectList.OS).get(0);
         	final ICommentWriter commentWriterMf = getCommentWriter(oilObjects[RTOS_ID___COMMON_DATA], FileTypes.MAKEFILE);
         	
-    		String value = commentWriterMf.writerBanner("Orti") + "EE_ORTI_SUPPORT := 1\n";
+    		String value = commentWriterMf.writerBanner("Orti") + "export EE_ORTI_SUPPORT := 1\n";
 			CommonUtils.updateSgrProperty(sgrOs, SGRK__MAKEFILE_MP_EXT_VARS__, value);
             
         }
