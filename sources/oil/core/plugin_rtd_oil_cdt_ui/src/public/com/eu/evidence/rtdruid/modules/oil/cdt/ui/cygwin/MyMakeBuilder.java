@@ -135,6 +135,10 @@ public class MyMakeBuilder {
 				"@REM   properties \"C/C++ Make Project\" -> \"Build command\"\n" +
 				"@REM   i.e.   ${workspace_loc:" + pName + "}/"+DEFAULT_NAME+"\n" +
 				"\n" +
+				"@REM   Unset CWD and PWD. They may cause cygwin warning.\n" +
+				"@set CWD=\n" +
+				"@set PWD=\n" +
+				"\n" +
 				"@set EE_BASH_PATH=" + cygpath_base +"\\bin\\bash\n" +
 				"\n" +
 				"@if EXIST %EE_BASH_PATH%.exe goto endok\n" +
@@ -168,7 +172,8 @@ public class MyMakeBuilder {
 				":endok\n" +
 				"@echo %EE_BASH_PATH% found!\n" +
 				define_erika_files +
-				"@%EE_BASH_PATH% -c \"/bin/bash --login -c \\\"cd `/bin/cygpath/ -ms \\\"$PWD\\\"`; make %1 %2 %3 %4\\\"\"\n";
+				"@%EE_BASH_PATH% -l -c \"cd \\\"%CD%\\\"; make %1 %2 %3 %4 %5 %6 %7 %8 %9\"\n";
+//				"@%EE_BASH_PATH% -c \"/bin/bash --login -c \\\"cd `/bin/cygpath/ -ms \\\"$PWD\\\"`; make %1 %2 %3 %4\\\"\"\n";
 //				"@%EE_BASH_PATH% -c \"/bin/bash --login -c \\\"cd \\\\\\\"$PWD\\\\\\\"; make %1 %2 %3 %4\\\"\"\n";
 		}
 		
