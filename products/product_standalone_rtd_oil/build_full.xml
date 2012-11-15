@@ -1,6 +1,10 @@
 				
 <project default="main">
 	
+	<dirname property="priv_ant_param.file.basedir" file="${ant.file.imported}"/>
+	<property name="custom.properties" value="${priv_ant_param.file.basedir}/empty.properties" />
+	<property file="${custom.properties}" />
+	
 	<property name="base.build.dir" value="${basedir}" />
 	
 	<property name="builder" value="${base.build.dir}/full" />
