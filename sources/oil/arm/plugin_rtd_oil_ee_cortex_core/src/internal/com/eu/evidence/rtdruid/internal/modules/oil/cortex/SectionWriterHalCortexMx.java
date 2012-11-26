@@ -58,6 +58,8 @@ public class SectionWriterHalCortexMx extends SectionWriter
 			IExtractObjectsExtentions,
 			IExtractKeywordsExtentions {
 
+
+	
 	/** Cortex M0 ee_opts */
 	public final static String EEOPT__CORTEX_MX__ = "__CORTEX_MX__";
 	public final static String EEOPT__IAR_COMPILER__ = "__IAR__";
@@ -76,14 +78,34 @@ public class SectionWriterHalCortexMx extends SectionWriter
 	final protected static HashMap<String, Mcu_Model> LPCX_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
 	final protected static HashMap<String, Mcu_Model> STELLARIS_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
 	final protected static HashMap<String, Mcu_Model> STM32_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
-	final protected static LinkedHashSet<String> ISR_LIST = new LinkedHashSet<String>();
+	final protected static LinkedHashSet<String> ISR_LIST_stm32 = loadIsr("isr_stm32.txt");
+	final protected static LinkedHashSet<String> ISR_LIST_stellaris = loadIsr("isr_stellaris.txt");
 	private static final String LPCX_MCU = "LPCXPRESSO";
 	private static final String STELLARIS_MCU = "STELLARIS";
 	private static final String STM32_MCU = "STM32";
 	
+	private enum McuType {
+		LPCXPRESSO(null), STELLARIS(ISR_LIST_stellaris), STM32(ISR_LIST_stm32);
+		
+		private LinkedHashSet<String> isrList;
+		
+		/**
+		 * 
+		 */
+		private McuType(LinkedHashSet<String> isrList) {
+			this.isrList = isrList;
+		}
+		
+		/**
+		 * @return the isrList
+		 */
+		public LinkedHashSet<String> getIsrList() {
+			return isrList;
+		}
+	};
+	
 	static {
 		loadMCU_properties();
-		loadIsr();
 	}
 	
 	/** The Erika Enterprise Writer that call this section writer */
@@ -121,7 +143,6 @@ public class SectionWriterHalCortexMx extends SectionWriter
 		this.vt = parent == null ? null : parent.getVt();
 		
 		isrWriter = new SectionWriterIsr(parent, IWritersKeywords.CPU_CORTEX_MX);
-		isrWriter.setValidEntries(ISR_LIST);
 		counterHwWriter = new SectionWriterKernelCounterHw(parent, IWritersKeywords.CPU_CORTEX_MX, EE_CORTEX_SYSTEM_TIMER_HANDLER);
 	}
 
@@ -157,15 +178,22 @@ public class SectionWriterHalCortexMx extends SectionWriter
 	 */
 	public void updateObjects() throws OilCodeWriterException {
 		
-		isrWriter.updateObjects();
-		counterHwWriter.updateObjects();
-
 		final IOilObjectList[] oilObjects = parent.getOilObjects();		
 
         ArrayList<String> commonEEopt = new ArrayList<String>();
 		
-		// mcu
-		checkMcu(commonEEopt);
+        { // mcu
+			McuType type = checkMcu(commonEEopt);
+
+			// isr
+			if (type != null) {
+				isrWriter.setValidEntries(type.getIsrList());
+			}
+			isrWriter.updateObjects();
+			
+			// counter
+			counterHwWriter.updateObjects();
+        }
 		
 		for ( int currentRtosId = 0; currentRtosId <oilObjects.length; currentRtosId ++) {
 			final IOilObjectList ool = oilObjects[currentRtosId];
@@ -837,9 +865,9 @@ public class SectionWriterHalCortexMx extends SectionWriter
 	/*
 	 * Parse and write the MCU Section
 	 */
-	private void checkMcu(ArrayList<String> ee_opts) {
-
+	private McuType checkMcu(ArrayList<String> ee_opts) {
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
+		McuType answer = null;
 		Mcu_Model mcu_properties = null;
 		for (int currentRtosId = 0; mcu_properties == null && currentRtosId < oilObjects.length; currentRtosId ++) { 
 			
@@ -856,6 +884,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 					String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "MODEL";
 	
 					if (LPCX_MCU.equals(mcu_type)) {
+						answer = McuType.LPCXPRESSO;
 						{
 							String t = "__LPCXPRESSO__";
 							if (!ee_opts.contains(t)) {
@@ -898,6 +927,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 						}
 						
 					} else if (STELLARIS_MCU.equals(mcu_type)) {
+						answer = McuType.STELLARIS;
 						{
 							String t = "__STELLARIS__";
 							if (!ee_opts.contains(t)) {
@@ -939,6 +969,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 							}
 						}
 					} else if (STM32_MCU.equals(mcu_type)) {
+						answer = McuType.STM32;
 						{
 							String t = "__STM32__";
 							if (!ee_opts.contains(t)) {
@@ -985,6 +1016,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 				
 			}
 		}
+		return answer;
 	}
 	/**
 	 * This metod takes an array and returns the first element, or null if the
@@ -1079,8 +1111,9 @@ public class SectionWriterHalCortexMx extends SectionWriter
 	/**
 	 * Loads valid isr names
 	 */
-	protected static void loadIsr() {
-		final String isr_filename = com.eu.evidence.rtdruid.modules.oil.cortex.Activator.TEMPLATES_PATH + "/isr_list.txt";
+	protected static LinkedHashSet<String> loadIsr(String name) {
+		LinkedHashSet<String> answer = new LinkedHashSet<String>();
+		final String isr_filename = com.eu.evidence.rtdruid.modules.oil.cortex.Activator.TEMPLATES_PATH + "/"+name;
 		
 		final char COMMENT = '#';
 		
@@ -1117,12 +1150,15 @@ public class SectionWriterHalCortexMx extends SectionWriter
 			}
 			
 			// add a NOT EMPTY row
-			if (t.length()==0 || t.charAt(0)==COMMENT) return; 
-			
-			String[] values = t.split("[\t ]");
-			if (values.length>0) {
-				ISR_LIST.add(values[0]);
+			if (t.length()==0 || t.charAt(0)==COMMENT) continue; 
+			else {
+				
+				String[] values = t.split("[\t ]");
+				if (values.length>0) {
+					answer.add(values[0]);
+				}
 			}
 		}
+		return answer;
 	}
 }
