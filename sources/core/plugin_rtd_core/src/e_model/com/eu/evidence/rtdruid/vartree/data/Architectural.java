@@ -23,6 +23,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getResourceList <em>Resource List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSignalList <em>Signal List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getTaskList <em>Task List</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getComList <em>Com List</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSpinLockList <em>Spin Lock List</em>}</li>
  * </ul>
  * </p>
  *
@@ -142,5 +144,37 @@ public interface Architectural extends ObjectWithID {
 	 * @generated
 	 */
 	EList<Task> getTaskList();
+
+	/**
+	 * Returns the value of the '<em><b>Com List</b></em>' containment reference list.
+	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.Com}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Com List</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Com List</em>' containment reference list.
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_ComList()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Com> getComList();
+
+	/**
+	 * Returns the value of the '<em><b>Spin Lock List</b></em>' reference list.
+	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.SpinLock}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Spin Lock List</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Spin Lock List</em>' reference list.
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_SpinLockList()
+	 * @model
+	 * @generated
+	 */
+	EList<SpinLock> getSpinLockList();
 
 } // Architectural

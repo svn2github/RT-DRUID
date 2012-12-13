@@ -19,6 +19,7 @@ import com.eu.evidence.rtdruid.vartree.data.Architectural;
 import com.eu.evidence.rtdruid.vartree.data.Bus;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCost;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCostList;
+import com.eu.evidence.rtdruid.vartree.data.Com;
 import com.eu.evidence.rtdruid.vartree.data.Cpu;
 import com.eu.evidence.rtdruid.vartree.data.CpuSched;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
@@ -52,6 +53,7 @@ import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
+import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.SubSystem;
 import com.eu.evidence.rtdruid.vartree.data.Task;
 import com.eu.evidence.rtdruid.vartree.data.TaskMap;
@@ -86,15 +88,15 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 	 * @generated
 	 */
 	public static DataFactory init() {
-//		try {
-//			DataFactory theDataFactory = (DataFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.evidence.eu.com/rtdruid/data"); 
-//			if (theDataFactory != null) {
-//				return theDataFactory;
-//			}
-//		}
-//		catch (Exception exception) {
-//			EcorePlugin.INSTANCE.log(exception);
-//		}
+		try {
+			DataFactory theDataFactory = (DataFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.evidence.eu.com/rtdruid/data"); 
+			if (theDataFactory != null) {
+				return theDataFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
 		return new DataFactoryImpl();
 	}
 
@@ -164,6 +166,8 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 			case DataPackage.FIELD: return createField();
 			case DataPackage.TYPE: return createType();
 			case DataPackage.OS_APPLICATION: return createOsApplication();
+			case DataPackage.COM: return createCom();
+			case DataPackage.SPIN_LOCK: return createSpinLock();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -209,6 +213,7 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
 			case DataPackage.BOOLEAN_VAR:
@@ -712,6 +717,26 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 	public OsApplication createOsApplication() {
 		OsApplicationImpl osApplication = new OsApplicationImpl();
 		return osApplication;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Com createCom() {
+		ComImpl com = new ComImpl();
+		return com;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SpinLock createSpinLock() {
+		SpinLockImpl spinLock = new SpinLockImpl();
+		return spinLock;
 	}
 
 	/**

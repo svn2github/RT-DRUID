@@ -1731,13 +1731,19 @@ ruleSpecialId returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
         newLeafNode(kw, grammarAccess.getSpecialIdAccess().getTASKKeyword_21()); 
     }
 
-    |
+    |(
+	kw='SPINLOCK' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getSPINLOCKKeyword_22_0()); 
+    }
+
 	kw='OS_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getOS_TYPEKeyword_22()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getOS_TYPEKeyword_22_1()); 
     }
-
+)
     |
 	kw='ALARM_TYPE' 
     {
@@ -1820,6 +1826,13 @@ ruleSpecialId returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
     {
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getSpecialIdAccess().getTASK_TYPEKeyword_34()); 
+    }
+
+    |
+	kw='SPINLOCK_TYPE' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getSPINLOCK_TYPEKeyword_35()); 
     }
 )
     ;
@@ -2232,6 +2245,12 @@ ruleObjectType returns [Enumerator current=null]
         $current = grammarAccess.getObjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_13().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_13, grammarAccess.getObjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_13()); 
     }
+)
+    |(	enumLiteral_14='SPINLOCK' 
+	{
+        $current = grammarAccess.getObjectTypeAccess().getSPINLOCKEnumLiteralDeclaration_14().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_14, grammarAccess.getObjectTypeAccess().getSPINLOCKEnumLiteralDeclaration_14()); 
+    }
 ));
 
 
@@ -2322,6 +2341,12 @@ ruleObjectTypeRef returns [Enumerator current=null]
 	{
         $current = grammarAccess.getObjectTypeRefAccess().getAPPLICATIONEnumLiteralDeclaration_13().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_13, grammarAccess.getObjectTypeRefAccess().getAPPLICATIONEnumLiteralDeclaration_13()); 
+    }
+)
+    |(	enumLiteral_14='SPINLOCK_TYPE' 
+	{
+        $current = grammarAccess.getObjectTypeRefAccess().getSPINLOCKEnumLiteralDeclaration_14().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_14, grammarAccess.getObjectTypeRefAccess().getSPINLOCKEnumLiteralDeclaration_14()); 
     }
 ));
 

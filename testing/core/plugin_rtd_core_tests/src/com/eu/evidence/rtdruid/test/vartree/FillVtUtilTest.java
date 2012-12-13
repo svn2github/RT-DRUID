@@ -3,13 +3,13 @@
  */
 package com.eu.evidence.rtdruid.test.vartree;
 
+import static com.eu.evidence.rtdruid.tests.RtdAssert.assertGreater;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static com.eu.evidence.rtdruid.tests.RtdAssert.assertGreater;
 
 import java.io.IOException;
 
@@ -27,6 +27,7 @@ import com.eu.evidence.rtdruid.io.RTD_XMI_Factory;
 import com.eu.evidence.rtdruid.tests.vartree.data.FillVtUtil;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
+import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
 
 /**
  *
@@ -98,8 +99,8 @@ public abstract class FillVtUtilTest {
 		assertEquals(filler.getEditingDomain().getResourceSet().getResources().size(), 1);
 		assertSame(filler.getEditingDomain().getResourceSet().getResources().get(0), filler.getResource());
 		assertSame(filler.getResource().getContents().get(0), root);
-//		System.out.println(Vt2StringUtilities.varTreeToStringErtd(filler.getEditingDomain()));
-//		System.out.println(Vt2StringUtilities.varTreeToStringRtd(filler.getEditingDomain()));
+		System.out.println(Vt2StringUtilities.varTreeToStringErtd(filler.getEditingDomain()));
+		System.out.println(Vt2StringUtilities.varTreeToStringRtd(filler.getEditingDomain()));
 	}
 
 	@Test

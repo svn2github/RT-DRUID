@@ -25,7 +25,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 
 
 /** Parse an oil file and convert it into a XML file.
@@ -301,13 +301,13 @@ TOKEN:
 	<object :
 		"OS" | "APPLICATION" | "TASK" | "COUNTER" | "ALARM" | "RESOURCE" |
 		"EVENT" | "ISR" | "MESSAGE" | "COM" | "NM" | "NETWORKMESSAGE" |
-		"APPMODE" | "IPDU"
+		"APPMODE" | "IPDU" | "SPINLOCK"
 	>
 |	
 	<object_ref_type :
 		"OS_TYPE" | "APPLICATION_TYPE" | "TASK_TYPE" | "COUNTER_TYPE" | "ALARM_TYPE" |
 		"RESOURCE_TYPE" | "EVENT_TYPE" | "ISR_TYPE" | "MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" |
-		"COMMM_TYPE" | "NM_TYPE" | "APPMODE_TYPE" | "IPDU_TYPE"
+		"COMMM_TYPE" | "NM_TYPE" | "APPMODE_TYPE" | "IPDU_TYPE" | "SPINLOCK_TYPE"
 	>
 }
 

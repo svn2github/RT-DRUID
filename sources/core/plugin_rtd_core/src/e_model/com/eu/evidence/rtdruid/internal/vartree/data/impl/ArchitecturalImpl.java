@@ -8,12 +8,14 @@ package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
 import com.eu.evidence.rtdruid.vartree.data.Architectural;
 import com.eu.evidence.rtdruid.vartree.data.Bus;
+import com.eu.evidence.rtdruid.vartree.data.Com;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
 import com.eu.evidence.rtdruid.vartree.data.Ecu;
 import com.eu.evidence.rtdruid.vartree.data.Frame;
 import com.eu.evidence.rtdruid.vartree.data.Mutex;
 import com.eu.evidence.rtdruid.vartree.data.Resource;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
+import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.Task;
 
 import java.util.Collection;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -42,6 +45,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getResourceList <em>Resource List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getSignalList <em>Signal List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getTaskList <em>Task List</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getComList <em>Com List</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getSpinLockList <em>Spin Lock List</em>}</li>
  * </ul>
  * </p>
  *
@@ -117,6 +122,26 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * @ordered
 	 */
 	protected EList<Task> taskList;
+
+	/**
+	 * The cached value of the '{@link #getComList() <em>Com List</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getComList()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Com> comList;
+
+	/**
+	 * The cached value of the '{@link #getSpinLockList() <em>Spin Lock List</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSpinLockList()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<SpinLock> spinLockList;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -226,6 +251,30 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Com> getComList() {
+		if (comList == null) {
+			comList = new EObjectContainmentEList<Com>(Com.class, this, DataPackage.ARCHITECTURAL__COM_LIST);
+		}
+		return comList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<SpinLock> getSpinLockList() {
+		if (spinLockList == null) {
+			spinLockList = new EObjectResolvingEList<SpinLock>(SpinLock.class, this, DataPackage.ARCHITECTURAL__SPIN_LOCK_LIST);
+		}
+		return spinLockList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -243,6 +292,8 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 				return ((InternalEList<?>)getSignalList()).basicRemove(otherEnd, msgs);
 			case DataPackage.ARCHITECTURAL__TASK_LIST:
 				return ((InternalEList<?>)getTaskList()).basicRemove(otherEnd, msgs);
+			case DataPackage.ARCHITECTURAL__COM_LIST:
+				return ((InternalEList<?>)getComList()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -269,6 +320,10 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 				return getSignalList();
 			case DataPackage.ARCHITECTURAL__TASK_LIST:
 				return getTaskList();
+			case DataPackage.ARCHITECTURAL__COM_LIST:
+				return getComList();
+			case DataPackage.ARCHITECTURAL__SPIN_LOCK_LIST:
+				return getSpinLockList();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -310,6 +365,14 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 				getTaskList().clear();
 				getTaskList().addAll((Collection<? extends Task>)newValue);
 				return;
+			case DataPackage.ARCHITECTURAL__COM_LIST:
+				getComList().clear();
+				getComList().addAll((Collection<? extends Com>)newValue);
+				return;
+			case DataPackage.ARCHITECTURAL__SPIN_LOCK_LIST:
+				getSpinLockList().clear();
+				getSpinLockList().addAll((Collection<? extends SpinLock>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -343,6 +406,12 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 			case DataPackage.ARCHITECTURAL__TASK_LIST:
 				getTaskList().clear();
 				return;
+			case DataPackage.ARCHITECTURAL__COM_LIST:
+				getComList().clear();
+				return;
+			case DataPackage.ARCHITECTURAL__SPIN_LOCK_LIST:
+				getSpinLockList().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -369,6 +438,10 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 				return signalList != null && !signalList.isEmpty();
 			case DataPackage.ARCHITECTURAL__TASK_LIST:
 				return taskList != null && !taskList.isEmpty();
+			case DataPackage.ARCHITECTURAL__COM_LIST:
+				return comList != null && !comList.isEmpty();
+			case DataPackage.ARCHITECTURAL__SPIN_LOCK_LIST:
+				return spinLockList != null && !spinLockList.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

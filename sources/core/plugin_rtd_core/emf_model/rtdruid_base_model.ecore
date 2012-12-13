@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rtdruid"
-    nsURI="http://www.evidence.eu.com/rtdruid/data" nsPrefix="com.eu.evidence.rtdruid.data">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rtdruid" nsURI="http://www.evidence.eu.com/rtdruid/data" nsPrefix="com.eu.evidence.rtdruid.data">
   <eClassifiers xsi:type="ecore:EClass" name="System" eSuperTypes="#//ObjectWithID">
     <eStructuralFeatures xsi:type="ecore:EReference" name="Annotation" eType="#//Annotation"
         containment="true"/>
@@ -75,6 +73,8 @@
         upperBound="-1" eType="#//Task" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ComList" upperBound="-1"
         eType="#//Com" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SpinLockList" upperBound="-1"
+        eType="#//SpinLock" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Mapping" eSuperTypes="#//ObjectWithID">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ProcMapList" upperBound="-1"
@@ -386,6 +386,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="OilVar" eType="#//OilVar"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Com" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SpinLock" eSuperTypes="#//ObjectWithID">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
         iD="true"/>
   </eClassifiers>

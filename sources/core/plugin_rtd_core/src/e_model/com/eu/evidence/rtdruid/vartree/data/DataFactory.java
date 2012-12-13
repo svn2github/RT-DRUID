@@ -458,6 +458,24 @@ public interface DataFactory extends EFactory {
 	OsApplication createOsApplication();
 
 	/**
+	 * Returns a new object of class '<em>Com</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Com</em>'.
+	 * @generated
+	 */
+	Com createCom();
+
+	/**
+	 * Returns a new object of class '<em>Spin Lock</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Spin Lock</em>'.
+	 * @generated
+	 */
+	SpinLock createSpinLock();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

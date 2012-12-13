@@ -12,6 +12,7 @@ import com.eu.evidence.rtdruid.vartree.data.Architectural;
 import com.eu.evidence.rtdruid.vartree.data.Bus;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCost;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCostList;
+import com.eu.evidence.rtdruid.vartree.data.Com;
 import com.eu.evidence.rtdruid.vartree.data.Cpu;
 import com.eu.evidence.rtdruid.vartree.data.CpuSched;
 import com.eu.evidence.rtdruid.vartree.data.DataFactory;
@@ -47,6 +48,7 @@ import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
+import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.SubSystem;
 import com.eu.evidence.rtdruid.vartree.data.SystemImplementation;
 import com.eu.evidence.rtdruid.vartree.data.Task;
@@ -447,6 +449,20 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass comEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass spinLockEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType booleanVarEDataType = null;
 
 	/**
@@ -521,8 +537,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * @generated
 	 */
 	private DataPackageImpl() {
-		//super(eNS_URI, DataFactory.eINSTANCE);
-		setEFactoryInstance(DataFactory.eINSTANCE);
+		super(eNS_URI, DataFactory.eINSTANCE);
 	}
 
 	/**
@@ -545,14 +560,10 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * @generated
 	 */
 	public static DataPackage init() {
-		if (isInited) {
-			return eINSTANCE;
-			//return (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
-		}
+		if (isInited) return (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 
 		// Obtain or create and register package
-		DataPackageImpl theDataPackage = new DataPackageImpl();
-				//(DataPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DataPackageImpl());
+		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DataPackageImpl());
 
 		isInited = true;
 
@@ -567,7 +578,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
   
 		// Update the registry and return the package
-		//EPackage.Registry.INSTANCE.put(DataPackage.eNS_URI, theDataPackage);
+		EPackage.Registry.INSTANCE.put(DataPackage.eNS_URI, theDataPackage);
 		return theDataPackage;
 	}
 
@@ -866,6 +877,24 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 */
 	public EReference getArchitectural_TaskList() {
 		return (EReference)architecturalEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getArchitectural_ComList() {
+		return (EReference)architecturalEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getArchitectural_SpinLockList() {
+		return (EReference)architecturalEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1523,6 +1552,15 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 */
 	public EAttribute getFrame_Name() {
 		return (EAttribute)frameEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFrame_MessageType() {
+		return (EAttribute)frameEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -2556,6 +2594,42 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getCom() {
+		return comEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCom_Name() {
+		return (EAttribute)comEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSpinLock() {
+		return spinLockEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSpinLock_Name() {
+		return (EAttribute)spinLockEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getBooleanVar() {
 		return booleanVarEDataType;
 	}
@@ -2700,6 +2774,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEReference(architecturalEClass, ARCHITECTURAL__RESOURCE_LIST);
 		createEReference(architecturalEClass, ARCHITECTURAL__SIGNAL_LIST);
 		createEReference(architecturalEClass, ARCHITECTURAL__TASK_LIST);
+		createEReference(architecturalEClass, ARCHITECTURAL__COM_LIST);
+		createEReference(architecturalEClass, ARCHITECTURAL__SPIN_LOCK_LIST);
 
 		mappingEClass = createEClass(MAPPING);
 		createEReference(mappingEClass, MAPPING__PROC_MAP_LIST);
@@ -2793,6 +2869,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEAttribute(frameEClass, FRAME__ID);
 		createEAttribute(frameEClass, FRAME__LENGTH);
 		createEAttribute(frameEClass, FRAME__NAME);
+		createEAttribute(frameEClass, FRAME__MESSAGE_TYPE);
 
 		signalEClass = createEClass(SIGNAL);
 		createEAttribute(signalEClass, SIGNAL__NAME);
@@ -2931,6 +3008,12 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEAttribute(osApplicationEClass, OS_APPLICATION__NAME);
 		createEAttribute(osApplicationEClass, OS_APPLICATION__OIL_VAR);
 
+		comEClass = createEClass(COM);
+		createEAttribute(comEClass, COM__NAME);
+
+		spinLockEClass = createEClass(SPIN_LOCK);
+		createEAttribute(spinLockEClass, SPIN_LOCK__NAME);
+
 		// Create data types
 		booleanVarEDataType = createEDataType(BOOLEAN_VAR);
 		doubleVarEDataType = createEDataType(DOUBLE_VAR);
@@ -3021,6 +3104,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		fieldEClass.getESuperTypes().add(this.getObjectWithID());
 		typeEClass.getESuperTypes().add(this.getObjectWithID());
 		osApplicationEClass.getESuperTypes().add(this.getObjectWithID());
+		comEClass.getESuperTypes().add(this.getObjectWithID());
+		spinLockEClass.getESuperTypes().add(this.getObjectWithID());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(systemEClass, com.eu.evidence.rtdruid.vartree.data.System.class, "System", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3071,6 +3156,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEReference(getArchitectural_ResourceList(), this.getResource(), null, "ResourceList", null, 0, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getArchitectural_SignalList(), this.getSignal(), null, "SignalList", null, 0, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getArchitectural_TaskList(), this.getTask(), null, "TaskList", null, 1, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getArchitectural_ComList(), this.getCom(), null, "ComList", null, 0, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getArchitectural_SpinLockList(), this.getSpinLock(), null, "SpinLockList", null, 0, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mappingEClass, Mapping.class, "Mapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMapping_ProcMapList(), this.getProcMap(), null, "ProcMapList", null, 0, -1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3164,6 +3251,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEAttribute(getFrame_Id(), this.getStringVar(), "Id", null, 0, 1, Frame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFrame_Length(), this.getLongVar(), "Length", null, 0, 1, Frame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFrame_Name(), this.getStringVar(), "Name", null, 1, 1, Frame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFrame_MessageType(), this.getStringVar(), "MessageType", null, 0, 1, Frame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(signalEClass, Signal.class, "Signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSignal_Name(), this.getStringVar(), "Name", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3301,6 +3389,12 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEClass(osApplicationEClass, OsApplication.class, "OsApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getOsApplication_Name(), this.getStringVar(), "Name", null, 0, 1, OsApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getOsApplication_OilVar(), this.getOilVar(), "OilVar", null, 0, 1, OsApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(comEClass, Com.class, "Com", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCom_Name(), this.getStringVar(), "Name", null, 0, 1, Com.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(spinLockEClass, SpinLock.class, "SpinLock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSpinLock_Name(), this.getStringVar(), "Name", null, 0, 1, SpinLock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(booleanVarEDataType, BooleanVar.class, "BooleanVar", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

@@ -33,6 +33,7 @@
     <eLiterals name="RESOURCE" value="7"/>
     <eLiterals name="TASK" value="6"/>
     <eLiterals name="APPLICATION" value="13"/>
+    <eLiterals name="SPINLOCK" value="14"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OilApplication">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

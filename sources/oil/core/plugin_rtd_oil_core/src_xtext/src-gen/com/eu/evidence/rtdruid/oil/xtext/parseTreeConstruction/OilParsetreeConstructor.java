@@ -54,6 +54,7 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule OilFile ****************
  *
  * OilFile:
+ * 
  * 	{OilFile} ("OIL_VERSION" "=" oilVersion=STRING ";")? Implementation=OilImplementation? Application=OilApplication?;
  *
  **/
@@ -343,6 +344,7 @@ protected class OilFile_ApplicationAssignment_3 extends AssignmentToken  {
  * // (":" description=STRING)? 
  * 
  * OilImplementation:
+ * 
  * 	"IMPLEMENTATION" name=ID "{" OilObjects+=OilObjectImpl* "}" ";";
  *
  **/
@@ -552,6 +554,7 @@ protected class OilImplementation_SemicolonKeyword_5 extends KeywordToken  {
 /************ begin Rule OilObjectImpl ****************
  *
  * OilObjectImpl:
+ * 
  * 	type=ObjectType "{" Parameters+=ParameterType* "}" (":" description=STRING)? ";";
  *
  **/
@@ -819,6 +822,7 @@ protected class OilObjectImpl_SemicolonKeyword_5 extends KeywordToken  {
 /************ begin Rule OilApplication ****************
  *
  * OilApplication:
+ * 
  * 	"CPU" name=ID "{" OilObjects+=OilObject* "}" (":" description=STRING)? ";";
  *
  **/
@@ -1108,6 +1112,7 @@ protected class OilApplication_SemicolonKeyword_6 extends KeywordToken  {
 /************ begin Rule ParameterType ****************
  *
  * ParameterType:
+ * 
  * 	ValueType | VariantType | ReferenceType;
  *
  **/
@@ -1260,6 +1265,7 @@ protected class ParameterType_ReferenceTypeParserRuleCall_2 extends RuleCallToke
 /************ begin Rule ValidValues ****************
  *
  * ValidValues:
+ * 
  * 	Range | ValueList;
  *
  **/
@@ -1374,6 +1380,7 @@ protected class ValidValues_ValueListParserRuleCall_1 extends RuleCallToken {
 /************ begin Rule ValueList ****************
  *
  * ValueList:
+ * 
  * 	{ValueList} values+=GenericNumber ("," values+=GenericNumber)*;
  *
  **/
@@ -1555,6 +1562,7 @@ protected class ValueList_ValuesAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule Range ****************
  *
  * Range:
+ * 
  * 	{Range} min=GenericNumber ".." max=GenericNumber;
  *
  **/
@@ -1711,12 +1719,15 @@ protected class Range_MaxAssignment_3 extends AssignmentToken  {
 /************ begin Rule ValueType ****************
  *
  * ValueType:
- * 	{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"? ("="
- * 	(=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";";
+ * 
+ * 	{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"?
+ * 
+ * 	("=" (=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";";
  *
  **/
 
 // {ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"? ("="
+// 
 // (=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";"
 protected class ValueType_Group extends GroupToken {
 	
@@ -2280,12 +2291,15 @@ protected class ValueType_SemicolonKeyword_8 extends KeywordToken  {
 /************ begin Rule VariantType ****************
  *
  * VariantType:
+ * 
  * 	{VariantType} type=EType withAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
+ * 
  * 	name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))? (":" description=STRING)? ";";
  *
  **/
 
 // {VariantType} type=EType withAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
+// 
 // name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))? (":" description=STRING)? ";"
 protected class VariantType_Group extends GroupToken {
 	
@@ -2960,6 +2974,7 @@ protected class VariantType_SemicolonKeyword_8 extends KeywordToken  {
 /************ begin Rule EnumeratorType ****************
  *
  * EnumeratorType:
+ * 
  * 	{EnumeratorType} name=SpecialId ("{" Parameters+=ParameterType* "}")? (":" description=STRING)?;
  *
  **/
@@ -3256,12 +3271,15 @@ protected class EnumeratorType_DescriptionAssignment_3_1 extends AssignmentToken
 /************ begin Rule ReferenceType ****************
  *
  * ReferenceType:
+ * 
  * 	{ReferenceType} type=ObjectTypeRef name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
+ * 
  * 	(":" description=STRING)? ";";
  *
  **/
 
 // {ReferenceType} type=ObjectTypeRef name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
+// 
 // (":" description=STRING)? ";"
 protected class ReferenceType_Group extends GroupToken {
 	
@@ -3670,6 +3688,7 @@ protected class ReferenceType_SemicolonKeyword_6 extends KeywordToken  {
 /************ begin Rule OilObject ****************
  *
  * OilObject:
+ * 
  * 	type=ObjectType name=ID ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
  *
  **/
@@ -3995,12 +4014,15 @@ protected class OilObject_SemicolonKeyword_4 extends KeywordToken  {
 /************ begin Rule Parameter ****************
  *
  * Parameter:
+ * 
  * 	{Parameter} Type=[ParameterType|SpecialId] "=" (=> auto?="AUTO" | value=GenericValue |
+ * 
  * 	ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
  *
  **/
 
 // {Parameter} Type=[ParameterType|SpecialId] "=" (=> auto?="AUTO" | value=GenericValue |
+// 
 // ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";"
 protected class Parameter_Group extends GroupToken {
 	

@@ -35,6 +35,7 @@ import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
 import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.modules.oil.interfaces.IRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
+import com.eu.evidence.rtdruid.modules.oil.transform.SimpleTransform;
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
@@ -1029,7 +1030,27 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 	        
 		}
 			break;
+		
+		/* ----------------------  SPINLOCK  ---------------------- */
+		case IOilObjectList.SPINLOCK:
+		{
+			String resPath = sysName+S+DPKG.getSystem_Architectural().getName()+S
+    			+SimpleTransform.SPIN_LOCK_LIST;
 			
+			// search all Architectural SpinLocks ...
+	        String[] resNames = vt.newTreeInterface().getAllName(resPath,SimpleTransform.SPIN_LOCK);
+	        if (resNames.length>0) {
+				answer = new SimpleGenRes[resNames.length];
+
+				// ... and store as SimpleGenRes 
+		        for (int i=0; i<resNames.length; i++) {
+					answer[i] = new SimpleGenRes(
+							resNames[i], resPath+S+resNames[i]+S);
+		        }
+	        }
+		}
+			break;
+
 		/* ----------------------  RESOURCE  ---------------------- */
 		case IOilObjectList.RESOURCE:
 		if (false) {

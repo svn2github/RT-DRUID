@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+    <extension
+            point="org.eclipse.ui.editors">
+        <editor
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="oil"
+            id="com.eu.evidence.rtdruid.oil.xtext.Oil"
+            name="Oil Editor">
+        </editor>
+    </extension>
+    <extension
+        point="org.eclipse.ui.handlers">
+        <handler
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
+            <activeWhen>
+                <reference
+                    definitionId="com.eu.evidence.rtdruid.oil.xtext.Oil.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+        <handler
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="com.eu.evidence.rtdruid.oil.xtext.Oil.validate">
+         <activeWhen>
+            <reference
+                    definitionId="com.eu.evidence.rtdruid.oil.xtext.Oil.Editor.opened">
+            </reference>
+         </activeWhen>
+      </handler>
+    </extension>
+    <extension point="org.eclipse.core.expressions.definitions">
+        <definition id="com.eu.evidence.rtdruid.oil.xtext.Oil.Editor.opened">
+            <and>
+                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+                <with variable="activeEditor">
+                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
+                        value="com.eu.evidence.rtdruid.oil.xtext.Oil" 
+                        forcePluginActivation="true"/>
+                </with>        
+            </and>
+        </definition>
+    </extension>
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="com.eu.evidence.rtdruid.oil.xtext.Oil"
+            name="Oil">
+            <keywordReference id="com.eu.evidence.rtdruid.oil.xtext.ui.keyword_Oil"/>
+        </page>
+        <page
+            category="com.eu.evidence.rtdruid.oil.xtext.Oil"
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="com.eu.evidence.rtdruid.oil.xtext.Oil.coloring"
+            name="Syntax Coloring">
+            <keywordReference id="com.eu.evidence.rtdruid.oil.xtext.ui.keyword_Oil"/>
+        </page>
+        <page
+            category="com.eu.evidence.rtdruid.oil.xtext.Oil"
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="com.eu.evidence.rtdruid.oil.xtext.Oil.templates"
+            name="Templates">
+            <keywordReference id="com.eu.evidence.rtdruid.oil.xtext.ui.keyword_Oil"/>
+        </page>
+    </extension>
+    <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="com.eu.evidence.rtdruid.oil.xtext.Oil"
+            name="Oil">
+            <keywordReference id="com.eu.evidence.rtdruid.oil.xtext.ui.keyword_Oil"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+    <extension
+        point="org.eclipse.ui.keywords">
+        <keyword
+            id="com.eu.evidence.rtdruid.oil.xtext.ui.keyword_Oil"
+            label="Oil"/>
+    </extension>
+    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Trigger expensive validation"
+            id="com.eu.evidence.rtdruid.oil.xtext.Oil.validate"
+            name="Validate">
+      </command>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+             <command
+                 commandId="com.eu.evidence.rtdruid.oil.xtext.Oil.validate"
+                 style="push"
+                 tooltip="Trigger expensive validation">
+            <visibleWhen checkEnabled="false">
+                <reference
+                    definitionId="com.eu.evidence.rtdruid.oil.xtext.Oil.Editor.opened">
+                </reference>
+            </visibleWhen>
+         </command>  
+         </menuContribution>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
+				<visibleWhen checkEnabled="false">
+                	<reference definitionId="com.eu.evidence.rtdruid.oil.xtext.Oil.Editor.opened">
+                	</reference>
+            	</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+	    <handler
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.editor.FindReferences">
+            <activeWhen>
+                <reference
+                    definitionId="com.eu.evidence.rtdruid.oil.xtext.Oil.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+    </extension>   
+
+<!-- adding resource factories -->
+
+	<extension
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="oil">
+		</parser>
+	</extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+        <resourceServiceProvider
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="oil">
+        </resourceServiceProvider>
+    </extension>
+
+
+    <!-- marker definitions for com.eu.evidence.rtdruid.oil.xtext.Oil -->
+    <extension
+            id="oil.check.fast"
+            name="Oil Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="oil.check.normal"
+            name="Oil Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.normal"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="oil.check.expensive"
+            name="Oil Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.expensive"/>
+        <persistent value="true"/>
+    </extension>
+
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="com.eu.evidence.rtdruid.oil.xtext.Oil.compare.contentViewers"
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="oil">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="com.eu.evidence.rtdruid.oil.xtext.Oil.compare.contentMergeViewers"
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="oil" label="Oil Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="com.eu.evidence.rtdruid.oil.xtext.Oil.editors.documentProviders"
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="oil">
+    </provider>
+  </extension>
+    <!-- quickfix marker resolution generator for com.eu.evidence.rtdruid.oil.xtext.Oil -->
+    <extension
+            point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="com.eu.evidence.rtdruid.oil.xtext.ui.oil.check.fast">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="com.eu.evidence.rtdruid.oil.xtext.ui.oil.check.normal">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="com.eu.evidence.rtdruid.oil.xtext.ui.OilExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="com.eu.evidence.rtdruid.oil.xtext.ui.oil.check.expensive">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+    </extension>
+
+</plugin>

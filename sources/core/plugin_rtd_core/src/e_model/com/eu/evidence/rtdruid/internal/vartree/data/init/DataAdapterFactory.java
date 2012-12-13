@@ -12,6 +12,7 @@ import com.eu.evidence.rtdruid.vartree.data.Architectural;
 import com.eu.evidence.rtdruid.vartree.data.Bus;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCost;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCostList;
+import com.eu.evidence.rtdruid.vartree.data.Com;
 import com.eu.evidence.rtdruid.vartree.data.Cpu;
 import com.eu.evidence.rtdruid.vartree.data.CpuSched;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
@@ -46,6 +47,7 @@ import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
+import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.SubSystem;
 import com.eu.evidence.rtdruid.vartree.data.SystemImplementation;
 import com.eu.evidence.rtdruid.vartree.data.Task;
@@ -324,6 +326,14 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseOsApplication(OsApplication object) {
 				return createOsApplicationAdapter();
+			}
+			@Override
+			public Adapter caseCom(Com object) {
+				return createComAdapter();
+			}
+			@Override
+			public Adapter caseSpinLock(SpinLock object) {
+				return createSpinLockAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -1056,6 +1066,34 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOsApplicationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.eu.evidence.rtdruid.vartree.data.Com <em>Com</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.eu.evidence.rtdruid.vartree.data.Com
+	 * @generated
+	 */
+	public Adapter createComAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.eu.evidence.rtdruid.vartree.data.SpinLock <em>Spin Lock</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.eu.evidence.rtdruid.vartree.data.SpinLock
+	 * @generated
+	 */
+	public Adapter createSpinLockAdapter() {
 		return null;
 	}
 

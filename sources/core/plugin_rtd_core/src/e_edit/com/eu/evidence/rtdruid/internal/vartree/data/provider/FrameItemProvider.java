@@ -69,6 +69,7 @@ public class FrameItemProvider
 			addIdPropertyDescriptor(object);
 			addLengthPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
+			addMessageTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -206,6 +207,28 @@ public class FrameItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Message Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addMessageTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Frame_MessageType_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Frame_MessageType_feature", "_UI_Frame_type"),
+				 DataPackage.Literals.FRAME__MESSAGE_TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns Frame.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -249,6 +272,7 @@ public class FrameItemProvider
 			case DataPackage.FRAME__ID:
 			case DataPackage.FRAME__LENGTH:
 			case DataPackage.FRAME__NAME:
+			case DataPackage.FRAME__MESSAGE_TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

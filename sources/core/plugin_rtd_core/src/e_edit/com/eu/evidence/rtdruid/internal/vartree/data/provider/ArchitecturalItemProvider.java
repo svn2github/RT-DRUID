@@ -21,6 +21,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -64,8 +65,31 @@ public class ArchitecturalItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addSpinLockListPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Spin Lock List feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSpinLockListPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Architectural_SpinLockList_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Architectural_SpinLockList_feature", "_UI_Architectural_type"),
+				 DataPackage.Literals.ARCHITECTURAL__SPIN_LOCK_LIST,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -87,6 +111,7 @@ public class ArchitecturalItemProvider
 			childrenFeatures.add(DataPackage.Literals.ARCHITECTURAL__RESOURCE_LIST);
 			childrenFeatures.add(DataPackage.Literals.ARCHITECTURAL__SIGNAL_LIST);
 			childrenFeatures.add(DataPackage.Literals.ARCHITECTURAL__TASK_LIST);
+			childrenFeatures.add(DataPackage.Literals.ARCHITECTURAL__COM_LIST);
 		}
 		return childrenFeatures;
 	}
@@ -149,6 +174,7 @@ public class ArchitecturalItemProvider
 			case DataPackage.ARCHITECTURAL__RESOURCE_LIST:
 			case DataPackage.ARCHITECTURAL__SIGNAL_LIST:
 			case DataPackage.ARCHITECTURAL__TASK_LIST:
+			case DataPackage.ARCHITECTURAL__COM_LIST:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -200,6 +226,11 @@ public class ArchitecturalItemProvider
 			(createChildParameter
 				(DataPackage.Literals.ARCHITECTURAL__TASK_LIST,
 				 DataFactory.eINSTANCE.createTask()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.ARCHITECTURAL__COM_LIST,
+				 DataFactory.eINSTANCE.createCom()));
 	}
 
 }

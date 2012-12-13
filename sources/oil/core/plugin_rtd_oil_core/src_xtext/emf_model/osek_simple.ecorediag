@@ -63,6 +63,10 @@
         <element xmi:type="ecore:EEnumLiteral" href="osek_simple.ecore#//ObjectType/OS"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eG5B0bVIEeGVUZKdMZRAJQ"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_Sl7j4EN6EeKHVKaTmK_Ugw" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="osek_simple.ecore#//ObjectType/SPINLOCK"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Sl7j4UN6EeKHVKaTmK_Ugw"/>
+      </children>
       <children xmi:type="notation:Node" xmi:id="_BNuVgMCiEeGJcb0hl7YI0Q" type="2006">
         <element xmi:type="ecore:EEnumLiteral" href="osek_simple.ecore#//ObjectType/APPLICATION"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_BNuVgcCiEeGJcb0hl7YI0Q"/>

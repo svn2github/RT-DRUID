@@ -8,6 +8,8 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
+import com.eu.evidence.rtdruid.oil.xtext.ui.internal.OilActivator;
+
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
@@ -16,12 +18,12 @@ public class OilExecutableExtensionFactory extends AbstractGuiceAwareExecutableE
 
 	@Override
 	protected Bundle getBundle() {
-		return com.eu.evidence.rtdruid.oil.xtext.ui.internal.OilActivator.getInstance().getBundle();
+		return OilActivator.getInstance().getBundle();
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return com.eu.evidence.rtdruid.oil.xtext.ui.internal.OilActivator.getInstance().getInjector("com.eu.evidence.rtdruid.oil.xtext.Oil");
+		return OilActivator.getInstance().getInjector(OilActivator.COM_EU_EVIDENCE_RTDRUID_OIL_XTEXT_OIL);
 	}
 	
 }

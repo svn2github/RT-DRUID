@@ -90,6 +90,7 @@ public class OilParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getParameterAccess().getGroup_4(), "rule__Parameter__Group_4__0");
 					put(grammarAccess.getParameterAccess().getGroup_5(), "rule__Parameter__Group_5__0");
+					put(grammarAccess.getSpecialIdAccess().getGroup_22(), "rule__SpecialId__Group_22__0");
 					put(grammarAccess.getINTAccess().getGroup(), "rule__INT__Group__0");
 					put(grammarAccess.getINTAccess().getGroup_1_0(), "rule__INT__Group_1_0__0");
 					put(grammarAccess.getFLOATAccess().getGroup(), "rule__FLOAT__Group__0");

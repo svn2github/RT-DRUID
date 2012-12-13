@@ -12,6 +12,7 @@ import com.eu.evidence.rtdruid.vartree.data.Architectural;
 import com.eu.evidence.rtdruid.vartree.data.Bus;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCost;
 import com.eu.evidence.rtdruid.vartree.data.CacheMissCostList;
+import com.eu.evidence.rtdruid.vartree.data.Com;
 import com.eu.evidence.rtdruid.vartree.data.Cpu;
 import com.eu.evidence.rtdruid.vartree.data.CpuSched;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
@@ -46,6 +47,7 @@ import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
+import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.SubSystem;
 import com.eu.evidence.rtdruid.vartree.data.SystemImplementation;
 import com.eu.evidence.rtdruid.vartree.data.Task;
@@ -481,6 +483,20 @@ public class DataSwitch<T> extends Switch<T> {
 				OsApplication osApplication = (OsApplication)theEObject;
 				T result = caseOsApplication(osApplication);
 				if (result == null) result = caseObjectWithID(osApplication);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DataPackage.COM: {
+				Com com = (Com)theEObject;
+				T result = caseCom(com);
+				if (result == null) result = caseObjectWithID(com);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DataPackage.SPIN_LOCK: {
+				SpinLock spinLock = (SpinLock)theEObject;
+				T result = caseSpinLock(spinLock);
+				if (result == null) result = caseObjectWithID(spinLock);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1250,6 +1266,36 @@ public class DataSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseOsApplication(OsApplication object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Com</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Com</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCom(Com object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Spin Lock</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Spin Lock</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSpinLock(SpinLock object) {
 		return null;
 	}
 

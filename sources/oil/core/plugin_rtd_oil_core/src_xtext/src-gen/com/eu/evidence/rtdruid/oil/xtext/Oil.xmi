@@ -434,7 +434,10 @@
       <elements xsi:type="xtext:Keyword" value="NM"/>
       <elements xsi:type="xtext:Keyword" value="RESOURCE"/>
       <elements xsi:type="xtext:Keyword" value="TASK"/>
-      <elements xsi:type="xtext:Keyword" value="OS_TYPE"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="SPINLOCK"/>
+        <elements xsi:type="xtext:Keyword" value="OS_TYPE"/>
+      </elements>
       <elements xsi:type="xtext:Keyword" value="ALARM_TYPE"/>
       <elements xsi:type="xtext:Keyword" value="APPMODE_TYPE"/>
       <elements xsi:type="xtext:Keyword" value="COUNTER_TYPE"/>
@@ -447,6 +450,7 @@
       <elements xsi:type="xtext:Keyword" value="NM_TYPE"/>
       <elements xsi:type="xtext:Keyword" value="RESOURCE_TYPE"/>
       <elements xsi:type="xtext:Keyword" value="TASK_TYPE"/>
+      <elements xsi:type="xtext:Keyword" value="SPINLOCK_TYPE"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:EnumRule" name="VType">
@@ -575,6 +579,10 @@
         <enumLiteral href="http://com.eu.evidence.rtdruid.oil.xtext.model#//ObjectType/APPLICATION"/>
         <literal value="APPLICATION"/>
       </elements>
+      <elements xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://com.eu.evidence.rtdruid.oil.xtext.model#//ObjectType/SPINLOCK"/>
+        <literal value="SPINLOCK"/>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:EnumRule" name="ObjectTypeRef">
@@ -637,6 +645,10 @@
       <elements xsi:type="xtext:EnumLiteralDeclaration">
         <enumLiteral href="http://com.eu.evidence.rtdruid.oil.xtext.model#//ObjectType/APPLICATION"/>
         <literal value="APPLICATION_TYPE"/>
+      </elements>
+      <elements xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://com.eu.evidence.rtdruid.oil.xtext.model#//ObjectType/SPINLOCK"/>
+        <literal value="SPINLOCK_TYPE"/>
       </elements>
     </alternatives>
   </rules>

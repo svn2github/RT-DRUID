@@ -59,6 +59,9 @@ public interface IOilXMLLabels {
 	/** Identifies a Network Managment SubSystem */
 	public static final String OBJ_NM = "NM";
 
+	/** Identifies a SPINLOCK */
+	public static final String OBJ_SPINLOCK = "SPINLOCK";
+
 	/** Identifies a CPU */
 	public static final String OBJ_CPU = "CPU";
 

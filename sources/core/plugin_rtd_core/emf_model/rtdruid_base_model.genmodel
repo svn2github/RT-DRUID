@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/plugin_rtd_core/src/e_model" editDirectory="/plugin_rtd_core/src/e_edit"
+    editorDirectory="" modelPluginID="com.eu.evidence.rtdruid.core" modelName="Data"
+    modelPluginClass="com.eu.evidence.rtdruid.Rtd_coreModelPlugin" editPluginClass="com.eu.evidence.rtdruid.Rtd_coreModelPlugin"
+    editorPluginClass="rtdruid.vartree.data.presentation.DataEditorPlugin" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="com.eu.evidence.rtdruid.core"
+    editorPluginID="rtdruid.vartree.data.editor">
+  <foreignModel>rtdruid_base_model.ecore</foreignModel>
+  <genPackages prefix="Data" basePackage="com.eu.evidence" interfacePackageSuffix="vartree.data"
+      metaDataPackageSuffix="vartree.data" classPackageSuffix="internal.vartree.data.impl"
+      utilityPackageSuffix="internal.vartree.data.init" providerPackageSuffix="internal.vartree.data.provider"
+      testsPackageSuffix="vartree.data.tests" ecorePackage="rtdruid_base_model.ecore#/">
+    <genDataTypes ecoreDataType="rtdruid_base_model.ecore#//BooleanVar"/>
+    <genDataTypes ecoreDataType="rtdruid_base_model.ecore#//DoubleVar"/>
+    <genDataTypes ecoreDataType="rtdruid_base_model.ecore#//FloatVar"/>
+    <genDataTypes ecoreDataType="rtdruid_base_model.ecore#//IntegerVar"/>
+    <genDataTypes ecoreDataType="rtdruid_base_model.ecore#//LongVar"/>
+    <genDataTypes ecoreDataType="rtdruid_base_model.ecore#//OilVar"/>
+    <genDataTypes ecoreDataType="rtdruid_base_model.ecore#//StringVar"/>
+    <genDataTypes ecoreDataType="rtdruid_base_model.ecore#//TimeVar"/>
+    <genDataTypes ecoreDataType="rtdruid_base_model.ecore#//PropertyVar"/>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//System">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//System/Annotation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//System/Architectural"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//System/Functional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//System/Mapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//System/Modes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//System/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//System/Schedulability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//System/XTC_Cookie"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_base_model.ecore#//ObjectWithID">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ObjectWithID/properties"/>
+      <genOperations ecoreOperation="rtdruid_base_model.ecore#//ObjectWithID/checkNewID">
+        <genParameters ecoreParameter="rtdruid_base_model.ecore#//ObjectWithID/checkNewID/newID"/>
+      </genOperations>
+      <genOperations ecoreOperation="rtdruid_base_model.ecore#//ObjectWithID/getObjectID"/>
+      <genOperations ecoreOperation="rtdruid_base_model.ecore#//ObjectWithID/setObjectID">
+        <genParameters ecoreParameter="rtdruid_base_model.ecore#//ObjectWithID/setObjectID/newID"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Modes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Modes/ModeList"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Mode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Mode/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Functional">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Functional/EventList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Functional/PartialOrderList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Functional/Implementation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Functional/TimeConstList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Functional/TypeList"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_base_model.ecore#//Implementation"/>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Proc">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Proc/MethodRefList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Proc/Methods"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Architectural">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Architectural/BusList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Architectural/EcuList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Architectural/FrameList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Architectural/MutexList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Architectural/ResourceList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Architectural/SignalList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Architectural/TaskList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Architectural/ComList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Architectural/SpinLockList"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Mapping">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Mapping/ProcMapList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Mapping/TaskMapList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Mapping/VarMapList"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Annotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Annotation/ExecTimeLists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Annotation/CacheMissCostLists"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Schedulability">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Schedulability/SchedulingScenarioList"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Var">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Var/Methods"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Var/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Trigger">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Trigger/MethodRefList"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Event">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Event/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Event/MethodRefName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Event/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//PartialOrder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//PartialOrder/ModeRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//PartialOrder/OrderList"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_base_model.ecore#//SystemImplementation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//SystemImplementation/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//SubSystem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//SubSystem/Implementation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//SubSystem/ProvidedInterfaceList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//SubSystem/RequiredInterfaceList"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//TimeConst">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TimeConst/ModeRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//TimeConst/TimeConstElementList"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//MethodRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//MethodRef/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//MethodRef/MethodName"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//ProvidedInterface">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ProvidedInterface/LocalMethodRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ProvidedInterface/LocalObjectRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ProvidedInterface/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//RequiredInterface">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//RequiredInterface/ExternalMethodRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//RequiredInterface/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Order">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Order/FirstEvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Order/SecondEvent"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//TimeConstElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TimeConstElement/BoundType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TimeConstElement/BoundValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TimeConstElement/FirstEvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TimeConstElement/SecondEvent"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Ecu">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Ecu/CpuList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Ecu/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Task">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Task/ActivationList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Task/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Task/OilVar"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Task/ResourceRefList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Task/SchedulingList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Task/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Resource">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Resource/Methods"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Resource/MutexRefList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Resource/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Bus">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Bus/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Bus/Speed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Bus/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Frame">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Frame/ActivationClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Frame/ActivationRate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Frame/ActivationType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Frame/Id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Frame/Length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Frame/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Frame/MessageType"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Signal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Signal/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Signal/OilVar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Signal/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Mutex">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Mutex/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Mutex/OilVar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Mutex/Policy"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Cpu">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Cpu/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Cpu/Model"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Cpu/Rtos"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Cpu/OsApplication"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Cpu/Speed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Cpu/Speed_Unit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Cpu/BinaryImage"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Rtos">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Rtos/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Rtos/OilVar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Rtos/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Rtos/Methods"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Scheduling">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Scheduling/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Scheduling/PreemptionGroupName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Scheduling/Priority"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Scheduling/Threshold"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Scheduling/Stack"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Activation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Activation/ActNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Activation/ActivationClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Activation/Deadline"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Activation/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Activation/Offset"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Activation/Period"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Activation/Type"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//ResourceRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ResourceRef/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ResourceRef/ResourceMethodRef"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//MutexRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//MutexRef/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//MutexRef/MutexName"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//ExecTime">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ExecTime/Best"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//ExecTime/Distribution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ExecTime/Ref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ExecTime/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ExecTime/Worst"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//ExecTimeList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//ExecTimeList/ExecTimeItemsList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ExecTimeList/ModeRef"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Distribution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Distribution/Avg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Distribution/SampleList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Distribution/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Distribution/Variance"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Sample">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Sample/Probability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Sample/Value"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//ProcMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ProcMap/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ProcMap/Order"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ProcMap/ProcRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ProcMap/TaskRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ProcMap/OnceEveryK"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//ProcMap/MethodRefName"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//TaskMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TaskMap/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TaskMap/RtosRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TaskMap/TaskRef"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//VarMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//VarMap/BusRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//VarMap/FrameRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//VarMap/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//VarMap/MutexRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//VarMap/VarRef"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//SchedulingScenario">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//SchedulingScenario/CpuSchedList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//SchedulingScenario/ModeRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//SchedulingScenario/Reports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//SchedulingScenario/TaskSchedList"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//CpuSched">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CpuSched/Boundary"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CpuSched/CpuRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CpuSched/Schedulable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CpuSched/SpeedFactor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CpuSched/Utilization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CpuSched/MaxStackSize"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//TaskSched">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TaskSched/CDelta"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TaskSched/ResponseTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TaskSched/Schedulable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TaskSched/TaskRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TaskSched/TDelta"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//TaskSched/Utilization"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//CacheMissCostList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//CacheMissCostList/CacheMissCostItemsList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CacheMissCostList/ModeRef"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//CacheMissCost">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CacheMissCost/Best"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//CacheMissCost/Distribution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CacheMissCost/Ref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CacheMissCost/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//CacheMissCost/Worst"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Field/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Field/Type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Field/Size"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Type/Name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_base_model.ecore#//Type/Field"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Type/Dim"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//OsApplication">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//OsApplication/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//OsApplication/OilVar"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//Com">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//Com/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="rtdruid_base_model.ecore#//SpinLock">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_base_model.ecore#//SpinLock/Name"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

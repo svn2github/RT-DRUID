@@ -69,6 +69,14 @@ public class SimpleTransform implements IOilTransform {
 	/**
 	 * 
 	 */
+	public static final String SPIN_LOCK = "SpinLock";
+	/**
+	 * 
+	 */
+	public static final String SPIN_LOCK_LIST = "SpinLockList";
+	/**
+	 * 
+	 */
 	public static final String MESSAGE_TYPE = "MessageType";
 	public static final String COM_LIST = "ComList";
 	public static final String COM_TYPE = "Com";
@@ -180,7 +188,9 @@ public class SimpleTransform implements IOilTransform {
 		storeMessages(systemVtp, application, id);
 		/* Com */
 		storeCom(systemVtp, application, id);
-
+		/* SpinLock */
+		storeSpinLock(systemVtp, application, id);
+		
 		/* OTHER OBJECTS */
 		storeOthers(systemVtp, application, rtosName, id);
 
@@ -403,6 +413,101 @@ public class SimpleTransform implements IOilTransform {
 			}
 		}
 
+	}
+
+	/**
+	 * This method stores all SpinLocks inside the given IVarTreePointer
+	 * 
+	 * @param vtp
+	 *            point to the system
+	 * @param parent
+	 *            the parent node
+	 * @param id
+	 *            contains the hw and rtos id of this data
+	 * @param rtos
+	 *            the name of RT-OS. Required for the mapping between Tasks and
+	 *            RT-OS.
+	 * 
+	 * @throws OilTransformException
+	 *             if there are some problems
+	 */
+	protected void storeSpinLock(IVarTreePointer vtp, Element parent, IOilImplID id)
+			throws OilTransformException {
+
+		// prepare where store all data
+		Element[] spinLockList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT,
+				new String[] { IOilXMLLabels.ATTR_TYPE }, new String[] { IOilXMLLabels.OBJ_SPINLOCK });
+
+		// aggregate instances of the same SpinLocks
+		ArrayList<Element> unamedSpinLocks = new ArrayList<Element>();
+		ArrayList<ArrayList<Element>> namedSpinLocks = new ArrayList<ArrayList<Element>>();
+		{
+			// namedSpinLocks is used to group together all objects with the
+			// same name
+			HashMap<String, ArrayList<Element>> namedSpinLockssKeys = new HashMap<String, ArrayList<Element>>();
+			for (int i = 0; i < spinLockList.length; i++) {
+				String tmp = getAttribute(spinLockList[i], IOilXMLLabels.ATTR_NAME);
+
+				if (tmp == null) {
+					unamedSpinLocks.add(spinLockList[i]);
+				} else {
+					if (namedSpinLockssKeys.containsKey(tmp)) {
+						namedSpinLockssKeys.get(tmp).add(spinLockList[i]);
+					} else {
+						ArrayList<Element> ar = new ArrayList<Element>();
+						ar.add(spinLockList[i]);
+						namedSpinLockssKeys.put(tmp, ar);
+						namedSpinLocks.add(ar);
+					}
+				}
+			}
+		}
+
+		// first the task without a name (set id to null)
+		// it isn't possible in a oil file !!
+		if (unamedSpinLocks.size() > 0) {
+			storeASpinLocks((IVarTreePointer) vtp.clone(), unamedSpinLocks, id);
+		}
+
+		// parse all tasks. If there're more than one instance for the same
+		// task, that task is parsed more than one time
+		for (ArrayList<Element> iter : namedSpinLocks) {
+			storeASpinLocks((IVarTreePointer) vtp.clone(), iter, id);
+		}
+
+	}
+	
+
+	/**
+	 * This method stores a task inside the given IVarTreePointer
+	 * 
+	 * @param vtp
+	 *            point to the system
+	 * @param id
+	 *            contains the hw and rtos id of this data
+	 * 
+	 * @throws OilTransformException
+	 *             if there are some problems
+	 */
+	protected void storeASpinLocks(IVarTreePointer vtp, ArrayList<Element> ar, IOilImplID id) {
+		final String[] SpinLockNamePath = { DPKG.getSystem_Architectural().getName(),
+				SPIN_LOCK_LIST, //
+				null // task name ... from oil
+				};
+		final String[] spinLockTypePath = { DPKG.getSystem_Architectural().getName(),
+				SPIN_LOCK_LIST, SPIN_LOCK};
+
+		// the name of a task (also a null value is valid)
+		final String spinLockName = getAttribute(ar.get(0), IOilXMLLabels.ATTR_NAME);
+
+		SpinLockNamePath[2] = spinLockName;
+		IVarTreePointer curr = vtp.clone().makePath(SpinLockNamePath, spinLockTypePath);
+
+		// store all instance of this SPIN LOCK object inside the VarTree
+		for (int i = 0; i < ar.size(); i++) {
+
+			storeInsideAOilVar(curr, ar.get(i), id);
+		}
 	}
 
 	/**
@@ -2071,7 +2176,7 @@ public class SimpleTransform implements IOilTransform {
 		int order[] = { IOilObjectList.OS, IOilObjectList.OSAPPLICATION, IOilObjectList.TASK, IOilObjectList.COUNTER,
 				IOilObjectList.ALARM, IOilObjectList.RESOURCE, IOilObjectList.EVENT, IOilObjectList.ISR,
 				IOilObjectList.MESSAGE, IOilObjectList.NETWORKMESSAGE, IOilObjectList.COM, IOilObjectList.NM,
-				IOilObjectList.APPMODE, IOilObjectList.IPDU };
+				IOilObjectList.APPMODE, IOilObjectList.IPDU, IOilObjectList.SPINLOCK };
 
 		for (int oolId = 0; oolId < order.length; oolId++) {
 
@@ -2351,6 +2456,19 @@ public class SimpleTransform implements IOilTransform {
 				objects = objList.toArray(new SimpleGenRes[objList.size()]);
 			}
 				break;
+			case IOilObjectList.SPINLOCK: {
+				String prefix = sysName + S + DPKG.getArchitectural().getName() + S
+						+ SPIN_LOCK_LIST + S;
+				String[] names = vt.newTreeInterface().getAllName(prefix, SPIN_LOCK);
+
+				objects = new SimpleGenRes[names.length];
+				for (int i = 0; i < names.length; i++) {
+					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
+					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_SPINLOCK);
+					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
+				}
+			}
+				break;
 			case IOilObjectList.RESOURCE: {
 				String prefix = sysName + S + DPKG.getArchitectural().getName() + S
 						+ DPKG.getArchitectural_MutexList().getName() + S;
@@ -2508,7 +2626,9 @@ public class SimpleTransform implements IOilTransform {
 		case IOilObjectList.EVENT: {
 //			path = DPKG.getRtos_OilVar().getName() + S + object.getString(IOilXMLLabels.ATTR_TYPE) + S + oilVarPrefix;
 		}
-//			break;
+//		break;
+		case IOilObjectList.SPINLOCK:
+//		break;
 		case IOilObjectList.RESOURCE: {
 //			path = DPKG.getMutex_OilVar().getName() + S + IOilXMLLabels.OBJ_RESOURCE + S + oilVarPrefix;
 		}

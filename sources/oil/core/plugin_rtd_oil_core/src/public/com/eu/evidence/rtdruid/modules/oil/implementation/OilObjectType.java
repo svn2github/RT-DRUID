@@ -46,6 +46,8 @@ public enum OilObjectType {
 	IPDU(IOilXMLLabels.OBJ_IPDU),
 	/** Identifies a Network Management SubSystem */
 	NM(IOilXMLLabels.OBJ_NM),
+	/** Identifies a SpinLock */
+	SPINLOCK(IOilXMLLabels.OBJ_SPINLOCK),
 	/** Identifies a CPU */
 	CPU(IOilXMLLabels.OBJ_CPU);
 
@@ -85,6 +87,7 @@ public enum OilObjectType {
 		case IOilObjectList.EVENT: return EVENT;
 		case IOilObjectList.ALARM: return ALARM;
 		case IOilObjectList.COUNTER: return COUNTER;
+		case IOilObjectList.SPINLOCK: return SPINLOCK;
 		case IOilObjectList.RESOURCE: return RESOURCE;
 		case IOilObjectList.NETWORKMESSAGE: return NETWORKMESSAGE;
 		case IOilObjectList.MESSAGE: return MESSAGE;

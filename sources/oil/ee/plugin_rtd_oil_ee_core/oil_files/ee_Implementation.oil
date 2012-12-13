@@ -167,4 +167,7 @@ IMPLEMENTATION ee {
             FALSE
         ] AUTOSTART;
     };
+    
+    SPINLOCK {
+    };
 };

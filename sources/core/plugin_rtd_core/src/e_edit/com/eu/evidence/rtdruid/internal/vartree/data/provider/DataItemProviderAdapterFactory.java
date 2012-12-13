@@ -1179,6 +1179,52 @@ public class DataItemProviderAdapterFactory extends DataAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.eu.evidence.rtdruid.vartree.data.Com} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ComItemProvider comItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.eu.evidence.rtdruid.vartree.data.Com}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createComAdapter() {
+		if (comItemProvider == null) {
+			comItemProvider = new ComItemProvider(this);
+		}
+
+		return comItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link com.eu.evidence.rtdruid.vartree.data.SpinLock} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SpinLockItemProvider spinLockItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.eu.evidence.rtdruid.vartree.data.SpinLock}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSpinLockAdapter() {
+		if (spinLockItemProvider == null) {
+			spinLockItemProvider = new SpinLockItemProvider(this);
+		}
+
+		return spinLockItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

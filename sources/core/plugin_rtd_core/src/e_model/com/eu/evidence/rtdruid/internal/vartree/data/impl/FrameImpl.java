@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FrameImpl#getId <em>Id</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FrameImpl#getLength <em>Length</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FrameImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.FrameImpl#getMessageType <em>Message Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -156,6 +157,26 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame {
 	 * @ordered
 	 */
 	protected StringVar name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getMessageType() <em>Message Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMessageType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final StringVar MESSAGE_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getMessageType() <em>Message Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMessageType()
+	 * @generated
+	 * @ordered
+	 */
+	protected StringVar messageType = MESSAGE_TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -307,6 +328,27 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public StringVar getMessageType() {
+		return messageType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMessageType(StringVar newMessageType) {
+		StringVar oldMessageType = messageType;
+		messageType = newMessageType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.FRAME__MESSAGE_TYPE, oldMessageType, messageType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -322,6 +364,8 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame {
 				return getLength();
 			case DataPackage.FRAME__NAME:
 				return getName();
+			case DataPackage.FRAME__MESSAGE_TYPE:
+				return getMessageType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -351,6 +395,9 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame {
 				return;
 			case DataPackage.FRAME__NAME:
 				setName((StringVar)newValue);
+				return;
+			case DataPackage.FRAME__MESSAGE_TYPE:
+				setMessageType((StringVar)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -382,6 +429,9 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame {
 			case DataPackage.FRAME__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case DataPackage.FRAME__MESSAGE_TYPE:
+				setMessageType(MESSAGE_TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -406,6 +456,8 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame {
 				return LENGTH_EDEFAULT == null ? length != null : !LENGTH_EDEFAULT.equals(length);
 			case DataPackage.FRAME__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case DataPackage.FRAME__MESSAGE_TYPE:
+				return MESSAGE_TYPE_EDEFAULT == null ? messageType != null : !MESSAGE_TYPE_EDEFAULT.equals(messageType);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -432,6 +484,8 @@ public class FrameImpl extends ObjectWithIDImpl implements Frame {
 		result.append(length);
 		result.append(", Name: ");
 		result.append(name);
+		result.append(", MessageType: ");
+		result.append(messageType);
 		result.append(')');
 		return result.toString();
 	}

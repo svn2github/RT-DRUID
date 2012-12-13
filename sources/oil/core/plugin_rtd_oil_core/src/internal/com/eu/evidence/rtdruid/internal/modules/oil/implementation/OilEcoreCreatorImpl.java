@@ -439,6 +439,8 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 				answer.setName("Frame");
 			} else if (IOilXMLLabels.OBJ_COM.equalsIgnoreCase(type)) {
 				answer.setName("Com");
+			} else if (IOilXMLLabels.OBJ_SPINLOCK.equalsIgnoreCase(type)) {
+				answer.setName("SpinLock");
 			} else {
 				answer.setName("Rtos");
 //				answer = null;

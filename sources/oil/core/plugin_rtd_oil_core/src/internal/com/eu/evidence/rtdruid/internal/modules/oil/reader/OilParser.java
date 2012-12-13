@@ -1423,7 +1423,7 @@ public class OilParser extends MergeHelper implements OilParserConstants {
                  nodo = doc.createElement(IOilXMLLabels.ELEM_ENUM_VALUE);
                  elem.appendChild(nodo);
 
-                 elem.setAttribute(IOilXMLLabels.ATTR_CURR_VALUE, t.image );
+                elem.setAttribute(IOilXMLLabels.ATTR_CURR_VALUE, t.image );
                 nodo.setAttribute(IOilXMLLabels.ATTR_NAME, t.image );
       switch (jj_nt.kind) {
       case 43:

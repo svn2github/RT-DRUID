@@ -970,6 +970,7 @@ public class OilPackageImpl extends EPackageImpl implements OilPackage {
 		addEEnumLiteral(objectTypeEEnum, ObjectType.RESOURCE);
 		addEEnumLiteral(objectTypeEEnum, ObjectType.TASK);
 		addEEnumLiteral(objectTypeEEnum, ObjectType.APPLICATION);
+		addEEnumLiteral(objectTypeEEnum, ObjectType.SPINLOCK);
 
 		initEEnum(vTypeEEnum, VType.class, "VType");
 		addEEnumLiteral(vTypeEEnum, VType.STRING);

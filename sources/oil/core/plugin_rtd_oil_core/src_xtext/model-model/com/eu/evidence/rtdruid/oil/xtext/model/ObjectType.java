@@ -154,7 +154,15 @@ public enum ObjectType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	APPLICATION(13, "APPLICATION", "APPLICATION");
+	APPLICATION(13, "APPLICATION", "APPLICATION"), /**
+	 * The '<em><b>SPINLOCK</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SPINLOCK_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SPINLOCK(14, "SPINLOCK", "SPINLOCK");
 
 	/**
 	 * The '<em><b>OS</b></em>' literal value.
@@ -367,6 +375,21 @@ public enum ObjectType implements Enumerator {
 	public static final int APPLICATION_VALUE = 13;
 
 	/**
+	 * The '<em><b>SPINLOCK</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>SPINLOCK</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #SPINLOCK
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SPINLOCK_VALUE = 14;
+
+	/**
 	 * An array of all the '<em><b>Object Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -388,6 +411,7 @@ public enum ObjectType implements Enumerator {
 			RESOURCE,
 			TASK,
 			APPLICATION,
+			SPINLOCK,
 		};
 
 	/**
@@ -452,6 +476,7 @@ public enum ObjectType implements Enumerator {
 			case RESOURCE_VALUE: return RESOURCE;
 			case TASK_VALUE: return TASK;
 			case APPLICATION_VALUE: return APPLICATION;
+			case SPINLOCK_VALUE: return SPINLOCK;
 		}
 		return null;
 	}

@@ -23,6 +23,7 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Frame#getId <em>Id</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Frame#getLength <em>Length</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Frame#getName <em>Name</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Frame#getMessageType <em>Message Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -186,5 +187,31 @@ public interface Frame extends ObjectWithID {
 	 * @generated
 	 */
 	void setName(StringVar value);
+
+	/**
+	 * Returns the value of the '<em><b>Message Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Message Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Message Type</em>' attribute.
+	 * @see #setMessageType(StringVar)
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getFrame_MessageType()
+	 * @model dataType="com.eu.evidence.rtdruid.vartree.data.StringVar"
+	 * @generated
+	 */
+	StringVar getMessageType();
+
+	/**
+	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.Frame#getMessageType <em>Message Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Message Type</em>' attribute.
+	 * @see #getMessageType()
+	 * @generated
+	 */
+	void setMessageType(StringVar value);
 
 } // Frame

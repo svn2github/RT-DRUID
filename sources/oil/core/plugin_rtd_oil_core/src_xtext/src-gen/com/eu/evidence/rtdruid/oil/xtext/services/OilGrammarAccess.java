@@ -7,6 +7,8 @@ package com.eu.evidence.rtdruid.oil.xtext.services;
 import com.google.inject.Singleton;
 import com.google.inject.Inject;
 
+import java.util.List;
+
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
@@ -32,6 +34,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cApplicationOilApplicationParserRuleCall_3_0 = (RuleCall)cApplicationAssignment_3.eContents().get(0);
 		
 		//OilFile:
+		//
 		//	{OilFile} ("OIL_VERSION" "=" oilVersion=STRING ";")? Implementation=OilImplementation? Application=OilApplication?;
 		public ParserRule getRule() { return rule; }
 
@@ -87,6 +90,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//// (":" description=STRING)? 
 		//
 		//OilImplementation:
+		//
 		//	"IMPLEMENTATION" name=ID "{" OilObjects+=OilObjectImpl* "}" ";";
 		public ParserRule getRule() { return rule; }
 
@@ -134,6 +138,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//OilObjectImpl:
+		//
 		//	type=ObjectType "{" Parameters+=ParameterType* "}" (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
@@ -191,6 +196,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//OilApplication:
+		//
 		//	"CPU" name=ID "{" OilObjects+=OilObject* "}" (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
@@ -242,6 +248,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cReferenceTypeParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//ParameterType:
+		//
 		//	ValueType | VariantType | ReferenceType;
 		public ParserRule getRule() { return rule; }
 
@@ -265,6 +272,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValueListParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//ValidValues:
+		//
 		//	Range | ValueList;
 		public ParserRule getRule() { return rule; }
 
@@ -290,6 +298,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuesGenericNumberParserRuleCall_2_1_0 = (RuleCall)cValuesAssignment_2_1.eContents().get(0);
 		
 		//ValueList:
+		//
 		//	{ValueList} values+=GenericNumber ("," values+=GenericNumber)*;
 		public ParserRule getRule() { return rule; }
 
@@ -329,6 +338,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cMaxGenericNumberParserRuleCall_3_0 = (RuleCall)cMaxAssignment_3.eContents().get(0);
 		
 		//Range:
+		//
 		//	{Range} min=GenericNumber ".." max=GenericNumber;
 		public ParserRule getRule() { return rule; }
 
@@ -387,11 +397,14 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//ValueType:
-		//	{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"? ("="
-		//	(=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";";
+		//
+		//	{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"?
+		//
+		//	("=" (=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"? ("="
+		//
 		//(=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
@@ -516,11 +529,14 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//VariantType:
+		//
 		//	{VariantType} type=EType withAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
+		//
 		//	name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))? (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{VariantType} type=EType withAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
+		//
 		//name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))? (":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
@@ -635,6 +651,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDescriptionSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cDescriptionAssignment_3_1.eContents().get(0);
 		
 		//EnumeratorType:
+		//
 		//	{EnumeratorType} name=SpecialId ("{" Parameters+=ParameterType* "}")? (":" description=STRING)?;
 		public ParserRule getRule() { return rule; }
 
@@ -702,11 +719,14 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//ReferenceType:
+		//
 		//	{ReferenceType} type=ObjectTypeRef name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
+		//
 		//	(":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{ReferenceType} type=ObjectTypeRef name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
+		//
 		//(":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
@@ -787,6 +807,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//OilObject:
+		//
 		//	type=ObjectType name=ID ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
@@ -864,11 +885,14 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Parameter:
+		//
 		//	{Parameter} Type=[ParameterType|SpecialId] "=" (=> auto?="AUTO" | value=GenericValue |
+		//
 		//	ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{Parameter} Type=[ParameterType|SpecialId] "=" (=> auto?="AUTO" | value=GenericValue |
+		//
 		//ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";"
 		public Group getGroup() { return cGroup; }
 
@@ -967,7 +991,9 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cNMKeyword_19 = (Keyword)cAlternatives.eContents().get(19);
 		private final Keyword cRESOURCEKeyword_20 = (Keyword)cAlternatives.eContents().get(20);
 		private final Keyword cTASKKeyword_21 = (Keyword)cAlternatives.eContents().get(21);
-		private final Keyword cOS_TYPEKeyword_22 = (Keyword)cAlternatives.eContents().get(22);
+		private final Group cGroup_22 = (Group)cAlternatives.eContents().get(22);
+		private final Keyword cSPINLOCKKeyword_22_0 = (Keyword)cGroup_22.eContents().get(0);
+		private final Keyword cOS_TYPEKeyword_22_1 = (Keyword)cGroup_22.eContents().get(1);
 		private final Keyword cALARM_TYPEKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
 		private final Keyword cAPPMODE_TYPEKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
 		private final Keyword cCOUNTER_TYPEKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
@@ -980,6 +1006,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cNM_TYPEKeyword_32 = (Keyword)cAlternatives.eContents().get(32);
 		private final Keyword cRESOURCE_TYPEKeyword_33 = (Keyword)cAlternatives.eContents().get(33);
 		private final Keyword cTASK_TYPEKeyword_34 = (Keyword)cAlternatives.eContents().get(34);
+		private final Keyword cSPINLOCK_TYPEKeyword_35 = (Keyword)cAlternatives.eContents().get(35);
 		
 		////	Value | Reference; // | Enumerator | Auto;
 		//
@@ -1066,16 +1093,23 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		////    ;
 		//
 		//SpecialId returns ecore::EString:
+		//
 		//	ID | "STRING" | "UINT32" | "INT32" | "UINT64" | "INT64" | "FLOAT" | "BOOLEAN" | "ENUM" | "OS" | "ALARM" | "APPMODE" |
-		//	"COUNTER" | "COM" | "EVENT" | "IPDU" | "ISR" | "MESSAGE" | "NETWORKMESSAGE" | "NM" | "RESOURCE" | "TASK" | "OS_TYPE" |
-		//	"ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" | "IPDU_TYPE" | "ISR_TYPE" | "MESSAGE_TYPE"
-		//	| "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE";
+		//
+		//	"COUNTER" | "COM" | "EVENT" | "IPDU" | "ISR" | "MESSAGE" | "NETWORKMESSAGE" | "NM" | "RESOURCE" | "TASK" | "SPINLOCK"
+		//
+		//	"OS_TYPE" | "ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" | "IPDU_TYPE" | "ISR_TYPE" |
+		//
+		//	"MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE" | "SPINLOCK_TYPE";
 		public ParserRule getRule() { return rule; }
 
 		//ID | "STRING" | "UINT32" | "INT32" | "UINT64" | "INT64" | "FLOAT" | "BOOLEAN" | "ENUM" | "OS" | "ALARM" | "APPMODE" |
-		//"COUNTER" | "COM" | "EVENT" | "IPDU" | "ISR" | "MESSAGE" | "NETWORKMESSAGE" | "NM" | "RESOURCE" | "TASK" | "OS_TYPE" |
-		//"ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" | "IPDU_TYPE" | "ISR_TYPE" | "MESSAGE_TYPE"
-		//| "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE"
+		//
+		//"COUNTER" | "COM" | "EVENT" | "IPDU" | "ISR" | "MESSAGE" | "NETWORKMESSAGE" | "NM" | "RESOURCE" | "TASK" | "SPINLOCK"
+		//
+		//"OS_TYPE" | "ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" | "IPDU_TYPE" | "ISR_TYPE" |
+		//
+		//"MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE" | "SPINLOCK_TYPE"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ID
@@ -1144,8 +1178,14 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"TASK"
 		public Keyword getTASKKeyword_21() { return cTASKKeyword_21; }
 
+		//"SPINLOCK" "OS_TYPE"
+		public Group getGroup_22() { return cGroup_22; }
+
+		//"SPINLOCK"
+		public Keyword getSPINLOCKKeyword_22_0() { return cSPINLOCKKeyword_22_0; }
+
 		//"OS_TYPE"
-		public Keyword getOS_TYPEKeyword_22() { return cOS_TYPEKeyword_22; }
+		public Keyword getOS_TYPEKeyword_22_1() { return cOS_TYPEKeyword_22_1; }
 
 		//"ALARM_TYPE"
 		public Keyword getALARM_TYPEKeyword_23() { return cALARM_TYPEKeyword_23; }
@@ -1182,6 +1222,9 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"TASK_TYPE"
 		public Keyword getTASK_TYPEKeyword_34() { return cTASK_TYPEKeyword_34; }
+
+		//"SPINLOCK_TYPE"
+		public Keyword getSPINLOCK_TYPEKeyword_35() { return cSPINLOCK_TYPEKeyword_35; }
 	}
 
 	public class GenericValueElements extends AbstractParserRuleElementFinder {
@@ -1192,6 +1235,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFLOATParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//GenericValue returns ecore::EString:
+		//
 		//	STRING | INT | FLOAT;
 		public ParserRule getRule() { return rule; }
 
@@ -1215,6 +1259,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFLOATParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//GenericNumber returns ecore::EString:
+		//
 		//	INT | FLOAT;
 		public ParserRule getRule() { return rule; }
 
@@ -1246,6 +1291,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//// Aggiungere la gestione dei numeri esadecimali
 		//
 		//INT returns ecore::EInt:
+		//
 		//	("+" | "-")? (NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)* | ZERO_INT | HEX);
 		public ParserRule getRule() { return rule; }
 
@@ -1305,6 +1351,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNON_ZERO_INTTerminalRuleCall_3_1 = (RuleCall)cAlternatives_3.eContents().get(1);
 		
 		//FLOAT returns ecore::EFloat:
+		//
 		//	("+" | "-")? (ZERO_INT | NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)*) => "." (ZERO_INT | NON_ZERO_INT)+;
 		public ParserRule getRule() { return rule; }
 
@@ -1372,6 +1419,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFLOATFLOATKeyword_5_0 = (Keyword)cFLOATEnumLiteralDeclaration_5.eContents().get(0);
 		
 		//enum VType:
+		//
 		//	STRING | UINT32 | INT32 | UINT64 | INT64 | FLOAT;
 		public EnumRule getRule() { return rule; }
 
@@ -1424,6 +1472,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cENUMENUMKeyword_1_0 = (Keyword)cENUMEnumLiteralDeclaration_1.eContents().get(0);
 		
 		//enum EType:
+		//
 		//	BOOLEAN | ENUM;
 		public EnumRule getRule() { return rule; }
 
@@ -1474,14 +1523,19 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTASKTASKKeyword_12_0 = (Keyword)cTASKEnumLiteralDeclaration_12.eContents().get(0);
 		private final EnumLiteralDeclaration cAPPLICATIONEnumLiteralDeclaration_13 = (EnumLiteralDeclaration)cAlternatives.eContents().get(13);
 		private final Keyword cAPPLICATIONAPPLICATIONKeyword_13_0 = (Keyword)cAPPLICATIONEnumLiteralDeclaration_13.eContents().get(0);
+		private final EnumLiteralDeclaration cSPINLOCKEnumLiteralDeclaration_14 = (EnumLiteralDeclaration)cAlternatives.eContents().get(14);
+		private final Keyword cSPINLOCKSPINLOCKKeyword_14_0 = (Keyword)cSPINLOCKEnumLiteralDeclaration_14.eContents().get(0);
 		
 		//enum ObjectType:
+		//
 		//	OS | ALARM | APPMODE | COUNTER | COM | EVENT | IPDU | ISR | MESSAGE | NETWORKMESSAGE | NM | RESOURCE | TASK |
-		//	APPLICATION;
+		//
+		//	APPLICATION | SPINLOCK;
 		public EnumRule getRule() { return rule; }
 
 		//OS | ALARM | APPMODE | COUNTER | COM | EVENT | IPDU | ISR | MESSAGE | NETWORKMESSAGE | NM | RESOURCE | TASK |
-		//APPLICATION
+		//
+		//APPLICATION | SPINLOCK
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//OS
@@ -1567,6 +1621,12 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"APPLICATION"
 		public Keyword getAPPLICATIONAPPLICATIONKeyword_13_0() { return cAPPLICATIONAPPLICATIONKeyword_13_0; }
+
+		//SPINLOCK
+		public EnumLiteralDeclaration getSPINLOCKEnumLiteralDeclaration_14() { return cSPINLOCKEnumLiteralDeclaration_14; }
+
+		//"SPINLOCK"
+		public Keyword getSPINLOCKSPINLOCKKeyword_14_0() { return cSPINLOCKSPINLOCKKeyword_14_0; }
 	}
 
 	public class ObjectTypeRefElements extends AbstractEnumRuleElementFinder {
@@ -1600,16 +1660,27 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTASKTASK_TYPEKeyword_12_0 = (Keyword)cTASKEnumLiteralDeclaration_12.eContents().get(0);
 		private final EnumLiteralDeclaration cAPPLICATIONEnumLiteralDeclaration_13 = (EnumLiteralDeclaration)cAlternatives.eContents().get(13);
 		private final Keyword cAPPLICATIONAPPLICATION_TYPEKeyword_13_0 = (Keyword)cAPPLICATIONEnumLiteralDeclaration_13.eContents().get(0);
+		private final EnumLiteralDeclaration cSPINLOCKEnumLiteralDeclaration_14 = (EnumLiteralDeclaration)cAlternatives.eContents().get(14);
+		private final Keyword cSPINLOCKSPINLOCK_TYPEKeyword_14_0 = (Keyword)cSPINLOCKEnumLiteralDeclaration_14.eContents().get(0);
 		
 		//enum ObjectTypeRef returns ObjectType:
+		//
 		//	OS="OS_TYPE" | ALARM="ALARM_TYPE" | APPMODE="APPMODE_TYPE" | COUNTER="COUNTER_TYPE" | COM="COM_TYPE" |
-		//	EVENT="EVENT_TYPE" | IPDU="IPDU_TYPE" | ISR="ISR_TYPE" | MESSAGE="MESSAGE_TYPE" | NETWORKMESSAGE="NETWORKMESSAGE_TYPE"
-		//	| NM="NM_TYPE" | RESOURCE="RESOURCE_TYPE" | TASK="TASK_TYPE" | APPLICATION="APPLICATION_TYPE";
+		//
+		//	EVENT="EVENT_TYPE" | IPDU="IPDU_TYPE" | ISR="ISR_TYPE" | MESSAGE="MESSAGE_TYPE" |
+		//
+		//	NETWORKMESSAGE="NETWORKMESSAGE_TYPE" | NM="NM_TYPE" | RESOURCE="RESOURCE_TYPE" | TASK="TASK_TYPE" |
+		//
+		//	APPLICATION="APPLICATION_TYPE" | SPINLOCK="SPINLOCK_TYPE";
 		public EnumRule getRule() { return rule; }
 
 		//OS="OS_TYPE" | ALARM="ALARM_TYPE" | APPMODE="APPMODE_TYPE" | COUNTER="COUNTER_TYPE" | COM="COM_TYPE" |
+		//
 		//EVENT="EVENT_TYPE" | IPDU="IPDU_TYPE" | ISR="ISR_TYPE" | MESSAGE="MESSAGE_TYPE" | NETWORKMESSAGE="NETWORKMESSAGE_TYPE"
-		//| NM="NM_TYPE" | RESOURCE="RESOURCE_TYPE" | TASK="TASK_TYPE" | APPLICATION="APPLICATION_TYPE"
+		//
+		//| NM="NM_TYPE" | RESOURCE="RESOURCE_TYPE" | TASK="TASK_TYPE" | APPLICATION="APPLICATION_TYPE" |
+		//
+		//SPINLOCK="SPINLOCK_TYPE"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//OS="OS_TYPE"
@@ -1695,6 +1766,12 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"APPLICATION_TYPE"
 		public Keyword getAPPLICATIONAPPLICATION_TYPEKeyword_13_0() { return cAPPLICATIONAPPLICATION_TYPEKeyword_13_0; }
+
+		//SPINLOCK="SPINLOCK_TYPE"
+		public EnumLiteralDeclaration getSPINLOCKEnumLiteralDeclaration_14() { return cSPINLOCKEnumLiteralDeclaration_14; }
+
+		//"SPINLOCK_TYPE"
+		public Keyword getSPINLOCKSPINLOCK_TYPEKeyword_14_0() { return cSPINLOCKSPINLOCK_TYPEKeyword_14_0; }
 	}
 	
 	private OilFileElements pOilFile;
@@ -1731,20 +1808,38 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	private TerminalRule tWS;
 	private TerminalRule tANY_OTHER;
 	
-	private final GrammarProvider grammarProvider;
+	private final Grammar grammar;
 
 	@Inject
 	public OilGrammarAccess(GrammarProvider grammarProvider) {
-		this.grammarProvider = grammarProvider;
+		this.grammar = internalFindGrammar(grammarProvider);
 	}
 	
-	public Grammar getGrammar() {	
-		return grammarProvider.getGrammar(this);
+	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
+		Grammar grammar = grammarProvider.getGrammar(this);
+		while (grammar != null) {
+			if ("com.eu.evidence.rtdruid.oil.xtext.Oil".equals(grammar.getName())) {
+				return grammar;
+			}
+			List<Grammar> grammars = grammar.getUsedGrammars();
+			if (!grammars.isEmpty()) {
+				grammar = grammars.iterator().next();
+			} else {
+				return null;
+			}
+		}
+		return grammar;
+	}
+	
+	
+	public Grammar getGrammar() {
+		return grammar;
 	}
 	
 
 	
 	//OilFile:
+	//
 	//	{OilFile} ("OIL_VERSION" "=" oilVersion=STRING ";")? Implementation=OilImplementation? Application=OilApplication?;
 	public OilFileElements getOilFileAccess() {
 		return (pOilFile != null) ? pOilFile : (pOilFile = new OilFileElements());
@@ -1757,6 +1852,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//// (":" description=STRING)? 
 	//
 	//OilImplementation:
+	//
 	//	"IMPLEMENTATION" name=ID "{" OilObjects+=OilObjectImpl* "}" ";";
 	public OilImplementationElements getOilImplementationAccess() {
 		return (pOilImplementation != null) ? pOilImplementation : (pOilImplementation = new OilImplementationElements());
@@ -1767,6 +1863,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OilObjectImpl:
+	//
 	//	type=ObjectType "{" Parameters+=ParameterType* "}" (":" description=STRING)? ";";
 	public OilObjectImplElements getOilObjectImplAccess() {
 		return (pOilObjectImpl != null) ? pOilObjectImpl : (pOilObjectImpl = new OilObjectImplElements());
@@ -1777,6 +1874,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OilApplication:
+	//
 	//	"CPU" name=ID "{" OilObjects+=OilObject* "}" (":" description=STRING)? ";";
 	public OilApplicationElements getOilApplicationAccess() {
 		return (pOilApplication != null) ? pOilApplication : (pOilApplication = new OilApplicationElements());
@@ -1787,6 +1885,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ParameterType:
+	//
 	//	ValueType | VariantType | ReferenceType;
 	public ParameterTypeElements getParameterTypeAccess() {
 		return (pParameterType != null) ? pParameterType : (pParameterType = new ParameterTypeElements());
@@ -1797,6 +1896,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValidValues:
+	//
 	//	Range | ValueList;
 	public ValidValuesElements getValidValuesAccess() {
 		return (pValidValues != null) ? pValidValues : (pValidValues = new ValidValuesElements());
@@ -1807,6 +1907,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValueList:
+	//
 	//	{ValueList} values+=GenericNumber ("," values+=GenericNumber)*;
 	public ValueListElements getValueListAccess() {
 		return (pValueList != null) ? pValueList : (pValueList = new ValueListElements());
@@ -1817,6 +1918,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Range:
+	//
 	//	{Range} min=GenericNumber ".." max=GenericNumber;
 	public RangeElements getRangeAccess() {
 		return (pRange != null) ? pRange : (pRange = new RangeElements());
@@ -1827,8 +1929,10 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValueType:
-	//	{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"? ("="
-	//	(=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";";
+	//
+	//	{ValueType} type=VType withAuto?="WITH_AUTO"? ("[" ValidValues=ValidValues "]")? name=SpecialId multiValue?="[]"?
+	//
+	//	("=" (=> defaultAuto?="AUTO" | defaultValue=(GenericValue | ID)))? (":" description=STRING)? ";";
 	public ValueTypeElements getValueTypeAccess() {
 		return (pValueType != null) ? pValueType : (pValueType = new ValueTypeElements());
 	}
@@ -1838,7 +1942,9 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VariantType:
+	//
 	//	{VariantType} type=EType withAuto?="WITH_AUTO"? ("[" (Values+=EnumeratorType ("," Values+=EnumeratorType)*)? "]")?
+	//
 	//	name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))? (":" description=STRING)? ";";
 	public VariantTypeElements getVariantTypeAccess() {
 		return (pVariantType != null) ? pVariantType : (pVariantType = new VariantTypeElements());
@@ -1849,6 +1955,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//EnumeratorType:
+	//
 	//	{EnumeratorType} name=SpecialId ("{" Parameters+=ParameterType* "}")? (":" description=STRING)?;
 	public EnumeratorTypeElements getEnumeratorTypeAccess() {
 		return (pEnumeratorType != null) ? pEnumeratorType : (pEnumeratorType = new EnumeratorTypeElements());
@@ -1859,7 +1966,9 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceType:
+	//
 	//	{ReferenceType} type=ObjectTypeRef name=SpecialId multiValue?="[]"? ("=" (=> defaultAuto?="AUTO" | defaultValue=ID))?
+	//
 	//	(":" description=STRING)? ";";
 	public ReferenceTypeElements getReferenceTypeAccess() {
 		return (pReferenceType != null) ? pReferenceType : (pReferenceType = new ReferenceTypeElements());
@@ -1870,6 +1979,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OilObject:
+	//
 	//	type=ObjectType name=ID ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
 	public OilObjectElements getOilObjectAccess() {
 		return (pOilObject != null) ? pOilObject : (pOilObject = new OilObjectElements());
@@ -1880,7 +1990,9 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Parameter:
+	//
 	//	{Parameter} Type=[ParameterType|SpecialId] "=" (=> auto?="AUTO" | value=GenericValue |
+	//
 	//	ValueRef=[ParameterRef|SpecialId]) ("{" Parameters+=Parameter* "}")? (":" description=STRING)? ";";
 	public ParameterElements getParameterAccess() {
 		return (pParameter != null) ? pParameter : (pParameter = new ParameterElements());
@@ -1975,10 +2087,14 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	////    ;
 	//
 	//SpecialId returns ecore::EString:
+	//
 	//	ID | "STRING" | "UINT32" | "INT32" | "UINT64" | "INT64" | "FLOAT" | "BOOLEAN" | "ENUM" | "OS" | "ALARM" | "APPMODE" |
-	//	"COUNTER" | "COM" | "EVENT" | "IPDU" | "ISR" | "MESSAGE" | "NETWORKMESSAGE" | "NM" | "RESOURCE" | "TASK" | "OS_TYPE" |
-	//	"ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" | "IPDU_TYPE" | "ISR_TYPE" | "MESSAGE_TYPE"
-	//	| "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE";
+	//
+	//	"COUNTER" | "COM" | "EVENT" | "IPDU" | "ISR" | "MESSAGE" | "NETWORKMESSAGE" | "NM" | "RESOURCE" | "TASK" | "SPINLOCK"
+	//
+	//	"OS_TYPE" | "ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" | "IPDU_TYPE" | "ISR_TYPE" |
+	//
+	//	"MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE" | "SPINLOCK_TYPE";
 	public SpecialIdElements getSpecialIdAccess() {
 		return (pSpecialId != null) ? pSpecialId : (pSpecialId = new SpecialIdElements());
 	}
@@ -1988,6 +2104,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum VType:
+	//
 	//	STRING | UINT32 | INT32 | UINT64 | INT64 | FLOAT;
 	public VTypeElements getVTypeAccess() {
 		return (unknownRuleVType != null) ? unknownRuleVType : (unknownRuleVType = new VTypeElements());
@@ -1998,6 +2115,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum EType:
+	//
 	//	BOOLEAN | ENUM;
 	public ETypeElements getETypeAccess() {
 		return (unknownRuleEType != null) ? unknownRuleEType : (unknownRuleEType = new ETypeElements());
@@ -2008,6 +2126,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//GenericValue returns ecore::EString:
+	//
 	//	STRING | INT | FLOAT;
 	public GenericValueElements getGenericValueAccess() {
 		return (pGenericValue != null) ? pGenericValue : (pGenericValue = new GenericValueElements());
@@ -2018,6 +2137,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//GenericNumber returns ecore::EString:
+	//
 	//	INT | FLOAT;
 	public GenericNumberElements getGenericNumberAccess() {
 		return (pGenericNumber != null) ? pGenericNumber : (pGenericNumber = new GenericNumberElements());
@@ -2028,8 +2148,10 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ObjectType:
+	//
 	//	OS | ALARM | APPMODE | COUNTER | COM | EVENT | IPDU | ISR | MESSAGE | NETWORKMESSAGE | NM | RESOURCE | TASK |
-	//	APPLICATION;
+	//
+	//	APPLICATION | SPINLOCK;
 	public ObjectTypeElements getObjectTypeAccess() {
 		return (unknownRuleObjectType != null) ? unknownRuleObjectType : (unknownRuleObjectType = new ObjectTypeElements());
 	}
@@ -2039,9 +2161,14 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ObjectTypeRef returns ObjectType:
+	//
 	//	OS="OS_TYPE" | ALARM="ALARM_TYPE" | APPMODE="APPMODE_TYPE" | COUNTER="COUNTER_TYPE" | COM="COM_TYPE" |
-	//	EVENT="EVENT_TYPE" | IPDU="IPDU_TYPE" | ISR="ISR_TYPE" | MESSAGE="MESSAGE_TYPE" | NETWORKMESSAGE="NETWORKMESSAGE_TYPE"
-	//	| NM="NM_TYPE" | RESOURCE="RESOURCE_TYPE" | TASK="TASK_TYPE" | APPLICATION="APPLICATION_TYPE";
+	//
+	//	EVENT="EVENT_TYPE" | IPDU="IPDU_TYPE" | ISR="ISR_TYPE" | MESSAGE="MESSAGE_TYPE" |
+	//
+	//	NETWORKMESSAGE="NETWORKMESSAGE_TYPE" | NM="NM_TYPE" | RESOURCE="RESOURCE_TYPE" | TASK="TASK_TYPE" |
+	//
+	//	APPLICATION="APPLICATION_TYPE" | SPINLOCK="SPINLOCK_TYPE";
 	public ObjectTypeRefElements getObjectTypeRefAccess() {
 		return (unknownRuleObjectTypeRef != null) ? unknownRuleObjectTypeRef : (unknownRuleObjectTypeRef = new ObjectTypeRefElements());
 	}
@@ -2053,6 +2180,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//// Aggiungere la gestione dei numeri esadecimali
 	//
 	//INT returns ecore::EInt:
+	//
 	//	("+" | "-")? (NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)* | ZERO_INT | HEX);
 	public INTElements getINTAccess() {
 		return (pINT != null) ? pINT : (pINT = new INTElements());
@@ -2063,6 +2191,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FLOAT returns ecore::EFloat:
+	//
 	//	("+" | "-")? (ZERO_INT | NON_ZERO_INT (ZERO_INT | NON_ZERO_INT)*) => "." (ZERO_INT | NON_ZERO_INT)+;
 	public FLOATElements getFLOATAccess() {
 		return (pFLOAT != null) ? pFLOAT : (pFLOAT = new FLOATElements());
@@ -2073,62 +2202,74 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal ID:
+	//
 	//	("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return (tID != null) ? tID : (tID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ID"));
 	} 
 
 	//terminal HEX returns ecore::EInt:
+	//
 	//	"0x" (ZERO_INT | NON_ZERO_INT | "A".."F" | "a".."f")+;
 	public TerminalRule getHEXRule() {
 		return (tHEX != null) ? tHEX : (tHEX = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "HEX"));
 	} 
 
 	//terminal NON_ZERO_INT returns ecore::EInt:
+	//
 	//	"1".."9";
 	public TerminalRule getNON_ZERO_INTRule() {
 		return (tNON_ZERO_INT != null) ? tNON_ZERO_INT : (tNON_ZERO_INT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "NON_ZERO_INT"));
 	} 
 
 	//terminal ZERO_INT returns ecore::EInt:
+	//
 	//	"0";
 	public TerminalRule getZERO_INTRule() {
 		return (tZERO_INT != null) ? tZERO_INT : (tZERO_INT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ZERO_INT"));
 	} 
 
 	//terminal STRING:
+	//
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" |
+	//
 	//	"n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
 		return (tSTRING != null) ? tSTRING : (tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING"));
 	} 
 
 	//terminal ML_COMMENT:
+	//
 	//	"/ *"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return (tML_COMMENT != null) ? tML_COMMENT : (tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ML_COMMENT"));
 	} 
 
 	//terminal SL_COMMENT:
+	//
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
 		return (tSL_COMMENT != null) ? tSL_COMMENT : (tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "SL_COMMENT"));
 	} 
 
 	//terminal INCLUDE:
+	//
 	//	"#include" (" " | "\t")* ("<" ("\\" ("\"" | "\\") | !("\\" | "\"" | "\n" | "\r" | "<" | ">"))* ">" | "\"" ("\\" ("\""
+	//
 	//	| "\\") | !("\\" | "\"" | "\n" | "\r" | "<" | ">"))* "\"");
 	public TerminalRule getINCLUDERule() {
 		return (tINCLUDE != null) ? tINCLUDE : (tINCLUDE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INCLUDE"));
 	} 
 
 	//terminal WS:
+	//
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
 		return (tWS != null) ? tWS : (tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS"));
 	} 
 
 	//terminal ANY_OTHER:
+	//
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return (tANY_OTHER != null) ? tANY_OTHER : (tANY_OTHER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ANY_OTHER"));
