@@ -474,8 +474,12 @@ public class VTLoadTest {
 			if (contains_eobjects) {
 				EObject croot = correct.getResourceSet().getResources().get(0).getContents().get(0);
 				EObject testroot = res.getContents().get(0);
-				
-				String t = VarTreeUtil.compare(testroot, croot).getMessage(); assertNull(t, t);
+
+				String a = Vt2StringUtilities.varTreeToString(croot, "ertd");
+				String b = Vt2StringUtilities.varTreeToString(testroot, "ertd");
+				assertEquals(a, b);
+
+//				String t = VarTreeUtil.compare(testroot, croot).getMessage(); assertNull(t, t);
 			}
 		}
 		

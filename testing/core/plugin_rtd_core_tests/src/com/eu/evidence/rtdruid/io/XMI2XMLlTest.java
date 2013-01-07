@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.tests.RtdAssert;
@@ -148,6 +149,7 @@ public class XMI2XMLlTest {
 	 * @throws Throwable 
 	 */
 	@Test
+	@Ignore
 	public void testXmi2XmlERTD() throws  Throwable {
 
 		
@@ -183,6 +185,7 @@ public class XMI2XMLlTest {
 	 * @throws Throwable 
 	 */
 	@Test
+	@Ignore
 	public void testXmi2XmlRTD_using_pipes() throws Throwable {
 
 		IVTResource first = (IVTResource) loadStringErtd(ERTD_EXAMPLE_STR);//prepareXMIReader();
@@ -215,6 +218,7 @@ public class XMI2XMLlTest {
 	 * @throws Throwable 
 	 */
 	@Test
+	@Ignore
 	public void testXmi2XmlRTD_using_buffers() throws Throwable {
 		IVTResource first = (IVTResource) loadStringErtd(ERTD_EXAMPLE_STR); // prepareXMIReader();
 		IVTResource second = createResource();
