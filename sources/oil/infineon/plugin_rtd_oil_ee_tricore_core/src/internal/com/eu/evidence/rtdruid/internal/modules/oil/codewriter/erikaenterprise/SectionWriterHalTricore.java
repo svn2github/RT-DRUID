@@ -196,7 +196,7 @@ public class SectionWriterHalTricore extends SectionWriter
 					if (enable_trap)
 						tmp.add("__TRAP__");
 
-					CpuUtility.addSources(sgrCpu, "$(OUTPUT_DIR)/" + TricoreConstants.ISR_HANDLER_FILE);
+					CpuUtility.addSources(sgrCpu, TricoreConstants.ISR_HANDLER_FILE);
 
 				}
 
