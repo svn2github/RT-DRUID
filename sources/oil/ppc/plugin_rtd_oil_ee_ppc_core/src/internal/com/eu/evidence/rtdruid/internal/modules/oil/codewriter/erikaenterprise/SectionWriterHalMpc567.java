@@ -10,6 +10,7 @@ import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtos
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -371,7 +372,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			
 			
 			// isr
-			isrWriter.writeIsr(currentRtosId, ool, cpuBuffs);
+			isrWriter.writeIsr(oilObjects, currentRtosId, ool, cpuBuffs);
 			counterHwWriter.writeCounterHw(currentRtosId, ool, cpuBuffs);
 			
 			// makefile
@@ -864,6 +865,8 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				Messages.sendWarningNl("MPC5668G mcu supports not more than one z0 and not more than one z6");
 			}
 			mcu_ee_opt = "__MPC5668G__";
+			
+			updateSharedIntControllerPrio();
 		} else if ("MPC5674F".equals(mcu_model)) {
 			
 			if (z0>0 || z6>0 || z4 >0 || z7 !=1) {
@@ -894,6 +897,64 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		}
 	}
 	
+	/**
+	 * 
+	 */
+	private void updateSharedIntControllerPrio() {
+		IOilObjectList[] oilObjects = parent.getOilObjects();
+		if (oilObjects.length>1) {
+			// NOTE: this code works with 2 cpu (z0 and z6)
+			
+			isrWriter.setSharedInterruptController(true);
+			
+			HashMap<String , BitSet> isrEntryLocation = new HashMap<String, BitSet>();
+			
+			
+			// get the location for all isr entries
+			for (int index=0; index <oilObjects.length; index++) {
+				for (ISimpleGenRes isr : oilObjects[index].getList(IOilObjectList.ISR)) {
+					
+					String id = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_ENTRY);
+					BitSet set;
+					if (isrEntryLocation.containsKey(id)) {
+						set = isrEntryLocation.get(id);
+					} else {
+						set = new BitSet();
+						isrEntryLocation.put(id, set);
+					}
+					set.set(index);
+				}
+			}
+			
+			// get the mapping z0->indez, z6->index
+			for (int index=0; index <oilObjects.length; index++) {
+				for (ISimpleGenRes isr : oilObjects[index].getList(IOilObjectList.ISR)) {
+					
+					String id = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_ENTRY);
+					BitSet set = isrEntryLocation.get(id);
+					String mask = null;
+					if (set.get(0) && set.get(1)) {
+						// both
+						mask = "EE_RTDRUID_ISR_BOTH";
+					} else if (set.get(0)) {
+						// master
+						mask = "EE_RTDRUID_ISR_MASTER";
+					} else {
+						// slave
+						mask = "EE_RTDRUID_ISR_SLAVE";
+					}
+					
+					if (mask!=null) {
+						String prio = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING);
+						isr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING, "("+prio+" | " + mask + ")");
+					}
+				}
+			}
+						
+			
+		}
+	}
+
 	void prepareMakeFile(final int currentRtosId, final IOilObjectList ool) {
 		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 		
