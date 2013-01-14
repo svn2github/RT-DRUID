@@ -24,12 +24,16 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractOb
 
 public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExtentions {
 	
+	public static enum ShareType {
+		None, CommonOnly, All;
+	}
+	
 	private static final String ISR_DISABLE_ENTRY = "isr_disable_entry";
 	protected Set<String> entries;
 	protected final String hw_id;
 	
 	protected Boolean checked;
-	protected boolean sharedInterruptController = false;
+	protected ShareType sharedInterruptController = ShareType.None;
 	
 	protected final ErikaEnterpriseWriter parent;
 
@@ -44,7 +48,7 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 	/**
 	 * @param sharedInterruptController the sharedInterruptController to set
 	 */
-	public void setSharedInterruptController(Boolean sharedInterruptController) {
+	public void setSharedInterruptController(ShareType sharedInterruptController) {
 		this.sharedInterruptController = sharedInterruptController;
 	}
 
@@ -98,18 +102,22 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 			}
 			
 			List<List<ISimpleGenRes>> allIsr = new LinkedList<List<ISimpleGenRes>>();
-			if (sharedInterruptController && oilObjects!= null) {
-				
+			switch (sharedInterruptController) {
+			case None:
+			case CommonOnly: // the same as None, but the priority should be set with "shared" flag
+				if (ool.getList(IOilObjectList.ISR).size()>0) {
+					allIsr.add(ool.getList(IOilObjectList.ISR));
+				}
+				break;
+			case All:
 				for (IOilObjectList list : oilObjects) {
 					if (list.getList(IOilObjectList.ISR).size()>0) {
 						allIsr.add(list.getList(IOilObjectList.ISR));
 					}
 				}
+				break;
+			default:
 				
-			} else {
-				if (ool.getList(IOilObjectList.ISR).size()>0) {
-					allIsr.add(ool.getList(IOilObjectList.ISR));
-				}
 			}
 	
 			if (allIsr.size()>0) {

@@ -39,6 +39,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr.ShareType;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterKernelCounterHw;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDescriptionManager;
@@ -905,9 +906,10 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		if (oilObjects.length>1) {
 			// NOTE: this code works with 2 cpu (z0 and z6)
 			
-			isrWriter.setSharedInterruptController(true);
+			isrWriter.setSharedInterruptController(ShareType.CommonOnly);
 			
 			HashMap<String , BitSet> isrEntryLocation = new HashMap<String, BitSet>();
+			HashMap<String , String> isrEntryPrio = new HashMap<String, String>();
 			
 			
 			// get the location for all isr entries
@@ -915,12 +917,21 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				for (ISimpleGenRes isr : oilObjects[index].getList(IOilObjectList.ISR)) {
 					
 					String id = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_ENTRY);
+					String prio = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING);
 					BitSet set;
 					if (isrEntryLocation.containsKey(id)) {
 						set = isrEntryLocation.get(id);
+						
+						String oldPrio = isrEntryPrio.get(id);
+						if (oldPrio != null && oldPrio.equals(prio)==false) {
+							 Messages.sendWarningNl("Isr " + id + " is shared but has different priorities. Use the master's one (" + oldPrio +")");
+							 isr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING, oldPrio);
+						}
+						
 					} else {
 						set = new BitSet();
 						isrEntryLocation.put(id, set);
+						isrEntryPrio.put(id, prio);
 					}
 					set.set(index);
 				}
