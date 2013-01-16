@@ -110,7 +110,12 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 			buffer.append(commentWriterH.writerBanner("HW counter definition"));
 			String speed = AbstractRtosWriter.getOsProperty(ool, IEEWriterKeywords.SGRK_OS_CPU_SPEED_HZ);
 			if (speed == null) {
-				throw new OilCodeWriterException("Expected a CLOCK for cpu " + ErikaEnterpriseWriter.getOSName(ool));
+				// check if the master cpu has a clock setting
+				IOilObjectList masterOol = parent.getOilObjects()[0];
+				speed = AbstractRtosWriter.getOsProperty(masterOol, IEEWriterKeywords.SGRK_OS_CPU_SPEED_HZ);
+				if (speed == null) {
+					throw new OilCodeWriterException("Expected a CLOCK for cpu " + ErikaEnterpriseWriter.getOSName(ool));
+				}
 			}
 			buffer.append(    "#define EE_CPU_CLOCK      " + speed+"U\n");
 			buffer.append(    "#define EE_MAX_COUNTER_HW " + max_counter_hw+"\n");
