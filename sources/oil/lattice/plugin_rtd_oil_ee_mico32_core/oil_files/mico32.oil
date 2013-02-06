@@ -144,11 +144,4 @@ IMPLEMENTATION ee {
 		] BOARD_DATA;
 
     };
-    
-        
-    ISR {
-		STRING LEVEL;
-	};
-    
-    
 };

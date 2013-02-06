@@ -60,7 +60,9 @@ public interface ISimpleGenResKeywords {
 	 * Isr
 	 **************************************************************************/
 	public final static String ISR_CATEGORY = "category";
-	public final static String ISR_ENTRY = "entry";
+	public final static String ISR_ENTRY = "isr_entry";
+	public final static String ISR_LEVEL = "isr_level";
+	public final static String ISR_TRAP = "isr_trap";
 	public final static String ISR_USER_PRIORITY = "isr_priority_defined_by_user";
 	public final static String ISR_READY_PRIORITY = "isr_ready_priority";
 	public final static String ISR_HANDLER = "handler";
@@ -216,9 +218,12 @@ public interface ISimpleGenResKeywords {
 //	public final static String OS_CPU_ORTI_SECTIONS = "_cpu_type_specifics_orti_sections_";
 //	
 	
+	public final static String OS_CPU__ISR2_NUMBER = "number_of_configured_isr2";
 	public final static String OS_CPU__ISR_REQUIRES_RESOURCES = "an_isr_requires_resources";
 	public final static String OS_CPU__ISR_REQUIRES_RESOURCES_MAX_PRIO = "an_isr_requires_resources_max_priority";
 	public final static String OS_CPU__ISR_REQUIRES_RESOURCES_SIZE = "an_isr_requires_resources_size";
+	public static final String OS_CPU__ISR2_ADDITIONAL = "number_of_additional_configured_isr2";
+	public static final String OS_CPU__ISR2_ADDITIONAL_TXT_LIST = "description_of_additional_configured_isr2";
 
 	
 	public final static String OS_CPU_STATUS = "_cpu_type_specifics_status_";

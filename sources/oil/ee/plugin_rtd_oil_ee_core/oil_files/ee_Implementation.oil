@@ -113,9 +113,12 @@ IMPLEMENTATION ee {
 		UINT32 [1, 2, 3] CATEGORY : "Isr category. <br/> 1 = internal interrupt<br/> 2 = standard interrupt<br/> 3 = trap";
 		RESOURCE_TYPE RESOURCE[];
 		MESSAGE_TYPE MESSAGE[];
-		STRING ENTRY: "the interrupt source id or source number (arch. dependent)"; 
+		STRING ENTRY: "the interrupt source id or source number (arch. dependent). Equivalent to LEVEL.";
+		STRING LEVEL: "the interrupt source id or source number (arch. dependent). Equivalent to ENTRY.";
 		UINT32 PRIORITY: "the interrupt priority";
 		STRING HANDLER: "if defined, this is the name of the function, otherwise the isr name is used as function name";
+
+		BOOLEAN TRAP = FALSE: "If TRUE, identifies a TRAP.<br/> In this case CATEGORY and PRIORITY are ignored.";
 
         STRING CPU_ID = "default_cpu";
 	};

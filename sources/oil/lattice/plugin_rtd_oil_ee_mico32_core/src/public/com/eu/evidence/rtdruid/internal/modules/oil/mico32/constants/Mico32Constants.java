@@ -5,6 +5,8 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.mico32.constants;
 
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
+
 
 /**
  * @author Nicola Serreli
@@ -30,8 +32,8 @@ public interface Mico32Constants {
 
 	
 	
-	public final static String SGRK__ISR_LEVEL__ = "sgrk_isr_property_mico32__isr_level";
-	public final static String SGRK__ISR_HANDLER__ = "sgrk_isr_property_mico32__isr_handler_name";
+	public final static String SGRK__ISR_LEVEL__ = ISimpleGenResKeywords.ISR_LEVEL;
+	public final static String SGRK__ISR_HANDLER__ = ISimpleGenResKeywords.ISR_HANDLER;
 
 	/***************************************************************************
 	 * 

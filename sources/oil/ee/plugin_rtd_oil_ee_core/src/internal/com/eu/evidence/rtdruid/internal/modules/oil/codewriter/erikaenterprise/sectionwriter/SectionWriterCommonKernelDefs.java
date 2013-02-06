@@ -320,6 +320,19 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 				}
 			}
 
+ 			{
+				String speed = AbstractRtosWriter.getOsProperty(ool, IEEWriterKeywords.SGRK_OS_CPU_SPEED_HZ);
+				if (speed == null) {
+					// check if the master cpu has a clock setting
+					IOilObjectList masterOol = parent.getOilObjects()[0];
+					speed = AbstractRtosWriter.getOsProperty(masterOol, IEEWriterKeywords.SGRK_OS_CPU_SPEED_HZ);
+				}
+				if (speed != null) {
+					buffer.append("\n" + indent + commentWriterH.writerSingleLineComment("CPU CLOCK definition")); //\n");
+					buffer.append(indent +    "#define EE_CPU_CLOCK      " + speed+"U\n");
+				}
+			}
+
 			{
 				/*
 				 * ---------------- COUNTER ----------------
@@ -406,6 +419,23 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 				}
 			}
 						
+			{
+				/*
+				 * ---------------- ISR2 ----------------
+				 * 
+				 * Define MAX_ISR2 as number of isr2 for current cpu
+				 */
+				String number = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR2_NUMBER);
+				buffer.append(IWritersKeywords.INDENT +commentWriterH.writerSingleLineComment("Number of isr 2"));
+				Object text = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_TXT_LIST);
+				if (text != null && text instanceof List) {
+					for (Object s : (List<?>) text) {
+						buffer.append(IWritersKeywords.INDENT +commentWriterH.writerSingleLineComment(""+s));
+					}
+				}
+				buffer.append(IWritersKeywords.INDENT + "#define EE_MAX_ISR2 " + (number == null ? "0" : number ) + "\n\n");
+
+			}
 			
 			/*
 			 * 

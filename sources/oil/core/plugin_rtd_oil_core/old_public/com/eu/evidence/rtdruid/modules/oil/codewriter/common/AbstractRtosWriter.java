@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
 
+import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.common.OilObjectList;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
@@ -671,21 +672,22 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 				// common data
 				String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.ISR, null)).getPath();
 				String[] values;
-				
+
+				{	// ----------- TRAP ------------
+					String value = CommonUtils.getFirstChildEnumType(vt, path+"TRAP");
+					if ("TRUE".equalsIgnoreCase(value)) {
+						answer[i].setObject(ISimpleGenResKeywords.ISR_TRAP, Boolean.TRUE);
+//					} else {
+//						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, "");
+					}
+				}
+
 				{	// ----------- CATEGORY ------------
 					values = CommonUtils.getValue(vt, path+"CATEGORY");
 					if (values!= null && values.length >0) {
 						answer[i].setProperty(ISimpleGenResKeywords.ISR_CATEGORY, values[0]);
 //					} else {
 //						answer[i].setProperty(ISimpleGenResKeywords.ISR_CATEGORY, "");
-					}
-				}
-				{	// ----------- ENTRY ------------
-					values = CommonUtils.getValue(vt, path+"ENTRY");
-					if (values!= null && values.length >0) {
-						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, values[0]);
-//					} else {
-//						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, "");
 					}
 				}
 				{	// ----------- PRIORITY ------------
@@ -700,6 +702,14 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					values = CommonUtils.getValue(vt, path+"ENTRY");
 					if (values!= null && values.length >0) {
 						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, values[0]);
+//					} else {
+//						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, "");
+					}
+				}
+				{	// ----------- LEVEL ------------
+					values = CommonUtils.getValue(vt, path+"LEVEL");
+					if (values!= null && values.length >0) {
+						answer[i].setProperty(ISimpleGenResKeywords.ISR_LEVEL, values[0]);
 //					} else {
 //						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, "");
 					}
@@ -720,7 +730,9 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 						answer[i].setProperty(ISimpleGenResKeywords.ISR_HANDLER, answer[i].getName());
 					}
 				}
-				
+				if (answer[i].containsProperty(ISimpleGenResKeywords.ISR_ENTRY) && answer[i].containsProperty(ISimpleGenResKeywords.ISR_LEVEL)) {
+					Messages.sendWarningNl("ISR " + answer[i].getName() + " contains both ENTRY and LEVEL attributes.");
+				}
 			}
 		}
 			break;

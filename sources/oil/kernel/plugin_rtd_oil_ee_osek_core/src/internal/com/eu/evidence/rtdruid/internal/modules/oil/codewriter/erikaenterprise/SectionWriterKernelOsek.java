@@ -26,7 +26,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AlarmAutoStartDescr;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.ResourceList;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.ResourceList;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
@@ -221,7 +221,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			ArrayList<String> appModes = null;
 			List<Integer> requiredOilObjects = (List<Integer>) AbstractRtosWriter.getOsObject(ool, SGRK__FORCE_ARRAYS_LIST__);
 			final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
-			final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
+			final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
 
 			
 			/*
@@ -286,7 +286,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			}
 		
 			StringBuffer buffer = answer[rtosId].get(FILE_EE_CFG_C);
-			StringBuffer buffer_h = answer[rtosId].get(FILE_EE_CFG_H);
+			StringBuffer buffer_h = answer[rtosId].get(FILE_EE_CFG_H);
 			//String ee_cfg_h_file_name = answer[rtosId].getFileName(FILE_EE_CFG_H);
 		
 			buffer.append(
@@ -309,9 +309,9 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							+ "const EE_TYPEPRIO EE_th_dispatch_prio["+MAX_TASK+"] = {\n");
 			// buffer for th_rnact (one row for each task)
 			StringBuffer EE_th_rnactBuffer = new StringBuffer(indent1
-					+ "EE_TYPENACT EE_th_rnact["+MAX_TASK+"] = {\n");
-			StringBuffer EE_th_rnactMaxBuffer = new StringBuffer(indent1
-					+ "const EE_TYPENACT EE_th_rnact_max["+MAX_TASK+"] = {\n");
+					+ "EE_TYPENACT EE_th_rnact["+MAX_TASK+"] = {\n");
+			StringBuffer EE_th_rnactMaxBuffer = new StringBuffer(indent1
+					+ "const EE_TYPENACT EE_th_rnact_max["+MAX_TASK+"] = {\n");
 			// for each task, contains if it's extended or not
 			StringBuffer EE_th_is_extendedBuffer = new StringBuffer(indent1
 					+ "EE_TYPEPRIO EE_th_is_extended["+MAX_TASK+"] =\n"
@@ -498,7 +498,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							+ dspPrio + "U");
 					EE_rq_linkBuffer.append(pre + " " + priorityLevel + "U");
 					EE_th_rnactBuffer.append(pre + post + indent2 + act + "U");
-					EE_th_rnactMaxBuffer.append(pre + post + indent2 + act + "U");
+					EE_th_rnactMaxBuffer.append(pre + post + indent2 + act + "U");
 					EE_th_is_extendedBuffer.append(pre + " " + sched + "U");
 		
 					sbDecThread.append(pre2 + indent1 + "DeclareTask(" + tname + ");");
@@ -521,7 +521,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			EE_th_dispatch_prioBuffer.append(" " + post + indent1 + "};\n\n");
 			EE_rq_linkBuffer.append("};\n\n");
 			EE_th_rnactBuffer.append(post + indent1 + "};\n\n");
-			EE_th_rnactMaxBuffer.append(post + indent1 + "};\n\n");
+			EE_th_rnactMaxBuffer.append(post + indent1 + "};\n\n");
 			EE_th_is_extendedBuffer.append("};\n\n");
 			sbStub.append(" " + post);
 		
@@ -668,7 +668,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				buffer
 						.append(indent1
 								+ commentWriterC.writerSingleLineComment("remaining nact: init= maximum pending activations of a Task")
-								+ EE_th_rnactBuffer + EE_th_rnactMaxBuffer + EE_rq_linkBuffer);
+								+ EE_th_rnactBuffer + EE_th_rnactMaxBuffer + EE_rq_linkBuffer);
 		
 				// EE_rq_pairs_next
 				buffer
@@ -772,6 +772,10 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				buffer.append(EE_th_is_extendedBuffer);
 			}
 		
+			final int isr_size = ErikaEnterpriseWriter.checkOrDefault(
+					(Integer) AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES_SIZE),
+					new Integer(0));
+
 			{
 				/***************************************************************
 				 * MUTEX
@@ -783,9 +787,6 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		
 					buffer.append(commentWriterC.writerBanner("Mutex"));
 		
-					final int isr_size = ErikaEnterpriseWriter.checkOrDefault(
-							(Integer) AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES_SIZE),
-							new Integer(0));
 
 					/*
 					 * OSEK_EXTENDED
@@ -928,28 +929,28 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					
 					
 					
-					 // ISR RESOURCES
+					 /*  ISR RESOURCES */
 					if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES))) {
 						
-						if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_ADD_IRQH))) {
-							buffer.append("#include \"ee_irq.h\"\n");
-						}
-						
-						StringBuffer isr_ceilingBuffer = new StringBuffer();
-						
+						if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_ADD_IRQH))) {
+							buffer.append("#include \"ee_irq.h\"\n");
+						}
+						
+						StringBuffer isr_ceilingBuffer = new StringBuffer();
+						
 						/*
 						 * EE_resource_ceiling
 						 */
 						buffer.append(indent1
 										+ "const EE_TYPEISR2PRIO EE_resource_isr2_priority["+MAX_RESOURCE+"]= {\n");
-						isr_ceilingBuffer.append(indent1
-								+ "const EE_TYPEPRIO EE_resource_isr2_ceiling["+MAX_RESOURCE+"]= {\n");
+						isr_ceilingBuffer.append(indent1
+								+ "const EE_TYPEPRIO EE_resource_isr2_ceiling["+MAX_RESOURCE+"]= {\n");
 						
 			
 						// search all ceilings and order them
 						String[] names = new String[maxMutex];
 						String[] ceilings = new String[maxMutex];
-						String[] user_ceilings = new String[maxMutex];
+						String[] user_ceilings = new String[maxMutex];
 						for (Iterator<ISimpleGenRes> iter = mutexList.iterator(); iter
 								.hasNext();) {
 			
@@ -957,8 +958,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			
 							int id = curr.getInt(ISimpleGenResKeywords.RESOURCE_SYS_ID);
 							
-							ceilings[id] = curr.getString(ISimpleGenResKeywords.RESOURCE_ISR_CEILING);
-							user_ceilings[id] = curr.getString(ISimpleGenResKeywords.RESOURCE_USER_ISR_CEILING);
+							ceilings[id] = curr.getString(ISimpleGenResKeywords.RESOURCE_ISR_CEILING);
+							user_ceilings[id] = curr.getString(ISimpleGenResKeywords.RESOURCE_USER_ISR_CEILING);
 							names[id]  = curr.getName();
 						}
 						pre2 = "";
@@ -967,49 +968,56 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			
 							final String name;
 							final String ceiling;
-							final String user_ceiling;
+							final String user_ceiling;
 							if (ceilings[j] != null) {
 								name = names[j];
 								ceiling = ceilings[j];
-								user_ceiling = user_ceilings[j];
+								user_ceiling = user_ceilings[j];
 							} else {
 								name = "UNUSED";
-								ceiling = ResourceList.EE_RES_ISR_UNMASKED;
-								user_ceiling = "0";
+								ceiling = ResourceList.EE_RES_ISR_UNMASKED;
+								user_ceiling = "0";
 							}
 							
 							buffer.append(pre2 + post + indent2 + ceiling);
-							isr_ceilingBuffer.append(pre2 + post + indent2 + user_ceiling + "U");
+							isr_ceilingBuffer.append(pre2 + post + indent2 + user_ceiling + "U");
 							post = "\t\t" + commentWriterC.writerSingleLineComment("resource " + name); // Ends with  " \n";
 							pre2 = ",";
 						}
 						buffer.append(" " + post + indent1 + "};\n\n");
-						isr_ceilingBuffer.append(" " + post + indent1 + "};\n\n");
+						isr_ceilingBuffer.append(" " + post + indent1 + "};\n\n");
 			
 						buffer.append(indent1
-										+ "EE_TYPEISR2PRIO EE_isr2_oldpriority["+MAX_RESOURCE+"];\n\n"
-										+isr_ceilingBuffer.toString());
-			
-						
-						/*
-						 * EE_th_resource_last
-						 */
-						buffer
-								.append(commentWriterC.writerMultiLineComment(indent1,
-											"array to hold corresponding isr2 nesting levels.")
-										+ indent1
-										+ "EE_UREG EE_isr2_nesting_level["+EE_MAX_ISR2_WITH_RESOURCES+"] =\n"
-										+ indent2 + "{ ");
-						pre2 = "";
-						for (int i = 0; i < isr_size; i++) {
-							buffer.append(pre2 + "(EE_UREG) -1");
-							pre2 = ", ";
-						}
-						buffer.append("};\n\n");
-
+										+ "EE_TYPEISR2PRIO EE_isr2_oldpriority["+MAX_RESOURCE+"];\n\n"
+										+isr_ceilingBuffer.toString());
 					}
 					
 				} // end "if (mutexList.size()>0)"
+			}
+			
+			if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES))) {
+				/*
+				 * ISR nexting level
+				 */
+				final String arraySizeId; 
+				final int size;
+				arraySizeId = EE_MAX_ISR2_WITH_RESOURCES; 
+				size = isr_size;
+//				/ se ci sono spinlock, usare MAX_ISR2. Nota ... serve una variabile da portarsi appresoo
+//				/ serve una chiave per dire che esistono degli spinlock a livello globale
+				buffer
+						.append(commentWriterC.writerMultiLineComment(indent1,
+									"array to hold corresponding isr2 nesting levels.")
+								+ indent1
+								+ "EE_UREG EE_isr2_nesting_level["+arraySizeId+"] =\n"
+								+ indent2 + "{ ");
+				pre2 = "";
+				for (int i = 0; i < size; i++) {
+					buffer.append(pre2 + "(EE_UREG) -1");
+					pre2 = ", ";
+				}
+				buffer.append("};\n\n");
+
 			}
 		
 			
@@ -1024,8 +1032,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				if (counterList.size() > 0 || requiredOilObjects.contains(new Integer(IOilObjectList.COUNTER))) {
 					buffer.append(commentWriterC.writerBanner("Counters"));
 		
-					buffer_h.append(commentWriterH.writerBanner("Counter defines"));
-		
+					buffer_h.append(commentWriterH.writerBanner("Counter defines"));
+		
 					/*
 					 * EE_counter_ROM
 					 */
@@ -1038,7 +1046,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		
 						// ------ GET VALUES -----
 						ISimpleGenRes curr = iter.next();
-						String name = curr.getName();
+						String name = curr.getName();
 		
 						String maxAllowed = curr.getString(ISimpleGenResKeywords.COUNTER_MAX_ALLOWED)+"U";
 						String ticks = curr.getString(ISimpleGenResKeywords.COUNTER_TICKS)+"U";
@@ -1046,31 +1054,31 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		
 						// ------ WRITE BUFFER -----
 		
-						buffer_h.append(
-								"#define OSMAXALLOWEDVALUE_" + name + " " + maxAllowed + "\n" +
-								"#define OSTICKSPERBASE_" + name + "    " + ticks + "\n" +
-								"#define OSMINCYCLE_" + name + "        " + minCycle + "\n\n");
-						
-						if (curr.containsProperty(ISimpleGenResKeywords.COUNTER_SYSTIMER) &&
-								"true".equalsIgnoreCase(curr.getString(ISimpleGenResKeywords.COUNTER_SYSTIMER))) {
-							
-							buffer_h.append(
-									"#define OSMAXALLOWEDVALUE" + " " + maxAllowed + "\n" +
-									"#define OSTICKSPERBASE" + "    " + ticks + "\n" +
-									"#define OSMINCYCLE" + "        " + minCycle + "\n");
-
-							if (curr.containsProperty(ISimpleGenResKeywords.COUNTER_NANOSECONDPERTICK)) {
-								String speed = curr.getLong(ISimpleGenResKeywords.COUNTER_NANOSECONDPERTICK)+"U";
-								buffer_h.append("#define OSTICKDURATION" + "    " + speed + "\n");
-								
-							}
-							buffer_h.append("\n");
-						}
-		
+						buffer_h.append(
+								"#define OSMAXALLOWEDVALUE_" + name + " " + maxAllowed + "\n" +
+								"#define OSTICKSPERBASE_" + name + "    " + ticks + "\n" +
+								"#define OSMINCYCLE_" + name + "        " + minCycle + "\n\n");
+						
+						if (curr.containsProperty(ISimpleGenResKeywords.COUNTER_SYSTIMER) &&
+								"true".equalsIgnoreCase(curr.getString(ISimpleGenResKeywords.COUNTER_SYSTIMER))) {
+							
+							buffer_h.append(
+									"#define OSMAXALLOWEDVALUE" + " " + maxAllowed + "\n" +
+									"#define OSTICKSPERBASE" + "    " + ticks + "\n" +
+									"#define OSMINCYCLE" + "        " + minCycle + "\n");
+
+							if (curr.containsProperty(ISimpleGenResKeywords.COUNTER_NANOSECONDPERTICK)) {
+								String speed = curr.getLong(ISimpleGenResKeywords.COUNTER_NANOSECONDPERTICK)+"U";
+								buffer_h.append("#define OSTICKDURATION" + "    " + speed + "\n");
+								
+							}
+							buffer_h.append("\n");
+						}
+		
 						buffer.append(pre2 + post + indent2+"{" + maxAllowed + ", "
 								+ ticks + ", " + minCycle + "}");
 						pre2 = ",";
-						post = indent2 + commentWriterC.writerSingleLineComment(name); // end with \n;
+						post = indent2 + commentWriterC.writerSingleLineComment(name); // end with \n;
 					}
 					buffer.append(" " + post +indent1+ "};\n\n");
 		

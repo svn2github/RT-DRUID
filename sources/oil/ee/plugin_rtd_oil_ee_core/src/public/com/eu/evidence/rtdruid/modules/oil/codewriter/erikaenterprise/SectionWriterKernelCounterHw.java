@@ -19,6 +19,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr.IsrInfo;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 
@@ -32,6 +33,8 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 	protected final String systimer_handler;
 	
 	protected Boolean checked;
+	protected boolean allowSystemTimerPriority = false;
+	protected SectionWriterIsr generateIsr2Defines = null;
 	
 	protected final ErikaEnterpriseWriter parent;
 
@@ -41,6 +44,20 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 		this.hw_id = hw_id;
 		this.systimer_handler = systimer_handler;
 		checked = null;
+	}
+	
+	/**
+	 * @param allowSystemTimerPriority the allowSystemTimerPriority to set
+	 */
+	public void setAllowSystemTimerPriority(boolean allowSystemTimerPriority) {
+		this.allowSystemTimerPriority = allowSystemTimerPriority;
+	}
+	
+	/**
+	 * @param generateIsr2Defines the generateIsr2Defines to set
+	 */
+	public void setGenerateIsr2Defines(SectionWriterIsr generateIsr2Defines) {
+		this.generateIsr2Defines = generateIsr2Defines;
 	}
 	
 	public void writeCounterHw(int currentRtosId, IOilObjectList ool, IOilWriterBuffer oilWBuff) throws OilCodeWriterException {
@@ -117,7 +134,6 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 					throw new OilCodeWriterException("Expected a CLOCK for cpu " + ErikaEnterpriseWriter.getOSName(ool));
 				}
 			}
-			buffer.append(    "#define EE_CPU_CLOCK      " + speed+"U\n");
 			buffer.append(    "#define EE_MAX_COUNTER_HW " + max_counter_hw+"\n");
 			if (sysTimer != null) {
 				buffer.append("#define EE_SYSTEM_TIMER   " + sysTimer.getName() +"\n");
@@ -128,15 +144,37 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 			
 			buffer.append("\n");
 			
-			for (Entry<String, ISimpleGenRes> dev: devices.entrySet()) {
-				String entry_id = "EE_"+hw_id+"_"+dev.getKey()+"_ISR";
-				ISimpleGenRes curr = dev.getValue();
-				buffer.append("#define " + entry_id + " " + curr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER) +"\n");
-				if (curr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING)) {
-					String prio = curr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING);
-					buffer.append("#define " + entry_id + "_PRI " + prio+"\n");
+			if (generateIsr2Defines == null) {
+				for (Entry<String, ISimpleGenRes> dev: devices.entrySet()) {
+					String entry_id = "EE_"+hw_id+"_"+dev.getKey()+"_ISR";
+					ISimpleGenRes curr = dev.getValue();
+					buffer.append("#define " + entry_id + " " + curr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER) +"\n");
+					if (curr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING)) {
+						String prio = curr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING);
+						buffer.append("#define " + entry_id + "_PRI " + prio+"\n");
+					}
+	
 				}
+			} else {
+				
+				for (ISimpleGenRes sgr: ool.getList(IOilObjectList.COUNTER)) {
+					if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_TYPE) && 
+							ISimpleGenResKeywords.COUNTER_TYPE_HW.equalsIgnoreCase(sgr.getString(ISimpleGenResKeywords.COUNTER_TYPE))) {
+						
+						IsrInfo info = new IsrInfo();
+						
+						info.name = sgr.getName();
+						info.category = "2";
+						info.handler = sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER);
+						info.entry_id = "EE_"+hw_id+"_"+sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE)+"_ISR";
+						info.disable = false;
+						info.generated_prioid = info.entry_id + "_PRI";
+						info.generated_prio_string = sgr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING) ? sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING): null;
 
+						generateIsr2Defines.doWriteIsr12(buffer, commentWriterH, info);
+
+					}
+				}
 			}
 
 		}
@@ -183,7 +221,8 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_USER_HANDLER)) {
 							throw new OilCodeWriterException("System timer does not support handler redefinition");
 						}
-						if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
+						
+						if (!allowSystemTimerPriority && sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
 							throw new OilCodeWriterException("System timer does not support priority redefinition");
 						}
 						

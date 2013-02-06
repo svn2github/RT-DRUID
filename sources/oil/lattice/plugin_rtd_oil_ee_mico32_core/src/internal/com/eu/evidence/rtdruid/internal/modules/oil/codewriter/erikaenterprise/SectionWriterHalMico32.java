@@ -35,8 +35,6 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStack
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
-import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
-import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
@@ -214,7 +212,6 @@ public class SectionWriterHalMico32 extends SectionWriter
 		 *  
 		 **********************************************************************/
 		{
-			final String oilHwRtosPrefix = parent.getOilHwRtosPrefix();
 			List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.ISR);
 			for (Iterator<ISimpleGenRes> iter = tasks.iterator(); iter.hasNext();) {
 
@@ -230,41 +227,11 @@ public class SectionWriterHalMico32 extends SectionWriter
 					
 				}
 				
-				
-
-				String oilVarPrefix = (new OilPath(OilObjectType.ISR, null)).getPath();
-
-	
-				{ // LEVEL
-					String deadLinePath = currIsr.getPath() + S + oilVarPrefix + S
-							+ "LEVEL" ;
-	
-					String[] values = CommonUtils.getValue(vt, deadLinePath);
-	
-					String var = null;
-					if (values != null && values.length >0) {
-						var = values[0];
-					} else {
-						throw new OilCodeWriterException("Required a LEVEL for the isr "+currIsr.getName()+".");
-					}
-					
-					currIsr.setObject(Mico32Constants.SGRK__ISR_LEVEL__, var);
+				if (!currIsr.containsProperty(Mico32Constants.SGRK__ISR_LEVEL__)) {
+					throw new OilCodeWriterException("Required a LEVEL for the isr "+currIsr.getName()+".");
 				}
-				
-				{ // HANDLER
-					String deadLinePath = currIsr.getPath() + S + oilVarPrefix + S
-							+ "HANDLER" ;
-	
-					String[] values = CommonUtils.getValue(vt, deadLinePath);
-	
-					String var = null;
-					if (values != null && values.length >0) {
-						var = values[0];
-					} else {
-						throw new OilCodeWriterException("The HANDLER for the isr "+currIsr.getName()+" is missing or incorrect.");
-					}
-					
-					currIsr.setObject(Mico32Constants.SGRK__ISR_HANDLER__, var);
+				if (!currIsr.containsProperty(Mico32Constants.SGRK__ISR_HANDLER__)) {
+					throw new OilCodeWriterException("The HANDLER for the isr "+currIsr.getName()+" is missing or incorrect.");
 				}
 			}
 

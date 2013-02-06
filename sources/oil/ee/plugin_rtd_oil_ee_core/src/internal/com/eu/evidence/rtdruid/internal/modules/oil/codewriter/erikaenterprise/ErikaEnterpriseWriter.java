@@ -6,13 +6,17 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
 
+import static com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords.S;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.eu.evidence.rtdruid.desk.Messages;
@@ -1815,27 +1819,46 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	protected void setIsrPriorities() {
 		
 		for (IOilObjectList ool : parent.getOilObjects()) {
-
-			ArrayList<Integer> isrPrioPres = new ArrayList<Integer>();
+			
+			CpuHwDescription cpuDescr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+			final boolean packPriorities = cpuDescr == null ? true : cpuDescr.isPackIsrPriorities();
+			
+			ArrayList<Integer> isr1PrioPres = new ArrayList<Integer>();
+			ArrayList<Integer> isr2PrioPres = new ArrayList<Integer>();
 
 			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.ISR)) {
-				String category = sgr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? sgr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
-				
-				if ("2".equals(category)) {
+				boolean trap = sgr.containsProperty(ISimpleGenResKeywords.ISR_TRAP) ? ((Boolean) sgr.getObject(ISimpleGenResKeywords.ISR_TRAP)).booleanValue() : false;
+				if (!trap) {
+					String category = sgr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? sgr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
 					
-					// priority
-					if (sgr.containsProperty(ISimpleGenResKeywords.ISR_USER_PRIORITY)) {
-						// search max ready priority
-						int tmp_priority = sgr.getInt(ISimpleGenResKeywords.ISR_USER_PRIORITY);
-						{// store the priority (if not already stored)
-							int pos = Collections.binarySearch(isrPrioPres,
-									new Integer(tmp_priority));
-							if (pos < 0) { // not found
-								isrPrioPres.add(-pos - 1, new Integer(tmp_priority));
+					ArrayList<Integer> priorities = null;
+					final boolean oneOrTwo;
+					if ("1".equals(category)) {
+						priorities = isr1PrioPres;
+						oneOrTwo = true;
+					} else if ("2".equals(category)) {
+						priorities = isr2PrioPres;
+						oneOrTwo = true;
+					} else {
+						oneOrTwo = false;
+					}
+					
+					if (oneOrTwo) {
+						// priority
+						if (sgr.containsProperty(ISimpleGenResKeywords.ISR_USER_PRIORITY)) {
+							// search max ready priority
+							int tmp_priority = sgr.getInt(ISimpleGenResKeywords.ISR_USER_PRIORITY);
+							{// store the priority (if not already stored)
+								int pos = Collections.binarySearch(priorities,
+										new Integer(tmp_priority));
+								if (pos < 0) { // not found
+									priorities.add(-pos - 1, new Integer(tmp_priority));
+								}
 							}
 						}
-					}				
+					}
 				}
+			
 			}
 			
 			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.COUNTER)) {
@@ -1847,10 +1870,10 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 						// search max ready priority
 						int tmp_priority = sgr.getInt(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY);
 						{// store the priority (if not already stored)
-							int pos = Collections.binarySearch(isrPrioPres,
+							int pos = Collections.binarySearch(isr2PrioPres,
 									new Integer(tmp_priority));
 							if (pos < 0) { // not found
-								isrPrioPres.add(-pos - 1, new Integer(tmp_priority));
+								isr2PrioPres.add(-pos - 1, new Integer(tmp_priority));
 							}
 						}
 					}				
@@ -1858,17 +1881,43 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 			}
 			
 			
-			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.ISR)) {
-				String category = sgr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? sgr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
+			if (isr1PrioPres.size()>0 && isr2PrioPres.size() >0){
+				int min_isr1_prio = isr1PrioPres.get(0);
+				int max_isr2_prio = isr2PrioPres.get(isr2PrioPres.size()-1);
 				
-				if ("2".equals(category) && sgr.containsProperty(ISimpleGenResKeywords.ISR_USER_PRIORITY)) {
-							
-					Integer integer_priority = new Integer(sgr.getInt(ISimpleGenResKeywords.ISR_USER_PRIORITY));
-					int prioVal = Collections.binarySearch(isrPrioPres, integer_priority);
-					if (prioVal >= 0) {
-						prioVal++; // values starting from 1 (not 0)
-						sgr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_VALUE, "" + prioVal);
-						sgr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING, "EE_ISR_PRI_" + prioVal);
+				if (min_isr1_prio<=max_isr2_prio) {
+					Messages.sendWarningNl("All isr1 priorities should be bigger than isr2 priorities.");
+				}
+			}
+			
+			
+			final int isr1Base = isr2PrioPres.size()+1;
+			
+			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.ISR)) {
+				boolean trap = sgr.containsProperty(ISimpleGenResKeywords.ISR_TRAP) ? ((Boolean) sgr.getObject(ISimpleGenResKeywords.ISR_TRAP)).booleanValue() : false;
+				if (!trap) {
+	
+					String category = sgr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? sgr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
+					
+					int base = 1;
+					ArrayList<Integer> priorities = null;
+					if ("1".equals(category)) {
+						priorities = isr1PrioPres;
+						base = packPriorities ? isr1Base : 0;
+					} else if ("2".equals(category)) {
+						priorities = isr2PrioPres;
+						base = packPriorities ? 1 : 0;
+					}
+					
+					if (priorities != null && sgr.containsProperty(ISimpleGenResKeywords.ISR_USER_PRIORITY)) {
+								
+						Integer integer_priority = new Integer(sgr.getInt(ISimpleGenResKeywords.ISR_USER_PRIORITY));
+						int prioVal = packPriorities ? Collections.binarySearch(priorities, integer_priority) : integer_priority.intValue();
+						if (prioVal >= 0) {
+							prioVal+= base; // values starting from 1 (not 0)
+							sgr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_VALUE, "" + prioVal);
+							sgr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING, "EE_ISR_PRI_" + prioVal);
+						}
 					}
 				}
 			}
@@ -1879,9 +1928,9 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 					if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
 							
 						Integer integer_priority = new Integer(sgr.getInt(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY));
-						int prioVal = Collections.binarySearch(isrPrioPres, integer_priority);
+						int prioVal = packPriorities ? Collections.binarySearch(isr2PrioPres, integer_priority) : integer_priority.intValue();
 						if (prioVal >= 0) {
-							prioVal++; // values starting from 1 (not 0)
+							prioVal+=packPriorities ? 1 : 0;; // values starting from 1 (not 0)
 							sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE, "" + prioVal);
 							sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING, "EE_ISR_PRI_" + prioVal);
 						}
@@ -1889,7 +1938,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				}
 			}
 			
-			if (isrPrioPres.size()>0) {
+			if (isr2PrioPres.size()>0) {
 				ool.getList(IOilObjectList.OS).get(0).setProperty(ISimpleGenResKeywords.OS_ADD_IRQH, "true");
 			}
 		}

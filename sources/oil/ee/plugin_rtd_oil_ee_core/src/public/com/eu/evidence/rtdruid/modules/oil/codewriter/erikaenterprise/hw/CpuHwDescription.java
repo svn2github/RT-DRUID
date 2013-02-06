@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.CommentsManager;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
+import com.eu.evidence.rtdruid.vartree.IVarTree;
 
 /**
  * This class is used to store some attributes required by a lot of common
@@ -14,6 +16,11 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosFor
  * @author Nicola Serreli
  */
 public class CpuHwDescription {
+	
+	public interface IRequiresUpdates {
+		public void update(IVarTree vt, IOilObjectList[] objects);
+	}
+	
 	
 	/**
 	 * Number of bytes used to store the stack address.
@@ -84,7 +91,13 @@ public class CpuHwDescription {
 	 * The maximum number of nested interrupts 
 	 */
 	protected int maxNestedInts = DEFAULT_MAX_NESTING_LEVEL;
-	
+
+
+	/**
+	 * Pack isr priorities
+	 */
+	protected boolean packIsrPriorities = true;
+
 	/**
 	 * Build a new Cpu HW Description
 	 */
@@ -154,5 +167,12 @@ public class CpuHwDescription {
 	
 	public boolean isSupportOrtiISR2() {
 		return supportOrtiISR2;
+	}
+	
+	/**
+	 * @return the packIsrPriorities
+	 */
+	public boolean isPackIsrPriorities() {
+		return packIsrPriorities;
 	}
 }

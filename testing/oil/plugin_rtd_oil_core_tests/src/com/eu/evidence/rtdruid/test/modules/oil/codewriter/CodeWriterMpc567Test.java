@@ -1779,7 +1779,6 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	
 	@Test
 	public void testMpc567_isr_resources() {
 	    final String text = " CPU test_application {\n" + 
@@ -1846,6 +1845,90 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		" \n" + 
 	    		"   ISR IsrMedium {\n" + 
 	    		"     CATEGORY = 2;\n" + 
+	    		"     PRIORITY = 2;\n" + 
+	    	    "     ENTRY = \"1\";\n" +
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   ISR IsrHigh {\n" + 
+	    		"     CATEGORY = 2;\n" + 
+	    		"     PRIORITY = 3;\n" + 
+	    		"     RESOURCE = ResourceB;\n" + 
+	    	    "     ENTRY = \"2\";\n" +
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   RESOURCE Resource1 { RESOURCEPROPERTY = STANDARD; };\n" + 
+	    		"   RESOURCE ResourceA { RESOURCEPROPERTY = STANDARD; };\n" + 
+	    		"   RESOURCE ResourceB { RESOURCEPROPERTY = STANDARD; };\n" + 
+	    		" };\n";
+    	commonWriterTest(text, 1);
+	}
+	
+	@Test
+	public void testMpc567_isr1_resources() {
+	    final String text = " CPU test_application {\n" + 
+	    		" \n" + 
+	    		"   OS EE {\n" + 
+	    		"     EE_OPT = \"__ASSERT__\";\n" + 
+	    		"     EE_OPT = \"DEBUG\";\n" + 
+	    		" \n" + 
+	    		"     STATUS = STANDARD;\n" + 
+	    		" \n" + 
+	    		"     STARTUPHOOK = FALSE;\n" + 
+	    		"     ERRORHOOK = TRUE;\n" + 
+	    		"     SHUTDOWNHOOK = FALSE;\n" + 
+	    		"     PRETASKHOOK = FALSE;\n" + 
+	    		"     POSTTASKHOOK = FALSE;\n" + 
+	    		" \n" + 
+	    		"     USEGETSERVICEID = FALSE;\n" + 
+	    		"     USEPARAMETERACCESS = FALSE;\n" + 
+	    		"     USERESSCHEDULER = FALSE;\n" + 
+	    		" \n" + 
+	    		"     EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n" + 
+	    		"     EE_OPT = \"__CODEWARRIOR__\";\n" + 
+	    		"     //EE_OPT = \"EEOPT_DIAB_5_8\";\n" + 
+//	    		"     EE_OPT = \"EE_ISR_DYNAMIC_TABLE\";\n" + 
+	    		" \n" + 
+	    		"     MCU_DATA = PPCE200ZX {\n" + 
+	    		"       MODEL = MPC5674F;\n" + 
+	    		"     };\n" + 
+	    		" \n" + 
+	    		"     CPU_DATA = PPCE200ZX {\n" + 
+	    		"       MODEL = E200Z7;\n" + 
+	    		"       APP_SRC = \"code.c\";\n" + 
+	    		"       APP_SRC = \"testcase/common/e200zx/test_irq.c\";\n" + 
+	    		"       VLE = FALSE;\n" + 
+	    		"       SYS_STACK_SIZE=2048;\n" + 
+	    		" \n" + 
+	    		"       MULTI_STACK = TRUE {\n" + 
+	    		"         IRQ_STACK = FALSE;\n" + 
+	    		"       };\n" + 
+	    		"     };\n" + 
+	    		" \n" + 
+	    		"     KERNEL_TYPE = ECC1;\n" + 
+	    		"     EE_OPT = \"__OO_STARTOS_OLD__\";\n" + 
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   TASK Task1 {\n" + 
+	    		"     PRIORITY = 1;\n" + 
+	    		"     ACTIVATION = 1;\n" + 
+	    		"     SCHEDULE = FULL;\n" + 
+	    		"     AUTOSTART = FALSE;\n" + 
+	    		"     STACK = SHARED;\n" + 
+	    		"     RESOURCE = Resource1;\n" + 
+	    		"     RESOURCE = ResourceA;\n" + 
+	    		"     RESOURCE = ResourceB;\n" + 
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   ISR IsrLow {\n" + 
+	    		"     CATEGORY = 2;\n" + 
+	    		"     PRIORITY = 1;\n" + 
+	    		"     RESOURCE = ResourceA;\n" + 
+	    		"     RESOURCE = ResourceB;\n" + 
+	    	    "     ENTRY = \"0\";\n" +
+	    		"   };\n" + 
+	    		" \n" + 
+	    		"   ISR IsrMedium {\n" + 
+	    		"     CATEGORY = 1;\n" + 
 	    		"     PRIORITY = 2;\n" + 
 	    	    "     ENTRY = \"1\";\n" +
 	    		"   };\n" + 
