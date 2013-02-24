@@ -371,7 +371,7 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
 	    			/***********************************************************************
 	    			 * CONTRIBUTION  to variables
 	    			 ***********************************************************************/
-	    			for (String value : AbstractRtosWriter.getOsProperties(ool, SGRK__MAKEFILE_MP_CPU_EXT_VARS__)) {
+	    			for (String value : AbstractRtosWriter.getOsProperties(ool, SGRK__MAKEFILE_CPU_EXT_VARS__)) {
 	    			    if (value != null) 
 	    			    	sbCpu_mk.append(value);
 	    			}

@@ -119,6 +119,116 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 2);
 	}
 
+	@Test public void testDoublez4Linkerscript() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"		EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n"+
+			"\n"+
+			"		MASTER_CPU = \"master\";\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			ID = \"master\";\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"master.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"			LINKERSCRIPT = \"linker_script_cpu.ld\";\n"+
+			"		};\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			ID = \"slave\";\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"			LINKERSCRIPT = \"linker_script_mcu.ld\";\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"		STARTUPHOOK = FALSE;\n"+
+			"		ERRORHOOK = FALSE;\n"+
+			"		SHUTDOWNHOOK = FALSE;\n"+
+			"		PRETASKHOOK = FALSE;\n"+
+			"		POSTTASKHOOK = FALSE;\n"+
+			"		USEGETSERVICEID = FALSE;\n"+
+			"		USEPARAMETERACCESS = FALSE;\n"+
+			"		USERESSCHEDULER = FALSE;\n"+
+			"\n"+
+			"		USEREMOTETASK = ALWAYS;\n"+
+			"		ORTI_SECTIONS = ALL;\n"+
+			"\n"+
+			"		KERNEL_TYPE = BCC1;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6 {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6b {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6c {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0 {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = TRUE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0b {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0c {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"};\n";
+		commonWriterTest(text, 2);
+	}
+
 	@Test public void testMpc567_bug88() {
 	    final String text = "CPU test_application {\n"+
 			"\n"+
@@ -248,6 +358,122 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		\n" +
 			"		MCU_DATA = PPCE200ZX {\n" +
 			"			MODEL = MPC5674F;\n" + 
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"		\n" +
+			"    };\n" +
+			"    \n" +
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK Task2 {\n" +
+			"		PRIORITY = 0x02;   /* High priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    OS EE { KERNEL_TYPE = FP; }; 	\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+
+	@Test public void testMpc567_linkerscriptcpu() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {		\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\"; \n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE;\n" +
+			"			MODEL = E200Z7;\n" +
+			"			SYS_STACK_SIZE = 128;\n" +
+			"			VLE = TRUE;\n" +
+			"			LINKERSCRIPT = \"linker_script_cpu.ld\";\n"+
+			"		};\n" +
+			"		\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5674F;\n" + 
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"		\n" +
+			"    };\n" +
+			"    \n" +
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK Task2 {\n" +
+			"		PRIORITY = 0x02;   /* High priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    OS EE { KERNEL_TYPE = FP; }; 	\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+
+	@Test public void testMpc567_linkerscriptmcu() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {		\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\"; \n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE;\n" +
+			"			MODEL = E200Z7;\n" +
+			"			SYS_STACK_SIZE = 128;\n" +
+			"			VLE = TRUE;\n" +
+			"		};\n" +
+			"		\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5674F;\n" + 
+			"			LINKERSCRIPT = \"linker_script_mcu.ld\";\n"+
 			"		};\n" +
 			"\n" +
 			"		STATUS = EXTENDED;\n" +

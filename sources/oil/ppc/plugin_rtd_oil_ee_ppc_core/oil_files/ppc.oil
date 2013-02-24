@@ -79,6 +79,7 @@ IMPLEMENTATION ee {
                 ] MODEL; 
                 
                 BOOLEAN VLE;
+                STRING LINKERSCRIPT : "A custom linker-script that is used for the current cpu. This option override the mcu-level custom linker-script, if defined.";
             }
             
         ] CPU_DATA;
@@ -91,6 +92,7 @@ IMPLEMENTATION ee {
 					MPC5674F, /* (mono Z7) */
 					MPC5643L  /* (one or two Z4) */
 				] MODEL;
+				STRING LINKERSCRIPT : "A custom linker-script that is used for each cpu, unless a cpu-specific linker-script is defined.";
 			}
 		] MCU_DATA;
     };

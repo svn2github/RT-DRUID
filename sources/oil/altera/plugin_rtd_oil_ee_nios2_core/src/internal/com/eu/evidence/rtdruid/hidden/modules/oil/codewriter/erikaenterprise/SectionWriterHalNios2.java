@@ -1042,7 +1042,7 @@ public class SectionWriterHalNios2 extends SectionWriter
 	        String value = "# RT_D: Referenced system library & location.\n"
 	                + "SYSTEM_NAME := " + sgrCpu.getString(Nios2Constants.SGRK__NIOS2_SYSTEM_LIBRARY__) + "\n"
 	                + "SYSTEM_DIR  := " + sgrCpu.getString(Nios2Constants.SGRK__NIOS2_SYSTEM_LIBRARY_PATH__) + "\n\n";
-	        CommonUtils.updateSgrProperty(sgrCpu, SGRK__MAKEFILE_MP_CPU_EXT_VARS__, value);
+	        CommonUtils.updateSgrProperty(sgrCpu, SGRK__MAKEFILE_CPU_EXT_VARS__, value);
 	        
 	        
 	        

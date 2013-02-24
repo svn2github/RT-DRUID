@@ -214,10 +214,10 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	 */
 	
 	/**
-	 * Identifies a string added inside the cpu.mk file (used to compile
-	 * multiprocessor systems), inside the section VARIABLES
+	 * Identifies a string added inside the cpu's makefile file inside the
+	 * section VARIABLES. This is used to both single-core and multi-core.
 	 */
-	public final static String SGRK__MAKEFILE_MP_CPU_EXT_VARS__ = "__CPU.MK_EXTENTIONS__VARIABLES__";
+	public final static String SGRK__MAKEFILE_CPU_EXT_VARS__ = "__CPU.MK_EXTENTIONS__VARIABLES__";
 	/**
 	 * Identifies a string added inside the cpu.mk file (used to compile a
 	 * multiprocessor system), just before the inclusion of common.mk

@@ -78,6 +78,8 @@ public class SectionWriterHalMpc567 extends SectionWriter
 	static final String ERR_CPU_TYPE = "Freescale PPC E200Zx";
 	static final String SGR_OS_APPL_SHARED_STACK_ID = "sgr__os_application__shared_stack_id__integer";
 	static final String SGR_OS_CPU_SYS_STACK_SIZE = "sgr__os_cpu_system_stack_size";
+	public static final String SGR_OS_CPU_LINKERSCRIPT = "sgr__os_cpu_linker_script";
+	public static final String SGR_OS_MCU_LINKERSCRIPT = "sgr__os_mcu_linker_script";
 	
 	static final String SGR_OS_MCU_MODEL = "sgr__os_cpu__mcu_model";
 
@@ -162,6 +164,28 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		
         LinkedHashSet<String> tmp_common_eeopts = new LinkedHashSet<String>();
 
+        String mcu_linker_script = null;
+        {
+    		for (IOilObjectList ool : oilObjects) {
+
+				/***********************************************************************
+				 * get values
+				 **********************************************************************/
+				ArrayList<String> childPaths = new ArrayList<String>();
+				List<String> childFound = parent.getRtosCommonChildType(ool, "MCU_DATA", childPaths);
+
+				for (int index = 0; index<childFound.size(); index++) {
+					String mcu_type = childFound.get(index);
+					if (PPC_MCU.equals(mcu_type)) {
+						String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "LINKERSCRIPT";
+						String[] tmp1 = CommonUtils.getValue(vt, currentMcuPrefix);
+						if (tmp1 != null && tmp1.length >0 && tmp1[0] != null) {
+							mcu_linker_script = tmp1[0];
+						}
+					}
+				}
+    		}
+        }
 		
 		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId++) {
 			final IOilObjectList ool = oilObjects[currentRtosId];
@@ -296,6 +320,26 @@ public class SectionWriterHalMpc567 extends SectionWriter
 					}
 
 				}
+				
+				/***********************************************************************
+				 * 
+				 * CPU linker script
+				 *  
+				 **********************************************************************/
+				{
+					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
+					String[] cpu_linkerscript = parent.getCpuDataValue(ool, "LINKERSCRIPT");
+					boolean linker = false;
+					if (cpu_linkerscript != null && cpu_linkerscript.length>0 && cpu_linkerscript[0] != null) {
+						sgrCpu.setProperty(SGR_OS_CPU_LINKERSCRIPT, ""+cpu_linkerscript[0]);
+						linker = true;
+					}
+					if (mcu_linker_script != null) {
+						sgrCpu.setProperty(SGR_OS_MCU_LINKERSCRIPT, ""+mcu_linker_script);
+						linker = true;
+					}
+				}
+
 			}
 			
 		}
@@ -966,9 +1010,12 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		}
 	}
 
-	void prepareMakeFile(final int currentRtosId, final IOilObjectList ool) {
+	/**
+	 * MakeFile
+	 */
+	private void prepareMakeFile(final int currentRtosId, final IOilObjectList ool) {
 		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
-		
+		final boolean multicore = parent.getOilObjects().length>1;
 		
 		final String cpu_type = checkOrDefault(getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE), PPC_MCU);
 		final String mcu_type;
@@ -984,7 +1031,9 @@ public class SectionWriterHalMpc567 extends SectionWriter
          **********************************************************************/
 		OsType wrapper = HostOsUtils.common.getTarget();
 
-		    StringBuffer sbMakefile_variables = new StringBuffer(commentWriterMf.writerBanner("Freescale"+mcu_type+", PPC "+cpu_type));
+	    StringBuilder sbMakefile = new StringBuilder(commentWriterMf.writerBanner("Freescale"+mcu_type+", PPC "+cpu_type));
+	    StringBuilder sbVariables = new StringBuilder();
+//			StringBuilder sbCommon = new StringBuilder();
 		    
 		    {	// PATHs
 	        	HashMap<String, ?> options = parent.getOptions();
@@ -1008,15 +1057,15 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			    	}
 			    	
 			    	
-			        sbMakefile_variables.append(
+			        sbMakefile.append(
 			        		CommonUtils.addMakefileDefinesInclude() +
 			                "APPBASE := " + appBase + "\n" +
 			                "OUTBASE := " + outputDir + "\n\n"
-			                
 			        );
 			    }
 	        	{
 			        boolean found_codewarrior = usingCodewarriorCompiler(currentRtosId);
+					String compiler_define = "";
 			        
 			        String gcc = "";
 	
@@ -1026,22 +1075,55 @@ public class SectionWriterHalMpc567 extends SectionWriter
 							String tmp = (String) options.get(PpcConstants.PREF_PPC_CODEWARRIOR_PATH);
 							if (tmp.length()>0) gcc = tmp;
 						}
-			    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(gcc, "PPC_CW_BASEDIR", wrapper) );
+			    		compiler_define = CommonUtils.compilerMakefileDefines(gcc, "PPC_CW_BASEDIR", wrapper);
 			    	} else {
 				    	if (options.containsKey(PpcConstants.PREF_PPC_DIAB_PATH) ) {
 							gcc = (String) options.get(PpcConstants.PREF_PPC_DIAB_PATH);
 						}
-			    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(gcc, "PPC_DIAB_BASEDIR", wrapper) );
+				    	compiler_define = CommonUtils.compilerMakefileDefines(gcc, "PPC_DIAB_BASEDIR", wrapper);
 			    	}
 			        
+			    	sbMakefile.append(compiler_define);
 	        	}		        
 		        
 		        
 		    }
 
 			ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
-            sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile_variables.toString());
 
+		{ // linker script
+			String link = null;
+			if (sgrCpu.containsProperty(SGR_OS_CPU_LINKERSCRIPT)) {
+				link = sgrCpu.getString(SGR_OS_CPU_LINKERSCRIPT);
+			}
+			if (link == null && sgrCpu.containsProperty(SGR_OS_MCU_LINKERSCRIPT)) {
+				link = sgrCpu.getString(SGR_OS_MCU_LINKERSCRIPT);
+			}
+			
+			if (link != null) {
+				sbVariables.append("EE_LINKERSCRIPT := " + link+ "\n");
+			}
+			
+		}
+
+//			if (multicore) {
+//				if (sgrCpu.containsProperty(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__)) {
+//					sbMakefile.append(sgrCpu.getString(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__));
+//				}
+//				sgrCpu.setProperty(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__, sbCommon.toString());
+//			} else {
+//				sbVariables.append(sbCommon.toString());
+//			}
+			
+			if (sgrCpu.containsProperty(SGRK__MAKEFILE_EXTENTIONS__)) {
+				sbMakefile.append(sgrCpu.getString(SGRK__MAKEFILE_EXTENTIONS__));
+			}
+			sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile.toString());
+
+			if (sgrCpu.containsProperty(SGRK__MAKEFILE_CPU_EXT_VARS__)) {
+				sbVariables.append(sgrCpu.getString(SGRK__MAKEFILE_CPU_EXT_VARS__));
+			}
+			sgrCpu.setProperty(SGRK__MAKEFILE_CPU_EXT_VARS__, sbVariables.toString());
 	}
 	
 

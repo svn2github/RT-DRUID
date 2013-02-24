@@ -241,7 +241,17 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 			for (String value : AbstractRtosWriter.getOsProperties(ool,SGRK__MAKEFILE_EXTENTIONS__)) {
 				sbMakefile.append(value);
 			}
-			
+
+			{
+				/***********************************************************************
+				 * CONTRIBUTION to variables
+				 ***********************************************************************/
+				for (String value : AbstractRtosWriter.getOsProperties(ool, SGRK__MAKEFILE_CPU_EXT_VARS__)) {
+					if (value != null)
+						sbMakefile.append(value);
+				}
+			}
+
 			{
 				/***************************************************************
 				 * FLAGS
