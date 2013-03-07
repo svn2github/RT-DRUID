@@ -20,6 +20,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr.IsrInfo;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 
@@ -65,6 +66,8 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 		int max_counter_hw = 0;
 		ISimpleGenRes sysTimer = null;
 		Map<String, ISimpleGenRes> devices = new LinkedHashMap<String, ISimpleGenRes>();
+		CpuHwDescription cpuDescr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+
 		for (ISimpleGenRes sgr: ool.getList(IOilObjectList.COUNTER)) {
 			if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_TYPE) && 
 					ISimpleGenResKeywords.COUNTER_TYPE_HW.equalsIgnoreCase(sgr.getString(ISimpleGenResKeywords.COUNTER_TYPE))) {
@@ -138,7 +141,12 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 			if (sysTimer != null) {
 				buffer.append("#define EE_SYSTEM_TIMER   " + sysTimer.getName() +"\n");
 				if (sysTimer.containsProperty(ISimpleGenResKeywords.COUNTER_DEVICE)) {
-					buffer.append("#define EE_SYSTEM_TIMER_DEVICE   " + "EE_"+hw_id+"_"+sysTimer.getString(ISimpleGenResKeywords.COUNTER_DEVICE) +"\n");					
+					String deviceId = sysTimer.getString(ISimpleGenResKeywords.COUNTER_DEVICE);
+					CpuHwDescription.McuCounterDevice device = cpuDescr == null ? null : cpuDescr.getMcuDevice(deviceId);
+					String value = "EE_" + 
+							(device == null ? hw_id : device.getMcu_id()) // CPU - MCU id
+							+ "_"+deviceId;
+					buffer.append("#define EE_SYSTEM_TIMER_DEVICE   " + value +"\n");
 				}
 			}
 			
@@ -146,12 +154,22 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 			
 			if (generateIsr2Defines == null) {
 				for (Entry<String, ISimpleGenRes> dev: devices.entrySet()) {
-					String entry_id = "EE_"+hw_id+"_"+dev.getKey()+"_ISR";
+					String deviceId = dev.getKey();
+					CpuHwDescription.McuCounterDevice device = cpuDescr == null ? null : cpuDescr.getMcuDevice(deviceId);
+
+					String entry_id = "EE_" + 
+							(device == null ? hw_id : device.getMcu_id()) // CPU - MCU id
+							+ "_"+deviceId+"_ISR";
+
 					ISimpleGenRes curr = dev.getValue();
 					buffer.append("#define " + entry_id + " " + curr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER) +"\n");
 					if (curr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING)) {
 						String prio = curr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING);
-						buffer.append("#define " + entry_id + "_PRI " + prio+"\n");
+						final String prio_id = (device == null ?
+								entry_id :
+								"EE_" + hw_id +"_"+device.getEntry()
+								)+"_PRI";
+						buffer.append("#define " + prio_id + " " + prio+"\n");
 					}
 	
 				}
@@ -160,15 +178,26 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 				for (ISimpleGenRes sgr: ool.getList(IOilObjectList.COUNTER)) {
 					if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_TYPE) && 
 							ISimpleGenResKeywords.COUNTER_TYPE_HW.equalsIgnoreCase(sgr.getString(ISimpleGenResKeywords.COUNTER_TYPE))) {
-						
+
+						String deviceId = sgr.containsProperty(ISimpleGenResKeywords.COUNTER_DEVICE) ? sgr.getString(ISimpleGenResKeywords.COUNTER_DEVICE) : null;
+						CpuHwDescription.McuCounterDevice device = cpuDescr == null ? null : cpuDescr.getMcuDevice(deviceId);
+						final String entry_id = "EE_" + 
+								(device == null ? hw_id : device.getMcu_id()) // CPU - MCU id
+								+ "_"+deviceId+"_ISR";
+						final String prio_id = (device == null ?
+								entry_id :
+								"EE_" + hw_id +"_"+device.getEntry()
+								)+"_PRI";
+
 						IsrInfo info = new IsrInfo();
 						
 						info.name = sgr.getName();
 						info.category = "2";
 						info.handler = sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER);
-						info.entry_id = "EE_"+hw_id+"_"+sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE)+"_ISR";
+//						info.entry_id = "EE_"+hw_id+"_"+sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE)+"_ISR";
+						info.entry_id = entry_id;
 						info.disable = false;
-						info.generated_prioid = info.entry_id + "_PRI";
+						info.generated_prioid = prio_id;
 						info.generated_prio_string = sgr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING) ? sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING): null;
 
 						generateIsr2Defines.doWriteIsr12(buffer, commentWriterH, info);
@@ -211,8 +240,16 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 			// check sysTimer
 			ISimpleGenRes sysTimer = null;
 			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.COUNTER)) {
+				CpuHwDescription cpuDescr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+				
 				if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_TYPE) && 
 						ISimpleGenResKeywords.COUNTER_TYPE_HW.equals(sgr.getObject(ISimpleGenResKeywords.COUNTER_TYPE))) {
+
+					CpuHwDescription.McuCounterDevice device;
+					{
+						String deviceId = sgr.containsProperty(ISimpleGenResKeywords.COUNTER_DEVICE) ? sgr.getString(ISimpleGenResKeywords.COUNTER_DEVICE) : null;
+						device = cpuDescr == null ? null : cpuDescr.getMcuDevice(deviceId);
+					}
 						
 					if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_SYSTIMER)
 							&& Boolean.TRUE.equals(sgr.getObject(ISimpleGenResKeywords.COUNTER_SYSTIMER))) {
@@ -226,13 +263,20 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 							throw new OilCodeWriterException("System timer does not support priority redefinition");
 						}
 						
-						sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, systimer_handler);
+						if (device == null) {
+							sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, systimer_handler);
+						} else {
+							sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, device.getHandler());							
+						}
 						
 					} else  { // handler
 						String handler = "EE_" + sgr.getName() + "_handler";
 						if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_USER_HANDLER)) {
 							handler = sgr.getString(ISimpleGenResKeywords.COUNTER_USER_HANDLER);
+						} else if (device != null){
+							handler = device.getHandler();
 						}
+
 						
 						sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, handler);
 					}

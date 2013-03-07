@@ -62,6 +62,19 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			IExtractObjectsExtentions,
 			IExtractKeywordsExtentions {
 
+	/**
+	 * 
+	 */
+	public static final String MCU_MPC5668G = "MPC5668G";
+	/**
+	 * 
+	 */
+	public static final String MCU_MPC5674F = "MPC5674F";
+	/**
+	 * 
+	 */
+	public static final String MCU_MPC5643L = "MPC5643L";
+	
 	private static final String EE_E200ZX_SYSTEM_TIMER_HANDLER = "EE_e200zx_system_timer_handler";
 	final String indent1 = IWritersKeywords.INDENT;
 	final String indent2 = indent1 + IWritersKeywords.INDENT;
@@ -198,42 +211,19 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				 * Get CPU model
 				 *  
 				 **********************************************************************/
-				String hw_type = null;
-//				Utility.explodeOilVar(Utility.varTreeToStringErtd(vt))
-				for (String currentCpuPrefix: AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX)) {
-					String cpu_model = CommonUtils.getFirstChildEnumType(vt, currentCpuPrefix+"MODEL", null);
-					if ("E200Z0".equals(cpu_model)) {
-						tmp_eeopts.add("__PPCE200Z0__");
-						hw_type = IWritersKeywords.CPU_PPCE200Z0;
-						
-					} else if ("E200Z4".equals(cpu_model)) {
-						tmp_eeopts.add("EE_PPCE200Z4");
-						hw_type = IWritersKeywords.CPU_PPCE200Z4;
-						
-					} else if ("E200Z6".equals(cpu_model)) {
-						tmp_eeopts.add("__PPCE200Z6__");
-						hw_type = IWritersKeywords.CPU_PPCE200Z6;
-						
-					} else if ("E200Z7".equals(cpu_model)) {
-						tmp_eeopts.add("__PPCE200Z7__");
-						hw_type = IWritersKeywords.CPU_PPCE200Z7;
-						
-					} else {
-						Messages.sendError((cpu_model != null ? "Wrong" : "Missing") +
-								" cpu model for PPC E200Zx family." +
-								(cpu_model != null ? " Found " + cpu_model : ""), null, "", null);
-					}
-				}
+				String hw_type = ErikaEnterpriseWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE);
 				if (hw_type != null) {
-					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
-					sgrCpu.setProperty(ISimpleGenResKeywords.OS_CPU_TYPE, hw_type);
-					
-					CpuHwDescription cpuDescr = EECpuDescriptionManager.getHWDescription(hw_type);
-					if (cpuDescr != null) {
-						sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR, cpuDescr);
-						sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_COMMENT_MANAGER, cpuDescr.commentManager);
-					} else {
-						sgrCpu.removeAProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
+					if (IWritersKeywords.CPU_PPCE200Z0.equals(hw_type)) {
+						tmp_eeopts.add("__PPCE200Z0__");
+						
+					} else if (IWritersKeywords.CPU_PPCE200Z4.equals(hw_type)) {
+						tmp_eeopts.add("EE_PPCE200Z4");
+						
+					} else if (IWritersKeywords.CPU_PPCE200Z6.equals(hw_type)) {
+						tmp_eeopts.add("__PPCE200Z6__");
+						
+					} else if (IWritersKeywords.CPU_PPCE200Z7.equals(hw_type)) {
+						tmp_eeopts.add("__PPCE200Z7__");
 					}
 					
 					tmp_common_eeopts.add("__PPCE200ZX__");
@@ -863,29 +853,8 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		for (IOilObjectList ool : oilObjects) {
 
 			if (mcu_model == null) {
-				/***********************************************************************
-				 * get values
-				 **********************************************************************/
-				ArrayList<String> childPaths = new ArrayList<String>();
-				List<String> childFound = parent.getRtosCommonChildType(ool, "MCU_DATA", childPaths);
-
-				for (int index = 0; index<childFound.size(); index++) {
-					if (mcu_model == null) {
-						String mcu_type = childFound.get(index);
-						
-						if (PPC_MCU.equals(mcu_type)) {
-							// ... and compete it 
-							String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "MODEL";
-			
-							mcu_model = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, null);
-						}
-						
-					}
-				}
-
+				mcu_model = getMcuType(parent.getVt(), ool);
 			}
-			
-			
 			
 			{
 				String hw_type = getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE);
@@ -904,7 +873,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		}
 		
 		String mcu_ee_opt = null;
-		if ("MPC5668G".equals(mcu_model)) {
+		if (MCU_MPC5668G.equals(mcu_model)) {
 			
 			if (z0>1 || z6>1 || z4 >0 || z7 >0) {
 				Messages.sendWarningNl("MPC5668G mcu supports not more than one z0 and not more than one z6");
@@ -912,13 +881,13 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			mcu_ee_opt = "__MPC5668G__";
 			
 			updateSharedIntControllerPrio();
-		} else if ("MPC5674F".equals(mcu_model)) {
+		} else if (MCU_MPC5674F.equals(mcu_model)) {
 			
 			if (z0>0 || z6>0 || z4 >0 || z7 !=1) {
 				Messages.sendWarningNl("MPC5674F mcu supports only a single Z7 cpu");
 			}
 			mcu_ee_opt = "__MPC5674F__";
-		} else if ("MPC5643L".equals(mcu_model)) {
+		} else if (MCU_MPC5643L.equals(mcu_model)) {
 			
 			if (z0>0 || z6>0 || z7 >0 || z4 > 2) {
 				Messages.sendWarningNl("MPC5643L mcu supports one or two Z4 cpu");
@@ -940,6 +909,35 @@ public class SectionWriterHalMpc567 extends SectionWriter
 				sgrCpu.setProperty(SGR_OS_MCU_MODEL, mcu_model);
 			}
 		}
+	}
+
+	/**
+	 * @param mcu_model
+	 * @param ool
+	 * @return
+	 */
+	public static String getMcuType(IVarTree vt, IOilObjectList ool) {
+		/***********************************************************************
+		 * get values
+		 **********************************************************************/
+		String mcu_model = null;
+		ArrayList<String> childPaths = new ArrayList<String>();
+		List<String> childFound = ErikaEnterpriseWriter.getRtosCommonChildType(vt, ool, "MCU_DATA", childPaths);
+
+		for (int index = 0; index<childFound.size(); index++) {
+			if (mcu_model == null) {
+				String mcu_type = childFound.get(index);
+				
+				if (PPC_MCU.equals(mcu_type)) {
+					// ... and compete it 
+					String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "MODEL";
+
+					mcu_model = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, null);
+				}
+				
+			}
+		}
+		return mcu_model;
 	}
 	
 	/**

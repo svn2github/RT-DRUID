@@ -19,16 +19,7 @@
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrMpc5">
       </cpu>
       <cpu
-            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrPpcE200Z0">
-      </cpu>
-      <cpu
-            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrPpcE200Z4">
-      </cpu>
-      <cpu
-            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrPpcE200Z6">
-      </cpu>
-      <cpu
-            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrPpcE200Z7">
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrPpcE200Zx">
       </cpu>
    </extension>
 	<extension

@@ -1,6 +1,7 @@
 package com.eu.evidence.rtdruid.test.modules.oil.codewriter;
 
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
@@ -1995,6 +1996,100 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		TICKSPERBASE = 1;\n" +
 			"		SECONDSPERTICK = 0.004;\n" +
 			"		TYPE = HARDWARE { DEVICE=\"INCREMENTER\";};\n" +
+			"	};\n" +
+
+			"	ALARM AcquireAlarm {\n" +
+			"		COUNTER = myCounter;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter1; };\n" +
+			"	};\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+
+	@Test
+	public void testMpc567_Timer_STM() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {		\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\"; \n" +
+			"\n" +
+			"		CPU_DATA = PPCE200ZX {\n" +
+			"			APP_SRC = \"main.c\";\n" +
+			"			MULTI_STACK = TRUE {\n" + 
+			"				IRQ_STACK = TRUE {\n" + 
+			"					SYS_SIZE=64;\n" + 
+			"				};\n" + 
+			"			};\n" + 
+			"			MODEL = E200Z4;\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			VLE = FALSE;\n" +
+			"		};\n" +
+			"		\n" +
+			"		MCU_DATA = PPCE200ZX {\n" +
+			"			MODEL = MPC5643L;\n" + 
+			"		};\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"		\n" +
+			"    };\n" +
+			"    \n" +
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK Task2 {\n" +
+			"		PRIORITY = 0x02;   /* High priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    OS EE { \n" +
+			"		KERNEL_TYPE = ECC2;\n" +
+			"		ORTI_SECTIONS = ALL;\n" +
+			"  }; 	\n" +
+			"	COUNTER myCounter0 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter1 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"		SECONDSPERTICK = 1.4;\n" +
+			"		TYPE = HARDWARE { DEVICE=\"DECREMENTER\"; SYSTEM_TIMER=TRUE;};\n" +
+			"	};\n" +
+			"	COUNTER myCounter {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	COUNTER myCounter2 {\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"		SECONDSPERTICK = 0.004;\n" +
+			"		TYPE = HARDWARE { DEVICE=\"STM\";};\n" +
 			"	};\n" +
 
 			"	ALARM AcquireAlarm {\n" +

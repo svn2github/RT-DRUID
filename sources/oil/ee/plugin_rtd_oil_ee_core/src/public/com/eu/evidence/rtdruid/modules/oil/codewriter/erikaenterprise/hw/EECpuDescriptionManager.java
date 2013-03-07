@@ -12,6 +12,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.IRequiresUpdates;
 
 /**
  * This class manages the list of available HW descriptions
@@ -79,7 +80,18 @@ public final class EECpuDescriptionManager {
 	 * @return the description for specified HW
 	 */
 	public static CpuHwDescription getHWDescription(String hw_id) {
-		return instance.availableHWs.get(hw_id);
+		CpuHwDescription answer = instance.availableHWs.get(hw_id);
+		if (answer instanceof IRequiresUpdates) {
+			try {
+				answer = answer.getClass().newInstance();
+			} catch (InstantiationException e) {
+				RtdruidLog.log(e);
+			} catch (IllegalAccessException e) {
+				RtdruidLog.log(e);
+			}
+		}
+
+		return answer;
 	}
 
 	/**

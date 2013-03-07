@@ -13,10 +13,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import com.eu.evidence.rtdruid.desk.Messages;
@@ -37,6 +35,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.IRequiresUpdates;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDescriptionManager;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IDistributionConstant;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
@@ -295,28 +294,28 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				// TODO DEFAULT
 						if (tmp != null) {
 
-				// check if the value is valid
-				checkKeys.setOilProperty("MULTI_STACK", tmp);
-
-				if ("TRUE".equalsIgnoreCase(tmp) && !answer.contains(DEF__MULTI_STACK__)) {
-								enable_multiStack = Boolean.TRUE;
-					String tmpPath = currentCpuDataPrefix
-						+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
-						+ "IRQ_STACK";
-					
-					String tmp2 = CommonUtils.getFirstChildEnumType(vt, tmpPath, child);
-					boolean ok = "TRUE".equalsIgnoreCase(tmp2);
-				
-					// check if the value is valid
-					checkKeys.setOilProperty("IRQ_STACK", tmp2);
-					
-					if (ok && !answer.contains(DEF__IRQ_STACK_NEEDED__)) {
-						answer.add(DEF__IRQ_STACK_NEEDED__);
-					}
-							} else {
-								enable_multiStack = Boolean.FALSE;
-				}
-			}
+							// check if the value is valid
+							checkKeys.setOilProperty("MULTI_STACK", tmp);
+			
+							if ("TRUE".equalsIgnoreCase(tmp) && !answer.contains(DEF__MULTI_STACK__)) {
+											enable_multiStack = Boolean.TRUE;
+								String tmpPath = currentCpuDataPrefix
+									+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
+									+ "IRQ_STACK";
+								
+								String tmp2 = CommonUtils.getFirstChildEnumType(vt, tmpPath, child);
+								boolean ok = "TRUE".equalsIgnoreCase(tmp2);
+							
+								// check if the value is valid
+								checkKeys.setOilProperty("IRQ_STACK", tmp2);
+								
+								if (ok && !answer.contains(DEF__IRQ_STACK_NEEDED__)) {
+									answer.add(DEF__IRQ_STACK_NEEDED__);
+								}
+										} else {
+											enable_multiStack = Boolean.FALSE;
+							}
+						}
 					}
 				}
 			}
@@ -761,8 +760,24 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		 **********************************************************************/
 		
 
-		IOilObjectList[] answer = super.extractObjects(); 
-		
+		IOilObjectList[] answer = super.extractObjects();
+
+		/***********************************************************************
+		 * Check and/or update CPU Descriptions
+		 **********************************************************************/
+		for (int i=0; i<answer.length; i++) {
+			final IOilObjectList ool = answer[i];
+			for (ISimpleGenRes sgrOs : ool.getList(IOilObjectList.OS)) {
+				if (sgrOs.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
+					CpuHwDescription descr = (CpuHwDescription) sgrOs
+							.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
+					if (descr != null && descr instanceof IRequiresUpdates) {
+						((IRequiresUpdates) descr).update(vt, answer, i);
+					}
+				}
+			}
+		}
+
 		/***********************************************************************
 		 * 
 		 * Mapping between Cpu and Counter.
@@ -1293,6 +1308,9 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	 * @return
 	 */
 	public List<String> getRtosCommonChildType(IOilObjectList ool, String key, List<String> child) {
+		return getRtosCommonChildType(vt, ool, key, child);
+	}
+	public static List<String> getRtosCommonChildType(IVarTree vt, IOilObjectList ool, String key, List<String> child) {
 	    ArrayList<String> answer = new ArrayList<String>();
 	    if (child != null) {
 	    	child.clear();
@@ -1865,18 +1883,14 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_TYPE) && 
 						ISimpleGenResKeywords.COUNTER_TYPE_HW.equalsIgnoreCase(sgr.getString(ISimpleGenResKeywords.COUNTER_TYPE))) {
 					
-					// priority
-					if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
-						// search max ready priority
-						int tmp_priority = sgr.getInt(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY);
-						{// store the priority (if not already stored)
-							int pos = Collections.binarySearch(isr2PrioPres,
-									new Integer(tmp_priority));
-							if (pos < 0) { // not found
-								isr2PrioPres.add(-pos - 1, new Integer(tmp_priority));
-							}
+					Integer tmp_priority = getCounterPrio(sgr, cpuDescr);
+					if (tmp_priority != null ){// store the priority (if not already stored)
+						int pos = Collections.binarySearch(isr2PrioPres,
+								tmp_priority);
+						if (pos < 0) { // not found
+							isr2PrioPres.add(-pos - 1, tmp_priority);
 						}
-					}				
+					}
 				}
 			}
 			
@@ -1925,9 +1939,9 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.COUNTER)) {
 				if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_TYPE) && 
 						ISimpleGenResKeywords.COUNTER_TYPE_HW.equalsIgnoreCase(sgr.getString(ISimpleGenResKeywords.COUNTER_TYPE))) {
-					if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
-							
-						Integer integer_priority = new Integer(sgr.getInt(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY));
+					Integer integer_priority = getCounterPrio(sgr, cpuDescr);
+
+					if (integer_priority != null) {
 						int prioVal = packPriorities ? Collections.binarySearch(isr2PrioPres, integer_priority) : integer_priority.intValue();
 						if (prioVal >= 0) {
 							prioVal+=packPriorities ? 1 : 0;; // values starting from 1 (not 0)
@@ -1942,6 +1956,23 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				ool.getList(IOilObjectList.OS).get(0).setProperty(ISimpleGenResKeywords.OS_ADD_IRQH, "true");
 			}
 		}
+	}
+
+	/**
+	 * @param sgr
+	 * @param cpuDescr
+	 * @return
+	 */
+	private Integer getCounterPrio(ISimpleGenRes sgr, CpuHwDescription cpuDescr) {
+		String deviceId = sgr.containsProperty(ISimpleGenResKeywords.COUNTER_DEVICE) ? sgr.getString(ISimpleGenResKeywords.COUNTER_DEVICE) : null;
+		CpuHwDescription.McuCounterDevice device = cpuDescr == null ? null : cpuDescr.getMcuDevice(deviceId);
+		// priority
+		Integer integer_priority = device == null ? null : device.getPrio();
+		if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
+			// search max ready priority
+			integer_priority = sgr.getInt(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY);
+		}
+		return integer_priority;
 	}
 	
 	

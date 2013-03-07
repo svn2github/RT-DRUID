@@ -1097,4 +1097,410 @@ public class CodeWriterPpcMultiCoreTest extends AbstractCodeWriterTest {
 			"};";
     	commonWriterTest(text, 2);
 	}
+	
+	@Test public void testDoublez4_timer_decrementer() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"		EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n"+
+			"\n"+
+			"		MASTER_CPU = \"master\";\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			ID = \"master\";\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"master.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"			CPU_CLOCK = 98.5;\n" +
+			"		};\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			ID = \"slave\";\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"		STARTUPHOOK = FALSE;\n"+
+			"		ERRORHOOK = FALSE;\n"+
+			"		SHUTDOWNHOOK = FALSE;\n"+
+			"		PRETASKHOOK = FALSE;\n"+
+			"		POSTTASKHOOK = FALSE;\n"+
+			"		USEGETSERVICEID = FALSE;\n"+
+			"		USEPARAMETERACCESS = FALSE;\n"+
+			"		USERESSCHEDULER = FALSE;\n"+
+			"\n"+
+			"		USEREMOTETASK = ALWAYS;\n"+
+			"		ORTI_SECTIONS = ALL;\n"+
+			"\n"+
+			"		KERNEL_TYPE = BCC1;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6 {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6b {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6c {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0 {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = TRUE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0b {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0c {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"	COUNTER myCounter1 {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"		SECONDSPERTICK = 1.4;\n" +
+			"		TYPE = HARDWARE { DEVICE=\"DECREMENTER\"; SYSTEM_TIMER=TRUE;};\n" +
+			"	};\n" +
+			"	COUNTER myCounter {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	ALARM AcquireAlarm {\n" +
+			"		COUNTER = myCounter1;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter; };\n" +
+			"	};\n" +
+			"};\n";
+		commonWriterTest(text, 2);
+	}
+
+	@Test public void testDoublez4_timer_stm() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"		EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n"+
+			"\n"+
+			"		MASTER_CPU = \"master\";\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			ID = \"master\";\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"master.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"			CPU_CLOCK = 98.5;\n" +
+			"		};\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			ID = \"slave\";\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"		STARTUPHOOK = FALSE;\n"+
+			"		ERRORHOOK = FALSE;\n"+
+			"		SHUTDOWNHOOK = FALSE;\n"+
+			"		PRETASKHOOK = FALSE;\n"+
+			"		POSTTASKHOOK = FALSE;\n"+
+			"		USEGETSERVICEID = FALSE;\n"+
+			"		USEPARAMETERACCESS = FALSE;\n"+
+			"		USERESSCHEDULER = FALSE;\n"+
+			"\n"+
+			"		USEREMOTETASK = ALWAYS;\n"+
+			"		ORTI_SECTIONS = ALL;\n"+
+			"\n"+
+			"		KERNEL_TYPE = BCC1;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6 {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6b {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6c {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0 {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = TRUE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0b {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0c {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"	ISR Generic_inter_isr_handler1 {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		CATEGORY = 2;\n" +
+			"		PRIORITY = 1;\n" +
+			"		ENTRY = \"7\";\n" +
+			"	};\n" +
+			"	ISR Generic_inter_isr_handler2 {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		CATEGORY = 2;\n" +
+			"		PRIORITY = 2;\n" +
+			"		ENTRY = \"19\";\n" +
+			"	};\n" +
+			"	COUNTER myCounter1 {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"		SECONDSPERTICK = 1.4;\n" +
+			"		TYPE = HARDWARE { DEVICE=\"STM\"; SYSTEM_TIMER=TRUE;};\n" +
+			"	};\n" +
+			"	COUNTER myCounter {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	ALARM AcquireAlarm {\n" +
+			"		COUNTER = myCounter1;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter; };\n" +
+			"	};\n" +
+			"};\n";
+		commonWriterTest(text, 2);
+	}
+
+	@Test public void testDoublez4_timer_stm_handler() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"		EE_OPT = \"__E200ZX_EXECUTE_FROM_RAM__\";\n"+
+			"\n"+
+			"		MASTER_CPU = \"master\";\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			ID = \"master\";\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"master.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"			CPU_CLOCK = 98.5;\n" +
+			"		};\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			ID = \"slave\";\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"		STARTUPHOOK = FALSE;\n"+
+			"		ERRORHOOK = FALSE;\n"+
+			"		SHUTDOWNHOOK = FALSE;\n"+
+			"		PRETASKHOOK = FALSE;\n"+
+			"		POSTTASKHOOK = FALSE;\n"+
+			"		USEGETSERVICEID = FALSE;\n"+
+			"		USEPARAMETERACCESS = FALSE;\n"+
+			"		USERESSCHEDULER = FALSE;\n"+
+			"\n"+
+			"		USEREMOTETASK = ALWAYS;\n"+
+			"		ORTI_SECTIONS = ALL;\n"+
+			"\n"+
+			"		KERNEL_TYPE = BCC1;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6 {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6b {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ6c {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0 {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = TRUE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0b {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskZ0c {\n"+
+			"		CPU_ID = \"slave\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"	ISR Generic_inter_isr_handler1 {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		CATEGORY = 2;\n" +
+			"		PRIORITY = 1;\n" +
+			"		ENTRY = \"7\";\n" +
+			"	};\n" +
+			"	ISR Generic_inter_isr_handler2 {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		CATEGORY = 2;\n" +
+			"		PRIORITY = 2;\n" +
+			"		ENTRY = \"19\";\n" +
+			"	};\n" +
+			"	COUNTER myCounter1 {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"		SECONDSPERTICK = 1.4;\n" +
+			"		TYPE = HARDWARE { DEVICE=\"STM\"; HANDLER=\"user_stm_handler\";};\n" +
+			"	};\n" +
+			"	COUNTER myCounter {\n" +
+			"		CPU_ID = \"slave\";\n" +
+			"		MINCYCLE = 0;\n" +
+			"		MAXALLOWEDVALUE = 10;\n" +
+			"		TICKSPERBASE = 1;\n" +
+			"	};\n" +
+			"	ALARM AcquireAlarm {\n" +
+			"		COUNTER = myCounter1;\n" +
+			"		ACTION = INCREMENTCOUNTER { COUNTER = myCounter; };\n" +
+			"	};\n" +
+			"};\n";
+		commonWriterTest(text, 2);
+	}
+
 }

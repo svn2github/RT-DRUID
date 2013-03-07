@@ -1,8 +1,11 @@
 package com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.CommentsManager;
@@ -17,8 +20,56 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
  */
 public class CpuHwDescription {
 	
+	public static class McuCounterDevice {
+		protected final String id;
+		protected final String mcu_id;
+		protected final int prio;
+		protected final String entry;
+		protected final String handler;
+		
+		
+		public McuCounterDevice(final String id, final String mcu_id, final int prio, final String entry, final String handler) {
+			this.id = id;
+			this.mcu_id = mcu_id;
+			this.prio = prio;
+			this.entry = entry;
+			this.handler = handler;
+		}
+		/**
+		 * @return the id
+		 */
+		public String getDeviveId() {
+			return id;
+		}
+		/**
+		 * @return the entry
+		 */
+		public String getEntry() {
+			return entry;
+		}
+		/**
+		 * @return the mcu_id
+		 */
+		public String getMcu_id() {
+			return mcu_id;
+		}
+		/**
+		 * @return the prio
+		 */
+		public int getPrio() {
+			return prio;
+		}
+		/**
+		 * @return the handler
+		 */
+		public String getHandler() {
+			return handler;
+		}
+	}
+
+	
 	public interface IRequiresUpdates {
-		public void update(IVarTree vt, IOilObjectList[] objects);
+		public void update(IVarTree vt, IOilObjectList[] objects, int currentCpuId);
 	}
 	
 	
@@ -92,6 +143,7 @@ public class CpuHwDescription {
 	 */
 	protected int maxNestedInts = DEFAULT_MAX_NESTING_LEVEL;
 
+	protected Map<String, McuCounterDevice> mcuCounterDevices = new HashMap<String, CpuHwDescription.McuCounterDevice>();
 
 	/**
 	 * Pack isr priorities
@@ -174,5 +226,15 @@ public class CpuHwDescription {
 	 */
 	public boolean isPackIsrPriorities() {
 		return packIsrPriorities;
+	}
+	
+	public McuCounterDevice getMcuDevice(String deviceId) {
+		return mcuCounterDevices.get(deviceId);
+	}
+	
+	protected void addMcuDevices(Collection<McuCounterDevice> devices) {
+		for (McuCounterDevice device : devices) {
+			mcuCounterDevices.put(device.getDeviveId(), device);
+		}
 	}
 }
