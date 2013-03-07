@@ -380,7 +380,7 @@ public class TaskSet extends ModeResList {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(var.get() != null) {
+		if(var != null && var.get() != null) {
 			return var.toString();
 		}
 		else{

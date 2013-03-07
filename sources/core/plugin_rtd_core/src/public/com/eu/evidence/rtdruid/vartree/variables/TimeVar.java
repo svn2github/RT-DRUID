@@ -183,7 +183,7 @@ public class TimeVar extends DoubleVar implements Comparable<TimeVar> {
 			return arg0 == null || arg0.value == null ? 0 : Integer.MAX_VALUE;
 		
 		if (arg0 == null || arg0.value == null)
-			return Integer.MIN_VALUE;
+			return -1;
 		
 		return ((Double) super.value).compareTo( ((Double) arg0.value).doubleValue()  * ratio(arg0.type, type));
 	}

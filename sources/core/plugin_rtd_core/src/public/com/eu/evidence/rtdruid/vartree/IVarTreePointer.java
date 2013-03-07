@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * 
  * @author Nicola Serreli
 */
-public interface IVarTreePointer {
+public interface IVarTreePointer extends Cloneable {
 	
 	// ----------------------    CONSTRUCTOR  ----------------------
 	

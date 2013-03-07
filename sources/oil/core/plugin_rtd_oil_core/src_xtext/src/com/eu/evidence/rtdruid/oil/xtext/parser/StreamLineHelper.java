@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.URI;
  */
 public class StreamLineHelper implements ILineHelper {
 	
-	private static class Info implements LineData, Tree.CloneElement<Info> {
+	private static class Info implements LineData, Tree.CloneElement<Info>, Cloneable {
 		final static int UNSET_VALUE = -1;
 		
 		URI uri;

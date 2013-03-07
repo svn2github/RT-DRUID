@@ -54,6 +54,13 @@ public enum OilObjectType {
 	private final String text;
 	private static Map<String, OilObjectType> elements = null;
 	
+	static {
+		elements = new HashMap<String, OilObjectType>();
+		for (OilObjectType p : OilObjectType.values()) {
+			elements.put(p.getText(), p);
+		}
+	}
+	
 	OilObjectType(String text) {
 		this.text = text;
 	}
@@ -66,12 +73,6 @@ public enum OilObjectType {
 	}
 	
 	public static OilObjectType get(String objID) {
-		if (elements == null) {
-			elements = new HashMap<String, OilObjectType>();
-			for (OilObjectType p : OilObjectType.values()) {
-				elements.put(p.getText(), p);
-			}
-		}
 		OilObjectType answer = elements.get(objID);
 		if (answer == null) {
 			throw new IllegalArgumentException("Unknow id " + objID);

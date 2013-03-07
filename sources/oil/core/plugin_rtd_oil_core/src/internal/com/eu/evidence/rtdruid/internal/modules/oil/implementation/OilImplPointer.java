@@ -38,7 +38,7 @@ public class OilImplPointer implements IOilImplPointer {
 	 * This little contains all description of a node. Internal fiels are all
 	 * public and final.
 	 */
-	private class ChildDescr implements IOilImplElementDescr {
+	private static class ChildDescr implements IOilImplElementDescr {
 		/** Contains the name of current node */
 		final String name;
 
@@ -91,7 +91,9 @@ public class OilImplPointer implements IOilImplPointer {
 	 * Contains simplest children of a Boolean: a TRUE Enumerator and a FALSE
 	 * Enumerator
 	 */
-	protected static ChildDescr[] DEFAULT_BOOLEAN_CHILDREN = null;
+	protected static ChildDescr[] DEFAULT_BOOLEAN_CHILDREN = new ChildDescr[] {
+		new ChildDescr("TRUE",  ENUMERATOR, null),
+		new ChildDescr("FALSE", ENUMERATOR, null) };
 
 	/** A reference to Oil Implementation Tree (XML Document) */
 	protected Document doc;
@@ -249,15 +251,6 @@ public class OilImplPointer implements IOilImplPointer {
 				&& "BOOLEAN".equalsIgnoreCase(((Element) point)
 						.getAttribute(IOilXMLLabels.ATTR_TYPE))) {
 
-			// use cache or make a new one and cache it
-			if (DEFAULT_BOOLEAN_CHILDREN == null) {
-				DEFAULT_BOOLEAN_CHILDREN = new ChildDescr[2];
-				DEFAULT_BOOLEAN_CHILDREN[0] = new ChildDescr("TRUE",
-						ENUMERATOR, null);
-
-				DEFAULT_BOOLEAN_CHILDREN[1] = new ChildDescr("FALSE",
-						ENUMERATOR, null);
-			}
 			answer = DEFAULT_BOOLEAN_CHILDREN;
 
 		}

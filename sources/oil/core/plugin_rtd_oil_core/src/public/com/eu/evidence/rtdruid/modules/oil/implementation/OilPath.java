@@ -19,7 +19,7 @@ import com.eu.evidence.rtdruid.vartree.DataPath;
  * @since 2.0
  * 
  */
-public class OilPath {
+public class OilPath implements Cloneable {
 	
 	private final OilObjectType objType;
 	

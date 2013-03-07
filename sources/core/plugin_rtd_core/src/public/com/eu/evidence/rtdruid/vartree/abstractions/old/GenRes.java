@@ -62,7 +62,7 @@ public class GenRes {
 		}
 
 		public String[] get(int what) {
-			ArrayList<String> curr = null;
+			ArrayList<String> curr;
 			switch (what) {
 
 			case ALL:
@@ -78,6 +78,8 @@ public class GenRes {
 			case OPTIONAL:
 				curr = optionalList;
 				break;
+			default : 
+				curr = new ArrayList<String>();
 			}
 
 			return (String[]) curr.toArray(new String[0]);

@@ -168,7 +168,7 @@ public class ResourceList {
 		/** The name (whitout protection for special characters) */
 		private String nome;
 		
-		private String path;
+//		private String path;
 
 		/** The position in "infoRis" list */
 		private int pos;
@@ -234,7 +234,7 @@ public class ResourceList {
 		 */
 		public String toString() {
 			return "ResName " + nome + " (type "+resType
-			+"; index "+pos+"; path "+path+")";			
+			+"; index "+pos+/*"; path "+path+*/")";			
 		}
 	}
 

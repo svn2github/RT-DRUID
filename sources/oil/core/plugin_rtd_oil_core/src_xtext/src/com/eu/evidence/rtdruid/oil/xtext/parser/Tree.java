@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @since 2.0
  *
  */
- public  class  Tree <T> {
+ public  class  Tree <T> implements Cloneable {
 	 public interface CloneElement <R> {
 		 public R clone();
 	 }
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 	  *
 	  * @param <R> The data type
 	  */
-	 protected static class Container<R> {
+	 protected static class Container<R> implements Cloneable {
 		 final R element;
 		 
 		 Container<R> parent;
@@ -120,7 +120,7 @@ import java.util.ArrayList;
 	 * @since 2.0
 	 *
 	 */
-	public class TreePointer {
+	public class TreePointer implements Cloneable {
 		
 		/** Current node */
 		protected Container<T> pointer;

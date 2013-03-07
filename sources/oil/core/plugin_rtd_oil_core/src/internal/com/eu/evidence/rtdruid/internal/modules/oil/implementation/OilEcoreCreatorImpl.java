@@ -447,7 +447,7 @@ public class OilEcoreCreatorImpl extends OilEcoreCreator {
 //				RtdruidLog.showDebug(/*new IllegalArgumentException*/("Unsupported rtd class " + type));
 			}
 			
-			if (answer != null) {
+			/*if (answer != null) */{
 				EClassifier tmp = ePackage.getEClassifier(answer.getName());
 				if (tmp != null) {
 					answer = (EClass) tmp;

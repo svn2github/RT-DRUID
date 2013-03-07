@@ -67,12 +67,9 @@ public class OilObjectList implements IOilObjectList {
 	 *             if id isn't a valid identifer (see contants declared above).
 	 */
 	public void setList(int id, ISimpleGenRes[] list) {
-		if (list == null) {
-			objectLists[id] = Collections
-			.unmodifiableList(new ArrayList<ISimpleGenRes>());
-		}
-		objectLists[id] = Collections
-				.unmodifiableList(Arrays.asList(list));
+		objectLists[id] = list == null ?
+				Collections.unmodifiableList(new ArrayList<ISimpleGenRes>()) :
+				Collections.unmodifiableList(Arrays.asList(list));
 	}
 	/**
 	 * Returns an unmodificable list of specific OSEK objects. <br>

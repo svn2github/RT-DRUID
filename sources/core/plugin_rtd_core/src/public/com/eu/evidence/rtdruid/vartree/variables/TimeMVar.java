@@ -128,7 +128,7 @@ public class TimeMVar extends DoubleMVar {
 		for (int i =0; i< valore.size(); i++) {
 			Double tval = (Double) valore.get(i);
 			String tmp = tval == null ? "" : tval.toString().equalsIgnoreCase("Infinity") ? "" : TimeVar.SYMBOLS[type];
-			sb.append(pre + tval.toString() + tmp );
+			sb.append(pre + tval + tmp );
 			pre = ", ";
 		}
 		sb.append("]");
@@ -136,7 +136,7 @@ public class TimeMVar extends DoubleMVar {
 	}
 	
 	public boolean equals(Object o) {
-		if (o instanceof TimeVar) {
+		if (o instanceof TimeMVar) {
 			return super.equals(o) && (this.type == ((TimeMVar) o).type );
 		}
 		return false;

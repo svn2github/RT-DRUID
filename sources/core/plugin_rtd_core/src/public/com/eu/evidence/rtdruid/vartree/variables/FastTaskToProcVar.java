@@ -27,7 +27,7 @@ public class FastTaskToProcVar implements IVariable  {
 	 * This class is used to store the mapping from a Task to every proc that is
 	 * mapped to it.
 	 */
-	public final static class Task2ProcMap {
+	public final static class Task2ProcMap implements Cloneable {
 		/**
 		 * This structure is used to store the link from a mode to a task and from a
 		 * task to procs

@@ -33,7 +33,7 @@ public final class OptionsManager {
     
     public static final String PLUGIN_ID = "com.eu.evidence.rtdruid.oil.core";
     public static final String EXTENSION_POINT = "builderOptions";
-    public static final Boolean mutex = new Boolean(true);
+    public static final Object mutex = new Object();
 
     /** Contains the names of all required adapter factories*/
     private static List<Class<IBuildOptions>> factories = null;

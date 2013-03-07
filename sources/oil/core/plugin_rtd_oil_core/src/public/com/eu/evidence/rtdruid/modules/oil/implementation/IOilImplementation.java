@@ -2,7 +2,7 @@ package com.eu.evidence.rtdruid.modules.oil.implementation;
 
 
 
-public interface IOilImplementation extends Comparable<Object> {
+public interface IOilImplementation extends Comparable<Object>, Cloneable {
 
 	/**
 	 * Return the id.

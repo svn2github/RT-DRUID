@@ -107,7 +107,7 @@ public final class RtdEPackage implements EPackage {
 
 	@Override
 	public EStructuralFeature eContainingFeature() {
-		return eContainingFeature();
+		return epkg.eContainingFeature();
 	}
 
 	@Override

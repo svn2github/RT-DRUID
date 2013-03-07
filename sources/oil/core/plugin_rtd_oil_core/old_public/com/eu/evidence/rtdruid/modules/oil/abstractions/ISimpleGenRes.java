@@ -12,7 +12,7 @@ import java.util.HashMap;
  * 
  * @author Nicola Serreli
  */
-public interface ISimpleGenRes {
+public interface ISimpleGenRes extends Cloneable {
 	//--------------------------------------------------
 	Object removeAProperty(String pName);
 

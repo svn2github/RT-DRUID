@@ -65,7 +65,7 @@ import com.eu.evidence.rtdruid.vartree.variables.TimeVar;
 	public final static String NULL_ID =   DataPath.NULL_ID;   // \0
 	public final static String VOID_ID =   DataPath.VOID_ID;   // \_
 	
-	protected static class LittlePointer implements EmfPoint {
+	protected static class LittlePointer implements EmfPoint, Cloneable {
 		protected EObject pointer;
 		protected EStructuralFeature attr;
 		

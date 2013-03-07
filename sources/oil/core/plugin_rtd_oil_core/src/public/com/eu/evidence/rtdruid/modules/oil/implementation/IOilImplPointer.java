@@ -1,7 +1,7 @@
 package com.eu.evidence.rtdruid.modules.oil.implementation;
 
 
-public interface IOilImplPointer {
+public interface IOilImplPointer extends Cloneable {
 
 	/** Identifies an object of First Level (Oil Objects as OS, TASK, ... ) */
 	public final static int FIRST_LEVEL = 0;

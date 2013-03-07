@@ -47,7 +47,7 @@ public class HostOsUtils {
 	 */
 	public void setTarget(OsType target) {
 		if (target == null) {
-			target = currentSystem;
+			this.target = currentSystem;
 		} else {
 			this.target = target;
 		}
