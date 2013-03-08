@@ -319,15 +319,16 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					String[] val = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_mem_base));
 					if (val != null && val.length>0 && val[0] != null && val[0].length()>0) {
 						
-						try {
-							Long.decode(val[0]);
-						} catch (NumberFormatException e) {
-							throw new OilCodeWriterException("OsApplication " + appl_name + " MEM_BASE is not a valid number");
-						}
+//						try {
+//							Long.decode(val[0]);
+//						} catch (NumberFormatException e) {
+//							throw new OilCodeWriterException("OsApplication " + appl_name + " MEM_BASE is not a valid number");
+//						}
 						
 						appl.setProperty(OS_APPLICATION_MEM_BASE, val[0]);
 					} else {
-						throw new OilCodeWriterException("Required a mem base for OsApplication " + appl_name);
+						appl.setProperty(OS_APPLICATION_MEM_BASE, "0");
+//						throw new OilCodeWriterException("Required a mem base for OsApplication " + appl_name);
 					}
 				}
 				{

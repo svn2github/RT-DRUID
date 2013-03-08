@@ -202,7 +202,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest implements DirectW
 			"		TASK = MainTask;\n" +
 			"		TASK = TrustedTask;\n" +
 			
-			"		MEMORY_BASE = 0x40010000;\n" +
+			"		MEMORY_BASE = \"0x40010000\";\n" +
 			"		MEMORY_SIZE = 0x10000;\n" +
 
 			"		SHARED_STACK_SIZE = 512;\n" +
@@ -214,7 +214,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest implements DirectW
 			"		ISR = \"App1Isr\";\n" +
 			"		TASK = \"App1Task\";\n" +
 
-			"		MEMORY_BASE = 0x40020000;\n" +
+			"		MEMORY_BASE = \"0x40020000\";\n" +
 			"		MEMORY_SIZE = 0x10000;\n" +
 
 			"		SHARED_STACK_SIZE = 512;\n" +
@@ -226,7 +226,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest implements DirectW
 			"		ISR = App2Isr;\n" +
 			"		TASK = App2Task;\n" +
 
-			"		MEMORY_BASE = 0x40030000;\n" +
+			"		MEMORY_BASE = \"0x40030000\";\n" +
 			"		MEMORY_SIZE = 0x4000;\n" +
 			"		SHARED_STACK_SIZE = 512;\n" +
 			"		IRQ_STACK_SIZE = 1024;\n" +

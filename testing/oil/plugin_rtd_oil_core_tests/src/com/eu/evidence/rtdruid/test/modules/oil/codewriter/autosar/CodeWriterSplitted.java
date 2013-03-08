@@ -59,7 +59,7 @@ public class CodeWriterSplitted extends AbstractCodeWriterTest {
 			"		TASK=Task_app1;\n" +
 			"       ISR = isr_base1;\n" +
 			"       ISR = isr_app1;\n" +
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"    };\n" +
 			"    APPLICATION appl2 {\n" +
@@ -67,7 +67,7 @@ public class CodeWriterSplitted extends AbstractCodeWriterTest {
 			"		IRQ_STACK_SIZE = 512;\n" +
     		"		SHARED_STACK_SIZE = 512;\n"+
 			"		TASK=Task2;\n" +
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"    };\n" +
 			"    /* this is the OIL part for the first task */\n" +
@@ -153,7 +153,7 @@ public class CodeWriterSplitted extends AbstractCodeWriterTest {
 				"		TASK=Task_app1;\n" +
 				"       ISR = isr_base1;\n" +
 				"       ISR = isr_app1;\n" +
-	    		"		MEMORY_BASE = 0x40020000;\n"+
+	    		"		MEMORY_BASE = \"0x40020000\";\n"+
 	    		"		MEMORY_SIZE = 0x10000;\n"+
 				"    };\n" +
 				"    APPLICATION appl2 {\n" +
@@ -161,7 +161,7 @@ public class CodeWriterSplitted extends AbstractCodeWriterTest {
 				"		IRQ_STACK_SIZE = 512;\n" +
 	    		"		SHARED_STACK_SIZE = 512;\n"+
 				"		TASK=Task2;\n" +
-	    		"		MEMORY_BASE = 0x40020000;\n"+
+	    		"		MEMORY_BASE = \"0x40020000\";\n"+
 	    		"		MEMORY_SIZE = 0x10000;\n"+
 				"    };\n" +
 				"    /* this is the OIL part for the first task */\n" +
@@ -265,7 +265,7 @@ public class CodeWriterSplitted extends AbstractCodeWriterTest {
 			"		TASK=Task_app1;\n" +
 			"       ISR = isr_base1;\n" +
 			"       ISR = isr_app1;\n" +
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"    };\n" +
 			"    APPLICATION appl2 {\n" +
@@ -273,7 +273,7 @@ public class CodeWriterSplitted extends AbstractCodeWriterTest {
 			"		IRQ_STACK_SIZE = 512;\n" +
     		"		SHARED_STACK_SIZE = 512;\n"+
 			"		TASK=Task2;\n" +
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"    };\n" +
 			"    /* this is the OIL part for the first task */\n" +
@@ -359,7 +359,7 @@ public class CodeWriterSplitted extends AbstractCodeWriterTest {
 				"		TASK=Task_app1;\n" +
 				"       ISR = isr_base1;\n" +
 				"       ISR = isr_app1;\n" +
-	    		"		MEMORY_BASE = 0x40020000;\n"+
+	    		"		MEMORY_BASE = \"0x40020000\";\n"+
 	    		"		MEMORY_SIZE = 0x10000;\n"+
 				"    };\n" +
 				"    APPLICATION appl2 {\n" +
@@ -367,7 +367,7 @@ public class CodeWriterSplitted extends AbstractCodeWriterTest {
 				"		IRQ_STACK_SIZE = 512;\n" +
 	    		"		SHARED_STACK_SIZE = 512;\n"+
 				"		TASK=Task2;\n" +
-	    		"		MEMORY_BASE = 0x40020000;\n"+
+	    		"		MEMORY_BASE = \"0x40020000\";\n"+
 	    		"		MEMORY_SIZE = 0x10000;\n"+
 				"    };\n" +
 				"    /* this is the OIL part for the first task */\n" +

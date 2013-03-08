@@ -621,7 +621,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		TASK=Task_app1;\n" +
 			"       ISR = isr_base1;\n" +
 			"       ISR = isr_app1;\n" +
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0xD0020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"    };\n" +
 			"    APPLICATION appl2 {\n" +
@@ -629,7 +629,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		IRQ_STACK_SIZE = 512;\n" +
     		"		SHARED_STACK_SIZE = 512;\n"+
 			"		TASK=Task2;\n" +
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"    };\n" +
 			"    /* this is the OIL part for the first task */\n" +
@@ -757,7 +757,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"		ISR = TrustedIsr;\n"+
 	    		"		TASK = MainTask;\n"+
 	    		"		TASK = TrustedTask1;\n"+
-	    		"		MEMORY_BASE = 0x40010000;\n"+
+	    		"		MEMORY_BASE = \"0x40010000\";\n"+
 	    		"		MEMORY_SIZE = 0x10000;\n"+
 	    		"		SHARED_STACK_SIZE = 512;\n"+
 				"		IRQ_STACK_SIZE = 512;\n" +
@@ -767,7 +767,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"		TRUSTED = FALSE;\n"+
 	    		"		ISR = App1Isr;\n"+
 	    		"		TASK = App1Task;\n"+
-	    		"		MEMORY_BASE = 0x40020000;\n"+
+	    		"		MEMORY_BASE = \"0x40020000\";\n"+
 	    		"		MEMORY_SIZE = 0x10000;\n"+
 	    		"		SHARED_STACK_SIZE = 512;\n"+
 				"		IRQ_STACK_SIZE = 512;\n" +
@@ -777,7 +777,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"		TRUSTED = FALSE;\n"+
 	    		"		ISR = App2Isr;\n"+
 	    		"		TASK = App2Task;\n"+
-	    		"		MEMORY_BASE = 0x40030000;\n"+
+	    		"		MEMORY_BASE = \"0x40030000\";\n"+
 	    		"		MEMORY_SIZE = 0x4000;\n"+
 	    		"		SHARED_STACK_SIZE = 512;\n"+
 				"		IRQ_STACK_SIZE = 512;\n" +
@@ -840,7 +840,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"       ISR = istexit_isr2;\n" +
 			
     		"		SHARED_STACK_SIZE = 512;\n"+
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"    };\n" +
 
@@ -849,14 +849,14 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		IRQ_STACK_SIZE = 512;\n" +
 			"       TASK = TaskApp1;\n" +
     		"		SHARED_STACK_SIZE = 512;\n"+
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"    };\n" +
 			"    APPLICATION app2 {\n" +
 			"		TRUSTED = FALSE;\n" +
 			"		IRQ_STACK_SIZE = 512;\n" +
     		"		SHARED_STACK_SIZE = 512;\n"+
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"       TASK = TaskApp2;\n" +
 			"    };\n" +
@@ -996,7 +996,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"       ISR = istexit_isr2;\n" +
 			
     		"		SHARED_STACK_SIZE = 512;\n"+
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"    };\n" +
 
@@ -1005,14 +1005,14 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"		IRQ_STACK_SIZE = 512;\n" +
 			"       TASK = TaskApp1;\n" +
     		"		SHARED_STACK_SIZE = 512;\n"+
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"	};\n" +
 			"    APPLICATION app2 {\n" +
 			"		TRUSTED = FALSE;\n" +
 			"		IRQ_STACK_SIZE = 512;\n" +
     		"		SHARED_STACK_SIZE = 512;\n"+
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"       TASK = TaskApp2;\n" +
 			"	};\n" +
@@ -1449,7 +1449,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"		TASK = MainTask;\n" +
 				"		TASK = TrustedTask1;\n" +
 				"		TASK = ErrorTask;\n" +
-				"		MEMORY_BASE = 0x40010000;\n" +
+				"		MEMORY_BASE = \"0x40010000\";\n" +
 				"		MEMORY_SIZE = 0x10000;\n" +
 				"		SHARED_STACK_SIZE = 512;\n" +
 				"		IRQ_STACK_SIZE = 512;\n" +
@@ -1462,7 +1462,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"		TASK = App1Task;\n" +
 				"		TASK = App1Ack;\n" +
 				"		TASK = App1Bkg;\n" +
-				"		MEMORY_BASE = 0x40020000;\n" +
+				"		MEMORY_BASE = \"0x40020000\";\n" +
 				"		MEMORY_SIZE = 0x10000;\n" +
 				"		SHARED_STACK_SIZE = 512;\n" +
 				"		IRQ_STACK_SIZE = 512;\n" +
@@ -1475,7 +1475,7 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"		TASK = App2Task;\n" +
 				"		TASK = App2Ack;\n" +
 				"		TASK = App2HiPriTask;\n" +
-				"		MEMORY_BASE = 0x40030000;\n" +
+				"		MEMORY_BASE = \"0x40030000\";\n" +
 				"		MEMORY_SIZE = 0x4000;\n" +
 				"		SHARED_STACK_SIZE = 512;\n" +
 				"		IRQ_STACK_SIZE = 512;\n" +
