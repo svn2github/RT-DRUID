@@ -274,6 +274,7 @@ Also there are few important variables:
 			
 	* ee.svn.number    = is used to set a valid version number for EE source plugin
 	* rtd.svn.number   = is used to set a valid version number for RT-Druid plugins (like Oil Configuration plugin)
+	* rtd.build.number = is used to set a valid build number for RT-Druid plugins (like Oil Configuration plugin)
 	
 
 To enable a sub set of RT-Druid plugin you should enable one or more of these variables	

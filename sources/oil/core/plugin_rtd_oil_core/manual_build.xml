@@ -173,6 +173,15 @@
 		  </fileset>
 		</replaceregexp>
 	</target>
+	<target name="gather.bin.parts.update.rtd.build.version" if="rtd.build.number">
+		<replaceregexp byline="true">
+		  <regexp pattern="2=(.*)"/>
+		  <substitution expression="2=${rtd.build.number}"/>
+		  <fileset dir="${destination.temp.folder}">
+		    <include name="about.mappings"/>
+		  </fileset>
+		</replaceregexp>
+	</target>
 	
 	<target name="gather.bin.parts" if="destination.temp.folder">
 		<fileset dir="${basedir}" id="common_gather_binary">
@@ -199,6 +208,7 @@
 		<echo> RTD Number ${current_configurator_number}, svn ${rtd.svn.number} --- ${destination.temp.folder} </echo>
 		<antcall target="gather.bin.parts.update.rtd.configurator.number"/>
 		<antcall target="gather.bin.parts.update.rtd.svn.version"/>
+		<antcall target="gather.bin.parts.update.rtd.build.version"/>
 	</target>
 
 	<!---->

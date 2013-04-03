@@ -55,6 +55,9 @@ if [ "_$EE_SVN_SET" = "_" ]; then
 	SVN_NUMBERS="${SVN_NUMBERS} -Dee.svn.number=$EE_SVN_VERSION"
 fi
 
+if [ "_$RTD_BUILD_ID" = "_" ]; then
+	SVN_NUMBERS="${SVN_NUMBERS} -Drtd.build.number=$RTD_BUILD_ID"
+fi
 
 # run ant
 sh ../product_standalone_rtd_oil/rootfiles/start_ant.sh "$@" ${SVN_NUMBERS}
