@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.eu.evidence.rtdruid.desk.Logger;
+import com.eu.evidence.rtdruid.desk.WorkerConfReader;
 import com.eu.evidence.rtdruid.internal.modules.project.templates.ExampleTemplate;
 import com.eu.evidence.rtdruid.internal.modules.project.templates.SearchTemplates;
 
@@ -123,7 +124,7 @@ public class WorkerExampleWriter implements IWorkerExampleWriter {
 			ExampleTemplate.ExampleFile f = files[i];
 			InputStream is = f.getContent();
 
-			String outputFile = outputDirectory +f.getName();
+			String outputFile = WorkerConfReader.formatFileName(outputDirectory +f.getName());
 			myLog("COPY", outputFile);
 
 //			new File(outputDirectory).mkdirs();

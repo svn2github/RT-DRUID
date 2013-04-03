@@ -5,12 +5,15 @@
  */
 package com.eu.evidence.rtdruid.desk;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -196,6 +199,7 @@ public class WorkerConfReader {
 			for (MultiSourceImporterFactory.LoadHelper helper : helpers) {
 
 				for (String s: helper.getNames()) {
+					s = formatFileName(s);
 					myLog("LOAD", s);
 				}
 				
@@ -210,7 +214,7 @@ public class WorkerConfReader {
 			
 			// load
 			for (String inputFile : simpleLoad) {
-
+				inputFile = formatFileName(inputFile);
 				myLog("LOAD", inputFile);
 				// load and parse the input file
 				IVTResource res = (IVTResource) new RTD_XMI_Factory()
@@ -289,4 +293,8 @@ public class WorkerConfReader {
 								- left.length()))) + right + "]");
 	}
 
+	public static String formatFileName(String name) {
+		IPath f = new Path(name);
+		return f.toOSString();
+	}
 }

@@ -121,7 +121,8 @@ public class WorkerOilConfWriter extends WorkerConfReader {
 				if (!filePath.endsWith(System.getProperty("file.separator"))) {
 					filePath += System.getProperty("file.separator");
 				}
-				myLog("WRITE", outputDir + filePath + fileName);
+				
+				myLog("WRITE", formatFileName(outputDir + filePath + fileName));
 				try {
 					// build the directory
 					File dirs = new File(outputDir + filePath);
