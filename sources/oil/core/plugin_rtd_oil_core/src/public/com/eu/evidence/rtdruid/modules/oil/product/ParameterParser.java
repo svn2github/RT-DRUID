@@ -14,12 +14,14 @@ import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerAllExampleWrit
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerExampleList;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerExampleWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerOilConfWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtdruidConfiguratorNumber;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.options.PreferenceStorage;
 
 public class ParameterParser {
 
 	// help
 	protected final static String HELP_KEY = "--help";
+	protected final static String VERSION_KEY = "--version";
 
 	
 	// Build
@@ -42,6 +44,7 @@ public class ParameterParser {
 	
 	protected String Help; 
 	protected String TemplateHelp;
+	protected String VersionHelp;
 	protected Logger logger = new StdOutLogger();
 	
 	
@@ -51,9 +54,11 @@ public class ParameterParser {
 			
 			// init Help
 			Help = "Help\n" +
-			"RT-Druid "+ ReadVersion.getRTDruidVersion() +"\n\n" +
+			"RT-Druid version "+ ReadVersion.getRTDruidVersion() +"\n\n" +
+			"RT-Druid build   "+ RtdruidConfiguratorNumber.getRTDruidBuildNumber() +"\n\n" +
 			"Valid parameters are:\n" +
 	//		"  "+ANT_KEY+" file_name      specifies the ant file to use\n" +
+			"  "+VERSION_KEY+"       shows the version number and exit.\n" +
 			"  "+INPUT_KEY+" file_name [file_name .. file_name]      specifies directly one or more input files.\n" +
 			"  "+CONF_FILE_KEY+" file_name      specifies the system configuration file\n" +
 			"  "+OUTPUT_KEY+" directory   specifies the directory where store every file (Default value is '"+DEFAULT_CONF_OUTPUT+"')\n" +
@@ -68,8 +73,10 @@ public class ParameterParser {
 		if(TemplateHelp == null) {
 			// init Help
 			TemplateHelp = "Help\n" +
-			"RT-Druid "+ ReadVersion.getRTDruidVersion() +"\n\n" +
+			"RT-Druid version "+ ReadVersion.getRTDruidVersion() +"\n\n" +
+			"RT-Druid build   "+ RtdruidConfiguratorNumber.getRTDruidBuildNumber() +"\n\n" +
 			"Valid parameters are:\n" +
+			"  "+VERSION_KEY+"       shows the version number and exit.\n" +
 			"  "+LIST_KEY+"                 list available templates\n" +
 			"  "+CONF_ALL_KEY+"                 generate all templates\n" +
 	//		"  "+OPT_KEY+" param=value      specifies a parameter and its value\n" +
@@ -80,6 +87,17 @@ public class ParameterParser {
 		return TemplateHelp;
 	}
 
+
+	public String getVersion() {
+		if(VersionHelp == null) {
+			VersionHelp = "RT-Druid version "+ ReadVersion.getRTDruidVersion() +"\n\n" +
+			"RT-Druid build   "+ RtdruidConfiguratorNumber.getRTDruidBuildNumber() +"\n\n";
+		}
+		
+		return VersionHelp;
+	}
+	
+	
 	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
@@ -127,8 +145,11 @@ public class ParameterParser {
 
 		boolean inputKeyFound = false;
 		for (int i=0; i<args.length; i++) {
-			if (HELP_KEY.equals(args[i])) {
-				throw new IllegalArgumentException(getWriterHelp());
+			if (VERSION_KEY.equals(args[i])) {
+				throw new RuntimeException(getVersion());
+				
+			} else if (HELP_KEY.equals(args[i])) {
+				throw new RuntimeException(getWriterHelp());
 				
 			} else if (INPUT_KEY.equals(args[i])) {
 				// get the next element
@@ -208,7 +229,10 @@ public class ParameterParser {
 		boolean confall = false;
 
 		for (int i=0; i<args.length; i++) {
-			if (HELP_KEY.equals(args[i])) {
+			if (VERSION_KEY.equals(args[i])) {
+				throw new RuntimeException(getVersion());
+				
+			} else if (HELP_KEY.equals(args[i])) {
 				throw new IllegalArgumentException(getTemplateHelp());
 			} else if (TEMPLATE_KEY.equals(args[i])) {
 				// get the next element

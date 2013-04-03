@@ -2,9 +2,12 @@
 
 set -e
 
-if [ $# -lt 3 ]; then
+
+
+if [ $# -lt 2 ]; then
     echo >&2 "Insufficient parameters"
     echo >&2 "Usage: code_generation.sh <RT-Druid_dir> <oil_file> <output_dir>"
+    echo >&2 "Usage: code_generation.sh <RT-Druid_dir> --version"
     exit 2
 fi
 LAUNCHER_JAR=`find "$1/plugins" -name "org.eclipse.equinox.launcher_*.jar" | sort | tail -1`
@@ -23,6 +26,14 @@ case "`uname -s`" in
 #    
 	;;
 esac
+
+# check if the user asks for the RT-Druid Version  
+for a in "$@"; do
+    if [ "$a" = "--version" ]; then
+        exec java -jar "$LAUNCHER_JAR" -application com.eu.evidence.rtdruid.oil.standalone.writer --version
+        exit 0
+    fi
+done
 
 # compact multiple inputs
 shift

@@ -15,6 +15,7 @@ public class RtdruidConfiguratorNumber {
 
 	public final static String RTDRUID_CONFIGURATOR_NUMBER = "rtdruid.configurator.number";
 	public final static String RTDRUID_CONFIGURATOR_NUMBER_ID = "" + '0';
+	public final static String RTDRUID_CONFIGURATOR_BUILD_NUMBER_ID = "" + '2';
 	
 	private final static Properties currentVersion = new Properties();
 
@@ -41,5 +42,11 @@ public class RtdruidConfiguratorNumber {
 				currentVersion.getProperty(RTDRUID_CONFIGURATOR_NUMBER_ID) : 
 					(currentVersion.containsKey(RTDRUID_CONFIGURATOR_NUMBER) ?
 							currentVersion.getProperty(RTDRUID_CONFIGURATOR_NUMBER) : "");
+	}
+	
+	public static String getRTDruidBuildNumber() {
+		
+		return currentVersion.containsKey(RTDRUID_CONFIGURATOR_BUILD_NUMBER_ID) ?
+				currentVersion.getProperty(RTDRUID_CONFIGURATOR_BUILD_NUMBER_ID) : "";
 	}
 }
