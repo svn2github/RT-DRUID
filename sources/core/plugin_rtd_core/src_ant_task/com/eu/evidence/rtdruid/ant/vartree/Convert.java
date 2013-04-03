@@ -107,9 +107,10 @@ public class Convert extends Task {
 	protected void myLog(String left, String right) {
 		final int LEFT_SIZE = 10;
 		
-		log("[" + left 
-				+ ("                 ".substring(0,
-						(left.length()> LEFT_SIZE-1 ? 1 : LEFT_SIZE-left.length()))
-				) + right + "]");	
+		if (Messages.LogLevel.info.enabled())
+			log("[" + left 
+					+ ("                 ".substring(0,
+							(left.length()> LEFT_SIZE-1 ? 1 : LEFT_SIZE-left.length()))
+					) + right + "]");	
 	}
 }

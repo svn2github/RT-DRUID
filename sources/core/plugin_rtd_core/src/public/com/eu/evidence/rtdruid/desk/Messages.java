@@ -16,23 +16,67 @@ import java.util.Stack;
  */
 public abstract class Messages {
 	
-	private static final boolean ENABLE_DEBUG = true;
+	public final static String ENV_LOG_LEVEL = "RTDRUID_LOG_LEVEL";
 	
 	private static Messages current;
 	private static Stack<Messages> old = new Stack<Messages>();
+
+	public static enum LogLevel {
+		none(0), error(1), warning(2), info(3), debug(4);
+		
+		protected final int level;
+		
+		private LogLevel(int level) {
+			this.level = level;
+		}
+		
+		public boolean enabled(LogLevel currentLevel) {
+			return level<=currentLevel.level;
+		}
+		
+		public boolean enabled() {
+			return level<=currentLevel.level;
+		}
+		
+		public static LogLevel parse(String txt) {
+			if ("none".equalsIgnoreCase(txt)) {
+				return none;
+			} else if ("error".equalsIgnoreCase(txt)) {
+				return error;
+			} else if ("warning".equalsIgnoreCase(txt)) {
+				return warning;
+			} else if ("info".equalsIgnoreCase(txt)) {
+				return info;
+			} else if ("debug".equalsIgnoreCase(txt)) {
+				return debug;
+			}
+			return null;
+		}
+	};
+
+	protected static LogLevel currentLevel;
 	
-	/** Identifies standard output */
-	public final static int OUTPUT = 0;
-	/** Identifies output of a warning message */
-	public final static int WARNING = 1;
+	static {
+		LogLevel l = LogLevel.parse(System.getenv(ENV_LOG_LEVEL));
+		if (l == null) {
+			l = LogLevel.info;
+		}
+		currentLevel = l;
+	}
+	
 	/** Identifies output of an error message */
-	public final static int ERROR = 2;
+	public final static int ERROR = 1;
+	/** Identifies output of a warning message */
+	public final static int WARNING = 2;
+	/** Identifies standard output */
+	public final static int OUTPUT = 3;
 	/** Identifies a debug message */
-	public final static int DEBUG = 3;
+	public final static int DEBUG = 4;
 	
 	/** Identifies if use or not "auto new line" at the end of the text */
 	public final static int AUTO_NL = 1<<30;
-	
+		
+//	private int
 	
 	/** The number of warnings */
 	private int wNumber = 0;
@@ -53,6 +97,13 @@ public abstract class Messages {
 			}
 		}
 		return current;
+	}
+
+	/**
+	 * @param currentLevel the currentLevel to set
+	 */
+	public static void setCurrentLevel(LogLevel currentLevel) {
+		Messages.currentLevel = currentLevel;
 	}
 	
 	public final static void setCurrent(Messages newMess) {
@@ -106,7 +157,9 @@ public abstract class Messages {
 	 * @param text contains the message
 	 */
 	public final static void sendText(String text) {
-		instance().output(OUTPUT, text, text, "", new Properties());
+		if (LogLevel.info.enabled()) {
+			instance().output(OUTPUT, text, text, "", new Properties());
+		}
 	}
 	
 	/** Sends a normal message (without New Line)
@@ -117,7 +170,9 @@ public abstract class Messages {
 	 *  @param otherInfo contains others not important info 
 	 */
 	public final static void sendText(String text, String detailedText, String errorCode, Properties otherInfo) {
-		instance().output(OUTPUT, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
+		if (LogLevel.info.enabled()) {
+			instance().output(OUTPUT, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
+		}
 	}
 	
 	/** Sends a warning (without New Line)
@@ -130,7 +185,9 @@ public abstract class Messages {
 	public final static void sendWarning(String text, String detailedText, String errorCode, Properties otherInfo) {
 		Messages t = instance();
 		t.wNumber++;
-		t.output(WARNING, text, detailedText == null ? text : detailedText, errorCode, otherInfo);
+		if (LogLevel.warning.enabled()) {
+			t.output(WARNING, text, detailedText == null ? text : detailedText, errorCode, otherInfo);
+		}
 	}
 	
 	/** Sends an error (without New Line)
@@ -143,7 +200,9 @@ public abstract class Messages {
 	public final static void sendError(String text, String detailedText, String errorCode, Properties otherInfo) {
 		Messages t = instance();
 		t.eNumber++;
-		t.output(ERROR, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
+		if (LogLevel.error.enabled()) {
+			t.output(ERROR, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
+		}
 	}
 
 	/** Sends a debug message (without New Line)
@@ -152,7 +211,7 @@ public abstract class Messages {
 	 */
 	public final static void sendDebug(String text) {
 		// if debug is enabled ...
-		if (ENABLE_DEBUG)
+		if (LogLevel.debug.enabled())
 			instance().output(DEBUG, text, text, "", new Properties());
 	}
 	
@@ -165,7 +224,7 @@ public abstract class Messages {
 	 */
 	public final static void sendDebug(String text, String detailedText, String errorCode, Properties otherInfo) {
 		// if debug is enabled ...
-		if (ENABLE_DEBUG)
+		if (LogLevel.debug.enabled())
 			instance().output(DEBUG, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
 	}
 
@@ -176,7 +235,8 @@ public abstract class Messages {
 	 * @param text contains the message
 	 */
 	public final static void sendTextNl(String text) {
-		instance().output(OUTPUT | AUTO_NL, text, text, "", new Properties());
+		if (LogLevel.info.enabled())
+			instance().output(OUTPUT | AUTO_NL, text, text, "", new Properties());
 	}
 	
 	/** Sends a normal message (with New Line)
@@ -187,7 +247,8 @@ public abstract class Messages {
 	 *  @param otherInfo contains others not important info 
 	 */
 	public final static void sendTextNl(String text, String detailedText, String errorCode, Properties otherInfo) {
-		instance().output(OUTPUT | AUTO_NL, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
+		if (LogLevel.info.enabled())
+			instance().output(OUTPUT | AUTO_NL, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
 	}
 	
 	/** Sends a warning (with New Line)
@@ -208,7 +269,8 @@ public abstract class Messages {
 	public final static void sendWarningNl(String text, String detailedText, String errorCode, Properties otherInfo) {
 		Messages t = instance();
 		t.wNumber++;
-		t.output(WARNING | AUTO_NL, text, detailedText == null ? text : detailedText, errorCode, otherInfo);
+		if (LogLevel.warning.enabled())
+			t.output(WARNING | AUTO_NL, text, detailedText == null ? text : detailedText, errorCode, otherInfo);
 	}
 	
 	/** Sends an error (with New Line)
@@ -221,7 +283,8 @@ public abstract class Messages {
 	public final static void sendErrorNl(String text, String detailedText, String errorCode, Properties otherInfo) {
 		Messages t = instance();
 		t.eNumber++;
-		t.output(ERROR | AUTO_NL, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
+		if (LogLevel.error.enabled())
+			t.output(ERROR | AUTO_NL, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
 	}
 
 	/** Sends a debug message (with New Line)
@@ -230,7 +293,7 @@ public abstract class Messages {
 	 */
 	public final static void sendDebugNl(String text) {
 		// if debug is enabled ...
-		if (ENABLE_DEBUG)
+		if (LogLevel.debug.enabled())
 			instance().output(DEBUG | AUTO_NL, text, text, "", new Properties());
 	}
 	
@@ -243,7 +306,7 @@ public abstract class Messages {
 	 */
 	public final static void sendDebugNl(String text, String detailedText, String errorCode, Properties otherInfo) {
 		// if debug is enabled ...
-		if (ENABLE_DEBUG)
+		if (LogLevel.debug.enabled())
 			instance().output(DEBUG | AUTO_NL, text, detailedText  == null ? text : detailedText, errorCode, otherInfo);
 	}
 

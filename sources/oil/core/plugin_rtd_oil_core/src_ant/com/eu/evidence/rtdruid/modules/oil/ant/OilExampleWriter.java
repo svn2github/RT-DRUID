@@ -9,6 +9,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
 import com.eu.evidence.rtdruid.desk.Logger;
+import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.OilWorkerException;
 import com.eu.evidence.rtdruid.internal.modules.oil.workers.WorkerExampleWriter;
 
@@ -78,11 +79,12 @@ public class OilExampleWriter extends Task {
 	protected void myLog(String left, String right) {
 		final int LEFT_SIZE = 10;
 
-		log("["
-				+ left
-				+ ("                 ".substring(0,
-						(left.length() > LEFT_SIZE - 1 ? 1 : LEFT_SIZE
-								- left.length()))) + right + "]");
+		if (Messages.LogLevel.info.enabled())
+			log("["
+					+ left
+					+ ("                 ".substring(0,
+							(left.length() > LEFT_SIZE - 1 ? 1 : LEFT_SIZE
+									- left.length()))) + right + "]");
 	}
 	protected void myLog(String txt) {
 		log(txt);
