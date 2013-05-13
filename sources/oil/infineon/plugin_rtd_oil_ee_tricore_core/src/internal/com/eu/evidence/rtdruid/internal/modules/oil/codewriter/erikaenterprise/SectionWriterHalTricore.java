@@ -3,8 +3,8 @@ package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
@@ -12,6 +12,9 @@ import org.eclipse.core.runtime.Path;
 
 import com.eu.evidence.modules.oil.tricore.constants.TricoreConstants;
 import com.eu.evidence.rtdruid.desk.Messages;
+import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.TricoreAbstractModel.ITricoreModelProvider;
+import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.TricoreModel_tc1796.TricoreModelProvider_tc1796;
+import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.TricoreModel_tc27x.TricoreModelProvider_tc27x;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
@@ -27,16 +30,11 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
-import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
-import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
-import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
-import com.eu.evidence.rtdruid.vartree.IVariable;
 
 /**
  * This writer build files for a Tricore CPU - Board
@@ -48,9 +46,47 @@ public class SectionWriterHalTricore extends SectionWriter
 			IExtractObjectsExtentions,
 			IExtractKeywordsExtentions {
 
-	final public String KEY_HAL_TRICORE = "__TRICORE1__";
-	final public String _EE_OPT_HAL_TRICORE = "__TRICORE1__";
+	enum TcModels {
+		tc1796("tc1796", new TricoreModelProvider_tc1796(), TricoreConstants.SGRK__GNU_COMPILER__ ),
+		tc27x("tc27x", new TricoreModelProvider_tc27x("tc27x"), TricoreConstants.SGRK__TASKING_COMPILER__);
+		
+		public final String name;
+		public final String default_compiler;
+		public final ITricoreModelProvider provider;
+		/**
+		 * 
+		 */
+		private TcModels(String name, ITricoreModelProvider provider, String default_compiler) {
+			this.name = name;
+			this.default_compiler = default_compiler;
+			this.provider = provider;
+		}
+		
+		public static TcModels get(String model) {
+			for (TcModels current : TcModels.values()) {
+				if (current.name.equalsIgnoreCase(model)) {
+					return current;
+				}
+			}
+			return null;
+		}
+	}
 	
+	public static final String SGR_OS_CPU_HW_END_INIT = "sgr__os_cpu_hw_end_init";
+	public static final String SGR_OS_CPU_LINKERSCRIPT = "sgr__os_cpu_linker_script";
+	public static final String SGR_OS_MCU_LINKERSCRIPT = "sgr__os_mcu_linker_script";
+	
+	public static final String KEY_HAL_TRICORE = "__TRICORE1__";
+	public static final String EEOPT_HAL_TRICORE__OLD = "__TRICORE1__";
+	public static final String EEOPT_HAL_TRICORE = "EE_TRICORE__";
+
+	private static final String EEOPT_GNU = "EE_GNU__";
+	private static final String EEOPT_TASKING = "EE_TASKING__";
+	
+	/** Old EEopt for old tricore model */
+	private static final String EEOPT_TRICORE_GNU = "__TRICORE_GNU__";
+
+	static final String TRICORE_MCU = "TRICORE";
 	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -69,7 +105,7 @@ public class SectionWriterHalTricore extends SectionWriter
 	 * 
 	 */
 	public SectionWriterHalTricore(ErikaEnterpriseWriter parent) {
-		super(IWritersKeywords.CPU_TRICORE1,
+		super(IWritersKeywords.CPU_TRICORE,
 				new String[] {}, //
 				new String[] { //
 					IWritersKeywords.CPU_NIOSII,//
@@ -83,6 +119,14 @@ public class SectionWriterHalTricore extends SectionWriter
 		this.vt = parent == null ? null : parent.getVt();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter#enabled()
+	 */
+	@Override
+	protected boolean enabled() {
+		return Collections.binarySearch(keywords, id) >= 0 || Collections.binarySearch(keywords, IWritersKeywords.CPU_TRICORE1) >= 0;
+	}
+	
 	/**
 	 * This method parse the data, prepares all buffers for
 	 * <code>.c/.h/.s/.asm</code> files and store them inside a
@@ -101,7 +145,7 @@ public class SectionWriterHalTricore extends SectionWriter
 			throws OilCodeWriterException {
 		parent.check(vt);
 
-		return writeEE_Tricore1_CPU();
+		return writeEE_Tricore_CPU();
 	}
 	
 	/**
@@ -120,434 +164,296 @@ public class SectionWriterHalTricore extends SectionWriter
 	 * @throws OilCodeWriterException 
 	 */
 	public void updateObjects() throws OilCodeWriterException {
+		if (parent.checkKeyword(IWritersKeywords.CPU_TRICORE)) {
+			updateObjects_new();
+		} else if (parent.checkKeyword(IWritersKeywords.CPU_TRICORE1)) {
+			updateObjects_old();
+		}
+	
+	}
+	public void updateObjects_new() throws OilCodeWriterException {
 		final IOilObjectList[] oilObjects = parent.getOilObjects();		
 		
-		final int currentRtosId = 0;
-		final IOilObjectList ool = oilObjects[currentRtosId];
+        String model = null;
+        String mcu_linker_script = null;
+        {
+    		for (IOilObjectList ool : oilObjects) {
 
-		/***********************************************************************
-		 * 
-		 * EE OPTS
-		 *  
-		 **********************************************************************/
-		{
-			//List requiredOilObjects = (List) sgrCpu.getObject(SGRK__FORCE_ARRAYS_LIST__);
+				/***********************************************************************
+				 * get values
+				 **********************************************************************/
+				ArrayList<String> childPaths = new ArrayList<String>();
+				List<String> childFound = parent.getRtosCommonChildType(ool, "MCU_DATA", childPaths);
 
-	        ArrayList<String> tmp = new ArrayList<String>();
-	        
-	        // store all older values (if there are)
-	        ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
-	        if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS)) {
-	        	String[] old = (String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS);
-	        	tmp.addAll(Arrays.asList(old));
-	        }
-	
-	        tmp.add(_EE_OPT_HAL_TRICORE);
-	        tmp.add("__TRICORE_GNU__");
-	        
-	        
-	        {
-				String[] tmp1 = parent.getCpuDataValue(ool, "MODEL");
-				if (tmp1 != null && tmp1.length >0 && tmp1[0] != null) {
-					String model = tmp1[0];
-				
-					if ("tc1796".equals(model)) {
-				        tmp.add("__TC1796__");
-				        tmp.add("__TC13__");
-					} else {
-						Messages.sendWarning("Unknown tricore cpu model " + model, null, "tricore_writer_model", null);
-					}
+				for (int index = 0; index<childFound.size(); index++) {
 					
+					String mcu_type = childFound.get(index);
 					
-		            sgrCpu.setProperty(TricoreConstants.SGRK__TRICORE_MODEL__, model);
-		        }
-			}
-
-			{
-				// ---------- Add crt0ram.S to sources
-				if 	(ool.getList(IOilObjectList.ISR).size() > 0) {
-					
-					boolean enable_int = false;
-					boolean enable_trap = false;
-
-					List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.ISR);
-					for (Iterator<ISimpleGenRes> iter = tasks.iterator(); iter.hasNext();) {
-
-						ISimpleGenRes currIsr = (ISimpleGenRes) iter.next();
-						
-						int category = currIsr.getInt(ISimpleGenResKeywords.ISR_CATEGORY); 
-						
-						switch (category) {
-						case 1:
-						case 2:
-							enable_int = true;
-							break;
-						case 3:
-							enable_trap = true;
-							break;
-						default:
-							throw new OilCodeWriterException("Unsupported isr category (" + category + ") for isr " + currIsr.getName());
+					if (TRICORE_MCU.equals(mcu_type)) {
+						if (model == null) {
+							// ... and compete it 
+							String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "MODEL";
+							model = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, null);
+						}
+						{    							
+							String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "LINKERSCRIPT";
+							String[] tmp1 = CommonUtils.getValue(vt, currentMcuPrefix);
+							if (tmp1 != null && tmp1.length >0 && tmp1[0] != null) {
+								mcu_linker_script = tmp1[0];
+							}
 						}
 					}
 					
 					
-					if (enable_int)
-						tmp.add("__INT__");
-					if (enable_trap)
-						tmp.add("__TRAP__");
-
-					CpuUtility.addSources(sgrCpu, TricoreConstants.ISR_HANDLER_FILE);
-
 				}
+    		}
+        }
+        
+		TcModels tcModel = TcModels.get(model);
+        String default_compiler = null;
+        {
+			if (tcModel == null) {
+				Messages.sendWarning("Unknown tricore cpu model " + model + "\n", null, "tricore_writer_model", null);
+			} else {
+				default_compiler = tcModel.default_compiler;
+			}
+        }
 
+        ArrayList<String> tmp_common_eeopts = new ArrayList<String>();
+		
+		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId++) {
+			final IOilObjectList ool = oilObjects[currentRtosId];
+	        ArrayList<String> tmp = new ArrayList<String>();
+
+		        
+	        // store all older values (if there are)
+	        ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
+	        
+			/***********************************************************************
+			 * 
+			 * Hardware End Init function
+			 *  
+			 **********************************************************************/
+			{
+				String[] endInitFunction = parent.getCpuDataValue(ool, "HW_ENDINIT");
+				if (endInitFunction != null && endInitFunction.length>0 && endInitFunction[0] != null) {
+					sgrCpu.setProperty(SGR_OS_CPU_HW_END_INIT, ""+endInitFunction[0]);
+				}
+			}
+	        
+			/***********************************************************************
+			 * 
+			 * CPU linker script
+			 *  
+			 **********************************************************************/
+			{
+				String[] cpu_linkerscript = parent.getCpuDataValue(ool, "LINKERSCRIPT");
+				if (cpu_linkerscript != null && cpu_linkerscript.length>0 && cpu_linkerscript[0] != null) {
+					sgrCpu.setProperty(SGR_OS_CPU_LINKERSCRIPT, ""+cpu_linkerscript[0]);
+				}
+				if (mcu_linker_script != null) {
+					sgrCpu.setProperty(SGR_OS_MCU_LINKERSCRIPT, ""+mcu_linker_script);
+				}
 			}
 
-			// store ee_opts
-			sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS, tmp.toArray(new String[tmp.size()]));
+		
+			{
+				//List requiredOilObjects = (List) sgrCpu.getObject(SGRK__FORCE_ARRAYS_LIST__);
+	
+				if (tcModel == null) {
+					sgrCpu.setProperty(TricoreConstants.SGRK__TRICORE_MODEL__, model);
+				} else {
+					TricoreAbstractModel modelInfo = null;
+					CpuHwDescription descr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+					if (descr instanceof CpuDescrTricore) {
+						modelInfo = ((CpuDescrTricore) descr).getModel();
+					}
+					if (modelInfo == null) {
+						modelInfo = tcModel.provider.newTricoreModel();
+					}
+					
+	            	sgrCpu.setObject(TricoreConstants.SGRK__TRICORE_MODEL_INFO__, modelInfo);
+	            	modelInfo.updateObjects(parent, currentRtosId);
+	            	if (currentRtosId == 0) {
+						for (String s: modelInfo.getEEopts(-1, ool)) {
+							tmp_common_eeopts.add(s);
+						}
+	            	}
+					for (String s: modelInfo.getEEopts(currentRtosId, ool)) {
+						tmp.add(s);
+					}
+					sgrCpu.setProperty(TricoreConstants.SGRK__TRICORE_MODEL__, tcModel.name);
+				}
+		
+						
+	            sgrCpu.setProperty(TricoreConstants.SGRK__TRICORE_MODEL__, model);
+		        if (model == null) {
+		        	tmp_common_eeopts.add(EEOPT_HAL_TRICORE);
+		        }
+	
+	
+		        { // select compiler
+		        	List<String> all = parent.getCpuDataEnum(ool, "COMPILER_TYPE");
+					String tmp1 = all.size() == 0? null : all.get(0);
+					if (tmp1 == null && default_compiler != null) {
+						tmp1 = default_compiler;
+					}
+					if (tmp1 == null) {
+						Messages.sendErrorNl("Explicit selection of compiler is needed for unknow tricore model" , null, "tricore_writer_model", null);
+					}
+					
+			
+					sgrCpu.setProperty(TricoreConstants.SGRK__Tricore_COMPILER_TYPE__, tmp1);
+					if (TricoreConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(tmp1)) {
+						if (!TcModels.tc1796.name.equalsIgnoreCase(model)) {
+							Messages.sendWarningNl("GNU compiler tested only with tc1796");
+				        }
+						tmp.add(TcModels.tc1796.name.equalsIgnoreCase(model) ? EEOPT_TRICORE_GNU : EEOPT_GNU);
+				    } else 	if (TricoreConstants.SGRK__TASKING_COMPILER__.equalsIgnoreCase(tmp1)) {
+						if (!TcModels.tc27x.name.equalsIgnoreCase(model)) {
+							Messages.sendWarningNl("TASKING compiler tested only with tc27x");
+				        }
+			            tmp.add(EEOPT_TASKING);
+					}
+		        }
+		        
+				
+		        // get all older values (if there are)
+		        if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS)) {
+		        	String[] old = (String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS);
+		        	tmp.addAll(Arrays.asList(old));
+		        }
+	
+				// store ee_opts
+				sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS, tmp.toArray(new String[tmp.size()]));
+			}
 		}
+		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId ++) { 
+			IOilObjectList ool = oilObjects[currentRtosId];
+			
+			/* COMMON VARIABLES */
+			ISimpleGenRes sgrCpu = (ISimpleGenRes) ool.getList(IOilObjectList.OS).get(0);
+			sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_COMMON_EE_OPTS, tmp_common_eeopts.toArray(new String[tmp_common_eeopts.size()]));			
+		}
+	}
+	
+	public void updateObjects_old() throws OilCodeWriterException {
+		final IOilObjectList[] oilObjects = parent.getOilObjects();		
 		
+		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId++) {
+			final IOilObjectList ool = oilObjects[currentRtosId];
+	
+			/***********************************************************************
+			 * 
+			 * EE OPTS
+			 *  
+			 **********************************************************************/
+			{
+				//List requiredOilObjects = (List) sgrCpu.getObject(SGRK__FORCE_ARRAYS_LIST__);
+	
+		        ArrayList<String> tmp = new ArrayList<String>();
+		        
+		        // store all older values (if there are)
+		        ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 		
-		
-		
-		/***********************************************************************
-		 * 
-		 * Get ISR LEVEL and HANDLER
-		 *  
-		 **********************************************************************/
-		{
-			List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.ISR);
-			for (Iterator<ISimpleGenRes> iter = tasks.iterator(); iter.hasNext();) {
-
-				ISimpleGenRes currIsr = (ISimpleGenRes) iter.next();
+		        
+		        String default_compiler = TricoreConstants.SGRK__GNU_COMPILER__;
 				
-				String oilVarPrefix = (new OilPath(OilObjectType.ISR, null)).getPath();
-
+		        String model = null;
+		        {
+					String[] tmp1 = parent.getCpuDataValue(ool, "MODEL");
+					if (tmp1 != null && tmp1.length >0 && tmp1[0] != null) {
+						model = tmp1[0];
 	
-				{ // LEVEL
-					String deadLinePath = currIsr.getPath() + S + oilVarPrefix + S
-							+ "LEVEL" ;
-	
-					String[] values = CommonUtils.getValue(vt, deadLinePath);
-	
-					String var = null;
-					if (values != null && values.length >0) {
-						var = values[0];
-					} else {
-						throw new OilCodeWriterException("Required a LEVEL for the isr "+currIsr.getName()+".");
-					}
-					
-					currIsr.setObject(TricoreConstants.SGRK__ISR_LEVEL__, var);
+						TcModels tcModel = TcModels.get(model);
+						
+						if (tcModel == null) {
+							Messages.sendWarning("Unknown tricore cpu model " + model + "\n", null, "tricore_writer_model", null);
+						} else {
+							TricoreAbstractModel modelInfo = tcModel.provider.newTricoreModel();
+			            	sgrCpu.setObject(TricoreConstants.SGRK__TRICORE_MODEL_INFO__, modelInfo);
+			            	modelInfo.updateObjects(parent, currentRtosId);
+			            	for (String s: modelInfo.getEEopts(-1, ool)) {
+			            		tmp.add(s);
+							}
+							for (String s: modelInfo.getEEopts(currentRtosId, ool)) {
+								tmp.add(s);
+							}
+							default_compiler = tcModel.default_compiler;
+						}
+						
+			            sgrCpu.setProperty(TricoreConstants.SGRK__TRICORE_MODEL__, model);
+			        }
 				}
+		        if (model == null) {
+					tmp.add(EEOPT_HAL_TRICORE__OLD);
+		        }
+	
+	
+		        { // select compiler
+					sgrCpu.setProperty(TricoreConstants.SGRK__Tricore_COMPILER_TYPE__, default_compiler);
+					if (TricoreConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(default_compiler)) {
+						if (!TcModels.tc1796.name.equalsIgnoreCase(model)) {
+							Messages.sendWarningNl("GNU compiler tested only with tc1796");
+				        }
+						tmp.add(TcModels.tc1796.name.equalsIgnoreCase(model) ? EEOPT_TRICORE_GNU : EEOPT_GNU);
+				    } else 	if (TricoreConstants.SGRK__TASKING_COMPILER__.equalsIgnoreCase(default_compiler)) {
+						if (!TcModels.tc27x.name.equalsIgnoreCase(model)) {
+							Messages.sendWarningNl("TASKING compiler tested only with tc27x");
+				        }
+			            tmp.add(EEOPT_TASKING);
+					}
+		        }
+	
+		        
 				
-				{ // HANDLER
-					String deadLinePath = currIsr.getPath() + S + oilVarPrefix + S
-							+ "HANDLER" ;
+		        // get all older values (if there are)
+		        if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS)) {
+		        	String[] old = (String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS);
+		        	tmp.addAll(Arrays.asList(old));
+		        }
 	
-					String[] values = CommonUtils.getValue(vt, deadLinePath);
-	
-					String var = null;
-					if (values != null && values.length >0) {
-						var = values[0];
-					} else {
-						throw new OilCodeWriterException("The HANDLER for the isr "+currIsr.getName()+" is missing or incorrect.");
-					}
-					
-					currIsr.setObject(TricoreConstants.SGRK__ISR_HANDLER__, var);
-				}
+				// store ee_opts
+				sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS, tmp.toArray(new String[tmp.size()]));
 			}
-
-		}		
-
+		}
 	}
 	
 	/**
-	 * Write configuration's files for TriCore1
+	 * Write configuration's files for TriCore
 	 * 
-	 * @return buffers with configuration for TriCore1
+	 * @return buffers with configuration for TriCore
 	 * 
 	 * @throws OilCodeWriterException
 	 *             if there are some problems
 	 */
-	protected IOilWriterBuffer[] writeEE_Tricore1_CPU()
+	protected IOilWriterBuffer[] writeEE_Tricore_CPU()
 			throws OilCodeWriterException {
 
-		final String ERR_CPU_TYPE = "TriCore1";
-		final IOilObjectList[] oilObjects = parent.getOilObjects();		
+		final IOilObjectList[] oilObjects = parent.getOilObjects();
+		IOilWriterBuffer[] all_results = new IOilWriterBuffer[oilObjects.length];
 		
-		IOilWriterBuffer answer = new OilWriterBuffer();
-		final int currentRtosId = 0;
-		final String indent1 = IWritersKeywords.INDENT;
-
-		// ------------- Common string --------------------
-		boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
-
-		/*
-		 * Define a string for each MAX_OBJECT_NUMBER (OBJECT=task, RESOURCE, ...).
-		 * Binary distribution uses the suffix RTD_. 
-		 */
-		final String MAX_TASK = (binaryDistr ? "RTD_" : "EE_") + "MAX_TASK";
-
-		String pre = "";
-		String post = "";
-		final String indent = IWritersKeywords.INDENT;
-
-		// ------------- Requirement --------------------
-		StringBuffer sbInithal_c = answer.get(FILE_EE_CFG_C);
-		
-		final IOilObjectList ool = oilObjects[currentRtosId];
-		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
-		
-		List<ISimpleGenRes> taskNames = ool.getList(IOilObjectList.TASK);
-		String stackType = parent.getStackType(); // MULTI or MONO
-
-		// ------------- Buffers --------------------
-		/* A buffer about stack  */
-		StringBuffer sbStack = new StringBuffer();
-
-		/* A buffer about declarations of stacks  */
-		StringBuffer sbStackDecl = new StringBuffer();
-		StringBuffer sbStackDeclSize = new StringBuffer();
-
-		// ------------- Compute --------------------
-
-		final int STACK_UNIT = ErikaEnterpriseWriter.getStackUnit(ool);
-		
-		sbInithal_c.append("\n#include \"ee.h\"\n");
-		/***********************************************************************
-		 * MULTI STACK
-		 **********************************************************************/
-		if (DEF__MULTI_STACK__.equals(stackType)) {
-			sbInithal_c.append(commentWriterC
-					.writerBanner("Stack definition for Tricore1"));
+		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId++) {
+			IOilWriterBuffer answer = all_results[currentRtosId] = new OilWriterBuffer();
 			
-			ITreeInterface ti = vt.newTreeInterface();
-
-
 			
-			int[] irqSize = null;
-			if (parent.checkKeyword(DEF__IRQ_STACK_NEEDED__)) {
-				/***************************************************************
-				 * IRQ_STACK
-				 **************************************************************/
-				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
-				for (String currentCpuPrefix: currentCpuPrefixes) {
-					if (irqSize != null) {
-						break;
-					}
-	
-					String[] child = new String[1];
-					String type = CommonUtils
-							.getFirstChildEnumType(vt, currentCpuPrefix
-									+ "MULTI_STACK", child);
-	
-					if ("TRUE".equalsIgnoreCase(type)) {
-						String prefixIRQ = currentCpuPrefix
-							+ "MULTI_STACK" + VARIANT_ELIST+child[0] + PARAMETER_LIST
-							+ "IRQ_STACK";
-						boolean ok = "TRUE".equalsIgnoreCase(CommonUtils
-						.getFirstChildEnumType(vt, prefixIRQ, child));
-						
-						if (ok) {
-							
-							prefixIRQ += VARIANT_ELIST + child[0] +PARAMETER_LIST;
-							irqSize = new int[1];
-							{ // get data for IRQ STACK ...
-								String path[] = { "SYS_SIZE" };
-	
-								for (int i = 0; i < path.length; i++) {
-									String tmp = null;
-									IVariable var = ti.getValue(prefixIRQ + path[i]
-											+ VALUE_VALUE);
-									if (var != null && var.get() != null) {
-										tmp = var.toString();
-									}
-									if (tmp == null)
-										throw new RuntimeException(
-												ERR_CPU_TYPE + " : Expected " + path[i]);
-	
-									// check for value
-									try {
-										// ... store them inside the irqSize vector
-										irqSize[0] = (Integer.decode("" + tmp))
-												.intValue();
-										// ... and increase the memory requirement
-	//									stackEnd += irqSize[0];
-									} catch (Exception e) {
-										throw new RuntimeException(
-												ERR_CPU_TYPE + " : Wrong int" + path[i]
-														+ ", value = " + tmp + ")");
-									}
-								}
-							}
-						}
-					}
-				}
-
+			final IOilObjectList ool = oilObjects[currentRtosId];
+			
+			// ------------- Compute --------------------
+			TricoreAbstractModel tricoreModel = (TricoreAbstractModel) AbstractRtosWriter.getOsObject(ool, TricoreConstants.SGRK__TRICORE_MODEL_INFO__);
+			/***********************************************************************
+			 * tricore model specifics
+			 **********************************************************************/
+			if (tricoreModel != null) {
+				tricoreModel.write(currentRtosId, ool, answer);
 			}
-
-			/*
-			 * elStack contains all data about stack, for current rtos and its
-			 * tasks.
-			 * 
-			 * tList and tListN are used to identify all tasks (theirs name and
-			 * system id).
-			 * 
-			 * elStack accepts the list of task's names (tList) to compute all
-			 * required stack and theirs size/position
-			 */
-			EEStacks elStack = new EEStacks(parent, ool, irqSize);
-			elStack.setDummyStackPolicy(elStack.FORCE_ALWAYS | elStack.FORCE_FIRST);
-			ArrayList<String> tList = new ArrayList<String>();
-			ArrayList<String> tListN = new ArrayList<String>();
-
-			{
-				/***************************************************************
-				 * STACK FOR EACH TASK
-				 **************************************************************/
-				
-				// add the dummy task
-				tListN.add(" ");
-				tList.add(IWritersKeywords.dummyName);
-				
-				// fill data for each task
-				for (Iterator<ISimpleGenRes> iter = taskNames.iterator(); iter.hasNext();) {
-
-					ISimpleGenRes sgr = (ISimpleGenRes) iter.next();
-					tList.add(sgr.getName());
-					tListN.add(sgr.getString(ISimpleGenResKeywords.TASK_SYS_ID));
-				}
-
-				// compute total stack size and add it to memory requirement
-//				int offset[][] = elStack.taskOffsets((String[]) tList
-//						.toArray(new String[0]));
-//				stackEnd += offset[offset.length - 1][0]; // tot sys
-			}
-
-			
-			{
-				/***************************************************************
-				 * PREPARE BUFFERS
-				 **************************************************************/
-
-				pre = "";
-				post = "";
-
-				/* get the link between a task and its stack. */
-				int pos[] = elStack.taskStackLink(tList
-						.toArray(new String[1]));
-				/* get the size of each stack. */
-				int size[][] = elStack.stackSize(tList
-						.toArray(new String[1]));
-				/* descrStack contains a description for each stack. */ 
-				String[] descrStack = new String[size.length];
-				sbStack.append(indent
-						+ "struct EE_CTX EE_tc1_system_ctx["+MAX_TASK+"+1] = {\n");
-
-				
-				
-					
-				// DESCRIPTIONS
-				for (int j = 0; j < pos.length; j++) {
-					sbStack.append(pre + post + indent + indent + "{ 0, NULL, " + +pos[j] + "}");
-					// set new values for "post" and "pre"
-					post = " /* " + tList.get(j) + " */\n";
-					pre = ",\t";
-
-					/*
-					 * add the name of current task to the description of the /
-					 * right stack. Check also if there is already something or
-					 * not, infact in the second case append the new description
-					 * to the old one
-					 */ 
-					descrStack[pos[j]] = (descrStack[pos[j]] == null) ?
-							// The first description
-							("Task " + tListN.get(j) + " (" + tList.get(j) + ")")
-							:
-							// other descriptions
-							(descrStack[pos[j]] + ", " + "Task "
-									+ tListN.get(j) + " (" + tList.get(j) + ")"); // others
-				}
-
-				// close sbStack
-				sbStack.append(" \t" + post + indent + "};\n\n" + indent
-						+ "struct EE_TOS EE_tcl_system_tos["
-						+ (size.length) + "] = {\n");
-
-				pre = "";
-				post = "";
-				
-//				 DECLARE STACK SIZE && STACK (ARRAY)
-				for (int j = 1; j < size.length; j++) {
-				    long value = size[j][0];
-				    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
-					sbStackDecl.append(indent1 + "EE_STACK EE_tcl_stack_"+j+"[STACK_"+j+"_SIZE];\t/* "+descrStack[j]+" */\n");
-					sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+" // size = "+size[j][0]+" bytes \n");
-				}
-				
-				/*
-				 * For each stack prepare the configuration's vectors and
-				 * descriptions
-				 */
-				for (int j = 0; j < size.length; j++) {
-				    
-			        String value = j == 0 ? "{0}" : "{(EE_ADDR)(&EE_tcl_stack_"+j+"[STACK_" + j + "_SIZE - 3])}";
-
-					sbStack.append(pre
-							+ post
-							+ indent
-							+ indent
-							+ value);
-
-					// set new values for size
-					pre = ",";
-					post = "\t/* "+descrStack[j]+" */\n";
-				}
-
-				// complete the stack's buffer
-				sbStack.append(" " + post + indent + "};\n\n" + indent
-						+ "EE_UREG EE_tc1_active_tos = 0; /* dummy */\n\n");
-
-				{ // if required, init also the irq stack
-					if (irqSize != null) {
-					    int j = size.length;
-					    long value = irqSize[0];
-					    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
-						sbStackDecl.append(indent1 + "EE_STACK EE_tcl_stack_"+j+"[STACK_"+j+"_SIZE];\t/* irq stack */\n");
-						sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+" // size = "+irqSize[0]+" bytes \n");
-
-						sbStack
-								.append(indent+"/* stack used only by IRQ handlers */\n"
-										+ indent+"struct EE_TOS EE_tcl_IRQ_tos = {\n"
-										+ indent+indent+"(EE_ADDR)(&EE_tcl_stack_"+j+"[STACK_" + j + "_SIZE - 3])\n"
-										+ indent+"};\n\n");
-					}
-				}
-				
-			}
-			
-
+	
+			/***********************************************************************
+			 * MakeFile
+			 **********************************************************************/
+			writeMakeFile(ool);
 		}
-		
-
-		if 	(ool.getList(IOilObjectList.ISR).size() > 0) { // eecfg.h
-			StringBuffer eecfg_h = answer.get(FILE_EE_CFG_H);
-			eecfg_h.append(indent1 + "#define EE_MAX_ISR 32");
-		}
-		
-		
-		// MakeFile
-		writeMakeFile(ool);
-		writeIsrFile(ool, answer);
-
-		// ------------- Write --------------------
-		//  add stack buffers
-		sbInithal_c.append(sbStackDeclSize+"\n"+
-		        sbStackDecl + "\n" +
-		        sbStack);
-
-		
-		
-		return new IOilWriterBuffer[] { answer };
+		return all_results;
 	}
 
 
@@ -556,10 +462,14 @@ public class SectionWriterHalTricore extends SectionWriter
 	 */
 	private void writeMakeFile(final IOilObjectList ool) {
 		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
+		final boolean multicore = parent.getOilObjects().length>1;
 		OsType wrapper = HostOsUtils.common.getTarget();
 
 		StringBuffer sbMakefile = new StringBuffer(commentWriterMf
 				.writerBanner("Tricore"));
+		
+		StringBuilder sbVariables = new StringBuilder();
+		StringBuilder sbCommon = new StringBuilder();
 
 		{ // PATHs
 			HashMap<String, ?> options = parent.getOptions();
@@ -595,78 +505,82 @@ public class SectionWriterHalTricore extends SectionWriter
 			}
 			
 			String model = ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, TricoreConstants.SGRK__TRICORE_MODEL__), "");
+			final String baseID = TcModels.tc1796.name.equals(model) ? "TRICORE1" : "TRICORE";
+			// compiler
+			String compiler_define = "";
+			{
+		        String compiler_type = AbstractRtosWriter.getOsProperty(ool,TricoreConstants.SGRK__Tricore_COMPILER_TYPE__);
+		        if (TricoreConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(compiler_type)) {
+		        	compiler_define = baseID +"_GCCDIR := $(realpath $(shell dirname $(shell which tricore-gcc))/../)\n";
+		        	
+			    	if (options.containsKey(TricoreConstants.PREF_TRICORE_GNU_CC_PATH)) {
+						String tmp = (String) options.get(TricoreConstants.PREF_TRICORE_GNU_CC_PATH);
+						if (tmp.length()>0) compiler_define = CommonUtils.compilerMakefileDefines(tmp, baseID +"_GCCDIR", wrapper);
+					} 
+
+		        } else if (TricoreConstants.SGRK__TASKING_COMPILER__.equalsIgnoreCase(compiler_type)) {
+		        	
+		        	String temp_path = "$(shell which cctc)/../../../";
+		        	
+			    	if (options.containsKey(TricoreConstants.PREF_TRICORE_TASKING_CC_PATH)) {
+						String tmp = (String) options.get(TricoreConstants.PREF_TRICORE_TASKING_CC_PATH);
+						if (tmp != null && tmp.length()>0) temp_path = tmp;
+					} 
+			    	 compiler_define = CommonUtils.compilerMakefileDefines(temp_path, baseID +"_TASKINGDIR", wrapper);
+
+		        } else {
+		        	compiler_define = "$(warning No compiler set)\n";
+		        }
+			}
+			String model_txt = TcModels.get(model) == null ? model : TcModels.get(model).name ;
 			
-			sbMakefile
-					.append(platformStr
+			sbMakefile.append(platformStr
 							+ "APPBASE := " + appBase + "\n"
-							+ "OUTBASE := " + outputDir + "\n\n"
-							+ "TRICORE1_MODEL  := " + model + "\n"
-							+ "TRICORE1_GCCDIR := $(realpath $(shell dirname $(shell which tricore-gcc))/../)");
+							+ "OUTBASE := " + outputDir + "\n");
+			
+			sbCommon.append(baseID +"_MODEL  := " + model_txt + "\n");
+
+			sbVariables.append("\n"+
+					CommonUtils.addMakefileDefinesInclude()
+					+ compiler_define);
 		}
 
 		ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
-		sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile.toString());
 
-	}
-	
-	
-	private void writeIsrFile(final IOilObjectList ool, IOilWriterBuffer buffers) throws OilCodeWriterException {
-		final String indent1 = IWritersKeywords.INDENT;
-
-		if 	(ool.getList(IOilObjectList.ISR).size() > 0) {
-			StringBuffer isrFile_s = buffers.get(TricoreConstants.ISR_HANDLER_FILE);
-			boolean enable_int = false;
-			boolean enable_trap = false;
-			
-			/***************************************************************
-			 * ISR table
-			 **************************************************************/
-			
-			
-			StringBuffer isrTable = new StringBuffer(
-					"BEGIN_VECTOR_TABLE\n");
-
-			StringBuffer trapTable = new StringBuffer(
-					"BEGIN_TRAP_TABLE\n");
-			
-			// fill data for each task
-			String pre = "";
-			for (Iterator<ISimpleGenRes> iter = ool.getList(IOilObjectList.ISR).iterator(); iter.hasNext();) {
-
-				ISimpleGenRes sgr = (ISimpleGenRes) iter.next();
-				
-				int category = sgr.getInt(ISimpleGenResKeywords.ISR_CATEGORY); 
-				String level   = sgr.getString(TricoreConstants.SGRK__ISR_LEVEL__);
-				String handler = sgr.getString(TricoreConstants.SGRK__ISR_HANDLER__);
-				
-				switch (category) {
-				case 1:
-					enable_int = true;
-					isrTable.append(indent1 + "EE_ISR1_STUB " + level + " " + handler +"\n");
-					break;
-				case 2:
-					enable_int = true;
-					isrTable.append(indent1 + "EE_ISR2_STUB " + level + " " + handler +"\n");
-					break;
-				case 3:
-					enable_trap = true;
-					trapTable.append(indent1 + "EE_TRAP_STUB " + level + " " + handler +"\n");
-					break;
-				default:
-					throw new OilCodeWriterException("Unsupported isr category (" + category + ") for isr " + sgr.getName());
-				}
+		{ // linker script
+			String link = null;
+			if (sgrCpu.containsProperty(SGR_OS_CPU_LINKERSCRIPT)) {
+				link = sgrCpu.getString(SGR_OS_CPU_LINKERSCRIPT);
 			}
-			isrTable.append("END_VECTOR_TABLE\n" );
-			trapTable.append("END_TRAP_TABLE\n" );
+			if (link == null && sgrCpu.containsProperty(SGR_OS_MCU_LINKERSCRIPT)) {
+				link = sgrCpu.getString(SGR_OS_MCU_LINKERSCRIPT);
+			}
 			
-			isrFile_s.append(
-					(enable_int ? "#include <cpu/tricore1/inc/ee_intstub.S>\n" : "") +
-					(enable_trap ? "#include <cpu/tricore1/inc/ee_trapstub.S>\n" : "") +
-					"\n" +
-					(enable_int ? isrTable + "\n" : "") +
-					(enable_trap ? trapTable : "") + "\n");
+			if (link != null) {
+				sbVariables.append("EE_LINKERSCRIPT := " + link+ "\n");
+			}
+			
 		}
 
+		
+		if (multicore) {
+			if (sgrCpu.containsProperty(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__)) {
+				sbMakefile.append(sgrCpu.getString(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__));
+			}
+			sgrCpu.setProperty(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__, sbCommon.toString());
+		} else {
+			sbVariables.append(sbCommon.toString());
+		}
+		
+		if (sgrCpu.containsProperty(SGRK__MAKEFILE_EXTENTIONS__)) {
+			sbMakefile.append(sgrCpu.getString(SGRK__MAKEFILE_EXTENTIONS__));
+		}
+		sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile.toString());
+
+		if (sgrCpu.containsProperty(SGRK__MAKEFILE_CPU_EXT_VARS__)) {
+			sbVariables.append(sgrCpu.getString(SGRK__MAKEFILE_CPU_EXT_VARS__));
+		}
+		sgrCpu.setProperty(SGRK__MAKEFILE_CPU_EXT_VARS__, sbVariables.toString());
 	}
 	
 	/**

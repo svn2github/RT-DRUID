@@ -15,6 +15,7 @@
 
 		<fileset dir="${ee.base.location}" id="ee_examples">
 			<include name="examples/tricore1/**/*"/>
+			<include name="examples/tricore/**/*"/>
 		</fileset>
 
 

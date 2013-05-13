@@ -65,6 +65,8 @@ public interface IWritersKeywords {
 	public final static String CPU_NIOSII = "NIOSII";
 
 	/** Identifies a TriCore architecture (one or more cpu?) */
+	public final static String CPU_TRICORE = "TRICORE";
+	/** Identifies a TriCore architecture (one or more cpu?) */
 	public final static String CPU_TRICORE1 = "TRICORE1";
 
 	/** Identifies a generic Cortex Mx architecture (one or more cpu?) */

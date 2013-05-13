@@ -12,6 +12,9 @@
       <cpu
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrTricore">
       </cpu>
+      <cpu
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrTricore1">
+      </cpu>
    </extension>
 	<extension
 		point="com.eu.evidence.rtdruid.oil.core.oil_implementation">

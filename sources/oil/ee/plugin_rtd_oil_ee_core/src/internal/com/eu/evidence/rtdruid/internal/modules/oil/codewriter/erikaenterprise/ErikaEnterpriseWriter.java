@@ -37,6 +37,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWr
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.IRequiresUpdates;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDescriptionManager;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.IRequiresUpdates;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IDistributionConstant;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
@@ -777,7 +778,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				}
 			}
 		}
-
+		
 		/***********************************************************************
 		 * 
 		 * Mapping between Cpu and Counter.

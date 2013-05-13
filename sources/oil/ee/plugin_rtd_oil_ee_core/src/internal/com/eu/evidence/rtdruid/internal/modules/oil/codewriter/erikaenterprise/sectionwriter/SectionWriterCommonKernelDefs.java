@@ -332,7 +332,7 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 					buffer.append(indent +    "#define EE_CPU_CLOCK      " + speed+"U\n");
 				}
 			}
-
+			
 			{
 				/*
 				 * ---------------- COUNTER ----------------
