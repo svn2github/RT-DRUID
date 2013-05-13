@@ -27,7 +27,7 @@ public interface TricoreConstants {
 	public static final String SGRK__TASKING_COMPILER__ = "TASKING";
 
 
-	public static final Object PREF_TRICORE_TASKING_CC_PATH = "preference_tricore__path_for_gnu_compiler";
-	public static final Object PREF_TRICORE_GNU_CC_PATH = "preference_tricore__path_for_tasking_compiler";
+	public static final Object PREF_TRICORE_TASKING_CC_PATH = "preference_tricore__path_for_tasking_compiler";
+	public static final Object PREF_TRICORE_GNU_CC_PATH = "preference_tricore__path_for_gnu_compiler";
 
 }

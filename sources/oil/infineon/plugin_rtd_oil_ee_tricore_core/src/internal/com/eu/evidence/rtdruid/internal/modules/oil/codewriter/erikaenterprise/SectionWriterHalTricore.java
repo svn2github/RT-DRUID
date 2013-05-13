@@ -544,16 +544,17 @@ public class SectionWriterHalTricore extends SectionWriter
 			{
 		        String compiler_type = AbstractRtosWriter.getOsProperty(ool,TricoreConstants.SGRK__Tricore_COMPILER_TYPE__);
 		        if (TricoreConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(compiler_type)) {
-		        	compiler_define = baseID +"_GCCDIR := $(realpath $(shell dirname $(shell which tricore-gcc))/../)\n";
+		        	String temp_path = "$(shell dirname \"$(shell which tricore-gcc)\")/../";
 		        	
 			    	if (options.containsKey(TricoreConstants.PREF_TRICORE_GNU_CC_PATH)) {
 						String tmp = (String) options.get(TricoreConstants.PREF_TRICORE_GNU_CC_PATH);
-						if (tmp.length()>0) compiler_define = CommonUtils.compilerMakefileDefines(tmp, baseID +"_GCCDIR", wrapper);
+						if (tmp != null && tmp.length()>0) temp_path = tmp;
 					} 
-
+			    	 compiler_define = CommonUtils.compilerMakefileDefines(temp_path, baseID +"_GCCDIR", wrapper);
+			    	
 		        } else if (TricoreConstants.SGRK__TASKING_COMPILER__.equalsIgnoreCase(compiler_type)) {
 		        	
-		        	String temp_path = "$(shell which cctc)/../../../";
+		        	String temp_path = "$(shell dirname \"$(shell which cctc)\")/../../";
 		        	
 			    	if (options.containsKey(TricoreConstants.PREF_TRICORE_TASKING_CC_PATH)) {
 						String tmp = (String) options.get(TricoreConstants.PREF_TRICORE_TASKING_CC_PATH);
