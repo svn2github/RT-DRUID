@@ -1523,4 +1523,5 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"};\n";
 		commonWriterTest(text, 1);
 	}
+	
 }

@@ -178,6 +178,8 @@ public class SectionWriterHalTricore extends SectionWriter
 		final IOilObjectList[] oilObjects = parent.getOilObjects();		
 		
         String model = null;
+        String board = null;
+        String board_eeopt = null;
         String mcu_linker_script = null;
         {
     		for (IOilObjectList ool : oilObjects) {
@@ -211,6 +213,26 @@ public class SectionWriterHalTricore extends SectionWriter
 				}
     		}
         }
+        {
+    		for (IOilObjectList ool : oilObjects) {
+
+				/***********************************************************************
+				 * get values
+				 **********************************************************************/
+				ArrayList<String> childPaths = new ArrayList<String>();
+				List<String> childFound = parent.getRtosCommonChildType(ool, "BOARD_DATA", childPaths);
+
+				for (int index = 0; index<childFound.size(); index++) {
+					
+					String mcu_type = childFound.get(index);
+					
+					if ("TRIBOARD_TC2X5".equals(mcu_type)) {
+						board = mcu_type;
+						board_eeopt = "EE_TRIBOARD_TC2X5";
+					}
+				}
+    		}
+        }
         
 		TcModels tcModel = TcModels.get(model);
         String default_compiler = null;
@@ -223,6 +245,10 @@ public class SectionWriterHalTricore extends SectionWriter
         }
 
         ArrayList<String> tmp_common_eeopts = new ArrayList<String>();
+        
+        if (board_eeopt != null) {
+        	tmp_common_eeopts.add(board_eeopt);
+        }
 		
 		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId++) {
 			final IOilObjectList ool = oilObjects[currentRtosId];
@@ -278,6 +304,15 @@ public class SectionWriterHalTricore extends SectionWriter
 				}
 				
 				currentCompiler = TricoreCompiler.get(tmp1);
+	        }
+	        
+	        /***********************************************************************
+			 * 
+			 * MCU and BOARD Model
+			 *  
+			 **********************************************************************/
+	        if (board != null) {
+	        	sgrCpu.setProperty(TricoreConstants.SGRK__TRICORE_BOARD_MODEL__, board);
 	        }
 		
 			{

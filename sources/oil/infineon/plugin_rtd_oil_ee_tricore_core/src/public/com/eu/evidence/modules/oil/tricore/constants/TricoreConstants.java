@@ -13,6 +13,8 @@ public interface TricoreConstants {
 	public final static String SGRK__TRICORE_MODEL__ = "sgrk_cpu_property_tricore1__model";
 	public final static String SGRK__TRICORE_MODEL_INFO__ = "sgrk_cpu_property_tricore1__model_info";
 
+	public final static String SGRK__TRICORE_BOARD_MODEL__ = "sgrk_cpu_property_tricore1__board_model";
+
 	
 	public final static String SGRK__ISR_LEVEL__ = ISimpleGenResKeywords.ISR_LEVEL;
 	public final static String SGRK__ISR_HANDLER__ = ISimpleGenResKeywords.ISR_HANDLER;

@@ -73,5 +73,9 @@ IMPLEMENTATION ee {
 				STRING LINKERSCRIPT : "A custom linker-script that is used for each cpu, unless a cpu-specific linker-script is defined.";
 			}
 		] MCU_DATA;
+		
+		ENUM [
+			TRIBOARD_TC2X5
+		] BOARD_DATA = NO_BOARD;
     };
 };
