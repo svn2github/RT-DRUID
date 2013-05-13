@@ -1,6 +1,8 @@
 
 package com.eu.evidence.modules.oil.tricore.constants;
 
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
+
 /**
  * @author Nicola Serreli
  *
@@ -12,8 +14,8 @@ public interface TricoreConstants {
 	public final static String SGRK__TRICORE_MODEL_INFO__ = "sgrk_cpu_property_tricore1__model_info";
 
 	
-	public final static String SGRK__ISR_LEVEL__ = "sgrk_isr_property_tricore__isr_level";
-	public final static String SGRK__ISR_HANDLER__ = "sgrk_isr_property_tricore__isr_handler_name";
+	public final static String SGRK__ISR_LEVEL__ = ISimpleGenResKeywords.ISR_LEVEL;
+	public final static String SGRK__ISR_HANDLER__ = ISimpleGenResKeywords.ISR_HANDLER;
 
 	
 	public final static String ISR_HANDLER_FILE = "ee_hndlr.S";

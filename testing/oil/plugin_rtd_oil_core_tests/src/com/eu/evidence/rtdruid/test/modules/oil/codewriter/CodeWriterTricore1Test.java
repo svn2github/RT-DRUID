@@ -1038,4 +1038,76 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 3);
 	}
 
+	
+	@Test public void testIsrTc27x() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"        CPU_DATA = TRICORE {\n" +
+				"            CPU_CLOCK = 200.0;\n" +
+				"            APP_SRC = \"code.c\";\n" +
+				"            MULTI_STACK = TRUE {\n" +
+				"                IRQ_STACK = TRUE {\n" +
+				"                    SYS_SIZE = 256;\n" +
+				"                };\n" +
+				"            };\n" +
+				"        };\n" +
+				"        STATUS = EXTENDED;\n" +
+				"        STARTUPHOOK = TRUE;\n" +
+				"        ERRORHOOK = TRUE;\n" +
+				"        USERESSCHEDULER = FALSE;\n" +
+				"\n"+
+				"		MCU_DATA = TRICORE {\n"+
+				"			MODEL = TC27x;\n"+
+				"		};\n"+
+				"		KERNEL_TYPE = ECC1;\n" +
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 3;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		 STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"	ISR Timer_isr2 {\n" +
+				"		CATEGORY = 2;" +
+				"		PRIORITY = 4;\n" +
+				"		HANDLER = \"isr2\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR irq5_isr1 {\n" +
+				"		CATEGORY = 1;" +
+				"		PRIORITY = 5;\n" +
+				"		HANDLER = \"isr1\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR trap_segfault {\n" +
+				"		CATEGORY = 2;" +
+				"		PRIORITY = 1;\n" +
+				"		TRAP = TRUE;" +
+	  			"		HANDLER = \"segfault\";	// Trap handler\n" +
+				"	};\n" +
+				"	ISR trap_halt {\n" +
+				"		CATEGORY = 2;" +
+				"		PRIORITY = 1;\n" +
+				"		TRAP = TRUE;" +
+				"		ENTRY = \"e_halt\";\n" +
+	  			"		HANDLER = \"segfault\";	// Trap handler\n" +
+				"	};\n" +
+				"	ISR trap_syscall {\n" +
+				"		CATEGORY = 2;" +
+				"		TRAP = TRUE;" +
+				"		LEVEL = \"l_syscall\";\n" +
+				"		HANDLER = \"syscall\";	// Trap handler\n" +
+				"	};\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
 }

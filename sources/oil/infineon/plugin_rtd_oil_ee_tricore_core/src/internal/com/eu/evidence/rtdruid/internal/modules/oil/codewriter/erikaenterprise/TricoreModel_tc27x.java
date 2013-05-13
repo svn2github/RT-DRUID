@@ -200,19 +200,17 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	 */
 	private void writeCfg(final int currentRtosId, final IOilObjectList ool, final IOilWriterBuffer buffers) {
 		final String indent = IWritersKeywords.INDENT;
+		StringBuffer sbInithal_h = buffers.get(FILE_EE_CFG_H);
 		
 		ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 		if (sgrCpu.containsProperty(SectionWriterHalTricore.SGR_OS_CPU_HW_END_INIT)) {
 			
 			
-			StringBuffer sbInithal_h = buffers.get(FILE_EE_CFG_H);
 			sbInithal_h.append(indent + SectionWriter.getCommentWriter(ool, FileTypes.H).writerSingleLineComment("Hardware startup end initialization function") + 
 					indent + "#define EE_START_UP_USER_ENDINIT     " + sgrCpu.getString(SectionWriterHalTricore.SGR_OS_CPU_HW_END_INIT)
 					+ "\n\n");
 			
 		}
-		
-
 	}
 
 	
@@ -558,5 +556,23 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	protected void writeKernelIsr(int currentRtosId, IOilObjectList ool, IOilWriterBuffer buffers) throws OilCodeWriterException {
 		isrWriter.writeIsr(currentRtosId, ool, buffers);
 		counterHwWriter.writeCounterHw(currentRtosId, ool, buffers);
+		if (ool.getList(IOilObjectList.ISR).size()>0) {
+			int max_isr_prio = 0;
+			String max_isr_string = "EE_ISR_UNMASKED";
+			for (ISimpleGenRes isr : ool.getList(IOilObjectList.ISR)) {
+				if (isr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_VALUE)) {
+					final int current_prio = isr.getInt(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_VALUE);
+					if (max_isr_prio< current_prio) {
+						max_isr_prio = current_prio;
+						max_isr_string = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING);
+					}
+				}
+			}
+
+			StringBuffer sbInithal_h = buffers.get(FILE_EE_CFG_H);
+
+			sbInithal_h.append("\n" +SectionWriter.getCommentWriter(ool, FileTypes.H).writerSingleLineComment("Max ISR priority") + 
+					"#define EE_TC_MAX_ISR_ID     " + max_isr_string + "\n\n");
+		}
 	}
 }

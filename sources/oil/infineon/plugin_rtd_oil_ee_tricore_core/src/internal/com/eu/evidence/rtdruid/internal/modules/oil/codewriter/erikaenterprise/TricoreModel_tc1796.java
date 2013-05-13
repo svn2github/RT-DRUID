@@ -22,8 +22,6 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWr
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
-import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 
@@ -118,40 +116,11 @@ public static class TricoreModelProvider_tc1796 implements ITricoreModelProvider
 			for (Iterator<ISimpleGenRes> iter = isrList.iterator(); iter.hasNext();) {
 
 				ISimpleGenRes currIsr = (ISimpleGenRes) iter.next();
-				
-				String oilVarPrefix = (new OilPath(OilObjectType.ISR, null)).getPath();
-
-	
-				{ // LEVEL
-					String deadLinePath = currIsr.getPath() + S + oilVarPrefix + S
-							+ "LEVEL" ;
-	
-					String[] values = CommonUtils.getValue(vt, deadLinePath);
-	
-					String var = null;
-					if (values != null && values.length >0) {
-						var = values[0];
-					} else {
-						throw new OilCodeWriterException("Required a LEVEL for the isr "+currIsr.getName()+".");
-					}
-					
-					currIsr.setObject(TricoreConstants.SGRK__ISR_LEVEL__, var);
+				if (!currIsr.containsProperty(TricoreConstants.SGRK__ISR_LEVEL__)) {
+					throw new OilCodeWriterException("Required a LEVEL for the isr "+currIsr.getName()+".");
 				}
-				
-				{ // HANDLER
-					String deadLinePath = currIsr.getPath() + S + oilVarPrefix + S
-							+ "HANDLER" ;
-	
-					String[] values = CommonUtils.getValue(vt, deadLinePath);
-	
-					String var = null;
-					if (values != null && values.length >0) {
-						var = values[0];
-					} else {
-						throw new OilCodeWriterException("The HANDLER for the isr "+currIsr.getName()+" is missing or incorrect.");
-					}
-					
-					currIsr.setObject(TricoreConstants.SGRK__ISR_HANDLER__, var);
+				if (!currIsr.containsProperty(TricoreConstants.SGRK__ISR_HANDLER__)) {
+					throw new OilCodeWriterException("The HANDLER for the isr "+currIsr.getName()+" is missing or incorrect.");
 				}
 			}
 			if (!isrList.isEmpty()) {

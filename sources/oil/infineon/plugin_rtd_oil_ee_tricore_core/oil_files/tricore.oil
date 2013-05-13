@@ -74,10 +74,4 @@ IMPLEMENTATION ee {
 			}
 		] MCU_DATA;
     };
-    
-    ISR {
-		STRING LEVEL;
-		STRING HANDLER;
-	};
-    
 };
