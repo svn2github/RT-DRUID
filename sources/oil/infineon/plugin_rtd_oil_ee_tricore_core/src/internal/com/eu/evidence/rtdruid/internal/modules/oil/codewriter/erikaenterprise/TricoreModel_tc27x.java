@@ -60,7 +60,9 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	
 	private static final String STACK_BASE_NAME = "EE_tc_stack_";
 	private static final String SGR_OS_CPU_SYS_STACK_SIZE = "sgr__os_cpu_system_stack_size";
-	private static final long DEFAULT_SYS_STACK_SIZE = 16384;
+	private static final String SGR_OS_CPU_SYS_CSA_SIZE = "sgr__os_cpu_system_csa_size";
+	private static final long DEFAULT_SYS_STACK_SIZE = 8192;
+	private static final long DEFAULT_SYS_CSA_SIZE = 16384;
 	
 	protected final String ERR_CPU_TYPE = "TriCore";
 	private static final String EE_TRICORE_SYSTEM_TIMER_HANDLER = "EE_tc_system_timer_handler";
@@ -166,7 +168,6 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		}
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
-		final IOilObjectList ool = oilObjects[currentRtosId];
 		
 		/***********************************************************************
 		 * 
@@ -174,6 +175,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		 *  
 		 **********************************************************************/
 		{
+		final IOilObjectList ool = oilObjects[currentRtosId];
 			String[] stack_size = parent.getCpuDataValue(ool, "SYS_STACK_SIZE");
 			if (stack_size != null && stack_size.length>0 && stack_size[0] != null) {
 				
@@ -192,6 +194,35 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					
 					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 					sgrCpu.setProperty(SGR_OS_CPU_SYS_STACK_SIZE, ""+value);
+				}
+			}
+		}
+		
+		/***********************************************************************
+		 * 
+		 * Context Save Area size
+		 *  
+		 **********************************************************************/
+		{
+			final IOilObjectList ool = oilObjects[currentRtosId];
+			String[] stack_size = parent.getCpuDataValue(ool, "SYS_CSA_SIZE");
+			if (stack_size != null && stack_size.length>0 && stack_size[0] != null) {
+				
+				boolean valid = false;
+				int value = -1;
+				try {
+					value = Integer.decode(stack_size[0]);
+					valid = true;
+				} catch (NumberFormatException e) {
+					Messages.sendWarningNl("Invalid value for  Context Save Area size : " + stack_size[0]);
+				}
+				
+				if (valid && value <0) {
+					Messages.sendWarningNl("Context Save Area size cannot be negative (" + value + ")");
+				} else {
+					
+					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
+					sgrCpu.setProperty(SGR_OS_CPU_SYS_CSA_SIZE, ""+value);
 				}
 			}
 		}
@@ -269,17 +300,28 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				switch (currentCompiler) {
 					case DEFAULT:
 					case TASKING:
+					{
+						int csa_size = Integer.parseInt( "" + ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_CSA_SIZE),
+								DEFAULT_SYS_CSA_SIZE));
+						csa_size = (int) Math.ceil(csa_size/64.0);
 						builder.append("\n" + SectionWriter.getCommentWriter(ool, FileTypes.MAKEFILE).writerSingleLineComment("Add a flag for the linkerscript to set the minimum size of system stack") + 
 								"LDFLAGS += -Wl-DUSTACK_TC"+currentRtosId+"=" + 
 									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
-											DEFAULT_SYS_STACK_SIZE))
+											DEFAULT_SYS_STACK_SIZE)) + "\n"+
+								"LDFLAGS += -Wl-DCSA_TC"+currentRtosId+"=" + csa_size
+
 								+ "\n\n");
+					}
 						break;
 					case GNU:
 						builder.append("\n" + SectionWriter.getCommentWriter(ool, FileTypes.MAKEFILE).writerSingleLineComment("Add a flag for the linkerscript to set the minimum size of system stack") + 
 								"LDFLAGS += -Wl,--defsym=__USTACK_SIZE=" +//+currentRtosId+"=" + 
 									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
-											DEFAULT_SYS_STACK_SIZE))
+											DEFAULT_SYS_STACK_SIZE)) + "\n"+
+								"LDFLAGS += -Wl,--defsym=__CSA_SIZE=" +//+currentRtosId+"=" + 
+									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_CSA_SIZE),
++										DEFAULT_SYS_CSA_SIZE))
+
 								+ "\n\n");
 						break;
 					default:
