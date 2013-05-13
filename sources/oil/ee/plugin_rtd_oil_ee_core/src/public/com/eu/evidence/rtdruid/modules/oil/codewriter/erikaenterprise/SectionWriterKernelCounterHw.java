@@ -36,6 +36,7 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 	protected Boolean checked;
 	protected boolean allowSystemTimerPriority = false;
 	protected SectionWriterIsr generateIsr2Defines = null;
+	protected boolean computeIsrEntryFromPriority = false;
 	
 	protected final ErikaEnterpriseWriter parent;
 
@@ -59,6 +60,13 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 	 */
 	public void setGenerateIsr2Defines(SectionWriterIsr generateIsr2Defines) {
 		this.generateIsr2Defines = generateIsr2Defines;
+	}
+	
+	/**
+	 * @param computeIsrEntryFromPriority the computeIsrEntryFromPriority to set
+	 */
+	public void setComputeIsrEntryFromPriority(boolean computeIsrEntryFromPriority) {
+		this.computeIsrEntryFromPriority = computeIsrEntryFromPriority;
 	}
 	
 	public void writeCounterHw(int currentRtosId, IOilObjectList ool, IOilWriterBuffer oilWBuff) throws OilCodeWriterException {
@@ -183,7 +191,8 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						CpuHwDescription.McuCounterDevice device = cpuDescr == null ? null : cpuDescr.getMcuDevice(deviceId);
 						final String entry_id = "EE_" + 
 								(device == null ? hw_id : device.getMcu_id()) // CPU - MCU id
-								+ "_"+deviceId+"_ISR";
+								+ "_"+
+								(computeIsrEntryFromPriority ? sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE) : deviceId)+"_ISR";
 						final String prio_id = (device == null ?
 								entry_id :
 								"EE_" + hw_id +"_"+device.getEntry()
@@ -194,7 +203,6 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						info.name = sgr.getName();
 						info.category = "2";
 						info.handler = sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER);
-//						info.entry_id = "EE_"+hw_id+"_"+sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE)+"_ISR";
 						info.entry_id = entry_id;
 						info.disable = false;
 						info.generated_prioid = prio_id;
@@ -276,7 +284,6 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						} else if (device != null){
 							handler = device.getHandler();
 						}
-
 						
 						sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, handler);
 					}

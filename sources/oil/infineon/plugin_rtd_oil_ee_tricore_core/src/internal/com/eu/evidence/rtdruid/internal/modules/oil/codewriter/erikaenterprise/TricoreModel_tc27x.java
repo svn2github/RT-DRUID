@@ -164,6 +164,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			counterHwWriter = new SectionWriterKernelCounterHw(parent, EE_TRICORE_HANDLER_BASEID, EE_TRICORE_SYSTEM_TIMER_HANDLER);
 			counterHwWriter.setAllowSystemTimerPriority(true);
 			counterHwWriter.setGenerateIsr2Defines(isrWriter);
+			counterHwWriter.setComputeIsrEntryFromPriority(true);
 			counterHwWriter.updateObjects();
 		}
 		
@@ -175,7 +176,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		 *  
 		 **********************************************************************/
 		{
-		final IOilObjectList ool = oilObjects[currentRtosId];
+			final IOilObjectList ool = oilObjects[currentRtosId];
 			String[] stack_size = parent.getCpuDataValue(ool, "SYS_STACK_SIZE");
 			if (stack_size != null && stack_size.length>0 && stack_size[0] != null) {
 				
@@ -320,8 +321,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 											DEFAULT_SYS_STACK_SIZE)) + "\n"+
 								"LDFLAGS += -Wl,--defsym=__CSA_SIZE=" +//+currentRtosId+"=" + 
 									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_CSA_SIZE),
-+										DEFAULT_SYS_CSA_SIZE))
-
+										DEFAULT_SYS_CSA_SIZE))
 								+ "\n\n");
 						break;
 					default:
@@ -536,7 +536,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	
 				// close sbStack
 				sbStack.append(" \t" + post + indent + "};\n\n" + indent
-						+ "struct EE_TOS EE_tc_system_tos["
+						+ "struct EE_TC_TOS EE_tc_system_tos["
 						+ (size.length) + "] = {\n");
 				
 				pre = "";
@@ -548,9 +548,11 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	//			 DECLARE STACK SIZE && STACK (ARRAY)
 				for (int j = 1; j < size.length; j++) {
 				    long value = size[j][0];
-				    value  = (value + (value%STACK_ALIGNMENT_UNIT)) / STACK_SIZE_UNIT; // arrotondo a 2
-					sbStackDecl.append(indent + "EE_STACK_T EE_COMPILER_ALIGN("+STACK_ALIGNMENT_UNIT+"U)  "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)] = EE_TC_FILL_STACK("+STACK_BASE_NAME+j+");\t" + commentC.writerSingleLineComment(descrStack[j]));
-					sbStackDeclSize.append(indent + "#define STACK_"+j+"_SIZE "+value+ commentC.writerSingleLineComment("size = "+size[j][0]+" bytes"));
+//				    value  = (value + (value%STACK_ALIGNMENT_UNIT)) / STACK_SIZE_UNIT; // arrotondo a 2
+					sbStackDecl.append(indent + "EE_STACK_T "+
+							"EE_STACK_ATTRIB "+
+							STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)] EE_TC_FILL_STACK("+STACK_BASE_NAME+j+");\t" + commentC.writerSingleLineComment(descrStack[j]));
+					sbStackDeclSize.append(indent + "#define STACK_"+j+"_SIZE "+value+ " " + commentC.writerSingleLineComment("size = "+size[j][0]+" bytes"));
 					// USED BY ORTI
 					stackTmp.add(new EEStackData(j, new long[] {size[j][0]}, new long[] {size[j][0]},
 							new String[] {" (int)(&"+STACK_BASE_NAME+j+")"}, true)); // DELTA
@@ -562,7 +564,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				 */
 				for (int j = 0; j < size.length; j++) {
 				    
-			        String value = j == 0 ? "{0}" : "{EE_STACK_INITP("+STACK_BASE_NAME+j+")}";
+			        String value = j == 0 ? "{0, 0U}" : "{EE_STACK_INITP("+STACK_BASE_NAME+j+"), 0U}";
 	
 					sbStack.append(pre
 							+ post
@@ -577,17 +579,17 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	
 				// complete the stack's buffer
 				sbStack.append(" " + post + indent + "};\n\n" + indent
-						+ "EE_UREG EE_tc_active_tos = 0;" +commentC.writerSingleLineComment("dummy") + "\n");
+						+ "EE_UREG EE_tc_active_tos = 0U;" +commentC.writerSingleLineComment("dummy") + "\n");
 				sbStack.append(indent
-						+ "struct EE_CTX EE_tc_system_ctx["+MAX_TASK+"+1];\n\n");
+						+ "EE_ADDR EE_tc_tasks_RA["+MAX_TASK+"+1];\n\n");
 	
 				{ // if required, init also the irq stack
 					if (irqSize != null) {
 					    int j = size.length;
 					    long value = irqSize[0];
 					    value  = (value + (value%STACK_ALIGNMENT_UNIT)) / STACK_SIZE_UNIT; // arrotondo a 2
-						sbStackDecl.append(indent + "EE_STACK_T EE_COMPILER_ALIGN("+STACK_ALIGNMENT_UNIT+"U)  "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)] = EE_TC_FILL_STACK("+STACK_BASE_NAME+j+");" + commentC.writerSingleLineComment("irq stack"));
-						sbStackDeclSize.append(indent + "#define STACK_"+j+"_SIZE "+value+commentC.writerSingleLineComment("size = "+irqSize[0]+" bytes"));
+						sbStackDecl.append(indent + "EE_STACK_T EE_STACK_ATTRIB "+STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)] EE_TC_FILL_STACK("+STACK_BASE_NAME+j+");\t" + commentC.writerSingleLineComment("irq stack"));
+						sbStackDeclSize.append(indent + "#define STACK_"+j+"_SIZE "+value+" " + commentC.writerSingleLineComment("size = "+irqSize[0]+" bytes"));
 	
 						sbStack
 								.append(indent+commentC.writerSingleLineComment("stack used only by IRQ handlers")
