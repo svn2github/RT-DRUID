@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.eu.evidence.modules.oil.tricore.constants.TricoreConstants;
+import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
@@ -58,6 +59,16 @@ public static class TricoreModelProvider_tc1796 implements ITricoreModelProvider
 			tmp.add("__TC1796__");
 			tmp.add("__TC13__");
 		} else {
+			{ // compiler
+				switch (currentCompiler) {
+					case DEFAULT:
+					case GNU:
+						tmp.add(SectionWriterHalTricore.EEOPT_TRICORE_GNU);
+						break;
+					default:
+						Messages.sendWarningNl("Unsupported compiler");
+				}
+			}
 	
 			{
 				// ---------- Add crt0ram.S to sources

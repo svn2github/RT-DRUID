@@ -114,8 +114,23 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		if (currentRtosId == -1) {
 			tmp.add(SectionWriterHalTricore.EEOPT_HAL_TRICORE);
 			tmp.add("EE_" + modelName.toUpperCase()+"__");		
+		} else {
+			{ // compiler
+				switch (currentCompiler) {
+					case DEFAULT:
+					case TASKING:
+						tmp.add(SectionWriterHalTricore.EEOPT_TASKING);
+						break;
+					case GNU:
+						tmp.add(SectionWriterHalTricore.EEOPT_GNU);
+						break;
+					default:
+						Messages.sendWarningNl("Unsupported compiler");
+				}
+			}
 		}
 		
+		// only for master cpu
 		if (currentRtosId == 0) {
 			int cpuNumber = parent.getOilObjects().length;
 			if (cpuNumber >1) {
@@ -249,11 +264,29 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			if (sgrCpu.containsProperty(SGRK__MAKEFILE_CPU_EXT_VARS__)) {
 				builder.append(sgrCpu.getString(SGRK__MAKEFILE_CPU_EXT_VARS__));
 			}
-			builder.append("\n" + SectionWriter.getCommentWriter(ool, FileTypes.MAKEFILE).writerSingleLineComment("Add a flag for the linkerscript to set the minimum size of system stack") + 
-						"LDFLAGS += -Wl-DUSTACK_TC"+currentRtosId+"=" + 
-							( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
-									DEFAULT_SYS_STACK_SIZE))
-						+ "\n\n");
+			
+			{ // compiler
+				switch (currentCompiler) {
+					case DEFAULT:
+					case TASKING:
+						builder.append("\n" + SectionWriter.getCommentWriter(ool, FileTypes.MAKEFILE).writerSingleLineComment("Add a flag for the linkerscript to set the minimum size of system stack") + 
+								"LDFLAGS += -Wl-DUSTACK_TC"+currentRtosId+"=" + 
+									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
+											DEFAULT_SYS_STACK_SIZE))
+								+ "\n\n");
+						break;
+					case GNU:
+						builder.append("\n" + SectionWriter.getCommentWriter(ool, FileTypes.MAKEFILE).writerSingleLineComment("Add a flag for the linkerscript to set the minimum size of system stack") + 
+								"LDFLAGS += -Wl,--defsym=__USTACK_SIZE=" +//+currentRtosId+"=" + 
+									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
+											DEFAULT_SYS_STACK_SIZE))
+								+ "\n\n");
+						break;
+					default:
+				}
+			}
+			
+			
 			sgrCpu.setProperty(SGRK__MAKEFILE_CPU_EXT_VARS__, builder.toString());
 			
 

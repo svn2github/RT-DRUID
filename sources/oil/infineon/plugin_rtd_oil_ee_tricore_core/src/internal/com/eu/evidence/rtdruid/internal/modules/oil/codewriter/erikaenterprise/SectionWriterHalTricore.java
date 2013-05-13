@@ -10,6 +10,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
+import com.eu.evidence.modules.oil.tricore.constants.TricoreCompiler;
 import com.eu.evidence.modules.oil.tricore.constants.TricoreConstants;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.TricoreAbstractModel.ITricoreModelProvider;
@@ -47,18 +48,20 @@ public class SectionWriterHalTricore extends SectionWriter
 			IExtractKeywordsExtentions {
 
 	enum TcModels {
-		tc1796("tc1796", new TricoreModelProvider_tc1796(), TricoreConstants.SGRK__GNU_COMPILER__ ),
-		tc27x("tc27x", new TricoreModelProvider_tc27x("tc27x"), TricoreConstants.SGRK__TASKING_COMPILER__);
+		tc1796("tc1796", new TricoreModelProvider_tc1796(), TricoreCompiler.GNU),
+		tc27x("tc27x", new TricoreModelProvider_tc27x("tc27x"), TricoreCompiler.TASKING);
 		
 		public final String name;
-		public final String default_compiler;
+		public final String default_compiler_txt;
+		public final TricoreCompiler default_compiler;
 		public final ITricoreModelProvider provider;
 		/**
 		 * 
 		 */
-		private TcModels(String name, ITricoreModelProvider provider, String default_compiler) {
+		private TcModels(String name, ITricoreModelProvider provider, TricoreCompiler default_compiler) {
 			this.name = name;
 			this.default_compiler = default_compiler;
+			this.default_compiler_txt = default_compiler == null ? null : default_compiler.getName();
 			this.provider = provider;
 		}
 		
@@ -80,11 +83,11 @@ public class SectionWriterHalTricore extends SectionWriter
 	public static final String EEOPT_HAL_TRICORE__OLD = "__TRICORE1__";
 	public static final String EEOPT_HAL_TRICORE = "EE_TRICORE__";
 
-	private static final String EEOPT_GNU = "EE_GNU__";
-	private static final String EEOPT_TASKING = "EE_TASKING__";
+	static final String EEOPT_GNU = "EE_GNU__";
+	static final String EEOPT_TASKING = "EE_TASKING__";
 	
 	/** Old EEopt for old tricore model */
-	private static final String EEOPT_TRICORE_GNU = "__TRICORE_GNU__";
+	static final String EEOPT_TRICORE_GNU = "__TRICORE_GNU__";
 
 	static final String TRICORE_MCU = "TRICORE";
 	
@@ -215,7 +218,7 @@ public class SectionWriterHalTricore extends SectionWriter
 			if (tcModel == null) {
 				Messages.sendWarning("Unknown tricore cpu model " + model + "\n", null, "tricore_writer_model", null);
 			} else {
-				default_compiler = tcModel.default_compiler;
+				default_compiler = tcModel.default_compiler_txt;
 			}
         }
 
@@ -256,6 +259,26 @@ public class SectionWriterHalTricore extends SectionWriter
 				}
 			}
 
+			/***********************************************************************
+			 * 
+			 * Compiler
+			 *  
+			 **********************************************************************/
+			final TricoreCompiler currentCompiler; 
+	        {
+	        	List<String> all = parent.getCpuDataEnum(ool, "COMPILER_TYPE");
+				String tmp1 = all.size() == 0? null : all.get(0);
+				if (tmp1 == null && default_compiler != null) {
+					tmp1 = default_compiler;
+				}
+				if (tmp1 == null) {
+					Messages.sendErrorNl("Explicit selection of compiler is needed for unknow tricore model" , null, "tricore_writer_model", null);
+				} else {
+					sgrCpu.setProperty(TricoreConstants.SGRK__Tricore_COMPILER_TYPE__, tmp1);
+				}
+				
+				currentCompiler = TricoreCompiler.get(tmp1);
+	        }
 		
 			{
 				//List requiredOilObjects = (List) sgrCpu.getObject(SGRK__FORCE_ARRAYS_LIST__);
@@ -273,6 +296,7 @@ public class SectionWriterHalTricore extends SectionWriter
 					}
 					
 	            	sgrCpu.setObject(TricoreConstants.SGRK__TRICORE_MODEL_INFO__, modelInfo);
+	            	modelInfo.setCompiler(currentCompiler);
 	            	modelInfo.updateObjects(parent, currentRtosId);
 	            	if (currentRtosId == 0) {
 						for (String s: modelInfo.getEEopts(-1, ool)) {
@@ -291,32 +315,6 @@ public class SectionWriterHalTricore extends SectionWriter
 		        	tmp_common_eeopts.add(EEOPT_HAL_TRICORE);
 		        }
 	
-	
-		        { // select compiler
-		        	List<String> all = parent.getCpuDataEnum(ool, "COMPILER_TYPE");
-					String tmp1 = all.size() == 0? null : all.get(0);
-					if (tmp1 == null && default_compiler != null) {
-						tmp1 = default_compiler;
-					}
-					if (tmp1 == null) {
-						Messages.sendErrorNl("Explicit selection of compiler is needed for unknow tricore model" , null, "tricore_writer_model", null);
-					}
-					
-			
-					sgrCpu.setProperty(TricoreConstants.SGRK__Tricore_COMPILER_TYPE__, tmp1);
-					if (TricoreConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(tmp1)) {
-//						if (!TcModels.tc1796.name.equalsIgnoreCase(model)) {
-//							Messages.sendWarningNl("GNU compiler tested only with tc1796");
-//				        }
-						tmp.add(TcModels.tc1796.name.equalsIgnoreCase(model) ? EEOPT_TRICORE_GNU : EEOPT_GNU);
-				    } else 	if (TricoreConstants.SGRK__TASKING_COMPILER__.equalsIgnoreCase(tmp1)) {
-						if (!TcModels.tc27x.name.equalsIgnoreCase(model)) {
-							Messages.sendWarningNl("TASKING compiler tested only with tc27x");
-				        }
-			            tmp.add(EEOPT_TASKING);
-					}
-		        }
-		        
 				
 		        // get all older values (if there are)
 		        if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS)) {
@@ -379,7 +377,7 @@ public class SectionWriterHalTricore extends SectionWriter
 							for (String s: modelInfo.getEEopts(currentRtosId, ool)) {
 								tmp.add(s);
 							}
-							default_compiler = tcModel.default_compiler;
+							default_compiler = tcModel.default_compiler_txt;
 						}
 						
 			            sgrCpu.setProperty(TricoreConstants.SGRK__TRICORE_MODEL__, model);

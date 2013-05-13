@@ -3,6 +3,7 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
+import com.eu.evidence.modules.oil.tricore.constants.TricoreCompiler;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
@@ -23,6 +24,7 @@ public abstract class TricoreAbstractModel {
 
 	protected IVarTree vt;
 	protected ErikaEnterpriseWriter parent;
+	protected TricoreCompiler currentCompiler = TricoreCompiler.DEFAULT ;
 
 	/**
 	 * @param vt
@@ -33,6 +35,13 @@ public abstract class TricoreAbstractModel {
 	public void updateObjects(ErikaEnterpriseWriter parent, int currentRtosId) throws OilCodeWriterException {
 		this.parent = parent;
 		this.vt = parent == null ? null : parent.getVt();
+	}
+	
+	/**
+	 * @param compiler the currentCompiler to set
+	 */
+	public void setCompiler(TricoreCompiler compiler) {
+		this.currentCompiler = compiler;
 	}
 
 	public void write(final int currentRtosId, IOilObjectList ool, IOilWriterBuffer buffers)
