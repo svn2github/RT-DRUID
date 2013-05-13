@@ -305,9 +305,9 @@ public class SectionWriterHalTricore extends SectionWriter
 			
 					sgrCpu.setProperty(TricoreConstants.SGRK__Tricore_COMPILER_TYPE__, tmp1);
 					if (TricoreConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(tmp1)) {
-						if (!TcModels.tc1796.name.equalsIgnoreCase(model)) {
-							Messages.sendWarningNl("GNU compiler tested only with tc1796");
-				        }
+//						if (!TcModels.tc1796.name.equalsIgnoreCase(model)) {
+//							Messages.sendWarningNl("GNU compiler tested only with tc1796");
+//				        }
 						tmp.add(TcModels.tc1796.name.equalsIgnoreCase(model) ? EEOPT_TRICORE_GNU : EEOPT_GNU);
 				    } else 	if (TricoreConstants.SGRK__TASKING_COMPILER__.equalsIgnoreCase(tmp1)) {
 						if (!TcModels.tc27x.name.equalsIgnoreCase(model)) {
