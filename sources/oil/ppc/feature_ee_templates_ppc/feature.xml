@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.ee.templates.ppc"
       label="Templates for Erika Enterprise for Power Pc"
-      version="2.0.0.qualifier"
+      version="2.1.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.ee.templates.ppc">
 
@@ -11,7 +11,7 @@
    </description>
 
    <copyright url="http://www.evidence.eu.com">
-      Copyright (c) 2004, 2011 Evidence S.r.l.
+      Copyright (c) 2004, 2013 Evidence S.r.l.
 All rights reserved.
    </copyright>
 
@@ -106,7 +106,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="com.eu.evidence.templates.core" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="com.eu.evidence.templates.core" version="2.1.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
