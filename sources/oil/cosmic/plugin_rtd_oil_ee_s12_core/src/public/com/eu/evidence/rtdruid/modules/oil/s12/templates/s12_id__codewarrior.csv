@@ -1,3 +1,7 @@
 #OIL/MOEL	File H		File C	File S	File LKF	
 MC9S12XS128	mc9s12xs128.h	mc9s12xs128.c	.	.	
 MC9S12G128	mc9s12g128.h	mc9s12g128.c	.	.	
+MC9S12GN16	mc9s12gn16.h	mc9s12gn16.c	.	.
+MC9S12GN32	mc9s12gn32.h	mc9s12gn32.c	.	.
+MC9S12G48	mc9s12g48.h	mc9s12g48.c	.	.
+MC9S12GN48	mc9s12gn48	mc9s12gn48.c	.	.
