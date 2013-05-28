@@ -22,6 +22,7 @@ IMPLEMENTATION ee {
                 ENUM [
                 	IAR,
                 	CCS,
+                	GNU,
                 	KEIL
                 ] COMPILER_TYPE;
                 

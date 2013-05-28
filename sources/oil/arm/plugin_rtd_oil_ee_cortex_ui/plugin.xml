@@ -13,7 +13,7 @@
        <page id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID.cortexConfigurator"
             class="com.eu.evidence.rtdruid.modules.oil.cortex.ui.preferencepages.CortexConfigurator"
             category="com.eu.evidence.rtdruid.oil.preferencePagesID"
-            name="cortex">
+            name="Cortex">
        </page>
    </extension>
 </plugin>

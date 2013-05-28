@@ -64,6 +64,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 	public final static String EEOPT__CORTEX_MX__ = "__CORTEX_MX__";
 	public final static String EEOPT__IAR_COMPILER__ = "__IAR__";
 	public final static String EEOPT__KEIL_COMPILER__ = "__KEIL__";
+	public final static String EEOPT__GNU_COMPILER__ = "__GNU__";
 	public final static String EEOPT__CCS_COMPILER__ = "__CCS__";
 	public final static String EEOPT__CORTEX_M0_JLINK__ = "__C_M0_IAR_J_LINK__";
 
@@ -272,6 +273,8 @@ public class SectionWriterHalCortexMx extends SectionWriter
 							Messages.sendWarningNl("Keil compiler tested only with cortex M4");
 				        }
 			            tmp.add(EEOPT__KEIL_COMPILER__);
+				    } else 	if (CortexConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(tmp1)) {
+			            tmp.add(EEOPT__GNU_COMPILER__);
 				    }
 
 				}
@@ -679,6 +682,13 @@ public class SectionWriterHalCortexMx extends SectionWriter
 							if (tmp.length()>0) gcc = tmp;
 						} 
 				        sbMakefile.append( CommonUtils.compilerMakefileDefines(gcc, "ARM_ROOT", wrapper) );
+			        } else if (CortexConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(compiler_type)) {
+				        String gcc = CortexConstants.DEFAULT_CORTEXMX_CONF_GNU_CC;
+				    	if (options.containsKey(CortexConstants.PREF_CORTEXMx_GNU_CC_PATH)) {
+							String tmp = (String) options.get(CortexConstants.PREF_CORTEXMx_GNU_CC_PATH);
+							if (tmp.length()>0) gcc = tmp;
+						} 
+				        sbMakefile.append( CommonUtils.compilerMakefileDefines(gcc, "GNU_ARM_ROOT", wrapper) );
 			        } 
 			    }
 	

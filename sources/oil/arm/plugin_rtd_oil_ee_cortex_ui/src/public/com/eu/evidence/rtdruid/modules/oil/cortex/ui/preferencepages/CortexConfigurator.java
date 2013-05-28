@@ -33,6 +33,7 @@ public class CortexConfigurator extends AbstractPage {
 	private Text paramIar = null;
 	private Text paramCcs = null;
 	private Text paramKeil = null;
+	private Text paramGnu = null;
     
 	/**
 	 * (non-Javadoc) Method declared on PreferencePage
@@ -95,6 +96,23 @@ public class CortexConfigurator extends AbstractPage {
 			});
 		}
 
+		createLabel(composite_tab, "Gnu Compiler path", 1); //$NON-NLS-1$
+		paramGnu = createTextField(composite_tab); //$NON-NLS-1$
+		{
+			Button gccButton = createPushButton(composite_tab, "Browse"); //$NON-NLS-1$
+			gccButton.addSelectionListener(new SelectionListener() {
+				public void widgetSelected(SelectionEvent e) {	work(e);	}
+				public void widgetDefaultSelected(SelectionEvent e) {	work(e);	}
+				protected void work(SelectionEvent e) {
+					DirectoryDialog dia = new DirectoryDialog(getShell());
+					String path = dia.open();
+					if (path!=null) {
+						paramGnu.setText(path);
+					}
+				}
+			});
+		}
+
 		initializeValues();
 
 		return new Composite(parent, SWT.NULL);
@@ -132,6 +150,7 @@ public class CortexConfigurator extends AbstractPage {
 		paramIar.setText(Options.DEFAULT_CORTEX_CONF_IAR);
 		paramCcs.setText(Options.DEFAULT_CORTEX_CONF_CCS);
 		paramKeil.setText(Options.DEFAULT_CORTEX_CONF_KEIL);
+		paramGnu.setText(Options.DEFAULT_CORTEX_CONF_GNU);
 		
 		enableOk();
 	}
@@ -159,6 +178,12 @@ public class CortexConfigurator extends AbstractPage {
 					store.getString(Options.CORTEX_CONF_KEIL) 
 					: Options.DEFAULT_CORTEX_CONF_KEIL;
 			paramKeil.setText(gcc);
+		}
+		{
+			String gcc = store.contains(Options.CORTEX_CONF_GNU) ?
+					store.getString(Options.CORTEX_CONF_GNU) 
+					: Options.DEFAULT_CORTEX_CONF_GNU;
+			paramGnu.setText(gcc);
 		}
 
 		enableOk();
@@ -193,6 +218,7 @@ public class CortexConfigurator extends AbstractPage {
 		store.setValue(Options.CORTEX_CONF_CCS, paramCcs.getText());
 		store.setValue(Options.CORTEX_CONF_IAR, paramIar.getText());
 		store.setValue(Options.CORTEX_CONF_KEIL, paramKeil.getText());
+		store.setValue(Options.CORTEX_CONF_GNU, paramGnu.getText());
 	}
 
 }
