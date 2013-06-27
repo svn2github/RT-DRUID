@@ -194,30 +194,29 @@ public class SectionWriterHalRx200 extends SectionWriter
 				 * System stack size
 				 *  
 				 **********************************************************************/
-//				{
-//					String[] stack_size = parent.getCpuDataValue(ool, "SYS_STACK_SIZE");
-//					if (stack_size != null && stack_size.length>0 && stack_size[0] != null) {
-//						
-//						boolean valid = false;
-//						int value = -1;
-//						try {
-//							value = Integer.decode(stack_size[0]);
-//							valid = true;
-//						} catch (NumberFormatException e) {
-//							Messages.sendWarningNl("Invalid value for System stack size : " + stack_size[0]);
-//						}
-//						
-//						if (valid && value <0) {
-//							Messages.sendWarningNl("System stack size cannot be negative (" + value + ")");
-//						} else {
-//							
-//							ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
-//							sgrCpu.setProperty(SGR_OS_CPU_SYS_STACK_SIZE, ""+value);
-//						}
-//						
-//					}
-//
-//				}
+				{
+					String[] stack_size = parent.getCpuDataValue(ool, "SYS_STACK_SIZE");
+					if (stack_size != null && stack_size.length>0 && stack_size[0] != null) {
+						
+						boolean valid = false;
+						int value = -1;
+						try {
+							value = Integer.decode(stack_size[0]);
+							valid = true;
+						} catch (NumberFormatException e) {
+							Messages.sendWarningNl("Invalid value for System stack size : " + stack_size[0]);
+						}
+						
+						if (valid && value <0) {
+							Messages.sendWarningNl("System stack size cannot be negative (" + value + ")");
+						} else {
+							
+							sgrCpu.setProperty(SGR_OS_CPU_SYS_STACK_SIZE, ""+value);
+						}
+						
+					}
+
+				}
 			}
 			
 		}
@@ -275,14 +274,14 @@ public class SectionWriterHalRx200 extends SectionWriter
 	
 			sbInithal_c.append("\n#include \"ee.h\"\n");
 	
-//			/***********************************************************************
-//			 * SYSTEM STACK SIZE
-//			 **********************************************************************/
-//			sbInithal_h.append(indent1 + getCommentWriter(ool, FileTypes.H).writerSingleLineComment("System stack size") + 
-//						indent1 + "#define EE_SYS_STACK_SIZE     " + 
-//							( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
-//									DEFAULT_SYS_STACK_SIZE))
-//						+ "\n\n");
+			/***********************************************************************
+			 * SYSTEM STACK SIZE
+			 **********************************************************************/
+			sbInithal_h.append(indent1 + getCommentWriter(ool, FileTypes.H).writerSingleLineComment("System stack size") + 
+						indent1 + "#define EE_ISTACK_SIZE     " + 
+							( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
+									DEFAULT_SYS_STACK_SIZE))
+						+ "\n\n");
 			
 			
 			/***********************************************************************

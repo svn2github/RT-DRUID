@@ -32,7 +32,8 @@ IMPLEMENTATION ee {
 				] COMPILER_TYPE;
 
                 UINT32 STACK_BOTTOM;
-
+				UINT32 SYS_STACK_SIZE;
+				
 //                UINT32 SYS_SIZE;    // available space for all user stacks
 //                UINT32 SHARED_MIN_SYS_SIZE;    // size of shared stack
                 
