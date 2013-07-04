@@ -1,16 +1,10 @@
 package com.eu.evidence.rtdruid.modules.oil.cdt.ui.preferences;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
-
 import org.junit.After;
 import org.junit.Test;
 
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.CompilerData;
 import com.eu.evidence.rtdruid.modules.oil.cdt.ui.CompilerData.CompilerPath;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.HostOsUtils;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OsType;
 import com.eu.evidence.rtdruid.tests.ui.swtbot.AbstractSwtBotTest;
 
 /**

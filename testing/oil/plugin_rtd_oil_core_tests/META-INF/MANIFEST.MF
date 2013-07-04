@@ -11,4 +11,4 @@ Require-Bundle: com.eu.evidence.rtdruid.tests,
  org.eclipse.xtext,
  org.eclipse.xtext.junit4,
  org.eclipselabs.xtext.utils.unittesting;bundle-version="0.9.3",
- org.hamcrest;bundle-version="1.1.0"
+ org.hamcrest.library;bundle-version="1.1.0"

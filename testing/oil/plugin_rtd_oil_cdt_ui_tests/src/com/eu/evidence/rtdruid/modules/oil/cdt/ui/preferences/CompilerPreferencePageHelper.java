@@ -3,9 +3,10 @@
  */
 package com.eu.evidence.rtdruid.modules.oil.cdt.ui.preferences;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;

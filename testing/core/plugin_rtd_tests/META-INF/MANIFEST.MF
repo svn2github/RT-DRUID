@@ -5,9 +5,9 @@ Bundle-SymbolicName: com.eu.evidence.rtdruid.tests
 Bundle-Version: 2.1.0.qualifier
 Bundle-Activator: com.eu.evidence.rtdruid.tests.TestsActivator
 Require-Bundle: org.eclipse.core.runtime,
- org.junit4;bundle-version="4.3.0";visibility:=reexport,
  org.eclipse.emf.ecore.xmi,
- org.eclipse.emf.edit
+ org.eclipse.emf.edit,
+ org.junit;bundle-version="4.0.0";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.
