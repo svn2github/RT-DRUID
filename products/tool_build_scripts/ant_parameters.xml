@@ -86,6 +86,8 @@
 		<property name="rtd_oil_ee_renesas_core_v"     value="2.1.0"/>
 		<property name="rtd_oil_ee_renesas_ui_v"       value="2.1.0"/>
 
+		<property name="frtd_oil_contrib_st_v"         value="1.0.0"/>
+		<property name="rtd_oil_contrib_st_v"     value="1.0.0"/>
 		
 	<property name="fee_code_v"            value="2.1.0"/>
 	<property name="ee_code_v"            value="2.1.0"/>

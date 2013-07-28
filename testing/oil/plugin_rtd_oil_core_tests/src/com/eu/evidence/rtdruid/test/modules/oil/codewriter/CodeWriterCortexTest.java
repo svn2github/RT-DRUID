@@ -1093,4 +1093,91 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+
+	@Test public void testCortexLib1() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"\n" + 
+				"	OS myOs {\n" + 
+				"	                \n" + 
+				"		EE_OPT = \"DEBUG\";\n" + 
+				"        STATUS = EXTENDED;\n" + 
+				"\n" + 
+				"        STARTUPHOOK = TRUE;\n" + 
+				"        ERRORHOOK = FALSE;\n" + 
+				"        SHUTDOWNHOOK = FALSE;\n" + 
+				"        PRETASKHOOK = FALSE;\n" + 
+				"        POSTTASKHOOK = FALSE;\n" + 
+				"        USEGETSERVICEID = FALSE;\n" + 
+				"        USEPARAMETERACCESS = FALSE;\n" + 
+				"        USERESSCHEDULER = TRUE;\n" + 
+				"        \n" + 
+				"        CPU_DATA = CORTEX_MX {\n" + 
+				"			MODEL = M0;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			MULTI_STACK = FALSE;\n" + 
+				"		};\n" + 
+				"		KERNEL_TYPE = FP;\n" + 
+				
+				"       LIB = ENABLE { NAME=\"STM32F4XX_SPD\"; \n" + 
+				"       	STM32F4XX_SPD = ENABLE {\n" + 
+				"		 USEALL = TRUE;\n" +
+				"		 USEADC = TRUE;\n" +
+				"		 USECAN = TRUE;\n" +
+				"		 USECRC = TRUE;\n" +
+				"		 USECRYP = TRUE;\n" +
+				"		 USEDAC = TRUE;\n" +
+				"		 USEDBGMCU = TRUE;\n" +
+				"		 USEDCMI = TRUE;\n" +
+				"		 USEDMA = TRUE;\n" +
+				"		 USEEXTI = TRUE;\n" +
+				"		 USEFLASH = TRUE;\n" +
+				"		 USEFSMC = TRUE;\n" +
+				"		 USEGPIO = TRUE;\n" +
+				"		 USEHASH = TRUE;\n" +
+				"		 USEI2C = TRUE;\n" +
+				"		 USEIWDG = TRUE;\n" +
+				"		 USEPWR = TRUE;\n" +
+				"		 USERCC = TRUE;\n" +
+				"		 USERNG = TRUE;\n" +
+				"		 USERTC = TRUE;\n" +
+				"		 USESDIO = TRUE;\n" +
+				"		 USESPI = TRUE;\n" +
+				"		 USESYSCFG = TRUE;\n" +
+				"		 USETIM = TRUE;\n" +
+				"		 USEUSART = TRUE;\n" +
+				"		 USEWWDG = TRUE;\n" +
+				"		 USEMISC = TRUE;\n" +
+				"			};\n" + 
+
+				"       	STM32F4_DISCOVERY = ENABLE {\n" + 
+				"       		USEALL = TRUE;\n" +
+				"       		USELEDS = TRUE;\n" +
+				"       		USEBUTTONS = TRUE;\n" +
+				"       		USECOM = TRUE;\n" +
+				"       		USEAUDIO = TRUE;\n" +
+				"       		USELCD = TRUE;\n" +
+				"       		USELCDLOG = TRUE;\n" +
+				"       		USEACCEL = TRUE;\n" +
+				"       		USESD = TRUE;\n" +
+				"       		USEUARTDEBUG = TRUE;\n" +
+				"			};\n" + 
+				"		};\n" + 
+
+				"	};\n" + 
+				"\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 1;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"	};\n" + 
+				"\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"    };\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+
+	
 }
