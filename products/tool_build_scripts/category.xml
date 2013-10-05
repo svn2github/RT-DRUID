@@ -84,6 +84,9 @@
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.renesas_2.1.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.renesas" version="2.1.0.qualifier">
       <category name="RT_Druid_for_ee"/>
    </feature>
+   <feature url="features/com.eu.evidence.rtdruid.oil.contrib.st.core_2.1.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.contrib.st.core" version="2.1.0.qualifier">
+      <category name="RT_Druid_for_ee"/>
+   </feature>
    <category-def name="RT_Druid_Core" label="RT-Druid core plugins"/>
    <category-def name="RT_Druid_for_ee" label="RT-Druid plugins for Erika Enterprise">
       <description>
