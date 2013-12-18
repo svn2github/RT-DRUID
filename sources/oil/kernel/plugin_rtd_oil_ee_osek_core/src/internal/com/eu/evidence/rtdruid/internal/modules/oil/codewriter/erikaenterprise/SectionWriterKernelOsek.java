@@ -219,6 +219,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			IOilObjectList ool = oilObjects[rtosId];
 			// appModes contains the list of available modes
 			ArrayList<String> appModes = null;
+			final boolean hasOsAppl = ool.getList(IOilObjectList.OSAPPLICATION).size()>0;
 			List<Integer> requiredOilObjects = (List<Integer>) AbstractRtosWriter.getOsObject(ool, SGRK__FORCE_ARRAYS_LIST__);
 			final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 			final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
@@ -314,7 +315,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					+ "const EE_TYPENACT EE_th_rnact_max["+MAX_TASK+"] = {\n");
 			// for each task, contains if it's extended or not
 			StringBuffer EE_th_is_extendedBuffer = new StringBuffer(indent1
-					+ "EE_TYPEPRIO EE_th_is_extended["+MAX_TASK+"] =\n"
+					+ "const EE_TYPEPRIO EE_th_is_extended["+MAX_TASK+"] =\n"
 					+ indent2 + "{");
 		
 		
@@ -1089,12 +1090,16 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							.append(indent1+"EE_oo_counter_RAM_type       EE_counter_RAM["+MAX_COUNTER+"] = {");
 					pre2 = "\n";
 					for (int i = 0; i < counterList.size(); i++) {
-						buffer.append(pre2 + indent2+"{0U, -1}");
+						buffer.append(pre2 + indent2+"{0U, (EE_TYPECOUNTEROBJECT)-1}");
 						pre2 = ",\n";
 					}
 					buffer.append("\n"+indent1+"};\n");
 				}
 			}
+			
+			StringBuffer counterObjRomBuffer = new StringBuffer();
+			int counterObjRomRows = 0;
+			
 			{
 				/***************************************************************
 				 * ALARMS
@@ -1104,15 +1109,19 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		
 				if (alarmList.size() > 0 || requiredOilObjects.contains(new Integer(IOilObjectList.ALARM))) {
 					final String NULL_NAME = "NULL";
-					buffer.append(commentWriterC.writerBanner("Alarms"));
 					
 					LinkedList<String> callback_functions = new LinkedList<String>();
 		
 					/*
 					 * EE_alarm_ROM
 					 */
-					StringBuffer romBuffer = new StringBuffer(indent1
-									+ "const EE_oo_alarm_ROM_type   EE_alarm_ROM[] = {\n");
+					StringBuffer romAlarmBuffer = new StringBuffer(
+							commentWriterC.writerBanner("Alarms")
+							+ indent1+  "const EE_oo_alarm_ROM_type EE_alarm_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_ALARM_ROM", alarmList.size())+"] = {\n"
+					);
+					StringBuffer romActionBuffer = new StringBuffer(
+							commentWriterC.writerBanner("Alarms action") 
+							+indent1+ "const EE_oo_action_ROM_type   EE_oo_action_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_ACTION_ROM", alarmList.size())+"] = {\n");
 		
 					boolean withEvents = IWritersKeywords.OSEK_ECC1
 							.equals(kernelType)
@@ -1124,18 +1133,20 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						ISimpleGenRes curr = iter.next();
 		
 						// set all values for each alarm
-						int counter_id = -1;
+						int counter_sys_id = -1;
+						String counter_def = "";
 						String callBackName = NULL_NAME;
 						//int task_id = 0;
 						String task_al_name = "0"; // default value
-						String counter_al_name = "-1"; // default value
+						String counter_al_name = "(EE_TYPECOUNTER)-1"; // default value
 						String evento = "0U";
 						String notif_type = "";
+						int osAppId = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_ID) ? (curr.getInt(ISimpleGenResKeywords.OS_APPL_ID) +1) : 0; 
 		
 						// prepare all data
 		
 						{ // ----- GET VALUES -----
-							String coun_Al_Name = curr.getString(ISimpleGenResKeywords.ALARM_COUNTER); 
+							counter_def = curr.getString(ISimpleGenResKeywords.ALARM_COUNTER); 
 		
 							//search counter
 							List<ISimpleGenRes> counterList = ool
@@ -1145,22 +1156,22 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								ISimpleGenRes counter = countIter
 										.next();
 		
-								if (coun_Al_Name.equals(counter.getName())) {
-									counter_id = counter
+								if (counter_def.equals(counter.getName())) {
+									counter_sys_id = counter
 											.getInt(ISimpleGenResKeywords.COUNTER_SYS_ID);
 									break;
 								}
 							}
-							if (counter_id == -1) {
+							if (counter_sys_id == -1) {
 								throw new RuntimeException(
 										"Alarm : Wrong counter name for this Alarm."
 												+ " (Alarm = " + curr.getName()
-												+ ", counter = " + coun_Al_Name
+												+ ", counter = " + counter_def
 												+ ")");
 							}
 		
 							final String tipo = curr.getString(ISimpleGenResKeywords.ALARM_ACTION_TYPE);
-		
+							
 							/*
 							 * these are the different types of alarm
 							 * notifications...
@@ -1203,7 +1214,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								 * EXTENDED, the notify_type is set as event
 								 * instead task.
 								 */
-								notif_type = "EE_ALARM_ACTION_TASK    ";
+								notif_type = "EE_ACTION_TASK    ";
 								
 							} else if (tipo.equals(ISimpleGenResKeywords.ALARM_SET_EVENT)) {
 								String[] tmp = (String[]) curr.getObject(ISimpleGenResKeywords.ALARM_SET_EVENT);
@@ -1229,7 +1240,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 													+ ", event = " + evento
 													+ ")");
 		
-								notif_type = "EE_ALARM_ACTION_EVENT   ";
+								notif_type = "EE_ACTION_EVENT   ";
 								
 							} else if (tipo.equals(ISimpleGenResKeywords.ALARM_CALL_BACK)) {
 								callBackName = curr.getString(ISimpleGenResKeywords.ALARM_CALL_BACK);
@@ -1238,7 +1249,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									callback_functions.add(callBackName);
 								}
 								
-								notif_type = "EE_ALARM_ACTION_CALLBACK";
+								notif_type = "EE_ACTION_CALLBACK";
 								
 							} else if (tipo.equals(ISimpleGenResKeywords.ALARM_INCR_COUNTER)) {
 								counter_al_name = curr.getString(ISimpleGenResKeywords.ALARM_INCR_COUNTER);
@@ -1273,7 +1284,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								 * EXTENDED, the notify_type is set as event
 								 * instead task.
 								 */
-								notif_type = "EE_ALARM_ACTION_COUNTER    ";
+								notif_type = "EE_ACTION_COUNTER    ";
 								
 							} else {
 								throw new Error("Unknow type");
@@ -1281,14 +1292,20 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						}
 		
 						// write
-						romBuffer.append(pre2 + indent2 + "{" + counter_id + ", "
+						romActionBuffer.append(pre2 + indent2 + "{"
 								+ notif_type + ", " + task_al_name
 								+ (withEvents ? ", " + evento : "") + ", "
 								+ (NULL_NAME.equals(callBackName) ? "(EE_VOID_CALLBACK)" : "") + callBackName
 								+ ", " + counter_al_name + " }");
+						
+						counterObjRomBuffer.append(pre2 + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_ALARM }");
+						romAlarmBuffer.append(pre2 + indent2 + "{" + counterObjRomRows + "U" +(hasOsAppl ? ", " + osAppId+"U" : "" ) + "}");
+						
+						counterObjRomRows++;
 						pre2 = ",\n";
 					}
-					romBuffer.append("\n"+indent1 + "};\n\n");
+					romActionBuffer.append("\n"+indent1 + "};\n");
+					romAlarmBuffer.append("\n"+indent1 + "};\n");
 		
 					// add functions
 					if (callback_functions.size()>0) {
@@ -1300,22 +1317,32 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					}
 					
 					// add ROM
-					buffer.append(romBuffer.toString());
+					buffer.append(romActionBuffer.toString() + "\n" + romAlarmBuffer.toString());
+				}
+			}
+			
+			{
+				
+
+				List<ISimpleGenRes> alarmList = ool.getList(IOilObjectList.ALARM);
+				final int counterObjectSize = alarmList.size();
+		
+				if (alarmList.size() > 0 || requiredOilObjects.contains(new Integer(IOilObjectList.ALARM))) {
+					buffer.append(commentWriterC.writerBanner("Counter Objects"));
+					
+					String size_id = ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_COUNTER_OBJECTS_ROM", counterObjectSize);
+					
 					/*
-					 * EE_alarm_RAM
+					 * EE_alarm_ROM
 					 */
 					buffer.append(indent1
-							+ "EE_oo_alarm_RAM_type         EE_alarm_RAM["
-							+ MAX_ALARM + "];");/* = {");
-					pre = "\n";
-					for (int i = 0; i < alarmList.size() - 1; i++) {
-						buffer.append(pre+indent2+"{0,0,0,-1}");
-						pre = ",\n";
-					}
-					buffer.append("\n"+indent1+"};\n\n");
-					*/
-					buffer.append("\n\n");
+									+ "const EE_oo_counter_object_ROM_type   EE_oo_counter_object_ROM["+size_id+"] = {\n"
+									+ counterObjRomBuffer.toString() + "\n"
+									+ indent1 + "};\n\n"
+									+ indent1 +"EE_oo_counter_object_RAM_type EE_oo_counter_object_RAM["+size_id+"];\n"
+					);
 				}
+				
 			}
 		
 		

@@ -306,17 +306,27 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 				buffer.append("\n" + indent + commentWriterH.writerSingleLineComment("ALARM definition")); //\n");
 				if (!binaryDistr) {
 					buffer.append(indent + "#define EE_MAX_ALARM " + alarmList.size()
-						+ "\n");
+						+ "U\n");
 				} else if (binaryDistrFull) {
 					buffer_c.append(indent + "const unsigned int EE_MAX_ALARM = " + alarmList.size()
-							+ ";\n");
+							+ "U;\n");
 				}
 
 				int id = 0;
 				for (Iterator<ISimpleGenRes> iter = alarmList.iterator(); iter.hasNext(); id++) {
 					ISimpleGenRes curr = (ISimpleGenRes) iter.next();
 					buffer.append(indent + "#define " + curr.getName() + " "
-							+ id + "\n");
+							+ id + "U\n");
+					curr.setProperty(ISimpleGenResKeywords.ALARM_SYS_ID, "" +id);
+				}
+				
+
+				buffer.append("\n" + indent + commentWriterH.writerSingleLineComment("COUNTER OBJECTS definition")); //\n");
+				if (!binaryDistr) {
+					buffer.append(indent + "#define EE_MAX_COUNTER_OBJECTS EE_MAX_ALARM\n");
+				} else if (binaryDistrFull) {
+					buffer_c.append(indent + "const unsigned int EE_MAX_COUNTER_OBJECTS = " + alarmList.size()
+							+ "U;\n");
 				}
 			}
 
@@ -347,17 +357,17 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 				buffer.append("\n" + indent + commentWriterH.writerSingleLineComment("COUNTER definition")); //\n");
 				if (!binaryDistr) {
 					buffer.append(indent + "#define EE_MAX_COUNTER "
-						+ counterList.size() + "\n");
+						+ counterList.size() + "U\n");
 				} else if (binaryDistrFull) {
 					buffer_c.append(indent + "const unsigned int EE_MAX_COUNTER = " + counterList.size()
-							+ ";\n");
+							+ "U;\n");
 				}
 
 				int id = 0;
 				for (Iterator<ISimpleGenRes> iter = counterList.iterator(); iter.hasNext(); id++) {
 					ISimpleGenRes curr = (ISimpleGenRes) iter.next();
 					buffer.append(indent + "#define " + curr.getName() + " "
-							+ id + "\n"); // should use ISimpleGenResKeywords.COUNTER_SYS_ID
+							+ id + "U\n"); // should use ISimpleGenResKeywords.COUNTER_SYS_ID
 				}
 			}
 

@@ -99,6 +99,8 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	public final static String DEF_HOST_OS_LINUX = "curr_host_os__linux";
 	
 	
+	/** A SimpleGenResKeyword for cpu related vector defines */
+	public final static String SGRK_OS_CPU_VECTOR_SIZE_DEFINES = "os_cpu_vector_size_define_list";
 	
 	
 	/** A SimpleGenResKeyword for cpu data inside an OS */
