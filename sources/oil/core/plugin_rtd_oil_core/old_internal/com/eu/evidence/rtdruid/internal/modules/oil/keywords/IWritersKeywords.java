@@ -150,6 +150,9 @@ public interface IWritersKeywords {
 	/** Enables the os applications for the current kernel (if available) */
 	public final static String KERNEL_OS_APPLICATION = "OS_APPLICATION";
 
+	/** Enables the service protection for the current kernel (if available) */
+	public final static String KERNEL_SERVICE_PROTECTION = "SERVICE_PROTECTION";
+	
 	/** Enables the memory protection for the current kernel (if available) */
 	public final static String KERNEL_MEMORY_PROTECTION = "MEMORY_PROTECTION";
 

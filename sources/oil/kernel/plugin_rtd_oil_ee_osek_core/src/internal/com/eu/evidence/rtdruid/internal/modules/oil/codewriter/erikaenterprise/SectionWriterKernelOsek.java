@@ -1637,6 +1637,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			options.add(new AutoOptions(currentRtosPrefix, "POSTTASKHOOK", "TRUE", OsekConstants.DEF__OSEKOS_HAS_POSTTASKHOOK__, false));
 			options.add(new AutoOptions(currentRtosPrefix, "USEGETSERVICEID", "TRUE", OsekConstants.DEF__OSEKOS_HAS_USEGETSERVICEID__, false));
 			options.add(new AutoOptions(currentRtosPrefix, "USEPARAMETERACCESS", "TRUE", OsekConstants.DEF__OSEKOS_HAS_USEPARAMETERACCESS__, false));
+			
+			options.add(new AutoOptions(currentRtosPrefix, "SERVICE_PROTECTION", "TRUE", IWritersKeywords.KERNEL_SERVICE_PROTECTION, false));
 
 			// this two should be enabled if not specified FALSE
 			for (String[] s: enabledByDefault) {
@@ -1728,6 +1730,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 
 						{ DEF__MONO_STACK__, "__MONO__" },
 						{ DEF__MULTI_STACK__, "__MULTI__" },
+						
+						{IWritersKeywords.KERNEL_SERVICE_PROTECTION, "EE_SERVICE_PROTECTION__" },
 
 				};
 
