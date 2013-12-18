@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Schedulability Analysis Plug-in (ui)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.jscan.ui;singleton:=true
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.2.0.qualifier
 Bundle-Activator: com.eu.evidence.rtdruid.modules.jscan.ui.rtd_jscan_ui.Rtd_jscan_uiPlugin
 Require-Bundle: com.eu.evidence.rtdruid.core,
  com.eu.evidence.rtdruid.core.ui,
