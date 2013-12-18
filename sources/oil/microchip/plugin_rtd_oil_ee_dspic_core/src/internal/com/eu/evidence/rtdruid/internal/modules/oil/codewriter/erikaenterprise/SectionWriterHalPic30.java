@@ -449,8 +449,8 @@ public class SectionWriterHalPic30 extends SectionWriter
 	
 					// close sbStack
 					sbStack.append(" \t" + post + indent + "};\n\n" + indent
-							+ "struct EE_TOS EE_pic30_system_tos["
-							+ (size.length) + "] = {\n");
+							+ "struct EE_TOS EE_pic30_system_tos["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_pic30_system_tos", size.length)
+							+ "] = {\n");
 	
 					pre = "";
 					post = "";
@@ -508,7 +508,7 @@ public class SectionWriterHalPic30 extends SectionWriter
 					 */
 					if (splim) {
 					    sbStack.append(indent+ "extern int _SPLIM_init;\n" +
-					    		indent+ "const struct EE_TOS EE_pic30_system_splim["+(size.length)+"] = {\n" +
+					    		indent+ "const struct EE_TOS EE_pic30_system_splim["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_pic30_system_splim", size.length)+"] = {\n" +
 					    		indent+indent+ "{(EE_ADDR)(EE_UREG)&_SPLIM_init}");
 					    		
 					    pre = ",\n";

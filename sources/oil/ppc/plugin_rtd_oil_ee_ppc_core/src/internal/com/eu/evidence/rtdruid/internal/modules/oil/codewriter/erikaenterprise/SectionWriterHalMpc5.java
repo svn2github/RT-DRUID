@@ -315,8 +315,8 @@ public class SectionWriterHalMpc5 extends SectionWriter implements IEEWriterKeyw
 
 				// close sbStack
 				sbStack.append(" \t" + post + indent + "};\n\n" + indent
-						+ "struct EE_TOS EE_mpc5_system_tos["
-						+ (offset.length - 1) + "] = {\n");
+						+ "struct EE_TOS EE_mpc5_system_tos["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_mpc5_system_tos", offset.length - 1)
+						+ "] = {\n");
 
 				pre = "";
 				post = "";
@@ -433,7 +433,7 @@ public class SectionWriterHalMpc5 extends SectionWriter implements IEEWriterKeyw
 			
 			/* buffer contains the irq table with all handler's address */
 			StringBuffer buffer = new StringBuffer();
-			buffer.append(indent1 + "const EE_ADDR EE_mpc5_irq_table[16] = {\n");
+			buffer.append(indent1 + "const EE_ADDR EE_mpc5_irq_table["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_mpc5_irq_table", 16)+"] = {\n");
 			
 			/*
 			 * requireForEverLoop checks if all handler are defined by user.
@@ -490,7 +490,7 @@ public class SectionWriterHalMpc5 extends SectionWriter implements IEEWriterKeyw
 			// write all irq mask (always the same, at this moment)
 			sbInithal_c.append(indent1+"#ifdef __ALLOW_NESTED_IRQ__\n"+
 					indent1+"#ifndef __ENHANCED_IRQ__\n"+
-					indent1+"const EE_UINT32 EE_mpc5_irq_mask[16] = {\n"+
+					indent1+"const EE_UINT32 EE_mpc5_irq_mask["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_mpc5_irq_mask", 16)+"] = {\n"+
 					indent2+"0x00000000,\n"+
 					indent2+"0x80000000,\n"+
 					indent2+"0xC0000000,\n"+

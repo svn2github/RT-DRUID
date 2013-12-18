@@ -599,8 +599,8 @@ public class SectionWriterHalRx200 extends SectionWriter
 				
 				// open system tos
 				sbStack.append(indent
-						+ "struct EE_TOS EE_rx200_system_tos["
-						+ (tos_size) + "] = {\n");
+						+ "struct EE_TOS EE_rx200_system_tos["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_rx200_system_tos", tos_size)
+						+ "] = {\n");
 
 				/*
 				 * For each stack prepare the configuration's vectors and

@@ -393,8 +393,8 @@ public class SectionWriterHalPic32 extends SectionWriter
 
 				// close sbStack
 				sbStack.append(" \t" + post + indent + "};\n\n" + indent
-						+ "struct EE_TOS EE_pic32_system_tos["
-						+ (size.length) + "] = {\n");
+						+ "struct EE_TOS EE_pic32_system_tos["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_pic32_system_tos", size.length)
+						+ "] = {\n");
 
 				pre = "";
 				post = "";

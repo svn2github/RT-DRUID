@@ -566,7 +566,7 @@ public class SectionWriterKernelEDF extends SectionWriter
 					 * EE_alarm_ROM
 					 */
 					StringBuffer romBuffer = new StringBuffer(indent1
-									+ "const EE_alarm_ROM_type   EE_alarm_ROM[] = {\n");
+									+ "const EE_alarm_ROM_type   EE_alarm_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_alarm_ROM", alarmList.size())+"] = {\n");
 		
 					boolean withEvents = false; // default for FP
 		

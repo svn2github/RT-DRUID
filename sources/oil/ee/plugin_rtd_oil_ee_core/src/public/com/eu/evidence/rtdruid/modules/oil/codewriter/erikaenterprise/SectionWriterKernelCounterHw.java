@@ -222,7 +222,7 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 			final ICommentWriter commentWriterC = SectionWriter.getCommentWriter(ool, FileTypes.C);
 
 			buffer.append(commentWriterC.writerBanner("HW counter definition"));
-			buffer.append(indent1+"const EE_oo_counter_hw_ROM_type EE_counter_hw_ROM[] = {\n");
+			buffer.append(indent1+"const EE_oo_counter_hw_ROM_type EE_counter_hw_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_counter_hw_ROM", max_counter_hw)+"] = {\n");
 			String pre2 = "";
 			String post = "";
 			List<ISimpleGenRes> counters = ool.getList(IOilObjectList.COUNTER);

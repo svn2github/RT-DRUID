@@ -376,8 +376,8 @@ public class SectionWriterHalNios2 extends SectionWriter
 
 					// close sbStack
 					sbStack.append(" \t" + post + indent1 + "};\n\n" + indent1
-							+ "struct EE_TOS EE_nios2_system_tos["
-							+ (offset.length - 1) + "] = {\n");
+							+ "struct EE_TOS EE_nios2_system_tos["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_nios2_system_tos", offset.length - 1)
+							+ "] = {\n");
 
 					pre = "";
 					post = "";

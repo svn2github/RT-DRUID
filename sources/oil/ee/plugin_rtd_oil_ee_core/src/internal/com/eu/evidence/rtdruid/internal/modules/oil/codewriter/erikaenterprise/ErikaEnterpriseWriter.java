@@ -2480,7 +2480,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		
 		return defineName;
 	}
-	
+
 	public static String addVectorSizeDefine(IOilObjectList[] ools, String vectorName, int size) {
 		String defineName = vectorName.toUpperCase() + "_SIZE";
 		for (IOilObjectList ool : ools) {
@@ -2495,4 +2495,5 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		}
 		return defineName;
 	}
+
 }

@@ -639,11 +639,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							.append(indent1
 									+ commentWriterC.writerSingleLineComment("The priority queues: (8 priorities maximum!)")
 									+ indent1
-									+ "EE_TYPEPAIR EE_rq_queues_head[8] =\n"
+									+ "EE_TYPEPAIR EE_rq_queues_head["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_rq_queues_head", 8)+"] =\n"
 									+ indent2
 									+ "{ -1, -1, -1, -1, -1, -1, -1, -1};\n"
 									+ indent1
-									+ "EE_TYPEPAIR EE_rq_queues_tail[8] =\n"
+									+ "EE_TYPEPAIR EE_rq_queues_tail["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_rq_queues_tail", 8)+"] =\n"
 									+ indent2
 									+ "{ -1, -1, -1, -1, -1, -1, -1, -1};\n\n"
 									+ indent1
@@ -654,11 +654,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									+ commentWriterC.writerSingleLineComment("The priority queues: (16 priorities maximum!)")
 		
 									+ indent1
-									+ "EE_TYPEPAIR EE_rq_queues_head[16] =\n"
+									+ "EE_TYPEPAIR EE_rq_queues_head["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_rq_queues_head", 16)+"] =\n"
 									+ indent2
 									+ "{ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};\n"
 									+ indent1
-									+ "EE_TYPEPAIR EE_rq_queues_tail[16] =\n"
+									+ "EE_TYPEPAIR EE_rq_queues_tail["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_rq_queues_tail", 16)+"] =\n"
 									+ indent2
 									+ "{ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};\n\n"
 									+ indent1
@@ -677,7 +677,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								+ commentWriterC.writerSingleLineComment("The pairs that are enqueued into the priority queues ("
 								+ activaction_TOT + " is the total number of task activations)")
 								+ indent1
-								+ "EE_TYPEPAIR EE_rq_pairs_next[] =\n"
+								+ "EE_TYPEPAIR EE_rq_pairs_next["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_rq_pairs_next", activaction_TOT)+"] =\n"
 								+ indent2 + "{ ");
 				pre2 = "";
 				for (int i = 1; i < activaction_TOT; i++) {
@@ -692,7 +692,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								+ commentWriterC.writerSingleLineComment("no need to be initialized")
 								+ indent1
 								+ "EE_TID EE_rq_pairs_tid["
-								+ activaction_TOT
+								+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_rq_pairs_tid", activaction_TOT)
 								+ "];\n\n"
 								+ indent1
 								+ commentWriterC.writerSingleLineComment("a list of unused pairs")
@@ -1039,7 +1039,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					 * EE_counter_ROM
 					 */
 					buffer
-							.append(indent1+"const EE_oo_counter_ROM_type EE_counter_ROM[] = {\n");
+							.append(indent1+"const EE_oo_counter_ROM_type EE_counter_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_counter_ROM", counterList.size())+"] = {\n");
 					pre2 = "";
 					post = "";
 		
@@ -1122,7 +1122,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					StringBuffer romActionBuffer = new StringBuffer(
 							commentWriterC.writerBanner("Alarms action") 
 							+indent1+ "const EE_oo_action_ROM_type   EE_oo_action_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_ACTION_ROM", alarmList.size())+"] = {\n");
-		
+
 					boolean withEvents = IWritersKeywords.OSEK_ECC1
 							.equals(kernelType)
 							|| IWritersKeywords.OSEK_ECC2.equals(kernelType);
@@ -1382,9 +1382,9 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							
 						
 							// .. and define it in the code
-							tmp_buffer.append(indent1+"static const EE_TID EE_oo_autostart_task_mode_"
-									+ appModes.get(appN) + "["
-									+ autostartList[appN].size() + "] = \n"+ indent2+"{ ");
+							tmp_buffer.append(indent1+"static const EE_TID EE_oo_autostart_task_mode_" + appModes.get(appN) + "["+
+									ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_oo_autostart_task_mode_"+ appModes.get(appN), autostartList[appN].size())
+									+ "] = \n"+ indent2+"{ ");
 							pre2 = "";
 							for (int i = 0; i < autostartList[appN].size(); i++) {
 								tmp_buffer.append(pre2 + autostartList[appN].get(i));
@@ -1470,8 +1470,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							allArrays[appN] = tmpArray;
 		
 							// .. and define it in the code
-							tmp_buffer.append(indent1+"static const EE_TYPEALARM EE_oo_autostart_alarm_mode_"
-									+ appModeName+ "["+tmpArray.size()+"] =\n"+indent2+"{ ");
+							tmp_buffer.append(indent1+"static const EE_TYPEALARM EE_oo_autostart_alarm_mode_"+appModeName+"["
+							+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_oo_autostart_alarm_mode_"+appModeName, tmpArray.size())+"] =\n"+indent2+"{ ");
 							pre2 = "";
 							for (int i = 0; i < tmpArray.size(); i++) {
 								String id = tmpArray.get(i);

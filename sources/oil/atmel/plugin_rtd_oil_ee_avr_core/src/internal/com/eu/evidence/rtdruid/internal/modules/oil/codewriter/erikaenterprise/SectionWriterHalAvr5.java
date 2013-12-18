@@ -331,7 +331,8 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 				// close sbStack
 				sbStack.append(" \t" + post + indent + "};\n\n" + indent
 						+ "struct EE_TOS EE_avr5_system_tos["
-						+ (offset.length - 1) + "] = {\n");
+						+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_avr5_system_tos", offset.length - 1)
+						+ "] = {\n");
 
 				pre = "";
 				post = "";

@@ -195,7 +195,7 @@ public class SectionWriterMcu_unibo_mparm extends SectionWriter implements IEEWr
 		
 		// A buffer for the vector
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(indent1 + "const EE_ADDR EE_IC_EXTIRQ_vector[22] = {\n");
+		buffer.append(indent1 + "const EE_ADDR EE_IC_EXTIRQ_vector["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_IC_EXTIRQ_vector", 22)+"] = {\n");
 		
 		/*
 		 * requireForEverLoop checks if all handler are defined by user.
@@ -250,12 +250,12 @@ public class SectionWriterMcu_unibo_mparm extends SectionWriter implements IEEWr
 		// write all irq mask (always the same, at this moment)
 		answerBuffer.append(indent1+"#if defined(__IRQ_PRIORITY_MASKS__) && defined(__ALLOW_NESTED_IRQ__)\n\n" +
 				indent1+"#ifdef __IRQ_PRIORITY_MASKS_NOCONST__\n" +
-				indent1+"EE_TYPEIRQMASK EE_IC_EXTIRQ_masks[21];\n" +
+				indent1+"EE_TYPEIRQMASK EE_IC_EXTIRQ_masks["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_IC_EXTIRQ_masks", 21)+"];\n" +
 				indent1+"#else\n" +
 				indent1+"/* the appropriate values have to be specified here!!!\n" + 
 				indent1+"   0x001FFFFF is a safe value that blocks everything\n" +
 				indent1+"*/\n" +
-				indent1+"const EE_TYPEIRQMASK EE_IC_EXTIRQ_masks[21] = {\n" +
+				indent1+"const EE_TYPEIRQMASK EE_IC_EXTIRQ_masks["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_IC_EXTIRQ_masks", 21)+"] = {\n" +
 				indent2+"0x001FFFFF, /* Ext 0 */\n" +
 				indent2+"0x001FFFFF, /* Ext 1 */\n" +
 				indent2+"0x001FFFFF, /* Ext 2 */\n" +
