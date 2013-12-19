@@ -49,6 +49,7 @@ public class SectionWriterHalTricore extends SectionWriter
 
 	enum TcModels {
 		tc1796("tc1796", new TricoreModelProvider_tc1796(), TricoreCompiler.GNU),
+		tc26x("tc26x", new TricoreModelProvider_tc27x("tc26x"), TricoreCompiler.TASKING),
 		tc27x("tc27x", new TricoreModelProvider_tc27x("tc27x"), TricoreCompiler.TASKING);
 		
 		public final String name;

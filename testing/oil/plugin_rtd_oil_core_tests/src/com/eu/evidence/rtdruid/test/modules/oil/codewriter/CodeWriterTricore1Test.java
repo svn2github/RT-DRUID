@@ -337,6 +337,78 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
+	@Test public void testTc26x() {
+	    final String text =
+	    		"CPU test_application {\n" +
+				"\n" +
+				"    OS EE {\n" +
+				"        EE_OPT = \"DEBUG\";\n" +
+				"        EE_OPT = \"DEBUG\";\n" +
+				"        EE_OPT = \"__ASSERT__\";\n" +
+				"        STATUS = EXTENDED;\n" +
+				"        USERESSCHEDULER = FALSE;\n" +
+				"		MCU_DATA = TRICORE {\n"+
+				"			MODEL = TC26x;\n"+
+				"		};\n"+
+				"\n"+
+				"        CPU_DATA = TRICORE {\n" +
+				"            CPU_CLOCK = 200.0;\n" +
+				"            APP_SRC = \"main.c\";\n" +
+				"        };\n" +
+				"    };\n" +
+				"\n" +
+				"    TASK Task1 {\n" +
+				"        PRIORITY = 0x01;   /* Low priority */\n" +
+				"        AUTOSTART = FALSE;\n" +
+				"        STACK = SHARED;\n" +
+				"        ACTIVATION = 1;    /* only one pending activation */\n" +
+				"    };    \n" +
+				"    \n" +
+				"    TASK Task2 {\n" +
+				"        PRIORITY = 0x02;   /* High priority */\n" +
+				"        SCHEDULE = FULL;\n" +
+				"        AUTOSTART = TRUE;    \n" +
+				"        STACK = SHARED;\n" +
+				"    };\n" +
+				"\n" +
+				"    COUNTER system_timer {\n" +
+				"        MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"            DEVICE = \"STM_SR0\";\n" +
+				"            SYSTEM_TIMER = TRUE;\n" +
+				"            PRIORITY = 1;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"    };\n" +
+				"\n" +
+				"    ALARM Alarm_TASK1_4s {\n" +
+				"      COUNTER = system_timer;\n" +
+				"      ACTION = ACTIVATETASK {\n" +
+				"          TASK = Task1;\n" +
+				"      };\n" +
+				"      AUTOSTART = TRUE {\n" +
+				"          ALARMTIME = 4000;\n" +
+				"          CYCLETIME = 4000;\n" +
+				"      };\n" +
+				"    };\n" +
+				"\n" +
+				"    ISR Button_isr2 {\n" +
+				"        CATEGORY = 2;\n" +
+				"        LEVEL = \"2\";\n" +
+				"        PRIORITY = 2;\n" +
+				"        HANDLER = \"button_handler\"; // IRQ handler \n" +
+				"    };\n" +
+				"\n" +
+				"\n" +
+				"    OS EE { KERNEL_TYPE = BCC1; EE_OPT = \"__OO_STARTOS_OLD__\";}; \n" +
+				"    TASK Task1 { SCHEDULE = FULL; };\n" +
+				"    TASK Task2 { ACTIVATION = 1; };\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
 	@Test public void testTc27x() {
 	    final String text =
 	    		"CPU test_application {\n" +

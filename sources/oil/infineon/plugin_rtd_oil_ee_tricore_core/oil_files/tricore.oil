@@ -68,6 +68,7 @@ IMPLEMENTATION ee {
 			TRICORE {
 				ENUM [
 					TC1796,
+					TC26x,
 					TC27x
 				] MODEL;
 
