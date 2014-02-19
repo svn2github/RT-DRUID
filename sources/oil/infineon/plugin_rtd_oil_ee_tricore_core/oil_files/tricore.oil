@@ -53,7 +53,8 @@ IMPLEMENTATION ee {
                 
                 ENUM [
                 	GNU,
-                	TASKING
+                	TASKING,
+                	DIAB
                 ] COMPILER_TYPE;
                 STRING HW_ENDINIT : "A custom function that is called at the end of the Hardware startup initialization";
 				STRING LINKERSCRIPT : "A custom linker-script that is used for the current cpu. This option override the mcu-level custom linker-script, if defined.";

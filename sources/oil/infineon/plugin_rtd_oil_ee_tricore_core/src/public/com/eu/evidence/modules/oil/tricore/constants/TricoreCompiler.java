@@ -10,7 +10,7 @@ package com.eu.evidence.modules.oil.tricore.constants;
  *
  */
 public enum TricoreCompiler {
-	GNU(TricoreConstants.SGRK__GNU_COMPILER__), TASKING(TricoreConstants.SGRK__TASKING_COMPILER__), UNKNOWN(null), DEFAULT(null);
+	GNU(TricoreConstants.SGRK__GNU_COMPILER__), TASKING(TricoreConstants.SGRK__TASKING_COMPILER__), DIAB(TricoreConstants.SGRK__DIAB_COMPILER__), UNKNOWN(null), DEFAULT(null);
 	
 	final String name;
 	

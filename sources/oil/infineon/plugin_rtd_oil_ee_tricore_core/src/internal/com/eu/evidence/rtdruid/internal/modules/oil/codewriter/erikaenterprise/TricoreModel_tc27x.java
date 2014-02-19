@@ -80,6 +80,12 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		"_lc_ub_ustack_tc2", // core2
 	};
 
+	private final static String[] Gcc_Diab_systemStackSymbols = new String[] {
+		"__USTACK", // core0
+		"__USTACK", // core1
+		"__USTACK", // core2
+	};
+
 	
 	protected final List<String> osekKeywords = Arrays.asList(new String[] {
 			IWritersKeywords.OSEK_BCC1, //
@@ -435,6 +441,18 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 								+ "\n\n");
 					}
 						break;
+					case DIAB:
+					{
+						builder.append("\n" + SectionWriter.getCommentWriter(ool, FileTypes.MAKEFILE).writerSingleLineComment("Add a flag for the linkerscript to set the minimum size of system stack") + 
+								"LDFLAGS += -D__USTACK_SIZE=" +//+currentRtosId+"=" + 
+									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
+											DEFAULT_SYS_STACK_SIZE)) + "\n"+
+								"LDFLAGS += -D__CSA_SIZE=" +//+currentRtosId+"=" + 
+									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_CSA_SIZE),
+										DEFAULT_SYS_CSA_SIZE))
+								+ "\n\n");
+					}
+						break;
 					default:
 				}
 			}
@@ -476,11 +494,21 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			final StringBuffer sbStackDeclSize = new StringBuffer();
 			
 			// used by ORTI
+			String stackSymbol;
+			switch (currentCompiler) {
+			case TASKING : stackSymbol =  Tasking_systemStackSymbols[currentRtosId];
+							break;
+			case GNU:
+			case DIAB:
+					stackSymbol =  Gcc_Diab_systemStackSymbols[currentRtosId];
+					break;
+			default: stackSymbol = ""; break;
+			}
 			ArrayList<EEStackData> stackTmp = new ArrayList<EEStackData>();
 			EEStackData sys_stack = new EEStackData(0,
 					new long[] { Long.decode(ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE), "" + DEFAULT_SYS_STACK_SIZE))},
 					new long[] {0},
-					new String[] {" (int)(&"+Tasking_systemStackSymbols[currentRtosId]+")"}, true);
+					new String[] {" (int)(&"+stackSymbol+")"}, true);
 	
 			// ------------- Buffers --------------------
 			

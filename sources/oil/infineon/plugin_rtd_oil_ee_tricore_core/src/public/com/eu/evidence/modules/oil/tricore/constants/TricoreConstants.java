@@ -25,9 +25,11 @@ public interface TricoreConstants {
 	public static final String SGRK__Tricore_COMPILER_TYPE__ = "sgrk_os__compiler_type";
 	public static final String SGRK__GNU_COMPILER__ = "GNU";
 	public static final String SGRK__TASKING_COMPILER__ = "TASKING";
+	public static final String SGRK__DIAB_COMPILER__ = "DIAB";
 
 
 	public static final Object PREF_TRICORE_TASKING_CC_PATH = "preference_tricore__path_for_tasking_compiler";
 	public static final Object PREF_TRICORE_GNU_CC_PATH = "preference_tricore__path_for_gnu_compiler";
+	public static final Object PREF_TRICORE_DIAB_CC_PATH = "preference_tricore__path_for_diab_compiler";
 
 }

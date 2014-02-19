@@ -586,6 +586,16 @@ public class SectionWriterHalTricore extends SectionWriter
 					} 
 			    	 compiler_define = CommonUtils.compilerMakefileDefines(temp_path, baseID +"_TASKINGDIR", wrapper);
 
+		        } else if (TricoreConstants.SGRK__DIAB_COMPILER__.equalsIgnoreCase(compiler_type)) {
+		        	
+		        	String temp_path = "$(shell dirname \"$(shell which dcc)\")/../";
+		        	
+			    	if (options.containsKey(TricoreConstants.PREF_TRICORE_DIAB_CC_PATH)) {
+						String tmp = (String) options.get(TricoreConstants.PREF_TRICORE_DIAB_CC_PATH);
+						if (tmp != null && tmp.length()>0) temp_path = tmp;
+					} 
+			    	 compiler_define = CommonUtils.compilerMakefileDefines(temp_path, baseID +"_DIABDIR", wrapper);
+
 		        } else {
 		        	compiler_define = "$(warning No compiler set)\n";
 		        }
