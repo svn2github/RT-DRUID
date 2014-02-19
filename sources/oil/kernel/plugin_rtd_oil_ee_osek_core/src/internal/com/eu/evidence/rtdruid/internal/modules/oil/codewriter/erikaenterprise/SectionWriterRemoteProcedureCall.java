@@ -18,6 +18,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
@@ -334,6 +335,21 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		
 		setEventMask(oilObjects);
 		
+		for (IOilObjectList ool : oilObjects) {
+			
+			Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
+			Object t = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_TXT_LIST);
+			int isr2Number = 1 + (o == null ? 0 : ((Integer) o).intValue()) ;
+			@SuppressWarnings("unchecked")
+			List<String> lt = t == null ? new ArrayList<String>() : (List<String>) t;
+			lt.add("Remote procedure call requires an additional ISR2");
+			for (ISimpleGenRes os : ool.getList(IOilObjectList.OS)) {
+				os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL, new Integer(isr2Number));
+				os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_TXT_LIST, lt);
+			}
+			
+		}
+
 	}
 
 	

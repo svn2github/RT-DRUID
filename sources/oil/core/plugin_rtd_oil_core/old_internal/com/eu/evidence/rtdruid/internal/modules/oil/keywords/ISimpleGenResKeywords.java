@@ -314,6 +314,7 @@ public interface ISimpleGenResKeywords {
 	public static final String SPINLOCK_NEXT = "spinlock_next";
 	public static final String SPINLOCK_APPLICATION  = "spinlock_application";
 
+
 	
 }
 
