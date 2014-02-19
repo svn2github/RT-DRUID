@@ -362,8 +362,8 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 			 ******************************************************************/
 			
 			// last line
-			if (parent.getOptions().containsKey(IWritersKeywords.WRITER_DISABLE_EE_RULES) 
-					&& "true".equalsIgnoreCase("" +parent.getOptions().get(IWritersKeywords.WRITER_DISABLE_EE_RULES))) {
+			if (!(parent.getOptions().containsKey(IWritersKeywords.WRITER_DISABLE_EE_RULES) 
+					&& "true".equalsIgnoreCase("" +parent.getOptions().get(IWritersKeywords.WRITER_DISABLE_EE_RULES)))) {
 				
 				sbMakefile.append(commentWriterMf.writerBanner("end") +
 				        "include $(EEBASE)/pkg/cfg/rules.mk\n");
