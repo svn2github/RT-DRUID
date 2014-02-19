@@ -187,6 +187,7 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 			StringBuffer sbSpinStatusArray = new StringBuffer();
 			StringBuffer sbSpinValuesArray = new StringBuffer();
 			StringBuffer sbSpinShare = new StringBuffer();
+			StringBuffer sbSpinID = new StringBuffer();
 //			int spinNumber = 0;
 			int spinlockIndex = 0;
 
@@ -229,6 +230,7 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 					pre = ",";
 					pre2 = ",\n";
 					post = "\t /* " + name + " */\n";
+					sbSpinID.append(indent1 + "#define RES_SPIN_" + name + " " + spinlockIndex + "U\n");
 					spinlockIndex++;
 				}
 			}
@@ -251,12 +253,13 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 						pre = ",";
 						pre2 = ",\n";
 						post = "\t /* " + name + " */\n";
+						sbSpinID.append(indent1 + "#define " + spin.getName() + " " + spinlockIndex + "U\n" );
 						spinlockIndex++;
 					}
 				}
 			}
 
-			 sbCfg_h.append("#define EE_MAX_SPINLOCK_USER " + spinlockIndex + "\n\n");
+			 sbCfg_h.append(indent1 +"#define EE_MAX_SPINLOCK_USER " + spinlockIndex + "\n\n");
 			 final int sbCfg_h_size = sbCfg_h.length();
 
 			// add a spin lock for each cpu
@@ -281,7 +284,7 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 				pre2 = ",\n";
 				post = "\t /* " + name + " */\n";
 
-			    sbCfg_h.insert(sbCfg_h_size, "#define " + getSpinCoreId(rtosId) + " " + spinlockIndex +"U" + post );
+			    sbCfg_h.insert(sbCfg_h_size, indent1 +"#define " + getSpinCoreId(rtosId) + " " + spinlockIndex +"U" + post );
 			    spinlockIndex++;
 			}
 
@@ -305,8 +308,8 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 					"\n\n");
 			
 			
-			sbCfg_h.append("#define EE_MAX_SPINLOCK " + spinlockIndex + "\n"+
-					"#define EE_MAX_SPINLOCK_OS " + spinlockIndex + "\n\n");
+			sbCfg_h.append(sbSpinID + indent1 +"#define EE_MAX_SPINLOCK " + spinlockIndex + "\n"+
+					indent1 +"#define EE_MAX_SPINLOCK_OS " + spinlockIndex + "\n\n");
 			
 			for (int rtosId = 0; rtosId < rtosNumber; rtosId++) {
 				StringBuffer sbCommon_h = answer[rtosId].get(FILE_EE_CFG_H);

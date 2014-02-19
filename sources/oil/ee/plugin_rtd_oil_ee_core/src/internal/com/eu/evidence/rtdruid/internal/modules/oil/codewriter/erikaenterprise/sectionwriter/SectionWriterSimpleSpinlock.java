@@ -171,6 +171,7 @@ public class SectionWriterSimpleSpinlock extends SectionWriter implements IEEWri
 			StringBuffer sbSpinStatusArray = new StringBuffer();
 			StringBuffer sbSpinValuesArray = new StringBuffer();
 			StringBuffer sbSpinShare = new StringBuffer();
+			StringBuffer sbSpinID = new StringBuffer();
 			// int spinNumber = 0;
 			int spinlockIndex = 0;
 
@@ -210,6 +211,7 @@ public class SectionWriterSimpleSpinlock extends SectionWriter implements IEEWri
 //					pre = ",";
 //					pre2 = ",\n";
 //					post = "\t /* " + name + " */\n";
+//					sbSpinID.append(indent1 + "#define " + name + " " + spinlockIndex + "U\n");
 					spinlockIndex++;
 				}
 			}
@@ -231,11 +233,12 @@ public class SectionWriterSimpleSpinlock extends SectionWriter implements IEEWri
 //						pre = ",";
 //						pre2 = ",\n";
 //						post = "\t /* " + name + " */\n";
+						sbSpinID.append(indent1 + "#define " + spin.getName() + " " + spinlockIndex + "U\n" );
 						spinlockIndex++;
 					}
 				}
 			}
-			sbCfg_h.append("#define EE_MAX_SPINLOCK_USER " + spinlockIndex + "\n\n");
+			sbCfg_h.append(indent1 +"#define EE_MAX_SPINLOCK_USER " + spinlockIndex + "\n\n");
 			final int sbCfg_h_size = sbCfg_h.length();
 
 			// add a spin lock for each cpu
@@ -256,7 +259,7 @@ public class SectionWriterSimpleSpinlock extends SectionWriter implements IEEWri
 				pre2 = ",\n";
 				post = "\t /* " + name + " */\n";
 
-				sbCfg_h.insert(sbCfg_h_size, "#define " + getSpinCoreId(rtosId) + " " + spinlockIndex + "U" + post);
+				sbCfg_h.insert(sbCfg_h_size, indent1 + "#define " + getSpinCoreId(rtosId) + " " + spinlockIndex + "U" + post);
 				spinlockIndex++;
 			}
 
@@ -268,8 +271,8 @@ public class SectionWriterSimpleSpinlock extends SectionWriter implements IEEWri
 		    				"[EE_MAX_SPINLOCK]",
 		    				";\n") +"\n");
 
-			sbCfg_h.append("#define EE_MAX_SPINLOCK " + spinlockIndex + "\n"
-						+ "#define EE_MAX_SPINLOCK_OS "	+ spinlockIndex + "\n\n");
+			sbCfg_h.append(sbSpinID + indent1 + "#define EE_MAX_SPINLOCK " + spinlockIndex + "\n"
+						+indent1 + "#define EE_MAX_SPINLOCK_OS "	+ spinlockIndex + "\n\n");
 
 			for (int rtosId = 0; rtosId < rtosNumber; rtosId++) {
 				StringBuffer sbCommon_h = answer[rtosId].get(FILE_EE_CFG_H);
