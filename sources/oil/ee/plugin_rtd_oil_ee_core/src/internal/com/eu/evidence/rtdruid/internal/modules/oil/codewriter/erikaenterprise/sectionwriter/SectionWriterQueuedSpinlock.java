@@ -270,7 +270,7 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 				pre2 = ",\n";
 				post = "\t /* " + name + " */\n";
 
-			    sbCfg_h.insert(sbCfg_h_size, "#define EE_SPINLOCK_CORE" + rtosId + " " + spinlockIndex + post );
+			    sbCfg_h.insert(sbCfg_h_size, "#define " + getSpinCoreId(rtosId) + " " + spinlockIndex +"U" + post );
 			    spinlockIndex++;
 			}
 
@@ -335,6 +335,14 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 		return answer;
 	}
 	
+	/**
+	 * @param rtosId
+	 * @return
+	 */
+	public static String getSpinCoreId(int rtosId) {
+		return "EE_SPINLOCK_CORE" + rtosId;
+	}
+
 	/* (non-Javadoc)
 	 * @see com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions#updateKeywords(java.util.ArrayList, java.lang.String[])
 	 */

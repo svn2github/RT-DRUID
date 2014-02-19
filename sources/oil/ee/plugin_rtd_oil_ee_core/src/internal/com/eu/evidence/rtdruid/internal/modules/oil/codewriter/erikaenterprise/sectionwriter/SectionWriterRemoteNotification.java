@@ -386,7 +386,11 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 			String pre2="";
 			for (int i=0; i<rtosNumber; i++) {
 				sbRnFirst_body.append(pre2+"{ -1, -1}");
-				sbRnSpin_body.append(pre2+(nGlobRes+i)+"U");
+				if (parent.checkKeyword(QUEUED_SPINLOCK)) {
+					sbRnSpin_body.append(pre2+SectionWriterQueuedSpinlock.getSpinCoreId(i));
+				} else {
+					sbRnSpin_body.append(pre2+(nGlobRes+i)+"U");
+				}
 				sbRnSwitch_body.append(pre2+"0U");
 				
 				pre2 =", ";
