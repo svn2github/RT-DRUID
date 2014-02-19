@@ -166,7 +166,13 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		// ee_cfg.h
 		ee_h_buffer.append(
 				commentWriterH.writerBanner("OS APPLICATIONS definition") +
-				indent1 + "#define EE_MAX_APP " + (applications.size() +1)+"U\n\n"); 				
+				indent1 + "#define EE_MAX_APP " + (applications.size() +1)+"U\n"); 	
+		for (ISimpleGenRes application : applications) {
+			ee_h_buffer.append(indent1+ "#define " + application.getName() 
+					+ " "+ (application.getInt(ISimpleGenResKeywords.OS_APPL_ID)+1)+"U\n" );
+		
+		}
+		ee_h_buffer.append("\n");
 
 		// ee_cfg.c
 		ee_c_buffer.append(
