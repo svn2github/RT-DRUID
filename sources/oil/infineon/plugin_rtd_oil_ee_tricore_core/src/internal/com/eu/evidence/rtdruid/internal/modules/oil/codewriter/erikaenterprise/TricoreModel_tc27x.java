@@ -453,7 +453,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		
 		if (DEF__MULTI_STACK__.equals(parent.getStackType())) {
 			ICommentWriter commentC = SectionWriter.getCommentWriter(ool, FileTypes.C);
-
+			final boolean needStackMonitoring = parent.checkKeyword(ISimpleGenResKeywords.OS_STACK_MONITORING);
 	
 			/*
 			 * Define a string for each MAX_OBJECT_NUMBER (OBJECT=task, RESOURCE, ...).
@@ -506,7 +506,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			if (parent.checkKeyword(DEF__IRQ_STACK_NEEDED__)) {
 				/***************************************************************
 				 * IRQ_STACK
-				 **************************************************************/
+				 **************************************************************/				
 				final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
 				for (String currentCpuPrefix: currentCpuPrefixes) {
 					if (irqSize != null) {
@@ -726,12 +726,12 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				final String additional_elements = osApplication_enabled ? ", 0U, 0U" : ", 0U";
 				sbStack.append(indent + "struct EE_TC_TOS EE_tc_system_tos["
 						+ (size.length - is_irq_stack.cardinality()) + "] = {\n"
-						+ writeSystemTos(commentC, size, descrStack, is_irq_stack, additional_elements));
+						+ writeSystemTos(commentC, size, descrStack, is_irq_stack, additional_elements, false));
 				    
 				if (osApplication_enabled) {
-					sbStack.append(indent + "struct EE_TC_BOS const EE_tc_system_bos["
+					sbStack.append(indent + "struct EE_TOS const EE_tc_system_bos["
 							+ (size.length - is_irq_stack.cardinality()) + "] = {\n"
-							+ writeSystemTos(commentC, size, descrStack, is_irq_stack, ""));
+							+ writeSystemTos(commentC, size, descrStack, is_irq_stack, "", needStackMonitoring));
 				}
 	
 				sbStack.append(indent+ "EE_UREG EE_tc_active_tos = 0U; " +commentC.writerSingleLineComment("dummy") + "\n");
@@ -749,7 +749,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 						sbStack
 								.append(indent+commentC.writerSingleLineComment("stack used only by IRQ handlers")
 										+ indent+"struct EE_TOS EE_tc_IRQ_tos = {\n"
-										+ indent+indent+"EE_STACK_INITP("+STACK_BASE_NAME+j+")\n"
+										+ indent+indent+"EE_STACK_INITP("+STACK_BASE_NAME+j+")"
+										+ (needStackMonitoring ? ", EE_STACK_ENDP("+STACK_BASE_NAME+j+")" : "") + "\n"
 										+ indent+"};\n\n");
 	
 						// REQUIRED By ORTI's STACK
@@ -793,7 +794,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	 * @param additional_elements
 	 */
 	private String writeSystemTos(ICommentWriter commentC, 
-				int[][] size, String[] descrStack, BitSet is_irq_stack, final String additional_elements) {
+				int[][] size, String[] descrStack, BitSet is_irq_stack, final String additional_elements, final boolean needStackMonitoring) {
 		
 		final StringBuilder sbStack = new StringBuilder();
 		final String indent = IWritersKeywords.INDENT;
@@ -803,6 +804,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		    if (!is_irq_stack.get(j)) {
 		        String value = "{" + 
 		        			(j == 0 ? "0" : "EE_STACK_INITP("+STACK_BASE_NAME+j+")")
+		        			+ (needStackMonitoring ? (j == 0 ? ", 0" : ", EE_STACK_ENDP("+STACK_BASE_NAME+j+")") : "")
 		        			+ additional_elements+"}";
 
 				sbStack.append(pre

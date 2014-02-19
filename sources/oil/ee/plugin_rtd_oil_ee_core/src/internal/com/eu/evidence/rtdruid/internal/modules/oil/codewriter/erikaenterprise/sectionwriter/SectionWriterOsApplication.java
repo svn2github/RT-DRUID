@@ -22,12 +22,14 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.OsApplicationAreas;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
@@ -56,6 +58,9 @@ public class SectionWriterOsApplication extends SectionWriter implements
 	 * 
 	 */
 	private static final String NO_HOOK = "0U";
+	
+	public final static String SGR_OS_MAX_NESTING_LEVEL = "sgr_os_max_nesting_level";
+	
 
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -137,6 +142,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			final IOilObjectList ool = oilObjects[currentRtosId];
 			
 			addOsApplications(ool, buff);
+			
+			writeIsr(ool, buff);
 		}
 		
 
@@ -144,6 +151,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 	}
 
 	protected void addOsApplications(IOilObjectList ool, IOilWriterBuffer answer) throws OilCodeWriterException {
+		final boolean needStackMonitoring = parent.checkKeyword(ISimpleGenResKeywords.OS_STACK_MONITORING);
 		CpuHwDescription cpuDescr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
 		OsApplicationAreas areaNames = cpuDescr == null ? null : cpuDescr.getOsApplicationNames();
 		
@@ -201,7 +209,9 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				
 			}
 		}
-		application_rom.append(" }, EE_MEMPROT_TRUST_MODE, EE_NIL}");
+		application_rom.append(" }, EE_MEMPROT_TRUST_MODE, EE_NIL" +
+				(needStackMonitoring ? ", 0U": "") +
+				"}");
 		
 		StringBuffer application_ram = new StringBuffer(
 				indent1 + "EE_as_Application_RAM_type EE_as_Application_RAM[EE_MAX_APP] = {\n" +
@@ -292,7 +302,9 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					}
 				}
 				application_rom.append(" }, "+
-							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") +", "+restartTask+"}");
+							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") +", "+restartTask+
+							(needStackMonitoring ? ", EE_STACK_ENDP("+stack_base_name+stack_id+")": "") +
+							"}");
 			}
 
 			if (parent.checkKeyword(IWritersKeywords.CPU_PPCE200ZX)) {
@@ -352,7 +364,106 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		ee_c_buffer.append(" " + end + indent1 + "};\n\n");
 		
 	}
+	
 
+	protected void writeIsr(IOilObjectList ool, IOilWriterBuffer answer) {
+		List<ISimpleGenRes> orderedIsr = SectionWriterIsr.getIsrByID(ool);
+		
+		if (orderedIsr.size() == 0) {
+			return;
+		}
+		
+		final String indent1 = IWritersKeywords.INDENT;
+		final String indent2 = indent1 + IWritersKeywords.INDENT;
+
+		List<ISimpleGenRes> osApplications = ool.getList(IOilObjectList.OSAPPLICATION);
+
+		StringBuffer ee_h_buffer = answer.get(FILE_EE_CFG_H);
+		final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
+
+		StringBuffer ee_c_buffer = answer.get(FILE_EE_CFG_C);
+		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
+		
+
+		int max_level = CpuHwDescription.DEFAULT_MAX_NESTING_LEVEL;
+		int isr2_number = ErikaEnterpriseWriter.getIsr2Number(ool);
+		{
+			String svalue = AbstractRtosWriter.getOsProperty(ool, SGR_OS_MAX_NESTING_LEVEL);
+			if (svalue != null) {
+				max_level =  Integer.decode(svalue).intValue();
+			} else {
+				CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+				if (currentStackDescription != null) {
+					max_level = currentStackDescription.getMaxNestedInts();
+				}
+			}
+		}
+
+		
+		// ee_cfg.h
+		ee_h_buffer.append(
+				commentWriterH.writerBanner("ISR definition") +
+				indent1 + "#define EE_MAX_NESTING_LEVEL   "+(isr2_number<max_level?isr2_number : max_level)+"\n" +
+				indent1 + "#define EE_MAX_ISR_ID          "+orderedIsr.size()+"\n\n"); 				
+
+		// ee_cfg.c
+		ee_c_buffer.append(
+				commentWriterC.writerBanner("ISR definition") +
+				indent1 + "EE_as_ISR_RAM_type EE_as_ISR_stack[EE_MAX_NESTING_LEVEL];\n\n" +
+				indent1 + "const EE_as_ISR_ROM_type EE_as_ISR_ROM[EE_MAX_ISR_ID] = {\n");
+				
+		StringBuffer appl_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR to Application mapping"));
+
+		String pre = "";
+		String post = "";
+		for (ISimpleGenRes isr : orderedIsr) {
+			if (isr != null) {
+				String name = isr.getName();
+				
+				int aid = 0;
+				if (isr.containsProperty(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME)) {
+					aid = 1+ getOsApplicationIndex(isr.getString(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME), osApplications);
+				//  --> at this moment all ISR related to HW Counters are executed by Kernel OsApplication, then aid = 0
+//				} else if (isr.containsProperty(ISimpleGenResKeywords.COUNTER_OS_APPLICATION_NAME)) { 
+//					aid = 1+ getOsApplicationIndex(isr.getString(ISimpleGenResKeywords.COUNTER_OS_APPLICATION_NAME), osApplications); 
+				}
+				appl_id.append(indent1 + "#define ISR2_APP_"+name+"\t" + aid + "\n");
+				
+				ee_c_buffer.append(pre + post + indent2 + "{ "+aid+" }");
+				pre = ",";
+				post = commentWriterC.writerSingleLineComment(name);
+			} else {
+				ee_c_buffer.append(pre + post + indent2 + "{ ((ApplicationType)-1) }");
+				pre = ",";
+				post = commentWriterC.writerSingleLineComment("not used");
+			}
+		}
+
+		ee_h_buffer.append(appl_id + "\n");
+		
+		ee_c_buffer.append(" " + post+indent1+"};\n\n");
+
+	}
+
+	
+	/**
+	 * 
+	 * @param osAppl
+	 *            os application name
+	 * @param osApplicationList
+	 *            all os applications
+	 * @return the position in the array of specified os application
+	 */
+	private int getOsApplicationIndex(String osAppl, List<ISimpleGenRes> osApplicationList) {
+		if (osAppl != null) {
+			for (int i=0; i<osApplicationList.size(); i++) {
+				if (osAppl.equals(osApplicationList.get(i).getName())) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
 	
 	@Override
 	public void updateObjects() throws OilCodeWriterException {
@@ -379,20 +490,16 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		final String path_errorH    =  osApplBasePath+ "ERRORHOOK";
 		final String path_shutdownH =  osApplBasePath+ "SHUTDOWNHOOK";
 		
+
+		final String osNestingLevelPath = S
+				+ (new OilPath(OilObjectType.OS, null)).getPath()
+				+ "MAX_NESTING_LEVEL";
+
+		
 		final String path_trusted_function = PARAMETER_LIST+ "TRUSTED_FUNCTION";
 		
 		final boolean enableMemoryProtection = parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION);
 
-
-//		final String taskOsApplRefPath = S
-//				+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
-//				+ IOilXMLLabels.OBJ_TASK + parent.getOilHwRtosPrefix() + "APPLICATION"; 
-//
-//	
-//	final String isrOsApplRefPath = S
-//				+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
-//				+ IOilXMLLabels.OBJ_ISR + parent.getOilHwRtosPrefix() + "APPLICATION";
-		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();	
 		boolean useOsApplications = false;
 		for (IOilObjectList ool : oilObjects) {
@@ -411,6 +518,12 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			Map<String, ISimpleGenRes> map_task = getMap(ool.getList(IOilObjectList.TASK));
 			
 
+			for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)){ // nesting level
+				String[] value = CommonUtils.getValue(vt, os.getPath() + osNestingLevelPath);
+				if (value != null && value.length>0 && value[0] != null && value[0].length()>0) {
+					os.setProperty(SGR_OS_MAX_NESTING_LEVEL, value[0]);
+				}
+			}
 			
 			// OS applications
 			int id = 0;
@@ -600,39 +713,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				id++;
 			}
 			
-			
-			
-			
-//			/**** OLD CODE ***/
-//			
-//			// tasks
-//			List<ISimpleGenRes> tasks = ool.getList(IOilObjectList.TASK);
-//			for (ISimpleGenRes task : tasks) {
-//			
-//				String[] os_appl_ref = CommonUtils.getValue(vt, task.getPath() + taskOsApplRefPath);
-//				if (os_appl_ref != null && os_appl_ref.length>0 && os_appl_ref[0] != null && os_appl_ref[0].length()>0) {
-//					add_appl_ref(task, ISimpleGenResKeywords.TASK_OS_APPLICATION_NAME, os_appl_ref[0]);
-//				}
-//				
-//			}
-//
-//			// isr
-//			List<ISimpleGenRes> isrs = ool.getList(IOilObjectList.ISR);
-//			int isr_id = 0;
-//			for (ISimpleGenRes isr : isrs) {
-//			
-//				String[] os_appl_ref = CommonUtils.getValue(vt, isr.getPath() + isrOsApplRefPath);
-//				if (os_appl_ref != null && os_appl_ref.length>0 && os_appl_ref[0] != null && os_appl_ref[0].length()>0) {
-//					add_appl_ref(isr, ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME, os_appl_ref[0]);
-//				}
-//
-//				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_ID)) {
-//					isr.setProperty(ISimpleGenResKeywords.ISR_ID, ""+isr_id);
-//					isr_id ++;
-//				}
-//
-//			}
-//
 			
 			if (useOsApplications) {//applications.size() >0) {
 				
