@@ -206,6 +206,7 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						info.entry_id = entry_id;
 						info.disable = false;
 						info.generated_prioid = prio_id;
+						info.generated_isrid = sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_ID_TXT) ? sgr.getString(ISimpleGenResKeywords.COUNTER_ISR_ID_TXT): null;
 						info.generated_prio_string = sgr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING) ? sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING): null;
 
 						generateIsr2Defines.doWriteIsr12(buffer, commentWriterH, info);
@@ -286,6 +287,20 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						}
 						
 						sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, handler);
+					}
+					
+					{ // priority
+						Integer prioVal = null;
+						if (device != null) {
+							prioVal = new Integer(device.getPrio());
+						} else if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY)) {
+							prioVal = new Integer(sgr.getInt(ISimpleGenResKeywords.COUNTER_ISR_PRIORITY));
+						}
+						
+						if (prioVal != null) {
+							sgr.setObject(ISimpleGenResKeywords.COUNTER_ISR_ID, new Integer(prioVal));
+							sgr.setObject(ISimpleGenResKeywords.COUNTER_ISR_ID_TXT, "" + prioVal);
+						}
 					}
 				}
 			}

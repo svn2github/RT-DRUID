@@ -168,6 +168,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		if (isrWriter == null) {
 			isrWriter = new SectionWriterIsr(parent, EE_TRICORE_HANDLER_BASEID);
 			isrWriter.setComputeEntryFromPriority(true);
+			isrWriter.setComputeIDFromPriority(true);
 			isrWriter.setGenerateDefineCategory(true);
 			isrWriter.setGenerateDefineIsrId(true);
 	//		isrWriter.setValidEntries(ISR_LIST);
@@ -780,6 +781,6 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	 */
 	@Override
 	public OsApplicationAreas osApplicationAreas() {
-		return new OsApplicationAreas(new String[] {}, new String[] {"ee_ssec", "ee_esec"});
+		return new OsApplicationAreas(new String[] {}, new String[] {"ee_ssec", "ee_esec"}, new String[] {}, new String[] {"ee_skernel_ram", "ee_ekernel_ram"});
 	}
 }

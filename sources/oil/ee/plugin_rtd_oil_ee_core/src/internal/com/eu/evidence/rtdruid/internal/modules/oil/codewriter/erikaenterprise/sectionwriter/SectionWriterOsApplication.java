@@ -141,6 +141,9 @@ public class SectionWriterOsApplication extends SectionWriter implements
 	}
 
 	protected void addOsApplications(IOilObjectList ool, IOilWriterBuffer answer) throws OilCodeWriterException {
+		CpuHwDescription cpuDescr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+		OsApplicationAreas areaNames = cpuDescr == null ? null : cpuDescr.getOsApplicationNames();
+		
 		List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
 
 		StringBuffer ee_h_buffer = answer.get(FILE_EE_CFG_H);
@@ -161,16 +164,29 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		
 				
 		StringBuffer application_rom = new StringBuffer(
-				indent1 + "const EE_as_Application_ROM_type EE_as_Application_ROM[EE_MAX_APP] = {\n");
+				indent1 + "const EE_as_Application_ROM_type EE_as_Application_ROM[EE_MAX_APP+1U] = {\n" +
+				indent2 + "{{ ");
+		if (areaNames != null) {
+			String sep = "";
+			final int size = areaNames.getConstAreas().size() + areaNames.getAreas().size();
+			for (int i=0; i<size; i++) {
+				application_rom.append(sep + "0U");
+				sep = ", ";
+			}
+		}
+		application_rom.append(" }}");
 		
 		StringBuffer application_ram = new StringBuffer(
 				indent1 + "EE_as_Application_RAM_type EE_as_Application_RAM[EE_MAX_APP+1U] = {\n" +
-				indent2 + "EE_APP_RAM_INIT(0,0U),\n");
+				indent2 + "EE_APP_RAM_INIT(0U, EE_MEMPROT_TRUST_MODE)");
 		
 				
-		StringBuilder startUp_buffer  = new StringBuilder(indent1 +"const EE_HOOKTYPE EE_as_Application_startuphook[EE_MAX_APP] = {\n");
-		StringBuilder shutdown_buffer = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_shutdownhook[EE_MAX_APP] = {\n");
-		StringBuilder error_buffer    = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_errorhook[EE_MAX_APP] = {\n");
+		StringBuilder startUp_buffer  = new StringBuilder(indent1 +"const EE_HOOKTYPE EE_as_Application_startuphook[EE_MAX_APP+1U] = {\n" +
+				indent2 + NO_HOOK);
+		StringBuilder shutdown_buffer = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_shutdownhook[EE_MAX_APP+1U] = {\n" +
+				indent2 + NO_HOOK);
+		StringBuilder error_buffer    = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_errorhook[EE_MAX_APP+1U] = {\n" +
+				indent2 + NO_HOOK);
 
 		StringBuilder startUp_decl_buffer  = new StringBuilder(indent1 + commentWriterC.writerSingleLineComment("Os Application Startup Hooks"));
 		StringBuilder shutdown_decl_buffer = new StringBuilder(indent1 + commentWriterC.writerSingleLineComment("Os Application Shutdown Hooks"));
@@ -178,7 +194,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 
 		final boolean enableMemoryProtection = parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION);
 		StringBuffer linker_buffer = new StringBuffer();
-		String end = "";
+		String end = ",\n";
 		for (ISimpleGenRes application : applications) {
 			boolean trusted = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
 						&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED));
@@ -203,9 +219,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 //			extern const int app0_start, app0_sstart, app0_end;
 
 			if (enableMemoryProtection) {
-				CpuHwDescription cpuDescr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
-
-
 				String mem_base = application.getString(OS_APPLICATION_MEM_BASE);
 				String mem_size = application.getString(OS_APPLICATION_MEM_SIZE);
 				
@@ -216,7 +229,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						mem_size + " " +
 						(trusted ? "1" : "0")+
 						"\n");
-				OsApplicationAreas areaNames = cpuDescr.getOsApplicationNames();
 				for (String areaName : areaNames.getConstAreas()) {
 					ee_c_buffer.append(indent1 + "extern const int " + areaName+"_"+name+";\n");
 				}
@@ -227,14 +239,17 @@ public class SectionWriterOsApplication extends SectionWriter implements
 	
 				application_rom.append(end +
 						indent2 + "{{ ");
-				String sep = "";
-				for (String areaName : areaNames.getConstAreas()) {
-					application_rom.append(sep + "&" + areaName+"_"+name);
-					sep = ", ";
-				}
-				for (String areaName : areaNames.getAreas()) {
-					application_rom.append(sep + "&" + areaName+"_"+name);
-					sep = ", ";
+				
+				if (areaNames != null) {
+					String sep = "";
+					for (String areaName : areaNames.getConstAreas()) {
+						application_rom.append(sep + "&" + areaName+"_"+name);
+						sep = ", ";
+					}
+					for (String areaName : areaNames.getAreas()) {
+						application_rom.append(sep + "&" + areaName+"_"+name);
+						sep = ", ";
+					}
 				}
 				application_rom.append(" }}");
 			}
@@ -289,6 +304,9 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				indent2 + "0");
 		end = "\t"+commentWriterC.writerSingleLineComment("dummy");
 		for (ISimpleGenRes task: ool.getList(IOilObjectList.TASK) ) {
+			if (!task.containsProperty(ISimpleGenResKeywords.OS_APPL_ID)) {
+				throw new OilCodeWriterException("The task " + task.getName() + " is not related to any OsApplication.");
+			}
 			ee_c_buffer.append("," + end +
 					indent2 + (task.getInt(ISimpleGenResKeywords.OS_APPL_ID) +1) );
 			end = "\t"+commentWriterC.writerSingleLineComment(task.getName());

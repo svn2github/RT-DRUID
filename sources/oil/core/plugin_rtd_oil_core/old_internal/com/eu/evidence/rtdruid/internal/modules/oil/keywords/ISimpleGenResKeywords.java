@@ -25,7 +25,23 @@ public interface ISimpleGenResKeywords {
 	 **************************************************************************/
 	public final static String APPMODES_TASK_LIST = "appmodes_task";
 	public final static String APPMODES_ALARM_LIST = "appmodes_alarm";
+
+	/***************************************************************************
+	 * OS Application
+	 **************************************************************************/
+	public final static String OS_APPL_ID = "os_application_id";
+	public final static String OS_APPL_PATH = "os_application_paths";
+	public final static String OS_APPL_STACK = "os_application_stack";
+
+	public final static String OS_APPL_LIST_REF_ALARM = "os_application_list_ref_alarm";
+	public final static String OS_APPL_LIST_REF_COUNTER = "os_application_list_ref_counter";
+	public final static String OS_APPL_LIST_REF_ISR = "os_application_list_ref_isr";
+	public final static String OS_APPL_LIST_REF_RESOURCE = "os_application_list_ref_resource";
+	public final static String OS_APPL_LIST_REF_TASK = "os_application_list_ref_task";
 	
+	public final static String OS_APPL_SHARED_STACK_ID = "os_application_shared_stack_id";
+	public final static String OS_APPL_CPU_MAPPED_ID = "os_application_cpu_mapped_id";
+
 	/***************************************************************************
 	 * Task
 	 **************************************************************************/
@@ -48,7 +64,7 @@ public interface ISimpleGenResKeywords {
 	public final static String TASK_STACK_SHARED = "SHARED";
 	public final static String TASK_STACK_PRIVATE = "PRIVATE";
 
-	public final static String TASK_OS_APPLICATION_NAME = "task_mapped_to_an_os_application";
+	public final static String TASK_OS_APPLICATION_NAME = /*__*/"task_mapped_to_an_os_application";
 
 
 	/** This property say if at least one cpu sends a remote notification to a task */
@@ -71,8 +87,9 @@ public interface ISimpleGenResKeywords {
 	public final static String ISR_GENERATED_HANDLER = "isr___generated_handler";
 	public final static String ISR_GENERATED_ENTRY = "isr___generated_entry";
 	public final static String ISR_GENERATED_PRIOID = "isr___generated_priority_id";
-	public final static String ISR_ID = "isr_index";
-	public final static String ISR_OS_APPLICATION_NAME = "isr_mapped_to_an_os_application";
+	public final static String ISR_ID = "isr_id_integer";
+	public final static String ISR_ID_TXT = "isr_id_string";
+	public final static String ISR_OS_APPLICATION_NAME = /*__*/ "isr_mapped_to_an_os_application";
 	public final static String ISR_RESOURCE_LIST = TASK_RESOURCE_LIST;
 	public final static String ISR_REQUIRES_RESOURCES = "isr_requires_resources";
 	
@@ -102,13 +119,15 @@ public interface ISimpleGenResKeywords {
 	public final static String COUNTER_USER_HANDLER = "counter__hw_user_handler";
 	public final static String COUNTER_ISR_PRIORITY = "counter__hw_isr_priority";
 	/** Handler used by the code (it may be the one proposed by the user or one computed by the code generator */
+	public final static String COUNTER_ISR_ID = "counter_isr_id_integer";
+	public final static String COUNTER_ISR_ID_TXT = "counter_isr_id_string";
 	public final static String COUNTER_GENERATED_HANDLER = "counter__hw_generated_handler";
 	public final static String COUNTER_GENERATED_PRIORITY_VALUE = "counter__hw_generated_priority_value";
 	public final static String COUNTER_GENERATED_PRIORITY_STRING = "counter__hw_generated_priority_string";
 	public final static String COUNTER_SYSTIMER = "counter__hw_system_timer";
 	public final static String COUNTER_TYPE_SW = "SOFTWARE";
 	
-	public final static String COUNTER_OS_APPLICATION_NAME = "counter_mapped_to_an_os_application";
+	public final static String COUNTER_OS_APPLICATION_NAME = /*__*/ "counter_mapped_to_an_os_application";
 
 	/***************************************************************************
 	 * Alarm
@@ -134,7 +153,7 @@ public interface ISimpleGenResKeywords {
 	/** contains true if the task name is remote */
 	public final static String ALARM_TASK_IS_REMOTE = "alarm_task_is_remote";
 
-	public final static String ALARM_OS_APPLICATION_NAME = "alarm_mapped_to_an_os_application";
+	public final static String ALARM_OS_APPLICATION_NAME = /*__*/ "alarm_mapped_to_an_os_application";
 
 
 	/***************************************************************************
@@ -166,7 +185,7 @@ public interface ISimpleGenResKeywords {
 	/** Contains all names of resources linked to a root resource (ArrayList) */
 	public static final String RESOURCE_CHAIN_LIST = "resource_chain_list";
 
-	public final static String RESOURCE_OS_APPLICATION_NAME = "resource_mapped_to_an_os_application";
+	public final static String RESOURCE_OS_APPLICATION_NAME = /*__*/ "resource_mapped_to_an_os_application";
 
 	/***************************************************************************
 	 * Event
@@ -289,30 +308,13 @@ public interface ISimpleGenResKeywords {
 	public final static String CPU_DATA_MULTI_STACK_IRQ_STACK_SYS_SIZE = "cpu_data_multi_stack_irq_stack_sys_size";
 	public final static String CPU_DATA_MULTI_STACK_DUMMY_STACK = "cpu_data_multi_stack_dummy_stack";
 	public final static String CPU_DATA_MULTI_STACK_DUMMY_STACK_SYS_SIZE = "cpu_data_multi_stack_dummy_stack_sys_size";
-	
-	
 
-	/***************************************************************************
-	 * OS Application
-	 **************************************************************************/
-	public final static String OS_APPL_ID = "os_application_id";
-	public final static String OS_APPL_PATH = "os_application_paths";
-	public final static String OS_APPL_STACK = "os_application_stack";
-
-	public final static String OS_APPL_LIST_REF_ALARM = "os_application_list_ref_alarm";
-	public final static String OS_APPL_LIST_REF_COUNTER = "os_application_list_ref_counter";
-	public final static String OS_APPL_LIST_REF_ISR = "os_application_list_ref_isr";
-	public final static String OS_APPL_LIST_REF_RESOURCE = "os_application_list_ref_resource";
-	public final static String OS_APPL_LIST_REF_TASK = "os_application_list_ref_task";
-	
-	public final static String OS_APPL_SHARED_STACK_ID = "os_application_shared_stack_id";
-	public final static String OS_APPL_CPU_MAPPED_ID = "os_application_cpu_mapped_id";
 
 	/***************************************************************************
 	 * OS Application
 	 **************************************************************************/
 	public static final String SPINLOCK_NEXT = "spinlock_next";
-	public static final String SPINLOCK_APPLICATION  = "spinlock_application";
+	public static final String SPINLOCK_APPLICATION  = /*__*/ "spinlock_application";
 
 
 	

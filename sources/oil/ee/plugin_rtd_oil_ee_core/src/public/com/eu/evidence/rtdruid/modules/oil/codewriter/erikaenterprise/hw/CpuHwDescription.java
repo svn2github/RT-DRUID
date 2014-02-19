@@ -71,12 +71,17 @@ public class CpuHwDescription {
 		protected List<String> constAreas;
 		protected List<String> areas;
 		
+		protected List<String> constKAreas;
+		protected List<String> kareas;
+
 		/**
 		 * 
 		 */
-		public OsApplicationAreas(String[] cAreas, String[] areas) {
+		public OsApplicationAreas(String[] cAreas, String[] areas, String[] cKAreas, String[] kareas) {
 			this.constAreas = Collections.unmodifiableList(Arrays.asList(cAreas));
 			this.areas = Collections.unmodifiableList(Arrays.asList(areas));
+			this.constKAreas = Collections.unmodifiableList(Arrays.asList(cKAreas));
+			this.kareas = Collections.unmodifiableList(Arrays.asList(kareas));
 		}
 		
 		/**
@@ -90,6 +95,19 @@ public class CpuHwDescription {
 		 */
 		public List<String> getConstAreas() {
 			return constAreas;
+		}
+		
+		/**
+		 * @return the areas
+		 */
+		public List<String> getKAreas() {
+			return kareas;
+		}
+		/**
+		 * @return the constAreas
+		 */
+		public List<String> getConstKAreas() {
+			return constKAreas;
 		}
 	}
 	
@@ -123,7 +141,9 @@ public class CpuHwDescription {
 	/** OsApplication sections */
 	protected OsApplicationAreas osApplicationNames = new OsApplicationAreas(
 			new String[] { "ee_load_data" },
-			new String[] { "ee_sstack", "ee_sdata", "ee_sbss", "ee_ebss"}
+			new String[] { "ee_sstack", "ee_sdata", "ee_sbss", "ee_ebss"},
+			new String[] { },
+			new String[] { }
 	);
 	/** Number of bits used to represent a priority */
 	public final int prioSize;
@@ -162,6 +182,11 @@ public class CpuHwDescription {
 	 * Able to handle empty vectors
 	 */
 	protected boolean handlesEmpyVector = true;
+	
+	/**
+	 * True if the current architecture has the mmu module
+	 */
+	protected boolean mmuAvailable = false;
 	
 	/**
 	 * 
@@ -273,5 +298,12 @@ public class CpuHwDescription {
 	 */
 	public OsApplicationAreas getOsApplicationNames() {
 		return osApplicationNames;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean hasMMU() {
+		return mmuAvailable;
 	}
 }

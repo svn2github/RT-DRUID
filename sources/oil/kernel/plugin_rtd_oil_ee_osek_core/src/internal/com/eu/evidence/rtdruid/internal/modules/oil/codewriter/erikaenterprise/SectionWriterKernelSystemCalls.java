@@ -55,9 +55,13 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		"ShutdownOS"
 	};
 
+	protected final static String[] EE_INTERNAL_IDs = {
+		"ThreadNotTerminated"
+	};
+
+
 
 	protected final static String[] EE_ISR2_IDs = {
-		"ThreadNotTerminated",
 		"TerminateISR2"
 	};
 
@@ -178,6 +182,13 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		for (String s: EE_OS_SERVICES_IDs) {
 			ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
 			ee_c_buffer.append(indent1+"(EE_FADDR)&EE_oo_"+s+",\n");
+			counter ++;
+		}
+		
+		// OS Services
+		for (String s: EE_INTERNAL_IDs) {
+			ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+			ee_c_buffer.append(indent1+"(EE_FADDR)&EE_"+s+",\n");
 			counter ++;
 		}
 		

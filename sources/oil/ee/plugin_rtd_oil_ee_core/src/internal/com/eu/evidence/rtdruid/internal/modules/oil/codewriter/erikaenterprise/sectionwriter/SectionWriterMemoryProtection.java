@@ -24,6 +24,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants;
@@ -128,42 +129,46 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 			answer[currentRtosId] = new OilWriterBuffer();;
 			
 			final IOilObjectList ool = oilObjects[currentRtosId];
-			List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
-			
-			StringBuffer ee_c_buffer = answer[currentRtosId].get(FILE_EE_CFG_C);
-			final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
-
-			
-			ee_c_buffer.append(
-					commentWriterC.writerBanner("Memory Partitions") +
-					indent1+ "const EE_MEMPROT_ENTRY_T EE_hal_memprot_entries[EE_HAL_MEMPROT_ENTRIES(EE_MAX_APP)] = {\n"+
-					indent2+ "EE_MEMPROT_SYSTEM_ENTRY"
-					);
-
-			String end = "\n";
-			
-			for (ISimpleGenRes appl: applications) {
+			CpuHwDescription descr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+			if (descr != null && descr.hasMMU()) {
 				
-				long size = appl.getLong(SectionWriterOsApplication.OS_APPLICATION_MEM_SIZE);
-				int log_size = (int) Math.ceil(Math.log(size) / Math.log(2));
+				List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
 				
-				boolean trusted = appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
-						&& "true".equalsIgnoreCase(appl.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED));
-
-				ee_c_buffer.append("," + end +
-						indent2 + "EE_MEMPROT_USER_ENTRY("+
-						(appl.getInt(ISimpleGenResKeywords.OS_APPL_ID)+1) + "U, " +
-						"0x" + Long.toHexString(appl.getLong(SectionWriterOsApplication.OS_APPLICATION_MEM_BASE)) + "U, " +
-						"0x" + Long.toHexString(size) + "U, " +
-						log_size + "U, " + 
-						(trusted ? "EE_MEMPROT_TRUST_DATA" : "EE_MEMPROT_USR_DATA") + ")"
+				StringBuffer ee_c_buffer = answer[currentRtosId].get(FILE_EE_CFG_C);
+				final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
+	
+				
+				ee_c_buffer.append(
+						commentWriterC.writerBanner("Memory Partitions") +
+						indent1+ "const EE_MEMPROT_ENTRY_T EE_hal_memprot_entries[EE_HAL_MEMPROT_ENTRIES(EE_MAX_APP)] = {\n"+
+						indent2+ "EE_MEMPROT_SYSTEM_ENTRY"
 						);
+	
+				String end = "\n";
 				
-				end = " " +commentWriterC.writerSingleLineComment(appl.getName());
-						
+				for (ISimpleGenRes appl: applications) {
+					
+					long size = appl.getLong(SectionWriterOsApplication.OS_APPLICATION_MEM_SIZE);
+					int log_size = (int) Math.ceil(Math.log(size) / Math.log(2));
+					
+					boolean trusted = appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
+							&& "true".equalsIgnoreCase(appl.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED));
+	
+					ee_c_buffer.append("," + end +
+							indent2 + "EE_MEMPROT_USER_ENTRY("+
+							(appl.getInt(ISimpleGenResKeywords.OS_APPL_ID)+1) + "U, " +
+							"0x" + Long.toHexString(appl.getLong(SectionWriterOsApplication.OS_APPLICATION_MEM_BASE)) + "U, " +
+							"0x" + Long.toHexString(size) + "U, " +
+							log_size + "U, " + 
+							(trusted ? "EE_MEMPROT_TRUST_DATA" : "EE_MEMPROT_USR_DATA") + ")"
+							);
+					
+					end = " " +commentWriterC.writerSingleLineComment(appl.getName());
+							
+				}
+				
+				ee_c_buffer.append(end + indent1 + "};\n\n");
 			}
-			
-			ee_c_buffer.append(end + indent1 + "};\n\n");
 			
 			
 			writeIsr(ool, answer[currentRtosId]);
@@ -206,39 +211,47 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 			}
 		}
 
+		List<ISimpleGenRes> orderedIsr = SectionWriterIsr.getIsrByID(ool);
+		
 		// ee_cfg.h
 		ee_h_buffer.append(
 				commentWriterH.writerBanner("ISR definition") +
-				indent1 + "#define EE_MAX_NESTING_LEVEL     "+max_level+"\n" +
-				indent1 + "#define EE_MAX_ISR               " + (isrList.size()) +"\n\n"); 				
+				indent1 + "#define EE_MAX_NESTING_LEVEL     "+max_level+"\n\n"); 				
 
 		// ee_cfg.c
 		ee_c_buffer.append(
 				commentWriterC.writerBanner("ISR definition") +
 				indent1 + "EE_as_ISR_RAM_type EE_as_ISR_stack[EE_MAX_NESTING_LEVEL];\n\n" +
-				indent1 + "const EE_as_ISR_ROM_type EE_as_ISR_ROM[EE_MAX_ISR] = {\n");
+				indent1 + "const EE_as_ISR_ROM_type EE_as_ISR_ROM["+orderedIsr.size()+"] = {\n");
 				
 		StringBuffer appl_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR to Application mapping"));
-		StringBuffer isr_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR id"));
 
 		String pre = "";
 		String post = "";
-		for (ISimpleGenRes isr : isrList) {
-			String name = isr.getName();
-			
-			int aid = isr.containsProperty(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME) ? 
-					1+ getOsApplicationIndex(isr.getString(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME), osApplications)
-					: 0;
-			int iid = isr.getInt(ISimpleGenResKeywords.ISR_ID);
-			appl_id.append(indent1 + "#define ISR2_APP_"+name+"\t" + aid + "\n");
-			isr_id.append(indent1 + "#define ISR2_ID_"+name+"\t" + iid + "\n");
-			
-			ee_c_buffer.append(pre + post + indent2 + "{ "+aid+" }");
-			pre = ",";
-			post = commentWriterC.writerSingleLineComment(name);
+		for (ISimpleGenRes isr : orderedIsr) {
+			if (isr != null) {
+				String name = isr.getName();
+				
+				int aid = 0;
+				if (isr.containsProperty(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME)) {
+					aid = 1+ getOsApplicationIndex(isr.getString(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME), osApplications);
+				//  --> at this moment all ISR related to HW Counters are executed by Kernel OsApplication, then aid = 0
+//				} else if (isr.containsProperty(ISimpleGenResKeywords.COUNTER_OS_APPLICATION_NAME)) { 
+//					aid = 1+ getOsApplicationIndex(isr.getString(ISimpleGenResKeywords.COUNTER_OS_APPLICATION_NAME), osApplications); 
+				}
+				appl_id.append(indent1 + "#define ISR2_APP_"+name+"\t" + aid + "\n");
+				
+				ee_c_buffer.append(pre + post + indent2 + "{ "+aid+" }");
+				pre = ",";
+				post = commentWriterC.writerSingleLineComment(name);
+			} else {
+				ee_c_buffer.append(pre + post + indent2 + "{ ((ApplicationType)-1) }");
+				pre = ",";
+				post = commentWriterC.writerSingleLineComment("not used");
+			}
 		}
 
-		ee_h_buffer.append(appl_id + "\n" + isr_id + "\n");
+		ee_h_buffer.append(appl_id + "\n");
 		
 		ee_c_buffer.append(" " + post+indent1+"};\n\n");
 
@@ -275,7 +288,11 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 			 * AUTOMATIC OPTIONS (CPU DEPENDENT)
 			 ******************************************************************/
 			answer.add(EE_OPT_MEMORY_PROTECTION);
-			answer.add("__EE_USE_MMU__");
+			
+			CpuHwDescription descr = ErikaEnterpriseWriter.getCpuHwDescription(parent.getOilObjects()[rtosId]);
+			if (descr != null && descr.hasMMU()) {
+				answer.add("__EE_USE_MMU__");
+			}
 		}
 
 		return answer;
@@ -325,19 +342,6 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 					os.setProperty(SGR_OS_MAX_NESTING_LEVEL, value[0]);
 				}
 			}
-
-			
-			// isr
-			List<ISimpleGenRes> isrs = ool.getList(IOilObjectList.ISR);
-			int isr_id = 0;
-			for (ISimpleGenRes isr : isrs) {
-				if (!isr.containsProperty(ISimpleGenResKeywords.ISR_ID)) {
-					isr.setProperty(ISimpleGenResKeywords.ISR_ID, ""+isr_id);
-					isr_id ++;
-				}
-
-			}
-
 		}
 	}
 

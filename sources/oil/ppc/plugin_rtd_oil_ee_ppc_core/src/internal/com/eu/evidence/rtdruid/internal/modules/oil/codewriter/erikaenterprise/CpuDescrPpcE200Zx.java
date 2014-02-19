@@ -36,6 +36,7 @@ public class CpuDescrPpcE200Zx extends CpuHwDescription implements CpuHwDescript
 		supportOrtiISR2 = true;
 		
 		macros = new MacrosForSharedData();
+		mmuAvailable = true;
 		
 
 		/*
