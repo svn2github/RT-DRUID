@@ -109,6 +109,9 @@
       <writer
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterSimpleSpinlock">
       </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterCommonKernelVectorSizeDefs">
+      </writer>
    </extension>
 
 

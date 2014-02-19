@@ -286,7 +286,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				
 				sbCommon_c.append(
 						macros.constVectorRom(
-								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_tasks","[]", " = {\n" +
+								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_tasks","["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_as_rpc_tasks", globalTaskIndex)+"]", " = {\n" +
 								sbCommonRpc_tasks.toString() + "\n" + indent1 + "};\n") + "\n");
 			} else {
 				sbTable.append("0U, ");
@@ -297,7 +297,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				
 				sbCommon_c.append(
 						macros.constVectorRom(
-								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_alarms","[]", " = {\n" +
+								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_alarms","["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_as_rpc_alarms", globalAlarmIndex)+"]", " = {\n" +
 								sbCommonRpc_alarms.toString() + "\n" + indent1 + "};\n") + "\n");
 			} else {
 				sbTable.append("0U, ");
@@ -308,7 +308,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				
 				sbCommon_c.append(
 						macros.constVectorRom(
-								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_counters","[]", " = {\n" +
+								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_counters","["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_as_rpc_counters", globalCounterIndex)+"]", " = {\n" +
 								sbCommonRpc_counters.toString() + "\n" + indent1 + "};\n") + "\n");
 			} else {
 				sbTable.append("0U");
@@ -316,7 +316,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 
 			
 			sbCommon_c.append(
-					macros.constVectorRom(indent1 + "EE_TYPEASREMOTEIDCONSTREF const ", "EE_as_rpc_services_table","[]", " = {\n"
+					macros.constVectorRom(indent1 + "EE_TYPEASREMOTEIDCONSTREF const ", "EE_as_rpc_services_table","["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_as_rpc_services_table", 3)+"]", " = {\n"
 							+indent2 +  sbTable.toString() + "\n"+indent1+ "};\n\n") + 
 					macros.vectorRam(indent1 + "EE_TYPEASRPC volatile ", "EE_as_rpc_RAM","["+MAX_CPU+"]", " = {\n" + indent2+sbCommonRpc_ram + "\n"+indent1 +"};\n") + "\n"
 			);

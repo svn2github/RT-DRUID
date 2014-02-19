@@ -725,12 +725,14 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				 */
 				final String additional_elements = osApplication_enabled ? ", 0U, 0U" : ", 0U";
 				sbStack.append(indent + "struct EE_TC_TOS EE_tc_system_tos["
-						+ (size.length - is_irq_stack.cardinality()) + "] = {\n"
+						+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_tc_system_tos", size.length - is_irq_stack.cardinality())
+						+ "] = {\n"
 						+ writeSystemTos(commentC, size, descrStack, is_irq_stack, additional_elements, false));
 				    
 				if (osApplication_enabled) {
 					sbStack.append(indent + "struct EE_TOS const EE_tc_system_bos["
-							+ (size.length - is_irq_stack.cardinality()) + "] = {\n"
+							+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_tc_system_bos", size.length - is_irq_stack.cardinality())
+							+ "] = {\n"
 							+ writeSystemTos(commentC, size, descrStack, is_irq_stack, "", needStackMonitoring));
 				}
 	
