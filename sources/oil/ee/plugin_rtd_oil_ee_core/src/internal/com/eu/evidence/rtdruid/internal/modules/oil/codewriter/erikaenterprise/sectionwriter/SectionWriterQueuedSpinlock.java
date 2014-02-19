@@ -5,6 +5,10 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter;
 
+import static com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants.SPINLOCK_BASE_NAME;
+import static com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants.SPINLOCK_STATUS_ARRAY;
+import static com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants.SPINLOCK_VALUE_ARRAY;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -41,21 +45,7 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
 public class SectionWriterQueuedSpinlock extends SectionWriter implements
 		IEEWriterKeywords, IExtractKeywordsExtentions,
 		IExtractObjectsExtentions, IGetEEOPTExtentions {
-	
-	/**
-	 * 
-	 */
-	private static final String SPINLOCK_STATUS_ARRAY = "EE_hal_spinlock_status";
 
-	/**
-	 * 
-	 */
-	private static final String SPINLOCK_BASE_NAME = "EE_hal_spinlock_value_";
-
-	/**
-	 * 
-	 */
-	private static final String SPINLOCK_VALUE_ARRAY = "EE_hal_spinlock_value";
 
 	protected final boolean enableRemoteResources = false;
 	
@@ -132,7 +122,6 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 		
 		final String indent1 = IWritersKeywords.INDENT;
 		final String indent2 = indent1 + IWritersKeywords.INDENT;
-		final String indent3 = indent2 + IWritersKeywords.INDENT;
 
 		final int rtosNumber = parent.getRtosSize();
 		IOilObjectList[] oilObjects = parent.getOilObjects();
@@ -143,7 +132,6 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 	
 		boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
 		final String MAX_CPU = (binaryDistr ? "RTD_" : "EE_") + "MAX_CPU";
-		final String MAX_RN = (binaryDistr ? "RTD_" : "EE_") + "MAX_RN";
 
 		IMacrosForSharedData macros = new EmptyMacrosForSharedData();
 		if (rtosNumber>0) {
@@ -260,7 +248,7 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 //			    sbSpinArrays.append(indent1+"extern EE_UINT32 EE_hal_spin_value_"+name+"["+MAX_CPU+"];\n");
 			    sbSpinShare.append(
 			    		macros.vectorRamUnitialized(
-			    				indent1+"EE_UINT16 ",
+			    				indent1+"EE_TYPESPINVALUE ",
 			    				SPINLOCK_BASE_NAME+name,
 			    				"["+MAX_CPU+"]",
 			    				";\n"));
@@ -279,14 +267,14 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 //					indent1 + "#define RTD_MAX_SPIN_LOCK "+(spinNumber)+"\n\n" +
 //					sbSpinArrays.toString() + "\n\n" +
 					macros.vectorRam(
-						indent1 + "EE_UINT32 ",
+						indent1 + "EE_TYPESPINSTATUS ",
 						SPINLOCK_STATUS_ARRAY, "[EE_MAX_SPINLOCK_OS]",
 						" = {\n" +
 						sbSpinStatusArray.toString() + " " + post +
 						indent1 + "};"
 						)+ "\n\n" +
 					macros.constVectorRom(
-						indent1 + "EE_UINT16 * const ",
+						indent1 + "EE_TYPESPINVALUEREF const ",
 						SPINLOCK_VALUE_ARRAY,"[EE_MAX_SPINLOCK_OS]",
 						" = {\n" +
 						sbSpinValuesArray.toString() + "\n" +

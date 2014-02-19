@@ -39,5 +39,14 @@ public interface IRemoteNotificationsConstants {
 	public final static int DEF__RN_FUNC_BIT__ = 3;
 	/** Enable SEM remote notifications  (bit)*/
 	public final static int DEF__RN_SEM_BIT__ = 4;
+	
+	
+	
+	/** The name of spin-lock status array */
+	public final static String SPINLOCK_STATUS_ARRAY = "EE_hal_spinlock_status";
+	/** The base name of spin-lock value arrays (one for each core) */
+	public final static String SPINLOCK_BASE_NAME = "EE_hal_spinlock_value_";
+	/** The name of spin-lock value array (The collector one) */
+	public final static String SPINLOCK_VALUE_ARRAY = "EE_hal_spinlock_value";
 
 }

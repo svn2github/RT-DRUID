@@ -3,6 +3,8 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
+import static com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants.SPINLOCK_STATUS_ARRAY;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -22,9 +24,11 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterKernelCounterHw;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EmptyMacrosForSharedData;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
@@ -276,9 +280,17 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	private void writeMulticoreCommon(final IOilObjectList ool, final IOilWriterBuffer buffers) {
 		
 		if (!parent.checkKeyword(QUEUED_SPINLOCK)) {
+			boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
+			final String MAX_CPU = (binaryDistr ? "RTD_" : "EE_") + "MAX_CPU";
 			
 		ICommentWriter commentWriter = SectionWriter.getCommentWriter(ool, FileTypes.C);
 
+			IMacrosForSharedData macros = new EmptyMacrosForSharedData();
+			CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+			if (currentStackDescription != null) {
+				macros =currentStackDescription.getShareDataMacros();
+			}
+	
 		{
 	    	final ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
 			CpuUtility.addSources(sgrOs, buffers.getFileName(FILE_EE_COMMON_C));
@@ -288,8 +300,12 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		StringBuffer sbCommon_c = buffers.get(FILE_EE_COMMON_C);
 		
 		sbCommon_c.append(commentWriter.writerBanner("Spin Lock Implementation")
-				+ "#include \"ee.h\"\n"
-					+ "EE_UINT32 EE_SHARED_UDATA EE_hal_spinlock_status[EE_MAX_CPU];\n\n");
+					+ "#include \"ee.h\"\n" +
+					macros.vectorRamUnitialized(
+								IWritersKeywords.INDENT + "EE_TYPESPINSTATUS ",
+			    				SPINLOCK_STATUS_ARRAY,
+			    				"["+MAX_CPU+"]",
+			    				";\n"));
 		}
 	}
 
