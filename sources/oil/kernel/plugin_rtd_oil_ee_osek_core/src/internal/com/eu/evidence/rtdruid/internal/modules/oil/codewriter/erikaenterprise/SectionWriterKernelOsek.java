@@ -1857,7 +1857,21 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			// ... alarm
 			if (ool.getList(IOilObjectList.ALARM).size() == 0 
 					&& !requiredOilObjects.contains(new Integer(IOilObjectList.ALARM))) {
-				answer.add("__OO_NO_ALARMS__");
+				
+				boolean noAlarm = true;
+				if (parent.checkKeyword(SectionWriterRemoteProcedureCall.DEF__USE_RPC__)) {
+					// check also remote alarms
+					
+					for (IOilObjectList list : parent.getOilObjects()) {
+						if (list.getList(IOilObjectList.ALARM).size()>0 || list.getList(IOilObjectList.COUNTER).size()>0) {
+							noAlarm = false;
+						}
+					}
+				}
+				
+				if (noAlarm) {
+					answer.add("__OO_NO_ALARMS__");
+				}
 			}
 
 			// ... resource
