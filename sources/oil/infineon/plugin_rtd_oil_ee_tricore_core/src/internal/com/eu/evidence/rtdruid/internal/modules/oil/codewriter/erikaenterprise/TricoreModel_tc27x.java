@@ -329,7 +329,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					isNumber = false;
 					
 					if (customBoot) {
-						Messages.sendWarningNl("Even if the option USE CUSTOM STARTUP is enabled, the core " + index + " is using the default startup address.");
+						Messages.sendWarningNl("Even if the option USE CUSTOM STARTUP is enabled, the core " + index + " is using the default startup address/symbol.");
 					}
 				} else {
 					try {
