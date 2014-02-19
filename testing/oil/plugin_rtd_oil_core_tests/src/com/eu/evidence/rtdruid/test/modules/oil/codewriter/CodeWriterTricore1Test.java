@@ -2694,7 +2694,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 			"		TASK=Task_app1;\n" +
 			"       ISR = isr_base1;\n" +
 			"       ISR = isr_app1;\n" +
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"		STARTUPHOOK = FALSE;\n" +
 			"		ERRORHOOK = TRUE;\n" +
@@ -2705,7 +2705,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 			"		IRQ_STACK_SIZE = 512;\n" +
     		"		SHARED_STACK_SIZE = 512;\n"+
 			"		TASK=Task2;\n" +
-    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_BASE = \"0x40020000\";\n"+
     		"		MEMORY_SIZE = 0x10000;\n"+
 			"		STARTUPHOOK = TRUE;\n" +
 			"		ERRORHOOK = TRUE;\n" +
