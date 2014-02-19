@@ -338,10 +338,10 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 			}
 		
 			{ // increase the isr size
-				Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
+				Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_NUMBER);
 				int addIsrNumber = counterIsrNumber + (o == null ? 0 : ((Integer) o).intValue()) ;
 				for (ISimpleGenRes os : ool.getList(IOilObjectList.OS)) {
-					os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL, new Integer(addIsrNumber));
+					os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_NUMBER, new Integer(addIsrNumber));
 				}
 			}
 		}

@@ -12,9 +12,11 @@ import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
@@ -38,6 +40,8 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 	protected boolean generateDefineIsrId = false;
 	protected boolean computeEntryFromPriority = false;
 	protected boolean computeIDFromPriority = false;
+	protected boolean enableOsAppRpcIsr = false;
+	protected int rpcIsrId = 0;
 	
 	protected final ErikaEnterpriseWriter parent;
 
@@ -82,6 +86,14 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 	 */
 	public void setComputeIDFromPriority(boolean computeIDFromPriority) {
 		this.computeIDFromPriority = computeIDFromPriority;
+	}
+	
+	public void setEnableOsAppRpcIsr(boolean enableOsAppRpcIsr) {
+		this.enableOsAppRpcIsr = enableOsAppRpcIsr;
+	}
+	
+	public void setRpcIsrId(int rpcIsrId) {
+		this.rpcIsrId = rpcIsrId;
 	}
 	
 	public void setValidEntries(Set<String> entries) {
@@ -303,10 +315,32 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 			int max_level = 0;
 			int isr2ResNumber = 0;
 			int isr2Number = 0;
+			int starting_isr_id = 0;
 //			{
 //				Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
 //				isr2Number += (o == null ? 0 : ((Integer) o).intValue()) ;
 //			}
+			
+			if (enableOsAppRpcIsr && parent.getOilObjects().length >1 && parent.checkKeyword(IWritersKeywords.KERNEL_OS_APPLICATION)) {
+				ArrayList<ISimpleGenRes> tempList = new ArrayList<ISimpleGenRes>();
+				
+				Object obj = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_SGR_LIST);
+				if (obj != null) {
+					tempList.addAll((ArrayList) obj);
+				}
+				
+				ISimpleGenRes sgr = new SimpleGenRes("Internally defined", null);
+				sgr.setObject(ISimpleGenResKeywords.ISR_ID, new Integer(rpcIsrId));
+				sgr.setProperty(ISimpleGenResKeywords.ISR_GENERATED_HANDLER, "EE_"+hw_id+"_iirq_handler");
+				sgr.setProperty(ISimpleGenResKeywords.ISR_CATEGORY, "2");
+				tempList.add(sgr);
+				
+				for (ISimpleGenRes os : ool.getList(IOilObjectList.OS)) {
+					os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_SGR_LIST, tempList);
+				}
+				
+				starting_isr_id += tempList.size();
+			}
 
 			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.ISR)) {
 				String category = sgr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? sgr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
@@ -423,7 +457,6 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 			}
 			
 			
-			
 			{// Set ISR ID
 				List<ISimpleGenRes> isrs = ool.getList(IOilObjectList.ISR);
 				if (computeIDFromPriority) {
@@ -435,7 +468,7 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 						}
 					}
 				} else {
-					int isr_id = 0;
+					int isr_id = starting_isr_id;
 					for (ISimpleGenRes isr : isrs) {
 						String category = isr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? isr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
 						boolean isIsr1 = "1".equals(category);
@@ -476,6 +509,23 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 	 */
 	public static List<ISimpleGenRes> getIsrByID(IOilObjectList ool) {
 		List<ISimpleGenRes> answer = new ArrayList<ISimpleGenRes>();
+		
+		Object obj = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_SGR_LIST);
+		if (obj != null) {
+			ArrayList<ISimpleGenRes> isrList = (ArrayList) obj;
+			for (ISimpleGenRes isr : isrList) {
+				String category = isr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? isr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
+				boolean isIsr1 = "1".equals(category);
+				boolean isIsr2 = "2".equals(category);
+				if ( (isIsr1 || isIsr2) && isr.containsProperty(ISimpleGenResKeywords.ISR_ID)) {
+					int id = isr.getInt(ISimpleGenResKeywords.ISR_ID);
+					while (answer.size()<=id) {
+						answer.add(null);
+					}
+					answer.set(id, isr);
+				}
+			}
+		}
 		
 		for (ISimpleGenRes isr : ool.getList(IOilObjectList.ISR)) {
 			String category = isr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? isr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";

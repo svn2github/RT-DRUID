@@ -27,6 +27,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IDistributionConstant;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEoptConstant;
@@ -442,7 +443,8 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 						buffer.append(IWritersKeywords.INDENT +commentWriterH.writerSingleLineComment(""+s));
 					}
 				}
-				buffer.append(IWritersKeywords.INDENT + "#define EE_MAX_ISR2 " + number + "\n\n");
+				buffer.append(IWritersKeywords.INDENT + "#define EE_MAX_ISR2   " + number + "\n"
+						    + IWritersKeywords.INDENT + "#define EE_MAX_ISR_ID " + SectionWriterIsr.getIsrByID(ool).size()+"\n\n");
 
 			}
 			

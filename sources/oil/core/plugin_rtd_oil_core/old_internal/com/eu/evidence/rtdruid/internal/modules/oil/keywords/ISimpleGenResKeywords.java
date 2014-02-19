@@ -244,8 +244,9 @@ public interface ISimpleGenResKeywords {
 	public final static String OS_CPU__ISR_REQUIRES_RESOURCES = "an_isr_requires_resources";
 	public final static String OS_CPU__ISR_REQUIRES_RESOURCES_MAX_PRIO = "an_isr_requires_resources_max_priority";
 	public final static String OS_CPU__ISR_REQUIRES_RESOURCES_SIZE = "an_isr_requires_resources_size";
-	public static final String OS_CPU__ISR2_ADDITIONAL = "number_of_additional_configured_isr2";
+	public static final String OS_CPU__ISR2_ADDITIONAL_NUMBER = "number_of_additional_configured_isr2";
 	public static final String OS_CPU__ISR2_ADDITIONAL_TXT_LIST = "description_of_additional_configured_isr2";
+	public static final String OS_CPU__ISR2_ADDITIONAL_SGR_LIST = "additional_configured_isr2_sgr_list";
 
 	
 	public final static String OS_CPU_STATUS = "_cpu_type_specifics_status_";

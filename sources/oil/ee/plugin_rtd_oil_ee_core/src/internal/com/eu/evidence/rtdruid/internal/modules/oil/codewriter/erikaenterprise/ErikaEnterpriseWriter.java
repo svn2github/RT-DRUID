@@ -2669,7 +2669,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	 */
 	public static int getIsr2Number(IOilObjectList ool) {
 		String number1 = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR2_NUMBER);
-		String number2 = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
+		String number2 = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_NUMBER);
 		int number = 0;
 		if (number1 != null) {
 			try {

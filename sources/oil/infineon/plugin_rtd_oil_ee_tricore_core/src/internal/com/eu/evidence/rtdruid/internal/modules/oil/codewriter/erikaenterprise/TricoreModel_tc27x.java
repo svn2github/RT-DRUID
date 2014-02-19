@@ -181,6 +181,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			isrWriter.setComputeIDFromPriority(true);
 			isrWriter.setGenerateDefineCategory(true);
 			isrWriter.setGenerateDefineIsrId(true);
+			isrWriter.setEnableOsAppRpcIsr(true);
+			isrWriter.setRpcIsrId(1);
 	//		isrWriter.setValidEntries(ISR_LIST);
 			isrWriter.updateObjects();
 		}

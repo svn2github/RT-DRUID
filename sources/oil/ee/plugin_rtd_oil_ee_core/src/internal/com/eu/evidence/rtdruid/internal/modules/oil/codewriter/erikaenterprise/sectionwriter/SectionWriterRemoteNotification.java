@@ -513,14 +513,14 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 		// Add an ISR2
 		for (IOilObjectList ool : oilObjects) {
 			
-			Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
+			Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_NUMBER);
 			Object t = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_TXT_LIST);
 			int isr2Number = 1 + (o == null ? 0 : ((Integer) o).intValue()) ;
 			@SuppressWarnings("unchecked")
 			List<String> lt = t == null ? new ArrayList<String>() : (List<String>) t;
 			lt.add("Remote notification requires an additional ISR2");
 			for (ISimpleGenRes os : ool.getList(IOilObjectList.OS)) {
-				os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL, new Integer(isr2Number));
+				os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_NUMBER, new Integer(isr2Number));
 				os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_TXT_LIST, lt);
 			}
 			
