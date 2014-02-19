@@ -112,6 +112,7 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	
 	/** A SimpleGenResKeyword that identifies the name of the stack vector (a String) */
 	public final static String SGRK_OS_STACK_VECTOR_NAME = "os_stack_vector_name";
+	public final static String SGRK_OS_STACK_VECTOR_FIELD = "os_stack_vector_field";
 	
 	/** A SimpleGenResKeyword that identifies the stack of a TASK (an EEStackData) */
 	public final static String SGRK_TASK_STACK = "task_stack_data_description";

@@ -799,6 +799,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 					sgrCpu.setObject(SGRK_OS_STACK_LIST, stackTmp.toArray(new EEStackData[0]));
 					sgrCpu.setObject(SGRK_OS_STACK_VECTOR_NAME, "EE_tc_system_tos");
+					sgrCpu.setObject(SGRK_OS_STACK_VECTOR_FIELD, ".ram_tos");
 				}
 			}
 	

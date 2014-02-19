@@ -286,10 +286,31 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 			
 			if (parent.checkKeyword(IWritersKeywords.KERNEL_OS_APPLICATION)) {
 				all_memoryProtection.append(",\n" +
-						"            \"CheckTaskMemoryAccess\" = 68,\n" +
-						"            \"CheckISRMemoryAccess\" = 70,\n" +
-						"            \"GetApplicationID\" = 72,\n" +
-						"            \"GetISRID\" = 74");
+						"            \"GetNumberOfActivatedCores\" = 72,\n" +
+						"            \"GetCoreID\" = 74,\n" +
+						"            \"StartCore\" = 76,\n" +
+						"            \"StartNonAutosarCore\" = 78,\n" +
+						"            \"GetSpinlock\" = 80,\n" +
+						"            \"ReleaseSpinlock\" = 82,\n" +
+						"            \"TryToGetSpinlock\" = 84,\n" +
+						"            \"ShutdownAllCores\" = 86,\n" +
+						"            \"CheckTaskMemoryAccess\" = 88,\n" +
+						"            \"CheckIsrMemoryAccess\" = 90,\n" +
+						"            \"GetApplicationID\" = 92,\n" +
+						"            \"GetISRID\" = 94,\n" +
+						"            \"GetApplicationState\" = 96,\n" +
+						"            \"TerminateApplication\" = 98,\n" +
+						"            \"AllowAccess\" = 100,\n" +
+						"            \"CheckObjectAccess\" = 102,\n" +
+						"            \"CheckObjectOwnership\" = 104,\n" +
+						"            \"CallTrustedFunction\" = 106,\n" +
+						"            \"StartScheduleTableRel\" = 108,\n" +
+						"            \"StartScheduleTableAbs\" = 110,\n" +
+						"            \"StopScheduleTable\" = 112,\n" +
+						"            \"NextScheduleTable\" = 114,\n" +
+						"            \"GetScheduleTableStatus\" = 116,\n" +
+						"            \"SyncScheduleTable\" = 118"
+						);
 			}
 			
 
@@ -305,7 +326,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				"    OS {\n" + 
 				"\n" + 
 				"    /* here for each task a small description and its index */\n" + 
-				"        ENUM [\n" +
+				"        TOTRACE ENUM [\n" +
 				all_task_id + 
 				"        ] RUNNINGTASK, \"Running Task Id\";\n" + 
 				"\n" + 
@@ -348,7 +369,16 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				"            \"StartOS\" = 50,\n" + 
 				"            \"ShutdownOS\" = 52,\n" + 
 				"            \"ForceSchedule\" = 54,\n" + 
-				"            \"CounterTick\" = 56"+
+				"            \"IncrementCounter\" = 56,\n"+
+				"            \"GetCounterValue\" = 58,\n"+
+				"            \"GetElapsedValue\" = 60,\n"+
+
+				"            \"InitSem\" = 62,\n" + 
+				"            \"WaitSem\" = 64,\n" + 
+				"            \"TryWaitSem\" = 66,\n"+
+				"            \"PostSem\" = 68,\n"+
+				"            \"GetValueSem\" = 70"+
+
 				all_memoryProtection +"\n" + 
 				"        ] SERVICETRACE, \"OS Services Watch\";\n" + 
 				"\n" + 
@@ -468,6 +498,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 				 **************************************************************/
 
 				String stack_vector_name = ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGRK_OS_STACK_VECTOR_NAME), "EE_hal_thread_tos");
+				String stack_vector_field = ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGRK_OS_STACK_VECTOR_FIELD), "");
 
 				List<ISimpleGenRes> taskList = ool.getList(IOilObjectList.TASK);
 				if (taskList.size() > 0) {
@@ -499,7 +530,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 								(
 										(EE_ORTI_current & OsekOrtiConstants.EE_ORTI_STACK) != 0  && all_stack_id.length()>0 ? 
 												(parent.checkKeyword(DEF__MULTI_STACK__) ? 
-														indent1+"STACK = \"("+stack_vector_name+"["+stackID+"])\";\n" :
+														indent1+"STACK = \"("+stack_vector_name+"["+stackID+"]"+stack_vector_field+")\";\n" :
 														indent1+"STACK = Stack0;\n"  
 												): "") + 
 								"};\n");		
@@ -599,7 +630,7 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 						
 						eeortiBuffer.append( 
 								"ALARM "+name+" {\n" + 
-								indent1+"ALARMTIME = \"EE_ORTI_alarmtime["+id+"]\";\n" + 
+								indent1+"ALARMTIME = \"EE_ORTI_alarmtime["+id+"].delta\";\n" + 
 								indent1+"CYCLETIME = \"EE_alarm_RAM["+id+"].cycle\";\n" + 
 								indent1+"STATE = \"(EE_alarm_RAM["+id+"].used == 0) ? 0 : 1\";\n" + 
 								indent1+"ACTION = \""+actionDescr+"\";\n" + 
