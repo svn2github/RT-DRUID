@@ -3547,10 +3547,10 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"\n" +
 				"  APPLICATION TrustedApp {\n" +
 				"    TRUSTED = TRUE;\n" +
-				"    ISR = \"TrustedIsr\";\n" +
+				"    ISR = TrustedIsr;\n" +
 				"    TASK = MainTask;\n" +
 				"    TASK = TrustedTask1;\n" +
-				"    MEMORY_BASE = 0x40010000;\n" +
+				"    MEMORY_BASE = \"0x40010000\";\n" +
 				"    MEMORY_SIZE = 0x10000;\n" +
 				"    SHARED_STACK_SIZE = 128;\n" +
 				"    IRQ_STACK_SIZE = 128;\n" +
@@ -3558,9 +3558,9 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"\n" +
 				"  APPLICATION App1 {\n" +
 				"    TRUSTED = FALSE;\n" +
-				"    ISR = \"App1Isr\";\n" +
+				"    ISR = App1Isr;\n" +
 				"    TASK = App1Task;\n" +
-				"    MEMORY_BASE = 0x40020000;\n" +
+				"    MEMORY_BASE = \"0x40020000\";\n" +
 				"    MEMORY_SIZE = 0x10000;\n" +
 				"    SHARED_STACK_SIZE = 128;\n" +
 				"    IRQ_STACK_SIZE = 128;\n" +
@@ -3568,9 +3568,9 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"\n" +
 				"  APPLICATION App2 {\n" +
 				"    TRUSTED = FALSE;\n" +
-				"    ISR = \"App2Isr\";\n" +
+				"    ISR = App2Isr;\n" +
 				"    TASK = App2Task;\n" +
-				"    MEMORY_BASE = 0x40030000;\n" +
+				"    MEMORY_BASE = \"0x40030000\";\n" +
 				"    MEMORY_SIZE = 0x4000;\n" +
 				"    SHARED_STACK_SIZE = 128;\n" +
 				"    IRQ_STACK_SIZE = 128;\n" +
