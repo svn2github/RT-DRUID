@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
@@ -66,6 +67,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 	public final static String OS_APPLICATION_MEM_SIZE = "SGR_os_application_mem_size";
 	public final static String OS_APPLICATION_SHARED_SIZE = "SGR_os_application_shared_size";
 	public final static String OS_APPLICATION_IRQ_SIZE = "SGR_os_application_irq_size";
+	public final static String OS_APPLICATION_RESTART_TASK = "SGR_os_application_restart_task";
+	
 	
 	public final static String EE_APPS_CONF = "apps.conf";
 	
@@ -198,7 +201,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				
 			}
 		}
-		application_rom.append(" }}");
+		application_rom.append(" }, EE_NIL}");
 		
 		StringBuffer application_ram = new StringBuffer(
 				indent1 + "EE_as_Application_RAM_type EE_as_Application_RAM[EE_MAX_APP+1U] = {\n" +
@@ -220,8 +223,19 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		StringBuffer linker_buffer = new StringBuffer();
 		String end = ",\n";
 		for (ISimpleGenRes application : applications) {
-			boolean trusted = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
-						&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED));
+			// if memory protection is disabled, everything is handled as trusted
+			final boolean trusted;
+			if (enableMemoryProtection)  {
+				trusted = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
+								&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED));
+			} else {
+				if (application.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
+						&& !("true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED)))) {
+					Messages.sendWarningNl("The osApplication " +application.getName() + " is defined as NOT TRUSTED, but without memory protection it is handled as trusted.");
+				}
+				
+				trusted = true;
+			}
 			final String name = application.getName();
 			String stack_id = application.getString(ISimpleGenResKeywords.OS_APPL_SHARED_STACK_ID);
 			String stack_base_name = application.getString(EEStacks.STACK_BASE_NAME_PREFIX);
@@ -242,9 +256,11 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			// ee_cfg.c
 //			extern const int app0_start, app0_sstart, app0_end;
 
-			if (enableMemoryProtection) {
-				String mem_base = application.getString(OS_APPLICATION_MEM_BASE);
-				String mem_size = application.getString(OS_APPLICATION_MEM_SIZE);
+			//if (enableMemoryProtection) 
+			{
+				String mem_base = application.containsProperty(OS_APPLICATION_MEM_BASE) ? application.getString(OS_APPLICATION_MEM_BASE) : "0";
+				String mem_size = application.containsProperty(OS_APPLICATION_MEM_SIZE) ? application.getString(OS_APPLICATION_MEM_SIZE) : "0";
+				String restartTask = application.getString(OS_APPLICATION_RESTART_TASK);
 				
 				linker_buffer.append(
 						name + 
@@ -275,7 +291,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						sep = ", ";
 					}
 				}
-				application_rom.append(" }}");
+				application_rom.append(" }, "+restartTask+"}");
 			}
 
 			if (parent.checkKeyword(IWritersKeywords.CPU_PPCE200ZX)) {
@@ -301,9 +317,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			end = ",\n";
 		}
 
-		if (enableMemoryProtection) {
-			answer.get(EE_APPS_CONF).append(linker_buffer + "\n");
-		}
+		answer.get(EE_APPS_CONF).append(linker_buffer + "\n");
 		
 		application_rom.append("\n" + indent1 +"};\n\n");
 		application_ram.append("\n" + indent1 +"};\n\n");
@@ -312,7 +326,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		error_buffer.append("\n" + indent1 +"};\n\n");
 
 		ee_c_buffer.append("\n" +
-				(enableMemoryProtection ? application_rom + "\n" + application_ram : "" ) +  
+				application_rom + "\n" + application_ram + "\n" +  
 				startUp_decl_buffer +
 				startUp_buffer +
 				shutdown_decl_buffer +
@@ -359,6 +373,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		final String path_isr      = osApplBasePath+ "ISR";
 		final String path_resource = osApplBasePath+ "RESOURCE";
 		final String path_task     = osApplBasePath+ "TASK";
+
+		final String path_restarttask     = osApplBasePath+ "RESTARTTASK";
 
 		final String path_startUpH  =  osApplBasePath+ "STARTUPHOOK";
 		final String path_errorH    =  osApplBasePath+ "ERRORHOOK";
@@ -549,8 +565,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					}
 					appl.setObject(ISimpleGenResKeywords.OS_APPL_LIST_REF_RESOURCE, resource);
 				}
+				ArrayList<String> task = new ArrayList<String>();
 				{
-					ArrayList<String> task = new ArrayList<String>();
 					String[] values = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_task));
 					if (values != null) for (String val: values) {
 						if (!map_task.containsKey(val)) {
@@ -562,6 +578,24 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						}
 					}
 					appl.setObject(ISimpleGenResKeywords.OS_APPL_LIST_REF_TASK, task);
+				}
+				{
+					String[] val = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_restarttask));
+					String resttask = "EE_NIL";
+					if (val != null && val.length>0 && val[0] != null && val[0].length()>0) {
+						
+						// check if the value is a valid task name
+						if (task.contains(val[0])) {
+							resttask = val[0];
+						} else {
+							throw new OilCodeWriterException("The restartTask " +val[0]+ " is not one of tasks related to the OsApplication " + appl_name);
+						}
+						
+						appl.setProperty(OS_APPLICATION_RESTART_TASK, val[0]);
+					}
+						
+					appl.setProperty(OS_APPLICATION_RESTART_TASK, resttask);
+					
 				}
 				
 				id++;

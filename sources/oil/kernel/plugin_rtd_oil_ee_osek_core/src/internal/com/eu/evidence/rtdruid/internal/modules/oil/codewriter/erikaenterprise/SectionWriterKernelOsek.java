@@ -50,6 +50,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 	
 	private static final String EE_MAX_ISR2_WITH_RESOURCES = "EE_MAX_ISR2_WITH_RESOURCES";
 	
+	public final static String SGR_OS_MEM_PROTECTION_HOOK = "sgr_os_has_memory_protection_hook";
+	public final static String EE_OPT_MEMORY_PROTECTION_HOOK = "EE_AS_HAS_PROTECTIONHOOK__";
+
+	public final static String EE_OPT_STACK_MONITORING = "EE_STACK_MONITORING__";
+	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
 
@@ -1730,6 +1735,10 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			
 			options.add(new AutoOptions(currentRtosPrefix, "SERVICE_PROTECTION", "TRUE", IWritersKeywords.KERNEL_SERVICE_PROTECTION, false));
 
+			
+			options.add(new AutoOptions(currentRtosPrefix, "PROTECTIONHOOK", "TRUE", SGR_OS_MEM_PROTECTION_HOOK, false));
+			options.add(new AutoOptions(currentRtosPrefix, "STACKMONITORING", "TRUE", ISimpleGenResKeywords.OS_STACK_MONITORING, false));
+
 			// this two should be enabled if not specified FALSE
 			for (String[] s: enabledByDefault) {
 				options.add(    new AutoOptions(currentRtosPrefix, s[0], s[1], s[3], false));
@@ -1913,6 +1922,19 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					) {
 			    answer.add( "__ALLOW_NESTED_IRQ__" );
 		    }
+
+			final boolean hasStackMonitoring = parent.checkKeyword(ISimpleGenResKeywords.OS_STACK_MONITORING);
+
+			if (parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION) || hasStackMonitoring) {
+				if (parent.checkKeyword(SGR_OS_MEM_PROTECTION_HOOK)) {
+					answer.add(EE_OPT_MEMORY_PROTECTION_HOOK);
+				}
+			}
+			
+			if (hasStackMonitoring) {
+				answer.add(EE_OPT_STACK_MONITORING);
+			}
+
 		}
 
 

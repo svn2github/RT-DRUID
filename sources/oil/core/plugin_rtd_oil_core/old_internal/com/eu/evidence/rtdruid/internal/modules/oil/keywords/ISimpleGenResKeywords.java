@@ -211,6 +211,8 @@ public interface ISimpleGenResKeywords {
 	
 	public final static String OS_IRQ_STACK_ID = "id_for_default_irq_stack";
 
+	public final static String OS_STACK_MONITORING = "sgr_os_has_stackMonitoring";
+	
 	public final static String SOURCES_LIST = "sources_list";
 	public final static String THUMB_SOURCES_LIST = "thumb_sources_list";
 

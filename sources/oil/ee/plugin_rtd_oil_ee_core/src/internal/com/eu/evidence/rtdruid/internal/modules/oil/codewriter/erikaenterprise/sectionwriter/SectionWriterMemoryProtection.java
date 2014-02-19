@@ -46,8 +46,6 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 		IExtractKeywordsExtentions {
 
 	public final static String SGR_OS_MAX_NESTING_LEVEL = "sgr_os_max_nesting_level";
-
-
 	
 	public final static String EE_OPT_MEMORY_PROTECTION = "__EE_MEMORY_PROTECTION__";
 	protected final static String indent1 = IWritersKeywords.INDENT;
@@ -334,8 +332,6 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 
 		final IOilObjectList[] oilObjects = parent.getOilObjects();	
 		for (IOilObjectList ool : oilObjects) {
-
-			
 			for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)){ // nesting level
 				String[] value = CommonUtils.getValue(vt, os.getPath() + osNestingLevelPath);
 				if (value != null && value.length>0 && value[0] != null && value[0].length()>0) {

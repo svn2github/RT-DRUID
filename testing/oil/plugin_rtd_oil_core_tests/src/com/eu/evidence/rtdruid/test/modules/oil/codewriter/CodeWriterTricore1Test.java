@@ -336,6 +336,246 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	@Test public void testIsrPriority2_memProt_resttask() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				" 	   MEMORY_PROTECTION = TRUE;\n" +
+				" 	   PROTECTIONHOOK = TRUE;\n" +
+				"		CPU_DATA = TRICORE {\n"+
+				"			APP_SRC = \"slave.c\";\n"+
+				"            CPU_CLOCK = 200.0;\n" +
+				"			APP_SRC = \"master.c\";\n"+
+				"            MULTI_STACK = TRUE {\n" +
+				"                IRQ_STACK = TRUE {\n" +
+				"                    SYS_SIZE = 256;\n" +
+				"                };\n" +
+				"            };\n" +
+				"			SYS_STACK_SIZE = 4096;\n"+
+				"			LINKERSCRIPT = \"slave2_link\";\n"+
+				"		};\n"+
+				"		KERNEL_TYPE = FP;\n" +
+				"		MCU_DATA = TRICORE {\n"+
+				"			MODEL = TC27x;\n"+
+				"			LINKERSCRIPT = \"mcu_link\";\n"+
+				"		};\n"+
+				"	};\n" + 
+				"APPLICATION appl1 {\n" +
+				"		TRUSTED = FALSE;\n" +
+				"		IRQ_STACK_SIZE = 1024;\n" +
+	    		"		SHARED_STACK_SIZE = 512;\n"+
+				"		TASK=Task0;\n" +
+				"		RESTARTTASK=Task0;\n" +
+				"       ISR = Timer_isr2c;\n" +
+				"       ISR = Timer_isr1a;\n" +
+				"       ISR = Timer_isr1b;\n" +
+	    		"		MEMORY_SIZE = 0x10000;\n"+
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = TRUE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"    };\n" +
+				"APPLICATION appl2 {\n" +
+				"		TRUSTED = TRUE;\n" +
+				"		IRQ_STACK_SIZE = 1024;\n" +
+	    		"		SHARED_STACK_SIZE = 512;\n"+
+				"		TASK=Task1;\n" +
+				"		RESTARTTASK=Task1;\n" +
+				"       ISR = Timer_isr2a;\n" +
+				"       ISR = Timer_isr2b;\n" +
+				"       ISR = Timer_isr1c;\n" +
+				"       COUNTER = system_timer;\n" +
+				"		MEMORY_SIZE = 0x10000;\n"+
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = TRUE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"    };\n" +
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 1;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		 STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"	ISR Timer_isr2a {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"4\";\n" +
+				"        PRIORITY = 5;\n" +
+				"		HANDLER = \"isr2a\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr2b {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"5\";\n" +
+				"        PRIORITY = 7;\n" +
+				"		HANDLER = \"isr2b\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr2c {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"6\";\n" +
+				"        PRIORITY = 9;\n" +
+				"		HANDLER = \"isr2c\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1a {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"1\";\n" +
+				"        PRIORITY = 6;\n" +
+				"		HANDLER = \"isr1a\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1b {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"2\";\n" +
+				"        PRIORITY = 8;\n" +
+				"		HANDLER = \"isr1b\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1c {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"3\";\n" +
+				"        PRIORITY = 10;\n" +
+	  			"		HANDLER = \"isr1c\";	// Trap handler\n" +
+				"	};\n" +
+				"    COUNTER system_timer {\n" +
+				"        MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"            DEVICE = \"STM_SR0\";\n" +
+				"            SYSTEM_TIMER = TRUE;\n" +
+				"            PRIORITY = 1;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"    };\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+
+	@Test public void testIsrPriority2_stackmonitoring_resttask() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				" 	   STACKMONITORING = TRUE;\n" +
+				" 	   PROTECTIONHOOK = TRUE;\n" +
+				"		CPU_DATA = TRICORE {\n"+
+				"			APP_SRC = \"slave.c\";\n"+
+				"            CPU_CLOCK = 200.0;\n" +
+				"			APP_SRC = \"master.c\";\n"+
+				"            MULTI_STACK = TRUE {\n" +
+				"                IRQ_STACK = TRUE {\n" +
+				"                    SYS_SIZE = 256;\n" +
+				"                };\n" +
+				"            };\n" +
+				"			SYS_STACK_SIZE = 4096;\n"+
+				"			LINKERSCRIPT = \"slave2_link\";\n"+
+				"		};\n"+
+				"		KERNEL_TYPE = ECC1;\n" +
+				"		MCU_DATA = TRICORE {\n"+
+				"			MODEL = TC27x;\n"+
+				"			LINKERSCRIPT = \"mcu_link\";\n"+
+				"		};\n"+
+				"	};\n" + 
+				"APPLICATION appl1 {\n" +
+				"		TRUSTED = FALSE;\n" +
+				"		IRQ_STACK_SIZE = 1024;\n" +
+	    		"		SHARED_STACK_SIZE = 512;\n"+
+				"		TASK=Task0;\n" +
+				"		RESTARTTASK=Task0;\n" +
+				"       ISR = Timer_isr2c;\n" +
+				"       ISR = Timer_isr1a;\n" +
+				"       ISR = Timer_isr1b;\n" +
+	    		"		MEMORY_SIZE = 0x10000;\n"+
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = TRUE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"    };\n" +
+				"APPLICATION appl2 {\n" +
+				"		TRUSTED = TRUE;\n" +
+				"		IRQ_STACK_SIZE = 1024;\n" +
+	    		"		SHARED_STACK_SIZE = 512;\n"+
+				"		TASK=Task1;\n" +
+				"		RESTARTTASK=Task1;\n" +
+				"       ISR = Timer_isr2a;\n" +
+				"       ISR = Timer_isr2b;\n" +
+				"       ISR = Timer_isr1c;\n" +
+				"       COUNTER = system_timer;\n" +
+				"		MEMORY_SIZE = 0x10000;\n"+
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = TRUE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"    };\n" +
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 1;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		 STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"	ISR Timer_isr2a {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"4\";\n" +
+				"        PRIORITY = 5;\n" +
+				"		HANDLER = \"isr2a\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr2b {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"5\";\n" +
+				"        PRIORITY = 7;\n" +
+				"		HANDLER = \"isr2b\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr2c {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"6\";\n" +
+				"        PRIORITY = 9;\n" +
+				"		HANDLER = \"isr2c\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1a {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"1\";\n" +
+				"        PRIORITY = 6;\n" +
+				"		HANDLER = \"isr1a\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1b {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"2\";\n" +
+				"        PRIORITY = 8;\n" +
+				"		HANDLER = \"isr1b\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1c {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"3\";\n" +
+				"        PRIORITY = 10;\n" +
+	  			"		HANDLER = \"isr1c\";	// Trap handler\n" +
+				"	};\n" +
+				"    COUNTER system_timer {\n" +
+				"        MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"            DEVICE = \"STM_SR0\";\n" +
+				"            SYSTEM_TIMER = TRUE;\n" +
+				"            PRIORITY = 1;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"    };\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+
 	@Test public void testIsrPriority2_memProt_onlyHwCounter() {
 	    final String text =
 				"CPU mySystem {\n" + 
@@ -3099,6 +3339,159 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 3);
 	}
 
+	@Test public void testTc27xOsApplMultiCore_restartTask() {
+	    final String text = "CPU test_application {\n" +
+	    		"\n" +
+	    		"  OS EE {\n" +
+	    		"    EE_OPT = \"EE_DEBUG\";\n" +
+	    		"    EE_OPT = \"__ASSERT__\";\n" +
+	    		"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+	    		"\n" +
+	    		"    REMOTENOTIFICATION = USE_RPC;\n" +
+	    		"\n" +
+	    		"    MASTER_CPU = \"master\";\n" +
+	    		"\n" +
+	    		"    CPU_DATA = TRICORE {\n" +
+	    		"      ID = \"master\";\n" +
+	    		"      CPU_CLOCK = 200.0;\n" +
+	    		"      APP_SRC = \"custom_cstart.c\";\n" +
+	    		"      APP_SRC = \"master.c\";\n" +
+	    		"      MULTI_STACK = TRUE;\n" +
+	    		"      SYS_STACK_SIZE = 4096;\n" +
+	    		"      COMPILER_TYPE = GNU;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    CPU_DATA = TRICORE {\n" +
+	    		"      ID = \"slave1\";\n" +
+	    		"      APP_SRC = \"custom_cstart.c\";\n" +
+	    		"      APP_SRC = \"slave1.c\";\n" +
+	    		"      MULTI_STACK = TRUE;\n" +
+	    		"      SYS_STACK_SIZE = 4096;\n" +
+	    		"      COMPILER_TYPE = GNU;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    CPU_DATA = TRICORE {\n" +
+	    		"      ID = \"slave2\";\n" +
+	    		"      APP_SRC = \"custom_cstart.c\";\n" +
+	    		"      APP_SRC = \"slave2.c\";\n" +
+	    		"      MULTI_STACK = TRUE;\n" +
+	    		"      SYS_STACK_SIZE = 4096;\n" +
+	    		"      COMPILER_TYPE = GNU;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    MCU_DATA = TRICORE {\n" +
+	    		"      MODEL = TC27x;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    STATUS = STANDARD;\n" +
+	    		"    KERNEL_TYPE = BCC1;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  TASK TaskMaster {\n" +
+	    		"    CPU_ID = \"master\";\n" +
+	    		"    PRIORITY = 1;\n" +
+	    		"    AUTOSTART = TRUE;\n" +
+	    		"    STACK = SHARED;\n" +
+	    		"    ACTIVATION = 1;\n" +
+	    		"    SCHEDULE = FULL;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  TASK TaskSlave1 {\n" +
+	    		"    CPU_ID = \"slave1\";\n" +
+	    		"    PRIORITY = 1;\n" +
+	    		"    AUTOSTART = FALSE;\n" +
+	    		"    STACK = SHARED;\n" +
+	    		"    ACTIVATION = 1;\n" +
+	    		"    SCHEDULE = FULL;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  TASK TaskSlave2a {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    PRIORITY = 1;\n" +
+	    		"    AUTOSTART = FALSE;\n" +
+	    		"    STACK = SHARED;\n" +
+	    		"    ACTIVATION = 1;\n" +
+	    		"    SCHEDULE = FULL;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  TASK TaskSlave2b {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    PRIORITY = 1;\n" +
+	    		"    AUTOSTART = FALSE;\n" +
+	    		"    STACK = SHARED;\n" +
+	    		"    ACTIVATION = 1;\n" +
+	    		"    SCHEDULE = FULL;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  ISR STM0_isr2_core0 {\n" +
+	    		"    CPU_ID = \"master\";\n" +
+	    		"    CATEGORY = 2;\n" +
+	    		"    PRIORITY = 2;\n" +
+	    		"    HANDLER = \"STM0_isr2\"; // IRQ handler \n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  ISR STM0_isr2_core1 {\n" +
+	    		"    CPU_ID = \"slave1\";\n" +
+	    		"    CATEGORY = 2;\n" +
+	    		"    PRIORITY = 2;\n" +
+	    		"    HANDLER = \"STM0_isr2\"; // IRQ handler \n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  ISR STM0_isr2_core2 {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    CATEGORY = 2;\n" +
+	    		"    PRIORITY = 2;\n" +
+	    		"    HANDLER = \"STM0_isr2\"; // IRQ handler \n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  APPLICATION MasterApplication {\n" +
+	    		"    CPU_ID = \"master\";\n" +
+	    		"    TRUSTED = TRUE;\n" +
+	    		"    ISR = STM0_isr2_core0;\n" +
+	    		"    TASK = TaskMaster;\n" +
+	    		"  MEMORY_BASE = 0x70030000;\n" +
+	    		"    MEMORY_SIZE = 0x00010000;\n" +
+	    		"    SHARED_STACK_SIZE = 512;\n" +
+	    		"    IRQ_STACK_SIZE = 512;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  APPLICATION Slave1Application {\n" +
+	    		"    CPU_ID = \"slave1\";\n" +
+	    		"    TRUSTED = TRUE;\n" +
+	    		"    ISR = STM0_isr2_core1;\n" +
+	    		"    TASK = TaskSlave1;\n" +
+	    		"//  MEMORY_BASE = 0x60030000;\n" +
+	    		"//  MEMORY_SIZE = 0x00010000;\n" +
+	    		"    SHARED_STACK_SIZE = 512;\n" +
+	    		"    IRQ_STACK_SIZE = 512;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  APPLICATION Slave2aApplication {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    TRUSTED = TRUE;\n" +
+	    		"    ISR = STM0_isr2_core2;\n" +
+	    		"    TASK = TaskSlave2a;\n" +
+	    		"    RESTARTTASK = TaskSlave2a;\n" +
+	    		"//  MEMORY_BASE = 0x50030000;\n" +
+	    		"//  MEMORY_SIZE = 0x00010000;\n" +
+	    		"    SHARED_STACK_SIZE = 512;\n" +
+	    		"    IRQ_STACK_SIZE = 512;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  APPLICATION Slave2bApplication {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    TRUSTED = TRUE;\n" +
+	    		"    TASK = TaskSlave2b;\n" +
+	    		"    RESTARTTASK = TaskSlave2b;\n" +
+	    		"//  MEMORY_BASE = 0x50030000;\n" +
+	    		"//  MEMORY_SIZE = 0x00010000;\n" +
+	    		"    SHARED_STACK_SIZE = 512;\n" +
+	    		"    IRQ_STACK_SIZE = 512;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"};\n";
+		commonWriterTest(text, 3);
+	}
 	
 	@Test public void testTc27xOsApplMultiCore() {
 	    final String text = "CPU test_application {\n" +
