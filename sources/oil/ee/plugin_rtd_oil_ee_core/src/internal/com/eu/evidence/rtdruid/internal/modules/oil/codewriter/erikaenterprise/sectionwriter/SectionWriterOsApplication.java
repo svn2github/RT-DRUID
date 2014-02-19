@@ -640,7 +640,18 @@ public class SectionWriterOsApplication extends SectionWriter implements
 	 */
 	public List<String> getEEOpt(int type, int rtosId) {
 		List<String> answer = new ArrayList<String>();
-		// nothing
+		
+		if ((type & EE_OPT_COMMON_AUTO_ONLY) != 0) {
+			/*******************************************************************
+			 * AUTOMATIC OPTIONS (not CPU DEPENDENT)
+			 ******************************************************************/
+	
+			// Enable OsApplications
+			if (parent.checkKeyword(IWritersKeywords.KERNEL_OS_APPLICATION)) {
+			    answer.add("EE_AS_OSAPPLICATIONS__");
+		    }
+		}
+
 		return answer;
 	}
 
@@ -654,7 +665,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				keywords.add(IWritersKeywords.KERNEL_OS_APPLICATION);
 			}
 		}
-	}	
-	
+	}
 	
 }

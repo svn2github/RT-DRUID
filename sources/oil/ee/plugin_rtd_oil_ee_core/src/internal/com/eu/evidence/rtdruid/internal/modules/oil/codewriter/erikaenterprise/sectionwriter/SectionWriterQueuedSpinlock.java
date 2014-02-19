@@ -29,6 +29,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EmptyMacrosForSharedData;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
@@ -164,6 +165,11 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 			 * SPIN LOCK
 			 *  
 			 ******************************************************************/
+			{
+		    	final ISimpleGenRes sgrOs = oilObjects[0].getList(IOilObjectList.OS).get(0);
+				CpuUtility.addSources(sgrOs, answer[0].getFileName(FILE_EE_COMMON_C));
+			}
+
 			ICommentWriter commentWriterC_common = getCommentWriter(oilObjects[0], FileTypes.C);
 			StringBuffer sbCommon_c = answer[0].get(FILE_EE_COMMON_C);
 
@@ -384,8 +390,8 @@ public class SectionWriterQueuedSpinlock extends SectionWriter implements
 						break;
 					}
 				}
-				if (!hasUserSpinlock) {
-					answer.add("EE_AS_NO_USER_SPINLOCKS__");
+				if (hasUserSpinlock) {
+					answer.add("EE_AS_USER_SPINLOCKS__");
 				}
 				
 			}

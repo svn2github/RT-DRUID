@@ -1839,11 +1839,6 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				    answer.add("__OO_HAS_USERESSCHEDULER__");
 			    }
 
-				// Disable OsApplications
-				if (!parent.checkKeyword(IWritersKeywords.KERNEL_OS_APPLICATION)) {
-				    answer.add("EE_AS_NO_OSAPPLICATIONS__");
-			    }
-
 			}
 			
 		}
