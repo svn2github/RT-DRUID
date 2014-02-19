@@ -26,6 +26,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDe
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EmptyMacrosForSharedData;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.OsApplicationAreas;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
@@ -594,6 +595,9 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				/* get the size of each stack. */
 				int size[][] = elStack.stackSize(tList
 						.toArray(new String[1]));
+				/* get the memory section id of each stack. */
+				String memoryId[] = elStack.stackMemoryId(tList
+						.toArray(new String[1]));
 				/* descrStack contains a description for each stack. */ 
 				String[] descrStack = new String[size.length];
 				
@@ -663,9 +667,10 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	//			 DECLARE STACK SIZE && STACK (ARRAY)
 				for (int j = 1; j < size.length; j++) {
 				    long value = size[j][0];
+			    	final String memId = memoryId[j];
 //				    value  = (value + (value%STACK_ALIGNMENT_UNIT)) / STACK_SIZE_UNIT; // arrotondo a 2
 					sbStackDecl.append(indent + "EE_STACK_T "+
-							"EE_STACK_ATTRIB "+
+							(memId == null ? "EE_STACK_ATTRIB " : "EE_STACK_ATTRIB_NAME("+memId+") ") +
 							STACK_BASE_NAME+j+"[EE_STACK_WLEN(STACK_"+j+"_SIZE)] EE_TC_FILL_STACK("+STACK_BASE_NAME+j+");\t" + commentC.writerSingleLineComment(descrStack[j]));
 					sbStackDeclSize.append(indent + "#define STACK_"+j+"_SIZE "+value+ " " + commentC.writerSingleLineComment("size = "+size[j][0]+" bytes"));
 					// USED BY ORTI
@@ -768,5 +773,13 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			sbInithal_h.append("\n" +SectionWriter.getCommentWriter(ool, FileTypes.H).writerSingleLineComment("Max ISR priority") + 
 					"#define EE_TC_MAX_ISR_ID     " + max_isr_string + "\n\n");
 		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.TricoreAbstractModel#osApplicationAreas()
+	 */
+	@Override
+	public OsApplicationAreas osApplicationAreas() {
+		return new OsApplicationAreas(new String[] {}, new String[] {"ee_ssec", "ee_esec"});
 	}
 }

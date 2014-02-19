@@ -27,6 +27,8 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.OsApplicationAreas;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants;
@@ -201,6 +203,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 //			extern const int app0_start, app0_sstart, app0_end;
 
 			if (enableMemoryProtection) {
+				CpuHwDescription cpuDescr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
 
 
 				String mem_base = application.getString(OS_APPLICATION_MEM_BASE);
@@ -213,21 +216,39 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						mem_size + " " +
 						(trusted ? "1" : "0")+
 						"\n");
-
-				ee_c_buffer.append(indent1 + "extern const int ee_load_data_"+name+";\n" +
-						indent1 + "extern int ee_sstack_"+name+";\n" +
-						indent1 + "extern int ee_sdata_"+name+";\n" +
-						indent1 + "extern int ee_sbss_"+name+";\n" +
-						indent1 + "extern int ee_ebss_"+name+";\n");
+				OsApplicationAreas areaNames = cpuDescr.getOsApplicationNames();
+				for (String areaName : areaNames.getConstAreas()) {
+					ee_c_buffer.append(indent1 + "extern const int " + areaName+"_"+name+";\n");
+				}
+				for (String areaName : areaNames.getAreas()) {
+					ee_c_buffer.append(indent1 + "extern int " + areaName+"_"+name+";\n");
+				}
+				ee_c_buffer.append("\n");
 	
 				application_rom.append(end +
-						indent2 + "{{ &ee_load_data_"+name+", &ee_sstack_"+name+", &ee_sdata_"+name+", &ee_sbss_"+name+", &ee_ebss_"+name+" }}");
+						indent2 + "{{ ");
+				String sep = "";
+				for (String areaName : areaNames.getConstAreas()) {
+					application_rom.append(sep + "&" + areaName+"_"+name);
+					sep = ", ";
+				}
+				for (String areaName : areaNames.getAreas()) {
+					application_rom.append(sep + "&" + areaName+"_"+name);
+					sep = ", ";
+				}
+				application_rom.append(" }}");
 			}
 
-			application_ram.append(end +
-					indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)], "+
-						(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") + ")");
-
+			if (parent.checkKeyword(IWritersKeywords.CPU_PPCE200ZX)) {
+				application_ram.append(end +
+						indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)], "+
+							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") + ")");
+			} else {
+				application_ram.append(end +
+						indent2 + "EE_APP_RAM_INIT(EE_STACK_INITP("+stack_base_name+stack_id+"), "+
+							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") + ")");
+			}
+			
 			startUp_buffer.append(end +indent2 + hStartup);
 			shutdown_buffer.append(end +indent2 + hShutdown);
 			error_buffer.append(end +indent2 + hError);

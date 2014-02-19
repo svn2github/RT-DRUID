@@ -41,6 +41,9 @@ public class CpuDescrTricore extends CpuHwDescription implements IRequiresUpdate
 			if (tmp != null) {
 				macros = tmp;
 			}
+			if (model.osApplicationAreas() != null) {
+				osApplicationNames = model.osApplicationAreas();
+			}
 		}
 	}
 	

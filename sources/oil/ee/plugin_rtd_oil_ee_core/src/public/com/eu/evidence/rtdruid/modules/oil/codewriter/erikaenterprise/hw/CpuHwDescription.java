@@ -67,6 +67,31 @@ public class CpuHwDescription {
 		}
 	}
 
+	public static class OsApplicationAreas {
+		protected List<String> constAreas;
+		protected List<String> areas;
+		
+		/**
+		 * 
+		 */
+		public OsApplicationAreas(String[] cAreas, String[] areas) {
+			this.constAreas = Collections.unmodifiableList(Arrays.asList(cAreas));
+			this.areas = Collections.unmodifiableList(Arrays.asList(areas));
+		}
+		
+		/**
+		 * @return the areas
+		 */
+		public List<String> getAreas() {
+			return areas;
+		}
+		/**
+		 * @return the constAreas
+		 */
+		public List<String> getConstAreas() {
+			return constAreas;
+		}
+	}
 	
 	public interface IRequiresUpdates {
 		public void update(IVarTree vt, IOilObjectList[] objects, int currentCpuId);
@@ -95,6 +120,11 @@ public class CpuHwDescription {
 	public final List<String> stackNames;
 	/** Oil identifiers for all stacks that are present in a "SHARED stack" */
 	public final List<String> sharedStackNames;
+	/** OsApplication sections */
+	protected OsApplicationAreas osApplicationNames = new OsApplicationAreas(
+			new String[] { "ee_load_data" },
+			new String[] { "ee_sstack", "ee_sdata", "ee_sbss", "ee_ebss"}
+	);
 	/** Number of bits used to represent a priority */
 	public final int prioSize;
 	/**
@@ -236,5 +266,12 @@ public class CpuHwDescription {
 		for (McuCounterDevice device : devices) {
 			mcuCounterDevices.put(device.getDeviveId(), device);
 		}
+	}
+	
+	/**
+	 * @return the osApplicationNames
+	 */
+	public OsApplicationAreas getOsApplicationNames() {
+		return osApplicationNames;
 	}
 }

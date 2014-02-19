@@ -56,7 +56,8 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	};
 
 
-	protected final static String[] EE_ISR2_IDs = { 
+	protected final static String[] EE_ISR2_IDs = {
+		"ThreadNotTerminated",
 		"TerminateISR2"
 	};
 

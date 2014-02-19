@@ -3357,7 +3357,6 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 3);
 	}
 	
-	
 	@Test public void testTc27xMulticoreBoard() {
 		String text = "CPU test_application {\n" +
 				"\n" +
@@ -3457,5 +3456,126 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"	};\n" +
 				"};\n";
 		commonWriterTest(text, 3);
+	}
+	
+	@Test public void testTc27xMemoryProtection() {
+		String text = "CPU PerfTestApp {\n" +
+				"  OS EE {\n" +
+				"    EE_OPT = \"EE_DEBUG\";\n" +
+				"    EE_OPT = \"__ASSERT__\";\n" +
+				"\n" +
+				"    //EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+				"    EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+				"    //EE_OPT = \"EE_MM_OPT\";\n" +
+				"\n" +
+				"    MEMORY_PROTECTION = TRUE;\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      CPU_CLOCK = 200.0;\n" +
+				"      APP_SRC = \"code.c\";\n" +
+				"      APP_SRC = \"app1.c\";\n" +
+				"      APP_SRC = \"app2.c\";\n" +
+				"      APP_SRC = \"trusted.c\";\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"      MULTI_STACK = TRUE {\n" +
+				"        IRQ_STACK = TRUE {\n" +
+				"            SYS_SIZE = 128;\n" +
+				"        };\n" +
+				"      };\n" +
+				"    };\n" +
+				"\n" +
+				"    MCU_DATA = TRICORE {\n" +
+				"        MODEL = TC27x;\n" +
+				"    };\n" +
+				"\n" +
+				"    STATUS = EXTENDED;\n" +
+				"    USEGETSERVICEID = FALSE;\n" +
+				"    USEPARAMETERACCESS = FALSE;\n" +
+				"    USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"    KERNEL_TYPE = BCC1;\n" +
+				"\n" +
+				"    ORTI_SECTIONS = ALL;\n" +
+				"  };\n" +
+				"\n" +
+				"  TASK MainTask {\n" +
+				"    PRIORITY = 10;\n" +
+				"    ACTIVATION = 1;\n" +
+				"    SCHEDULE = FULL;\n" +
+				"    AUTOSTART = TRUE;\n" +
+				"    STACK = SHARED;\n" +
+				"  };\n" +
+				"\n" +
+				"  TASK TrustedTask1 {\n" +
+				"    PRIORITY = 1;\n" +
+				"    ACTIVATION = 1;\n" +
+				"    SCHEDULE = FULL;\n" +
+				"    AUTOSTART = FALSE;\n" +
+				"    STACK = SHARED;\n" +
+				"  };\n" +
+				"\n" +
+				"  TASK App1Task {\n" +
+				"    PRIORITY = 4;\n" +
+				"    ACTIVATION = 1;\n" +
+				"    SCHEDULE = FULL;\n" +
+				"    AUTOSTART = FALSE;\n" +
+				"    STACK = SHARED;\n" +
+				"  };\n" +
+				"\n" +
+				"  TASK App2Task {\n" +
+				"    PRIORITY = 4;\n" +
+				"    ACTIVATION = 1;\n" +
+				"    SCHEDULE = FULL;\n" +
+				"    AUTOSTART = FALSE;\n" +
+				"    STACK = SHARED;\n" +
+				"  };\n" +
+				"\n" +
+				"  ISR TrustedIsr {\n" +
+				"    CATEGORY = 2;\n" +
+				"    PRIORITY = 3;\n" +
+				"  };\n" +
+				"\n" +
+				"  ISR App1Isr {\n" +
+				"    CATEGORY = 2;\n" +
+				"    PRIORITY = 2;\n" +
+				"  };\n" +
+				"\n" +
+				"  ISR App2Isr {\n" +
+				"    CATEGORY = 2;\n" +
+				"    PRIORITY = 1;\n" +
+				"  };\n" +
+				"\n" +
+				"  APPLICATION TrustedApp {\n" +
+				"    TRUSTED = TRUE;\n" +
+				"    ISR = \"TrustedIsr\";\n" +
+				"    TASK = MainTask;\n" +
+				"    TASK = TrustedTask1;\n" +
+				"    MEMORY_BASE = 0x40010000;\n" +
+				"    MEMORY_SIZE = 0x10000;\n" +
+				"    SHARED_STACK_SIZE = 128;\n" +
+				"    IRQ_STACK_SIZE = 128;\n" +
+				"  };\n" +
+				"\n" +
+				"  APPLICATION App1 {\n" +
+				"    TRUSTED = FALSE;\n" +
+				"    ISR = \"App1Isr\";\n" +
+				"    TASK = App1Task;\n" +
+				"    MEMORY_BASE = 0x40020000;\n" +
+				"    MEMORY_SIZE = 0x10000;\n" +
+				"    SHARED_STACK_SIZE = 128;\n" +
+				"    IRQ_STACK_SIZE = 128;\n" +
+				"  };\n" +
+				"\n" +
+				"  APPLICATION App2 {\n" +
+				"    TRUSTED = FALSE;\n" +
+				"    ISR = \"App2Isr\";\n" +
+				"    TASK = App2Task;\n" +
+				"    MEMORY_BASE = 0x40030000;\n" +
+				"    MEMORY_SIZE = 0x4000;\n" +
+				"    SHARED_STACK_SIZE = 128;\n" +
+				"    IRQ_STACK_SIZE = 128;\n" +
+				"  };\n" +
+				"};\n";
+		commonWriterTest(text, 1);
 	}
 }

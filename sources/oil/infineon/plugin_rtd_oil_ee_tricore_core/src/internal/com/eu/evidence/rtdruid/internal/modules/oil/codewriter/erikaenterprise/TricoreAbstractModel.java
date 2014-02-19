@@ -7,6 +7,7 @@ import com.eu.evidence.modules.oil.tricore.constants.TricoreCompiler;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.OsApplicationAreas;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
@@ -64,6 +65,13 @@ public abstract class TricoreAbstractModel {
 	 * @return
 	 */
 	public IMacrosForSharedData getMacros() {
+		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	public OsApplicationAreas osApplicationAreas() {
 		return null;
 	}
 }
