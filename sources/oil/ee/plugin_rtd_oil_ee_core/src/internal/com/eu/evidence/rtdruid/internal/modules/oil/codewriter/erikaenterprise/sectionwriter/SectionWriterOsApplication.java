@@ -423,7 +423,12 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		HashSet<String> def = new HashSet<String>();
 		for (ISimpleGenRes isr : orderedIsr) {
 			if (isr != null) {
-				String name = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_HANDLER);
+				String name = "";
+				if (isr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_HANDLER)) {
+					name = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_HANDLER);
+				} else if (isr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER)) {
+					name = isr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER);
+				}
 				if (!def.contains(name)) {
 					def.add(name);
 					ee_c_buffer.append("extern void "+name+"( void ); /* "+isr.getName()+" */\n");

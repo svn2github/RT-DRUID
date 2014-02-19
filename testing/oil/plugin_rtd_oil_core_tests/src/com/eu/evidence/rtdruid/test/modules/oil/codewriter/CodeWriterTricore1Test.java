@@ -3673,7 +3673,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 	    		"    TRUSTED = TRUE;\n" +
 	    		"    ISR = STM0_isr2_core0;\n" +
 	    		"    TASK = TaskMaster;\n" +
-	    		"  MEMORY_BASE = 0x70030000;\n" +
+	    		"  MEMORY_BASE = \"0x70030000\";\n" +
 	    		"    MEMORY_SIZE = 0x00010000;\n" +
 	    		"    SHARED_STACK_SIZE = 512;\n" +
 	    		"    IRQ_STACK_SIZE = 512;\n" +
