@@ -3770,4 +3770,497 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"};\n";
 		commonWriterTest(text, 1);
 	}
+	
+	
+	@Test public void test290_ecc1() {
+	    final String text =
+	    		"CPU test_application {\n" +
+	    				"\n" +
+	    				"	OS EE {\n" +
+	    				"		EE_OPT = \"EE_DEBUG\";\n" +
+	    				"		EE_OPT = \"__OO_SEM__\";\n" +
+	    				"		EE_OPT = \"NODEPS\";\n" +
+	    				"		EE_OPT = \"__ASSERT__\";\n" +
+	    				"        	EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+	    				"		EE_OPT=\"EE_MM_OPT\";\n" +
+	    				"        	EE_OPT = \"EE_FIND_COMPILER_IN_PATH\";    /* Used by Lin */\n" +
+	    				"\n" +                                                                                                                                                       
+	    				"		CPU_DATA = TRICORE {\n" +
+	    				"			CPU_CLOCK = 200.0;\n" +
+	    				"            		COMPILER_TYPE = GNU;\n" +
+	    				"            		APP_SRC = \"main.c\";\n" +
+	    				"			MULTI_STACK = TRUE {\n" +
+	    				"				IRQ_STACK = TRUE {\n" +
+	    				"					SYS_SIZE = 512;\n" +
+	    				"				};\n" +
+	    				"			};\n" +
+	    				"			SYS_STACK_SIZE = 2048;\n" +
+	    				"		};\n" +
+	    				"\n" +
+	    				"		MCU_DATA = TRICORE {\n" +
+	    				"			MODEL = TC27x;\n" +
+	    				"		};\n" +
+	    				"\n" +
+	    				"		STATUS = EXTENDED;\n" +
+	    				"		STARTUPHOOK = TRUE;\n" +
+	    				"		ERRORHOOK = TRUE;\n" +
+	    				"		SHUTDOWNHOOK = TRUE;\n" +
+	    				"		PRETASKHOOK = FALSE;\n" +
+	    				"		POSTTASKHOOK = FALSE;\n" +
+	    				"		USEGETSERVICEID = FALSE;\n" +
+	    				"		USEPARAMETERACCESS = FALSE;\n" +
+	    				"		USERESSCHEDULER = FALSE;\n" +
+	    				"\n" +
+	    				"		ORTI_SECTIONS = ALL;\n" +
+	    				"	};\n" +
+	    				"\n" +
+	    				"    COUNTER SystemTimer {\n" +
+	    				"    MINCYCLE = 1;\n" +
+	    				"        MAXALLOWEDVALUE = 2147483647;\n" +
+	    				"        TICKSPERBASE = 1;\n" +
+	    				"        TYPE = HARDWARE {\n" +
+	    				"            DEVICE = \"STM_SR0\";\n" +
+	    				"            SYSTEM_TIMER = TRUE;\n" +
+	    				"            PRIORITY = 1;\n" +
+	    				"        };\n" +
+	    				"        SECONDSPERTICK = 0.001;\n" +
+	    				"    };\n" +
+	    				"\n" +
+	    				"	TASK Task1 {\n" +
+	    				"		PRIORITY = 0x01;\n" +
+	    				"		AUTOSTART = FALSE;\n" +
+	    				"		STACK = SHARED;\n" +
+	    				"		ACTIVATION = 1;\n" +
+	    				"		RESOURCE = MyResource;\n" +
+	    				"	};\n" +
+	    				"\n" +
+	    				"	TASK Task2 {\n" +
+	    				"		PRIORITY = 0x02;\n" +
+	    				"		SCHEDULE = FULL;\n" +
+	    				"		AUTOSTART = TRUE;\n" +
+	    				"		STACK = PRIVATE {\n" +
+	    				"			SYS_SIZE = 1024;\n" +
+	    				"		};\n" +
+	    				"		RESOURCE = MyResource;\n" +
+	    				"		EVENT = MyEvent;\n" +
+	    				"	};\n" +
+	    				"\n" +
+	    				"	EVENT MyEvent { MASK = AUTO; };\n" +
+	    				"\n" +
+	    				"	RESOURCE MyResource { RESOURCEPROPERTY = STANDARD; };\n" +
+	    				"\n" +
+	    				"	COUNTER MainTimer {\n" +
+	    				"		MINCYCLE = 2;\n" +
+	    				"		MAXALLOWEDVALUE = 100;\n" +
+	    				"		TICKSPERBASE = 1;\n" +
+	    				"	};\n" +
+	    				"\n" +
+	    				"	ALARM MyAlarm {\n" +
+	    				"		COUNTER = MainTimer;\n" +
+	    				"		ACTION = ACTIVATETASK {\n" +
+	    				"			TASK = Task1;\n" +
+	    				"		};\n" +
+	    				"		AUTOSTART = TRUE{\n" +
+	    				"			ALARMTIME = 12;\n" +
+	    				"			CYCLETIME = 12;\n" +
+	    				"		};\n" +
+	    				"	};\n" +
+	    				"\n" +
+	    				"	OS EE { KERNEL_TYPE = ECC1; EE_OPT = \"__OO_STARTOS_OLD__\";};\n" +
+	    				"	TASK Task1 { SCHEDULE = NON; };\n" +
+	    				"	TASK Task2 { ACTIVATION = 1; };\n" +
+	    				"};";
+		commonWriterTest(text, 1);
+	}
+	@Test public void test290_ecc2() {
+	    final String text =
+	    		"CPU test_application {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"EE_DEBUG\";\n" +
+				"		EE_OPT = \"__OO_SEM__\";\n" +
+				"		EE_OPT = \"NODEPS\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"		EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+				"		EE_OPT=\"EE_MM_OPT\";\n" +
+				"        	EE_OPT = \"EE_FIND_COMPILER_IN_PATH\";    /* Used by Lin */\n" +
+				"\n" +
+				"		CPU_DATA = TRICORE {\n" +
+				"			CPU_CLOCK = 200.0;\n" +
+				"            COMPILER_TYPE = GNU;\n" +
+				"            APP_SRC = \"main.c\";\n" +
+				"			MULTI_STACK = TRUE;\n" +
+				"		};\n" +
+				"\n" +
+				"		MCU_DATA = TRICORE {\n" +
+				"			MODEL = TC27x;\n" +
+				"		};\n" +
+				"\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = TRUE;\n" +
+				"		ERRORHOOK = TRUE;\n" +
+				"		SHUTDOWNHOOK = TRUE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"		ORTI_SECTIONS = ALL;\n" +
+				"	};\n" +
+				"\n" +
+				"	COUNTER SystemTimer {\n" +
+				"	MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"		DEVICE = \"STM_SR0\";\n" +
+				"		SYSTEM_TIMER = TRUE;\n" +
+				"		PRIORITY = 1;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		RESOURCE = MyResource;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 1024;\n" +
+				"		};\n" +
+				"		RESOURCE = MyResource;\n" +
+				"		EVENT = MyEvent;\n" +
+				"	};\n" +
+				"\n" +
+				"	EVENT MyEvent { MASK = AUTO; };\n" +
+				"\n" +
+				"	RESOURCE MyResource { RESOURCEPROPERTY = STANDARD; };\n" +
+				"\n" +
+				"	COUNTER MainTimer {\n" +
+				"		MINCYCLE = 2;\n" +
+				"		MAXALLOWEDVALUE = 100;\n" +
+				"		TICKSPERBASE = 1;\n" +
+				"	};\n" +
+				"\n" +
+				"	ALARM MyAlarm {\n" +
+				"		COUNTER = MainTimer;\n" +
+				"		ACTION = ACTIVATETASK {\n" +
+				"			TASK = Task1;\n" +
+				"		};\n" +
+				"		AUTOSTART = TRUE{\n" +
+				"			ALARMTIME = 12;\n" +
+				"			CYCLETIME = 12;\n" +
+				"		};\n" +
+				"	};\n" +
+				"\n" +
+				"	OS EE { KERNEL_TYPE = ECC2; EE_OPT = \"__OO_STARTOS_OLD__\";};\n" +
+				"	TASK Task1 { SCHEDULE = NON; };\n" +
+				"	TASK Task2 { ACTIVATION = 1; };\n" +
+				"};";
+		commonWriterTest(text, 1);
+	}
+
+	@Test public void test302_mp_ecc2() {
+		String text = "CPU test_application {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"EE_DEBUG\";\n" +
+				"		EE_OPT = \"NODEPS\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"		EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+				"		EE_OPT=\"EE_MM_OPT\";\n" +
+				"        	EE_OPT = \"EE_FIND_COMPILER_IN_PATH\";    /* Used by Lin */\n" +
+				"\n" +
+				"		REMOTENOTIFICATION = USE_RPC;	/* Required by Inter-core communication mechanism */\n" +
+				"\n" +
+				"		MASTER_CPU = \"master\";\n" +
+				"\n" +
+				"		CPU_DATA = TRICORE {\n" +
+				"			ID = \"master\";\n" +
+				"			CPU_CLOCK = 200.0;\n" +
+				"            COMPILER_TYPE = GNU;\n" +
+				"            APP_SRC = \"main.c\";\n" +
+				"			MULTI_STACK = TRUE;\n" +
+				"		};\n" +
+				"\n" +
+				"		CPU_DATA = TRICORE {\n" +
+				"			ID = \"slave\";\n" +
+				"			CPU_CLOCK = 200.0;\n" +
+				"            COMPILER_TYPE = GNU;\n" +
+				"            APP_SRC = \"main.c\";\n" +
+				"			MULTI_STACK = TRUE;\n" +
+				"		};\n" +
+				"\n" +
+				"		MCU_DATA = TRICORE {\n" +
+				"			MODEL = TC27x;\n" +
+				"		};\n" +
+				"\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = TRUE;\n" +
+				"		POSTTASKHOOK = TRUE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"		USEREMOTETASK = ALWAYS;\n" +
+				"		USEREMOTEEVENT = ALWAYS;\n" +
+				"\n" +
+				"		ORTI_SECTIONS = ALL;\n" +
+				"		KERNEL_TYPE = ECC2;\n" +
+				"                EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+				"	};\n" +
+				"\n" +
+				"	COUNTER SystemTimerMaster {\n" +
+				"	MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"		DEVICE = \"STM_SR0\";\n" +
+				"		SYSTEM_TIMER = TRUE;\n" +
+				"		PRIORITY = 2;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"        CPU_ID = \"master\";\n" +
+				"	};\n" +
+				"\n" +
+				"	COUNTER SystemTimerSlave {\n" +
+				"	MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"		DEVICE = \"STM_SR0\";\n" +
+				"		SYSTEM_TIMER = TRUE;\n" +
+				"		PRIORITY = 2;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"        CPU_ID = \"slave\";\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		SCHEDULE = NON;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		RESOURCE = MyResource;\n" +
+				"		CPU_ID = \"master\";\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 1024;\n" +
+				"		};\n" +
+				"		ACTIVATION = 1;\n" +
+				"		RESOURCE = MyResource;\n" +
+				"		EVENT = MyEvent;\n" +
+				"		CPU_ID = \"master\";\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK Task3 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		RESOURCE = MyOtherResource;\n" +
+				"		CPU_ID = \"slave\";\n" +
+				"	};\n" +
+				"\n" +
+				"	EVENT MyEvent { MASK = AUTO; };\n" +
+				"\n" +
+				"	RESOURCE MyResource { RESOURCEPROPERTY = STANDARD; };\n" +
+				"\n" +
+				"	RESOURCE MyOtherResource { RESOURCEPROPERTY = STANDARD; };\n" +
+				"\n" +
+				"	COUNTER MainTimer {\n" +
+				"		MINCYCLE = 2;\n" +
+				"		MAXALLOWEDVALUE = 100;\n" +
+				"		TICKSPERBASE = 1;\n" +
+				"		CPU_ID = \"master\";\n" +
+				"	};\n" +
+				"\n" +
+				"	ALARM MyAlarm {\n" +
+				"		COUNTER = MainTimer;\n" +
+				"		ACTION = ACTIVATETASK {\n" +
+				"			TASK = Task1;\n" +
+				"		};\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"	};\n" +
+				"\n" +
+				"	COUNTER OtherTimer {\n" +
+				"		MINCYCLE = 2;\n" +
+				"		MAXALLOWEDVALUE = 100;\n" +
+				"		TICKSPERBASE = 1;\n" +
+				"		CPU_ID = \"slave\";\n" +
+				"	};\n" +
+				"\n" +
+				"	ALARM OtherAlarm {\n" +
+				"		COUNTER = OtherTimer;\n" +
+				"		ACTION = ACTIVATETASK {\n" +
+				"			TASK = Task1;\n" +
+				"		};\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"	};\n" +
+				"};";
+		commonWriterTest(text, 2);
+	}
+	@Test public void test302_mp_bcc1() {
+		String text = "CPU test_application {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"EE_DEBUG\";\n" +
+				"		EE_OPT = \"NODEPS\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"        	EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+				"		EE_OPT=\"EE_MM_OPT\";\n" +
+				"        	EE_OPT = \"EE_FIND_COMPILER_IN_PATH\";    /* Used by Lin */\n" +
+				"\n" +
+				"		REMOTENOTIFICATION = USE_RPC;	/* Required by Inter-core communication mechanism */\n" +
+				"\n" +
+				"		MASTER_CPU = \"master\";\n" +
+				"\n" +
+				"		CPU_DATA = TRICORE {\n" +
+				"			ID = \"master\";\n" +
+				"			CPU_CLOCK = 200.0;\n" +
+				"            COMPILER_TYPE = GNU;\n" +
+				"            APP_SRC = \"main.c\";\n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"\n" +
+				"		CPU_DATA = TRICORE {\n" +
+				"			ID = \"slave\";\n" +
+				"			CPU_CLOCK = 200.0;\n" +
+				"            COMPILER_TYPE = GNU;\n" +
+				"            APP_SRC = \"main.c\";\n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"\n" +
+				"		MCU_DATA = TRICORE {\n" +
+				"			MODEL = TC27x;\n" +
+				"		};\n" +
+				"\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"		USEREMOTETASK = ALWAYS;\n" +
+				"\n" +
+				"		ORTI_SECTIONS = ALL;\n" +
+				"		KERNEL_TYPE = BCC1;\n" +
+				"                EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+				"	};\n" +
+				"\n" +
+				"	COUNTER SystemTimerMaster {\n" +
+				"	MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"		DEVICE = \"STM_SR0\";\n" +
+				"		SYSTEM_TIMER = TRUE;\n" +
+				"		PRIORITY = 2;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"        CPU_ID = \"master\";\n" +
+				"	};\n" +
+				"\n" +
+				"	COUNTER SystemTimerSlave {\n" +
+				"	MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"		DEVICE = \"STM_SR0\";\n" +
+				"		SYSTEM_TIMER = TRUE;\n" +
+				"		PRIORITY = 2;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"        CPU_ID = \"slave\";\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		SCHEDULE = NON;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		RESOURCE = MyResource;\n" +
+				"		CPU_ID = \"master\";\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		RESOURCE = MyResource;\n" +
+				"		CPU_ID = \"master\";\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK Task3 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		RESOURCE = MyOtherResource;\n" +
+				"		CPU_ID = \"slave\";\n" +
+				"	};\n" +
+				"\n" +
+				"	RESOURCE MyResource { RESOURCEPROPERTY = STANDARD; };\n" +
+				"\n" +
+				"	RESOURCE MyOtherResource { RESOURCEPROPERTY = STANDARD; };\n" +
+				"\n" +
+				"	COUNTER MainTimer {\n" +
+				"		MINCYCLE = 2;\n" +
+				"		MAXALLOWEDVALUE = 100;\n" +
+				"		TICKSPERBASE = 1;\n" +
+				"		CPU_ID = \"master\";\n" +
+				"	};\n" +
+				"\n" +
+				"	ALARM MyAlarm {\n" +
+				"		COUNTER = MainTimer;\n" +
+				"		ACTION = ACTIVATETASK {\n" +
+				"			TASK = Task1;\n" +
+				"		};\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"	};\n" +
+				"\n" +
+				"	COUNTER OtherTimer {\n" +
+				"		MINCYCLE = 2;\n" +
+				"		MAXALLOWEDVALUE = 100;\n" +
+				"		TICKSPERBASE = 1;\n" +
+				"		CPU_ID = \"slave\";\n" +
+				"	};\n" +
+				"\n" +
+				"	ALARM OtherAlarm {\n" +
+				"		COUNTER = OtherTimer;\n" +
+				"		ACTION = ACTIVATETASK {\n" +
+				"			TASK = Task1;\n" +
+				"		};\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"	};\n" +
+				"};";
+		commonWriterTest(text, 2);
+	}
+
 }

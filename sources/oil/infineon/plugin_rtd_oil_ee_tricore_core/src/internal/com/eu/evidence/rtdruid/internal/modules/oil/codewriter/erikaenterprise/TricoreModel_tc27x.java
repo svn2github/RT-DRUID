@@ -347,7 +347,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					decl.append(indent + "extern void "+addr+" ( void );\n");
 				}
 				
-				buff.append(pre + indent+indent+ "(EE_ADDR) " +addr);
+				buff.append(pre + indent+indent+ "&" +addr);
 				pre = ",\n";
 			}
 		
@@ -686,7 +686,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				 */
 				for (int j = 0; j < size.length; j++) {
 				    
-			        String value = j == 0 ? "{0, 0U}" : "{EE_STACK_INITP("+STACK_BASE_NAME+j+"), 0U}";
+			        String value = j == 0 ? "{0U, 0U}" : "{EE_STACK_INITP("+STACK_BASE_NAME+j+"), 0U}";
 	
 					sbStack.append(pre
 							+ post
