@@ -251,6 +251,10 @@ public class SectionWriterHalTricore extends SectionWriter
         	tmp_common_eeopts.add(board_eeopt);
         }
         TricoreCompiler masterCompiler = TricoreCompiler.UNKNOWN; 
+        
+        if (board_eeopt != null) {
+        	tmp_common_eeopts.add(board_eeopt);
+        }
 		
 		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId++) {
 			final IOilObjectList ool = oilObjects[currentRtosId];
