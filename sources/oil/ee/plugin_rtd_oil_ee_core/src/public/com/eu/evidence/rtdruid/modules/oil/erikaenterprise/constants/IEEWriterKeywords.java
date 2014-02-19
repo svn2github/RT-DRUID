@@ -182,7 +182,9 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	public final static String SGRK__MAKEFILE_EXT_EOF__ = "__MAKEFILE_EXTENTIONS__END_OF_FILE__";
 
 	
-	
+	/** Enables the usage of custom startup code */
+	public final static String DEF__CUSTOM_STARTUP_CODE__ = "EE_USE_CUSTOM_STARTUP_CODE";
+
 
 	/*
 	 * 

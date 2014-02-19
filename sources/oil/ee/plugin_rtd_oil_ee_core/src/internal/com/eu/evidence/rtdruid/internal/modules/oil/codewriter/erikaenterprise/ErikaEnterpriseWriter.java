@@ -359,7 +359,24 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 						answer.add(kernel_type);
 					}
 				}
+			}
+			{
+				/*******************************************************************
+				 * STARTUP CODE
+				 ******************************************************************/
+				// check only the first RTOS !!! (as rtos of CPU0)
+				String mcu_type = CommonUtils.getFirstChildEnumType(vt,
+						currentRtosPrefix + "CUSTOM_STARTUP_CODE", null);
+				if (mcu_type != null) {
 	
+					// check if the value is valid
+					checkKeys.setOilProperty("CUSTOM_STARTUP_CODE", mcu_type);
+
+					if ("true".equalsIgnoreCase(mcu_type) && !answer.contains(DEF__CUSTOM_STARTUP_CODE__)) {
+						answer.add(DEF__CUSTOM_STARTUP_CODE__);
+					}
+					
+				}
 			}
 		} // end for
 		
@@ -1189,6 +1206,9 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 
 						// -------- MULTI CPU -------------
 						{ DEF__MSRP__, "__MSRP__" },
+
+						// -------- STARTUP -------------
+						{ DEF__CUSTOM_STARTUP_CODE__, DEF__CUSTOM_STARTUP_CODE__ },
 
 				};
 

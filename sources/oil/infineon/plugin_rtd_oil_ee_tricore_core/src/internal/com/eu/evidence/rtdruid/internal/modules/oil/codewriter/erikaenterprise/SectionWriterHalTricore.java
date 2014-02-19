@@ -279,11 +279,17 @@ public class SectionWriterHalTricore extends SectionWriter
 			 **********************************************************************/
 			{
 				String[] cpu_linkerscript = parent.getCpuDataValue(ool, "LINKERSCRIPT");
+				boolean linker = false;
 				if (cpu_linkerscript != null && cpu_linkerscript.length>0 && cpu_linkerscript[0] != null) {
 					sgrCpu.setProperty(SGR_OS_CPU_LINKERSCRIPT, ""+cpu_linkerscript[0]);
+					linker = true;
 				}
 				if (mcu_linker_script != null) {
 					sgrCpu.setProperty(SGR_OS_MCU_LINKERSCRIPT, ""+mcu_linker_script);
+					linker = true;
+				}
+				if (parent.checkKeyword(DEF__CUSTOM_STARTUP_CODE__) && !linker) {
+					throw new OilCodeWriterException("A custom linker script is needed if the custom startup code flag is enabled.");
 				}
 			}
 

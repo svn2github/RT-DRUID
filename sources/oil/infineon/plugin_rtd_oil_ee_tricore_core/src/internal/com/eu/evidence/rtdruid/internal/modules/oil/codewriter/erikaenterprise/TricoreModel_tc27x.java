@@ -3,8 +3,6 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
-import static com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants.SPINLOCK_STATUS_ARRAY;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -25,7 +23,6 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWr
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterKernelCounterHw;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EmptyMacrosForSharedData;
@@ -66,6 +63,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	private static final String STACK_BASE_NAME = "EE_tc_stack_";
 	private static final String SGR_OS_CPU_SYS_STACK_SIZE = "sgr__os_cpu_system_stack_size";
 	private static final String SGR_OS_APPL_SHARED_STACK_ID = "sgr__os_application__shared_stack_id__integer";
+	private static final String SGR_OS_APPL_STARTUP_ADDRESS = "sgr__os_application__startup_address";
 	private static final String SGR_OS_CPU_SYS_CSA_SIZE = "sgr__os_cpu_system_csa_size";
 	private static final long DEFAULT_SYS_STACK_SIZE = 8192;
 	private static final long DEFAULT_SYS_CSA_SIZE = 16384;
@@ -215,6 +213,30 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		
 		/***********************************************************************
 		 * 
+		 * Startup Address
+		 *  
+		 **********************************************************************/
+		{
+			boolean master = true;
+			for (IOilObjectList ool : oilObjects) {
+		        final List<String> currentCpuPrefixes = AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX);
+		        prefix_loop:
+		        for (String currentCpuPrefix: currentCpuPrefixes) {
+					String[] tmp1 = CommonUtils.getValue(vt, currentCpuPrefix + "STARTUP_ADDRESS");
+					if (tmp1 != null && tmp1.length > 0) {
+						ool.getList(IOilObjectList.OS).get(0).setProperty(SGR_OS_APPL_STARTUP_ADDRESS, tmp1[0]);
+						if (master) {
+							Messages.sendWarningNl("Startup address is ignored for core master. Instead enable Custom Startup Code flag.");
+						}
+						break prefix_loop;
+					}
+		        }
+		        master = false;
+			}
+		}
+		
+		/***********************************************************************
+		 * 
 		 * Context Save Area size
 		 *  
 		 **********************************************************************/
@@ -248,7 +270,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	public void write(final int currentRtosId, final IOilObjectList ool, final IOilWriterBuffer buffers) throws OilCodeWriterException {
 		
 		if (currentRtosId == 0 && parent.getOilObjects().length>1) {
-			writeMulticoreCommon(ool, buffers);
+			writeMulticoreCommon(currentRtosId, buffers);
 		}
 		
 		writeCfg(currentRtosId, ool, buffers);
@@ -278,36 +300,46 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	/**
 	 * @param buffers
 	 */
-	private void writeMulticoreCommon(final IOilObjectList ool, final IOilWriterBuffer buffers) {
+	private void writeMulticoreCommon(final int currentRtosId, final IOilWriterBuffer buffers) {
+		final String indent = IWritersKeywords.INDENT;
+		boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
+		boolean customBoot = parent.checkKeyword(IEEWriterKeywords.DEF__CUSTOM_STARTUP_CODE__);
+		final String MAX_CPU = (binaryDistr ? "RTD_" : "EE_") + "MAX_CPU";
+		final IOilObjectList[] objects = parent.getOilObjects();
 		
-//		if (!parent.checkKeyword(QUEUED_SPINLOCK)) {
-//			boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
-//			final String MAX_CPU = (binaryDistr ? "RTD_" : "EE_") + "MAX_CPU";
-//			
-//			ICommentWriter commentWriter = SectionWriter.getCommentWriter(ool, FileTypes.C);
-//			
-//			IMacrosForSharedData macros = new EmptyMacrosForSharedData();
-//			CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(ool);
-//			if (currentStackDescription != null) {
-//				macros =currentStackDescription.getShareDataMacros();
-//			}
-//	
-//			{
-//		    	final ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
-//				CpuUtility.addSources(sgrOs, buffers.getFileName(FILE_EE_COMMON_C));
-//			}
-//			
-//			
-//			StringBuffer sbCommon_c = buffers.get(FILE_EE_COMMON_C);
-//			
-//			sbCommon_c.append(commentWriter.writerBanner("Spin Lock Implementation")
-//					+ "#include \"ee.h\"\n" +
-//					macros.vectorRamUnitialized(
-//								IWritersKeywords.INDENT + "EE_TYPESPINSTATUS ",
-//			    				SPINLOCK_STATUS_ARRAY,
-//			    				"["+MAX_CPU+"]",
-//			    				";\n"));
-//		}
+		ICommentWriter commentWriter = SectionWriter.getCommentWriter(objects[0], FileTypes.C);
+		IMacrosForSharedData macros = new EmptyMacrosForSharedData();
+		CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(objects[0]);
+		if (currentStackDescription != null) {
+			macros =currentStackDescription.getShareDataMacros();
+		}
+		StringBuffer sbCommon_c = buffers.get(FILE_EE_COMMON_C);
+		{
+			sbCommon_c.append(commentWriter.writerBanner("Slave core StartUp Address"));
+			StringBuilder buff = new StringBuilder(" = {\n");
+		
+			String pre = "";
+			for (int index = 1; index<objects.length; index++) {
+				IOilObjectList ool = objects[index];
+				String addr = AbstractRtosWriter.getOsProperty(ool, SGR_OS_APPL_STARTUP_ADDRESS);
+				if (addr == null) {
+					addr = "EE_CPU"+index + "_START_ADDR";
+					
+					if (customBoot) {
+						Messages.sendWarningNl("Even if the option USE CUSTOM STARTUP is enabled, the core " + index + " is using the default startup address.");
+					}
+				}
+				buff.append(pre + indent+indent+ "(EE_ADDR) " +addr);
+				pre = ",\n";
+			}
+		
+			sbCommon_c.append(
+					macros.constVectorRom(
+								IWritersKeywords.INDENT + "EE_ADDR const ",
+			    				"EE_as_core_start_addresses",
+			    				"["+MAX_CPU+" -1]",
+			    				buff + "\n"+indent +"};\n\n"));
+		}
 	}
 
 	/* (non-Javadoc)

@@ -43,6 +43,7 @@ IMPLEMENTATION ee {
         // -------------------------------------
 
 		STRING MASTER_CPU = "default_cpu";
+		BOOLEAN CUSTOM_STARTUP_CODE : "If true, disable default boot files. Usually also linkerscripts should be customized.";
         
         ENUM [
         ] CPU_DATA[];

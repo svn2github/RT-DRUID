@@ -58,6 +58,7 @@ IMPLEMENTATION ee {
                 STRING HW_ENDINIT : "A custom function that is called at the end of the Hardware startup initialization";
 				STRING LINKERSCRIPT : "A custom linker-script that is used for the current cpu. This option override the mcu-level custom linker-script, if defined.";
                 
+                STRING STARTUP_ADDRESS : "Address of startup code. Used only for slave cores. The master address is set through the boot and likerscript files.";
                 UINT32 SYS_STACK_SIZE;
                 UINT32 SYS_CSA_SIZE : "Size of Context Save Area";
                 FLOAT CPU_CLOCK : "The cpu clock, expressed as MHz.";

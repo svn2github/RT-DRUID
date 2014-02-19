@@ -659,7 +659,7 @@ public class SectionWriterHalArm7 extends SectionWriter implements IEEWriterKeyw
 				if (tmp != null && tmp.length != 0 && tmp[0] != null){
 		            String linkerScript = tmp[0];
 		            
-		            sbMakefile.append("PIC30_LINKERSCRIPT := " + linkerScript+"\n\n");
+		            sbMakefile.append("ARM7_LINKERSCRIPT := " + linkerScript+"\n\n");
 		        }
 		        
 				ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
