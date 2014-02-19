@@ -195,6 +195,7 @@ public interface IWritersKeywords {
 	public final static String WRITER_WS_OUTPUT_projectbase_DIR = "writer_base_output_prefix_inside_project";
 	public final static String WRITER_WS_PATH_OUTPUT_DIR = "writer_ws_project_relative_path_output_dir";
 	
+	public static final String WRITER_DISABLE_EE_RULES = "disable_generation_of_ee_rules_call_inside_makefiles";
 
 	
 	// ----------------------- ORTI -------------------------------

@@ -379,9 +379,12 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
 	            
 	    		
 	    		// COMMON MAKEFILE
-   	            sbCpu_mk.append(commentWriterMf.writerBanner("Default rules")
+				if (parent.getOptions().containsKey(IWritersKeywords.WRITER_DISABLE_EE_RULES) 
+						&& "true".equalsIgnoreCase("" +parent.getOptions().get(IWritersKeywords.WRITER_DISABLE_EE_RULES))) {
+					
+					sbCpu_mk.append(commentWriterMf.writerBanner("Default rules")
    	                    + "include $(EEBASE)/pkg/cfg/rules.mk\n\n");
-   	           
+				}
 	    		 	                    
 	    		{
 					/***********************************************************************

@@ -183,6 +183,10 @@ public class WorkerOilConfWriter extends WorkerConfReader {
 			options.put(IWritersKeywords.WRITER_FS_PATH_OUTPUT_DIR, outputDir);
 			options.put(IWritersKeywords.WRITER_WS_OUTPUT_projectbase_DIR, "..");
 			options.put(IWritersKeywords.WRITER_LAST_OUTPUT_DIR, tmp);
+			
+			if (System.getenv("EE_DISABLE_RULES") != null) {
+				options.put(IWritersKeywords.WRITER_DISABLE_EE_RULES, "true".equalsIgnoreCase(System.getenv("EE_DISABLE_RULES")));
+			}
 		}
 
 		// --------------- Load data ------------------
