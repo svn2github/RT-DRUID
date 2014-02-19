@@ -218,6 +218,230 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"};\n";
 		commonWriterTest(text, 1);
 	}
+	
+	@Test public void testOsAppl() {
+	    final String text =
+			"CPU PerfTestApp {\n" +
+			"  OS EE {\n" +
+			"    EE_OPT = \"EE_DEBUG\";\n" +
+			"    EE_OPT = \"__ASSERT__\";\n" +
+			"    EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+			"\n" +
+			"    MEMORY_PROTECTION = TRUE;\n" +
+			"    STACKMONITORING = TRUE;\n" +
+			"\n" +
+			"    /* Used to enable static map of OS-Applications on protection sets\n" +
+			"       optimization */\n" +
+			"    EE_OPT = \"EE_OS_APP_MAPPED_ON_PROTECTION_SETS\";\n" +
+			"\n" +
+			"    CPU_DATA = TRICORE {\n" +
+			"      CPU_CLOCK = 200.0;\n" +
+			"      APP_SRC = \"code.c\";\n" +
+			"      APP_SRC = \"app.c\";\n" +
+			"      COMPILER_TYPE = DIAB;\n" +
+			"      MULTI_STACK = TRUE {\n" +
+			"        IRQ_STACK = TRUE {\n" +
+			"            SYS_SIZE = 256;\n" +
+			"        };\n" +
+			"      };\n" +
+			"      SYS_CSA_SIZE=0x2000;\n" +
+			"    };\n" +
+			"\n" +
+			"    MCU_DATA = TRICORE {\n" +
+			"      MODEL = TC27x;\n" +
+			"    };\n" +
+			"\n" +
+			"    STATUS = EXTENDED;\n" +
+			"    USEPARAMETERACCESS = FALSE;\n" +
+			"    USERESSCHEDULER = FALSE;\n" +
+			"    SHUTDOWNHOOK = TRUE;\n" +
+			"\n" +
+			"    PROTECTIONHOOK = TRUE;\n" +
+			"    KERNEL_TYPE    = BCC1;\n" +
+			"    ORTI_SECTIONS  = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskApp1Prio1 {\n" +
+			"    PRIORITY = 2;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    AUTOSTART = TRUE;\n" +
+			"    STACK = SHARED;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskApp1Prio2 {\n" +
+			"    PRIORITY = 2;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = SHARED;\n" +
+			"  };\n" +
+			"\n" +
+			"  APPLICATION UserApp1 {\n" +
+			"    TRUSTED = FALSE;\n" +
+			"    TASK=TaskApp1Prio1;\n" +
+			"    TASK=TaskApp1Prio2;\n" +
+			"    MEMORY_SIZE = 0x1000;\n" +
+			"    SHARED_STACK_SIZE = 256;\n" +
+			"    IRQ_STACK_SIZE = 256;\n" +
+			"  };\n" +
+			"};\n";
+		commonWriterTest(text, 1);
+	}
+
+	@Test public void testTc_memProt_09() {
+	    final String text =
+			"CPU PerfTestApp {\n" +
+			"  OS EE {\n" +
+			"    EE_OPT = \"EE_DEBUG\";\n" +
+			"    EE_OPT = \"__ASSERT__\";\n" +
+			"    //EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+			"    EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+			"    //EE_OPT = \"EE_MM_OPT\";\n" +
+			"\n" +
+			"    MEMORY_PROTECTION = TRUE;\n" +
+			"    STACKMONITORING = TRUE;\n" +
+			"\n" +
+			"    /* Used to enable static map of OS-Applications on protection sets\n" +
+			"       optimization */\n" +
+			"    EE_OPT = \"EE_OS_APP_MAPPED_ON_PROTECTION_SETS\";\n" +
+			"\n" +
+			"    CPU_DATA = TRICORE {\n" +
+			"      CPU_CLOCK = 200.0;\n" +
+			"      APP_SRC = \"code.c\";\n" +
+			"      APP_SRC = \"app.c\";\n" +
+			"      APP_SRC = \"test_irq.c\";\n" +
+			"      COMPILER_TYPE = DIAB;\n" +
+			"      MULTI_STACK = TRUE {\n" +
+			"        IRQ_STACK = TRUE {\n" +
+			"            SYS_SIZE = 256;\n" +
+			"        };\n" +
+			"      };\n" +
+			"      SYS_CSA_SIZE=0x2000;\n" +
+			"    };\n" +
+			"\n" +
+			"    MCU_DATA = TRICORE {\n" +
+			"      MODEL = TC27x;\n" +
+			"    };\n" +
+			"\n" +
+			"    STATUS = EXTENDED;\n" +
+			"    USEPARAMETERACCESS = FALSE;\n" +
+			"    USERESSCHEDULER = FALSE;\n" +
+			"    STARTUPHOOK=TRUE;\n" +
+			"    SHUTDOWNHOOK=TRUE;\n" +
+			"    ERRORHOOK=TRUE;\n" +
+			"\n" +
+			"    KERNEL_TYPE = ECC2;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK MainTask {\n" +
+			"    PRIORITY = 1;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = NON;\n" +
+			"    AUTOSTART = TRUE;\n" +
+			"    STACK = SHARED;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskApp1Prio2 {\n" +
+			"    PRIORITY = 2;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = SHARED;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskApp1Prio4 {\n" +
+			"    PRIORITY = 4;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = NON;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = PRIVATE {\n" +
+			"      SYS_SIZE = 256;\n" +
+			"    };\n" +
+			"    EVENT = DummyEvent;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskApp1Prio6 {\n" +
+			"    PRIORITY = 6;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = SHARED;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskApp2Prio3 {\n" +
+			"    PRIORITY = 3;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = SHARED;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskApp2Prio5 {\n" +
+			"    PRIORITY = 5;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = NON;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = PRIVATE {\n" +
+			"      SYS_SIZE = 256;\n" +
+			"    };\n" +
+			"    EVENT = DummyEvent;\n" +
+			"  };\n" +
+			"\n" +
+			"  ISR App1Isr1 {\n" +
+			"    CATEGORY = 2;\n" +
+			"    PRIORITY = 1;\n" +
+			"  };\n" +
+			"\n" +
+			"  ISR App1Isr2 {\n" +
+			"    CATEGORY = 2;\n" +
+			"    PRIORITY = 2;\n" +
+			"  };\n" +
+			"\n" +
+			"  ISR App2Isr3 {\n" +
+			"    CATEGORY = 2;\n" +
+			"    PRIORITY = 3;\n" +
+			"  };\n" +
+			"\n" +
+			"  EVENT DummyEvent  { MASK = AUTO; };\n" +
+			"\n" +
+			"  APPLICATION UserApp1 {\n" +
+			"    TRUSTED = FALSE;\n" +
+			"    ISR  = App1Isr1;\n" +
+			"    ISR  = App1Isr2;\n" +
+			"    TASK = TaskApp1Prio2;\n" +
+			"    TASK = TaskApp1Prio4;\n" +
+			"    TASK = TaskApp1Prio6;\n" +
+			"    MEMORY_SIZE = 0x1000;\n" +
+			"    SHARED_STACK_SIZE = 256;\n" +
+			"    IRQ_STACK_SIZE = 256;\n" +
+			"    STARTUPHOOK=TRUE;\n" +
+			"    SHUTDOWNHOOK=TRUE;\n" +
+			"    ERRORHOOK=TRUE;\n" +
+			"  };\n" +
+			"\n" +
+			"  APPLICATION TrustedApp2 {\n" +
+			"    TRUSTED = TRUE {\n" +
+			"      TRUSTED_FUNCTION = TRUE {\n" +
+			"        NAME = \"test_fire_irq\";\n" +
+			"      };\n" +
+			"    };\n" +
+			"    ISR  = App2Isr3;\n" +
+			"    TASK = TaskApp2Prio3;\n" +
+			"    TASK = TaskApp2Prio5;\n" +
+			"    TASK = MainTask;\n" +
+			"    MEMORY_SIZE = 0x1000;\n" +
+			"    SHARED_STACK_SIZE = 256;\n" +
+			"    IRQ_STACK_SIZE = 256;\n" +
+			"    STARTUPHOOK=TRUE;\n" +
+			"    SHUTDOWNHOOK=TRUE;\n" +
+			"    ERRORHOOK=TRUE;\n" +
+			"  };\n" +
+			"};\n";
+			commonWriterTest(text, 1);
+		}
 
 	@Test public void testIsrPriority2_memProt() {
 	    final String text =

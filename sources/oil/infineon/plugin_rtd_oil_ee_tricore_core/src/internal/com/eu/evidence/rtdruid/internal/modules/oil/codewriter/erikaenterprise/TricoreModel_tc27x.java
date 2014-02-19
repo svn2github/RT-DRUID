@@ -762,15 +762,15 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				 */
 				final String additional_elements = osApplication_enabled ? ", 0U, 0U" : ", 0U";
 				sbStack.append(indent + "struct EE_TC_TOS EE_tc_system_tos["
-						+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_tc_system_tos", size.length - is_irq_stack.cardinality())
+						+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_tc_system_tos", size.length /* - is_irq_stack.cardinality()*/)
 						+ "] = {\n"
 						+ writeSystemTos(commentC, size, descrStack, null, is_irq_stack, additional_elements, false));
 				    
 				if (osApplication_enabled) {
 					sbStack.append(indent + "struct EE_TC_BOS const EE_tc_system_bos["
-							+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_tc_system_bos", size.length - is_irq_stack.cardinality())
+							+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_tc_system_bos", size.length /* - is_irq_stack.cardinality()*/)
 							+ "] = {\n"
-							+ writeSystemTos(commentC, size, descrStack, new String[] {"EE_E_USTACK", "EE_B_USTACK"}, is_irq_stack, "", needStackMonitoring));
+							+ writeSystemTos(commentC, size, descrStack, new String[] {"(EE_ADDR)EE_E_USTACK", "(EE_ADDR)EE_B_USTACK"}, is_irq_stack, "", needStackMonitoring));
 				}
 	
 				sbStack.append(indent+ "EE_UREG EE_tc_active_tos = 0U; " +commentC.writerSingleLineComment("dummy") + "\n");
@@ -789,8 +789,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 								.append(indent+commentC.writerSingleLineComment("stack used only by IRQ handlers")
 										+ indent+"struct EE_TOS EE_tc_IRQ_tos = {\n"
 										+ indent+indent+"EE_STACK_INITP("+STACK_BASE_NAME+j+")"
-										+ (needStackMonitoring ? ", EE_STACK_ENDP("+STACK_BASE_NAME+j+")" : "") + "\n"
-										+ indent+"};\n\n");
+//										+ (needStackMonitoring ? ", EE_STACK_ENDP("+STACK_BASE_NAME+j+")" : "")
+										+ "\n" + indent+"};\n\n");
 	
 						// REQUIRED By ORTI's STACK
 						int eesdID = stackTmp.size();
@@ -841,7 +841,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		String pre = "";
 		String post = "";
 		for (int j = 0; j < size.length; j++) {
-		    if (!is_irq_stack.get(j)) {
+		    //if (!is_irq_stack.get(j))
+		    {
 		        String value = "{" + 
 		        			(j == 0 ? (globalStackNames == null ? "0" : globalStackNames[0]) : "EE_STACK_INITP("+STACK_BASE_NAME+j+")")
 		        			+ (needStackMonitoring ? (j == 0 ? (globalStackNames == null ? ", 0" : ", " +globalStackNames[1]) : ", EE_STACK_ENDP("+STACK_BASE_NAME+j+")") : "")

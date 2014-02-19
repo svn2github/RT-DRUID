@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.AutoOptions;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
@@ -102,6 +103,13 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 	public IOilWriterBuffer[] internalWrite(IVarTree vt)
 			throws OilCodeWriterException {
 		parent.check(vt);
+		
+		if (!parent.checkKeyword(IEEWriterKeywords.DEF__MULTI_STACK__) 
+				&& parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION)) {
+			throw new OilCodeWriterException("Memory protection requires multi stack enabled.");
+		}
+		
+
 
 		return writeMemoryProtection();
 	}

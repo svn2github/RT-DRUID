@@ -10,6 +10,7 @@ import static com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils.
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -133,6 +134,11 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			throws OilCodeWriterException {
 		parent.check(vt);
 		
+		if (!parent.checkKeyword(IEEWriterKeywords.DEF__MULTI_STACK__) 
+				&& parent.checkKeyword(IWritersKeywords.KERNEL_OS_APPLICATION)) {
+			Messages.sendWarningNl("OsApplication should be used with multi stack enabled.");
+		}
+		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		IOilWriterBuffer[] answer = new IOilWriterBuffer[oilObjects.length];
 		for (int currentRtosId = 0; currentRtosId <oilObjects.length; currentRtosId++) {
@@ -215,13 +221,13 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				
 			}
 		}
-		application_rom.append(" }, EE_MEMPROT_TRUST_MODE, EE_NIL" +
+		application_rom.append(" }, EE_MEMPROT_TRUST_MODE" +
 				(needStackMonitoring ? ", 0U": "") +
-				"}");
+				", EE_NIL}");
 		
 		StringBuffer application_ram = new StringBuffer(
-				indent1 + "EE_as_Application_RAM_type EE_as_Application_RAM[EE_MAX_APP] = {\n" +
-				indent2 + "EE_APP_RAM_INIT(0U)");
+				indent1 + "EE_as_Application_RAM_type EE_as_Application_RAM[EE_MAX_APP];\n");
+				//= {\n" +				indent2 + "EE_APP_RAM_INIT(0U)");
 		
 				
 		StringBuilder startUp_buffer  = new StringBuilder(indent1 +"const EE_HOOKTYPE EE_as_Application_startuphook[EE_MAX_APP] = {\n" +
@@ -308,18 +314,18 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					}
 				}
 				application_rom.append(" }, "+
-							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") +", "+restartTask+
-							(needStackMonitoring ? ", EE_STACK_ENDP("+stack_base_name+stack_id+")": "") +
-							"}");
+							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") +
+							(needStackMonitoring ? ", "+stack_id+"U": "") +
+							", "+restartTask+"}");
 			}
 
-			if (parent.checkKeyword(IWritersKeywords.CPU_PPCE200ZX)) {
-				application_ram.append(end +
-						indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)])");
-			} else {
-				application_ram.append(end +
-						indent2 + "EE_APP_RAM_INIT(EE_STACK_INITP("+stack_base_name+stack_id+"))");
-			}
+//			if (parent.checkKeyword(IWritersKeywords.CPU_PPCE200ZX)) {
+//				application_ram.append(end +
+//						indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)])");
+//			} else {
+//				application_ram.append(end +
+//						indent2 + "EE_APP_RAM_INIT(EE_STACK_INITP("+stack_base_name+stack_id+"))");
+//			}
 			
 			startUp_buffer.append(end +indent2 + hStartup);
 			shutdown_buffer.append(end +indent2 + hShutdown);
@@ -337,7 +343,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		answer.get(EE_APPS_CONF).append(linker_buffer + "\n");
 		
 		application_rom.append("\n" + indent1 +"};\n\n");
-		application_ram.append("\n" + indent1 +"};\n\n");
+		//application_ram.append("\n" + indent1 +"};\n\n");
 		startUp_buffer.append("\n" + indent1 +"};\n\n");
 		shutdown_buffer.append("\n" + indent1 +"};\n\n");
 		error_buffer.append("\n" + indent1 +"};\n\n");
@@ -413,8 +419,20 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				indent1 + "#define EE_MAX_ISR_ID          "+orderedIsr.size()+"\n\n"); 				
 
 		// ee_cfg.c
-		ee_c_buffer.append(
-				commentWriterC.writerBanner("ISR definition") +
+		ee_c_buffer.append(commentWriterC.writerBanner("ISR definition"));
+		HashSet<String> def = new HashSet<String>();
+		for (ISimpleGenRes isr : orderedIsr) {
+			if (isr != null) {
+				String name = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_HANDLER);
+				if (!def.contains(name)) {
+					def.add(name);
+					ee_c_buffer.append("extern void "+name+"( void ); /* "+isr.getName()+" */\n");
+				} else {
+					ee_c_buffer.append(commentWriterC.writerSingleLineComment("extern void "+name+"( void ); /* "+isr.getName()+" */"));
+				}
+			}		
+		}
+		ee_c_buffer.append("\n" +
 				indent1 + "EE_as_ISR_RAM_type EE_as_ISR_stack[EE_MAX_NESTING_LEVEL];\n\n" +
 				indent1 + "const EE_as_ISR_ROM_type EE_as_ISR_ROM[EE_MAX_ISR_ID] = {\n");
 				
@@ -424,9 +442,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		String post = "";
 		final boolean needOrtiHandler = parent.checkKeyword(IWritersKeywords.ENABLE_ORTI_ISR2);
 		for (ISimpleGenRes isr : orderedIsr) {
-
-			
-			
 			if (isr != null) {
 				String name = isr.getName();
 				String orti_handler = needOrtiHandler ? ", " + isr.getString(ISimpleGenResKeywords.ISR_GENERATED_HANDLER) : "";
