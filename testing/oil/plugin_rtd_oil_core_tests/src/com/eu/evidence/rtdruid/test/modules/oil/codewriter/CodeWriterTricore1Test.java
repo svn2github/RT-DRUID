@@ -2240,8 +2240,8 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 //			"        RESOURCE = MUTEX_2;\n" + 
 			"	};\n"+
 			"\n"+
-			"	TASK TaskSlave2a {\n"+
-			"		CPU_ID = \"slave2\";\n"+
+			"	TASK TaskSlave1c {\n"+
+			"		CPU_ID = \"slave1\";\n"+
 			"		PRIORITY = 2;\n"+
 			"		AUTOSTART = FALSE;\n"+
 			"        STACK = PRIVATE {\n" +
@@ -2266,9 +2266,11 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 			"    RESOURCE MUTEX_1 { RESOURCEPROPERTY = STANDARD; };\n" + 
 			"    RESOURCE MUTEX_2 { RESOURCEPROPERTY = STANDARD; };\n" + 
 			"    RESOURCE MUTEX_3 { RESOURCEPROPERTY = STANDARD; };\n" + 
-			"    SPINLOCK MUTEX_1 {  };\n" + 
-			"    SPINLOCK MUTEX_2 {  };\n" + 
-			"    SPINLOCK MUTEX_3 {  };\n" + 
+			"    SPINLOCK SPIN_1 {  };\n" + 
+			"    SPINLOCK SPIN_2 {  };\n" + 
+			"    SPINLOCK SPIN_3 {  };\n" + 
+			"    SPINLOCK SPIN_4 {  };\n" + 
+			"    SPINLOCK SPIN_5 {  };\n" + 
 			"};\n";
 		commonWriterTest(text, 3);
 	}

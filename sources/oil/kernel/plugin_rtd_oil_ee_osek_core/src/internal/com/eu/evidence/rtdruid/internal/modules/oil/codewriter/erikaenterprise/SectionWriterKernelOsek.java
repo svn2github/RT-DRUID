@@ -1581,13 +1581,16 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			// add a new line
 			buffer.append("\n");
 		}
-		
+		writeSpinlock(answer);
 		return answer;
 	}
 	
 	protected void writeSpinlock(IOilWriterBuffer[] buffers) {
 		
 		if (parent.checkKeyword(DEF__USER_SPINLOCKS__)) {
+			
+			final String indent1 = IWritersKeywords.INDENT;
+			final String indent2 = indent1 + indent1;
 			
 			IOilObjectList[] oilObjects = parent.getOilObjects();
 			
@@ -1597,15 +1600,16 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				StringBuffer bufferC = buffers[rtosId].get(FILE_EE_CFG_C);
 	
 				
-				bufferC.append(commentWriterC.writerSingleLineComment("Spinlock locker") +
-						"TaskType EE_as_spinlocks_locker_task_or_isr2[EE_MAX_TASK + EE_MAX_ISR2] = {");
-				String pre = "";
+				bufferC.append(commentWriterC.writerBanner("Spinlock") +
+						indent1 + "TaskType EE_as_spinlocks_locker_task_or_isr2[EE_MAX_TASK + EE_MAX_ISR2] = {\n");
+				String pre = indent2;
 				Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_NUMBER);
 				int lockerSize = ool.getList(IOilObjectList.TASK).size() + (o == null ? 0 : ((Integer) o).intValue()) ; 
 				for (int i=0; i<lockerSize; i++ ) {
 					bufferC.append(pre + "EE_NIL");
 					pre = ", ";
 				};
+				bufferC.append("\n" + indent1 + "};\n\n");
 				
 				if (rtosId == 0) {
 					IMacrosForSharedData macros = new EmptyMacrosForSharedData();
@@ -1614,36 +1618,51 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						macros = currentStackDescription.getShareDataMacros();
 					}
 					
-					StringBuffer body = new StringBuffer(" = {\n");
 					int size = 0;
 					for (IOilObjectList spins : oilObjects) {
 						size += spins.getList(IOilObjectList.SPINLOCK).size();
 					}
 					
+					StringBuffer body_locker = new StringBuffer(" = {\n");
 					pre = "";
 					for (int i=0; i<size; i++ ) {
-						body.append(pre + IWritersKeywords.INDENT +IWritersKeywords.INDENT + "OS_CORE_ID_INVALID");
+						body_locker.append(pre + indent2 + "OS_CORE_ID_INVALID");
 						pre = ",\n";
 					};
-					body.append("\n"+IWritersKeywords.INDENT+"};\n");
+					body_locker.append("\n"+indent1+"};\n");
+					StringBuffer body_last = new StringBuffer(" = {\n");
+					pre = "";
+					for (int i=0; i<oilObjects.length; i++ ) {
+						body_last.append(pre + indent2 + "OS_SPINLOCK_ID_INVALID");
+						pre = ",\n";
+					};
+					body_last.append("\n"+indent1+"};\n");
+					StringBuffer body_stack = new StringBuffer(" = {\n");
+					pre = "";
+					for (int i=0; i<size; i++ ) {
+						body_stack.append(pre + indent2 + "OS_SPINLOCK_ID_INVALID");
+						pre = ",\n";
+					};
+					body_stack.append("\n"+indent1+"};\n");
 	
 					StringBuffer bufferCommon = buffers[rtosId].get(FILE_EE_COMMON_C);
 					bufferCommon.append(
+							commentWriterC.writerBanner("Spin locks") + 
 							macros.vectorRam(
 									IWritersKeywords.INDENT + "CoreIdType volatile ",
 				    				"EE_as_spinlocks_locker_core",
-				    				"[EE_MAX_SPINLOCK]",
-				    				body.toString()) +
+				    				"[EE_MAX_SPINLOCK_USER]",
+				    				body_locker.toString()) +
 							macros.vectorRam(
 									IWritersKeywords.INDENT + "SpinlockIdType volatile ",
 				    				"EE_as_spinlocks_last",
 				    				"[EE_MAX_CPU]",
-				    				body.toString()) +
+				    				body_last.toString()) +
 							macros.vectorRam(
 									IWritersKeywords.INDENT + "SpinlockIdType volatile ",
 				    				"EE_as_spinlocks_stack",
-				    				"[EE_MAX_SPINLOCK]",
-				    				body.toString()) + "\n");
+				    				"[EE_MAX_SPINLOCK_USER]",
+				    				body_stack.toString()) + "\n");
 				}
 			}
 		}
