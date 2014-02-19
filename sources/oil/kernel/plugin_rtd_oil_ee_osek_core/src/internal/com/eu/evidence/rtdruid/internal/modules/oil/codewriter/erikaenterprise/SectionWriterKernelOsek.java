@@ -33,9 +33,11 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EmptyMacrosForSharedData;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
 /**
@@ -996,14 +998,20 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				} // end "if (mutexList.size()>0)"
 			}
 			
-			if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES))) {
+			if (parent.checkKeyword(DEF__USER_SPINLOCKS__) || "true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES))) {
 				/*
 				 * ISR nexting level
 				 */
 				final String arraySizeId; 
 				final int size;
-				arraySizeId = EE_MAX_ISR2_WITH_RESOURCES; 
-				size = isr_size;
+				if (parent.checkKeyword(DEF__USER_SPINLOCKS__)) {
+					arraySizeId = "EE_MAX_ISR2";
+					Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_NUMBER);
+					size = o == null ? 0 : ((Integer) o).intValue() ; 
+				} else {
+					arraySizeId = EE_MAX_ISR2_WITH_RESOURCES; 
+					size = isr_size;
+				}
 //				/ se ci sono spinlock, usare MAX_ISR2. Nota ... serve una variabile da portarsi appresoo
 //				/ serve una chiave per dire che esistono degli spinlock a livello globale
 				buffer
@@ -1577,7 +1585,70 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		return answer;
 	}
 	
+	protected void writeSpinlock(IOilWriterBuffer[] buffers) {
+		
+		if (parent.checkKeyword(DEF__USER_SPINLOCKS__)) {
+			
+			IOilObjectList[] oilObjects = parent.getOilObjects();
+			
+			for (int rtosId = 0; rtosId < oilObjects.length; rtosId++) {
+				IOilObjectList ool = oilObjects[rtosId];
+				final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
+				StringBuffer bufferC = buffers[rtosId].get(FILE_EE_CFG_C);
 	
+				
+				bufferC.append(commentWriterC.writerSingleLineComment("Spinlock locker") +
+						"TaskType EE_as_spinlocks_locker_task_or_isr2[EE_MAX_TASK + EE_MAX_ISR2] = {");
+				String pre = "";
+				Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_NUMBER);
+				int lockerSize = ool.getList(IOilObjectList.TASK).size() + (o == null ? 0 : ((Integer) o).intValue()) ; 
+				for (int i=0; i<lockerSize; i++ ) {
+					bufferC.append(pre + "EE_NIL");
+					pre = ", ";
+				};
+				
+				if (rtosId == 0) {
+					IMacrosForSharedData macros = new EmptyMacrosForSharedData();
+					CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(oilObjects[0]);
+					if (currentStackDescription != null) {
+						macros = currentStackDescription.getShareDataMacros();
+					}
+					
+					StringBuffer body = new StringBuffer(" = {\n");
+					int size = 0;
+					for (IOilObjectList spins : oilObjects) {
+						size += spins.getList(IOilObjectList.SPINLOCK).size();
+					}
+					
+					pre = "";
+					for (int i=0; i<size; i++ ) {
+						body.append(pre + IWritersKeywords.INDENT +IWritersKeywords.INDENT + "OS_CORE_ID_INVALID");
+						pre = ",\n";
+					};
+					body.append("\n"+IWritersKeywords.INDENT+"};\n");
+	
+					StringBuffer bufferCommon = buffers[rtosId].get(FILE_EE_COMMON_C);
+					bufferCommon.append(
+							macros.vectorRam(
+									IWritersKeywords.INDENT + "CoreIdType volatile ",
+				    				"EE_as_spinlocks_locker_core",
+				    				"[EE_MAX_SPINLOCK]",
+				    				body.toString()) +
+							macros.vectorRam(
+									IWritersKeywords.INDENT + "SpinlockIdType volatile ",
+				    				"EE_as_spinlocks_last",
+				    				"[EE_MAX_CPU]",
+				    				body.toString()) +
+							macros.vectorRam(
+									IWritersKeywords.INDENT + "SpinlockIdType volatile ",
+				    				"EE_as_spinlocks_stack",
+				    				"[EE_MAX_SPINLOCK]",
+				    				body.toString()) + "\n");
+				}
+			}
+		}
+
+	}
 	
 	
 

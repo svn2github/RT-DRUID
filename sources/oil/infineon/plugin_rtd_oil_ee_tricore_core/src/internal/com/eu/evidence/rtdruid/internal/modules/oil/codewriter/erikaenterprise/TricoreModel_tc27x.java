@@ -279,34 +279,34 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	 */
 	private void writeMulticoreCommon(final IOilObjectList ool, final IOilWriterBuffer buffers) {
 		
-		if (!parent.checkKeyword(QUEUED_SPINLOCK)) {
-			boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
-			final String MAX_CPU = (binaryDistr ? "RTD_" : "EE_") + "MAX_CPU";
-			
-		ICommentWriter commentWriter = SectionWriter.getCommentWriter(ool, FileTypes.C);
-
-			IMacrosForSharedData macros = new EmptyMacrosForSharedData();
-			CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(ool);
-			if (currentStackDescription != null) {
-				macros =currentStackDescription.getShareDataMacros();
-			}
-	
-		{
-	    	final ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
-			CpuUtility.addSources(sgrOs, buffers.getFileName(FILE_EE_COMMON_C));
-		}
-		
-		
-		StringBuffer sbCommon_c = buffers.get(FILE_EE_COMMON_C);
-		
-		sbCommon_c.append(commentWriter.writerBanner("Spin Lock Implementation")
-					+ "#include \"ee.h\"\n" +
-					macros.vectorRamUnitialized(
-								IWritersKeywords.INDENT + "EE_TYPESPINSTATUS ",
-			    				SPINLOCK_STATUS_ARRAY,
-			    				"["+MAX_CPU+"]",
-			    				";\n"));
-		}
+//		if (!parent.checkKeyword(QUEUED_SPINLOCK)) {
+//			boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
+//			final String MAX_CPU = (binaryDistr ? "RTD_" : "EE_") + "MAX_CPU";
+//			
+//			ICommentWriter commentWriter = SectionWriter.getCommentWriter(ool, FileTypes.C);
+//			
+//			IMacrosForSharedData macros = new EmptyMacrosForSharedData();
+//			CpuHwDescription currentStackDescription = ErikaEnterpriseWriter.getCpuHwDescription(ool);
+//			if (currentStackDescription != null) {
+//				macros =currentStackDescription.getShareDataMacros();
+//			}
+//	
+//			{
+//		    	final ISimpleGenRes sgrOs = ool.getList(IOilObjectList.OS).get(0);
+//				CpuUtility.addSources(sgrOs, buffers.getFileName(FILE_EE_COMMON_C));
+//			}
+//			
+//			
+//			StringBuffer sbCommon_c = buffers.get(FILE_EE_COMMON_C);
+//			
+//			sbCommon_c.append(commentWriter.writerBanner("Spin Lock Implementation")
+//					+ "#include \"ee.h\"\n" +
+//					macros.vectorRamUnitialized(
+//								IWritersKeywords.INDENT + "EE_TYPESPINSTATUS ",
+//			    				SPINLOCK_STATUS_ARRAY,
+//			    				"["+MAX_CPU+"]",
+//			    				";\n"));
+//		}
 	}
 
 	/* (non-Javadoc)

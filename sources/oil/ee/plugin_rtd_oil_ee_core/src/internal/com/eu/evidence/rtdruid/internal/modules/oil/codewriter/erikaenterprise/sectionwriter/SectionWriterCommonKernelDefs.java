@@ -109,7 +109,6 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 	 * @throws OilCodeWriterException
 	 *             if there are some problems
 	 */
-	@SuppressWarnings("unchecked")
 	protected IOilWriterBuffer[] writeCommonDefinition() throws OilCodeWriterException {
 		
 		IOilObjectList[] oilObjects = parent.getOilObjects();

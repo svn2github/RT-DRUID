@@ -145,6 +145,9 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	/** Enable multiprocesor */
 	public final static String DEF__MSRP__ = "__MSRP__";
 	
+	/** Enable user spinlock handling */
+	public final static String DEF__USER_SPINLOCKS__ = "__USER_SPINLOCKS__";
+	
 	/** A 'general' way to define syncronous startup of a MultiProcessor System.
 	 *  
 	 *  This keyword isn't an EE_OPT and isn't directly used by Erika Enterprise 
@@ -272,6 +275,7 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	public final static String OS_APPLICATION_TRUSTED_FUNCTIONS = "SGR_os_application_trusted_functions__String_list";
 	
 
-	public final static String QUEUED_SPINLOCK = "enable queued spinlocs";
+	public final static String SIMPLE_SPINLOCK = "enable simple spinlock handling";
+	public final static String QUEUED_SPINLOCK = "enable queued spinlock handling";
 
 }

@@ -5,6 +5,8 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter;
 
+import static com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterQueuedSpinlock.getSpinCoreId;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
@@ -387,7 +389,7 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 			for (int i=0; i<rtosNumber; i++) {
 				sbRnFirst_body.append(pre2+"{ -1, -1}");
 				if (parent.checkKeyword(QUEUED_SPINLOCK)) {
-					sbRnSpin_body.append(pre2+SectionWriterQueuedSpinlock.getSpinCoreId(i));
+					sbRnSpin_body.append(pre2+getSpinCoreId(i));
 				} else {
 					sbRnSpin_body.append(pre2+(nGlobRes+i)+"U");
 				}

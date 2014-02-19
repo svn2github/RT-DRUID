@@ -106,6 +106,9 @@
       <writer
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterQueuedSpinlock">
       </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterSimpleSpinlock">
+      </writer>
    </extension>
 
 

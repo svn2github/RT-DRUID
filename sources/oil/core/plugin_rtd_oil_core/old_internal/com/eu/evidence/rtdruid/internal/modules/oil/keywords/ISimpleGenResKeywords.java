@@ -217,6 +217,7 @@ public interface ISimpleGenResKeywords {
 	public final static String OS_CPU_NIOS2_APP_CONFIG = "_cpu_type_specifics_nios2_app_config_";
 //	public final static String OS_CPU_ORTI_SECTIONS = "_cpu_type_specifics_orti_sections_";
 //	
+	public static final String OS_SPINLOCK_NESTED = "_os_with_nested_spinlocks_";
 	
 	public final static String OS_CPU__ISR2_NUMBER = "number_of_configured_isr2";
 	public final static String OS_CPU__ISR_REQUIRES_RESOURCES = "an_isr_requires_resources";
@@ -305,6 +306,13 @@ public interface ISimpleGenResKeywords {
 	public final static String OS_APPL_LIST_REF_TASK = "os_application_list_ref_task";
 	
 	public final static String OS_APPL_SHARED_STACK_ID = "os_application_shared_stack_id";
+
+	/***************************************************************************
+	 * OS Application
+	 **************************************************************************/
+	public static final String SPINLOCK_NEXT = "spinlock_next";
+	public static final String SPINLOCK_APPLICATION  = "spinlock_application";
+
 	
 }
 

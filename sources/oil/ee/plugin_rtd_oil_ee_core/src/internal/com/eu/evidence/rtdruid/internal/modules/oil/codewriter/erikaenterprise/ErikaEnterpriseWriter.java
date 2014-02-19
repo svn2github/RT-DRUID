@@ -398,6 +398,11 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
          **********************************************************************/
 		if (getRtosSize() > 1) {
 		    answer.add(DEF__MSRP__);
+		    
+		    // check spinlocks
+		    if (existObject(IOilObjectList.SPINLOCK)) {
+			    answer.add(DEF__USER_SPINLOCKS__);
+		    }
 		}
 		
 		/***********************************************************************
@@ -884,6 +889,82 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		}
 		}
 	
+		/***********************************************************************
+		 * 
+		 * Check and order Spin-locks
+		 *  
+		 **********************************************************************/
+		 {
+			 boolean enableNestedSpinlocks = false;
+			 for (IOilObjectList ool: answer) {
+				 boolean hasNext = false;
+				 class SpinList {
+					ISimpleGenRes spin;
+					boolean hasPrev;
+					SpinList next;
+					/**
+					 * 
+					 */
+					public SpinList(ISimpleGenRes o) {
+						spin = o;
+						next = null;
+						hasPrev = false;
+					}
+				 };
+				 
+				 LinkedHashMap<String, SpinList> allSpins = new LinkedHashMap<String, SpinList>();
+				 for (ISimpleGenRes spin : ool.getList(IOilObjectList.SPINLOCK)) {
+					 allSpins.put(spin.getName(), new SpinList(spin));
+					 if (spin.containsProperty(ISimpleGenResKeywords.SPINLOCK_NEXT)) {
+						 hasNext = true;
+					 }
+				 }
+				 if (hasNext) {
+					 LinkedList<ISimpleGenRes> result = new LinkedList<ISimpleGenRes>();
+					 enableNestedSpinlocks = true;
+					 for (SpinList curr : allSpins.values()) {
+						 int index = -1;
+						 
+						 if (curr.spin.containsProperty(ISimpleGenResKeywords.SPINLOCK_NEXT)) {
+							 String next = curr.spin.getString(ISimpleGenResKeywords.SPINLOCK_NEXT);
+							 if (!(allSpins.containsKey(next))) {
+								 throw new OilCodeWriterException("The spinlock " + curr.spin.getName() + " points to a missing spinlock " + next);
+							 }
+							 if (next.equals(curr.spin.getName())) {
+								 throw new OilCodeWriterException("The spinlock " + curr.spin.getName() + " points to a it self");
+							 }
+							 
+							 SpinList nextElem = allSpins.get(next);
+							 curr.next = nextElem;
+							 nextElem.hasPrev = true;
+							 // check cicles
+							 for (SpinList iter = curr.next; iter != null; iter = iter.next) {
+								 if (iter == curr) {
+									 throw new OilCodeWriterException("Found a cicle on Spinlock Chain");
+								 }
+							 }
+							 index = result.indexOf(nextElem.spin);
+						 }
+						 
+						 if (index == -1) {
+							 // addlast
+							 result.addLast(curr.spin);
+						 } else {
+							 result.add(index, curr.spin);
+						 }
+					 }
+					 ool.setList(IOilObjectList.SPINLOCK, result.toArray(new ISimpleGenRes[result.size()]));
+				 }
+
+			 }
+
+			 if (enableNestedSpinlocks) {
+				 for (IOilObjectList ool: answer) {
+					 ool.getList(IOilObjectList.OS).get(0).setProperty(ISimpleGenResKeywords.OS_SPINLOCK_NESTED, "true");
+				 }
+			 }
+		 }
+
 
 		return answer;
 	}
@@ -1118,6 +1199,10 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 					        answer.add(splitted[l]);
 					    }
 					}
+				}
+				
+				if ("true".equals(getOsProperty(oilObjects[0], ISimpleGenResKeywords.OS_SPINLOCK_NESTED))) {
+					answer.add("EE_SPINLOCK_ORDERED");
 				}
 			}
 

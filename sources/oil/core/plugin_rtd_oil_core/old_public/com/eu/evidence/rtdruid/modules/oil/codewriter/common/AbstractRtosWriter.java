@@ -194,6 +194,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 		
 		Map<String, IOilObjectList> answer = extractDistinctOs();
 		
+		boolean extractSpinlocks = true;
 		for (IOilObjectList ool: answer.values()) {
 
 			for (ISimpleGenRes sgros: ool.getList(IOilObjectList.OS)) {
@@ -202,9 +203,17 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 				// search all objects
 				for (int id = 0; id < IOilObjectList.OBJECT_NUMBER; id++) {
 					List<ISimpleGenRes> list = ool.getList(id);
-					ool.setList(id, merge(id, list, extractObject(id, prefix)));
+					ISimpleGenRes[] extracted;
+					if (id == IOilObjectList.SPINLOCK && !extractSpinlocks) {
+						// add spinlocks only to mastercpu
+						extracted = new ISimpleGenRes[0];
+					} else {
+						extracted = extractObject(id, prefix);
+					}
+					ool.setList(id, merge(id, list, extracted));
 				}
 			}
+			extractSpinlocks = false;
 		}
 		
 		return answer.values().toArray(new IOilObjectList[answer.size()]);
@@ -1058,8 +1067,27 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 		        for (int i=0; i<resNames.length; i++) {
 					answer[i] = new SimpleGenRes(
 							resNames[i], resPath+S+resNames[i]+S);
+					
+					String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.SPINLOCK, null)).getPath();
+					String[] values;
+
+					{	// ----------- TRAP ------------
+						values = CommonUtils.getValue(vt, path+"NEXT_SPINLOCK");
+						if (values != null && values.length>0 && values[0] != null) {
+							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_NEXT, values[0]);
+						}
+					}
+					{	// ----------- TRAP ------------
+						values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
+						if (values != null) {
+							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_APPLICATION, values);
+						}
+					}
+
 		        }
 	        }
+	        
+	        
 		}
 			break;
 
