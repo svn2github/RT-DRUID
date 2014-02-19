@@ -4263,4 +4263,215 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 2);
 	}
 
+	
+
+	@Test public void testTc27xCsa_GNU() {
+		String text = "CPU test_application {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"    EE_OPT = \"EE_DEBUG\";\n" +
+				"    EE_OPT = \"__ASSERT__\";\n" +
+				"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+				"    EE_OPT = \"EE_ICACHE_ENABLED\";\n" +
+				"    EE_OPT = \"EE_DCACHE_ENABLED\";\n" +
+				"    EE_OPT = \"EE_AS_IOC__\";\n" +
+				"\n" +
+				"    REMOTENOTIFICATION = USE_RPC;\n" +
+				"    MASTER_CPU = \"master\";\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      ID = \"master\";\n" +
+				"      APP_SRC = \"master.c\";\n" +
+				"      APP_SRC = \"ioc_common.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      SYS_STACK_SIZE = 4096;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"    };\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      ID = \"slave1\";\n" +
+				"      APP_SRC = \"slave1.c\";\n" +
+				"      APP_SRC = \"ioc_slave1.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      SYS_STACK_SIZE = 4096;\n" +
+				"      SYS_CSA_SIZE = 4096;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"    };\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      ID = \"slave2\";\n" +
+				"      APP_SRC = \"slave2.c\";\n" +
+				"      APP_SRC = \"ioc_slave2.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      SYS_CSA_SIZE = 4100;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"    };\n" +
+				"\n" +
+				"    MCU_DATA = TRICORE {\n" +
+				"      MODEL = TC27x;\n" +
+				"    };\n" +
+				"\n" +
+				"    STATUS = EXTENDED;\n" +
+				"    USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"    ORTI_SECTIONS = ALL;\n" +
+				"\n" +
+				"    KERNEL_TYPE = BCC1;\n" +
+				"  };\n" +
+				"\n" +
+				"	TASK TaskSend1 {\n" +
+				"		CPU_ID = \"master\";\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 128;\n" +
+				"		};\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"\n" +
+				"    TASK master_receive1 {\n" +
+				"		CPU_ID = \"master\";\n" +
+				"		PRIORITY = 0x04;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 128;\n" +
+				"		};\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"\n" +
+				"    TASK TaskSlave1 {\n" +
+				"		CPU_ID = \"slave1\";\n" +
+				"		PRIORITY = 0x2;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 128;\n" +
+				"		};\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"\n" +
+				"    TASK TaskSlave2 {\n" +
+				"		CPU_ID = \"slave2\";\n" +
+				"		PRIORITY = 0x2;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 128;\n" +
+				"		};\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"\n" +
+				"    SPINLOCK spinlock_1 { };\n" +
+				"    SPINLOCK spinlock_2 { };\n" +
+				"    SPINLOCK spinlock_3 { };\n" +
+				"};\n";
+		commonWriterTest(text, 3);
+	}
+	@Test public void testTc27xCsa_TASKING() {
+		String text = "CPU test_application {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"    EE_OPT = \"EE_DEBUG\";\n" +
+				"    EE_OPT = \"__ASSERT__\";\n" +
+				"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+				"    EE_OPT = \"EE_ICACHE_ENABLED\";\n" +
+				"    EE_OPT = \"EE_DCACHE_ENABLED\";\n" +
+				"    EE_OPT = \"EE_AS_IOC__\";\n" +
+				"\n" +
+				"    REMOTENOTIFICATION = USE_RPC;\n" +
+				"    MASTER_CPU = \"master\";\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      ID = \"master\";\n" +
+				"      APP_SRC = \"master.c\";\n" +
+				"      APP_SRC = \"ioc_common.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      SYS_STACK_SIZE = 4096;\n" +
+				"      COMPILER_TYPE = TASKING;\n" +
+				"    };\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      ID = \"slave1\";\n" +
+				"      APP_SRC = \"slave1.c\";\n" +
+				"      APP_SRC = \"ioc_slave1.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      SYS_STACK_SIZE = 4096;\n" +
+				"      SYS_CSA_SIZE = 4096;\n" +
+				"      COMPILER_TYPE = TASKING;\n" +
+				"    };\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      ID = \"slave2\";\n" +
+				"      APP_SRC = \"slave2.c\";\n" +
+				"      APP_SRC = \"ioc_slave2.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      SYS_CSA_SIZE = 4100;\n" +
+				"      COMPILER_TYPE = TASKING;\n" +
+				"    };\n" +
+				"\n" +
+				"    MCU_DATA = TRICORE {\n" +
+				"      MODEL = TC27x;\n" +
+				"    };\n" +
+				"\n" +
+				"    STATUS = EXTENDED;\n" +
+				"    USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"    ORTI_SECTIONS = ALL;\n" +
+				"\n" +
+				"    KERNEL_TYPE = BCC1;\n" +
+				"  };\n" +
+				"\n" +
+				"	TASK TaskSend1 {\n" +
+				"		CPU_ID = \"master\";\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 128;\n" +
+				"		};\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"\n" +
+				"    TASK master_receive1 {\n" +
+				"		CPU_ID = \"master\";\n" +
+				"		PRIORITY = 0x04;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 128;\n" +
+				"		};\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"\n" +
+				"    TASK TaskSlave1 {\n" +
+				"		CPU_ID = \"slave1\";\n" +
+				"		PRIORITY = 0x2;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 128;\n" +
+				"		};\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"\n" +
+				"    TASK TaskSlave2 {\n" +
+				"		CPU_ID = \"slave2\";\n" +
+				"		PRIORITY = 0x2;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 128;\n" +
+				"		};\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"\n" +
+				"    SPINLOCK spinlock_1 { };\n" +
+				"    SPINLOCK spinlock_2 { };\n" +
+				"    SPINLOCK spinlock_3 { };\n" +
+				"};\n";
+		commonWriterTest(text, 3);
+	}
+	
 }
