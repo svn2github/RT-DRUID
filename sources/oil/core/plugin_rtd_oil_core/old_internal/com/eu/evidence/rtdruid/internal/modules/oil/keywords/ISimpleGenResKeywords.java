@@ -306,6 +306,7 @@ public interface ISimpleGenResKeywords {
 	public final static String OS_APPL_LIST_REF_TASK = "os_application_list_ref_task";
 	
 	public final static String OS_APPL_SHARED_STACK_ID = "os_application_shared_stack_id";
+	public final static String OS_APPL_CPU_MAPPED_ID = "os_application_cpu_mapped_id";
 
 	/***************************************************************************
 	 * OS Application

@@ -670,6 +670,25 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 			}
 	
 			break;
+			case IOilObjectList.OSAPPLICATION:
+			{
+				for (int i=0; i<answer.length; i++) {
+					final String path = answer[i].getPath()
+							+S+ (new OilPath(OilObjectType.OSAPPLICATION, null)).getPath();
+	
+					{ // get mapping between counter and CPU
+						String[] cpu_Id = CommonUtils.getValue(vt, path+"CPU_ID");
+						
+						if (cpu_Id!= null && cpu_Id.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.OS_APPL_CPU_MAPPED_ID, cpu_Id[0]);
+						} else {
+							answer[i].setObject(ISimpleGenResKeywords.OS_APPL_CPU_MAPPED_ID, DEFAULT_CPU_NAME);
+						}
+					}
+				}
+				
+			}
+			break;
 			case IOilObjectList.ALARM:
 				/**
 				 * Set, for each alarm an id that is stored as a property : ALARM_SYS_ID.
@@ -805,16 +824,60 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		
 		/***********************************************************************
 		 * 
+		 * GetAll OsApplication.
+		 * 
 		 * Mapping between Cpu and Counter.
 		 * 
 		 * Mapping between Cpu and Alarm (using alarm's counter's map).
 		 *  
 		 **********************************************************************/
+		Map<String, List<ISimpleGenRes>> osApplMap = new HashMap<String, List<ISimpleGenRes>>();
+		for (IOilObjectList ool: answer) {
+			for (ISimpleGenRes curr : ool.getList(IOilObjectList.OSAPPLICATION)) {
+				
+				String cpuId = curr.getString(ISimpleGenResKeywords.OS_APPL_CPU_MAPPED_ID);
+				List<ISimpleGenRes> newList;
+				if (osApplMap.containsKey(cpuId)) {
+					newList = osApplMap.get(cpuId);
+				} else {
+					newList = new ArrayList<ISimpleGenRes>();
+					osApplMap.put(cpuId, newList);
+				}
+				newList.add(curr);
+			}
+		}
+		
 		for (IOilObjectList ool: answer) {
 			
 			String cpuName = getOSName(ool);
 			if (cpuName == null) {
 				cpuName = DEFAULT_CPU_NAME;
+			}
+			
+			/*
+			 * Set OsApplications for current cpu  
+			 */
+			List<ISimpleGenRes> osApplications;
+			if (osApplMap.containsKey(cpuName)) {
+				osApplications = osApplMap.get(cpuName);
+			} else {
+				osApplications = new ArrayList<ISimpleGenRes>();
+			}
+			ool.setList(IOilObjectList.OSAPPLICATION,
+					(ISimpleGenRes[]) osApplications.toArray(new ISimpleGenRes[osApplications
+							.size()]));
+			
+			for (ISimpleGenRes curr : ool.getList(IOilObjectList.OSAPPLICATION)) {
+				
+				String cpuId = curr.getString(ISimpleGenResKeywords.OS_APPL_CPU_MAPPED_ID);
+				List<ISimpleGenRes> newList;
+				if (osApplMap.containsKey(cpuId)) {
+					newList = osApplMap.get(cpuId);
+				} else {
+					newList = new ArrayList<ISimpleGenRes>();
+					osApplMap.put(cpuId, newList);
+				}
+				newList.add(curr);
 			}
 			
 			/*

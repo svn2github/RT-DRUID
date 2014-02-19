@@ -615,10 +615,12 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					
 				// DESCRIPTIONS
 				for (int j = 0; j < pos.length; j++) {
-					sbStack.append(pre + post + indent + indent + +pos[j]+"U");
-					// set new values for "post" and "pre"
-					post = commentC.writerSingleLineComment(tList.get(j));
-					pre = ",\t";
+					if (j<=taskNames.size()) {
+						sbStack.append(pre + post + indent + indent + +pos[j]+"U");
+						// set new values for "post" and "pre"
+						post = commentC.writerSingleLineComment(tList.get(j));
+						pre = ",\t";
+					}
 	
 					/*
 					 * add the name of current task to the description of the /
@@ -626,13 +628,25 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					 * not, infact in the second case append the new description
 					 * to the old one
 					 */ 
+					String id = tList.get(j);
+					boolean task = true;
+					if (id != null) {
+						if (id.startsWith(EEStacks.APPLICATION_SHARED_PREFIX)) {
+							id = "Shared stack " + id.substring(EEStacks.APPLICATION_SHARED_PREFIX.length());
+							task = false;
+						} else if (id.startsWith(EEStacks.APPLICATION_IRQ_PREFIX)) {
+							id = "Irq stack " + id.substring(EEStacks.APPLICATION_IRQ_PREFIX.length()); 
+							task = false;
+						}
+					}
+					String txt = task ? "Task " + tListN.get(j) + " (" + id + ")" : id; 
+					
 					descrStack[pos[j]] = (descrStack[pos[j]] == null) ?
 							// The first description
-							("Task " + tListN.get(j) + " (" + tList.get(j) + ")")
+							txt
 							:
 							// other descriptions
-							(descrStack[pos[j]] + ", " + "Task "
-									+ tListN.get(j) + " (" + tList.get(j) + ")"); // others
+							(descrStack[pos[j]] + ", " + txt); // others
 				}
 	
 				// close sbStack

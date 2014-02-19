@@ -147,8 +147,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		StringBuffer ee_c_buffer = answer.get(FILE_EE_CFG_C);
 		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 		
-		StringBuffer linker_buffer = answer.get(EE_APPS_CONF);
-
 		// ee_cfg.h
 		ee_h_buffer.append(
 				commentWriterH.writerBanner("OS APPLICATIONS definition") +
@@ -176,6 +174,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		StringBuilder shutdown_decl_buffer = new StringBuilder(indent1 + commentWriterC.writerSingleLineComment("Os Application Shutdown Hooks"));
 		StringBuilder error_decl_buffer    = new StringBuilder(indent1 + commentWriterC.writerSingleLineComment("Os Application Errork Hooks"));
 
+		final boolean enableMemoryProtection = parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION);
+		StringBuffer linker_buffer = new StringBuffer();
 		String end = "";
 		for (ISimpleGenRes application : applications) {
 			boolean trusted = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
@@ -184,8 +184,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			String stack_id = application.getString(ISimpleGenResKeywords.OS_APPL_SHARED_STACK_ID);
 			String stack_base_name = application.getString(EEStacks.STACK_BASE_NAME_PREFIX);
 			
-			String mem_base = application.getString(OS_APPLICATION_MEM_BASE);
-			String mem_size = application.getString(OS_APPLICATION_MEM_SIZE);
+			
 
 			String hError = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_HOOK_ERROR) 
 					&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_HOOK_ERROR))?
@@ -200,15 +199,30 @@ public class SectionWriterOsApplication extends SectionWriter implements
 
 			// ee_cfg.c
 //			extern const int app0_start, app0_sstart, app0_end;
-			
-			ee_c_buffer.append(indent1 + "extern const int ee_load_data_"+name+";\n" +
-					indent1 + "extern int ee_sstack_"+name+";\n" +
-					indent1 + "extern int ee_sdata_"+name+";\n" +
-					indent1 + "extern int ee_sbss_"+name+";\n" +
-					indent1 + "extern int ee_ebss_"+name+";\n");
 
-			application_rom.append(end +
-					indent2 + "{{ &ee_load_data_"+name+", &ee_sstack_"+name+", &ee_sdata_"+name+", &ee_sbss_"+name+", &ee_ebss_"+name+" }}");
+			if (enableMemoryProtection) {
+
+
+				String mem_base = application.getString(OS_APPLICATION_MEM_BASE);
+				String mem_size = application.getString(OS_APPLICATION_MEM_SIZE);
+				
+				linker_buffer.append(
+						name + 
+						(name.length() < 30 ? white.substring(0, 30-name.length()) : "" ) + " " + 
+						mem_base + " " +
+						mem_size + " " +
+						(trusted ? "1" : "0")+
+						"\n");
+
+				ee_c_buffer.append(indent1 + "extern const int ee_load_data_"+name+";\n" +
+						indent1 + "extern int ee_sstack_"+name+";\n" +
+						indent1 + "extern int ee_sdata_"+name+";\n" +
+						indent1 + "extern int ee_sbss_"+name+";\n" +
+						indent1 + "extern int ee_ebss_"+name+";\n");
+	
+				application_rom.append(end +
+						indent2 + "{{ &ee_load_data_"+name+", &ee_sstack_"+name+", &ee_sdata_"+name+", &ee_sbss_"+name+", &ee_ebss_"+name+" }}");
+			}
 
 			application_ram.append(end +
 					indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)], "+
@@ -221,18 +235,15 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			if (hStartup  != NO_HOOK) { startUp_decl_buffer.append( indent1 + "extern void "+hStartup +" ( void );\n"); };
 			if (hShutdown != NO_HOOK) { shutdown_decl_buffer.append(indent1 + "extern void "+hShutdown+" ( StatusType );\n"); };
 			if (hError    != NO_HOOK) { error_decl_buffer.append(   indent1 + "extern void "+hError+   " ( StatusType );\n"); };
-			
-			linker_buffer.append(
-					name + 
-					(name.length() < 30 ? white.substring(0, 30-name.length()) : "" ) + " " + 
-					mem_base + " " +
-					mem_size + " " +
-					(trusted ? "1" : "0")+
-					"\n");
+
+
 			
 			end = ",\n";
 		}
-		
+
+		if (enableMemoryProtection) {
+			answer.get(EE_APPS_CONF).append(linker_buffer + "\n");
+		}
 		
 		application_rom.append("\n" + indent1 +"};\n\n");
 		application_ram.append("\n" + indent1 +"};\n\n");
@@ -241,16 +252,13 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		error_buffer.append("\n" + indent1 +"};\n\n");
 
 		ee_c_buffer.append("\n" +
-				application_rom + "\n" +
-				application_ram + 
+				(enableMemoryProtection ? application_rom + "\n" + application_ram : "" ) +  
 				startUp_decl_buffer +
 				startUp_buffer +
 				shutdown_decl_buffer +
 				shutdown_buffer +
 				error_decl_buffer  +
 				error_buffer);
-		
-		linker_buffer.append("\n");
 		
 		
 		
@@ -294,6 +302,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		final String path_shutdownH =  osApplBasePath+ "SHUTDOWNHOOK";
 		
 		final String path_trusted_function = PARAMETER_LIST+ "TRUSTED_FUNCTION";
+		
+		final boolean enableMemoryProtection = parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION);
 
 
 //		final String taskOsApplRefPath = S
@@ -304,9 +314,16 @@ public class SectionWriterOsApplication extends SectionWriter implements
 //	final String isrOsApplRefPath = S
 //				+ DataPackage.eINSTANCE.getOsApplication_OilVar().getName() + S
 //				+ IOilXMLLabels.OBJ_ISR + parent.getOilHwRtosPrefix() + "APPLICATION";
-	
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();	
+		boolean useOsApplications = false;
+		for (IOilObjectList ool : oilObjects) {
+			if (ool.getList(IOilObjectList.OSAPPLICATION).size()>0) {
+				useOsApplications = true;
+			}
+		}
+	
+		
 		for (IOilObjectList ool : oilObjects) {
 			
 			Map<String, ISimpleGenRes> map_alarm = getMap(ool.getList(IOilObjectList.ALARM));
@@ -400,7 +417,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						}
 						
 						appl.setProperty(OS_APPLICATION_MEM_SIZE, val[0]);
-					} else {
+					} else if (enableMemoryProtection) {
 						throw new OilCodeWriterException("Required a mem size for OsApplication " + appl_name);
 					}
 				}
@@ -521,7 +538,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 //			}
 //
 			
-			if (applications.size() >0) {
+			if (useOsApplications) {//applications.size() >0) {
 				
 				// check 
 				List<String> not_map_alarm = new LinkedList<String>();

@@ -8,6 +8,7 @@ IMPLEMENTATION ee {
 	
     APPLICATION {
     	UINT32 CORE;
+    	STRING CPU_ID;
     	
     
     	BOOLEAN [
