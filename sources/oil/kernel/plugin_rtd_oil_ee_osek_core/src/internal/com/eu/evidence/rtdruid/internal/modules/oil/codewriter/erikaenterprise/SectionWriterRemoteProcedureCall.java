@@ -156,6 +156,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		final StringBuilder[] sbRemoteCountersDefines = new StringBuilder[oilObjects.length];
 		
 		final StringBuilder sbCommonRpc_spins = new StringBuilder();
+		final StringBuilder sbCommonRpc_ram = new StringBuilder();
 		final StringBuilder sbCommonRpc_tasks = new StringBuilder();
 		final StringBuilder sbCommonRpc_alarms = new StringBuilder();
 		final StringBuilder sbCommonRpc_counters = new StringBuilder();
@@ -176,28 +177,29 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		for (int rtosId = 0; rtosId < rtosNumber; rtosId++) {
 		
 			// ------------------ common data ------------------
-	
+
 			// all objects for current os
 			IOilObjectList ool = oilObjects[rtosId];
-	
+
 			String cpuId = "OS_CORE_ID_" + rtosId;
-			
+
 			sbCommonRpc_spins.append(( sbCommonRpc_tasks.length() == 0 ? "" : ", ") +  "EE_SPINLOCK_CORE" + rtosId);
-	
+			sbCommonRpc_ram.append(( sbCommonRpc_ram.length() == 0 ? "" : ", ") +  "{ OS_CORE_ID_INVALID }");
+
 			for (ISimpleGenRes task : ool.getList(IOilObjectList.TASK)) {
 				final String name = task.getName();
 				final String taskId = task.getString(ISimpleGenResKeywords.TASK_SYS_ID);
-				
+
 				for (int i=0; i< rtosNumber; i++) {
 					if (i != rtosId) {
 						sbRemoteTasksDefines[i].append(IWritersKeywords.INDENT + "#define " + name + " ((EE_TID)" + globalTaskIndex + "U + (EE_TID)EE_REMOTE_TID)\n");
 					}
 				}
-				
+
 				sbCommonRpc_tasks.append(
 						( sbCommonRpc_tasks.length() == 0 ? "" : ",\n") 
 						+ indent2 + "{ "+cpuId+", " + taskId + "U}");
-				
+
 				// increase the task index number
 				globalTaskIndex++;
 			}
@@ -283,19 +285,18 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				
 				sbCommon_c.append(
 						macros.constVectorRom(
-								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_tasks","["+MAX_CPU+"]", " = {\n" +
+								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_tasks","[]", " = {\n" +
 								sbCommonRpc_tasks.toString() + "\n" + indent1 + "};\n") + "\n");
 			} else {
 				sbTable.append("0U, ");
 			}
-
 			
 			if (sbCommonRpc_alarms.length()>0) {
 				sbTable.append("&EE_as_rpc_alarms[0], ");
 				
 				sbCommon_c.append(
 						macros.constVectorRom(
-								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_alarms","["+MAX_CPU+"]", " = {\n" +
+								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_alarms","[]", " = {\n" +
 								sbCommonRpc_alarms.toString() + "\n" + indent1 + "};\n") + "\n");
 			} else {
 				sbTable.append("0U, ");
@@ -306,7 +307,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				
 				sbCommon_c.append(
 						macros.constVectorRom(
-								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_counters","["+MAX_CPU+"]", " = {\n" +
+								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_counters","[]", " = {\n" +
 								sbCommonRpc_counters.toString() + "\n" + indent1 + "};\n") + "\n");
 			} else {
 				sbTable.append("0U");
@@ -316,7 +317,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			sbCommon_c.append(
 					macros.constVectorRom(indent1 + "EE_TYPEASREMOTEIDCONSTREF const ", "EE_as_rpc_services_table","[]", " = {\n"
 							+indent2 +  sbTable.toString() + "\n"+indent1+ "};\n\n") + 
-					macros.vectorRamUnitialized(indent1 + "EE_TYPEASRPC volatile ", "EE_as_rpc_RAM","["+MAX_CPU+"]", ";\n") + "\n"
+					macros.vectorRam(indent1 + "EE_TYPEASRPC volatile ", "EE_as_rpc_RAM","["+MAX_CPU+"]", " = {\n" + indent2+sbCommonRpc_ram + "\n"+indent1 +"};\n") + "\n"
 			);
 		}
 		
