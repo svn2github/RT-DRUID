@@ -535,7 +535,7 @@ public final class CommonUtils {
 	 */
 	public static String addMakefileDefinesInclude() {
 		
-		return 	"include $(EEBASE)/pkg/cfg/path_helper.mk\n";
+		return 	"-include $(EEBASE)/pkg/cfg/path_helper.mk\n";
 	}
 	/**
 	 * 
