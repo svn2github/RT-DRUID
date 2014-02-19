@@ -112,6 +112,10 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 		
 		// check if is needed a binary distribution
 		final boolean useBinaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
+		
+		final boolean enableRules = !(parent.getOptions().containsKey(IWritersKeywords.WRITER_DISABLE_EE_RULES) 
+				&& "true".equalsIgnoreCase("" +parent.getOptions().get(IWritersKeywords.WRITER_DISABLE_EE_RULES)));
+
 
 		final IOilObjectList[] oilObjects = parent.getOilObjects();		
 
@@ -229,7 +233,7 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 						"endif # ERIKA_FILES\n"+
 						"# ERIKA_FILES has fulfilled its role. Make sure it's not used inside Erika makefiles\n"+ 
 						"ERIKA_FILES :=\n"+
-						 "$(info Using erika files in $(EEBASE))\n"
+						( enableRules ? "$(info Using erika files in $(EEBASE))\n" : "")
 		        );
 			}
 			
@@ -362,9 +366,7 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 			 ******************************************************************/
 			
 			// last line
-			if (!(parent.getOptions().containsKey(IWritersKeywords.WRITER_DISABLE_EE_RULES) 
-					&& "true".equalsIgnoreCase("" +parent.getOptions().get(IWritersKeywords.WRITER_DISABLE_EE_RULES)))) {
-				
+			if (enableRules) {				
 				sbMakefile.append(commentWriterMf.writerBanner("end") +
 				        "include $(EEBASE)/pkg/cfg/rules.mk\n");
 			}

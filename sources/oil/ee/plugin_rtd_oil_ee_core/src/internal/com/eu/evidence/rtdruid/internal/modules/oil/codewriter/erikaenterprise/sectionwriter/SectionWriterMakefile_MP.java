@@ -156,6 +156,9 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		IOilObjectList ool = oilObjects[RTOS_ID___COMMON_DATA];
 		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
+		
+		final boolean enableRules = !(parent.getOptions().containsKey(IWritersKeywords.WRITER_DISABLE_EE_RULES) 
+				&& "true".equalsIgnoreCase("" +parent.getOptions().get(IWritersKeywords.WRITER_DISABLE_EE_RULES)));
 
 		StringBuffer sbCommon_mk = buffers[0].get(FILE_EE_COMMON_MK);
 
@@ -189,7 +192,7 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
 					"endif # ERIKA_FILES\n"+
 					"# ERIKA_FILES has fulfilled its role. Make sure it's not used inside Erika makefiles\n"+ 
 					"ERIKA_FILES :=\n\n"+
-					"$(info Using erika files in $(EEBASE))\n"+
+					(enableRules ? "$(info Using erika files in $(EEBASE))\n" : "")+
 					"endif " +commentWriterMf.writerSingleLineComment(ERIKA_INNER_MAKEFILE_DEFINE)+"\n"
 	        );
 			
