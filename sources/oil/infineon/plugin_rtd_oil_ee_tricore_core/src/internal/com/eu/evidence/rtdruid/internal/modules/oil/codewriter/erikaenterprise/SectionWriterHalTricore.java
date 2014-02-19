@@ -250,6 +250,7 @@ public class SectionWriterHalTricore extends SectionWriter
         if (board_eeopt != null) {
         	tmp_common_eeopts.add(board_eeopt);
         }
+        TricoreCompiler masterCompiler = TricoreCompiler.UNKNOWN; 
 		
 		for (int currentRtosId = 0; currentRtosId < oilObjects.length; currentRtosId++) {
 			final IOilObjectList ool = oilObjects[currentRtosId];
@@ -304,7 +305,19 @@ public class SectionWriterHalTricore extends SectionWriter
 					sgrCpu.setProperty(TricoreConstants.SGRK__Tricore_COMPILER_TYPE__, tmp1);
 				}
 				
-				currentCompiler = TricoreCompiler.get(tmp1);
+				TricoreCompiler tmpCompiler = TricoreCompiler.get(tmp1);
+				if (currentRtosId == 0) {
+					masterCompiler = tmpCompiler;
+				} else {
+					if (tmpCompiler == TricoreCompiler.DEFAULT) {
+						tmpCompiler = masterCompiler;
+					} else {
+						if (tmpCompiler != masterCompiler) {
+							throw new OilCodeWriterException("All cpu should use the same compiler type.");
+						}
+					}
+				}
+				currentCompiler = tmpCompiler;
 	        }
 	        
 	        /***********************************************************************
@@ -485,7 +498,7 @@ public class SectionWriterHalTricore extends SectionWriter
 			/***********************************************************************
 			 * MakeFile
 			 **********************************************************************/
-			writeMakeFile(ool);
+			writeMakeFile(currentRtosId, ool);
 		}
 		return all_results;
 	}
@@ -494,7 +507,7 @@ public class SectionWriterHalTricore extends SectionWriter
 	/**
 	 * MakeFile
 	 */
-	private void writeMakeFile(final IOilObjectList ool) {
+	private void writeMakeFile(final int currentRtosId, final IOilObjectList ool) {
 		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 		final boolean multicore = parent.getOilObjects().length>1;
 		OsType wrapper = HostOsUtils.common.getTarget();
@@ -575,9 +588,15 @@ public class SectionWriterHalTricore extends SectionWriter
 			
 			sbCommon.append(baseID +"_MODEL  := " + model_txt + "\n");
 
-			sbVariables.append("\n"+
-					CommonUtils.addMakefileDefinesInclude()
-					+ compiler_define);
+			if (multicore) {
+				sbCommon.append("\n"+
+						CommonUtils.addMakefileDefinesInclude()
+						+ compiler_define);
+			} else {
+				sbVariables.append("\n"+
+						CommonUtils.addMakefileDefinesInclude()
+						+ compiler_define);
+			}
 		}
 
 		ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
