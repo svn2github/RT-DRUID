@@ -334,7 +334,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		IOilObjectList[] oilObjects = parent.getOilObjects();
 		
 		setEventMask(oilObjects);
-		
+		String text = "Remote procedure call requires an additional ISR2";
 		for (IOilObjectList ool : oilObjects) {
 			
 			Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
@@ -342,7 +342,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			int isr2Number = 1 + (o == null ? 0 : ((Integer) o).intValue()) ;
 			@SuppressWarnings("unchecked")
 			List<String> lt = t == null ? new ArrayList<String>() : (List<String>) t;
-			lt.add("Remote procedure call requires an additional ISR2");
+			lt.add(text);
 			for (ISimpleGenRes os : ool.getList(IOilObjectList.OS)) {
 				os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL, new Integer(isr2Number));
 				os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_TXT_LIST, lt);

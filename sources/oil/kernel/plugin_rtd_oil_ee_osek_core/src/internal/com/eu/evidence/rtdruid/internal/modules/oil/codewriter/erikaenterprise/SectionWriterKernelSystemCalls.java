@@ -56,7 +56,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	};
 
 	protected final static String[] EE_INTERNAL_IDs = {
-		"ThreadNotTerminated"
+		"thread_not_terminated"
 	};
 
 
@@ -193,13 +193,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		}
 		
 		{
-			boolean isr2_enabled = false;
-			for (ISimpleGenRes isr :  ool.getList(IOilObjectList.ISR)) {
-				if (isr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) && "2".equals(isr.getString(ISimpleGenResKeywords.ISR_CATEGORY))) {
-					isr2_enabled = true;
-					break;
-				}
-			}
+			boolean isr2_enabled = ErikaEnterpriseWriter.getIsr2Number(ool) >0;
 			
 			if (isr2_enabled) {
 				for (String s: EE_ISR2_IDs) {

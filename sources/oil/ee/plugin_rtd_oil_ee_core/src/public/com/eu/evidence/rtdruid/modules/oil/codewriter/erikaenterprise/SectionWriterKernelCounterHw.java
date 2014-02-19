@@ -37,6 +37,7 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 	protected boolean allowSystemTimerPriority = false;
 	protected SectionWriterIsr generateIsr2Defines = null;
 	protected boolean computeIsrEntryFromPriority = false;
+	protected boolean computeIsrIDFromPriority = false;
 	
 	protected final ErikaEnterpriseWriter parent;
 
@@ -67,6 +68,13 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 	 */
 	public void setComputeIsrEntryFromPriority(boolean computeIsrEntryFromPriority) {
 		this.computeIsrEntryFromPriority = computeIsrEntryFromPriority;
+	}
+	
+	/**
+	 * @param computeIsrIDFromPriority the computeIsrIDFromPriority to set
+	 */
+	public void setComputeIsrIDFromPriority(boolean computeIsrIDFromPriority) {
+		this.computeIsrIDFromPriority = computeIsrIDFromPriority;
 	}
 	
 	public void writeCounterHw(int currentRtosId, IOilObjectList ool, IOilWriterBuffer oilWBuff) throws OilCodeWriterException {
@@ -246,6 +254,9 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 	public void updateObjects() throws OilCodeWriterException {
 		for (IOilObjectList ool : parent.getOilObjects()) {
 			
+			final int isrNumber = ool.getList(IOilObjectList.ISR).size();
+			int counterIsrNumber = 0;
+			
 			// check sysTimer
 			ISimpleGenRes sysTimer = null;
 			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.COUNTER)) {
@@ -289,7 +300,7 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, handler);
 					}
 					
-					{ // priority
+					if (computeIsrIDFromPriority) { // ID from priority
 						Integer prioVal = null;
 						if (device != null) {
 							prioVal = new Integer(device.getPrio());
@@ -301,8 +312,15 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 							sgr.setObject(ISimpleGenResKeywords.COUNTER_ISR_ID, new Integer(prioVal));
 							sgr.setObject(ISimpleGenResKeywords.COUNTER_ISR_ID_TXT, "" + prioVal);
 						}
+					} else {
+						
+						sgr.setObject(ISimpleGenResKeywords.COUNTER_ISR_ID, new Integer(isrNumber+counterIsrNumber));
+						sgr.setObject(ISimpleGenResKeywords.COUNTER_ISR_ID_TXT, "" + (isrNumber+counterIsrNumber));
 					}
-				}
+					
+					// increased as last thing
+					counterIsrNumber++;
+				} // end Counter HW if
 			}
 
 			if (sysTimer != null) {
@@ -317,6 +335,14 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 		        tmp_eeopts.add("ENABLE_SYSTEM_TIMER");
 				// store ee_opts
 				sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS, tmp_eeopts.toArray(new String[tmp_eeopts.size()]));
+			}
+		
+			{ // increase the isr size
+				Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
+				int addIsrNumber = counterIsrNumber + (o == null ? 0 : ((Integer) o).intValue()) ;
+				for (ISimpleGenRes os : ool.getList(IOilObjectList.OS)) {
+					os.setObject( ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL, new Integer(addIsrNumber));
+				}
 			}
 		}
 	}

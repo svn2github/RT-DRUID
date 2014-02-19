@@ -2634,7 +2634,6 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		}
 	}
 	
-
 	public static String addVectorSizeDefine(IOilObjectList ool, String vectorName, int size) {
 		String defineName = vectorName.toUpperCase() + "_SIZE";
 		Map<String, Integer> list = (Map<String, Integer>) getOsObject(ool, SGRK_OS_CPU_VECTOR_SIZE_DEFINES);
@@ -2664,4 +2663,24 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		return defineName;
 	}
 
+	/**
+	 * @param ool
+	 * @return
+	 */
+	public static int getIsr2Number(IOilObjectList ool) {
+		String number1 = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR2_NUMBER);
+		String number2 = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
+		int number = 0;
+		if (number1 != null) {
+			try {
+				number += Integer.parseInt(number1);
+			} catch (NumberFormatException e) {}
+		}
+		if (number2 != null) {
+			try {
+				number += Integer.parseInt(number2);
+			} catch (NumberFormatException e) {}
+		}
+		return number;
+	}
 }

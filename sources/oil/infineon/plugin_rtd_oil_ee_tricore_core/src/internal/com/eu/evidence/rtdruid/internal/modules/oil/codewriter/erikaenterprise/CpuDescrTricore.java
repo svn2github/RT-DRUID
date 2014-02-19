@@ -37,6 +37,7 @@ public class CpuDescrTricore extends CpuHwDescription implements IRequiresUpdate
 		this.model = model;
 		if (model != null) {
 			packIsrPriorities = model.isPackIsrPriorities();
+			maxNestedInts = 255;
 			IMacrosForSharedData tmp = model.getMacros();
 			if (tmp != null) {
 				macros = tmp;

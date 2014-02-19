@@ -336,6 +336,81 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	@Test public void testIsrPriority2_memProt_onlyHwCounter() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				" 	   MEMORY_PROTECTION = TRUE;\n" +
+				"		CPU_DATA = TRICORE {\n"+
+				"			APP_SRC = \"slave.c\";\n"+
+				"            CPU_CLOCK = 200.0;\n" +
+				"			APP_SRC = \"master.c\";\n"+
+				"            MULTI_STACK = TRUE {\n" +
+				"                IRQ_STACK = TRUE {\n" +
+				"                    SYS_SIZE = 256;\n" +
+				"                };\n" +
+				"            };\n" +
+				"			SYS_STACK_SIZE = 4096;\n"+
+				"			LINKERSCRIPT = \"slave2_link\";\n"+
+				"		};\n"+
+				"		KERNEL_TYPE = FP;\n" +
+				"		MCU_DATA = TRICORE {\n"+
+				"			MODEL = TC27x;\n"+
+				"			LINKERSCRIPT = \"mcu_link\";\n"+
+				"		};\n"+
+				"	};\n" + 
+				"APPLICATION appl1 {\n" +
+				"		TRUSTED = FALSE;\n" +
+				"		IRQ_STACK_SIZE = 1024;\n" +
+	    		"		SHARED_STACK_SIZE = 512;\n"+
+				"		TASK=Task0;\n" +
+	    		"		MEMORY_SIZE = 0x10000;\n"+
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = TRUE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"    };\n" +
+				"APPLICATION appl2 {\n" +
+				"		TRUSTED = TRUE;\n" +
+				"		IRQ_STACK_SIZE = 1024;\n" +
+	    		"		SHARED_STACK_SIZE = 512;\n"+
+				"		TASK=Task1;\n" +
+				"       COUNTER = system_timer;\n" +
+				"		MEMORY_SIZE = 0x10000;\n"+
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = TRUE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"    };\n" +
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 1;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		 STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"    COUNTER system_timer {\n" +
+				"        MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"            DEVICE = \"STM_SR0\";\n" +
+				"            SYSTEM_TIMER = TRUE;\n" +
+				"            PRIORITY = 1;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"    };\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
 	@Test public void testLed() {
 	    final String text =
 				"CPU mySystem {\n" + 

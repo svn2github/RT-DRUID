@@ -179,9 +179,9 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 	
 	
 	protected void writeIsr(IOilObjectList ool, IOilWriterBuffer answer) {
-		List<ISimpleGenRes> isrList = ool.getList(IOilObjectList.ISR);
+		List<ISimpleGenRes> orderedIsr = SectionWriterIsr.getIsrByID(ool);
 		
-		if (isrList.size() == 0) {
+		if (orderedIsr.size() == 0) {
 			return;
 		}
 		
@@ -198,7 +198,7 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 		
 
 		int max_level = CpuHwDescription.DEFAULT_MAX_NESTING_LEVEL;
-		
+		int isr2_number = ErikaEnterpriseWriter.getIsr2Number(ool);
 		{
 			String svalue = AbstractRtosWriter.getOsProperty(ool, SGR_OS_MAX_NESTING_LEVEL);
 			if (svalue != null) {
@@ -211,12 +211,12 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 			}
 		}
 
-		List<ISimpleGenRes> orderedIsr = SectionWriterIsr.getIsrByID(ool);
 		
 		// ee_cfg.h
 		ee_h_buffer.append(
 				commentWriterH.writerBanner("ISR definition") +
-				indent1 + "#define EE_MAX_NESTING_LEVEL     "+max_level+"\n\n"); 				
+				indent1 + "#define EE_MAX_NESTING_LEVEL   "+(isr2_number<max_level?isr2_number : max_level)+"\n" +
+				indent1 + "#define EE_MAX_ISR_ID          "+(orderedIsr.size()-1)+"\n\n"); 				
 
 		// ee_cfg.c
 		ee_c_buffer.append(

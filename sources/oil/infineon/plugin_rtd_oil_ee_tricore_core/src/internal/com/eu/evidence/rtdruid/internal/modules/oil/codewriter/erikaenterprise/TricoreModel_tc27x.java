@@ -179,6 +179,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			counterHwWriter.setAllowSystemTimerPriority(true);
 			counterHwWriter.setGenerateIsr2Defines(isrWriter);
 			counterHwWriter.setComputeIsrEntryFromPriority(true);
+			counterHwWriter.setComputeIsrIDFromPriority(true);
 			counterHwWriter.updateObjects();
 		}
 		
@@ -277,7 +278,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		
 		writeCfg(currentRtosId, ool, buffers);
 		writeMultistack(currentRtosId, ool, buffers);
-		writeKernelIsr(currentRtosId, ool, buffers);
+		writeKernelMaxIsrPriority(currentRtosId, ool, buffers);
 	}
 
 	/**
@@ -753,10 +754,10 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	 * @param buffers
 	 * @throws OilCodeWriterException 
 	 */
-	protected void writeKernelIsr(int currentRtosId, IOilObjectList ool, IOilWriterBuffer buffers) throws OilCodeWriterException {
+	protected void writeKernelMaxIsrPriority(int currentRtosId, IOilObjectList ool, IOilWriterBuffer buffers) throws OilCodeWriterException {
 		isrWriter.writeIsr(currentRtosId, ool, buffers);
 		counterHwWriter.writeCounterHw(currentRtosId, ool, buffers);
-		if (ool.getList(IOilObjectList.ISR).size()>0) {
+		if (ool.getList(IOilObjectList.ISR).size()>0 || ool.getList(IOilObjectList.COUNTER).size()>0) {
 			int max_isr_prio = 0;
 			String max_isr_string = "EE_ISR_UNMASKED";
 			for (ISimpleGenRes isr : ool.getList(IOilObjectList.ISR)) {
@@ -765,6 +766,15 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					if (max_isr_prio< current_prio) {
 						max_isr_prio = current_prio;
 						max_isr_string = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_PRIORITY_STRING);
+					}
+				}
+			}
+			for (ISimpleGenRes isr : ool.getList(IOilObjectList.COUNTER)) {
+				if (isr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE)) {
+					final int current_prio = isr.getInt(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE);
+					if (max_isr_prio< current_prio) {
+						max_isr_prio = current_prio;
+						max_isr_string = isr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_STRING);
 					}
 				}
 			}

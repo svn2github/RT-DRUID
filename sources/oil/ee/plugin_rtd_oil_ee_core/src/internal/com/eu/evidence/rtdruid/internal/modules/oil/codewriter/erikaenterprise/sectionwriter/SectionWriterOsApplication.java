@@ -167,11 +167,35 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				indent1 + "const EE_as_Application_ROM_type EE_as_Application_ROM[EE_MAX_APP+1U] = {\n" +
 				indent2 + "{{ ");
 		if (areaNames != null) {
-			String sep = "";
-			final int size = areaNames.getConstAreas().size() + areaNames.getAreas().size();
-			for (int i=0; i<size; i++) {
-				application_rom.append(sep + "0U");
-				sep = ", ";
+			if (areaNames.getConstKAreas().isEmpty() && areaNames.getKAreas().isEmpty()) {
+
+				String sep = "";
+				final int size = areaNames.getConstAreas().size() + areaNames.getAreas().size();
+				for (int i=0; i<size; i++) {
+					application_rom.append(sep + "0U");
+					sep = ", ";
+				}
+
+			} else {
+				
+				for (String areaName : areaNames.getConstKAreas()) {
+					ee_c_buffer.append(indent1 + "extern const int " + areaName+";\n");
+				}
+				for (String areaName : areaNames.getKAreas()) {
+					ee_c_buffer.append(indent1 + "extern int " + areaName+";\n");
+				}
+				ee_c_buffer.append("\n");
+				
+				String sep = "";
+				for (String areaName : areaNames.getConstKAreas()) {
+					application_rom.append(sep + "&" + areaName);
+					sep = ", ";
+				}
+				for (String areaName : areaNames.getKAreas()) {
+					application_rom.append(sep + "&" + areaName);
+					sep = ", ";
+				}
+				
 			}
 		}
 		application_rom.append(" }}");

@@ -434,7 +434,7 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 				 * 
 				 * Define MAX_ISR2 as number of isr2 for current cpu
 				 */
-				String number = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR2_NUMBER);
+				int number = ErikaEnterpriseWriter.getIsr2Number(ool);
 				buffer.append(IWritersKeywords.INDENT +commentWriterH.writerSingleLineComment("Number of isr 2"));
 				Object text = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL_TXT_LIST);
 				if (text != null && text instanceof List) {
@@ -442,7 +442,7 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 						buffer.append(IWritersKeywords.INDENT +commentWriterH.writerSingleLineComment(""+s));
 					}
 				}
-				buffer.append(IWritersKeywords.INDENT + "#define EE_MAX_ISR2 " + (number == null ? "0" : number ) + "\n\n");
+				buffer.append(IWritersKeywords.INDENT + "#define EE_MAX_ISR2 " + number + "\n\n");
 
 			}
 			
@@ -573,7 +573,6 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 		
 		return answer;
 	}
-	
 	
 	/**
 	 * Sets a valid mask for each event.

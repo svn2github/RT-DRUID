@@ -2,8 +2,6 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -14,7 +12,6 @@ import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
-import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
@@ -306,10 +303,10 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 			int max_level = 0;
 			int isr2ResNumber = 0;
 			int isr2Number = 0;
-			{
-				Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
-				isr2Number += (o == null ? 0 : ((Integer) o).intValue()) ;
-			}
+//			{
+//				Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_ADDITIONAL);
+//				isr2Number += (o == null ? 0 : ((Integer) o).intValue()) ;
+//			}
 
 			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.ISR)) {
 				String category = sgr.containsProperty(ISimpleGenResKeywords.ISR_CATEGORY) ? sgr.getString(ISimpleGenResKeywords.ISR_CATEGORY) : "";
