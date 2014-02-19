@@ -158,7 +158,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		// ee_cfg.h
 		ee_h_buffer.append(
 				commentWriterH.writerBanner("OS APPLICATIONS definition") +
-				indent1 + "#define EE_MAX_APP " + applications.size() +"U\n\n"); 				
+				indent1 + "#define EE_MAX_APP " + (applications.size() +1)+"U\n\n"); 				
 
 		// ee_cfg.c
 		ee_c_buffer.append(
@@ -167,7 +167,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		
 				
 		StringBuffer application_rom = new StringBuffer(
-				indent1 + "const EE_as_Application_ROM_type EE_as_Application_ROM[EE_MAX_APP+1U] = {\n" +
+				indent1 + "const EE_as_Application_ROM_type EE_as_Application_ROM[EE_MAX_APP] = {\n" +
 				indent2 + "{{ ");
 		if (areaNames != null) {
 			if (areaNames.getConstKAreas().isEmpty() && areaNames.getKAreas().isEmpty()) {
@@ -201,18 +201,18 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				
 			}
 		}
-		application_rom.append(" }, EE_NIL}");
+		application_rom.append(" }, EE_MEMPROT_TRUST_MODE, EE_NIL}");
 		
 		StringBuffer application_ram = new StringBuffer(
-				indent1 + "EE_as_Application_RAM_type EE_as_Application_RAM[EE_MAX_APP+1U] = {\n" +
-				indent2 + "EE_APP_RAM_INIT(0U, EE_MEMPROT_TRUST_MODE)");
+				indent1 + "EE_as_Application_RAM_type EE_as_Application_RAM[EE_MAX_APP] = {\n" +
+				indent2 + "EE_APP_RAM_INIT(0U)");
 		
 				
-		StringBuilder startUp_buffer  = new StringBuilder(indent1 +"const EE_HOOKTYPE EE_as_Application_startuphook[EE_MAX_APP+1U] = {\n" +
+		StringBuilder startUp_buffer  = new StringBuilder(indent1 +"const EE_HOOKTYPE EE_as_Application_startuphook[EE_MAX_APP] = {\n" +
 				indent2 + NO_HOOK);
-		StringBuilder shutdown_buffer = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_shutdownhook[EE_MAX_APP+1U] = {\n" +
+		StringBuilder shutdown_buffer = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_shutdownhook[EE_MAX_APP] = {\n" +
 				indent2 + NO_HOOK);
-		StringBuilder error_buffer    = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_errorhook[EE_MAX_APP+1U] = {\n" +
+		StringBuilder error_buffer    = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_errorhook[EE_MAX_APP] = {\n" +
 				indent2 + NO_HOOK);
 
 		StringBuilder startUp_decl_buffer  = new StringBuilder(indent1 + commentWriterC.writerSingleLineComment("Os Application Startup Hooks"));
@@ -291,17 +291,16 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						sep = ", ";
 					}
 				}
-				application_rom.append(" }, "+restartTask+"}");
+				application_rom.append(" }, "+
+							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") +", "+restartTask+"}");
 			}
 
 			if (parent.checkKeyword(IWritersKeywords.CPU_PPCE200ZX)) {
 				application_ram.append(end +
-						indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)], "+
-							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") + ")");
+						indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)])");
 			} else {
 				application_ram.append(end +
-						indent2 + "EE_APP_RAM_INIT(EE_STACK_INITP("+stack_base_name+stack_id+"), "+
-							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") + ")");
+						indent2 + "EE_APP_RAM_INIT(EE_STACK_INITP("+stack_base_name+stack_id+"))");
 			}
 			
 			startUp_buffer.append(end +indent2 + hStartup);
