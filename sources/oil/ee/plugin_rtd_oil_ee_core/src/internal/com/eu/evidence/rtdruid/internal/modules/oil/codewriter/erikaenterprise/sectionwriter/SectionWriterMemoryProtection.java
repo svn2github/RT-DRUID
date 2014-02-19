@@ -216,13 +216,13 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 		ee_h_buffer.append(
 				commentWriterH.writerBanner("ISR definition") +
 				indent1 + "#define EE_MAX_NESTING_LEVEL   "+(isr2_number<max_level?isr2_number : max_level)+"\n" +
-				indent1 + "#define EE_MAX_ISR_ID          "+(orderedIsr.size()-1)+"\n\n"); 				
+				indent1 + "#define EE_MAX_ISR_ID          "+orderedIsr.size()+"\n\n"); 				
 
 		// ee_cfg.c
 		ee_c_buffer.append(
 				commentWriterC.writerBanner("ISR definition") +
 				indent1 + "EE_as_ISR_RAM_type EE_as_ISR_stack[EE_MAX_NESTING_LEVEL];\n\n" +
-				indent1 + "const EE_as_ISR_ROM_type EE_as_ISR_ROM["+orderedIsr.size()+"] = {\n");
+				indent1 + "const EE_as_ISR_ROM_type EE_as_ISR_ROM[EE_MAX_ISR_ID] = {\n");
 				
 		StringBuffer appl_id = new StringBuffer(commentWriterC.writerSingleLineComment("ISR to Application mapping"));
 

@@ -791,6 +791,6 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	 */
 	@Override
 	public OsApplicationAreas osApplicationAreas() {
-		return new OsApplicationAreas(new String[] {}, new String[] {"ee_ssec", "ee_esec"}, new String[] {}, new String[] {"ee_skernel_ram", "ee_ekernel_ram"});
+		return new OsApplicationAreas(new String[] {}, new String[] {"ee_ssec", "ee_esec", "ee_sstack", "ee_estack"}, new String[] {}, new String[] {"ee_skernel_ram", "ee_ekernel_ram", "ee_sstack_kernel", "ee_estack_kernel"});
 	}
 }
