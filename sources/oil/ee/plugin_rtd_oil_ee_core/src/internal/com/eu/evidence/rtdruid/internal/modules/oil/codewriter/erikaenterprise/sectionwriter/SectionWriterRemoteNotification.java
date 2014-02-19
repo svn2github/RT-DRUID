@@ -22,6 +22,7 @@ import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.OilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
@@ -32,6 +33,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtil
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EmptyMacrosForSharedData;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractObjectsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
@@ -44,7 +46,9 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
  */
 public class SectionWriterRemoteNotification extends SectionWriter implements
 		IEEWriterKeywords, IRemoteNotificationsConstants,
-		IExtractObjectsExtentions, IGetEEOPTExtentions {
+		IExtractObjectsExtentions, IExtractKeywordsExtentions, IGetEEOPTExtentions {
+	
+	public final static String DEF__USE_RN__ = "use old rn feature";
 	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -80,7 +84,7 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 	 * @return true if this writer is enabled
 	 */
 	protected boolean enabled() {
-		return parent.getRtosSize() > 1 || Collections.binarySearch(keywords, IWritersKeywords.CPU_NIOSII) >=0;
+		return Collections.binarySearch(keywords, DEF__USE_RN__) >=0;
 	}
 
 	/**
@@ -764,4 +768,43 @@ public class SectionWriterRemoteNotification extends SectionWriter implements
 		
 		return answer;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions#updateKeywords(java.util.ArrayList, java.lang.String[])
+	 */
+	@Override
+	public void updateKeywords(ArrayList<String> keywords, String[] rtosPrefix) throws OilCodeWriterException {
+		
+		if (parent.getRtosSize() > 1 || Collections.binarySearch(keywords, IWritersKeywords.CPU_NIOSII) >=0) {
+	
+			final IVarTree vt = parent.getVt();
+			// by default, use this RemoteNotification handling
+			boolean useRN = true;
+	
+			//final ArrayList ee_opts = new ArrayList();
+			for (int i=0; i<rtosPrefix.length; i++) {
+				
+				/*******************************************************************
+				 * BOARD TYPE
+				 ******************************************************************/
+				String path = parent.computeOilRtosPrefix(rtosPrefix[i]) + "REMOTENOTIFICATION";
+	
+				String[] child = new String[1];
+				String board_type = CommonUtils.getFirstChildEnumType(vt,
+						path , child);
+				if (board_type != null) {
+	
+					// if the notification type is not rn, disable this writer
+					if (!"USE_RN".equals(board_type)) {
+						useRN = false;
+					}
+				}
+			}
+	
+			if (useRN && !keywords.contains("USE_RN")) {
+				keywords.add(DEF__USE_RN__);
+			}
+		}
+	}
+	
 }
