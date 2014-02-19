@@ -2644,4 +2644,109 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
+	
+
+	@Test public void testTc27x_os_application() {
+	    final String text = "CPU test_application {\n" +
+			"\n" +
+			"	OS EE {		\n" +
+			"		EE_OPT = \"DEBUG_STACK\";\n" +
+			"\n" +
+			"		CFLAGS = \"-g2\";\n" +
+			"		ASFLAGS = \"\";\n" +
+			"		LDFLAGS = \"\"; \n" +
+			"\n" +
+			"		 CPU_DATA = TRICORE {\n" +
+			"            CPU_CLOCK = 200.0;\n" +
+			"            APP_SRC = \"code.c\";\n" +
+			"            MULTI_STACK = TRUE {\n" +
+			"                IRQ_STACK = TRUE {\n" +
+			"                    SYS_SIZE = 256;\n" +
+			"                };\n" +
+			"            };\n" +
+			"        };\n" +
+			"		\n" +
+			"		MCU_DATA = TRICORE {\n"+
+			"			MODEL = TC27x;\n"+
+			"		};\n"+
+			"		\n" +
+			"\n" +
+			"		STATUS = EXTENDED;\n" +
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = FALSE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"		PRETASKHOOK = FALSE;\n" +
+			"		POSTTASKHOOK = FALSE;\n" +
+			"		USEGETSERVICEID = FALSE;\n" +
+			"		USEPARAMETERACCESS = FALSE;\n" +
+			"		USERESSCHEDULER = FALSE;\n" +
+			"		\n" +
+			"    };\n" +
+			"    \n" +
+			"    APPLICATION appl1 {\n" +
+			"		TRUSTED = FALSE;\n" +
+			"		IRQ_STACK_SIZE = 1024;\n" +
+    		"		SHARED_STACK_SIZE = 512;\n"+
+			"		TASK=Task1;\n" +
+			"		TASK=Task_app1;\n" +
+			"       ISR = isr_base1;\n" +
+			"       ISR = isr_app1;\n" +
+    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_SIZE = 0x10000;\n"+
+			"		STARTUPHOOK = FALSE;\n" +
+			"		ERRORHOOK = TRUE;\n" +
+			"		SHUTDOWNHOOK = FALSE;\n" +
+			"    };\n" +
+			"    APPLICATION appl2 {\n" +
+			"		TRUSTED = FALSE;\n" +
+			"		IRQ_STACK_SIZE = 512;\n" +
+    		"		SHARED_STACK_SIZE = 512;\n"+
+			"		TASK=Task2;\n" +
+    		"		MEMORY_BASE = 0x40020000;\n"+
+    		"		MEMORY_SIZE = 0x10000;\n"+
+			"		STARTUPHOOK = TRUE;\n" +
+			"		ERRORHOOK = TRUE;\n" +
+			"		SHUTDOWNHOOK = TRUE;\n" +
+			"    };\n" +
+			"    /* this is the OIL part for the first task */\n" +
+			"    TASK Task1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    /* this is the OIL part for the second task */\n" +
+			"    TASK Task2 {\n" +
+			"		PRIORITY = 0x02;   /* High priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = SHARED;\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"\n" +
+			"    TASK Task_app1 {\n" +
+			"		PRIORITY = 0x01;   /* Low priority */\n" +
+			"		AUTOSTART = FALSE;\n" +
+			"		STACK = PRIVATE {\n" +
+			"			SYS_SIZE = 512;\n" +
+			"		};\n" +
+			"		ACTIVATION = 1;    /* only one pending activation */\n" +
+			"	};	\n" +
+			"    ISR isr_base1 {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};	\n" +			
+			"    ISR isr_app1 {\n" +
+			"		CATEGORY = 2;\n" +
+			"	};	\n" +			
+			"    OS EE { \n" +
+			"		KERNEL_TYPE = ECC2;\n" +
+			"		ORTI_SECTIONS = ALL;\n" +
+			"		MAX_NESTING_LEVEL = 8;\n" +
+			"  }; 	\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+
 }

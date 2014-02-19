@@ -273,7 +273,10 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	public final static String OS_APPLICATION_TRUSTED = "SGR_os_application_trusted";
 
 	public final static String OS_APPLICATION_TRUSTED_FUNCTIONS = "SGR_os_application_trusted_functions__String_list";
-	
+	public final static String OS_APPLICATION_HOOK_STARTUP  = "SGR_os_application_enable_startup_hook__";
+	public final static String OS_APPLICATION_HOOK_SHUTDOWN = "SGR_os_application_enable_shutdown_hook__";
+	public final static String OS_APPLICATION_HOOK_ERROR    = "SGR_os_application_enable_error_hook__";
+		
 
 	public final static String SIMPLE_SPINLOCK = "enable simple spinlock handling";
 	public final static String QUEUED_SPINLOCK = "enable queued spinlock handling";

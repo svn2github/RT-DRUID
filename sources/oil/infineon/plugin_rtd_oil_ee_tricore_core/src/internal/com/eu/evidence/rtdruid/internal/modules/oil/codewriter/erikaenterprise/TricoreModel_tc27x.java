@@ -65,6 +65,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	
 	private static final String STACK_BASE_NAME = "EE_tc_stack_";
 	private static final String SGR_OS_CPU_SYS_STACK_SIZE = "sgr__os_cpu_system_stack_size";
+	private static final String SGR_OS_APPL_SHARED_STACK_ID = "sgr__os_application__shared_stack_id__integer";
 	private static final String SGR_OS_CPU_SYS_CSA_SIZE = "sgr__os_cpu_system_csa_size";
 	private static final long DEFAULT_SYS_STACK_SIZE = 8192;
 	private static final long DEFAULT_SYS_CSA_SIZE = 16384;
@@ -403,6 +404,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			final int STACK_SIZE_UNIT = 1;// ErikaEnterpriseWriter.getStackUnit(ool);
 			final ICommentWriter commentWriterC = SectionWriter.getCommentWriter(ool, FileTypes.C);
 			List<ISimpleGenRes> taskNames = ool.getList(IOilObjectList.TASK);
+			List<ISimpleGenRes> osApplications = ool.getList(IOilObjectList.OSAPPLICATION);
 	
 			String pre = "";
 			String post = "";
@@ -509,6 +511,20 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					tListN.add(sgr.getString(ISimpleGenResKeywords.TASK_SYS_ID));
 				}
 	
+				// fill data for each shared stack, related to OS applications
+				for (Iterator<ISimpleGenRes> iter = osApplications.iterator(); iter.hasNext();) {
+
+					ISimpleGenRes sgr = (ISimpleGenRes) iter.next();
+					tList.add(EEStacks.APPLICATION_SHARED_PREFIX+ sgr.getName());
+					tListN.add(" ");
+
+					tList.add(EEStacks.APPLICATION_IRQ_PREFIX+ sgr.getName());
+					tListN.add("");
+					
+					sgr.setObject(SGR_OS_APPL_SHARED_STACK_ID, new Integer((tList.size()-1)));
+					sgr.setObject(EEStacks.STACK_BASE_NAME_PREFIX, STACK_BASE_NAME);
+				}
+
 				// compute total stack size and add it to memory requirement
 	//			int offset[][] = elStack.taskOffsets((String[]) tList
 	//					.toArray(new String[0]));
@@ -538,6 +554,15 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 						+ "const EE_UREG EE_std_thread_tos["+MAX_TASK+"+1] = {\n");
 	
 				
+				 // fill data for each shared stack, related to OS applications
+				for (Iterator<ISimpleGenRes> iter = osApplications.iterator(); iter.hasNext();) {
+
+					ISimpleGenRes sgr = (ISimpleGenRes) iter.next();
+					Integer index = (Integer) sgr.getObject(SGR_OS_APPL_SHARED_STACK_ID);
+
+					sgr.setProperty(ISimpleGenResKeywords.OS_APPL_SHARED_STACK_ID,"" + pos[index.intValue()]);
+					
+				}
 				
 					
 				// DESCRIPTIONS

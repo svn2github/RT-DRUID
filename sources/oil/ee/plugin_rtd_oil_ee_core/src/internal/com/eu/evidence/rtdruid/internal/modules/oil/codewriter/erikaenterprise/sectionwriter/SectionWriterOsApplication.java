@@ -163,6 +163,10 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				indent2 + "EE_APP_RAM_INIT(0,0U),\n");
 		
 				
+		StringBuilder startUp_buffer  = new StringBuilder(indent1 +"const EE_HOOKTYPE EE_as_Application_startuphook[EE_MAX_APP] = {\n");
+		StringBuilder shutdown_buffer = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_shutdownhook[EE_MAX_APP] = {\n");
+		StringBuilder error_buffer    = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_errorhook[EE_MAX_APP] = {\n");
+
 		String end = "";
 		for (ISimpleGenRes application : applications) {
 			boolean trusted = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
@@ -173,6 +177,16 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			
 			String mem_base = application.getString(OS_APPLICATION_MEM_BASE);
 			String mem_size = application.getString(OS_APPLICATION_MEM_SIZE);
+
+			String hError = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_HOOK_ERROR) 
+					&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_HOOK_ERROR))?
+							"ErrorHook_" + application.getName() : "0U";
+			String hStartup = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_HOOK_STARTUP) 
+					&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_HOOK_STARTUP))?
+							"StartupHook_" + application.getName() : "0U";
+			String hShutdown = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_HOOK_SHUTDOWN) 
+					&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_HOOK_SHUTDOWN))?
+							"ShutdownHook_" + application.getName() : "0U";
 
 
 			// ee_cfg.c
@@ -191,6 +205,9 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					indent2 + "EE_APP_RAM_INIT(&"+stack_base_name+stack_id+"[EE_STACK_INITP(STACK_"+stack_id+"_SIZE)], "+
 						(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") + ")");
 
+			startUp_buffer.append(end +indent2 + hStartup);
+			shutdown_buffer.append(end +indent2 + hShutdown);
+			error_buffer.append(end +indent2 + hError);
 			
 			linker_buffer.append(
 					name + 
@@ -206,10 +223,16 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		
 		application_rom.append("\n" + indent1 +"};\n\n");
 		application_ram.append("\n" + indent1 +"};\n\n");
+		startUp_buffer.append("\n" + indent1 +"};\n\n");
+		shutdown_buffer.append("\n" + indent1 +"};\n\n");
+		error_buffer.append("\n" + indent1 +"};\n\n");
 
 		ee_c_buffer.append("\n" +
 				application_rom + "\n" +
-				application_ram);
+				application_ram + 
+				startUp_buffer +
+				shutdown_buffer +
+				error_buffer);
 		
 		linker_buffer.append("\n");
 		
@@ -250,6 +273,10 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		final String path_resource = osApplBasePath+ "RESOURCE";
 		final String path_task     = osApplBasePath+ "TASK";
 
+		final String path_startUpH  =  osApplBasePath+ "STARTUPHOOK";
+		final String path_errorH    =  osApplBasePath+ "ERRORHOOK";
+		final String path_shutdownH =  osApplBasePath+ "SHUTDOWNHOOK";
+		
 		final String path_trusted_function = PARAMETER_LIST+ "TRUSTED_FUNCTION";
 
 
@@ -314,6 +341,21 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					appl.setObject(IEEWriterKeywords.OS_APPLICATION_TRUSTED_FUNCTIONS, trustedFunctionNames);
 					
 				}
+				{
+					String val = CommonUtils.getFirstChildEnumType(vt, addToAllStrings(appl_paths, path_startUpH), null);
+					if (val != null) {
+						appl.setProperty(OS_APPLICATION_HOOK_STARTUP, "" + "true".equalsIgnoreCase(val));
+					}
+					val = CommonUtils.getFirstChildEnumType(vt, addToAllStrings(appl_paths, path_shutdownH), null);
+					if (val != null) {
+						appl.setProperty(OS_APPLICATION_HOOK_SHUTDOWN, "" + "true".equalsIgnoreCase(val));
+					}
+					val = CommonUtils.getFirstChildEnumType(vt, addToAllStrings(appl_paths, path_errorH), null);
+					if (val != null) {
+						appl.setProperty(OS_APPLICATION_HOOK_ERROR, "" + "true".equalsIgnoreCase(val));
+					}
+				}
+
 			
 				{
 					String[] val = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_mem_base));
