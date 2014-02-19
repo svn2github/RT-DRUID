@@ -420,15 +420,11 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
 											DEFAULT_SYS_STACK_SIZE)) + "\n"+
 								"LDFLAGS += -Wl-DCSA_TC"+currentRtosId+"=" + csa_size
-
 								+ "\n\n");
 					}
 						break;
 					case GNU:
 					{
-						int csa_size = Integer.parseInt( "" + ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_CSA_SIZE),
-								DEFAULT_SYS_CSA_SIZE));
-						csa_size = (int) Math.ceil(csa_size/64.0);
 						builder.append("\n" + SectionWriter.getCommentWriter(ool, FileTypes.MAKEFILE).writerSingleLineComment("Add a flag for the linkerscript to set the minimum size of system stack") + 
 								"LDFLAGS += -Wl,--defsym=__USTACK_SIZE=" +//+currentRtosId+"=" + 
 									( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
@@ -727,13 +723,13 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				 * For each stack prepare the configuration's vectors and
 				 * descriptions
 				 */
-				final String additional_elements = osApplication_enabled ? ", 0U, 0U, EE_NIL" : ", 0U";
-				sbStack.append(indent + "struct EE_TOS EE_tc_system_tos["
+				final String additional_elements = osApplication_enabled ? ", 0U, 0U" : ", 0U";
+				sbStack.append(indent + "struct EE_TC_TOS EE_tc_system_tos["
 						+ (size.length - is_irq_stack.cardinality()) + "] = {\n"
 						+ writeSystemTos(commentC, size, descrStack, is_irq_stack, additional_elements));
 				    
 				if (osApplication_enabled) {
-					sbStack.append(indent + "struct EE_BOS const EE_tc_system_bos["
+					sbStack.append(indent + "struct EE_TC_BOS const EE_tc_system_bos["
 							+ (size.length - is_irq_stack.cardinality()) + "] = {\n"
 							+ writeSystemTos(commentC, size, descrStack, is_irq_stack, ""));
 				}

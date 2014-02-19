@@ -99,7 +99,10 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	};
 		
 		
-				
+	protected final static String[] EE_OSAPPL_IDs = {
+		"TerminateApplication",
+		"AllowAccess"
+	};			
 	
 	
 	
@@ -151,6 +154,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	@SuppressWarnings("unchecked")
 	protected void addSysCalls(IOilObjectList ool, IOilWriterBuffer answer, int rtosId) {
 		List<Integer> requiredOilObjects = (List<Integer>) AbstractRtosWriter.getOsObject(ool, SGRK__FORCE_ARRAYS_LIST__);
+		List<ISimpleGenRes> os_appls = ool.getList(IOilObjectList.OSAPPLICATION);
 
 		final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
 		final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
@@ -273,12 +277,22 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 				}
 			}
 		}
+		
+		// Resources
+		if (os_appls.size() > 0
+				&& parent.checkKeyword(IWritersKeywords.CPU_TRICORE))  {
+
+			for (String s: EE_OSAPPL_IDs) {
+				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+				counter ++;
+			}
+		}
 
 		int max_sys_serviceId = counter;
 
 		// Trusted Functions
 		{
-			List<ISimpleGenRes> os_appls = ool.getList(IOilObjectList.OSAPPLICATION);
 			for (ISimpleGenRes appl: os_appls) {
 				if (appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
 						&& "true".equalsIgnoreCase(appl.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED))) {
