@@ -775,7 +775,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	
 				sbStack.append(indent+ "EE_UREG EE_tc_active_tos = 0U; " +commentC.writerSingleLineComment("dummy") + "\n");
 				sbStack.append(indent
-						+ "EE_ADDR EE_tc_tasks_RA["+MAX_TASK+"+1];\n\n");
+						+ "EE_tc_task_save_data EE_tc_tasks_RA["+MAX_TASK+"+1];\n\n");
 	
 				{ // if required, init also the irq stack
 					if (irqSize != null) {
