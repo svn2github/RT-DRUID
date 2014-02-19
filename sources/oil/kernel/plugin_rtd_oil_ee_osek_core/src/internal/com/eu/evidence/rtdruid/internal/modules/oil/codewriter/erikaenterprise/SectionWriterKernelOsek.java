@@ -1065,6 +1065,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						String maxAllowed = curr.getString(ISimpleGenResKeywords.COUNTER_MAX_ALLOWED)+"U";
 						String ticks = curr.getString(ISimpleGenResKeywords.COUNTER_TICKS)+"U";
 						String minCycle = curr.getString(ISimpleGenResKeywords.COUNTER_MIN_CYCLE)+"U";
+						
+						int osAppId = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_ID) ? (curr.getInt(ISimpleGenResKeywords.OS_APPL_ID) +1) : 0; 
 		
 						// ------ WRITE BUFFER -----
 		
@@ -1090,7 +1092,9 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						}
 		
 						buffer.append(pre2 + post + indent2+"{" + maxAllowed + ", "
-								+ ticks + ", " + minCycle + "}");
+								+ ticks + ", " + minCycle +
+								(hasOsAppl ? ", " + osAppId : "")
+								+ "}");
 						pre2 = ",";
 						post = indent2 + commentWriterC.writerSingleLineComment(name); // end with \n;
 					}

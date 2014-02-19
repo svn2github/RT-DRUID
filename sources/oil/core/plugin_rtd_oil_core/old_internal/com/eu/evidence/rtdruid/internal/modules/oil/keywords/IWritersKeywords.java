@@ -201,6 +201,7 @@ public interface IWritersKeywords {
 	// ----------------------- ORTI -------------------------------
 	/** This keyword is used to enable the generation of orti files */
 	public final static String ENABLE_ORTI = "enable_orti_output";
+	public final static String ENABLE_ORTI_ISR2 = "enable_orti_isr2_output";
 	
 
 }

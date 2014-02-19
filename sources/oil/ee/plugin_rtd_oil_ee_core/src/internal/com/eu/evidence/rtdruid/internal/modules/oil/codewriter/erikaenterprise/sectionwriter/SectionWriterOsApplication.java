@@ -422,9 +422,14 @@ public class SectionWriterOsApplication extends SectionWriter implements
 
 		String pre = "";
 		String post = "";
+		final boolean needOrtiHandler = parent.checkKeyword(IWritersKeywords.ENABLE_ORTI_ISR2);
 		for (ISimpleGenRes isr : orderedIsr) {
+
+			
+			
 			if (isr != null) {
 				String name = isr.getName();
+				String orti_handler = needOrtiHandler ? ", " + isr.getString(ISimpleGenResKeywords.ISR_GENERATED_HANDLER) : "";
 				
 				int aid = 0;
 				if (isr.containsProperty(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME)) {
@@ -435,11 +440,12 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				}
 				appl_id.append(indent1 + "#define ISR2_APP_"+name+"\t" + aid + "\n");
 				
-				ee_c_buffer.append(pre + post + indent2 + "{ "+aid+" }");
+				ee_c_buffer.append(pre + post + indent2 + "{ "+aid + orti_handler+" }");
 				pre = ",";
 				post = commentWriterC.writerSingleLineComment(name);
 			} else {
-				ee_c_buffer.append(pre + post + indent2 + "{ ((ApplicationType)-1) }");
+				String orti_handler = needOrtiHandler ? ", 0" : "";
+				ee_c_buffer.append(pre + post + indent2 + "{ ((ApplicationType)-1)"+orti_handler+" }");
 				pre = ",";
 				post = commentWriterC.writerSingleLineComment("not used");
 			}

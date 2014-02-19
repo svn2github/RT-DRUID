@@ -721,6 +721,9 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 		if (EE_ORTI_current != 0 && !keywords.contains(IWritersKeywords.ENABLE_ORTI)) {
 			keywords.add(IWritersKeywords.ENABLE_ORTI);
 		}
+		if ( (EE_ORTI_current & OsekOrtiConstants.EE_ORTI_ISR2) != 0 && !keywords.contains(IWritersKeywords.ENABLE_ORTI_ISR2)) {
+			keywords.add(IWritersKeywords.ENABLE_ORTI_ISR2);
+		}
 	}	
 
 	public void updateObjects() throws OilCodeWriterException {
