@@ -1635,21 +1635,21 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					StringBuffer body_locker = new StringBuffer(" = {\n");
 					pre = "";
 					for (int i=0; i<size; i++ ) {
-						body_locker.append(pre + indent2 + "OS_CORE_ID_INVALID");
+						body_locker.append(pre + indent2 + "INVALID_CORE_ID");
 						pre = ",\n";
 					};
 					body_locker.append("\n"+indent1+"};\n");
 					StringBuffer body_last = new StringBuffer(" = {\n");
 					pre = "";
 					for (int i=0; i<oilObjects.length; i++ ) {
-						body_last.append(pre + indent2 + "OS_SPINLOCK_ID_INVALID");
+						body_last.append(pre + indent2 + "INVALID_SPINLOCK");
 						pre = ",\n";
 					};
 					body_last.append("\n"+indent1+"};\n");
 					StringBuffer body_stack = new StringBuffer(" = {\n");
 					pre = "";
 					for (int i=0; i<size; i++ ) {
-						body_stack.append(pre + indent2 + "OS_SPINLOCK_ID_INVALID");
+						body_stack.append(pre + indent2 + "INVALID_SPINLOCK");
 						pre = ",\n";
 					};
 					body_stack.append("\n"+indent1+"};\n");
