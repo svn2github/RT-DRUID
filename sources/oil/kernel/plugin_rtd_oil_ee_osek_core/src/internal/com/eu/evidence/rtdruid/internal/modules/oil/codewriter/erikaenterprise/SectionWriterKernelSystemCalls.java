@@ -288,6 +288,31 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 				counter ++;
 			}
 		}
+		
+		{
+			
+			boolean hasTrustedFunctions = false;
+			for (ISimpleGenRes appl: os_appls) {
+				if (appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
+						&& "true".equalsIgnoreCase(appl.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED))) {
+					
+					List<String> functions = appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED_FUNCTIONS) ?
+							(List<String>) appl.getObject(IEEWriterKeywords.OS_APPLICATION_TRUSTED_FUNCTIONS) : new ArrayList<String>();
+					
+					if (functions.size()>0) {
+						hasTrustedFunctions = true;
+						break;
+					}
+				}
+			}
+			if (hasTrustedFunctions) {
+				String s = "CallTrustedFunction";
+				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+				counter ++;
+			}
+			
+		}
 
 		int max_sys_serviceId = counter;
 

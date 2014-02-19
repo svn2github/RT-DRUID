@@ -146,6 +146,9 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					case GNU:
 						tmp.add(SectionWriterHalTricore.EEOPT_GNU);
 						break;
+					case DIAB:
+						tmp.add(SectionWriterHalTricore.EEOPT_DIAB);
+						break;
 					default:
 						Messages.sendWarningNl("Unsupported compiler");
 				}
@@ -528,6 +531,12 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			
 			ITreeInterface ti = vt.newTreeInterface();
 	
+			if (osApplication_enabled) {
+				sbInithal_c.append(commentWriterC.writerSingleLineComment("User Stack Base.")+
+						indent + "extern EE_STACK_T EE_B_USTACK[];\n"+
+						commentWriterC.writerSingleLineComment("User Stack end.")+
+						indent + "extern EE_STACK_T EE_E_USTACK[];\n");
+			}
 	
 			
 			int[] irqSize = null;
@@ -755,13 +764,13 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				sbStack.append(indent + "struct EE_TC_TOS EE_tc_system_tos["
 						+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_tc_system_tos", size.length - is_irq_stack.cardinality())
 						+ "] = {\n"
-						+ writeSystemTos(commentC, size, descrStack, is_irq_stack, additional_elements, false));
+						+ writeSystemTos(commentC, size, descrStack, null, is_irq_stack, additional_elements, false));
 				    
 				if (osApplication_enabled) {
-					sbStack.append(indent + "struct EE_TOS const EE_tc_system_bos["
+					sbStack.append(indent + "struct EE_TC_BOS const EE_tc_system_bos["
 							+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_tc_system_bos", size.length - is_irq_stack.cardinality())
 							+ "] = {\n"
-							+ writeSystemTos(commentC, size, descrStack, is_irq_stack, "", needStackMonitoring));
+							+ writeSystemTos(commentC, size, descrStack, new String[] {"EE_E_USTACK", "EE_B_USTACK"}, is_irq_stack, "", needStackMonitoring));
 				}
 	
 				sbStack.append(indent+ "EE_UREG EE_tc_active_tos = 0U; " +commentC.writerSingleLineComment("dummy") + "\n");
@@ -825,7 +834,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	 * @param additional_elements
 	 */
 	private String writeSystemTos(ICommentWriter commentC, 
-				int[][] size, String[] descrStack, BitSet is_irq_stack, final String additional_elements, final boolean needStackMonitoring) {
+				int[][] size, String[] descrStack, String[] globalStackNames, BitSet is_irq_stack, final String additional_elements, final boolean needStackMonitoring) {
 		
 		final StringBuilder sbStack = new StringBuilder();
 		final String indent = IWritersKeywords.INDENT;
@@ -834,8 +843,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		for (int j = 0; j < size.length; j++) {
 		    if (!is_irq_stack.get(j)) {
 		        String value = "{" + 
-		        			(j == 0 ? "0" : "EE_STACK_INITP("+STACK_BASE_NAME+j+")")
-		        			+ (needStackMonitoring ? (j == 0 ? ", 0" : ", EE_STACK_ENDP("+STACK_BASE_NAME+j+")") : "")
+		        			(j == 0 ? (globalStackNames == null ? "0" : globalStackNames[0]) : "EE_STACK_INITP("+STACK_BASE_NAME+j+")")
+		        			+ (needStackMonitoring ? (j == 0 ? (globalStackNames == null ? ", 0" : ", " +globalStackNames[1]) : ", EE_STACK_ENDP("+STACK_BASE_NAME+j+")") : "")
 		        			+ additional_elements+"}";
 
 				sbStack.append(pre

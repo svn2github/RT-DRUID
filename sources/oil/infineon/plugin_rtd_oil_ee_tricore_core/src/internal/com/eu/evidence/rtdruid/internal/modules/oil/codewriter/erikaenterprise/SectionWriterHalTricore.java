@@ -84,6 +84,7 @@ public class SectionWriterHalTricore extends SectionWriter
 	public static final String EEOPT_HAL_TRICORE__OLD = "__TRICORE1__";
 	public static final String EEOPT_HAL_TRICORE = "EE_TRICORE__";
 
+	static final String EEOPT_DIAB = "EE_DIAB__";
 	static final String EEOPT_GNU = "EE_GNU__";
 	static final String EEOPT_TASKING = "EE_TASKING__";
 	
