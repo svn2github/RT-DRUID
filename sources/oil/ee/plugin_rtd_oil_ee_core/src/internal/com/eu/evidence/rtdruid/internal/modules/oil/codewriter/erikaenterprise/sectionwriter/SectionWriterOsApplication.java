@@ -49,6 +49,11 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		IExtractKeywordsExtentions {
 
 	
+	/**
+	 * 
+	 */
+	private static final String NO_HOOK = "0U";
+
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
 
@@ -167,6 +172,10 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		StringBuilder shutdown_buffer = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_shutdownhook[EE_MAX_APP] = {\n");
 		StringBuilder error_buffer    = new StringBuilder(indent1 +"const EE_STATUSHOOKTYPE EE_as_Application_errorhook[EE_MAX_APP] = {\n");
 
+		StringBuilder startUp_decl_buffer  = new StringBuilder(indent1 + commentWriterC.writerSingleLineComment("Os Application Startup Hooks"));
+		StringBuilder shutdown_decl_buffer = new StringBuilder(indent1 + commentWriterC.writerSingleLineComment("Os Application Shutdown Hooks"));
+		StringBuilder error_decl_buffer    = new StringBuilder(indent1 + commentWriterC.writerSingleLineComment("Os Application Errork Hooks"));
+
 		String end = "";
 		for (ISimpleGenRes application : applications) {
 			boolean trusted = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
@@ -180,13 +189,13 @@ public class SectionWriterOsApplication extends SectionWriter implements
 
 			String hError = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_HOOK_ERROR) 
 					&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_HOOK_ERROR))?
-							"ErrorHook_" + application.getName() : "0U";
+							"ErrorHook_" + application.getName() : NO_HOOK;
 			String hStartup = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_HOOK_STARTUP) 
 					&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_HOOK_STARTUP))?
-							"StartupHook_" + application.getName() : "0U";
+							"StartupHook_" + application.getName() : NO_HOOK;
 			String hShutdown = application.containsProperty(IEEWriterKeywords.OS_APPLICATION_HOOK_SHUTDOWN) 
 					&& "true".equalsIgnoreCase(application.getString(IEEWriterKeywords.OS_APPLICATION_HOOK_SHUTDOWN))?
-							"ShutdownHook_" + application.getName() : "0U";
+							"ShutdownHook_" + application.getName() : NO_HOOK;
 
 
 			// ee_cfg.c
@@ -209,6 +218,10 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			shutdown_buffer.append(end +indent2 + hShutdown);
 			error_buffer.append(end +indent2 + hError);
 			
+			if (hStartup  != NO_HOOK) { startUp_decl_buffer.append( indent1 + "extern void "+hStartup +" ( void );\n"); };
+			if (hShutdown != NO_HOOK) { shutdown_decl_buffer.append(indent1 + "extern void "+hShutdown+" ( StatusType );\n"); };
+			if (hError    != NO_HOOK) { error_decl_buffer.append(   indent1 + "extern void "+hError+   " ( StatusType );\n"); };
+			
 			linker_buffer.append(
 					name + 
 					(name.length() < 30 ? white.substring(0, 30-name.length()) : "" ) + " " + 
@@ -230,8 +243,11 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		ee_c_buffer.append("\n" +
 				application_rom + "\n" +
 				application_ram + 
+				startUp_decl_buffer +
 				startUp_buffer +
+				shutdown_decl_buffer +
 				shutdown_buffer +
+				error_decl_buffer  +
 				error_buffer);
 		
 		linker_buffer.append("\n");

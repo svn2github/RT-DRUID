@@ -317,23 +317,39 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		{
 			sbCommon_c.append(commentWriter.writerBanner("Slave core StartUp Address"));
 			StringBuilder buff = new StringBuilder(" = {\n");
+			StringBuilder decl = new StringBuilder();
 		
 			String pre = "";
 			for (int index = 1; index<objects.length; index++) {
 				IOilObjectList ool = objects[index];
 				String addr = AbstractRtosWriter.getOsProperty(ool, SGR_OS_APPL_STARTUP_ADDRESS);
+				boolean isNumber = true;
 				if (addr == null) {
 					addr = "EE_CPU"+index + "_START_ADDR";
+					isNumber = false;
 					
 					if (customBoot) {
 						Messages.sendWarningNl("Even if the option USE CUSTOM STARTUP is enabled, the core " + index + " is using the default startup address.");
 					}
+				} else {
+					try {
+						Integer.decode(addr);
+					} catch (NumberFormatException e) {
+						isNumber = false;
+					}
 				}
+				
+				if (!isNumber) {
+					// add symbol declaration
+					decl.append(indent + "extern void "+addr+" ( void );\n");
+				}
+				
 				buff.append(pre + indent+indent+ "(EE_ADDR) " +addr);
 				pre = ",\n";
 			}
 		
 			sbCommon_c.append(
+					decl.toString() + "\n" +
 					macros.constVectorRom(
 								IWritersKeywords.INDENT + "EE_ADDR const ",
 			    				"EE_as_core_start_addresses",
