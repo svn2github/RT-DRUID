@@ -5,6 +5,7 @@ package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -464,6 +465,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			 */
 			final boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
 			final String MAX_TASK = (binaryDistr ? "RTD_" : "EE_") + "MAX_TASK";
+			final boolean osApplication_enabled = parent.checkKeyword(IWritersKeywords.KERNEL_OS_APPLICATION);
+			final boolean enableMemoryProtection = parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION);
 	
 			
 			// ------------- Buffers --------------------
@@ -603,8 +606,10 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					tList.add(EEStacks.APPLICATION_SHARED_PREFIX+ sgr.getName());
 					tListN.add(" ");
 
-					tList.add(EEStacks.APPLICATION_IRQ_PREFIX+ sgr.getName());
-					tListN.add("");
+					if (enableMemoryProtection) {
+						tList.add(EEStacks.APPLICATION_IRQ_PREFIX+ sgr.getName());
+						tListN.add("");
+					}
 					
 					sgr.setObject(SGR_OS_APPL_SHARED_STACK_ID, new Integer((tList.size()-1)));
 					sgr.setObject(EEStacks.STACK_BASE_NAME_PREFIX, STACK_BASE_NAME);
@@ -654,13 +659,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				
 					
 				// DESCRIPTIONS
+				BitSet is_irq_stack = new BitSet();
 				for (int j = 0; j < pos.length; j++) {
-					if (j<=taskNames.size()) {
-						sbStack.append(pre + post + indent + indent + +pos[j]+"U");
-						// set new values for "post" and "pre"
-						post = commentC.writerSingleLineComment(tList.get(j));
-						pre = ",\t";
-					}
 	
 					/*
 					 * add the name of current task to the description of the /
@@ -675,10 +675,21 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 							id = "Shared stack " + id.substring(EEStacks.APPLICATION_SHARED_PREFIX.length());
 							task = false;
 						} else if (id.startsWith(EEStacks.APPLICATION_IRQ_PREFIX)) {
+							is_irq_stack.set(pos[j]);
 							id = "Irq stack " + id.substring(EEStacks.APPLICATION_IRQ_PREFIX.length()); 
 							task = false;
 						}
 					}
+					
+					if (j<=taskNames.size()) {
+						sbStack.append(pre + post + indent + indent + +pos[j]+"U");
+						// set new values for "post" and "pre"
+						post = commentC.writerSingleLineComment(tList.get(j));
+						pre = ",\t";
+					}
+
+					
+					
 					String txt = task ? "Task " + tListN.get(j) + " (" + id + ")" : id; 
 					
 					descrStack[pos[j]] = (descrStack[pos[j]] == null) ?
@@ -690,9 +701,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				}
 	
 				// close sbStack
-				sbStack.append(" \t" + post + indent + "};\n\n" + indent
-						+ "struct EE_TC_TOS EE_tc_system_tos["
-						+ (size.length) + "] = {\n");
+				sbStack.append(" \t" + post + indent + "};\n\n");
 				
 				pre = "";
 				post = "";
@@ -718,24 +727,18 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				 * For each stack prepare the configuration's vectors and
 				 * descriptions
 				 */
-				for (int j = 0; j < size.length; j++) {
+				final String additional_elements = osApplication_enabled ? ", 0U, 0U, EE_NIL" : ", 0U";
+				sbStack.append(indent + "struct EE_TOS EE_tc_system_tos["
+						+ (size.length - is_irq_stack.cardinality()) + "] = {\n"
+						+ writeSystemTos(commentC, size, descrStack, is_irq_stack, additional_elements));
 				    
-			        String value = j == 0 ? "{0U, 0U}" : "{EE_STACK_INITP("+STACK_BASE_NAME+j+"), 0U}";
-	
-					sbStack.append(pre
-							+ post
-							+ indent
-							+ indent
-							+ value);
-	
-					// set new values for size
-					pre = ",";
-					post = "\t" + commentC.writerSingleLineComment(descrStack[j]);
+				if (osApplication_enabled) {
+					sbStack.append(indent + "struct EE_BOS const EE_tc_system_bos["
+							+ (size.length - is_irq_stack.cardinality()) + "] = {\n"
+							+ writeSystemTos(commentC, size, descrStack, is_irq_stack, ""));
 				}
 	
-				// complete the stack's buffer
-				sbStack.append(" " + post + indent + "};\n\n" + indent
-						+ "EE_UREG EE_tc_active_tos = 0U;" +commentC.writerSingleLineComment("dummy") + "\n");
+				sbStack.append(indent+ "EE_UREG EE_tc_active_tos = 0U; " +commentC.writerSingleLineComment("dummy") + "\n");
 				sbStack.append(indent
 						+ "EE_ADDR EE_tc_tasks_RA["+MAX_TASK+"+1];\n\n");
 	
@@ -780,6 +783,48 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		} else {
 			
 		}
+	}
+
+	/**
+	 * @param indent
+	 * @param commentC
+	 * @param sbStack
+	 * @param pre
+	 * @param post
+	 * @param size
+	 * @param descrStack
+	 * @param is_irq_stack
+	 * @param additional_elements
+	 */
+	private String writeSystemTos(ICommentWriter commentC, 
+				int[][] size, String[] descrStack, BitSet is_irq_stack, final String additional_elements) {
+		
+		final StringBuilder sbStack = new StringBuilder();
+		final String indent = IWritersKeywords.INDENT;
+		String pre = "";
+		String post = "";
+		for (int j = 0; j < size.length; j++) {
+		    if (!is_irq_stack.get(j)) {
+		        String value = "{" + 
+		        			(j == 0 ? "0" : "EE_STACK_INITP("+STACK_BASE_NAME+j+")")
+		        			+ additional_elements+"}";
+
+				sbStack.append(pre
+						+ post
+						+ indent
+						+ indent
+						+ value);
+
+				// set new values for size
+				pre = ",";
+				post = "\t" + commentC.writerSingleLineComment(descrStack[j]);
+		    }
+		}
+
+		// complete the stack's buffer
+		sbStack.append(" " + post + indent + "};\n\n");
+		
+		return sbStack.toString();
 	}
 	
 	
