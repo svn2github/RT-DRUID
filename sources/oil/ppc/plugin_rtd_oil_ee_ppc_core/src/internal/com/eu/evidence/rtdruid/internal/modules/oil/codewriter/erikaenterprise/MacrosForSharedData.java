@@ -44,6 +44,13 @@ public class MacrosForSharedData implements IMacrosForSharedData {
 
 		}
 		
+		
+		@Override
+		public String vectorRamUnitialized(String type, String vectorName, String array, String body) {
+			return vectorRam(type, vectorName, array, body);
+		}
+
+		
 		@Override
 		public String vectorRam(String type, String vectorName, String array, String body) {
 //			addElement("EE_SHARED_IDATA", "mcglobald", vectorName);
@@ -86,6 +93,11 @@ public class MacrosForSharedData implements IMacrosForSharedData {
 					type +vectorName+array+body+
 					"#pragma section EE_SHARED_SCONST_END /* pragma tail */\n" +
 					"#pragma section EE_SHARED_CONST_END /* pragma tail */\n";
+		}
+
+		@Override
+		public String valueRamUnitialized(String type, String valueName, String body) {
+			return valueRam(type, valueName, body);
 		}
 
 		@Override
@@ -140,6 +152,11 @@ public class MacrosForSharedData implements IMacrosForSharedData {
 	}
 	
 	@Override
+	public String vectorRamUnitialized(String type, String vectorName, String array, String body) {
+		return vectorRam(type, vectorName, array, body);
+	}
+	
+	@Override
 	public String vectorRam(String type, String vectorName, String array, String body) {
 		return type + "EE_SHARED_IDATA "+vectorName+array + body;
 	}
@@ -159,6 +176,11 @@ public class MacrosForSharedData implements IMacrosForSharedData {
 		return type + "EE_SHARED_CDATA "+vectorName+array + body;
 	}
 
+	@Override
+	public String valueRamUnitialized(String type, String valueName, String body) {
+		return valueRam(type, valueName, body);
+	}
+	
 	@Override
 	public String valueRam(String type, String valueName, String body) {
 		return type + "EE_SHARED_IDATA "+valueName + body;

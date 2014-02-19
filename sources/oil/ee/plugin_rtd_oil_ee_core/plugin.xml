@@ -103,6 +103,9 @@
       <writer
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterCommonKernelVectorSizeDefs">
       </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterQueuedSpinlock">
+      </writer>
    </extension>
 
 

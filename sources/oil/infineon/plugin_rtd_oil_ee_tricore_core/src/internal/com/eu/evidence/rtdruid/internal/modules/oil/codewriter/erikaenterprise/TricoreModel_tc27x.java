@@ -26,6 +26,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtil
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
 import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 
@@ -104,6 +105,14 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	@Override
 	public boolean isPackIsrPriorities() {
 		return false;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.TricoreAbstractModel#getMacros()
+	 */
+	@Override
+	public IMacrosForSharedData getMacros() {
+		return new TricoreMacrosForSharedData();
 	}
 	
 	/* (non-Javadoc)
@@ -266,6 +275,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	 */
 	private void writeMulticoreCommon(final IOilObjectList ool, final IOilWriterBuffer buffers) {
 		
+		if (!parent.checkKeyword(QUEUED_SPINLOCK)) {
+			
 		ICommentWriter commentWriter = SectionWriter.getCommentWriter(ool, FileTypes.C);
 
 		{
@@ -278,7 +289,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		
 		sbCommon_c.append(commentWriter.writerBanner("Spin Lock Implementation")
 				+ "#include \"ee.h\"\n"
-				+ "EE_UINT32 EE_SHARED_UDATA EE_COMPILER_ALIGN(4) EE_tc_spin_lock[EE_MAX_CPU];\n\n");
+					+ "EE_UINT32 EE_SHARED_UDATA EE_hal_spinlock_status[EE_MAX_CPU];\n\n");
+		}
 	}
 
 	/* (non-Javadoc)

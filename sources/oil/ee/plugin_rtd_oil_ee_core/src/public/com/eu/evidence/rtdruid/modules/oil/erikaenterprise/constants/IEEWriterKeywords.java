@@ -272,4 +272,6 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	public final static String OS_APPLICATION_TRUSTED_FUNCTIONS = "SGR_os_application_trusted_functions__String_list";
 	
 
+	public final static String QUEUED_SPINLOCK = "enable queued spinlocs";
+
 }

@@ -37,6 +37,8 @@ IMPLEMENTATION ee {
         ENUM [ALWAYS, IFREQUIRED] USEREMOTEEVENT = IFREQUIRED;
         STRING MP_SHARED_RAM = "";
         STRING MP_SHARED_ROM = "";
+        
+        ENUM [SIMPLE, QUEUED] SPINLOCKS = SIMPLE;
 
         // -------------------------------------
 

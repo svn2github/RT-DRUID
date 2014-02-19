@@ -337,6 +337,8 @@ public class ResourceList {
 
 	/** Resource's Data */
 	private ArrayList infoRis;
+	
+	private final boolean enableGlobalResources;
 
 	/**
 	 * Searces all resources and stores all data inside the given OilObjectList array.
@@ -347,8 +349,9 @@ public class ResourceList {
 	 *            contains all objects (only tasks are required)
 	 */
 	public ResourceList(IVarTree vt, String prefix, String oilPrefix,
-			IOilObjectList[] oilObjects, final boolean useResScheduler) throws OilCodeWriterException {
-
+			IOilObjectList[] oilObjects, final boolean useResScheduler, final boolean enableGlobalResources) throws OilCodeWriterException {
+		this.enableGlobalResources = enableGlobalResources;
+		
 		final LinkedList<ResourceTmp> rTemp;
 		{
 			ITreeInterface ti = vt.newTreeInterface();
@@ -532,6 +535,9 @@ public class ResourceList {
 				int type = rname.getResType()
 					| (rname.getName().equals(info.chainRoot) ? ISimpleGenResKeywords.RESOURCE_CHAIN_ROOT : 0);
 				
+				if (!enableGlobalResources && info.global) {
+					throw new OilCodeWriterException("Global resources are not allowed: " + rname.nome);
+				}
 				sgr.setProperty(ISimpleGenResKeywords.RESOURCE_GLOBAL, "" + info.global);
 				sgr.setProperty(ISimpleGenResKeywords.RESOURCE_TYPE, "" + type);
 				sgr.setObject(ISimpleGenResKeywords.RESOURCE_ALLOCATION, info.cpu.clone());

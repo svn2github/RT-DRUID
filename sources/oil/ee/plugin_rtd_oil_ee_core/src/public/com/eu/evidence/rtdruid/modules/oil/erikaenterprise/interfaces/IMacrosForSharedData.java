@@ -13,7 +13,9 @@ public interface IMacrosForSharedData {
 	}
 	
 	IPragma getPragma();
-	
+
+	String vectorRamUnitialized(String type, String vectorName, String array, String body);
+
 	String vectorRam(String type, String vectorName, String array, String body);
 
 	String vectorRom(String type, String vectorName, String array, String body);
@@ -22,6 +24,8 @@ public interface IMacrosForSharedData {
 
 	String constVectorRom(String type, String vectorName, String array, String body);
 
+	String valueRamUnitialized(String type, String valueName, String body);
+	
 	String valueRam(String type, String valueName, String body);
 
 	String valueRom(String type, String valueName, String body);

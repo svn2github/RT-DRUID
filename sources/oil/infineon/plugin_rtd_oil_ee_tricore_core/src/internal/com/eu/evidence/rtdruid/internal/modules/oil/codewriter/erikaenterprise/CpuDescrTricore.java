@@ -11,6 +11,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.IRequiresUpdates;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
+import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
 /**
@@ -36,6 +37,10 @@ public class CpuDescrTricore extends CpuHwDescription implements IRequiresUpdate
 		this.model = model;
 		if (model != null) {
 			packIsrPriorities = model.isPackIsrPriorities();
+			IMacrosForSharedData tmp = model.getMacros();
+			if (tmp != null) {
+				macros = tmp;
+			}
 		}
 	}
 	

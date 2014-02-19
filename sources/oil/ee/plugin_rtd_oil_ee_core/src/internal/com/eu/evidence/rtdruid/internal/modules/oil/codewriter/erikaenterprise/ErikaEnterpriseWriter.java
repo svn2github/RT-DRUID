@@ -931,7 +931,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		{
 			new ResourceList(vt, architecturalPrefix,
 					oilHwRtosPrefix, oilObjects,
-					checkKeyword(DEF__OS_HAS_USERESSCHEDULER__));
+					checkKeyword(DEF__OS_HAS_USERESSCHEDULER__), !checkKeyword(QUEUED_SPINLOCK));
 		}
 
 		
