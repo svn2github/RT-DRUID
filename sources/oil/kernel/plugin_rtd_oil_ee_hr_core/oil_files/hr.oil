@@ -1,0 +1,49 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+            NIOSII {
+
+				STRING TIMER_FREERUNNING;
+				ENUM [
+					SINGLE {
+						STRING TIMER_IRQ;
+					},
+					MULTIPLE {
+						STRING TIMER_IRQ_BUDGET;
+						STRING TIMER_IRQ_RECHARGE;
+						STRING TIMER_IRQ_DLCHECK;
+						
+					}
+				] FRSH_TIMERS;				                
+            }
+        ] CPU_DATA[];
+    
+        ENUM [
+            HR {
+            	// contains every contract
+				ENUM [
+					CONTRACT {
+						STRING NAME;
+						UINT32 BUDGET;
+						UINT32 PERIOD;
+						UINT32 BANDWIDTH;
+						STRING MAX_DELAY;
+						STRING CPU_ID;
+						STRING SCHED_POLICY;
+					}
+				] CONTRACTS[];
+				
+				STRING TICK_TIME;
+            }
+
+        ] KERNEL_TYPE;
+    };
+
+    TASK {
+        // can contain the name of a contract (see KERNEL_TYPE SECTIONs)
+        STRING CONTRACT;
+        STRING MAX_SYSTEM_LOCK_TIME;
+    };
+};

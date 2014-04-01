@@ -6560,6 +6560,79 @@
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
   </eClassifiers>
+  
+  <eClassifiers xsi:type="ecore:EClass" name="OILOS__KERNEL_1TYPE__HR" eSuperTypes="//OILOS__KERNEL_1TYPE">
+    <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+      <details key="type" value="HR"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="CONTRACTS" upperBound="-1" eType="//OILOS__KERNEL_1TYPE__HR__CONTRACTS" containment="true">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="USE_SYNC_OBJ" eType="//OILOS__KERNEL_1TYPE__HR__USE_1SYNC_1OBJ" containment="true">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="TICK_TIME">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OILOS__KERNEL_1TYPE__HR__CONTRACTS" abstract="true">
+    <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+      <details key="variant_type" value="ENUM"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OILOS__KERNEL_1TYPE__HR__CONTRACTS__CONTRACT" eSuperTypes="//OILOS__KERNEL_1TYPE__HR__CONTRACTS">
+    <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+      <details key="type" value="CONTRACT"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="NAME">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="BUDGET">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="PERIOD">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="CPU_ID">
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="WITH_AUTO" value="false"/>
+      </eAnnotations>
+      <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
+        <details key="AUTO" value="false"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  
+  
   <eClassifiers xsi:type="ecore:EClass" name="OILOS__KERNEL_1TYPE__FRSH__USE_1SYNC_1OBJ" abstract="true">
     <eAnnotations source="htt:///com/eu/evidence/rtdruid/annotations">
       <details key="variant_type" value="BOOLEAN"/>

@@ -909,4 +909,184 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 		commonWriterTest(test, 1);
 	}
 
+	
+
+	@Test public void testHR_1() {
+		String test = "CPU test_application {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"		CFLAGS = \"-DALT_DEBUG -Os -g\";\n" +
+				"		CFLAGS = \"-Wall\";\n" +
+				"		ASFLAGS = \"-g\";\n" +
+				"		LDFLAGS = \"-Wl,-Map -Wl,project.map\";\n" +
+				"		LDDEPS = \"\\\\\";\n" +
+				"		LIBS = \"-lm\";\n" +
+				"		NIOS2_SYS_CONFIG = \"Debug\";\n" +
+				"		NIOS2_APP_CONFIG = \"Debug\";\n" +
+				"		NIOS2_DO_MAKE_OBJDUMP = TRUE;\n" +
+				"		NIOS2_JAM_FILE = \"C:/altera/81/nios2eds/examples/verilog/niosII_stratixII_2s60_RoHS/frsh_small/fpga.jam\";\n" +
+				"		NIOS2_PTF_FILE = \"C:/altera/81/nios2eds/examples/verilog/niosII_stratixII_2s60_RoHS/frsh_small/NiosII_stratixII_2s60_RoHS_small_sopc.ptf\";\n" +
+				"\n" +
+				"		CPU_DATA = NIOSII {\n" +
+				"			STACK_TOP = \"__alt_stack_pointer\";\n" +
+				"			SYS_SIZE = 8096;\n" +
+				"			/* The full_featured example is useful if you have the tracer support! */\n" +
+				"			SYSTEM_LIBRARY_NAME = \"frsh_small_syslib\";\n" +
+				"			SYSTEM_LIBRARY_PATH = \"/cygdrive/c/Users/pj/workspaceFRSH81/frsh_small_syslib\";\n" +
+				"\n" +
+				"			MULTI_STACK = TRUE {\n" +
+				"				IRQ_STACK = TRUE {\n" +
+				"					SYS_SIZE=512;\n" +
+				"				};\n" +
+				"				DUMMY_STACK = SHARED;\n" +
+				"			};\n" +
+				"\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			\n" +
+				"			TIMER_FREERUNNING = \"HIGH_RES_TIMER_0\";\n" +
+				"			FRSH_TIMERS = MULTIPLE {\n" +
+				"				TIMER_IRQ_BUDGET = \"TIMER_CAPACITY_0\";\n" +
+				"				TIMER_IRQ_RECHARGE = \"TIMER_RECHARGING_0\";\n" +
+				"				TIMER_IRQ_DLCHECK = \"TIMER_DLCHECK_0\";\n" +
+				"				//TIMER_IRQ_SEM = \"TIMER_SEM_0\";\n" +
+				"		     };\n" +
+				"		};\n" +
+				"	  \n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = TRUE; // this demo is using the StartupHook!\n" +
+				"		ERRORHOOK = TRUE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = TRUE;\n" +
+				"\n" +
+				"        KERNEL_TYPE = HR {\n" +
+				"        		TICK_TIME = \"20ns\";\n" +
+				"        		//USE_SYNC_OBJ = TRUE;\n" +
+				"        		CONTRACTS = CONTRACT {\n" +
+				"        				NAME = \"c1\";\n" +
+				"						BANDWIDTH = 15;\n" +
+				"						MAX_DELAY = \"17000000\";\n" +
+				"						SCHED_POLICY = \"FP\";\n" +
+				"        			};\n" +
+				"        		CONTRACTS = CONTRACT {\n" +
+				"        				NAME = \"c2\";\n" +
+				"        				BUDGET = 20000;\n" +
+				"        				PERIOD = 100000;\n" +
+				"						SCHED_POLICY = \"EDF\";\n" +
+				"        			};\n" +
+				"        		CONTRACTS = CONTRACT {\n" +
+				"        				NAME = \"c3\";\n" +
+				"        				BUDGET = 20000;\n" +
+				"        				PERIOD = 100000;\n" +
+				"						SCHED_POLICY = \"FP\";\n" +
+				"        			};\n" +
+				"        		CONTRACTS = CONTRACT {\n" +
+				"        				NAME = \"c4\";\n" +
+				"        				BUDGET = 20000;\n" +
+				"        				PERIOD = 100000;\n" +
+				"						SCHED_POLICY = \"FP\";\n" +
+				"        			};\n" +
+				"        		CONTRACTS = CONTRACT {\n" +
+				"        				NAME = \"c5\";\n" +
+				"        				BUDGET = 40000;\n" +
+				"        				PERIOD = 800000;\n" +
+				"						SCHED_POLICY = \"FP\";\n" +
+				"        			};\n" +
+				"        		CONTRACTS = CONTRACT {\n" +
+				"        				NAME = \"c6\";\n" +
+				"        				BUDGET = 40000;\n" +
+				"        				PERIOD = 800000;\n" +
+				"						SCHED_POLICY = \"FP\";\n" +
+				"        			};\n" +
+				"        		CONTRACTS = CONTRACT {\n" +
+				"        				NAME = \"c7\";\n" +
+				"        				BUDGET = 40000;\n" +
+				"        				PERIOD = 800000;\n" +
+				"						SCHED_POLICY = \"FP\";\n" +
+				"        			};\n" +
+				"        		CONTRACTS = CONTRACT {\n" +
+				"        				NAME = \"clong\";\n" +
+				"        				BUDGET = 40000;\n" +
+				"        				PERIOD = 80000000;\n" +
+				"						SCHED_POLICY = \"FP\";\n" +
+				"        			};\n" +
+				"        	};\n" +
+				"		\n" +
+				"		/* This generates the ORTI File used by lauterbach Trace32! */\n" +
+				"		ORTI_SECTIONS = ALL;\n" +
+				"    };\n" +
+				"\n" +
+				"    TASK Task1 {\n" +
+				"    	CONTRACT = \"c1\";\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 1024;\n" +
+				"		};\n" +
+				"		RESOURCE = myRes;\n" +
+				"		RESOURCE = myRes2;\n" +
+				"		MAX_SYSTEM_LOCK_TIME =  \"5000ns\";\n" +
+				"    };\n" +
+				"\n" +
+				"    TASK Task2 {\n" +
+				"    	CONTRACT = \"c1\";\n" +
+				"		PRIORITY = 0x06;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 1024;\n" +
+				"		};\n" +
+				"		RESOURCE = myRes;\n" +
+				"    };\n" +
+				"    \n" +
+				"    TASK Task3 {\n" +
+				"    	CONTRACT = \"c2\";\n" +
+				"		REL_DEADLINE = \"0.5s\";\n" +
+				"		//PRIORITY = 0x01;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 1024;\n" +
+				"		};\n" +
+				"		RESOURCE = myRes;\n" +
+				"    };\n" +
+				"    \n" +
+				"    TASK Task4 {\n" +
+				"    	CONTRACT = \"c2\";\n" +
+				"		REL_DEADLINE = \"0.1s\";\n" +
+				"		//PRIORITY = 0x02;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 1024;\n" +
+				"		};\n" +
+				"    };\n" +
+				"\n" +
+				"   TASK Task5 {\n" +
+				"    	CONTRACT = \"clong\";\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		STACK = PRIVATE {\n" +
+				"			SYS_SIZE = 1024;\n" +
+				"		};\n" +
+				"		RESOURCE = myRes2;\n" +
+				"    };\n" +
+				"    \n" +
+				"    RESOURCE myRes { RESOURCEPROPERTY = STANDARD; };\n" +
+				"    RESOURCE myRes2 { RESOURCEPROPERTY = STANDARD; };\n" +
+				"\n" +
+				"    COUNTER Counter1;\n" +
+				"\n" +
+				"    ALARM AlarmTask2 {\n" +
+				"                COUNTER = Counter1;\n" +
+				"                ACTION = ACTIVATETASK { TASK = Task2; };\n" +
+				"    };\n" +
+				"    ALARM AlarmTask3 {\n" +
+				"                COUNTER = Counter1;\n" +
+				"                ACTION = ACTIVATETASK { TASK = Task3; };\n" +
+				"    };\n" +
+				"    ALARM AlarmTask4 {\n" +
+				"                COUNTER = Counter1;\n" +
+				"                ACTION = ACTIVATETASK { TASK = Task4; };\n" +
+				"    };\n" +
+				"\n" +
+				"};\n";
+		
+		commonWriterTest(test, 1);
+	}	
 }

@@ -1064,8 +1064,9 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		 *  
 		 **********************************************************************/
 		setIsrPriorities();
-		setTaskPriorityAndRemote();
-
+		if(!checkKeyword(IWritersKeywords.HR)) { 
+			setTaskPriorityAndRemote();
+		}
 		
 		/***********************************************************************
 		 *
@@ -1101,7 +1102,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		 * Set Task's Dispatch Priority, and then "drop" internal resources
 		 *  
 		 **********************************************************************/
-		{
+		if(!checkKeyword(IWritersKeywords.HR)) {
 			setTaskDispatchPriority();
 			final int R_ID = IOilObjectList.RESOURCE;
 			for (int i=0; i<oilObjects.length; i++) {

@@ -1383,6 +1383,18 @@
     <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF__REL_1DEADLINES_1IN_1RAM"/>
     <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF__REL_1DEADLINES_1IN_1RAM__TRUE"/>
     <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__EDF__REL_1DEADLINES_1IN_1RAM__FALSE"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR/CONTRACTS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR/USE_SYNC_OBJ"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR/TICK_TIME"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR__CONTRACTS"/>
+    <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR__CONTRACTS__CONTRACT">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR__CONTRACTS__CONTRACT/NAME"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR__CONTRACTS__CONTRACT/BUDGET"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR__CONTRACTS__CONTRACT/PERIOD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__HR__CONTRACTS__CONTRACT/CPU_ID"/>
+    </genClasses>
     <genClasses ecoreClass="rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH/CONTRACTS"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rtdruid_merge.ecore#//OILOS__KERNEL_1TYPE__FRSH/USE_SYNC_OBJ"/>

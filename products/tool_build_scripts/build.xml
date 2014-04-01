@@ -28,6 +28,7 @@
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/microchip/feature_rtd_oil_ee_dspic"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/kernel/feature_rtd_oil_ee_fp"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/kernel/feature_rtd_oil_ee_iris"/>
+		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/kernel/feature_rtd_oil_ee_hr"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/kernel/feature_rtd_oil_ee_osek"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/altera/feature_rtd_oil_ee_nios2"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/ppc/feature_rtd_oil_ee_ppc"/>

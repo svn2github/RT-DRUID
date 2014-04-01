@@ -515,6 +515,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 							if (isAValidInteger(ttt)) {
 								currentAnswer.setProperty(ISimpleGenResKeywords.TASK_PRIORITY, "" + ttt);
 							} else {
+								if(! checkKeyword(IWritersKeywords.HR))
 								throw new OilCodeWriterException("Not found or not valid value for task "+ current.getName() + "'s priority");
 							}
 						}

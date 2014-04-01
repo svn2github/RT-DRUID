@@ -141,6 +141,9 @@ public interface IWritersKeywords {
 	/** Identifies a FRESCOR kernel */
 	public final static String FRSH = "FRSH";
 
+	/** Identifies an HR kernel */
+	public final static String HR = "HR";
+
 	/** Identifies an CBS kernel */
 	public final static String CBS = "CBS";
 

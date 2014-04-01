@@ -184,7 +184,7 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 				}
 			}
 
-			{
+			if(!parent.checkKeyword(IWritersKeywords.HR)) {
 				/*
 				 * ---------------- MUTEX ----------------
 				 * 

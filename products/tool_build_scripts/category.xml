@@ -33,6 +33,9 @@
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.frsh_2.3.0.N_qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.frsh" version="2.3.0.N_qualifier">
       <category name="RT_Druid_for_ee"/>
    </feature>
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.hr_1.0.0.N_qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.hr" version="1.0.0.N_qualifier">
+      <category name="RT_Druid_for_ee"/>
+   </feature>
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.nios2_2.3.0.N_qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.nios2" version="2.3.0.N_qualifier">
       <category name="RT_Druid_for_ee"/>
    </feature>

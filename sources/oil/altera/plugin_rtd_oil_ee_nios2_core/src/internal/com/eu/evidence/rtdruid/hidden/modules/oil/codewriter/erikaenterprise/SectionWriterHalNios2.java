@@ -50,6 +50,9 @@ public class SectionWriterHalNios2 extends SectionWriter
 		
 	public final static String DEF___NIOS2_SPIN_AVALON_MUTEX_DIRECT__ = "__NIOS2_SPIN_AVALON_MUTEX_DIRECT__";
 	
+	/* Identifies a the bitwise mask used to identify system resources in the HR kernel*/
+	public final static String HR_SYSTEM_RESOURCES_MASK__ = "__HR_SYSTEM_RESOURCES_MASK___";
+	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
 
@@ -137,6 +140,7 @@ public class SectionWriterHalNios2 extends SectionWriter
 		final String MAX_CPU = (binaryDistr ? "RTD_" : "EE_") + "MAX_CPU";
 		final String MAX_TASK = (binaryDistr ? "RTD_" : "EE_") + "MAX_TASK";
 
+				
 		// IPIC
 		String globalIpcName = "";
 		if (rtosNumber>1) {
@@ -591,7 +595,11 @@ public class SectionWriterHalNios2 extends SectionWriter
 				}
 	            
 			}
-			
+			if(parent.checkKeyword(IWritersKeywords.HR)) {
+				/* Setting the bitwise mask used to identify system resources in the HR kernel */
+				ISimpleGenRes res = ool.getList(IOilObjectList.RESOURCE).get(0);
+				res.setObject(HR_SYSTEM_RESOURCES_MASK__, 0x40000000);
+			}
 		} // end for (int rtosId ... rtosPrefix..)
 		
 		if (rtosNumber>1) {

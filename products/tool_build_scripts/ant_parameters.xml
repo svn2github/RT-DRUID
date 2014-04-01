@@ -62,6 +62,9 @@
 		<property name="frtd_oil_ee_frsh_v"         value="2.3.0"/>
 		<property name="rtd_oil_ee_frsh_core_v"     value="2.3.0"/>
 
+		<property name="frtd_oil_ee_hr_v"         value="1.0.0"/>
+		<property name="rtd_oil_ee_hr_core_v"     value="1.0.0"/>
+
 		<property name="frtd_oil_ee_nios2_v"         value="2.3.0"/>
 		<property name="rtd_oil_ee_nios2_core_v"     value="2.3.0"/>
 
