@@ -1,6 +1,6 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
-class FrshOrtiConstants {
+class HrOrtiConstants {
 
 	
 	/***************************************************************************
