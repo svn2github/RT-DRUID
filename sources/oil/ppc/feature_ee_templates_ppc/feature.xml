@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.ee.templates.ppc"
       label="Templates for Erika Enterprise for Power Pc"
-      version="2.3.0.N_qualifier"
+      version="2.3.0.Nqualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.ee.templates.ppc">
 

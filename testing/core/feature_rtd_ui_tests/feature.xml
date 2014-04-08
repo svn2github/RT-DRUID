@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.ui.tests"
       label="RT-Druid tests"
-      version="2.3.0.N_qualifier"
+      version="2.3.0.Nqualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.core.ui.tests">
 

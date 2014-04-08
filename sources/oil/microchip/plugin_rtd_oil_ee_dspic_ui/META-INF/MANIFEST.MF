@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid DS-Pic30 UI Plug-in
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.dspic.ui;singleton:=true
-Bundle-Version: 2.3.0.N_qualifier
+Bundle-Version: 2.3.0.Nqualifier
 Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.dspic.ui.Activator
 Bundle-Vendor: Evidence S.r.l.
 Require-Bundle: org.eclipse.ui,

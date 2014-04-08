@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Support for templates (Tests)
 Bundle-SymbolicName: com.eu.evidence.templates.core.tests
-Bundle-Version: 2.3.0.N_qualifier
+Bundle-Version: 2.3.0.Nqualifier
 Fragment-Host: com.eu.evidence.templates.core;bundle-version="2.3.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.

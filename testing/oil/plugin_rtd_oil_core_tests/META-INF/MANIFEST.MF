@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Oil Plug-in (tests)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.core.tests
-Bundle-Version: 2.3.0.N_qualifier
+Bundle-Version: 2.3.0.Nqualifier
 Fragment-Host: com.eu.evidence.rtdruid.oil.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.

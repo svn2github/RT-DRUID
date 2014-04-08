@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid FP and EDF Kernel plugin (Core)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.fp_edf.core;singleton:=true
-Bundle-Version: 2.3.0.N_qualifier
+Bundle-Version: 2.3.0.Nqualifier
 Bundle-Activator: com.eu.evidence.modules.oil.fp_edf.Activator
 Require-Bundle: org.eclipse.core.runtime,
  com.eu.evidence.rtdruid.core,
