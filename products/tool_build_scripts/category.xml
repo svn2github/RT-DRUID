@@ -48,10 +48,10 @@
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.s12_2.3.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.s12" version="2.3.0.Nqualifier">
       <category name="RT_Druid_for_ee"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.esirisc_1.0.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.esirisc" version="1.0.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.esirisc_1.0.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.esirisc" version="1.0.0.Nqualifier">
       <category name="RT_Druid_for_ee"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.msp430_1.0.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.msp430" version="1.0.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.msp430_1.0.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.msp430" version="1.0.0.Nqualifier">
       <category name="RT_Druid_for_ee"/>
    </feature>
    <feature url="features/com.eu.evidence.ee.templates.avr_2.3.0.Nqualifier.jar" id="com.eu.evidence.ee.templates.avr" version="2.3.0.Nqualifier">
@@ -87,7 +87,7 @@
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.renesas_2.3.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.renesas" version="2.3.0.Nqualifier">
       <category name="RT_Druid_for_ee"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.contrib.st.core_2.3.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.contrib.st.core" version="2.3.0.Nqualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.contrib.st.core_1.0.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.contrib.st.core" version="1.0.0.Nqualifier">
       <category name="RT_Druid_for_ee"/>
    </feature>
    <category-def name="RT_Druid_Core" label="RT-Druid core plugins"/>
