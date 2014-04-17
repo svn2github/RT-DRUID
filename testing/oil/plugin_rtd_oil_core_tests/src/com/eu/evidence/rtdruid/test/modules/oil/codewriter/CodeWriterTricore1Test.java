@@ -5180,4 +5180,228 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
+	@Test public void testTc26xExportFile_1() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"		CPU_DATA = TRICORE {\n"+
+				"			APP_SRC = \"slave.c\";\n"+
+				"            CPU_CLOCK = 200.0;\n" +
+				"			APP_SRC = \"master.c\";\n"+
+				"            MULTI_STACK = TRUE {\n" +
+				"                IRQ_STACK = TRUE {\n" +
+				"                    SYS_SIZE = 256;\n" +
+				"                };\n" +
+				"            };\n" +
+				"			SYS_STACK_SIZE = 4096;\n"+
+				"			LINKERSCRIPT = \"slave2_link\";\n"+
+				"           COMPILER_TYPE = GNU {\n" +
+				"               EXPORT_FILE = \"expFile1\";\n" +
+				"           };\n" +
+				"		};\n"+
+				"		KERNEL_TYPE = FP;\n" +
+				"		MCU_DATA = TRICORE {\n"+
+				"			MODEL = TC26x;\n"+
+				"			LINKERSCRIPT = \"mcu_link\";\n"+
+				"		};\n"+
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 1;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		 STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"	ISR Timer_isr2a {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"4\";\n" +
+				"        PRIORITY = 5;\n" +
+				"		HANDLER = \"isr2a\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr2b {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"5\";\n" +
+				"        PRIORITY = 7;\n" +
+				"		HANDLER = \"isr2b\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr2c {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"6\";\n" +
+				"        PRIORITY = 9;\n" +
+				"		HANDLER = \"isr2c\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1a {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"1\";\n" +
+				"        PRIORITY = 6;\n" +
+				"		HANDLER = \"isr1a\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1b {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"2\";\n" +
+				"        PRIORITY = 8;\n" +
+				"		HANDLER = \"isr1b\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1c {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"3\";\n" +
+				"        PRIORITY = 10;\n" +
+	  			"		HANDLER = \"isr1c\";	// Trap handler\n" +
+				"	};\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void testTc27xExportFile_1() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"\n"+
+			"		MASTER_CPU = \"master\";\n"+
+			"\n"+
+			"		CPU_DATA = TRICORE {\n"+
+			"			ID = \"master\";\n"+
+			"            CPU_CLOCK = 200.0;\n" +
+			"			APP_SRC = \"master.c\";\n"+
+			"            MULTI_STACK = TRUE {\n" +
+			"                IRQ_STACK = TRUE {\n" +
+			"                    SYS_SIZE = 256;\n" +
+			"                };\n" +
+			"            };\n" +
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"           COMPILER_TYPE = GNU {\n" +
+			"               EXPORT_FILE = \"expFile1\";\n" +
+			"           };\n" +
+			"		};\n"+
+			"\n"+
+			"		CPU_DATA = TRICORE {\n"+
+			"			ID = \"slave1\";\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"            CPU_CLOCK = 200.0;\n" +
+			"			APP_SRC = \"master.c\";\n"+
+			"            MULTI_STACK = TRUE {\n" +
+			"                IRQ_STACK = TRUE {\n" +
+			"                    SYS_SIZE = 256;\n" +
+			"                };\n" +
+			"            };\n" +
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"           COMPILER_TYPE = GNU {\n" +
+			"               EXPORT_FILE = \"expFile2\";\n" +
+			"           };\n" +
+			"		};\n"+
+			"\n"+
+			"		CPU_DATA = TRICORE {\n"+
+			"			ID = \"slave2\";\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"            CPU_CLOCK = 200.0;\n" +
+			"			APP_SRC = \"master.c\";\n"+
+			"            MULTI_STACK = TRUE {\n" +
+			"                IRQ_STACK = TRUE {\n" +
+			"                    SYS_SIZE = 256;\n" +
+			"                };\n" +
+			"            };\n" +
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"           COMPILER_TYPE = GNU {\n" +
+			"               EXPORT_FILE = \"expFile3\";\n" +
+			"           };\n" +
+			"			LINKERSCRIPT = \"slave2_link\";\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"		STARTUPHOOK = FALSE;\n"+
+			"		ERRORHOOK = FALSE;\n"+
+			"		SHUTDOWNHOOK = FALSE;\n"+
+			"		PRETASKHOOK = FALSE;\n"+
+			"		POSTTASKHOOK = FALSE;\n"+
+			"		USEGETSERVICEID = FALSE;\n"+
+			"		USEPARAMETERACCESS = FALSE;\n"+
+			"		USERESSCHEDULER = FALSE;\n"+
+			"\n"+
+			"		USEREMOTETASK = ALWAYS;\n"+
+			"		ORTI_SECTIONS = ALL;\n"+
+			"\n"+
+			"		MCU_DATA = TRICORE {\n"+
+			"			MODEL = TC27x;\n"+
+			"			LINKERSCRIPT = \"mcu_link\";\n"+
+			"		};\n"+
+			"\n"+
+			"		KERNEL_TYPE = BCC1;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskMaster1 {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskMaster2 {\n"+
+			"		CPU_ID = \"master\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"        STACK = PRIVATE {\n" +
+			"            SYS_SIZE = 256;\n" +
+			"        };\n" +
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskSlave1a {\n"+
+			"		CPU_ID = \"slave1\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskSlave1b {\n"+
+			"		CPU_ID = \"slave1\";\n"+
+			"		PRIORITY = 1;\n"+
+			"		AUTOSTART = TRUE;\n"+
+			"		STACK = SHARED;\n"+
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskSlave2a {\n"+
+			"		CPU_ID = \"slave2\";\n"+
+			"		PRIORITY = 2;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"        STACK = PRIVATE {\n" +
+			"            SYS_SIZE = 256;\n" +
+			"        };\n" +
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK TaskSlave2b {\n"+
+			"		CPU_ID = \"slave2\";\n"+
+			"		PRIORITY = 3;\n"+
+			"		AUTOSTART = FALSE;\n"+
+			"        STACK = PRIVATE {\n" +
+			"            SYS_SIZE = 256;\n" +
+			"        };\n" +
+			"		ACTIVATION = 1;\n"+
+			"		SCHEDULE = FULL;\n"+
+			"	};\n"+
+			"};\n";
+		commonWriterTest(text, 3);
+	}
 }

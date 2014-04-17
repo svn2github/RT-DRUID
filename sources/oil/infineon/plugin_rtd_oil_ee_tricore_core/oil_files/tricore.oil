@@ -52,7 +52,9 @@ IMPLEMENTATION ee {
                 STRING MODEL;
                 
                 ENUM [
-                	GNU,
+                	GNU {
+						STRING EXPORT_FILE;
+                	},
                 	TASKING,
                 	DIAB
                 ] COMPILER_TYPE;

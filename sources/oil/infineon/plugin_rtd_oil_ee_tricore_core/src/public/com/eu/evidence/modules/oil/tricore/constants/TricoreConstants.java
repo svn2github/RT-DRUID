@@ -23,6 +23,7 @@ public interface TricoreConstants {
 	public final static String ISR_HANDLER_FILE = "ee_hndlr.S";
 	
 	public static final String SGRK__Tricore_COMPILER_TYPE__ = "sgrk_os__compiler_type";
+	public static final String SGRK__Tricore_COMPILER_EXPORT_FILE__ = "sgrk_os__compiler_export_file";
 	public static final String SGRK__GNU_COMPILER__ = "GNU";
 	public static final String SGRK__TASKING_COMPILER__ = "TASKING";
 	public static final String SGRK__DIAB_COMPILER__ = "DIAB";

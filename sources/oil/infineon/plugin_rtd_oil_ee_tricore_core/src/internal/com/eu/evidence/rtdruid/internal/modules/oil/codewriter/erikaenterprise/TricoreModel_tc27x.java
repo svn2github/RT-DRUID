@@ -9,6 +9,7 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 
+import com.eu.evidence.modules.oil.tricore.constants.TricoreConstants;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
@@ -135,7 +136,21 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		
 		if (currentRtosId == -1) {
 			tmp.add(SectionWriterHalTricore.EEOPT_HAL_TRICORE);
-			tmp.add("EE_" + modelName.toUpperCase()+"__");		
+			tmp.add("EE_" + modelName.toUpperCase()+"__");
+			
+			boolean hasExportFile = false;
+			for (IOilObjectList objs : parent.getOilObjects()) {
+				
+				ISimpleGenRes sgrCpu = objs.getList(IOilObjectList.OS).get(0);
+				if (sgrCpu.containsProperty(TricoreConstants.SGRK__Tricore_COMPILER_EXPORT_FILE__) && 
+					sgrCpu.getString(TricoreConstants.SGRK__Tricore_COMPILER_EXPORT_FILE__) != "") {
+					hasExportFile = true;
+					break;
+				}
+			}
+			if (hasExportFile) {
+				tmp.add("EE_BUILD_SINGLE_ELF");
+			}
 		} else {
 			{ // compiler
 				switch (currentCompiler) {

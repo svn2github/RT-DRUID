@@ -1,6 +1,8 @@
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
 
+import static com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords.S;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -305,8 +307,27 @@ public class SectionWriterHalTricore extends SectionWriter
 			 **********************************************************************/
 			final TricoreCompiler currentCompiler; 
 	        {
-	        	List<String> all = parent.getCpuDataEnum(ool, "COMPILER_TYPE");
-				String tmp1 = all.size() == 0? null : all.get(0);
+	        	
+	        	String tmp1 = null;
+	        	String gnuExpFile = null;
+	        	String[] childName = new String[1];
+	    		for (String currentCpuPrefix: AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX)) {
+	    			String lPath = currentCpuPrefix + S + "COMPILER_TYPE";
+	    			tmp1 = CommonUtils.getFirstChildEnumType(vt, lPath, childName);
+	    			if (tmp1 != null) {
+	    				
+	    				if ( TricoreCompiler.get(tmp1) == TricoreCompiler.GNU) {
+	    					lPath += S+childName[0];
+	    					String[] value = CommonUtils.getValue(vt, lPath +S+"EXPORT_FILE");
+							if (value != null && value.length>0) {
+								gnuExpFile = value[0];
+							}
+	    				}
+	    				
+	    				break;
+	    			}
+	    		}
+	        	
 				if (tmp1 == null && default_compiler != null) {
 					tmp1 = default_compiler;
 				}
@@ -314,6 +335,10 @@ public class SectionWriterHalTricore extends SectionWriter
 					Messages.sendErrorNl("Explicit selection of compiler is needed for unknow tricore model" , null, "tricore_writer_model", null);
 				} else {
 					sgrCpu.setProperty(TricoreConstants.SGRK__Tricore_COMPILER_TYPE__, tmp1);
+				}
+				
+				if (gnuExpFile != null) {
+					sgrCpu.setProperty(TricoreConstants.SGRK__Tricore_COMPILER_EXPORT_FILE__, gnuExpFile);
 				}
 				
 				TricoreCompiler tmpCompiler = TricoreCompiler.get(tmp1);
@@ -633,6 +658,18 @@ public class SectionWriterHalTricore extends SectionWriter
 			
 			if (link != null) {
 				sbVariables.append("EE_LINKERSCRIPT := " + link+ "\n");
+			}
+			
+		}
+		
+		{ // export file
+			String exportFile = null;
+			if (sgrCpu.containsProperty(TricoreConstants.SGRK__Tricore_COMPILER_EXPORT_FILE__)) {
+				exportFile = sgrCpu.getString(TricoreConstants.SGRK__Tricore_COMPILER_EXPORT_FILE__);
+			}
+			
+			if (exportFile != null) {
+				sbVariables.append("EE_USER_EXPORT_FILE := " + exportFile+ "\n");
 			}
 			
 		}
