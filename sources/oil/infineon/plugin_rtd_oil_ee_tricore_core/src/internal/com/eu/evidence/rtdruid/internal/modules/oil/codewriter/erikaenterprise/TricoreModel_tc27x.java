@@ -388,7 +388,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 					decl.append(indent + "extern void "+addr+" ( void );\n");
 				}
 				
-				buff.append(pre + indent+indent+ "&" +addr);
+				buff.append(pre + indent+indent+ (isNumber ? "(EE_ADDR)" : "&") +addr);
 				pre = ",\n";
 			}
 		
