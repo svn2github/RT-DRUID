@@ -499,7 +499,223 @@ public class CodeWriterPic32Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	@Test public void testDS_PIC32_ESK_1() {
+	    final String text =
+		"CPU test_application {" + 
+		"" + 
+		"	OS EE {" + 
+		"		EE_OPT = \"DEBUG\";" + 
+		"" + 
+		"		CPU_DATA = PIC32 {" + 
+		"			APP_SRC = \"code.c\";" + 
+		"			MULTI_STACK = FALSE;" + 
+		"			ICD2 = TRUE;" + 
+		"		};" + 
+		"" + 
+		"		MCU_DATA = PIC32 {" + 
+		"			MODEL = PIC32MX360F512L;" + 
+		"		};" + 
 
+		"		BOARD_DATA = MICROCHIP_ESK {\n" +
+		"			USELEDS = TRUE;\n" +
+		"		};\n" +
+		"" + 
+		"		STATUS = EXTENDED;" + 
+		"		STARTUPHOOK = FALSE;" + 
+		"		ERRORHOOK = FALSE;" + 
+		"		SHUTDOWNHOOK = FALSE;" + 
+		"		PRETASKHOOK = FALSE;" + 
+		"		POSTTASKHOOK = FALSE;" + 
+		"		USEGETSERVICEID = FALSE;" + 
+		"		USEPARAMETERACCESS = FALSE;" + 
+		"		USERESSCHEDULER = FALSE;" + 
+		"	};" + 
+		"" + 
+		"	/* this is the OIL part for the task displaying the christmas tree */" + 
+		"    TASK Task1 {" + 
+		"		PRIORITY = 0x01;   /* Low priority */" + 
+		"		AUTOSTART = FALSE;" + 
+		"		STACK = SHARED;" + 
+		"		ACTIVATION = 1;    /* only one pending activation */" + 
+		"	};	" + 
+		"	" + 
+		"	/* this is the OIL part for the task activated by the button press */" + 
+		"    TASK Task2 {" + 
+		"		PRIORITY = 0x02;   /* High priority */" + 
+		"		SCHEDULE = FULL;" + 
+		"		AUTOSTART = TRUE;	" + 
+		"		STACK = SHARED;" + 
+		"    };" + 
+		"    OS EE { KERNEL_TYPE = BCC1; }; " + 
+		"	TASK Task1 { SCHEDULE = NON; };" + 
+		"	TASK Task2 { ACTIVATION = 1; };" + 
+		"};";
+		commonWriterTest(text, 1);
+	}
+
+	@Test public void testDS_PIC32_ESK_2() {
+	    final String text =
+		"CPU test_application {" + 
+		"" + 
+		"	OS EE {" + 
+		"		EE_OPT = \"DEBUG\";" + 
+		"" + 
+		"		CPU_DATA = PIC32 {" + 
+		"			APP_SRC = \"code.c\";" + 
+		"			MULTI_STACK = FALSE;" + 
+		"			ICD2 = TRUE;" + 
+		"		};" + 
+		"" + 
+		"		MCU_DATA = PIC32 {" + 
+		"			MODEL = PIC32MX360F512L;" + 
+		"		};" + 
+
+		"		BOARD_DATA = MICROCHIP_ESK {\n" +
+		"			USEBUTTONS = TRUE;\n" +
+		"		};\n" +
+		"" + 
+		"		STATUS = EXTENDED;" + 
+		"		STARTUPHOOK = FALSE;" + 
+		"		ERRORHOOK = FALSE;" + 
+		"		SHUTDOWNHOOK = FALSE;" + 
+		"		PRETASKHOOK = FALSE;" + 
+		"		POSTTASKHOOK = FALSE;" + 
+		"		USEGETSERVICEID = FALSE;" + 
+		"		USEPARAMETERACCESS = FALSE;" + 
+		"		USERESSCHEDULER = FALSE;" + 
+		"	};" + 
+		"" + 
+		"	/* this is the OIL part for the task displaying the christmas tree */" + 
+		"    TASK Task1 {" + 
+		"		PRIORITY = 0x01;   /* Low priority */" + 
+		"		AUTOSTART = FALSE;" + 
+		"		STACK = SHARED;" + 
+		"		ACTIVATION = 1;    /* only one pending activation */" + 
+		"	};	" + 
+		"	" + 
+		"	/* this is the OIL part for the task activated by the button press */" + 
+		"    TASK Task2 {" + 
+		"		PRIORITY = 0x02;   /* High priority */" + 
+		"		SCHEDULE = FULL;" + 
+		"		AUTOSTART = TRUE;	" + 
+		"		STACK = SHARED;" + 
+		"    };" + 
+		"    OS EE { KERNEL_TYPE = BCC1; }; " + 
+		"	TASK Task1 { SCHEDULE = NON; };" + 
+		"	TASK Task2 { ACTIVATION = 1; };" + 
+		"};";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void testDS_PIC32_ESK_3() {
+	    final String text =
+		"CPU test_application {" + 
+		"" + 
+		"	OS EE {" + 
+		"		EE_OPT = \"DEBUG\";" + 
+		"" + 
+		"		CPU_DATA = PIC32 {" + 
+		"			APP_SRC = \"code.c\";" + 
+		"			MULTI_STACK = FALSE;" + 
+		"			ICD2 = TRUE;" + 
+		"		};" + 
+		"" + 
+		"		MCU_DATA = PIC32 {" + 
+		"			MODEL = PIC32MX360F512L;" + 
+		"		};" + 
+
+		"		BOARD_DATA = MICROCHIP_ESK {\n" +
+		"			USELEDS = TRUE;\n" +
+		"			USEBUTTONS = TRUE;\n" +
+		"		};\n" +
+		"" + 
+		"		STATUS = EXTENDED;" + 
+		"		STARTUPHOOK = FALSE;" + 
+		"		ERRORHOOK = FALSE;" + 
+		"		SHUTDOWNHOOK = FALSE;" + 
+		"		PRETASKHOOK = FALSE;" + 
+		"		POSTTASKHOOK = FALSE;" + 
+		"		USEGETSERVICEID = FALSE;" + 
+		"		USEPARAMETERACCESS = FALSE;" + 
+		"		USERESSCHEDULER = FALSE;" + 
+		"	};" + 
+		"" + 
+		"	/* this is the OIL part for the task displaying the christmas tree */" + 
+		"    TASK Task1 {" + 
+		"		PRIORITY = 0x01;   /* Low priority */" + 
+		"		AUTOSTART = FALSE;" + 
+		"		STACK = SHARED;" + 
+		"		ACTIVATION = 1;    /* only one pending activation */" + 
+		"	};	" + 
+		"	" + 
+		"	/* this is the OIL part for the task activated by the button press */" + 
+		"    TASK Task2 {" + 
+		"		PRIORITY = 0x02;   /* High priority */" + 
+		"		SCHEDULE = FULL;" + 
+		"		AUTOSTART = TRUE;	" + 
+		"		STACK = SHARED;" + 
+		"    };" + 
+		"    OS EE { KERNEL_TYPE = BCC1; }; " + 
+		"	TASK Task1 { SCHEDULE = NON; };" + 
+		"	TASK Task2 { ACTIVATION = 1; };" + 
+		"};";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void testDS_PIC32_ESK_4() {
+	    final String text =
+		"CPU test_application {" + 
+		"" + 
+		"	OS EE {" + 
+		"		EE_OPT = \"DEBUG\";" + 
+		"" + 
+		"		CPU_DATA = PIC32 {" + 
+		"			APP_SRC = \"code.c\";" + 
+		"			MULTI_STACK = FALSE;" + 
+		"			ICD2 = TRUE;" + 
+		"		};" + 
+		"" + 
+		"		MCU_DATA = PIC32 {" + 
+		"			MODEL = PIC32MX360F512L;" + 
+		"		};" + 
+
+		"		BOARD_DATA = MICROCHIP_ESK {\n" +
+		"			USELEDS = FALSE;\n" +
+		"			USEBUTTONS = FALSE;\n" +
+		"		};\n" +
+		"" + 
+		"		STATUS = EXTENDED;" + 
+		"		STARTUPHOOK = FALSE;" + 
+		"		ERRORHOOK = FALSE;" + 
+		"		SHUTDOWNHOOK = FALSE;" + 
+		"		PRETASKHOOK = FALSE;" + 
+		"		POSTTASKHOOK = FALSE;" + 
+		"		USEGETSERVICEID = FALSE;" + 
+		"		USEPARAMETERACCESS = FALSE;" + 
+		"		USERESSCHEDULER = FALSE;" + 
+		"	};" + 
+		"" + 
+		"	/* this is the OIL part for the task displaying the christmas tree */" + 
+		"    TASK Task1 {" + 
+		"		PRIORITY = 0x01;   /* Low priority */" + 
+		"		AUTOSTART = FALSE;" + 
+		"		STACK = SHARED;" + 
+		"		ACTIVATION = 1;    /* only one pending activation */" + 
+		"	};	" + 
+		"	" + 
+		"	/* this is the OIL part for the task activated by the button press */" + 
+		"    TASK Task2 {" + 
+		"		PRIORITY = 0x02;   /* High priority */" + 
+		"		SCHEDULE = FULL;" + 
+		"		AUTOSTART = TRUE;	" + 
+		"		STACK = SHARED;" + 
+		"    };" + 
+		"    OS EE { KERNEL_TYPE = BCC1; }; " + 
+		"	TASK Task1 { SCHEDULE = NON; };" + 
+		"	TASK Task2 { ACTIVATION = 1; };" + 
+		"};";
+		commonWriterTest(text, 1);
+	}
 
 	public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
 		CommentWriterCpp cWriter = new CommentWriterCpp();

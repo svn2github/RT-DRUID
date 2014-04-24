@@ -10,13 +10,12 @@ import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
-import com.eu.evidence.rtdruid.modules.oil.keywords.IOilXMLLabels;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
 public class SectionWriterHalPicBoards implements IEEWriterKeywords {
 	
 	final protected static String PIC_30 = SectionWriterHalPic30.PIC_MCU;
-	final protected static String PIC_32 = SectionWriterHalPic30.PIC_MCU;
+	final protected static String PIC_32 = SectionWriterHalPic32.PIC_MCU;
 	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -208,6 +207,14 @@ public class SectionWriterHalPicBoards implements IEEWriterKeywords {
 					"EE_EASYLAB",
 					new String[] {"USETIMER", "USEUART", "USELEDS", "USEDIO", "USEBUZZER", "USEADC", "USEPWM"},
 					new String[] {"USE_TIMER", "USE_UART", "USE_LEDS", "USE_DIO", "USE_TIMER USE_BUZZER", "USE_ADC", "USE_PWM"}));
+		}
+		
+		if (PIC_32.equals(cpu_type)) {
+			STANDARD_BOARD_PROPERTIES.put("MICROCHIP_ESK", new BOARD_MODEL(
+					"MICROCHIP_ESK", // name
+					"__MICROCHIP_ESK__",
+					new String[] {"USELEDS", "USEBUTTONS"},
+					new String[] {"__USE_LEDS__", "__USE_BUTTONS__"}));
 		}
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
