@@ -7,6 +7,8 @@ package com.eu.evidence.rtdruid.modules.oil.renesas.ui.preferencepages;
 
 
 
+import java.util.Map;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -93,7 +95,7 @@ public class RenesasConfigurator extends AbstractPage {
 	 * store.
 	 */
 	private void initializeDefaults() {
-		paramGcc.setText(RenesasConstants.DEFAULT_RX200_CONF_CCRX_CC);
+		paramGcc.setText(Options.INSTANCE.getUiDeafultValue(Options.RENESAS_CONF_CCRX));
 		
 		enableOk();
 	}
@@ -102,7 +104,10 @@ public class RenesasConfigurator extends AbstractPage {
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		String ccrx = Options.getValues().get(RenesasConstants.PREF_RX200_CCRX_CC_PATH);
+		Map<String, String> values = Options.INSTANCE.getUiOptions();
+		String ccrx = values.containsKey(Options.RENESAS_CONF_CCRX) ?
+				values.get(Options.RENESAS_CONF_CCRX) 
+				: RenesasConstants.DEFAULT_RX200_CONF_CCRX_CC;
 		paramGcc.setText(ccrx);
 
 		enableOk();

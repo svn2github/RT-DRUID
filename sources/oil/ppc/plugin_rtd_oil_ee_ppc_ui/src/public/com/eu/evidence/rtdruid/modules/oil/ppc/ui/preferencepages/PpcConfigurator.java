@@ -8,6 +8,8 @@ package com.eu.evidence.rtdruid.modules.oil.ppc.ui.preferencepages;
 
 
 
+import java.util.Map;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -109,8 +111,8 @@ public class PpcConfigurator extends AbstractPage {
 	 * store.
 	 */
 	private void initializeDefaults() {
-		paramCodeWarriorPath.setText(PpcConstants.DEFAULT_PPC_CODEWARRIOR_CONF_CC);
-		paramDiabPath.setText(PpcConstants.DEFAULT_PPC_DIAB_CONF_GCC);
+		paramCodeWarriorPath.setText(Options.INSTANCE.getUiDeafultValue(Options.Ppc_CODEWARRIOR_CONF_CC));
+		paramDiabPath.setText(Options.INSTANCE.getUiDeafultValue(Options.Ppc_DIAB_CONF_CC));
 		
 		enableOk();
 	}
@@ -119,16 +121,16 @@ public class PpcConfigurator extends AbstractPage {
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		IPreferenceStore store = getPreferenceStore();
+		Map<String, String> values = Options.INSTANCE.getUiOptions();
 
-		String cwPath = store.contains(Options.Ppc_CODEWARRIOR_CONF_CC) ?
-				store.getString(Options.Ppc_CODEWARRIOR_CONF_CC) 
+		String cwPath = values.containsKey(Options.Ppc_CODEWARRIOR_CONF_CC) ?
+				values.get(Options.Ppc_CODEWARRIOR_CONF_CC) 
 				: PpcConstants.DEFAULT_PPC_CODEWARRIOR_CONF_CC;
 
 		paramCodeWarriorPath.setText(cwPath);
 		
-		String diabPath = store.contains(Options.Ppc_DIAB_CONF_CC) ?
-				store.getString(Options.Ppc_DIAB_CONF_CC) 
+		String diabPath = values.containsKey(Options.Ppc_DIAB_CONF_CC) ?
+				values.get(Options.Ppc_DIAB_CONF_CC) 
 				: PpcConstants.DEFAULT_PPC_DIAB_CONF_GCC;
 
 		paramDiabPath.setText(diabPath);

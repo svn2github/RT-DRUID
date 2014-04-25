@@ -57,6 +57,7 @@ import com.eu.evidence.rtdruid.modules.oil.cdt.ui.project.RTDOilProjectNature;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.RtosFactory;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.options.OptionsManager;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.options.PreferenceStorage;
 import com.eu.evidence.rtdruid.modules.oil.ee.ui.location.ErikaEnterpriseLocationProjectHandler;
 import com.eu.evidence.rtdruid.ui.common.RTDConsole;
 import com.eu.evidence.rtdruid.ui.common.ResourceUtility;
@@ -942,6 +943,11 @@ class ProjectBuilder implements IProjectBuilder {
 	protected HashMap<String, Object> getWriterProperties(boolean enableMessages, IVarTree vt, String[] rtosPath) {
 		// get Parent properties
 		options = new HashMap<String, Object>();
+		
+		{
+			PreferenceStorage pref = PreferenceStorage.getCommonIstance();
+			options.putAll(pref.getAllValue());
+		}
 		
 		{
 			// output dir 

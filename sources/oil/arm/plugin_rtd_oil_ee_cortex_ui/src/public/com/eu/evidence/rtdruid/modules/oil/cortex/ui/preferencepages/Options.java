@@ -5,21 +5,19 @@
  */
 package com.eu.evidence.rtdruid.modules.oil.cortex.ui.preferencepages;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jface.preference.IPreferenceStore;
-
-import com.eu.evidence.rtdruid.modules.oil.codewriter.options.IBuildOptions;
 import com.eu.evidence.rtdruid.modules.oil.cortex.constants.CortexConstants;
 import com.eu.evidence.rtdruid.modules.oil.ee.ui.preferencepages.IOPPConstants;
-import com.eu.evidence.rtdruid.ui.Rtd_core_uiPlugin;
+import com.eu.evidence.rtdruid.modules.oil.ee.ui.preferencepages.UiOilBuilderOptions;
 
 /**
  * @author Nicola Serreli
  * 
  */
-public class Options implements IBuildOptions {
+public class Options extends UiOilBuilderOptions {
 
 	/*
 	 * PROPERTIES
@@ -41,47 +39,38 @@ public class Options implements IBuildOptions {
 	public static final String DEFAULT_CORTEX_CONF_KEIL = CortexConstants.DEFAULT_CORTEXMX_CONF_KEIL_CC;
 	public static final String DEFAULT_CORTEX_CONF_GNU = CortexConstants.DEFAULT_CORTEXMX_CONF_GNU_CC;
 
+	public static Options INSTANCE = new Options();
+	
+	protected ArrayList<OptionElement> initOpt() {
+		ArrayList<OptionElement> answer = super.initOpt();
+		answer.add(new OptionElement(
+				CORTEX_CONF_CCS,
+				CortexConstants.PREF_CORTEXMx_CCS_CC_PATH,
+				DEFAULT_CORTEX_CONF_CCS));
+		
+		answer.add(new OptionElement(
+				CORTEX_CONF_IAR,
+				CortexConstants.PREF_CORTEXMx_IAR_CC_PATH,
+				DEFAULT_CORTEX_CONF_IAR));
+		
+		answer.add(new OptionElement(
+				CORTEX_CONF_KEIL,
+				CortexConstants.PREF_CORTEXMx_KEIL_CC_PATH,
+				DEFAULT_CORTEX_CONF_KEIL));
+		
+		answer.add(new OptionElement(
+				CORTEX_CONF_GNU,
+				CortexConstants.PREF_CORTEXMx_GNU_CC_PATH,
+				DEFAULT_CORTEX_CONF_GNU));
+		
+		return answer;
+	}
 	/**
 	 * Returns the values of preferences controlled by this preference page.
 	 */
-	public static HashMap<String, String> getValues() {
-		IPreferenceStore store = Rtd_core_uiPlugin.getDefault()
-				.getPreferenceStore();
-		HashMap<String, String> answer = new HashMap<String, String>();
-
-		{
-			String gcc = store.contains(CORTEX_CONF_CCS) ? store
-					.getString(CORTEX_CONF_CCS) : DEFAULT_CORTEX_CONF_CCS;
-			answer.put(CortexConstants.PREF_CORTEXMx_CCS_CC_PATH, gcc);
-		}
-		{
-			String gcc = store.contains(CORTEX_CONF_IAR) ? store
-					.getString(CORTEX_CONF_IAR) : DEFAULT_CORTEX_CONF_IAR;
-			answer.put(CortexConstants.PREF_CORTEXMx_IAR_CC_PATH, gcc);
-		}
-		{
-			String gcc = store.contains(CORTEX_CONF_KEIL) ? store
-					.getString(CORTEX_CONF_KEIL) : DEFAULT_CORTEX_CONF_KEIL;
-			answer.put(CortexConstants.PREF_CORTEXMx_KEIL_CC_PATH, gcc);
-		}
-		{
-			String gcc = store.contains(CORTEX_CONF_GNU) ? store
-					.getString(CORTEX_CONF_GNU) : DEFAULT_CORTEX_CONF_GNU;
-			answer.put(CortexConstants.PREF_CORTEXMx_GNU_CC_PATH, gcc);
-		}
-
+	public static Map<String, ?> getValues() {
+		Map<String,Object> answer = new HashMap<String,Object>();
+		answer.putAll(INSTANCE.getOptions());
 		return answer;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.eu.evidence.rtdruid.modules.oil.cdt.ui.options.IBuildOptions#getOptions
-	 * ()
-	 */
-	@Override
-	public Map<String, ?> getOptions() {
-		return getValues();
 	}
 }

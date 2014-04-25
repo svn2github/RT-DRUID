@@ -7,6 +7,8 @@ package com.eu.evidence.rtdruid.modules.oil.cortex.ui.preferencepages;
 
 
 
+import java.util.Map;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -147,10 +149,10 @@ public class CortexConfigurator extends AbstractPage {
 	 * store.
 	 */
 	private void initializeDefaults() {
-		paramIar.setText(Options.DEFAULT_CORTEX_CONF_IAR);
-		paramCcs.setText(Options.DEFAULT_CORTEX_CONF_CCS);
-		paramKeil.setText(Options.DEFAULT_CORTEX_CONF_KEIL);
-		paramGnu.setText(Options.DEFAULT_CORTEX_CONF_GNU);
+		paramIar.setText(Options.INSTANCE.getUiDeafultValue(Options.CORTEX_CONF_IAR));
+		paramCcs.setText(Options.INSTANCE.getUiDeafultValue(Options.CORTEX_CONF_CCS));
+		paramKeil.setText(Options.INSTANCE.getUiDeafultValue(Options.CORTEX_CONF_KEIL));
+		paramGnu.setText(Options.INSTANCE.getUiDeafultValue(Options.CORTEX_CONF_GNU));
 		
 		enableOk();
 	}
@@ -159,29 +161,29 @@ public class CortexConfigurator extends AbstractPage {
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		IPreferenceStore store = getPreferenceStore();
+		Map<String, String> values = Options.INSTANCE.getUiOptions();
 		
 		{
-			String gcc = store.contains(Options.CORTEX_CONF_CCS) ?
-					store.getString(Options.CORTEX_CONF_CCS) 
+			String gcc = values.containsKey(Options.CORTEX_CONF_CCS) ?
+					values.get(Options.CORTEX_CONF_CCS) 
 					: Options.DEFAULT_CORTEX_CONF_CCS;
 			paramCcs.setText(gcc);
 		}
 		{
-			String gcc = store.contains(Options.CORTEX_CONF_IAR) ?
-					store.getString(Options.CORTEX_CONF_IAR) 
+			String gcc = values.containsKey(Options.CORTEX_CONF_IAR) ?
+					values.get(Options.CORTEX_CONF_IAR) 
 					: Options.DEFAULT_CORTEX_CONF_IAR;
 			paramIar.setText(gcc);
 		}
 		{
-			String gcc = store.contains(Options.CORTEX_CONF_KEIL) ?
-					store.getString(Options.CORTEX_CONF_KEIL) 
+			String gcc = values.containsKey(Options.CORTEX_CONF_KEIL) ?
+					values.get(Options.CORTEX_CONF_KEIL) 
 					: Options.DEFAULT_CORTEX_CONF_KEIL;
 			paramKeil.setText(gcc);
 		}
 		{
-			String gcc = store.contains(Options.CORTEX_CONF_GNU) ?
-					store.getString(Options.CORTEX_CONF_GNU) 
+			String gcc = values.containsKey(Options.CORTEX_CONF_GNU) ?
+					values.get(Options.CORTEX_CONF_GNU) 
 					: Options.DEFAULT_CORTEX_CONF_GNU;
 			paramGnu.setText(gcc);
 		}

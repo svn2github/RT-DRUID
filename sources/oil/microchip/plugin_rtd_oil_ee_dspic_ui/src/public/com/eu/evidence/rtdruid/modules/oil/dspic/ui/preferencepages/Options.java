@@ -5,21 +5,19 @@
  */
 package com.eu.evidence.rtdruid.modules.oil.dspic.ui.preferencepages;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jface.preference.IPreferenceStore;
-
 import com.eu.evidence.modules.oil.dspic.constants.PicConstants;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.options.IBuildOptions;
 import com.eu.evidence.rtdruid.modules.oil.ee.ui.preferencepages.IOPPConstants;
-import com.eu.evidence.rtdruid.ui.Rtd_core_uiPlugin;
+import com.eu.evidence.rtdruid.modules.oil.ee.ui.preferencepages.UiOilBuilderOptions;
 
 /**
  * @author Nicola Serreli
  *
  */
-public class Options implements IBuildOptions {
+public class Options extends UiOilBuilderOptions {
 
 	/*
 	 * PROPERTIES PIC 30
@@ -46,57 +44,39 @@ public class Options implements IBuildOptions {
 	/** A String that identifies the ASM Path */
 	public static final String PIC32_CONF_ASM= PIC32_CONF_PREFIX+"asm_path";
 
+	public static Options INSTANCE = new Options();
 
-	/**
-	 * Returns the values of preferences controlled by this preference page.
-	 */
-	public static HashMap<String,String> getValues() {
-		IPreferenceStore store = Rtd_core_uiPlugin.getDefault()
-				.getPreferenceStore();
-		HashMap<String,String> answer = new HashMap<String,String>();
-	
-//		boolean use_ee_deps = store.contains(PIC30_CONF_USE_EE_GCC_DEPS) ? ("" + true)
-//				.equals(store.getString(PIC30_CONF_USE_EE_GCC_DEPS))
-//				: PicConstants.DEFAULT_PIC30_CONF_USE_EE_GCC_DEPS;
-//		answer.put(PicConstants.PREF_PIC30_USE_EEGCC_DEPS, "" + use_ee_deps);
-//	
-//		boolean use_ee_comp = store.contains(PIC30_CONF_USE_EE_GCC_COMP) ? ("" + true)
-//				.equals(store.getString(PIC30_CONF_USE_EE_GCC_COMP))
-//				: PicConstants.DEFAULT_PIC30_CONF_USE_EE_GCC_COMP;
-//		answer.put(PicConstants.PREF_PIC30_USE_EEGCC_COMPILE, "" + use_ee_comp);
-	
-		String asm_30 = store.contains(PIC30_CONF_ASM) ? store
-				.getString(PIC30_CONF_ASM) : PicConstants.DEFAULT_PIC30_CONF_ASM;
-		answer.put(PicConstants.PREF_PIC30_ASM_PATH, asm_30);
-	
-		String gcc_30 = store.contains(PIC30_CONF_GCC) ? store
-				.getString(PIC30_CONF_GCC) : PicConstants.DEFAULT_PIC30_CONF_GCC;
-		answer.put(PicConstants.PREF_PIC30_GCC_PATH, gcc_30);
-	
+	protected ArrayList<OptionElement> initOpt() {
+		ArrayList<OptionElement> answer = super.initOpt();
+		answer.add(new OptionElement(
+				PIC30_CONF_ASM,
+				PicConstants.PREF_PIC30_ASM_PATH,
+				PicConstants.DEFAULT_PIC30_CONF_ASM));
 		
-		// ---------------
+		answer.add(new OptionElement(
+				PIC30_CONF_GCC,
+				PicConstants.PREF_PIC30_GCC_PATH,
+				PicConstants.DEFAULT_PIC30_CONF_GCC));
 		
+		answer.add(new OptionElement(
+				PIC32_CONF_ASM,
+				PicConstants.PREF_PIC32_ASM_PATH,
+				PicConstants.DEFAULT_PIC32_CONF_ASM));
 		
-	
-		String asm_32 = store.contains(PIC32_CONF_ASM) ? store
-				.getString(PIC32_CONF_ASM) : PicConstants.DEFAULT_PIC32_CONF_ASM;
-	
-		answer.put(PicConstants.PREF_PIC32_ASM_PATH, asm_32);
-	
-		String gcc_32 = store.contains(PIC32_CONF_GCC) ? store
-				.getString(PIC32_CONF_GCC) : PicConstants.DEFAULT_PIC32_CONF_GCC;
-		answer.put(PicConstants.PREF_PIC32_GCC_PATH, gcc_32);
-
-		
+		answer.add(new OptionElement(
+				PIC32_CONF_GCC,
+				PicConstants.PREF_PIC32_GCC_PATH,
+				PicConstants.DEFAULT_PIC32_CONF_GCC));
 		
 		return answer;
 	}
 	
-	
-	/* (non-Javadoc)
-	 * @see com.eu.evidence.rtdruid.modules.oil.cdt.ui.options.IBuildOptions#getOptions()
+	/**
+	 * Returns the values of preferences controlled by this preference page.
 	 */
-	public Map<String, ?> getOptions() {
-		return getValues();
+	public static Map<String,?> getValues() {
+		Map<String,Object> answer = new HashMap<String,Object>();
+		answer.putAll(INSTANCE.getOptions());
+		return answer;
 	}
 }

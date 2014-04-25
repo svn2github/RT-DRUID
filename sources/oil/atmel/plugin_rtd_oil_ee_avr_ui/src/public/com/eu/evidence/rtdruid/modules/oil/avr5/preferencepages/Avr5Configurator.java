@@ -6,6 +6,8 @@
 package com.eu.evidence.rtdruid.modules.oil.avr5.preferencepages;
 
 
+import java.util.Map;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -115,13 +117,14 @@ public class Avr5Configurator extends AbstractPage {
 	 * store.
 	 */
 	private void initializeDefaults() {
+		paramSerial.removeAll();
 		for (int i=0; i<20; i++) {
 			paramSerial.add("/dev/ttyS"+i);
 		}
 		paramSerial.select(0);
 
-		paramGcc.setText(Options.DEFAULT_AVR_CONF_GCC_PATH);
-		paramUisp.setText(Options.DEFAULT_AVR_CONF_UISP_PATH);
+		paramGcc.setText(Options.INSTANCE.getUiDeafultValue(Options.AVR_CONF_GCC_PATH));
+		paramUisp.setText(Options.INSTANCE.getUiDeafultValue(Options.AVR_CONF_UISP_PATH));
 		
 		enableOk();
 	}
@@ -130,24 +133,25 @@ public class Avr5Configurator extends AbstractPage {
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
+		paramSerial.removeAll();
 		for (int i=0; i<20; i++) {
 			paramSerial.add("/dev/ttyS"+i);
 		}
 		
-		IPreferenceStore store = getPreferenceStore();
+		Map<String, String> values = Options.INSTANCE.getUiOptions();
 
-		String gcc = store.contains(Options.AVR_CONF_GCC_PATH) ?
-				store.getString(Options.AVR_CONF_GCC_PATH) 
+		String gcc = values.containsKey(Options.AVR_CONF_GCC_PATH) ?
+				values.get(Options.AVR_CONF_GCC_PATH) 
 				: Options.DEFAULT_AVR_CONF_GCC_PATH;
 		paramGcc.setText(gcc);
 
-		String uisp = store.contains(Options.AVR_CONF_UISP_PATH) ?
-				store.getString(Options.AVR_CONF_UISP_PATH) 
+		String uisp = values.containsKey(Options.AVR_CONF_UISP_PATH) ?
+				values.get(Options.AVR_CONF_UISP_PATH) 
 				: Options.DEFAULT_AVR_CONF_UISP_PATH;
 		paramUisp.setText(uisp);
 
-		String serial = store.contains(Options.AVR_CONF_SERIAL_DEVICE) ?
-				store.getString(Options.AVR_CONF_SERIAL_DEVICE) 
+		String serial = values.containsKey(Options.AVR_CONF_SERIAL_DEVICE) ?
+				values.get(Options.AVR_CONF_SERIAL_DEVICE) 
 				: "";
 
 		paramSerial.setText(serial);

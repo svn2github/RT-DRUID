@@ -7,6 +7,8 @@ package com.eu.evidence.rtdruid.modules.oil.arm.ui.preferencepages;
 
 
 
+import java.util.Map;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -109,7 +111,7 @@ public class ArmConfigurator extends AbstractPage {
 	 */
 	private void initializeDefaults() {
 //		paramAsm.setText(Options.DEFAULT_ARM_CONF_ASM);
-		paramGcc.setText(Options.DEFAULT_ARM_CONF_GCC);
+		paramGcc.setText(Options.INSTANCE.getUiDeafultValue(Options.ARM_CONF_GCC));
 		
 		enableOk();
 	}
@@ -118,7 +120,7 @@ public class ArmConfigurator extends AbstractPage {
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		IPreferenceStore store = getPreferenceStore();
+		Map<String, String> values = Options.INSTANCE.getUiOptions();
 
 //		String asm = store.contains(Options.PIC_CONF_ASM) ?
 //				store.getString(Options.PIC_CONF_ASM) 
@@ -126,8 +128,8 @@ public class ArmConfigurator extends AbstractPage {
 //
 //		paramAsm.setText(asm);
 		
-		String gcc = store.contains(Options.ARM_CONF_GCC) ?
-				store.getString(Options.ARM_CONF_GCC) 
+		String gcc = values.containsKey(Options.ARM_CONF_GCC) ?
+				values.get(Options.ARM_CONF_GCC) 
 				: Options.DEFAULT_ARM_CONF_GCC;
 		paramGcc.setText(gcc);
 

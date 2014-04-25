@@ -7,6 +7,8 @@ package com.eu.evidence.rtdruid.modules.oil.dspic.ui.preferencepages;
 
 
 
+import java.util.Map;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -128,8 +130,8 @@ public class PIC30Configurator extends AbstractPage {
 	 * store.
 	 */
 	private void initializeDefaults() {
-		paramAsm.setText(PicConstants.DEFAULT_PIC30_CONF_ASM);
-		paramGcc.setText(PicConstants.DEFAULT_PIC30_CONF_GCC);
+		paramAsm.setText(Options.INSTANCE.getUiDeafultValue(Options.PIC30_CONF_ASM));
+		paramGcc.setText(Options.INSTANCE.getUiDeafultValue(Options.PIC30_CONF_GCC));
 		
 //		useEEgcc_deps.setSelection(PicConstants.DEFAULT_PIC30_CONF_USE_EE_GCC_DEPS);
 //		useEEgcc_comp.setSelection(PicConstants.DEFAULT_PIC30_CONF_USE_EE_GCC_COMP);
@@ -141,24 +143,24 @@ public class PIC30Configurator extends AbstractPage {
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		IPreferenceStore store = getPreferenceStore();
+		Map<String, String> values = Options.INSTANCE.getUiOptions();
 
-//		boolean use_ee_d = store.contains(Options.PIC30_CONF_USE_EE_GCC_DEPS) ? 
-//				(""+true).equals(store.getString(Options.PIC30_CONF_USE_EE_GCC_DEPS)) : PicConstants.DEFAULT_PIC30_CONF_USE_EE_GCC_DEPS;
+//		boolean use_ee_d = values.containsKey(Options.PIC30_CONF_USE_EE_GCC_DEPS) ? 
+//				(""+true).equals(values.get(Options.PIC30_CONF_USE_EE_GCC_DEPS)) : PicConstants.DEFAULT_PIC30_CONF_USE_EE_GCC_DEPS;
 //		useEEgcc_deps.setSelection(use_ee_d);
 //
-//		boolean use_ee_c = store.contains(Options.PIC30_CONF_USE_EE_GCC_COMP) ? 
-//				(""+true).equals(store.getString(Options.PIC30_CONF_USE_EE_GCC_COMP)) : PicConstants.DEFAULT_PIC30_CONF_USE_EE_GCC_COMP;
+//		boolean use_ee_c = values.containsKey(Options.PIC30_CONF_USE_EE_GCC_COMP) ? 
+//				(""+true).equals(values.get(Options.PIC30_CONF_USE_EE_GCC_COMP)) : PicConstants.DEFAULT_PIC30_CONF_USE_EE_GCC_COMP;
 //		useEEgcc_comp.setSelection(use_ee_c);
 		
-		String asm = store.contains(Options.PIC30_CONF_ASM) ?
-				store.getString(Options.PIC30_CONF_ASM) 
+		String asm = values.containsKey(Options.PIC30_CONF_ASM) ?
+				values.get(Options.PIC30_CONF_ASM) 
 				: PicConstants.DEFAULT_PIC30_CONF_ASM;
 
 		paramAsm.setText(asm);
 		
-		String gcc = store.contains(Options.PIC30_CONF_GCC) ?
-				store.getString(Options.PIC30_CONF_GCC) 
+		String gcc = values.containsKey(Options.PIC30_CONF_GCC) ?
+				values.get(Options.PIC30_CONF_GCC) 
 				: PicConstants.DEFAULT_PIC30_CONF_GCC;
 		paramGcc.setText(gcc);
 

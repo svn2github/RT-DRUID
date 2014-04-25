@@ -3,21 +3,19 @@
  */
 package com.eu.evidence.rtdruid.modules.oil.renesas.ui.preferencepages;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jface.preference.IPreferenceStore;
-
-import com.eu.evidence.rtdruid.modules.oil.codewriter.options.IBuildOptions;
 import com.eu.evidence.rtdruid.modules.oil.ee.ui.preferencepages.IOPPConstants;
+import com.eu.evidence.rtdruid.modules.oil.ee.ui.preferencepages.UiOilBuilderOptions;
 import com.eu.evidence.rtdruid.modules.oil.renesas.interfaces.RenesasConstants;
-import com.eu.evidence.rtdruid.ui.Rtd_core_uiPlugin;
 
 /**
  * @author Nicola Serreli
  *
  */
-public class Options implements IBuildOptions {
+public class Options extends UiOilBuilderOptions {
 
 	/*
 	 * PROPERTIES Renesas
@@ -27,28 +25,23 @@ public class Options implements IBuildOptions {
 	/** A String that identifies the GCC Path */
 	public static final String RENESAS_CONF_CCRX= RENESAS_CONF_PREFIX+"ccrx_path";
 
+	public static Options INSTANCE = new Options();
 
-	/**
-	 * Returns the values of preferences controlled by this preference page.
-	 */
-	public static HashMap<String,String> getValues() {
-		IPreferenceStore store = Rtd_core_uiPlugin.getDefault()
-				.getPreferenceStore();
-		HashMap<String,String> answer = new HashMap<String,String>();
-	
-
-		String ccrx = store.contains(RENESAS_CONF_CCRX) ? store
-				.getString(RENESAS_CONF_CCRX) : RenesasConstants.DEFAULT_RX200_CONF_CCRX_CC;
-		answer.put(RenesasConstants.PREF_RX200_CCRX_CC_PATH, ccrx);
+	protected ArrayList<OptionElement> initOpt() {
+		ArrayList<OptionElement> answer = super.initOpt();
+		answer.add(new OptionElement(
+				RENESAS_CONF_CCRX,
+				RenesasConstants.PREF_RX200_CCRX_CC_PATH,
+				RenesasConstants.DEFAULT_RX200_CONF_CCRX_CC));
 		
 		return answer;
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see com.eu.evidence.rtdruid.modules.oil.cdt.ui.options.IBuildOptions#getOptions()
+	/**
+	 * Returns the values of preferences controlled by this preference page.
 	 */
-	public Map<String, ?> getOptions() {
-		return getValues();
+	public static Map<String,?> getValues() {
+		Map<String,Object> answer = new HashMap<String,Object>();
+		answer.putAll(INSTANCE.getOptions());
+		return answer;
 	}
 }

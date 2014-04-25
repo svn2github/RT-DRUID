@@ -5,20 +5,18 @@
  */
 package com.eu.evidence.rtdruid.modules.oil.avr5.preferencepages;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jface.preference.IPreferenceStore;
-
 import com.eu.evidence.modules.oil.avr.constants.AvrConstants;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.options.IBuildOptions;
-import com.eu.evidence.rtdruid.ui.Rtd_core_uiPlugin;
+import com.eu.evidence.rtdruid.modules.oil.ee.ui.preferencepages.UiOilBuilderOptions;
 
 /**
  * @author Nicola Serreli
  *
  */
-public class Options implements IBuildOptions {
+public class Options extends UiOilBuilderOptions {
 	/*
 	 * PROPERTIES
 	 */
@@ -41,40 +39,33 @@ public class Options implements IBuildOptions {
 	/** A String that identifies the default value of uisp path */
 	public static final String DEFAULT_AVR_CONF_UISP_PATH= "c:\\cygwin\\usr\\local\\bin\\uisp.exe";
 
-	/**
-	 * Returns the values of preferences controlled by this preference page.
-	 */
-	public static HashMap<String, Object> getValues() {
-		IPreferenceStore store = Rtd_core_uiPlugin.getDefault()
-				.getPreferenceStore();
-		HashMap<String, Object> answer = new HashMap<String, Object>();
+	public static Options INSTANCE = new Options();
+	
+	protected ArrayList<OptionElement> initOpt() {
+		ArrayList<OptionElement> answer = super.initOpt();
+		answer.add(new OptionElement(
+				AVR_CONF_GCC_PATH,
+				AvrConstants.PREF_AVR_GCC_PATH,
+				Options.DEFAULT_AVR_CONF_GCC_PATH));
 		
-		String gcc = store.contains(Options.AVR_CONF_GCC_PATH) ?
-				store.getString(Options.AVR_CONF_GCC_PATH) 
-				: Options.DEFAULT_AVR_CONF_GCC_PATH;
+		answer.add(new OptionElement(
+				AVR_CONF_UISP_PATH,
+				AVR_CONF_UISP_PATH,
+				Options.DEFAULT_AVR_CONF_UISP_PATH));
 		
-		answer.put(AvrConstants.PREF_AVR_GCC_PATH, gcc);
-		
-		String uisp = store.contains(Options.AVR_CONF_UISP_PATH) ?
-				store.getString(Options.AVR_CONF_UISP_PATH) 
-				: Options.DEFAULT_AVR_CONF_UISP_PATH;
-		
-		answer.put(Options.AVR_CONF_UISP_PATH, uisp);
-		
-		String serial = store.contains(Options.AVR_CONF_SERIAL_DEVICE) ?
-				store.getString(Options.AVR_CONF_SERIAL_DEVICE) 
-				: "";
-		
-		answer.put(Options.AVR_CONF_SERIAL_DEVICE, serial);
-		
+		answer.add(new OptionElement(
+				AVR_CONF_SERIAL_DEVICE,
+				AVR_CONF_SERIAL_DEVICE,
+				""));
 		return answer;
 	}
 	
-	
-	/* (non-Javadoc)
-	 * @see com.eu.evidence.rtdruid.modules.oil.cdt.ui.options.IBuildOptions#getOptions()
+	/**
+	 * Returns the values of preferences controlled by this preference page.
 	 */
-	public Map<String, ?> getOptions() {
-		return getValues();
+	public static Map<String, ?> getValues() {
+		Map<String,Object> answer = new HashMap<String,Object>();
+		answer.putAll(INSTANCE.getOptions());
+		return answer;
 	}
 }

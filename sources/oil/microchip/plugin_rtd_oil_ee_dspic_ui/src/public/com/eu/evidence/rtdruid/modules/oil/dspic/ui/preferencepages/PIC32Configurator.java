@@ -7,6 +7,8 @@ package com.eu.evidence.rtdruid.modules.oil.dspic.ui.preferencepages;
 
 
 
+import java.util.Map;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -110,8 +112,8 @@ public class PIC32Configurator extends AbstractPage {
 	 * store.
 	 */
 	private void initializeDefaults() {
-		paramAsm.setText(PicConstants.DEFAULT_PIC32_CONF_ASM);
-		paramGcc.setText(PicConstants.DEFAULT_PIC32_CONF_GCC);
+		paramAsm.setText(Options.INSTANCE.getUiDeafultValue(Options.PIC32_CONF_ASM));
+		paramGcc.setText(Options.INSTANCE.getUiDeafultValue(Options.PIC32_CONF_GCC));
 
 		enableOk();
 	}
@@ -120,16 +122,16 @@ public class PIC32Configurator extends AbstractPage {
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		IPreferenceStore store = getPreferenceStore();
+		Map<String, String> values = Options.INSTANCE.getUiOptions();
 
-		String asm = store.contains(Options.PIC32_CONF_ASM) ?
-				store.getString(Options.PIC32_CONF_ASM) 
+		String asm = values.containsKey(Options.PIC32_CONF_ASM) ?
+				values.get(Options.PIC32_CONF_ASM) 
 				: PicConstants.DEFAULT_PIC32_CONF_ASM;
 
 		paramAsm.setText(asm);
 		
-		String gcc = store.contains(Options.PIC32_CONF_GCC) ?
-				store.getString(Options.PIC32_CONF_GCC) 
+		String gcc = values.containsKey(Options.PIC32_CONF_GCC) ?
+				values.get(Options.PIC32_CONF_GCC) 
 				: PicConstants.DEFAULT_PIC32_CONF_GCC;
 		paramGcc.setText(gcc);
 

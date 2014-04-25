@@ -124,10 +124,9 @@ public class PreferenceStorage {
 	}
 	
 	public void save() {
-		if (currentFile != null) {
-			Properties tmp = new Properties();
+		if (currentFile != null && values != null) {
 			try {
-				tmp.store(new FileOutputStream(currentFile), "");
+				values.store(new FileOutputStream(currentFile), "");
 			} catch (FileNotFoundException e) {
 				// cannot be
 				RtdruidLog.log(e);
@@ -160,6 +159,8 @@ public class PreferenceStorage {
 						tmp.load(new FileInputStream(file));
 						currentFile = file;
 						loaded = true;
+						values.clear();
+						values.putAll(tmp);
 						dbg += " ... done ";
 					} catch (FileNotFoundException e) {
 						// cannot be
@@ -355,9 +356,20 @@ public class PreferenceStorage {
 		}
 		return null;
 	}
+
+	
+	public String getValue(String ID, String defaultValue) {
+		if (loaded == false && currentFile != null) {
+			load();
+		}
+		if (values.containsKey(ID)) {
+			return values.getProperty(ID);
+		}
+		return defaultValue;
+	}
 	
 	public void setValue(String ID, String value) {
-		throw new UnsupportedOperationException();
+		values.setProperty(ID, value);
 	}
 	
 	public void setCurrentFile(File f) {

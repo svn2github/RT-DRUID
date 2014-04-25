@@ -8,6 +8,8 @@ package com.eu.evidence.rtdruid.modules.oil.s12.ui.preferencepages;
 
 
 
+import java.util.Map;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -109,8 +111,8 @@ public class S12Configurator extends AbstractPage {
 	 * store.
 	 */
 	private void initializeDefaults() {
-		paramCodeWarriorPath.setText(S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC);
-		paramGcc.setText(S12Constants.DEFAULT_S12_COSMIC_CONF_GCC);
+		paramCodeWarriorPath.setText(Options.INSTANCE.getUiDeafultValue(Options.S12_CODEWARRIOR_CONF_GCC));
+		paramGcc.setText(Options.INSTANCE.getUiDeafultValue(Options.S12_CONF_GCC));
 
 		enableOk();
 	}
@@ -119,16 +121,16 @@ public class S12Configurator extends AbstractPage {
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		IPreferenceStore store = getPreferenceStore();
+		Map<String, String> values = Options.INSTANCE.getUiOptions();
 
-		String cwPath = store.contains(Options.S12_CODEWARRIOR_CONF_GCC) ?
-				store.getString(Options.S12_CODEWARRIOR_CONF_GCC) 
+		String cwPath = values.containsKey(Options.S12_CODEWARRIOR_CONF_GCC) ?
+				values.get(Options.S12_CODEWARRIOR_CONF_GCC) 
 				: S12Constants.DEFAULT_S12_CODEWARRIOR_CONF_GCC;
 
 		paramCodeWarriorPath.setText(cwPath);
 		
-		String gcc = store.contains(Options.S12_CONF_GCC) ?
-				store.getString(Options.S12_CONF_GCC) 
+		String gcc = values.containsKey(Options.S12_CONF_GCC) ?
+				values.get(Options.S12_CONF_GCC) 
 				: S12Constants.DEFAULT_S12_COSMIC_CONF_GCC;
 		paramGcc.setText(gcc);
 
