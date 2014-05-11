@@ -29,6 +29,7 @@ import com.eu.evidence.rtdruid.test.modules.oil.codewriter.AbstractCodeWriterTes
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.AbstractCodeWriterTest.DefaultTestResult;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterArm7Test;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterAvr5Test;
+import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterAvr8Test;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterComTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterCortexTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterCosmicS12Test;
@@ -49,6 +50,7 @@ import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWritertMPTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWritertTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.AutosarCodeWriterArm7Test;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.AutosarCodeWriterAvr5Test;
+import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.AutosarCodeWriterAvr8Test;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.AutosarCodeWriterComTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.AutosarCodeWriterCortexTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.autosar.AutosarOilWriterTests.AutosarCodeWriterCosmicS12Test;
@@ -78,7 +80,7 @@ import com.eu.evidence.rtdruid.vartree.Vt2StringUtilities;
  * 
  */
 @RunWith(Suite.class)
-@SuiteClasses({ AutosarCodeWriterArm7Test.class, AutosarCodeWriterAvr5Test.class, AutosarCodeWriterComTest.class, 
+@SuiteClasses({ AutosarCodeWriterArm7Test.class, AutosarCodeWriterAvr5Test.class, AutosarCodeWriterAvr8Test.class, AutosarCodeWriterComTest.class, 
 	AutosarCodeWriterCortexTest.class,
 		AutosarCodeWriterCosmicS12Test.class, AutosarCodeWriterDsPicTest.class, AutosarCodeWriterMico32Test.class,
 		AutosarCodeWriterMisraTest.class, AutosarCodeWriterMpc567Test.class, AutosarCodeWriterMpc5Test.class,
@@ -110,6 +112,17 @@ public class AutosarOilWriterTests {
 
 	
 	public static class AutosarCodeWriterAvr5Test extends CodeWriterAvr5Test implements DirectWriter {
+		@Override
+		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
+		@Override
+		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
+			return AutosarOilWriterTests.writerAutosarTest(this, oil_text, expected_cpu)[0];
+		}
+	}
+	
+	public static class AutosarCodeWriterAvr8Test extends CodeWriterAvr8Test implements DirectWriter {
 		@Override
 		public DefaultTestResult doWrite(String oil_text, int expected_cpu) {
 			return super.commonWriterTest(oil_text, expected_cpu);

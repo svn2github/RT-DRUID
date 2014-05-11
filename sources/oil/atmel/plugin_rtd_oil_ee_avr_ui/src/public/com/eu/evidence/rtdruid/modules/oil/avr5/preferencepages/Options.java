@@ -45,7 +45,7 @@ public class Options extends UiOilBuilderOptions {
 		ArrayList<OptionElement> answer = super.initOpt();
 		answer.add(new OptionElement(
 				AVR_CONF_GCC_PATH,
-				AvrConstants.PREF_AVR_GCC_PATH,
+				AvrConstants.PREF_AVR5_GCC_PATH,
 				Options.DEFAULT_AVR_CONF_GCC_PATH));
 		
 		answer.add(new OptionElement(

@@ -18,6 +18,7 @@ import com.eu.evidence.rtdruid.oil.xtext.model.OilFile;
 import com.eu.evidence.rtdruid.oil.xtext.services.OilModelLoader;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterArm7Test;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterAvr5Test;
+import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterAvr8Test;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterComTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterCortexTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWriterCosmicS12Test;
@@ -38,6 +39,7 @@ import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWritertMPTest;
 import com.eu.evidence.rtdruid.test.modules.oil.codewriter.CodeWritertTest;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.ValidationOilWriterTests.ValidationOilInputArm7Test;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.ValidationOilWriterTests.ValidationOilInputAvr5Test;
+import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.ValidationOilWriterTests.ValidationOilInputAvr8Test;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.ValidationOilWriterTests.ValidationOilInputComTest;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.ValidationOilWriterTests.ValidationOilInputCortexTest;
 import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.ValidationOilWriterTests.ValidationOilInputCosmicS12Test;
@@ -64,7 +66,7 @@ import com.eu.evidence.rtdruid.test.modules.oil.xtext.validation.ValidationOilWr
  * 
  */
 @RunWith(Suite.class)
-@SuiteClasses({ ValidationOilInputArm7Test.class, ValidationOilInputAvr5Test.class, ValidationOilInputComTest.class, 
+@SuiteClasses({ ValidationOilInputArm7Test.class, ValidationOilInputAvr5Test.class, ValidationOilInputAvr8Test.class, ValidationOilInputComTest.class, 
 	ValidationOilInputCortexTest.class,
 		ValidationOilInputCosmicS12Test.class, ValidationOilInputDsPicTest.class, ValidationOilInputMico32Test.class,
 		ValidationOilInputMisraTest.class, ValidationOilInputMpc567Test.class, ValidationOilInputMpc5Test.class,
@@ -87,6 +89,14 @@ public class ValidationOilWriterTests {
 
 	
 	public static class ValidationOilInputAvr5Test extends CodeWriterAvr5Test {
+		@Override
+		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
+			ValidationOilWriterTests.validateTest(oil_text);
+			return super.commonWriterTest(oil_text, expected_cpu);
+		}
+	}
+	
+	public static class ValidationOilInputAvr8Test extends CodeWriterAvr8Test {
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
 			ValidationOilWriterTests.validateTest(oil_text);

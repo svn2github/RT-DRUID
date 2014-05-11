@@ -717,8 +717,8 @@ public class SectionWriterHalAvr5 extends SectionWriter implements IEEWriterKeyw
 		        	HashMap<String, ?> options = parent.getOptions();
 
 			    	String avr5_gcc_Path = "C:\\programmi\\AVRGCC\\avrgcc";
-		        	if (options.containsKey(AvrConstants.PREF_AVR_GCC_PATH)) {
-						String tmp = (String) options.get(AvrConstants.PREF_AVR_GCC_PATH);
+		        	if (options.containsKey(AvrConstants.PREF_AVR5_GCC_PATH)) {
+						String tmp = (String) options.get(AvrConstants.PREF_AVR5_GCC_PATH);
 						if (tmp.length()>0) avr5_gcc_Path = tmp;
 					}
 

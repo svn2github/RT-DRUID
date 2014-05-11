@@ -62,6 +62,64 @@ import com.eu.evidence.rtdruid.vartree.data.DataPackage;
  */
 public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWriterKeywords {
 
+	public static 
+	/**
+	 * Use a specific Properties that check if the new value is already
+	 * setted and they are the same.
+	 */
+	class EEProperties extends Properties {
+		/**	 */
+		private static final long serialVersionUID = -752544725338646244L;
+		/**
+		 * Before set a property, check if the property already exist and if
+		 * the new value and the old one are the same.
+		 * 
+		 * @param key
+		 *            identifies the property
+		 * @param value
+		 *            the property value
+		 * 
+		 * @throws OilCodeWriterException
+		 *             if the property was setted with a different value.
+		 */
+		public synchronized Object setOilProperty(String key, String value)
+				throws OilCodeWriterException {
+
+			// Don't do anything if value is null
+			if (value == null) {
+				return super.getProperty(key);
+			}
+			
+			// Check if the property already exist
+			if (super.containsKey(key)) {
+				String oldValue = super.getProperty(key);
+
+				// check if the new value is valid
+				if (!value.equalsIgnoreCase(oldValue)) {
+					throw new OilCodeWriterException(
+							"Found more than one setting for " + key
+									+ " : " + oldValue + " and " + value);
+				}
+
+				return oldValue;
+
+			} else {
+				// Set the property for the first time
+				return super.setProperty(key, value);
+			}
+		}
+		/**
+		 * Disabled : use setOilProperty(String key, String value)
+		 * 
+		 * @throws UnsupportedOperationException
+		 * 
+		 * @deprecated use setOilProperty(String key, String value)
+		 */
+		public synchronized Object setProperty(String key, String value) {
+			throw new UnsupportedOperationException(
+					"Use setOilProperty(String key, String value)");
+		}
+	};
 	
 	private final static boolean useMultiplePriorities = false;
 	
@@ -195,66 +253,8 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 			}
 			
 		}
-
-		/**
-		 * Use a specific Properties that check if the new value is already
-		 * setted and they are the same.
-		 */
-		class MyProperties extends Properties {
-			/**	 */
-			private static final long serialVersionUID = -752544725338646244L;
-			/**
-			 * Before set a property, check if the property already exist and if
-			 * the new value and the old one are the same.
-			 * 
-			 * @param key
-			 *            identifies the property
-			 * @param value
-			 *            the property value
-			 * 
-			 * @throws OilCodeWriterException
-			 *             if the property was setted with a different value.
-			 */
-			public synchronized Object setOilProperty(String key, String value)
-					throws OilCodeWriterException {
-
-				// Don't do anything if value is null
-				if (value == null) {
-					return super.getProperty(key);
-				}
-				
-				// Check if the property already exist
-				if (super.containsKey(key)) {
-					String oldValue = super.getProperty(key);
-
-					// check if the new value is valid
-					if (!value.equalsIgnoreCase(oldValue)) {
-						throw new OilCodeWriterException(
-								"Found more than one setting for " + key
-										+ " : " + oldValue + " and " + value);
-					}
-
-					return oldValue;
-
-				} else {
-					// Set the property for the first time
-					return super.setProperty(key, value);
-				}
-			}
-			/**
-			 * Disabled : use setOilProperty(String key, String value)
-			 * 
-			 * @throws UnsupportedOperationException
-			 * 
-			 * @deprecated use setOilProperty(String key, String value)
-			 */
-			public synchronized Object setProperty(String key, String value) {
-				throw new UnsupportedOperationException(
-						"Use setOilProperty(String key, String value)");
-			}
-		}; 
 		
-		MyProperties checkKeys = new MyProperties();
+		EEProperties checkKeys = new EEProperties();
 
 		Boolean enable_multiStack = null;
 

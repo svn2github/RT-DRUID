@@ -14,7 +14,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ CodeWriterArm7Test.class, CodeWriterAvr5Test.class, CodeWriterComTest.class, 
+@SuiteClasses({ CodeWriterArm7Test.class, CodeWriterAvr5Test.class, CodeWriterAvr8Test.class, CodeWriterComTest.class, 
 	CodeWriterCortexTest.class,
 		CodeWriterCosmicS12Test.class, CodeWriterDsPicTest.class, CodeWriterMico32Test.class,
 		CodeWriterMisraTest.class, CodeWriterMpc567Test.class, CodeWriterMpc5Test.class,
