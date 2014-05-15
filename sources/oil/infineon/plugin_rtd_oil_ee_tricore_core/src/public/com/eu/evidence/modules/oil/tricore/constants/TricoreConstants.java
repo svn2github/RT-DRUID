@@ -29,8 +29,8 @@ public interface TricoreConstants {
 	public static final String SGRK__DIAB_COMPILER__ = "DIAB";
 
 
-	public static final Object PREF_TRICORE_TASKING_CC_PATH = "preference_tricore__path_for_tasking_compiler";
-	public static final Object PREF_TRICORE_GNU_CC_PATH = "preference_tricore__path_for_gnu_compiler";
-	public static final Object PREF_TRICORE_DIAB_CC_PATH = "preference_tricore__path_for_diab_compiler";
+	public static final String PREF_TRICORE_TASKING_CC_PATH = "preference_tricore__path_for_tasking_compiler";
+	public static final String PREF_TRICORE_GNU_CC_PATH     = "preference_tricore__path_for_gnu_compiler";
+	public static final String PREF_TRICORE_DIAB_CC_PATH    = "preference_tricore__path_for_diab_compiler";
 
 }
