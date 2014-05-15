@@ -1429,6 +1429,16 @@ public class SectionWriterHalAvr8 extends SectionWriter
 			        
 			    	sbMakefile.append(compiler_define);
 	        	}
+	        	{
+			    	if (options.containsKey(AvrConstants.PREF_AVR8_ARDUINO_PATH) ) {
+						String gcc = (String) options.get(AvrConstants.PREF_AVR8_ARDUINO_PATH);
+						if (gcc.length()>0) {
+				    		String compiler_define = CommonUtils.compilerMakefileDefines(gcc, "ARDUINO_SDK_FILES", wrapper);
+					        
+					    	sbMakefile.append(compiler_define);
+						}
+					}
+	        	}
 		    }
 
 			ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
