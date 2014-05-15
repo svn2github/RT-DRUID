@@ -3,7 +3,7 @@
  *
  * $Id: Avr5Configurator.java,v 1.2 2008/03/26 18:23:52 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.preferencepages;
+package com.eu.evidence.rtdruid.modules.oil.avr.preferencepages;
 
 
 import java.util.Map;
@@ -123,7 +123,7 @@ public class Avr5Configurator extends AbstractPage {
 		}
 		paramSerial.select(0);
 
-		paramGcc.setText(Options.INSTANCE.getUiDeafultValue(Options.AVR_CONF_GCC_PATH));
+		paramGcc.setText(Options.INSTANCE.getUiDeafultValue(Options.AVR5_CONF_GCC_PATH));
 		paramUisp.setText(Options.INSTANCE.getUiDeafultValue(Options.AVR_CONF_UISP_PATH));
 		
 		enableOk();
@@ -140,8 +140,8 @@ public class Avr5Configurator extends AbstractPage {
 		
 		Map<String, String> values = Options.INSTANCE.getUiOptions();
 
-		String gcc = values.containsKey(Options.AVR_CONF_GCC_PATH) ?
-				values.get(Options.AVR_CONF_GCC_PATH) 
+		String gcc = values.containsKey(Options.AVR5_CONF_GCC_PATH) ?
+				values.get(Options.AVR5_CONF_GCC_PATH) 
 				: Options.DEFAULT_AVR_CONF_GCC_PATH;
 		paramGcc.setText(gcc);
 
@@ -185,7 +185,7 @@ public class Avr5Configurator extends AbstractPage {
 	protected void storeValues() {
 		IPreferenceStore store = getPreferenceStore();
 
-		store.setValue(Options.AVR_CONF_GCC_PATH, paramGcc.getText());
+		store.setValue(Options.AVR5_CONF_GCC_PATH, paramGcc.getText());
 		store.setValue(Options.AVR_CONF_UISP_PATH, paramUisp.getText());
 		store.setValue(Options.AVR_CONF_SERIAL_DEVICE, paramSerial.getText());
 	}

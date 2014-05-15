@@ -1,13 +1,14 @@
 /*
  * Created on 16/lug/07
  *
- * $Id: ProgramMemory.java,v 1.2 2007/07/20 07:02:08 durin Exp $
+ * $Id: VerifyMemory.java,v 1.1 2007/07/20 06:57:06 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.actions;
+package com.eu.evidence.rtdruid.modules.oil.avr.actions;
 
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.action.IAction;
@@ -22,7 +23,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
 
-public class ProgramMemory implements IWorkbenchWindowActionDelegate {
+public class VerifyMemory implements IWorkbenchWindowActionDelegate {
 
 	/** Remembers the previous choosed file */
 	protected static IFile previous = null;
@@ -32,7 +33,7 @@ public class ProgramMemory implements IWorkbenchWindowActionDelegate {
 	/**
 	 * The constructor.
 	 */
-	public ProgramMemory() {
+	public VerifyMemory() {
 	}
 
 	/**
@@ -44,18 +45,15 @@ public class ProgramMemory implements IWorkbenchWindowActionDelegate {
 	public void run(IAction action) {
 
 		try {
-			IRunnableWithProgress op = new CommonActions.ProgrFlashAct() {
+			IRunnableWithProgress op = new CommonActions.VerifyAct() {
 
 				void getBinImage() {
 					// searc the binary image
-					IWorkspaceRoot root = ResourcesPlugin.getWorkspace()
-							.getRoot();
+					IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
-					IFile[] files = CommonActions.searchSRec(root,
-							intMonitor);
-					
+					IFile[] files = CommonActions.searchSRec((IProject) root, intMonitor);
 					if (intMonitor.isCanceled()) {
-						return; // ---> EXIT
+						return;  // ---> EXIT
 					}
 					if (files.length == 0) {
 						// no file found
@@ -63,38 +61,35 @@ public class ProgramMemory implements IWorkbenchWindowActionDelegate {
 						// Show an error message
 						try {
 
-							final Display display = window.getShell()
-									.getDisplay();
+							final Display display = window.getShell().getDisplay();
 							display.syncExec(new Runnable() {
 								public void run() {
-									MessageDialog
-											.openError(window.getShell(),
-													"Avr5 Memory Programmer",
-													"No *.srec file found in the workspace");
+									MessageDialog.openError(window.getShell(),
+											"Avr5 Memory Programmer (Verify)",
+											"No *.srec file found in the workspace");
 								}
 							});
 						} catch (Throwable e) {
 							RtdruidLog.log(e);
 						}
-
-						Messages.sendErrorNl(
-								"No *.srec file found in the workspace", null,
-								null, null);
+						
+						Messages.sendErrorNl("No *.srec file found in the workspace",
+								null, null, null);
 
 						abort = true;
 						return; // ---> EXIT
 
-					} else { // if (files.length > 1) { ALWAYS ASK
+					} else  { //if (files.length > 1) { ALWAYS ASK
 						// too many files
-						
-						binImg = CommonActions.askBinImage(window.getShell(),
-								files, previous);
+						binImg = CommonActions.askBinImage(window.getShell(), files, previous);
 
 						if (binImg == null) {
 							abort = true;
 							return; // ---> EXIT
 						}
 
+//					} else {
+//						binImg = files[0];
 					}
 
 				}

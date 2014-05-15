@@ -1,4 +1,4 @@
-package com.eu.evidence.rtdruid.modules.oi.avr5.ui;
+package com.eu.evidence.rtdruid.modules.oi.avr.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

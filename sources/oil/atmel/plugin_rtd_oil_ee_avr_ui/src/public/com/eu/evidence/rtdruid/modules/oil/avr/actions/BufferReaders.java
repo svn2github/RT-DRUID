@@ -3,7 +3,7 @@
  *
  * $Id: BufferReaders.java,v 1.1 2007/07/18 06:53:03 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.actions;
+package com.eu.evidence.rtdruid.modules.oil.avr.actions;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

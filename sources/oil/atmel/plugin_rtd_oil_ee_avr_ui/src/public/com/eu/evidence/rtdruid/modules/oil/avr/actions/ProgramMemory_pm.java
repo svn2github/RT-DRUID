@@ -3,7 +3,7 @@
  *
  * $Id: ProgramMemory_pm.java,v 1.1 2007/07/20 06:57:06 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.actions;
+package com.eu.evidence.rtdruid.modules.oil.avr.actions;
 
 import java.lang.reflect.InvocationTargetException;
 

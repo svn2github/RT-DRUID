@@ -3,7 +3,7 @@
  *
  * $Id: Parameters.java,v 1.2 2007/07/20 07:02:32 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.preferencepages;
+package com.eu.evidence.rtdruid.modules.oil.avr.preferencepages;
 
 public class Parameters {
 

@@ -1,9 +1,9 @@
 /*
  * Created on 16/lug/07
  *
- * $Id: ReadFuse.java,v 1.2 2007/07/20 07:02:08 durin Exp $
+ * $Id: ReadFuse_pm.java,v 1.1 2007/07/20 06:57:06 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.actions;
+package com.eu.evidence.rtdruid.modules.oil.avr.actions;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -11,17 +11,19 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IObjectActionDelegate;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-public class ReadFuse implements IWorkbenchWindowActionDelegate {
+public class ReadFuse_pm implements IObjectActionDelegate {
 
-	private IWorkbenchWindow window;
+	private Shell shell;
 
 	/**
 	 * The constructor.
 	 */
-	public ReadFuse() {
+	public ReadFuse_pm() {
 	}
 
 	/**
@@ -34,7 +36,7 @@ public class ReadFuse implements IWorkbenchWindowActionDelegate {
 
 		try {
 			IRunnableWithProgress op = new CommonActions.ReadFuseAct();
-			new ProgressMonitorDialog(window.getShell()).run(true, false, op);
+			new ProgressMonitorDialog(shell).run(true, false, op);
 		} catch (InvocationTargetException e) {
 			// handle exception
 		} catch (InterruptedException e) {
@@ -50,24 +52,13 @@ public class ReadFuse implements IWorkbenchWindowActionDelegate {
 	 * @see IWorkbenchWindowActionDelegate#selectionChanged
 	 */
 	public void selectionChanged(IAction action, ISelection selection) {
+		// do nothing
 	}
 
 	/**
-	 * We can use this method to dispose of any system resources we previously
-	 * allocated.
-	 * 
-	 * @see IWorkbenchWindowActionDelegate#dispose
+	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
 	 */
-	public void dispose() {
-	}
-
-	/**
-	 * We will cache window object in order to be able to provide parent shell
-	 * for the message dialog.
-	 * 
-	 * @see IWorkbenchWindowActionDelegate#init
-	 */
-	public void init(IWorkbenchWindow window) {
-		this.window = window;
+	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
+		shell = targetPart.getSite().getShell();
 	}
 }

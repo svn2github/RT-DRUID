@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Avr UI Plug-in
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.avr.ui;singleton:=true
 Bundle-Version: 2.3.0.Nqualifier
-Bundle-Activator: com.eu.evidence.rtdruid.modules.oi.avr5.ui.Activator
+Bundle-Activator: com.eu.evidence.rtdruid.modules.oi.avr.ui.Activator
 Bundle-Vendor: Evidence S.r.l.
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

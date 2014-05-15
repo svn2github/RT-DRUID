@@ -3,7 +3,7 @@
  *
  * $Id: CommonActions.java,v 1.1 2007/07/20 06:57:06 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.actions;
+package com.eu.evidence.rtdruid.modules.oil.avr.actions;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.eu.evidence.rtdruid.desk.Messages;
 import com.eu.evidence.rtdruid.desk.RtdruidLog;
-import com.eu.evidence.rtdruid.modules.oil.avr5.preferencepages.Parameters;
+import com.eu.evidence.rtdruid.modules.oil.avr.preferencepages.Parameters;
 import com.eu.evidence.rtdruid.ui.common.RTDConsole;
 
 public class CommonActions {

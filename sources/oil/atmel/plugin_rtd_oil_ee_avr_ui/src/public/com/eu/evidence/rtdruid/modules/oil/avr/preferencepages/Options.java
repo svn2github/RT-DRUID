@@ -3,7 +3,7 @@
  *
  * $Id$
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.preferencepages;
+package com.eu.evidence.rtdruid.modules.oil.avr.preferencepages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,13 +22,20 @@ public class Options extends UiOilBuilderOptions {
 	 */
 	public static final String AVR5_CONF_PREFIX=IAvrPPConstants.PREFIX+"UISP_CONF."; //$NON-NLS-1$
 	
+	public static final String AVR8_CONF_PREFIX=IAvrPPConstants.PREFIX+"AVR8."; //$NON-NLS-1$
+	
 	// Preference constants
 	/** A String that identifies the Gcc Path */
-	public static final String AVR_CONF_GCC_PATH=AVR5_CONF_PREFIX+"gcc_path";
+	public static final String AVR5_CONF_GCC_PATH=AVR5_CONF_PREFIX+"gcc_path";
+	/** A String that identifies the Gcc Path */
+	public static final String AVR8_CONF_GCC_PATH=AVR8_CONF_PREFIX+"gcc_path";
 	/** A String that identifies the Uisp Path */
 	public static final String AVR_CONF_UISP_PATH=AVR5_CONF_PREFIX+"uisp_path";
 	/** A String that identifies the choiche about which Serial Port use */
 	public static final String AVR_CONF_SERIAL_DEVICE=AVR5_CONF_PREFIX+"serial_device";
+
+	/** A String that identifies the Gcc Path */
+	public static final String AVR8_CONF_ARDUINO_PATH=AVR8_CONF_PREFIX+"arduino_path";
 
 	/*
 	 * Default
@@ -44,9 +51,14 @@ public class Options extends UiOilBuilderOptions {
 	protected ArrayList<OptionElement> initOpt() {
 		ArrayList<OptionElement> answer = super.initOpt();
 		answer.add(new OptionElement(
-				AVR_CONF_GCC_PATH,
+				AVR5_CONF_GCC_PATH,
 				AvrConstants.PREF_AVR5_GCC_PATH,
 				Options.DEFAULT_AVR_CONF_GCC_PATH));
+		
+		answer.add(new OptionElement(
+				AVR8_CONF_GCC_PATH,
+				AvrConstants.PREF_AVR8_GCC_PATH,
+				""));
 		
 		answer.add(new OptionElement(
 				AVR_CONF_UISP_PATH,
@@ -57,6 +69,12 @@ public class Options extends UiOilBuilderOptions {
 				AVR_CONF_SERIAL_DEVICE,
 				AVR_CONF_SERIAL_DEVICE,
 				""));
+		
+		answer.add(new OptionElement(
+				AVR8_CONF_ARDUINO_PATH,
+				AvrConstants.PREF_AVR8_ARDUINO_PATH,
+				""));
+
 		return answer;
 	}
 	

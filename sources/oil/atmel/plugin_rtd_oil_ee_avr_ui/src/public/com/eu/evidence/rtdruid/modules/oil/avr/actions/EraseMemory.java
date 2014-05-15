@@ -1,9 +1,9 @@
 /*
  * Created on 16/lug/07
  *
- * $Id: JTagDisable_pm.java,v 1.1 2007/07/20 06:57:06 durin Exp $
+ * $Id: EraseMemory.java,v 1.2 2007/07/20 07:02:08 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.actions;
+package com.eu.evidence.rtdruid.modules.oil.avr.actions;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -11,19 +11,17 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IObjectActionDelegate;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-public class JTagDisable_pm implements IObjectActionDelegate {
+public class EraseMemory implements IWorkbenchWindowActionDelegate {
 
-	private Shell shell;
+	private IWorkbenchWindow window;
 
 	/**
 	 * The constructor.
 	 */
-	public JTagDisable_pm() {
+	public EraseMemory() {
 	}
 
 	/**
@@ -35,8 +33,8 @@ public class JTagDisable_pm implements IObjectActionDelegate {
 	public void run(IAction action) {
 
 		try {
-			IRunnableWithProgress op = new CommonActions.JTagDisableAct();
-			new ProgressMonitorDialog(shell).run(true, false, op);
+			IRunnableWithProgress op = new CommonActions.EraseAct();
+			new ProgressMonitorDialog(window.getShell()).run(true, false, op);
 		} catch (InvocationTargetException e) {
 			// handle exception
 		} catch (InterruptedException e) {
@@ -52,13 +50,24 @@ public class JTagDisable_pm implements IObjectActionDelegate {
 	 * @see IWorkbenchWindowActionDelegate#selectionChanged
 	 */
 	public void selectionChanged(IAction action, ISelection selection) {
-		// do nothing
 	}
-	
+
 	/**
-	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
+	 * We can use this method to dispose of any system resources we previously
+	 * allocated.
+	 * 
+	 * @see IWorkbenchWindowActionDelegate#dispose
 	 */
-	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
-		shell = targetPart.getSite().getShell();
+	public void dispose() {
+	}
+
+	/**
+	 * We will cache window object in order to be able to provide parent shell
+	 * for the message dialog.
+	 * 
+	 * @see IWorkbenchWindowActionDelegate#init
+	 */
+	public void init(IWorkbenchWindow window) {
+		this.window = window;
 	}
 }

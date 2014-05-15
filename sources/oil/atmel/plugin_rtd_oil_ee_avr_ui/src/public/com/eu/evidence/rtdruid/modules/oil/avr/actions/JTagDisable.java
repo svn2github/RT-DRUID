@@ -1,9 +1,9 @@
 /*
  * Created on 16/lug/07
  *
- * $Id: JTagEnable.java,v 1.2 2007/07/20 07:02:08 durin Exp $
+ * $Id: JTagDisable.java,v 1.2 2007/07/20 07:02:08 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.actions;
+package com.eu.evidence.rtdruid.modules.oil.avr.actions;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -14,14 +14,14 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-public class JTagEnable implements IWorkbenchWindowActionDelegate {
+public class JTagDisable implements IWorkbenchWindowActionDelegate {
 
 	private IWorkbenchWindow window;
 
 	/**
 	 * The constructor.
 	 */
-	public JTagEnable() {
+	public JTagDisable() {
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class JTagEnable implements IWorkbenchWindowActionDelegate {
 	public void run(IAction action) {
 
 		try {
-			IRunnableWithProgress op = new CommonActions.JTagEnableAct();
+			IRunnableWithProgress op = new CommonActions.JTagDisableAct();
 			new ProgressMonitorDialog(window.getShell()).run(true, false, op);
 		} catch (InvocationTargetException e) {
 			// handle exception
@@ -70,6 +70,5 @@ public class JTagEnable implements IWorkbenchWindowActionDelegate {
 	public void init(IWorkbenchWindow window) {
 		this.window = window;
 	}
-
 
 }

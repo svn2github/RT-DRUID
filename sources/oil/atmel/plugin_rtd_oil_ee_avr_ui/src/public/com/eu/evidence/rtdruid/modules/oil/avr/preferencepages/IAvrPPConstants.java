@@ -3,7 +3,7 @@
  *
  * $Id: IAvrPPConstants.java,v 1.1 2007/07/18 06:53:03 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.preferencepages;
+package com.eu.evidence.rtdruid.modules.oil.avr.preferencepages;
 
 /**
  * This interface contains only some ID used to store Oil's preferences

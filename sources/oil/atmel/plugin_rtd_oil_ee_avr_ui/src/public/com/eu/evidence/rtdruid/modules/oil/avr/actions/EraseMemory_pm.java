@@ -1,9 +1,9 @@
 /*
  * Created on 16/lug/07
  *
- * $Id: ReadFuse_pm.java,v 1.1 2007/07/20 06:57:06 durin Exp $
+ * $Id: EraseMemory_pm.java,v 1.1 2007/07/20 06:57:06 durin Exp $
  */
-package com.eu.evidence.rtdruid.modules.oil.avr5.actions;
+package com.eu.evidence.rtdruid.modules.oil.avr.actions;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -16,14 +16,14 @@ import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-public class ReadFuse_pm implements IObjectActionDelegate {
+public class EraseMemory_pm implements IObjectActionDelegate {
 
 	private Shell shell;
 
 	/**
 	 * The constructor.
 	 */
-	public ReadFuse_pm() {
+	public EraseMemory_pm() {
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class ReadFuse_pm implements IObjectActionDelegate {
 	public void run(IAction action) {
 
 		try {
-			IRunnableWithProgress op = new CommonActions.ReadFuseAct();
+			IRunnableWithProgress op = new CommonActions.EraseAct();
 			new ProgressMonitorDialog(shell).run(true, false, op);
 		} catch (InvocationTargetException e) {
 			// handle exception
@@ -54,7 +54,7 @@ public class ReadFuse_pm implements IObjectActionDelegate {
 	public void selectionChanged(IAction action, ISelection selection) {
 		// do nothing
 	}
-
+	
 	/**
 	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
 	 */
