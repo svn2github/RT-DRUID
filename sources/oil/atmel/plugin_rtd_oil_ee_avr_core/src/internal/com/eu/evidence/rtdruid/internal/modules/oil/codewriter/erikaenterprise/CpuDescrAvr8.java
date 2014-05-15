@@ -21,6 +21,6 @@ public class CpuDescrAvr8 extends CpuHwDescription {
 	public CpuDescrAvr8() {
 		super(IWritersKeywords.CPU_AVR8, "PRIVATE",
 				new String[] { "SYS_SIZE" },
-				new String[] { "SHARED_MIN_SYS_SIZE" }, 16, 1, 2, 16);
+				new String[] { "SHARED_MIN_SYS_SIZE" }, 32, 1, 4, 32);
 	}
 }
