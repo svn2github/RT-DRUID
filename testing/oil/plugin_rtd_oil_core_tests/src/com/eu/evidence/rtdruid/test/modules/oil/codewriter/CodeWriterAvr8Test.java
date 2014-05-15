@@ -672,4 +672,76 @@ public class CodeWriterAvr8Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	@Test public void testAVR8_ISR() {
+	    final String text =
+	    		"CPU singleCPU {\n" +
+				"\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"		EE_OPT = \"SKIP_END_FUNCTIONS\"; /* What's the meaning?!? */\n" +
+				"\n" +
+				"		CFLAGS = \"\";\n" +
+				"		LDFLAGS = \"\";\n" +
+				"        CFLAGS = \"-I../erika-lib/dio_lib\";\n" +
+				"        CFLAGS = \"-I../erika-lib/core_lib\";\n" +
+				"\n" +
+				"		CPU_DATA = AVR8 {\n" +
+				"            APP_SRC = \"data.c\";\n" +
+				"            APP_SRC = \"task.c\";\n" +
+				"            APP_SRC = \"main.c\";\n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"\n" +
+				"		EE_OPT = \"__HAS_TYPES_H__\";\n" +
+				"		EE_OPT = \"__AVR8_GCC_C99__\";\n" +
+				"\n" +
+				"		MCU_DATA = MEGA {\n" +
+				"			MODEL = MEGA_328p;\n" +
+				"		};\n" +
+				"\n" +
+				"		EE_OPT = \"__ARDUINO_SDK__\";\n" +
+				"		EE_OPT = \"__ARDUINO_SDK_LIB_TIMER1__\";\n" +
+				"		EE_OPT = \"__ARDUINO_UNO_328__\";\n" +
+				"		EE_OPT = \"__ADD_LIBS__\";\n" +
+				"		LIB = ENABLE {\n" +
+				"			NAME = \"ARDUINO_SDK\";\n" +
+				"		};\n" +
+				"		KERNEL_TYPE = BCC1;\n" +
+				"	};\n" +
+				"\n" +
+				"	ISR timer1_handler {\n" +
+				"		CATEGORY = 2;\n" +
+				"		ENTRY = \"TIMER1_OVF\";\n" +
+				"	};\n" +
+				"\n" +
+				"	COUNTER mainCounter {\n" +
+				"		MINCYCLE = 1;\n" +
+				"		MAXALLOWEDVALUE = 65535;\n" +
+				"		TICKSPERBASE = 1;\n" +
+				"	};\n" +
+				"\n" +
+				"	TASK mainTask {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"\n" +
+				"    TASK Task1 {\n" +
+				"      PRIORITY = 2;\n" +
+				"      STACK = SHARED;\n" +
+				"      SCHEDULE = FULL;\n" +
+				"    }; \n" +
+				"    ALARM Task1_alarm {\n" +
+				"      COUNTER = mainCounter;\n" +
+				"      ACTION = ACTIVATETASK { TASK = Task1; };\n" +
+				"      AUTOSTART = TRUE {\n" +
+				"          ALARMTIME = 1;\n" +
+				"          CYCLETIME = 1;\n" +
+				"      };\n" +
+				"    };\n" +
+				"};";
+		commonWriterTest(text, 1);
+	}
 }

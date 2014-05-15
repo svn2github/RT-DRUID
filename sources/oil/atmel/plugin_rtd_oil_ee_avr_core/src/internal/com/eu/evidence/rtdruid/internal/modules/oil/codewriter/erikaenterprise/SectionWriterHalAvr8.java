@@ -668,6 +668,7 @@ public class SectionWriterHalAvr8 extends SectionWriter
 		this.vt = parent == null ? null : parent.getVt();
 		
 		isrWriter = new SectionWriterIsr(parent, IWritersKeywords.CPU_AVR8);
+		isrWriter.setGenerateDefineCategory(true);
 	}
 
 	/**
