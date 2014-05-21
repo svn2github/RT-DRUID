@@ -257,6 +257,15 @@ IMPLEMENTATION ee {
 					}, FALSE
 				] ENABLE_MCU_DRIVER = FALSE;
 		
+				/* POWER REDUCTION */
+				BOOLEAN  [ 
+					TRUE {
+						BOOLEAN PULL_UP = FALSE;
+						BOOLEAN PORT_OUT = FALSE;
+						BOOLEAN JTAG = FALSE;
+					}, FALSE
+				] ENABLE_MCU_POWER_REDUCTION = FALSE;
+		
 				/* E2P DRIVER */
 				BOOLEAN  [
 					TRUE {

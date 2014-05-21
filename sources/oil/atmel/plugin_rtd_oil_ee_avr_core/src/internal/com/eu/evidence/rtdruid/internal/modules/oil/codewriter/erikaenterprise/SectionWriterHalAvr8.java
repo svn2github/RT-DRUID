@@ -172,6 +172,18 @@ public class SectionWriterHalAvr8 extends SectionWriter
 				trueEnum.entries.add( new EEEntry("MCU_PERFORMRESET_API",    null).add("TRUE", "__MCU_PERFORMRESET_API__") );
 			}
 			
+			{ // MCU POWER REDUCTION
+				EEEnumGroup mcu = new EEEnumGroup("ENABLE_MCU_POWER_REDUCTION");
+				xmega.drivers.add(mcu);
+				
+				EEEnum trueEnum = new EEEnum("__MCU_POWER_REDUCTION__");
+				mcu.groups.put("TRUE", trueEnum);
+				
+				trueEnum.entries.add( new EEEntry("PULL_UP",  null).add("TRUE", "__MCU_PR_PULL_UP__") );
+				trueEnum.entries.add( new EEEntry("PORT_OUT", null).add("TRUE", "__MCU_PR_PORT_OUT__") );
+				trueEnum.entries.add( new EEEntry("JTAG",     null).add("TRUE", "__MCU_PR_JTAG__") );
+			}
+			
 			{ // E2P
 				EEEnumGroup e2p = new EEEnumGroup("ENABLE_E2P_DRIVER");
 				xmega.drivers.add(e2p);
@@ -813,7 +825,7 @@ public class SectionWriterHalAvr8 extends SectionWriter
 	
 			// ------------- Requirement --------------------
 			StringBuffer sbInithal_c = cpuBuffs.get(FILE_EE_CFG_C);
-			StringBuffer sbInithal_h = cpuBuffs.get(FILE_EE_CFG_H);
+//			StringBuffer sbInithal_h = cpuBuffs.get(FILE_EE_CFG_H);
 			
 			final IOilObjectList ool = oilObjects[currentRtosId];
 	
@@ -822,14 +834,14 @@ public class SectionWriterHalAvr8 extends SectionWriter
 	
 			sbInithal_c.append("\n#include \"ee.h\"\n");
 	
-			/***********************************************************************
-			 * SYSTEM STACK SIZE
-			 **********************************************************************/
-			sbInithal_h.append(indent1 + getCommentWriter(ool, FileTypes.H).writerSingleLineComment("System stack size") + 
-						indent1 + "#define EE_SYS_STACK_SIZE     " + 
-							( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
-									DEFAULT_SYS_STACK_SIZE))
-						+ "\n\n");
+//			/***********************************************************************
+//			 * SYSTEM STACK SIZE
+//			 **********************************************************************/
+//			sbInithal_h.append(indent1 + getCommentWriter(ool, FileTypes.H).writerSingleLineComment("System stack size") + 
+//						indent1 + "#define EE_SYS_STACK_SIZE     " + 
+//							( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
+//									DEFAULT_SYS_STACK_SIZE))
+//						+ "\n\n");
 			
 			
 			/***********************************************************************
