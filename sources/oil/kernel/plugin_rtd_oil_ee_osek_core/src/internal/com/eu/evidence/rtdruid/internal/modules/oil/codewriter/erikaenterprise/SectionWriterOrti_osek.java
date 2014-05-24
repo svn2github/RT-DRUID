@@ -630,12 +630,12 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 						
 						eeortiBuffer.append( 
 								"ALARM "+name+" {\n" + 
-								indent1+"ALARMTIME = \"EE_ORTI_alarmtime["+id+"].delta\";\n" + 
-								indent1+"CYCLETIME = \"EE_alarm_RAM["+id+"].cycle\";\n" + 
-								indent1+"STATE = \"(EE_alarm_RAM["+id+"].used == 0) ? 0 : 1\";\n" + 
+								indent1+"ALARMTIME = \"EE_ORTI_alarmtime["+id+"]\";\n" + 
+								indent1+"CYCLETIME = \"EE_oo_counter_object_RAM["+id+"].cycle\";\n" + 
+								indent1+"STATE = \"(EE_oo_counter_object_RAM["+id+"].used == 0) ? 0 : 1\";\n" + 
 								indent1+"ACTION = \""+actionDescr+"\";\n" + 
 								indent1+"COUNTER = \""+counter+"\";\n" + 
-								indent1+"COUNTERVALUE = \"EE_counter_RAM[EE_alarm_ROM["+id+"].c].value\";\n" + 
+								indent1+"COUNTERVALUE = \"EE_counter_RAM[EE_oo_counter_object_ROM["+id+"].c].value\";\n" + 
 								"};\n");		
 					
 					}			

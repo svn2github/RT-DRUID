@@ -5404,4 +5404,99 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 			"};\n";
 		commonWriterTest(text, 3);
 	}
+
+	@Test public void testTc27xOrti() {
+	    final String text = "CPU test_application {\n" +
+	    		"\n" +
+	    		"    OS EE {\n" +
+	    		"        EE_OPT = \"EE_DEBUG\";\n" +
+	    		"\n" +
+	    		"        EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+	    		"\n" +
+	    		"        SERVICE_PROTECTION = TRUE;\n" +
+	    		"\n" +
+	    		"        MCU_DATA = TRICORE {\n" +
+	    		"            MODEL = TC27x;\n" +
+	    		"        };\n" +
+	    		"\n" +
+	    		"        CPU_DATA = TRICORE {\n" +
+	    		"            CPU_CLOCK = 200.0;\n" +
+	    		"            APP_SRC = \"code.c\";\n" +
+	    		"            COMPILER_TYPE = GNU;\n" +
+	    		"            MULTI_STACK = TRUE {\n" +
+	    		"                IRQ_STACK = TRUE {\n" +
+	    		"                    SYS_SIZE = 256;\n" +
+	    		"                };\n" +
+	    		"            };\n" +
+	    		"        };\n" +
+	    		"\n" +
+	    		"        BOARD_DATA = TRIBOARD_TC2X5;\n" +
+	    		"\n" +
+	    		"        STATUS = EXTENDED;\n" +
+	    		"        STARTUPHOOK = TRUE;\n" +
+	    		"        ERRORHOOK = TRUE;\n" +
+	    		"\n" +
+	    		"        KERNEL_TYPE = ECC1;\n" +
+	    		"        ORTI_SECTIONS = ALL;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    TASK Task1 {\n" +
+	    		"        PRIORITY = 0x01;\n" +
+	    		"        ACTIVATION = 1;\n" +
+	    		"        SCHEDULE = FULL;\n" +
+	    		"        AUTOSTART = TRUE;\n" +
+	    		"        STACK = PRIVATE {\n" +
+	    		"            SYS_SIZE = 256;\n" +
+	    		"        };\n" +
+	    		"        EVENT = TimerEvent;\n" +
+	    		"        EVENT = ButtonEvent;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    TASK Task2 {\n" +
+	    		"        PRIORITY = 0x02;\n" +
+	    		"        ACTIVATION = 1;\n" +
+	    		"        SCHEDULE = FULL;\n" +
+	    		"        AUTOSTART = FALSE;\n" +
+	    		"        STACK = SHARED;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    EVENT TimerEvent  { MASK = AUTO; };\n" +
+	    		"    EVENT ButtonEvent { MASK = AUTO; };\n" +
+	    		"\n" +
+	    		"    COUNTER system_timer {\n" +
+	    		"        MINCYCLE = 1;\n" +
+	    		"        MAXALLOWEDVALUE = 2147483647;\n" +
+	    		"        TICKSPERBASE = 1;\n" +
+	    		"        TYPE = HARDWARE {\n" +
+	    		"            DEVICE = \"STM_SR0\";\n" +
+	    		"            SYSTEM_TIMER = TRUE;\n" +
+	    		"            PRIORITY = 1;\n" +
+	    		"        };\n" +
+	    		"        SECONDSPERTICK = 0.001;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    ALARM AlarmTask1 {\n" +
+	    		"        COUNTER = system_timer;\n" +
+	    		"        ACTION = SETEVENT { TASK = Task1; EVENT = TimerEvent; };\n" +
+	    		"        AUTOSTART = TRUE { ALARMTIME = 250; CYCLETIME = 500; };\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    ALARM AlarmTask2 {\n" +
+	    		"        COUNTER = system_timer;\n" +
+	    		"        ACTION = ACTIVATETASK { TASK = Task2; };\n" +
+	    		"        AUTOSTART = FALSE;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    ISR Button_isr2 {\n" +
+	    		"        CATEGORY = 2;\n" +
+	    		"        LEVEL = \"2\";\n" +
+	    		"        PRIORITY = 2;\n" +
+	    		"        HANDLER = \"button_handler\"; // IRQ handler \n" +
+	    		"    };\n" +
+	    		"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	
+	
 }
