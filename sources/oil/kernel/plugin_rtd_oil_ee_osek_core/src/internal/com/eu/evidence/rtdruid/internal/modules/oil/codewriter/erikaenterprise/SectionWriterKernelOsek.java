@@ -1023,14 +1023,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						.append(commentWriterC.writerMultiLineComment(indent1,
 									"array to hold corresponding isr2 nesting levels.")
 								+ indent1
-								+ "EE_UREG EE_isr2_nesting_level["+arraySizeId+"] =\n"
-								+ indent2 + "{ ");
-				pre2 = "";
-				for (int i = 0; i < size; i++) {
-					buffer.append(pre2 + "(EE_UREG) -1");
-					pre2 = ", ";
-				}
-				buffer.append("};\n\n");
+								+ "EE_UREG EE_isr2_nesting_level["+arraySizeId+"];\n\n");
 
 			}
 		
