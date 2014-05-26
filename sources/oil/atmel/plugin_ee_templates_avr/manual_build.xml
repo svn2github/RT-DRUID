@@ -14,7 +14,7 @@
 		<property name="bundleVersion" value="${templates_ee_avr_v}.${build_number}"/>
 
 		<fileset dir="${ee.base.location}" id="ee_examples">
-			<include name="examples/avr5/**/*"/>
+			<include name="examples/avr8/**/*"/>
 		</fileset>
 
 	<!--

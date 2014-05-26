@@ -3,9 +3,9 @@
 <plugin>
    <extension
          point="com.eu.evidence.rtdruid.oil.ee.core.eeSectionWriter">
-      <writer
+<!--      <writer
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterHalAvr5">
-      </writer>
+      </writer>-->
       <writer
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterHalAvr8">
       </writer>
@@ -13,14 +13,14 @@
 	<extension
 		point="com.eu.evidence.rtdruid.oil.core.oil_implementation">
 		<implementation_file
-			path="oil_files/avr.oil">
+			path="oil_files/avr8.oil">
 		</implementation_file>
 	</extension>
    <extension
          point="com.eu.evidence.rtdruid.oil.ee.core.eeCpuDescription">
-      <cpu
+<!--      <cpu
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrAvr5">
-      </cpu>
+      </cpu>-->
       <cpu
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrAvr8">
       </cpu>

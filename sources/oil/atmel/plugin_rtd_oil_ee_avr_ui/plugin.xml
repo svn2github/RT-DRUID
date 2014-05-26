@@ -9,7 +9,7 @@
    </extension>
 
 
-
+<!--
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
@@ -63,14 +63,14 @@
                id="com.eu.evidence.rtdruid.modules.avr5.actionSet.JTagEnable"/>
       </actionSet>
    </extension> 
-
+-->
    <extension
       point = "org.eclipse.ui.preferencePages">
-       <page id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID.Avr5Configurator"
+<!--       <page id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID.Avr5Configurator"
             class="com.eu.evidence.rtdruid.modules.oil.avr.preferencepages.Avr5Configurator"
             category="com.eu.evidence.rtdruid.oil.preferencePagesID"
             name="Avr5">
-       </page>
+       </page>-->
        <page id="com.eu.evidence.rtdruid.oil.configurator.preferencePagesID.Avr8Configurator"
             class="com.eu.evidence.rtdruid.modules.oil.avr.preferencepages.Avr8Configurator"
             category="com.eu.evidence.rtdruid.oil.preferencePagesID"
@@ -78,7 +78,7 @@
        </page>
    </extension>
 
-
+<!--
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
@@ -164,6 +164,6 @@
                id="com.eu.evidence.rtdruid.modules.avr5.actionSet.menu2.ProgramMemory"/>
       </objectContribution>
    </extension>
-
+-->
 
 </plugin>
