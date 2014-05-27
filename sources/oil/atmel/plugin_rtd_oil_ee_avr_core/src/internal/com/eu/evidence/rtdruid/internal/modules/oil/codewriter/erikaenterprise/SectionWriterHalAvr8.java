@@ -150,7 +150,12 @@ public class SectionWriterHalAvr8 extends SectionWriter
 			mcus.put("XMEGA", xmega);
 
 			xmega.eeopt = "__ATXMEGA__";
-			xmega.model.add( new EEEntry("MODEL", "XMEGA_16d4").add("XMEGA_16d4", "atxmega16d4") );
+			xmega.model.add( new EEEntry("MODEL", "XMEGA_16d4")
+								.add("XMEGA_14d4",   "atxmega14d4")
+								.add("XMEGA_pardon", "atxmegapardon")
+								.add("XMEGA_16d4",   "atxmega16d4")
+								.add("XMEGA_32d4",   "atxmega32d4")
+								.add("CUSTOM",  ""));
 			xmega.entries.add( new EEEntry("AVR_PGMSPACE", null).add("TRUE", "__AVR_PGMSPACE__") );
 			xmega.entries.add( new EEEntry("USE_TC_HW",    null).add("TRUE", "__USE_TC_HW__") );
 
@@ -538,7 +543,12 @@ public class SectionWriterHalAvr8 extends SectionWriter
 			mcus.put("MEGA", mega);
 
 			mega.eeopt = "__ATMEGA__";
-			mega.model.add( new EEEntry("MODEL", "MEGA_328p").add("MEGA_328p", "atmega328p") );
+			mega.model.add( new EEEntry("MODEL", "MEGA_328p")
+						.add("MEGA_128",   "atmega128")
+						.add("MEGA_1281", "atmega1281")
+						.add("MEGA_328",   "atmega328")
+						.add("MEGA_328p",  "atmega328p")
+						.add("CUSTOM",  ""));
 			mega.entries.add( new EEEntry("USEIC",   null).add("TRUE", "__IC_USED__") );
 			mega.entries.add( new EEEntry("USEUART", null).add("TRUE", "__USE_UART__") );
 			mega.entries.add( new EEEntry("USESPI",  null).add("TRUE", "__USE_SPI__") );
@@ -1265,10 +1275,18 @@ public class SectionWriterHalAvr8 extends SectionWriter
 						for (EEEntry modelGp : mcu.model) {
 							String prefix = mcuBasePath + PARAMETER_LIST + modelGp.path;
 
-							String type = CommonUtils.getFirstChildEnumType(vt, prefix, null);
+							String[] enumName = new String[1];
+							String type = CommonUtils.getFirstChildEnumType(vt, prefix, enumName);
 							if (type == null) type = modelGp.defaultValue;
 							
-							if (modelGp.values.containsKey(type)) {
+							if ("CUSTOM".equals(type)) {
+								String[] values = CommonUtils.getValue(vt, 
+										prefix + S + enumName[0] + S +"MODEL");
+								if (values != null && values.length>0) {
+									mcu_model = values[0];
+								}
+								
+							} else if (modelGp.values.containsKey(type)) {
 								mcu_model = modelGp.values.get(type);
 							}
 						}

@@ -46,7 +46,13 @@ IMPLEMENTATION ee {
 			XMEGA {
 			
 				ENUM [
-					XMEGA_16d4
+					XMEGA_14d4,
+					XMEGA_pardon,
+					XMEGA_16d4,
+					XMEGA_32d4,
+					CUSTOM {
+						STRING MODEL;
+					}
 				] MODEL = XMEGA_16d4;
 
 				BOOLEAN AVR_PGMSPACE = FALSE;
@@ -208,7 +214,13 @@ IMPLEMENTATION ee {
 			MEGA {
 			
 				ENUM [
-					MEGA_328p
+					MEGA_128,
+					MEGA_1281,
+					MEGA_328,
+					MEGA_328p,
+					CUSTOM {
+						STRING MODEL;
+					}
 				] MODEL = MEGA_328p;
 
 				BOOLEAN USEIC = FALSE;
