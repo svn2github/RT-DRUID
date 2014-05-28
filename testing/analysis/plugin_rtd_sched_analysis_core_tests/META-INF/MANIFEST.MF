@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Schedulability Analysis Plug-in (Tests)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.jscan.core.tests
-Bundle-Version: 2.3.0.Nqualifier
+Bundle-Version: 2.3.0.qualifier
 Fragment-Host: com.eu.evidence.rtdruid.jscan.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.

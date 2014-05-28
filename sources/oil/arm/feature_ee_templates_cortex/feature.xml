@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.ee.templates.cortex"
       label="Templates for Erika Enterprise for ARM Cortex"
-      version="2.3.0.Nqualifier"
+      version="2.3.0.qualifier"
       provider-name="Evidence S.r.l.">
 
    <description url="http://www.evidence.eu.com">

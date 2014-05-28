@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Arm UI Plug-in
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.arm.ui;singleton:=true
-Bundle-Version: 2.3.0.Nqualifier
+Bundle-Version: 2.3.0.qualifier
 Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.arm.ui.Activator
 Bundle-Vendor: Evidence S.r.l.
 Require-Bundle: org.eclipse.ui,
