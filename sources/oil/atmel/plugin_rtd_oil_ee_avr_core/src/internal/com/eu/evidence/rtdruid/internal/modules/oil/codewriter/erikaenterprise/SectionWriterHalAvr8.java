@@ -344,13 +344,14 @@ public class SectionWriterHalAvr8 extends SectionWriter
 				EEEnum trueEnum = new EEEnum("__PWM_DRIVER__");
 				pwm.groups.put("TRUE", trueEnum);
 				
-				trueEnum.entries.add( new EEEntry("PWM_STATUS",             null).add("EXTENDED", "__PWM_EXTENDED_STATUS__") );
-				trueEnum.entries.add( new EEEntry("PWM_GETSTATUS_API",      null).add("TRUE", "__PWM_GETSTATUS_API__") );
-				trueEnum.entries.add( new EEEntry("PWM_DEINIT_API",         null).add("TRUE", "__PWM_DEINIT_API__") );
-				trueEnum.entries.add( new EEEntry("PWM_ENABLENOTIF_API",    null).add("TRUE", "__PWM_ENABLENOTIF_API__") );
-				trueEnum.entries.add( new EEEntry("PWM_DISABLENOTIF_API",   null).add("TRUE", "__PWM_DISABLENOTIF_API__") );
-				trueEnum.entries.add( new EEEntry("PWM_SETDUTYCYCLE_API",   null).add("TRUE", "__PWM_SETDUTYCYCLE_API__") );
-				trueEnum.entries.add( new EEEntry("PWM_GETOUTPUTSTATE_API", null).add("TRUE", "__PWM_GETOUTPUTSTATE_API__  __PWM_SETOUTPUTTOIDLE_API__") );
+				trueEnum.entries.add( new EEEntry("PWM_STATUS",              null).add("EXTENDED", "__PWM_EXTENDED_STATUS__") );
+				trueEnum.entries.add( new EEEntry("PWM_GETSTATUS_API",       null).add("TRUE", "__PWM_GETSTATUS_API__") );
+				trueEnum.entries.add( new EEEntry("PWM_DEINIT_API",          null).add("TRUE", "__PWM_DEINIT_API__") );
+				trueEnum.entries.add( new EEEntry("PWM_ENABLENOTIF_API",     null).add("TRUE", "__PWM_ENABLENOTIF_API__") );
+				trueEnum.entries.add( new EEEntry("PWM_DISABLENOTIF_API",    null).add("TRUE", "__PWM_DISABLENOTIF_API__") );
+				trueEnum.entries.add( new EEEntry("PWM_SETDUTYCYCLE_API",    null).add("TRUE", "__PWM_SETDUTYCYCLE_API__") );
+				trueEnum.entries.add( new EEEntry("PWM_GETOUTPUTSTATE_API",  null).add("TRUE", "__PWM_GETOUTPUTSTATE_API__") );
+				trueEnum.entries.add( new EEEntry("PWM_SETOUTPUTTOIDLE_API", null).add("TRUE", "__PWM_SETOUTPUTTOIDLE_API__") );
 
 				//  ----- 0 --------
 				trueEnum.entries.add( new EEEntry("PWM_CHANNEL_C_0", null)
