@@ -103,7 +103,12 @@ public class SectionWriterHalAvr8 extends SectionWriter
 					if (this.requiredEEopt != null && !tmp_common_eeopts.contains(this.requiredEEopt)) {
 						Messages.sendWarningNl(this.requiredEEoptMsg);
 					} else {
-						tmp_common_eeopts.add(val);
+						String[] val_splitted = val.split(" ");
+						for (String s : val_splitted) {
+							if (!s.trim().isEmpty()) {
+								tmp_common_eeopts.add(s);
+							}
+						}
 						
 						for (String s : this.eeopt) {
 							tmp_common_eeopts.add(s);
@@ -345,7 +350,7 @@ public class SectionWriterHalAvr8 extends SectionWriter
 				trueEnum.entries.add( new EEEntry("PWM_ENABLENOTIF_API",    null).add("TRUE", "__PWM_ENABLENOTIF_API__") );
 				trueEnum.entries.add( new EEEntry("PWM_DISABLENOTIF_API",   null).add("TRUE", "__PWM_DISABLENOTIF_API__") );
 				trueEnum.entries.add( new EEEntry("PWM_SETDUTYCYCLE_API",   null).add("TRUE", "__PWM_SETDUTYCYCLE_API__") );
-				trueEnum.entries.add( new EEEntry("PWM_GETOUTPUTSTATE_API", null).add("TRUE", "__PWM_GETOUTPUTSTATE_API__") );
+				trueEnum.entries.add( new EEEntry("PWM_GETOUTPUTSTATE_API", null).add("TRUE", "__PWM_GETOUTPUTSTATE_API__  __PWM_SETOUTPUTTOIDLE_API__") );
 
 				//  ----- 0 --------
 				trueEnum.entries.add( new EEEntry("PWM_CHANNEL_C_0", null)
