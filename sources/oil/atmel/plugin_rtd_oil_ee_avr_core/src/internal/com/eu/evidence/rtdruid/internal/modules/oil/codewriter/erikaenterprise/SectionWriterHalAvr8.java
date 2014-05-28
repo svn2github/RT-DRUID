@@ -601,14 +601,14 @@ public class SectionWriterHalAvr8 extends SectionWriter
 			boards.put("XBOW_MIB5X0", board);
 
 			board.eeopt = "__XBOW_MIB5X0__";
-			board.entries.add( new EEEntry("USELEDS",   null).add("TRUE", "__LED_USED__") );
+			board.entries.add( new EEEntry("USELEDS",   null).add("TRUE", "__LEDS_USED__") );
 		}
 		{
 			EEBoard board = new EEBoard();
 			boards.put("ATMEL_STK50X", board);
 
 			board.eeopt = "__ATMEL_STK50X__";
-			board.entries.add( new EEEntry("USELEDS",   null).add("TRUE", "__LED_USED__") );
+			board.entries.add( new EEEntry("USELEDS",   null).add("TRUE", "__LEDS_USED__") );
 			board.entries.add( new EEEntry("USEBUTTON", null).add("TRUE", "__BUTTON_USED__") );
 		}		
 		{
