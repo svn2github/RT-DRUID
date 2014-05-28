@@ -77,7 +77,7 @@ public class CodeWriterAvr8Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	@Test public void testAVR8_board_ATMEGA_STK50X() {
+	@Test public void testAVR8_board_ATMEL_STK50X_empty() {
 	    final String text =
 	    		"CPU mySystem {\n" +
 	    				"	OS myOs {\n" +
@@ -87,7 +87,7 @@ public class CodeWriterAvr8Test extends AbstractCodeWriterTest {
 	    				"			APP_SRC = \"code.c\";\n" +
 	    				"			MULTI_STACK = TRUE;\n" +
 	    				"		};\n" +
-	    				"		BOARD_DATA = ATMEGA_STK50X {\n" +
+	    				"		BOARD_DATA = ATMEL_STK50X {\n" +
 	    				"		};\n" +
 	    				"		KERNEL_TYPE = FP;\n" +
 	    				"	};\n" +
