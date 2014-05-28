@@ -39,7 +39,7 @@ public class PartialOrderAction implements IWorkbenchWindowActionDelegate {
 		IWorkbenchPage iwp = window.getActivePage();
 		IEditorPart iep = iwp == null ? null : iwp.getActiveEditor();
 		if (iep == null || !(iep instanceof IVarTreeProvider)) {
-			MessageDialog.openError(window.getShell(), "Partioal Order check", "Open an editor able to manage RT-Druid files");
+			MessageDialog.openError(window.getShell(), "Partial Order check", "Open an editor able to manage RT-Druid files");
 		}
 		
 		boolean outputEnable = false;
