@@ -88,6 +88,8 @@ If it is not set, it is considered to be false.
                   </enumeration>
                   <enumeration value="OTHERS">
                   </enumeration>
+                  <enumeration value="END">
+                  </enumeration>
                </restriction>
             </simpleType>
          </attribute>

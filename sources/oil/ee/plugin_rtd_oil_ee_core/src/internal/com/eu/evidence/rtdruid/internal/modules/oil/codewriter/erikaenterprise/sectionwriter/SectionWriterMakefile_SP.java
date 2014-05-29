@@ -60,7 +60,7 @@ public class SectionWriterMakefile_SP extends SectionWriter implements IEEWriter
 	public SectionWriterMakefile_SP(ErikaEnterpriseWriter parent) {
 		super("MAKEFILE_SP", new String[] {}, //
 				new String[] {},
-				SWCategoryManager.defaultInstance.newCategory(SWCategoryManager.TYPE_MAKEFILE, Integer.MAX_VALUE));
+				SWCategoryManager.defaultInstance.newCategory(SWCategoryManager.TYPE_MAKEFILE, SWCategoryManager.defaultPriority));
 		
 		this.parent = parent;
 		this.vt = parent == null ? null : parent.getVt();

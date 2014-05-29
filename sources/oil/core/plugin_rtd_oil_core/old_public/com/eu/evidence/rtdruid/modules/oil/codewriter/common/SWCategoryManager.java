@@ -34,6 +34,7 @@ public class SWCategoryManager {
 	public final static String TYPE_END = "END";
 	
 	public final static int defaultPriority = 1000;
+	public final static int defaultMakefilePriority = 10000000;
 	public final static ISWCategory EMPTY_CATEGORY = new SWCategory(null, defaultPriority);
 	
 	public final static SWCategoryManager defaultInstance = new SWCategoryManager();

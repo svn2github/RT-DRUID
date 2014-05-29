@@ -63,7 +63,7 @@ public class SectionWriterMakefile_nios extends SectionWriter implements IEEWrit
 	public SectionWriterMakefile_nios(ErikaEnterpriseWriter parent) {
 		super("MAKEFILE", new String[] {}, //
 				new String[] {},
-				SWCategoryManager.defaultInstance.newCategory(SWCategoryManager.TYPE_MAKEFILE, Integer.MAX_VALUE));
+				SWCategoryManager.defaultInstance.newCategory(SWCategoryManager.TYPE_MAKEFILE, SWCategoryManager.defaultPriority));
 		
 		this.parent = parent;
 		this.vt = parent == null ? null : parent.getVt();
