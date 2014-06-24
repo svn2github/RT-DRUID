@@ -231,8 +231,15 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 			
 			{
 				EEStackData[] stacks = ErikaEnterpriseWriter.checkOrDefault((EEStackData[]) AbstractRtosWriter.getOsObject(ool, SGRK_OS_STACK_LIST), new EEStackData[0]);
-				for (int i=0; i<stacks.length; i++) {
-					all_stack_id.append("            \"Stack"+i+"\" : Stack"+i+" = "+i+",\n");
+				if (stacks != null) {
+					String pre = "";
+					if (stacks != null) {
+						for (int i=0; i<stacks.length; i++) {
+							all_stack_id.append(pre + "            \"Stack"+i+"\" : Stack"+i+" = "+i);
+							pre = ",\n";
+						}
+						if (all_stack_id.length()>0) all_stack_id.append("\n");
+					}
 				}
 			}
 			
