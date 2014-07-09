@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.ee.templates.mico32"
       label="Templates for Erika Enterprise for mico32"
-      version="2.3.0.qualifier"
+      version="2.4.0.Nqualifier"
       provider-name="Evidence S.r.l.">
 
    <description url="http://www.evidence.eu.com">

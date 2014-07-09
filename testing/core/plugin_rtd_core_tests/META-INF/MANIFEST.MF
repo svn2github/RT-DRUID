@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Core Plug-in (tests)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.core.tests
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.Nqualifier
 Fragment-Host: com.eu.evidence.rtdruid.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Evidence S.r.l.

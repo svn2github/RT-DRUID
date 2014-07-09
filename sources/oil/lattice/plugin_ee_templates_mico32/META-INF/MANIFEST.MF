@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Templates for Erika Enterprise for mico32
 Bundle-SymbolicName: com.eu.evidence.ee.templates.mico32;singleton:=true
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.Nqualifier
 Require-Bundle: com.eu.evidence.templates.core
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

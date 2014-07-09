@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.ee"
       label="Erika Enterprise source Feature"
-      version="2.3.0.qualifier"
+      version="2.4.0.Nqualifier"
       provider-name="Evidence SRL">
 
    <description url="http://www.evidence.eu.com">

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Erika Enterprise sources
 Bundle-SymbolicName: com.eu.evidence.ee;singleton:=true
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.Nqualifier
 Bundle-Vendor: Evidence S.r.l.
 Require-Bundle: org.eclipse.core.runtime,
  com.eu.evidence.templates.core,

@@ -6,7 +6,7 @@ Require-Bundle: com.eu.evidence.rtdruid.core,
  com.eu.evidence.templates.core
 Bundle-Vendor: Evidence S.r.l.
 Bundle-ActivationPolicy: lazy
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.Nqualifier
 Bundle-Name: eSi-RISC support for Erika Enterprise
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.esirisc.core;singleton:=true
