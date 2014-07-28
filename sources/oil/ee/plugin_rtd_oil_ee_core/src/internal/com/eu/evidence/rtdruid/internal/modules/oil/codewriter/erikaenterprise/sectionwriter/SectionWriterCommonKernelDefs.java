@@ -252,7 +252,7 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 					String size = AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_CPU__ISR_REQUIRES_RESOURCES_SIZE);
 					
 					buffer.append("\n"+indent + "#define " +EE_MAX_ISR2_WITH_RESOURCES+" "
-							+ size + "U\n");
+							+ size + "\n");
 					buffer.append(indent + "#define EE_ISR2_MAX_LEVEL          "
 							+ max_level + "U\n");
 					
