@@ -22,6 +22,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		CodeWriterMultiPic30Test.class, CodeWriterNiosIITest.class, CodeWriterPic32Test.class,
 		CodeWriterPpcMultiCoreTest.class, CodeWriterResourcesTest.class, 
 		CodeWriterRx200Test.class, CodeWritertMPTest.class, CodeWriterTricore1Test.class,
+		CodeWriterX86Test.class,
 		CodeWritertTest.class })
 public class AllWriteTests {
 

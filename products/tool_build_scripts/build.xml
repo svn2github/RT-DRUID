@@ -36,7 +36,8 @@
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/lattice/feature_rtd_oil_ee_mico32"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/infineon/feature_rtd_oil_ee_tricore"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/renesas/feature_rtd_oil_ee_renesas"/>
-
+		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/intel/feature_rtd_oil_ee_x86"/>
+			
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/ensilica/feature_rtd_oil_ee_esirisc"/>
 		<ant antfile="manual_build.xml" target="${target}" dir="../../sources/oil/ti/feature_rtd_oil_ee_msp430"/>
 

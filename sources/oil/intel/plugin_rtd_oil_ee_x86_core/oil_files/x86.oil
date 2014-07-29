@@ -1,0 +1,31 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+            X86 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                
+                BOOLEAN [
+                    TRUE {
+						BOOLEAN [
+							TRUE {
+								UINT32 SYS_SIZE;
+							},
+							FALSE
+						] IRQ_STACK;
+                    },
+                FALSE
+                ] MULTI_STACK = FALSE;
+                
+                BOOLEAN USE_UART = FALSE;
+                ENUM [
+                	GCC,
+                	CLAGN
+                ] COMPILER_TYPE;
+            }
+        ] CPU_DATA[];
+    };
+};
+

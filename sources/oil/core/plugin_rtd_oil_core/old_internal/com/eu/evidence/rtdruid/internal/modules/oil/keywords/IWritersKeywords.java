@@ -91,7 +91,10 @@ public interface IWritersKeywords {
 
 	/** Identifies an AVR architecture (one cpu?) */
 	public final static String CPU_AVR8 = "AVR8";
-		
+
+	/** Identifies an AVR architecture (one cpu?) */
+	public final static String CPU_X86 = "X86";
+	
 	/** Identifies the number of cpu (one or more cpu) */
 	public final static String CPU_NUMBER = "CPU_NUMBER";
 	

@@ -36,6 +36,9 @@
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.avr_2.4.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.avr" version="2.4.0.Nqualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.x86_1.0.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.x86" version="1.0.0.Nqualifier">
+      <category name="RT-Druid Oil for Erika Enterprise"/>
+   </feature>
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.dspic_2.4.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.dspic" version="2.4.0.Nqualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>

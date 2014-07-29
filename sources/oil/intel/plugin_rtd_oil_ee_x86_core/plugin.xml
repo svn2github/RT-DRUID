@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeSectionWriter">
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterHalI386">
+      </writer>
+   </extension>
+	<extension
+		point="com.eu.evidence.rtdruid.oil.core.oil_implementation">
+		<implementation_file
+			path="oil_files/x86.oil">
+		</implementation_file>
+	</extension>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeCpuDescription">
+      <cpu
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrI386">
+      </cpu>
+   </extension>
+
+</plugin>
