@@ -74,6 +74,165 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"};\n";
 		commonWriterTest(text, 1);
 	}
+
+	@Test public void testTaskTimingProtection() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"       CPU_DATA = TRICORE1 {\n" + 
+				"			APP_SRC = \"code.c\";\n" + 
+				"			MODEL = \"tc1796\";\n" + 
+				"		};\n" + 				
+				"		KERNEL_TYPE = FP;\n" +
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"		TIMING_PROTECTION = TRUE {\n" +
+				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
+				"			EXECUTIONBUDGET = 2.0;" +
+				"			MAXOSINTERRUPTLOCKTIME = 3.0;" +
+				"			TIMEFRAME = 4.0;" +
+				"	       RESOURCE = RESOURCELOCK {\n" + 
+				"				RESOURCELOCKTIME = 5.0;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"			};\n" + 				
+				"		};\n" +
+				"    };\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 3;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		 STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"		TIMING_PROTECTION = TRUE {\n" +
+				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
+				"			EXECUTIONBUDGET = 2.0;" +
+				"			MAXOSINTERRUPTLOCKTIME = 3.0;" +
+				"			TIMEFRAME = 4.0;" +
+				"	       RESOURCE = RESOURCELOCK {\n" + 
+				"				RESOURCELOCKTIME = 5.0;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"			};\n" + 				
+				"	       RESOURCE = RESOURCELOCK {\n" + 
+				"				RESOURCELOCKTIME = 6.0;\n" + 
+				"				RESOURCE = res2;\n" + 
+				"			};\n" + 				
+				"	       RESOURCE = RESOURCELOCK {\n" + 
+				"				RESOURCELOCKTIME = 7.0;\n" + 
+				"				RESOURCE = res3;\n" + 
+				"			};\n" + 				
+				"		};\n" +
+				"    };\n" + 
+				"	ISR irq5_isr1 {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"5\";\n" +
+				"		HANDLER = \"isr1\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR trap_segfault {\n" +
+				"		CATEGORY = 3;" +
+				"		LEVEL = \"1\";\n" +
+	  			"		HANDLER = \"segfault\";	// Trap handler\n" +
+				"		TIMING_PROTECTION = FALSE;\n" +
+				"	};\n" +
+				"	ISR trap_syscall {\n" +
+				"		CATEGORY = 3;" +
+				"		LEVEL = \"6\";\n" +
+				"		HANDLER = \"syscall\";	// Trap handler\n" +
+				"	};\n" +
+				"    RESOURCE res1 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"    RESOURCE res2 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"    RESOURCE res3 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void testIsrTimingProtection() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"       CPU_DATA = TRICORE1 {\n" + 
+				"			APP_SRC = \"code.c\";\n" + 
+				"			MODEL = \"tc1796\";\n" + 
+				"		};\n" + 				
+				"		KERNEL_TYPE = FP;\n" +
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 3;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		 STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"	ISR Timer_isr2 {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"4\";\n" +
+				"		HANDLER = \"isr2\";	// IRQ handler\n" +
+				"		TIMING_PROTECTION = TRUE {\n" +
+				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
+				"			EXECUTIONTIME = 2.0;" +
+				"			MAXOSINTERRUPTLOCKTIME = 3.0;" +
+				"			TIMEFRAME = 4.0;" +
+				"	       RESOURCE = LOCKINGTIME {\n" + 
+				"				MAXRESOURCELOCKTIME = 5.0;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"			};\n" + 				
+				"		};\n" +
+				"	};\n" +
+				"	ISR irq5_isr1 {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"5\";\n" +
+				"		HANDLER = \"isr1\";	// IRQ handler\n" +
+				"		TIMING_PROTECTION = TRUE {\n" +
+				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
+				"			EXECUTIONTIME = 2.0;" +
+				"			MAXOSINTERRUPTLOCKTIME = 3.0;" +
+				"			TIMEFRAME = 4.0;" +
+				"	       RESOURCE = LOCKINGTIME {\n" + 
+				"				MAXRESOURCELOCKTIME = 5.0;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"			};\n" + 				
+				"	       RESOURCE = LOCKINGTIME {\n" + 
+				"				MAXRESOURCELOCKTIME = 6.0;\n" + 
+				"				RESOURCE = res2;\n" + 
+				"			};\n" + 				
+				"	       RESOURCE = LOCKINGTIME {\n" + 
+				"				MAXRESOURCELOCKTIME = 7.0;\n" + 
+				"				RESOURCE = res3;\n" + 
+				"			};\n" + 				
+				"		};\n" +
+				"	};\n" +
+				"	ISR trap_segfault {\n" +
+				"		CATEGORY = 3;" +
+				"		LEVEL = \"1\";\n" +
+	  			"		HANDLER = \"segfault\";	// Trap handler\n" +
+				"		TIMING_PROTECTION = FALSE;\n" +
+				"	};\n" +
+				"	ISR trap_syscall {\n" +
+				"		CATEGORY = 3;" +
+				"		LEVEL = \"6\";\n" +
+				"		HANDLER = \"syscall\";	// Trap handler\n" +
+				"	};\n" +
+				"    RESOURCE res1 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"    RESOURCE res2 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"    RESOURCE res3 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
+	}
 	
 	@Test public void testIsrPriority() {
 	    final String text =
