@@ -1220,7 +1220,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										if (task_al_name.equals(sgr.getName())) {
 											notFound = false;
 											
-											if (cpuId == rtosId && !CpuUtility.checkOsAccessRules(curr, sgr)) {
+											if (!CpuUtility.checkOsAccessRules(curr, sgr)) {
 												throw new OilCodeWriterException("The alarm " + curr.getName() + " cannot access to the task " + task_al_name);
 											}
 										}
@@ -1264,7 +1264,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 											if (task_al_name.equals(sgr.getName())) {
 												notFound = false;
 												
-												if (cpuId == rtosId && !CpuUtility.checkOsAccessRules(curr, sgr)) {
+												if (!CpuUtility.checkOsAccessRules(curr, sgr)) {
 													throw new OilCodeWriterException("The alarm " + curr.getName() + " cannot access to the task " + task_al_name);
 												}
 											}
@@ -1552,7 +1552,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 													notFound = false;
 													
 													// check access rules
-													if (cpuId==rtosId && !CpuUtility.checkOsAccessRules(curr, sgr)) {
+													if (!CpuUtility.checkOsAccessRules(curr, sgr)) {
 														throw new OilCodeWriterException("The schedule table " + curr.getName() + " cannot access to the task " + task_al_name);
 													}
 

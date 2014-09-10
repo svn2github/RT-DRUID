@@ -456,14 +456,20 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				ee_c_buffer.append(pre + indent1 + "};\n\n");
 			}
 
-			if (!ool.getList(IOilObjectList.SPINLOCK).isEmpty()) {
-				pre = "";
-				ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_spinlock_access_rules["+MAX_SPINLOCK+"] =\n"+indent1+"{\n");
-				for (ISimpleGenRes spinlock : ool.getList(IOilObjectList.SPINLOCK)) {
-					ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(spinlock, ool, null));
-					pre = ",\n";
+			// search SPINLOCK on all cores
+			for (IOilObjectList sool : parent.getOilObjects()) { 
+				if (!sool.getList(IOilObjectList.SPINLOCK).isEmpty()) {
+					pre = "";
+					ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_spinlock_access_rules["+MAX_SPINLOCK+"] =\n"+indent1+"{\n");
+					for (ISimpleGenRes spinlock : sool.getList(IOilObjectList.SPINLOCK)) {
+						ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(spinlock, /* object list of this core */ ool, null));
+						pre = ",\n";
+					}
+					ee_c_buffer.append(pre + indent1 + "};\n\n");
+					
+					// spin-locks found. Do not search for more
+					break;
 				}
-				ee_c_buffer.append(pre + indent1 + "};\n\n");
 			}
 		}
 		

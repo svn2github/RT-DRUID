@@ -201,7 +201,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			sbCommonRpc_spins.append(( sbCommonRpc_spins.length() == 0 ? "" : ",\n"+indent2) +  "EE_SPINLOCK_CORE" + rtosId
 					//+ (hasAccessProtection ? addAccessMask(null, oilObjects, sbCommonRpc_access_mask, access_index) : "")
 					);
-			sbCommonRpc_ram.append((   sbCommonRpc_ram.length()   == 0 ? "" : ",\n"+indent2) +  "{ OS_CORE_ID_INVALID, 0U, {0U}, {0U}, {0U}, E_OK}");
+			sbCommonRpc_ram.append((   sbCommonRpc_ram.length()   == 0 ? "" : ",\n"+indent2) +  "{ INVALID_CORE_ID, 0U, {0U}, {0U}, {0U}, E_OK}");
 
 			for (ISimpleGenRes task : ool.getList(IOilObjectList.TASK)) {
 				final String name = task.getName();
@@ -276,9 +276,8 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				sbCommonRpc_OsAppls.append(
 						( sbCommonRpc_OsAppls.length() == 0 ? "" : ",\n") 
 						+ indent2 + "{ "+cpuId+", " + osApplId + "U"
-						+ (hasAccessProtection ? addAccessMask(osAppl, oilObjects, sbCommonRpc_access_mask, access_index, access_descr) : "")
+						+ (hasAccessProtection ? ", EE_UREG_MINUS1" : "")
 						+ "}");
-				access_descr = commentWriterC.writerSingleLineComment(cpuId + " - " + name);
 
 				// increase the task index number
 				globalOsApplIndex++;
@@ -359,7 +358,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				sbCommon_c.append(
 						macros.constVectorRom(
 								indent1 + "EE_TYPEACCESSMASK const ", "EE_as_rpc_remote_access_rules","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_remote_access_rules", access_index[0])+"]", " = {\n" +
-								sbCommonRpc_access_mask.toString() + "\n" + indent1 + "};\n") + "\n");
+								sbCommonRpc_access_mask.toString() + indent1 + "};\n") + "\n");
 			}
 			
 			if (sbCommonRpc_tasks.length()>0) {
@@ -439,7 +438,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			if (i>0) accessBuffer.append(", ");
 			accessBuffer.append(CpuUtility.getOsAccessBitMask(sgr, oilObjects[i], null));
 		}
-		String answer = ", " + index[0]+", " + (index[0]+oilObjects.length-1);
+		String answer = ", " + index[0]+"U"; //+", " + (index[0]+oilObjects.length-1);
 		index[0]+=oilObjects.length;
 		return answer;
 	}

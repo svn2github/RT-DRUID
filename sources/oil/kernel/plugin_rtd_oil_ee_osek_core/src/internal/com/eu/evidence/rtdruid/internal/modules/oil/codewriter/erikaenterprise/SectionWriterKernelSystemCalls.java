@@ -81,13 +81,15 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		"WaitEvent"
 	};
 	
-	
 	protected final static String[] EE_ALARMS_IDs = {
 		"GetAlarmBase",
 		"GetAlarm",
 		"SetRelAlarm",
 		"SetAbsAlarm",
-		"CancelAlarm",
+		"CancelAlarm"
+	};
+	
+	protected final static String[] EE_ALARMS_LOCAL_IDs = {
 		"IncrementCounter"
 	};
 
@@ -293,6 +295,14 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 			if (  hasAlarm || requiredOilObjects.contains(new Integer(IOilObjectList.ALARM)))  {
 	
 				for (String s: EE_ALARMS_IDs) {
+					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)&EE_oo_"+s+",\n");
+					counter ++;
+				}
+			}
+			if (  ool.getList(IOilObjectList.ALARM).size() > 0)  {
+				
+				for (String s: EE_ALARMS_LOCAL_IDs) {
 					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
 					ee_c_buffer.append(indent1+"(EE_FADDR)&EE_oo_"+s+",\n");
 					counter ++;
