@@ -336,7 +336,7 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 					ISimpleGenRes curr = (ISimpleGenRes) iter.next();
 					buffer.append(indent + "#define " + curr.getName() + " "
 							+ id + "U\n");
-					curr.setProperty(ISimpleGenResKeywords.SCHEDULING_SYS_ID, "" +id);
+					curr.setProperty(ISimpleGenResKeywords.SCHEDTABLE_SYS_ID, "" +id);
 				}
 				
 				

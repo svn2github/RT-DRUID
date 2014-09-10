@@ -156,6 +156,8 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		final StringBuilder[] sbRemoteTasksDefines = new StringBuilder[oilObjects.length];
 		final StringBuilder[] sbRemoteAlarmsDefines = new StringBuilder[oilObjects.length];
 		final StringBuilder[] sbRemoteCountersDefines = new StringBuilder[oilObjects.length];
+		final StringBuilder[] sbRemoteOsApplsDefines = new StringBuilder[oilObjects.length];
+		final StringBuilder[] sbRemoteSchedTabsDefines = new StringBuilder[oilObjects.length];
 
 		final StringBuilder sbCommonRpc_access_mask = new StringBuilder();
 		int access_index[] = {0};
@@ -165,6 +167,8 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		final StringBuilder sbCommonRpc_tasks = new StringBuilder();
 		final StringBuilder sbCommonRpc_alarms = new StringBuilder();
 		final StringBuilder sbCommonRpc_counters = new StringBuilder();
+		final StringBuilder sbCommonRpc_OsAppls = new StringBuilder();
+		final StringBuilder sbCommonRpc_SchedTabs = new StringBuilder();
 		
 		
 		// init vectors
@@ -173,12 +177,16 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			sbRemoteTasksDefines[rtosId] = new StringBuilder();
 			sbRemoteAlarmsDefines[rtosId] = new StringBuilder();
 			sbRemoteCountersDefines[rtosId] = new StringBuilder();
+			sbRemoteOsApplsDefines[rtosId] = new StringBuilder();
+			sbRemoteSchedTabsDefines[rtosId] = new StringBuilder();
 		}
 		
 		
 		int globalTaskIndex = 0;
 		int globalAlarmIndex = 0;
 		int globalCounterIndex = 0;
+		int globalOsApplIndex = 0;
+		int globalSchedTablIndex = 0;
 		for (int rtosId = 0; rtosId < rtosNumber; rtosId++) {
 		
 			// ------------------ common data ------------------
@@ -250,7 +258,44 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				// increase the task index number
 				globalCounterIndex++;
 			}
-		
+			for (ISimpleGenRes osAppl : ool.getList(IOilObjectList.OSAPPLICATION)) {
+				final String name = osAppl.getName();
+				final String osApplId = osAppl.getString(ISimpleGenResKeywords.OS_APPL_ID);
+
+				for (int i=0; i< rtosNumber; i++) {
+					if (i != rtosId) {
+						sbRemoteOsApplsDefines[i].append(IWritersKeywords.INDENT + "#define " + name + " ((EE_TID)" + globalOsApplIndex + "U + (EE_TID)EE_REMOTE_TID)\n");
+					}
+				}
+				
+				sbCommonRpc_OsAppls.append(
+						( sbCommonRpc_OsAppls.length() == 0 ? "" : ",\n") 
+						+ indent2 + "{ "+cpuId+", " + osApplId + "U"
+						+ (hasAccessProtection ? addAccessMask(osAppl, oilObjects, sbCommonRpc_access_mask, access_index) : "")
+						+ "}");
+				
+				// increase the task index number
+				globalOsApplIndex++;
+			}
+			for (ISimpleGenRes schedTab : ool.getList(IOilObjectList.SCHEDULE_TABLE)) {
+				final String name = schedTab.getName();
+				final String schedTabId = schedTab.getString(ISimpleGenResKeywords.SCHEDTABLE_SYS_ID);
+
+				for (int i=0; i< rtosNumber; i++) {
+					if (i != rtosId) {
+						sbRemoteSchedTabsDefines[i].append(IWritersKeywords.INDENT + "#define " + name + " ((EE_TID)" + globalSchedTablIndex + "U + (EE_TID)EE_REMOTE_TID)\n");
+					}
+				}
+				
+				sbCommonRpc_SchedTabs.append(
+						( sbCommonRpc_SchedTabs.length() == 0 ? "" : ",\n") 
+						+ indent2 + "{ "+cpuId+", " + schedTabId + "U"
+						+ (hasAccessProtection ? addAccessMask(schedTab, oilObjects, sbCommonRpc_access_mask, access_index) : "")
+						+ "}");
+				
+				// increase the task index number
+				globalSchedTablIndex++;
+			}
 		}
 	
 	
@@ -269,6 +314,12 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			
 			sbCfg_h.append(commentWriter.writerBanner("Remote counters"));
 			sbCfg_h.append(sbRemoteCountersDefines[rtosId].toString());
+			
+			sbCfg_h.append(commentWriter.writerBanner("Remote OsApplication"));
+			sbCfg_h.append(sbRemoteOsApplsDefines[rtosId].toString());
+			
+			sbCfg_h.append(commentWriter.writerBanner("Remote Schedule Tables"));
+			sbCfg_h.append(sbRemoteSchedTabsDefines[rtosId].toString());
 		}
 		
 		// common
@@ -323,12 +374,34 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			}
 			
 			if (sbCommonRpc_counters.length()>0) {
-				sbTable.append("&EE_as_rpc_counters[0]");
+				sbTable.append("&EE_as_rpc_counters[0], ");
 				
 				sbCommon_c.append(
 						macros.constVectorRom(
 								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_counters","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_counters", globalCounterIndex)+"]", " = {\n" +
 								sbCommonRpc_counters.toString() + "\n" + indent1 + "};\n") + "\n");
+			} else {
+				sbTable.append("0U, ");
+			}
+			
+			if (sbCommonRpc_OsAppls.length()>0) {
+				sbTable.append("&EE_as_rpc_osAppls[0], ");
+				
+				sbCommon_c.append(
+						macros.constVectorRom(
+								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_osAppls","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_osAppls", globalOsApplIndex)+"]", " = {\n" +
+										sbCommonRpc_OsAppls.toString() + "\n" + indent1 + "};\n") + "\n");
+			} else {
+				sbTable.append("0U, ");
+			}
+			
+			if (sbCommonRpc_SchedTabs.length()>0) {
+				sbTable.append("&EE_as_rpc_schedTabs[0]");
+				
+				sbCommon_c.append(
+						macros.constVectorRom(
+								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_schedTabs","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_schedTabs", globalSchedTablIndex)+"]", " = {\n" +
+										sbCommonRpc_SchedTabs.toString() + "\n" + indent1 + "};\n") + "\n");
 			} else {
 				sbTable.append("0U");
 			}

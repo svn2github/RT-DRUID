@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -162,6 +163,72 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		OsApplicationAreas areaNames = cpuDescr == null ? null : cpuDescr.getOsApplicationNames();
 		
 		List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
+		
+		
+
+		
+		{
+			// checks:
+			// for each alarm, check if the counter allow the acces from the alarm's osApplication
+			// for each schedule table, check if the counter allow the acces from the schedule table's osApplication
+			
+			for (ISimpleGenRes curr: ool.getList(IOilObjectList.ALARM) ) {
+				String counter_def = curr.getString(ISimpleGenResKeywords.ALARM_COUNTER); 
+				
+				//search counter
+				ISimpleGenRes counter = null;
+				for (ISimpleGenRes countIter : ool.getList(IOilObjectList.COUNTER)) {
+					if (counter_def.equals(countIter.getName())) {
+						counter = countIter;
+						break;
+					}
+				}
+				if (counter == null) {
+					throw new OilCodeWriterException("Missing the counter " + counter_def + " required by alarm " + curr.getName());
+				}
+				
+				// check osApplication access
+				String osAppName = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) ? curr.getString(ISimpleGenResKeywords.OS_APPL_NAME) : "";
+				
+				boolean access = counter.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL) && "true".equalsIgnoreCase(counter.getString(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL));
+				access |= (counter.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) && osAppName.equalsIgnoreCase(counter.getString(ISimpleGenResKeywords.OS_APPL_NAME))); 
+				access |= (counter.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST) && ((List<String>)counter.getObject(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST)).contains(access));
+				
+				if (!access) {
+					throw new OilCodeWriterException("The alarm " + curr.getName() + " cannot access to the counter " + counter_def);
+				}
+			}
+			
+			for (ISimpleGenRes curr: ool.getList(IOilObjectList.SCHEDULE_TABLE) ) {
+				String counter_def = curr.getString(ISimpleGenResKeywords.SCHEDULING_COUNTER); 
+				
+				//search counter
+				ISimpleGenRes counter = null;
+				for (ISimpleGenRes countIter : ool.getList(IOilObjectList.COUNTER)) {
+					if (counter_def.equals(countIter.getName())) {
+						counter = countIter;
+						break;
+					}
+				}
+				if (counter == null) {
+					throw new OilCodeWriterException("Missing the counter " + counter_def + " required by schedule table " + curr.getName());
+				}
+				
+				// check osApplication access
+				String osAppName = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) ? curr.getString(ISimpleGenResKeywords.OS_APPL_NAME) : "";
+				
+				boolean access = counter.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL) && "true".equalsIgnoreCase(counter.getString(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL));
+				access |= (counter.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) && osAppName.equalsIgnoreCase(counter.getString(ISimpleGenResKeywords.OS_APPL_NAME))); 
+				access |= (counter.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST) && ((List<String>)counter.getObject(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST)).contains(access));
+				
+				if (!access) {
+					throw new OilCodeWriterException("The schedule table " + curr.getName() + " cannot access to the counter " + counter_def);
+				}
+			}
+			
+		}
+		
+		
 
 		StringBuffer ee_h_buffer = answer.get(FILE_EE_CFG_H);
 		final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);

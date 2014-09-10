@@ -689,6 +689,25 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				
 			}
 			break;
+			case IOilObjectList.SCHEDULE_TABLE:
+			{
+				for (int i=0; i<answer.length; i++) {
+					final String path = answer[i].getPath()
+							+S+ (new OilPath(OilObjectType.SCHEDULETABLE, null)).getPath();
+	
+					{ // get mapping between counter and CPU
+						String[] cpu_Id = CommonUtils.getValue(vt, path+"CPU_ID");
+						
+						if (cpu_Id!= null && cpu_Id.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_CPU_MAPPED_ID, cpu_Id[0]);
+						} else {
+							answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_CPU_MAPPED_ID, DEFAULT_CPU_NAME);
+						}
+					}
+				}
+				
+			}
+			break;
 			case IOilObjectList.ALARM:
 				/**
 				 * Set, for each alarm an id that is stored as a property : ALARM_SYS_ID.
@@ -933,6 +952,22 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 					(ISimpleGenRes[]) alarms.toArray(new ISimpleGenRes[alarms
 							.size()]));
 			
+
+			/*
+			 * Remove schedule tables not mapped to current cpu 
+			 */
+			List<ISimpleGenRes> schedTabl = new ArrayList<ISimpleGenRes>(ool.getList(IOilObjectList.SCHEDULE_TABLE));
+			
+			for (Iterator<ISimpleGenRes> iter = schedTabl.iterator(); iter.hasNext(); ) {
+				ISimpleGenRes curr = (ISimpleGenRes) iter.next();
+				
+				if (!cpuName.equals(curr.getString(ISimpleGenResKeywords.SCHEDTABLE_CPU_MAPPED_ID))) {
+					iter.remove();
+				}
+			}
+			ool.setList(IOilObjectList.SCHEDULE_TABLE,
+					(ISimpleGenRes[]) schedTabl.toArray(new ISimpleGenRes[schedTabl
+							.size()]));
 		}
 		
 		/***********************************************************************

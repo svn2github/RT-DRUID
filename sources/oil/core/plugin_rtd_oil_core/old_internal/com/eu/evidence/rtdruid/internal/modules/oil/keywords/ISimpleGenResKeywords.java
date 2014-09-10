@@ -46,6 +46,7 @@ public interface ISimpleGenResKeywords {
 	
 	public final static String OS_APPL_NAME = "object_mapped_an_os_application_name";
 	public final static String GENERIC_ACCESSING_OS_APPL_LIST = "accessing_os_application_list";
+	public final static String GENERIC_ACCESSING_ALLOW_ALL = "allow_the_access_to_all_os_applications";
 
 	/***************************************************************************
 	 * Task
@@ -334,13 +335,14 @@ public interface ISimpleGenResKeywords {
 	/***************************************************************************
 	 * Scheduling table
 	 **************************************************************************/
-	public static final String SCHEDULING_SYS_ID  = "schedule_table_system_id";
+	public static final String SCHEDTABLE_SYS_ID  = "schedule_table_system_id";
+	public final static String SCHEDTABLE_CPU_MAPPED_ID = "counter_cpu_mapped_id";
 	public static final String SCHEDTABLE_DURATION = "schedule_table_duration";
 	public static final String SCHEDTABLE_REPEATING = "schedule_table_repeating";
 	public static final String SCHEDTABLE_OS_APPLICATION_NAME  = OS_APPL_NAME;
 	public final static String SCHEDTABLE_ACCESSING_OS_APPL_LIST = GENERIC_ACCESSING_OS_APPL_LIST;
 	public static final String SCHEDULING_COUNTER  = "schedule_table_counter";
-
+	
 	public static final String SCHEDTABLE_AUTOSTART_APPMODES_LIST  = "schedule_table_applmode_list";
 	public static final String SCHEDTABLE_AUTOSTART_START_VALUE = "schedule_table_autosart_start_value";	
 	public static final String SCHEDTABLE_AUTOSTART_TYPE = "schedule_table_autosart_type";	

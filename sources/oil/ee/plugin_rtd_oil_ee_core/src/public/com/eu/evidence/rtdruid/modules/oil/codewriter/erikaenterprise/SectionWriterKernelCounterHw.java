@@ -273,6 +273,9 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						
 					if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_SYSTIMER)
 							&& Boolean.TRUE.equals(sgr.getObject(ISimpleGenResKeywords.COUNTER_SYSTIMER))) {
+						if (sysTimer != null) {
+							throw new OilCodeWriterException("Each core can have at most a single system timers found " +sysTimer.getName()+" and " +  sgr.getName());
+						}
 						sysTimer = sgr;
 					
 						if (sgr.containsProperty(ISimpleGenResKeywords.COUNTER_USER_HANDLER)) {
@@ -288,6 +291,8 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						} else {
 							sgr.setProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER, device.getHandler());							
 						}
+						
+						sysTimer.setProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL, Boolean.TRUE.toString());
 						
 					} else  { // handler
 						String handler = "EE_" + sgr.getName() + "_handler";

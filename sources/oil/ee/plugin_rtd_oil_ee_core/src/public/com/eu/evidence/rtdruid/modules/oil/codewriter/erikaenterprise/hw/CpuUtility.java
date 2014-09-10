@@ -84,12 +84,12 @@ public class CpuUtility {
 		if (object.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME)) {
 			validOsApplNames.add(object.getString(ISimpleGenResKeywords.OS_APPL_NAME) );
 		}
-		
+		boolean allowAll = object.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL) && "true".equalsIgnoreCase(object.getString(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL));
 		
 		List<ISimpleGenRes> osAppls = ool.getList(IOilObjectList.OSAPPLICATION);
 		for (int i=0; i<osAppls.size(); i++) {
 			ISimpleGenRes sgr = osAppls.get(i);
-			if (validOsApplNames.contains(sgr.getName())) {
+			if (allowAll || validOsApplNames.contains(sgr.getName())) {
 				answerBitSet.set(sgr.getInt(ISimpleGenResKeywords.OS_APPL_ID)+1);
 			}
 		}

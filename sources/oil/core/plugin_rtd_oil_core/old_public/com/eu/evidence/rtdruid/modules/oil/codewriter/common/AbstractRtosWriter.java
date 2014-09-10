@@ -1101,7 +1101,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 								+ (new OilPath(OilObjectType.get(requiredType), signalNames[i])).getPath();
 						String[] values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
 						if (values!= null && values.length > 0) {
-							answer[i].setObject(
+							sgr.setObject(
 									(type == IOilObjectList.ALARM ? ISimpleGenResKeywords.ALARM_ACCESSING_OS_APPL_LIST : ISimpleGenResKeywords.COUNTER_ACCESSING_OS_APPL_LIST )
 									, Arrays.asList(values));
 						}
@@ -1172,7 +1172,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					{	// ----------- ACCESSING_APPLICATION ------------
 						values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
 						if (values != null) {
-							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_ACCESSING_OS_APPL_LIST, values);
+							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_ACCESSING_OS_APPL_LIST, Arrays.asList(values));
 						}
 					}
 
@@ -1185,12 +1185,19 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			/* ----------------------  SCHEDULING TABLE  ---------------------- */
 		case IOilObjectList.SCHEDULE_TABLE:
 		{
+			String rtosName = getVarAsString(rtosPrefix + S
+					+ DataPackage.eINSTANCE.getRtos_Name().getName());
+			if (rtosName == null) {
+				break;
+			}
+			
 			String resPath = sysName+S+DPKG.getSystem_Architectural().getName()+S
     			+SimpleTransform.SCHED_TABLE_LIST;
 			
-			// search all Architectural SpinLocks ...
+			// search all Architectural Schedule table ...
 	        String[] resNames = vt.newTreeInterface().getAllName(resPath,SimpleTransform.SCHED_TABLE);
 	        if (resNames.length>0) {
+	        	
 				answer = new SimpleGenRes[resNames.length];
 
 				// ... and store as SimpleGenRes 
@@ -1200,6 +1207,14 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					
 					String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.SCHEDULETABLE, null)).getPath();
 					String[] values;
+
+					{	// ----------- CPU_ID ------------
+						values = CommonUtils.getValue(vt, path+"CPU_ID");
+						if (values != null && values.length>0 && values[0] != null) {
+							
+							answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_DURATION, values[0]);
+						}
+					}
 
 					{	// ----------- DURATION ------------
 						values = CommonUtils.getValue(vt, path+"DURATION");
@@ -1220,7 +1235,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					{	// ----------- ACCESSING_APPLICATION ------------
 						values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
 						if (values != null) {
-							answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_ACCESSING_OS_APPL_LIST, values);
+							answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_ACCESSING_OS_APPL_LIST, Arrays.asList(values));
 						}
 					}
 					
