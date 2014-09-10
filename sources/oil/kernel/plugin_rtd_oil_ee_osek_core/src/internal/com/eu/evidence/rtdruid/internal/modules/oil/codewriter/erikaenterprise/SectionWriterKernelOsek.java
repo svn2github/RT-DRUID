@@ -629,7 +629,12 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						}
 						
 						String timeFrame = "EE_OS_NO_TIME";
-						
+						if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_FRAME)) {
+							timeFrame = "EE_AS_TP_MICRO_TO_TICKS_SATURATED("+
+										getBudgetValue(currTask.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_FRAME), "Invalid time frame for task " + tname)
+										+")";
+						}
+
 						int t_id = currTask
 								.getInt(ISimpleGenResKeywords.TASK_SYS_ID);
 						while (sb_tp_arrays.size()<=t_id) {
@@ -815,6 +820,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						}
 					}
 					String timeFrame = "EE_OS_NO_TIME";
+					if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_FRAME)) {
+						timeFrame = "EE_AS_TP_MICRO_TO_TICKS_SATURATED("+
+									getBudgetValue(currIsr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_FRAME), "Invalid time frame for isr " + tname)
+									+")";
+					}
 					
 					int t_id = currIsr
 							.getInt(ISimpleGenResKeywords.ISR_ID);
