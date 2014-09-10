@@ -180,6 +180,58 @@ IMPLEMENTATION ee {
     };
     
     SCHEDULINGTABLE {
+		UINT32 DURATION;
+		BOOLEAN REPEATING = FALSE;
+		COUNTER_TYPE COUNTER;
+		
+		BOOLEAN [
+			TRUE {
+				ENUM [ABSOLUTE, RELATIVE, SYNCHRON] TYPE;
+				UINT64 START_VALUE;
+				APPMODE_TYPE APPMODE[];
+			},
+			FALSE
+		] AUTOSTART;
+		
+		ENUM [
+			ACTION {
+				UINT64 EXPIRE_VALUE;
+				ENUM [
+					ACTIVATETASK {
+		                TASK_TYPE TASK;
+		            },
+		            SETEVENT {
+		                TASK_TYPE TASK;
+		                EVENT_TYPE EVENT;
+		            }
+				] ACTION[];
+				
+				BOOLEAN [
+					TRUE {
+						UINT64 MAX_POSOSITIVE_ADJ;
+						UINT64 MAX_NEGATIVE_ADJ;
+					},
+					FALSE
+				] SYNC_ADJUSTMENT;
+			}
+		] EXPIRE_POINT[];
+		
+		BOOLEAN [
+			TRUE {
+				UINT64 EXPLICIT_PRECISION;
+				ENUM [
+					EXPLICIT,
+					IMPLICIT,
+					NONE
+				] SYNC_STRATEGY;
+			},
+			FALSE
+		] 
+		LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION;
     };
     
+};
+
+CPU a{
+	SCHEDULINGTABLE a {};
 };
