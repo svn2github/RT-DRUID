@@ -147,7 +147,7 @@ public class CodeWriterAutosar extends AbstractCodeWriterTest implements DirectW
 			"		USEPARAMETERACCESS = FALSE;\n" +
 			"		USERESSCHEDULER = FALSE;\n" +
 			"\n" +
-			"		KERNEL_TYPE = SC4;\n" +
+			"		KERNEL_TYPE = ECC2;\n" +
 			"\n" +
 			"//		ORTI_SECTIONS = ALL;\n" +
 			"	};\n" +

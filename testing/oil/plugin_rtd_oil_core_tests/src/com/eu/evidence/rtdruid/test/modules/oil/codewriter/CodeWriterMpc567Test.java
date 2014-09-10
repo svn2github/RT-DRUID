@@ -703,7 +703,8 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 	    		"		USEPARAMETERACCESS = FALSE;\n"+
 	    		"		USERESSCHEDULER = FALSE;\n"+
 	    		"\n"+
-	    		"		KERNEL_TYPE = SC4;\n"+
+	    		"		KERNEL_TYPE = ECC2;\n"+
+	    		"		SCALABILITYCLASS = SC4;\n"+
 	    		"\n"+
 	    		"//		ORTI_SECTIONS = ALL;\n"+
 	    		"	};\n"+
@@ -1323,7 +1324,8 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 				"		USEPARAMETERACCESS = FALSE;\n" +
 				"		USERESSCHEDULER = FALSE;\n" +
 				"\n" +
-				"		KERNEL_TYPE = SC4;\n" +
+				"		KERNEL_TYPE = ECC2;\n" +
+				"		SCALABILITYCLASS = SC4;\n" +
 				"\n" +
 				"		EE_OPT = \"DEBUG\";\n" +
 				"		ORTI_SECTIONS = ALL;\n" +

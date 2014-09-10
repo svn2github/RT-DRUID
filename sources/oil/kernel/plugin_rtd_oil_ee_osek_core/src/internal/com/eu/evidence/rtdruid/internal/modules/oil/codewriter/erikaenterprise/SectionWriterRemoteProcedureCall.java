@@ -420,7 +420,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			
 			sbCommon_c.append(
 					macros.constVectorRom(indent1 + "EE_TYPEASREMOTEIDCONSTREF const ", "EE_as_rpc_services_table","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_services_table", 5)+"]", " = {\n"
-							+indent2 +  sbTable.toString() + ", 0U, 0U\n"+indent1+ "};\n\n") + 
+							+indent2 +  sbTable.toString() + "\n"+indent1+ "};\n\n") + 
 					macros.vectorRam(indent1 + "EE_TYPEASRPC volatile ", "EE_as_rpc_RAM","["+MAX_CPU+"]", " = {\n" + indent2+sbCommonRpc_ram + "\n"+indent1 +"};\n") + "\n"
 			);
 		}
