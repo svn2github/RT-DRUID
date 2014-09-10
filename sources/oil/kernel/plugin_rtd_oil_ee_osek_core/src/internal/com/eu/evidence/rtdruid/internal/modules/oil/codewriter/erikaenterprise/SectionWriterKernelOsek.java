@@ -1763,11 +1763,14 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					StringBuffer romExpPointBuffer = new StringBuffer();
 					StringBuffer romScTableBuffer = new StringBuffer();
 					StringBuffer ramScTableBuffer = new StringBuffer();
+					
+					String romExpPointBuffer_pre = "\n";
+					String scTableBuffer_pre = "\n";
+
 					int expPointSize = 0;
 					/*
 					 * EE_alarm_ROM
 					 */
-		
 					pre2 = "\n";
 					for (Iterator<ISimpleGenRes> iter = schedTabList.iterator(); iter.hasNext();) {
 		
@@ -1853,7 +1856,6 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							}
 				
 							
-							String expPre = "\n";
 							ArrayList<String> exPointChildName = new ArrayList<String>();
 							ArrayList<String> exPointType = CommonUtils.getAllChildrenEnumType(vt, currPath+"EXPIRE_POINT", exPointChildName);
 							for (int epIndex=0; epIndex<exPointType.size(); epIndex++) {
@@ -2016,8 +2018,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									counterActionRomRows++;
 								}
 								
-								romExpPointBuffer.append(expPre + indent2 + "{ " + expireValue+", "+startingActIndex+"U, "+(counterActionRomRows-1)+"U, "+posAdj+"U, "+negAdj+"U }");
-								expPre = ",\n";
+								romExpPointBuffer.append(romExpPointBuffer_pre + indent2 + "{ " + expireValue+", "+startingActIndex+"U, "+(counterActionRomRows-1)+"U, "+posAdj+"U, "+negAdj+"U }");
+								romExpPointBuffer_pre = ",\n";
 								expPointSize++;
 							}
 						}
@@ -2116,7 +2118,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						}
 						
 						counterObjRomBuffer.append(pre_shared_c + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_SCHEDULETABLE }");
-						romScTableBuffer.append(pre2 + indent2 + "{" 
+						romScTableBuffer.append(scTableBuffer_pre + indent2 + "{" 
 									+ startingExpIndex + "U, "
 									+ (expPointSize-1) + "U, "
 									+ syncStrategy /*EE_SCHEDTABLE_SYNC_NONE*/ + ", "
@@ -2128,6 +2130,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						
 						counterObjRomRows++;
 						pre2 = ",\n";
+						scTableBuffer_pre = ",\n";
 						pre_shared_c = ",\n";
 					}
 
