@@ -89,11 +89,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			IWritersKeywords.OSEK_BCC1, //
 			IWritersKeywords.OSEK_BCC2, //
 			IWritersKeywords.OSEK_ECC1, //
-			IWritersKeywords.OSEK_ECC2, //
-			IWritersKeywords.OSEK_SC1, //
-			IWritersKeywords.OSEK_SC2, //
-			IWritersKeywords.OSEK_SC3, //
-			IWritersKeywords.OSEK_SC4 //
+			IWritersKeywords.OSEK_ECC2
 	};
 
 	/**
@@ -162,6 +158,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 	public IOilWriterBuffer[] internalWrite(IVarTree vt)
 			throws OilCodeWriterException {
 		parent.check(vt);
+		
+		checkScalabilityClasses();
 		
 		/*
 		 * Call some function to prepare many structures
@@ -2566,6 +2564,85 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 
 	}
 	
+	protected void checkScalabilityClasses() throws OilCodeWriterException {
+		
+		final boolean is_sc1 = keywords.contains(IWritersKeywords.OSEK_SC1);
+		final boolean is_sc2 = keywords.contains(IWritersKeywords.OSEK_SC2);
+		final boolean is_sc3 = keywords.contains(IWritersKeywords.OSEK_SC3);
+		final boolean is_sc4 = keywords.contains(IWritersKeywords.OSEK_SC4);
+		
+		if (!( is_sc1 || is_sc2 || is_sc3 || is_sc4 )) {
+			return;
+		}
+
+		IOilObjectList[] ools = parent.getOilObjects();
+		
+		// protection hook richiede SC2, SC3, SC4
+		if (keywords.contains(SGR_OS_MEM_PROTECTION_HOOK) && !is_sc2 && !is_sc3 && !is_sc4) {
+			throw new OilCodeWriterException("Protection hook requires Schedulability Class 2, 3 or 4");
+		}
+		
+		// Timing protection richiede SC2 SC4
+		{
+			boolean hasTimingProtection = false;
+			for (int i=0; i<ools.length && ! hasTimingProtection; i++) {
+			
+				if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ools[i], ISimpleGenResKeywords.OS_HAS_TIMING_PPROTECTION))) {
+					hasTimingProtection = true;
+				}
+			}
+			
+			if (hasTimingProtection && !is_sc2 && !is_sc4) {
+				throw new OilCodeWriterException("Timing protection requires Schedulability Class 2 or 4");
+			}
+		}
+		
+		// global time/synchronization support SC2 SC4
+		{
+			// TODO ???
+		}
+		
+		// Memory protection richiede SC3 SC4
+		if (keywords.contains(IWritersKeywords.KERNEL_MEMORY_PROTECTION) && !is_sc3 && !is_sc4) {
+			throw new OilCodeWriterException("Memory protection requires Schedulability Class 3 or 4");
+		}
+		
+		// OS-Application richiede SC3 SC4
+		if (keywords.contains(IWritersKeywords.KERNEL_OS_APPLICATION) && !is_sc3 && !is_sc4) {
+			throw new OilCodeWriterException("OS Application requires Schedulability Class 3 or 4");
+		}
+		
+		// service protection richiede SC3 SC4
+		if (keywords.contains(IWritersKeywords.KERNEL_SERVICE_PROTECTION) && !is_sc3 && !is_sc4) {
+			throw new OilCodeWriterException("Service protection requires Schedulability Class 3 or 4");
+		}
+		
+		// callTrustedFunction richiede SC3 SC4
+		{
+			boolean hasTrustedFunctions = false;
+			for (int i=0; i<ools.length && ! hasTrustedFunctions; i++) {
+				for (ISimpleGenRes appl: ools[i].getList(IOilObjectList.OSAPPLICATION)) {
+					if (appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 
+							&& "true".equalsIgnoreCase(appl.getString(IEEWriterKeywords.OS_APPLICATION_TRUSTED))) {
+						
+						List<String> functions = appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED_FUNCTIONS) ?
+								(List<String>) appl.getObject(IEEWriterKeywords.OS_APPLICATION_TRUSTED_FUNCTIONS) : new ArrayList<String>();
+						
+						if (functions.size()>0) {
+							hasTrustedFunctions = true;
+							break;
+						}
+					}
+				} 
+			}
+			
+			if (hasTrustedFunctions && !is_sc3 && !is_sc4) {
+				throw new OilCodeWriterException("Trusted function requires Schedulability Class 3 or 4");
+			}
+			
+		}
+	}
+	
 	
 
 	/* (non-Javadoc)
@@ -2577,11 +2654,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		if (!(keywords.contains(IWritersKeywords.OSEK_BCC1) ||
 				keywords.contains(IWritersKeywords.OSEK_BCC2) ||
 				keywords.contains(IWritersKeywords.OSEK_ECC1) ||
-				keywords.contains(IWritersKeywords.OSEK_ECC2) ||
-				keywords.contains(IWritersKeywords.OSEK_SC1) ||
-				keywords.contains(IWritersKeywords.OSEK_SC2) ||
-				keywords.contains(IWritersKeywords.OSEK_SC3) ||
-				keywords.contains(IWritersKeywords.OSEK_SC4))) {
+				keywords.contains(IWritersKeywords.OSEK_ECC2))) {
 			return;
 		}
 
@@ -2633,6 +2706,12 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			options.add(new AutoOptions(currentRtosPrefix, "PROTECTIONHOOK", "TRUE", SGR_OS_MEM_PROTECTION_HOOK, false));
 			options.add(new AutoOptions(currentRtosPrefix, "STACKMONITORING", "TRUE", ISimpleGenResKeywords.OS_STACK_MONITORING, false));
 
+			options.add(new AutoOptions(currentRtosPrefix, "SCALABILITYCLASS", "SC1", IWritersKeywords.OSEK_SC1, false));
+			options.add(new AutoOptions(currentRtosPrefix, "SCALABILITYCLASS", "SC2", IWritersKeywords.OSEK_SC2, false));
+			options.add(new AutoOptions(currentRtosPrefix, "SCALABILITYCLASS", "SC3", IWritersKeywords.OSEK_SC3, false));
+			options.add(new AutoOptions(currentRtosPrefix, "SCALABILITYCLASS", "SC4", IWritersKeywords.OSEK_SC4, false));
+
+			
 			// this two should be enabled if not specified FALSE
 			for (String[] s: enabledByDefault) {
 				options.add(    new AutoOptions(currentRtosPrefix, s[0], s[1], s[3], false));
@@ -2667,11 +2746,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		if (!(parent.checkKeyword(IWritersKeywords.OSEK_BCC1) ||
 				parent.checkKeyword(IWritersKeywords.OSEK_BCC2) ||
 				parent.checkKeyword(IWritersKeywords.OSEK_ECC1) ||
-				keywords.contains(IWritersKeywords.OSEK_ECC2) ||
-				keywords.contains(IWritersKeywords.OSEK_SC1) ||
-				keywords.contains(IWritersKeywords.OSEK_SC2) ||
-				keywords.contains(IWritersKeywords.OSEK_SC3) ||
-				keywords.contains(IWritersKeywords.OSEK_SC4))) {
+				keywords.contains(IWritersKeywords.OSEK_ECC2))) {
 		}
 		
 		

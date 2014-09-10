@@ -17,12 +17,15 @@ IMPLEMENTATION ee {
            	BCC1,
            	BCC2,
            	ECC1,
-           	ECC2,
+           	ECC2
+        ] KERNEL_TYPE;
+        
+        ENUM [
            	SC1,
            	SC2,
            	SC3,
            	SC4
-        ] KERNEL_TYPE;
+        ] SCALABILITYCLASS;
     };
 
 	TASK {

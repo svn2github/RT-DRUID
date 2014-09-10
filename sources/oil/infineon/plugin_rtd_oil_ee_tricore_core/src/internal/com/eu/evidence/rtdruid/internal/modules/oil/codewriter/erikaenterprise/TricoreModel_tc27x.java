@@ -89,18 +89,6 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		"__USTACK", // core1
 		"__USTACK", // core2
 	};
-
-	
-	protected final List<String> osekKeywords = Arrays.asList(new String[] {
-			IWritersKeywords.OSEK_BCC1, //
-			IWritersKeywords.OSEK_BCC2, //
-			IWritersKeywords.OSEK_ECC1, //
-			IWritersKeywords.OSEK_ECC2, //
-			IWritersKeywords.OSEK_SC1, //
-			IWritersKeywords.OSEK_SC2, //
-			IWritersKeywords.OSEK_SC3, //
-			IWritersKeywords.OSEK_SC4 //
-	});
 	
 	private SectionWriterIsr isrWriter; 
 	private SectionWriterKernelCounterHw counterHwWriter;
