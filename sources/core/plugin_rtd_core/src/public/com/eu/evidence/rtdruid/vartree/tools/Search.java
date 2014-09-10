@@ -2156,6 +2156,49 @@ public final class Search {
 	}
 	
 	/**
+	 * Searchs all Schedule table stored inside the tree. If no system was found, returns
+	 * null, otherwise returns an array with 0 or more String that contain paths
+	 * of all found Tasks
+	 * 
+	 * @param ti
+	 *            current data repository
+	 * 
+	 * @return null if NO system is found. Otherwise returns a not null array
+	 *         with 0 or more path, one for each found RT-OS
+	 * 
+	 * @throws NullPointerException
+	 *             if ti is null
+	 */
+	public static ArchElement[] allScheduleTableNames(ITreeInterface ti) {
+		if (ti == null) {
+			throw new NullPointerException("Required a not null treeinterface");
+		}
+
+		DataPackage dpkg = DataPackage.eINSTANCE;
+		String S = "" + DataPath.SEPARATOR;
+
+		String prefix = null;
+		String[] tmp = ti.getAllName(prefix, dpkg.getSystem().getName());
+		if (tmp.length == 0) {
+			// Messages.sendWarning("No System found", null, "", null);
+			return null;
+		}
+
+		prefix = tmp[0] + S + dpkg.getSystem_Architectural().getName() + S
+				+ dpkg.getArchitectural_TaskList().getName();
+
+		String[] ttmp = ti.getAllName(prefix, dpkg.getScheduleTable().getName());
+		ArchElement[] answer = new ArchElement[ttmp.length];
+
+		for (int i = 0; i < answer.length; i++) {
+			answer[i] = new ArchElement(prefix + S + ttmp[i], DataPath
+					.removeSlash(DataPath.removeSlash(ttmp[i])));
+		}
+
+		return answer;
+	}
+	
+	/**
 	 * Searchs all Spinlocks stored inside the tree. If no system was found, returns
 	 * null, otherwise returns an array with 0 or more String that contain paths
 	 * of all found Spinlocks
