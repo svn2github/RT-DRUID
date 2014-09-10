@@ -164,6 +164,9 @@ public interface IWritersKeywords {
 	
 	/** Enables the memory protection for the current kernel (if available) */
 	public final static String KERNEL_MEMORY_PROTECTION = "MEMORY_PROTECTION";
+	
+	/** Enables the usage of kernel private stacks for the current architecture (if available) */
+	public final static String KERNEL_KERNEL_STACKS = "KERNEL_STACKS";
 
 	/** Common memory protection writer: writer type */
 	public final static String KERNEL_MEMORY_PROTECTION_TYPE = SWCategoryManager.TYPE_KERNEL;

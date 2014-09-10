@@ -575,7 +575,7 @@ public class ErikaEnterpriseTransform extends SimpleTransform {
 				IOilObjectList.RESOURCE, IOilObjectList.EVENT, IOilObjectList.ISR,
 				IOilObjectList.MESSAGE, IOilObjectList.NETWORKMESSAGE,
 				IOilObjectList.COM, IOilObjectList.NM, IOilObjectList.APPMODE,
-				IOilObjectList.IPDU, IOilObjectList.SPINLOCK, IOilObjectList.SCHEDULING_TABLE };
+				IOilObjectList.IPDU, IOilObjectList.SPINLOCK, IOilObjectList.SCHEDULE_TABLE };
 
 		for (int oolId = 0; oolId < order.length; oolId++) {
 

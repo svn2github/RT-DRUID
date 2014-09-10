@@ -112,7 +112,7 @@ public class ArchitecturalItemProvider
 			childrenFeatures.add(DataPackage.Literals.ARCHITECTURAL__SIGNAL_LIST);
 			childrenFeatures.add(DataPackage.Literals.ARCHITECTURAL__TASK_LIST);
 			childrenFeatures.add(DataPackage.Literals.ARCHITECTURAL__COM_LIST);
-			childrenFeatures.add(DataPackage.Literals.ARCHITECTURAL__SCHEDULING_TABLE_LIST);
+			childrenFeatures.add(DataPackage.Literals.ARCHITECTURAL__SCHEDULE_TABLE_LIST);
 		}
 		return childrenFeatures;
 	}
@@ -176,7 +176,7 @@ public class ArchitecturalItemProvider
 			case DataPackage.ARCHITECTURAL__SIGNAL_LIST:
 			case DataPackage.ARCHITECTURAL__TASK_LIST:
 			case DataPackage.ARCHITECTURAL__COM_LIST:
-			case DataPackage.ARCHITECTURAL__SCHEDULING_TABLE_LIST:
+			case DataPackage.ARCHITECTURAL__SCHEDULE_TABLE_LIST:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -236,8 +236,8 @@ public class ArchitecturalItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(DataPackage.Literals.ARCHITECTURAL__SCHEDULING_TABLE_LIST,
-				 DataFactory.eINSTANCE.createSchedulingTable()));
+				(DataPackage.Literals.ARCHITECTURAL__SCHEDULE_TABLE_LIST,
+				 DataFactory.eINSTANCE.createScheduleTable()));
 	}
 
 }

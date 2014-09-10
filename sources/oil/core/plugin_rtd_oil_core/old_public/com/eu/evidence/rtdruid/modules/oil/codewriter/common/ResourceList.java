@@ -353,19 +353,19 @@ public class ResourceList {
 		this.enableGlobalResources = enableGlobalResources;
 		
 		final LinkedList<ResourceTmp> rTemp;
+		final DataPackage dpkg = DataPackage.eINSTANCE;
+		final String tmpPref = prefix + S
+				+ dpkg.getArchitectural_MutexList().getName() +S;
 		{
 			ITreeInterface ti = vt.newTreeInterface();
 			LinkedList pendenti = new LinkedList(); // store a link to a resource
 													// Not already visited
-			final DataPackage dpkg = DataPackage.eINSTANCE;
 	
 			/***********************************************************************
 			 * 
 			 * get all resource data
 			 *  
 			 **********************************************************************/
-			String tmpPref = prefix + S
-					+ dpkg.getArchitectural_MutexList().getName() +S;
 			String[] resName = ti.getAllName(tmpPref, dpkg.getMutex().getName());
 	
 			rTemp = new LinkedList<ResourceList.ResourceTmp>();
@@ -523,7 +523,7 @@ public class ResourceList {
 			// store all names, in each rtos that uses it
 			for (Iterator iter = nomiRis.iterator(); iter.hasNext(); ) {
 				ResName rname = (ResName) iter.next();
-				ISimpleGenRes sgr = new SimpleGenRes(rname.getName(), null);
+				ISimpleGenRes sgr = new SimpleGenRes(rname.getName(), tmpPref + rname.getName());
 				
 				ResInfo info = (ResInfo) infoRis.get(rname.getIndex());
 
@@ -546,6 +546,17 @@ public class ResourceList {
 				if (info.srcFiles != null) {
 					sgr.setObject(ISimpleGenResKeywords.RESOURCE_SRC, info.srcFiles);
 				}
+				
+				{
+					String path = sgr.getPath()+S
+							+(new OilPath(OilObjectType.RESOURCE, sgr.getName())).getPath();
+					// ----------- ACCESSING_APPLICATION ------------
+					String[] values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
+					if (values != null) {
+						sgr.setObject(ISimpleGenResKeywords.RESOURCE_ACCESSING_OS_APPL_LIST, values);
+					}
+				}
+				
 //System.err.println(">>" + sgr + "<<\n\n");
 				// clone a copy inside all list of resources (they can have differt ceiling and position/id)
 				for (int i=0; i<info.cpu.length() && i<tmpList.length; i++) {

@@ -3,7 +3,7 @@
 package com.eu.evidence.rtdruid.internal.vartree.data.impl;
 
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.SchedulingTable;
+import com.eu.evidence.rtdruid.vartree.data.ScheduleTable;
 
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
@@ -20,13 +20,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.SchedulingTableImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ScheduleTableImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class SchedulingTableImpl extends ObjectWithIDImpl implements SchedulingTable {
+public class ScheduleTableImpl extends ObjectWithIDImpl implements ScheduleTable {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -52,7 +52,7 @@ public class SchedulingTableImpl extends ObjectWithIDImpl implements SchedulingT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected SchedulingTableImpl() {
+	protected ScheduleTableImpl() {
 		super();
 	}
 
@@ -63,7 +63,7 @@ public class SchedulingTableImpl extends ObjectWithIDImpl implements SchedulingT
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return DataPackage.Literals.SCHEDULING_TABLE;
+		return DataPackage.Literals.SCHEDULE_TABLE;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class SchedulingTableImpl extends ObjectWithIDImpl implements SchedulingT
 		StringVar oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SCHEDULING_TABLE__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.SCHEDULE_TABLE__NAME, oldName, name));
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class SchedulingTableImpl extends ObjectWithIDImpl implements SchedulingT
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case DataPackage.SCHEDULING_TABLE__NAME:
+			case DataPackage.SCHEDULE_TABLE__NAME:
 				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -109,7 +109,7 @@ public class SchedulingTableImpl extends ObjectWithIDImpl implements SchedulingT
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case DataPackage.SCHEDULING_TABLE__NAME:
+			case DataPackage.SCHEDULE_TABLE__NAME:
 				setName((StringVar)newValue);
 				return;
 		}
@@ -124,7 +124,7 @@ public class SchedulingTableImpl extends ObjectWithIDImpl implements SchedulingT
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case DataPackage.SCHEDULING_TABLE__NAME:
+			case DataPackage.SCHEDULE_TABLE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -139,7 +139,7 @@ public class SchedulingTableImpl extends ObjectWithIDImpl implements SchedulingT
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case DataPackage.SCHEDULING_TABLE__NAME:
+			case DataPackage.SCHEDULE_TABLE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
@@ -161,4 +161,4 @@ public class SchedulingTableImpl extends ObjectWithIDImpl implements SchedulingT
 		return result.toString();
 	}
 
-} //SchedulingTableImpl
+} //ScheduleTableImpl

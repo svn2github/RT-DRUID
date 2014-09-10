@@ -33,6 +33,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWr
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.OsApplicationAreas;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IRemoteNotificationsConstants;
@@ -53,7 +54,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		IEEWriterKeywords, IRemoteNotificationsConstants,
 		IExtractObjectsExtentions, IGetEEOPTExtentions,
 		IExtractKeywordsExtentions {
-
 	
 	/**
 	 * 
@@ -157,7 +157,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 	}
 
 	protected void addOsApplications(IOilObjectList ool, IOilWriterBuffer answer) throws OilCodeWriterException {
-		final boolean needStackMonitoring = parent.checkKeyword(ISimpleGenResKeywords.OS_STACK_MONITORING);
+		final boolean needStackMonitoring = true; //force parent.checkKeyword(ISimpleGenResKeywords.OS_STACK_MONITORING);
 		CpuHwDescription cpuDescr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
 		OsApplicationAreas areaNames = cpuDescr == null ? null : cpuDescr.getOsApplicationNames();
 		
@@ -315,7 +315,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				}
 				application_rom.append(" }, "+
 							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") +
-							(needStackMonitoring ? ", "+stack_id+"U": "") +
+							(needStackMonitoring ? ", "+(stack_id>=0? stack_id+"U" : "((EE_UREG)-1)"): "") +
 							", "+restartTask+"}");
 			}
 
@@ -375,6 +375,81 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		
 		ee_c_buffer.append(" " + end + indent1 + "};\n\n");
 		
+		
+		if (parent.checkKeyword(IWritersKeywords.KERNEL_SERVICE_PROTECTION)) {
+			// check if this a binary distribution
+			boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
+			/*
+			 * Define a string for each MAX_OBJECT_NUMBER (OBJECT=task, RESOURCE, ...).
+			 * Binary distribution uses the suffix RTD_. 
+			 */
+			final String MAX_ALARM = (binaryDistr ? "RTD_" : "EE_") + "MAX_ALARM";
+			final String MAX_APPMODE = (binaryDistr ? "RTD_" : "EE_") + "MAX_APPMODE";
+			final String MAX_COUNTER = (binaryDistr ? "RTD_" : "EE_") + "MAX_COUNTER";
+			final String MAX_TASK = (binaryDistr ? "RTD_" : "EE_") + "MAX_TASK";
+			final String MAX_RESOURCE = (binaryDistr ? "RTD_" : "EE_") + "MAX_RESOURCE";
+			final String MAX_SCHED_TAB = (binaryDistr ? "RTD_" : "EE_") + "MAX_SCHEDULETABLES";
+			String pre = "";
+			
+			ee_c_buffer.append(
+					commentWriterC.writerBanner("OS APPLICATIONS ACCESS"));
+			
+			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_task_access_rules["+MAX_TASK+"] =\n"+indent1+"{\n");
+			for (ISimpleGenRes task : ool.getList(IOilObjectList.TASK)) {
+				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(task, ool, null));
+				pre = ",\n";
+			}
+			ee_c_buffer.append(pre + indent1 + "};\n\n");
+			
+			pre = "";
+			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_isr_access_rules[EE_MAX_ISR_ID] =\n"+indent1+"{\n");
+			for (ISimpleGenRes isr : SectionWriterIsr.getIsrByID(ool)) {
+				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(isr, ool, null));
+				pre = ",\n";
+			}
+			ee_c_buffer.append(pre + indent1 + "};\n\n");
+
+			pre = "";
+			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_resource_access_rules["+MAX_RESOURCE+"] =\n"+indent1+"{\n");
+			for (ISimpleGenRes resource : ool.getList(IOilObjectList.RESOURCE)) {
+				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(resource, ool, null));
+				pre = ",\n";
+			}
+			ee_c_buffer.append(pre + indent1 + "};\n\n");
+
+			pre = "";
+			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_alarm_access_rules["+MAX_ALARM+"] =\n"+indent1+"{\n");
+			for (ISimpleGenRes alarm : ool.getList(IOilObjectList.ALARM)) {
+				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(alarm, ool, null));
+				pre = ",\n";
+			}
+			ee_c_buffer.append(pre + indent1 + "};\n\n");
+
+			pre = "";
+			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_counter_access_rules["+MAX_COUNTER+"] =\n"+indent1+"{\n");
+			for (ISimpleGenRes counter : ool.getList(IOilObjectList.COUNTER)) {
+				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(counter, ool, null));
+				pre = ",\n";
+			}
+			ee_c_buffer.append(pre + indent1 + "};\n\n");
+
+			pre = "";
+			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_scheduletable_access_rules["+MAX_SCHED_TAB+"] =\n"+indent1+"{\n");
+			for (ISimpleGenRes schedTab : ool.getList(IOilObjectList.SCHEDULE_TABLE)) {
+				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(schedTab, ool, null));
+				pre = ",\n";
+			}
+			ee_c_buffer.append(pre + indent1 + "};\n\n");
+
+//			pre = "";
+//			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_spinlock_access_rules["+MAX_SPINLOCK+"] =\n"+indent1+"{\n");
+//			for (ISimpleGenRes spinlock : ool.getList(IOilObjectList.SPINLOCK)) {
+//				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(spinlock, ool, null));
+//				pre = ",\n";
+//			}
+//			ee_c_buffer.append(pre + indent1 + "};\n\n");
+		}
+		
 	}
 	
 
@@ -429,11 +504,13 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				} else if (isr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER)) {
 					name = isr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER);
 				}
-				if (!def.contains(name)) {
-					def.add(name);
-					ee_c_buffer.append("extern void "+name+"( void ); /* "+isr.getName()+" */\n");
-				} else {
-					ee_c_buffer.append(commentWriterC.writerSingleLineComment("extern void "+name+"( void ); /* "+isr.getName()+" */"));
+				if (name.length()>0) {
+					if (!def.contains(name)) {
+						def.add(name);
+						ee_c_buffer.append("extern void "+name+"( void ); /* "+isr.getName()+" */\n");
+					} else {
+						ee_c_buffer.append(commentWriterC.writerSingleLineComment("extern void "+name+"( void ); /* "+isr.getName()+" */"));
+					}
 				}
 			}		
 		}
@@ -510,11 +587,12 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		final String path_mem_shared = osApplBasePath+ "SHARED_STACK_SIZE";
 		final String path_mem_irq = osApplBasePath+ "IRQ_STACK_SIZE";
 		
-		final String path_alarm    = osApplBasePath+ "ALARM";
-		final String path_counter  = osApplBasePath+ "COUNTER";
-		final String path_isr      = osApplBasePath+ "ISR";
-		final String path_resource = osApplBasePath+ "RESOURCE";
-		final String path_task     = osApplBasePath+ "TASK";
+		final String path_alarm      = osApplBasePath+ "ALARM";
+		final String path_counter    = osApplBasePath+ "COUNTER";
+		final String path_isr        = osApplBasePath+ "ISR";
+		final String path_resource   = osApplBasePath+ "RESOURCE";
+		final String path_task       = osApplBasePath+ "TASK";
+		final String path_schedTable = osApplBasePath+ "SCHEDULETABLE";
 
 		final String path_restarttask     = osApplBasePath+ "RESTARTTASK";
 
@@ -539,7 +617,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				useOsApplications = true;
 			}
 		}
-	
 		
 		for (IOilObjectList ool : oilObjects) {
 			
@@ -548,6 +625,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			Map<String, ISimpleGenRes> map_isr = getMap(ool.getList(IOilObjectList.ISR));
 			Map<String, ISimpleGenRes> map_resource = getMap(ool.getList(IOilObjectList.RESOURCE));
 			Map<String, ISimpleGenRes> map_task = getMap(ool.getList(IOilObjectList.TASK));
+			Map<String, ISimpleGenRes> map_schedTable = getMap(ool.getList(IOilObjectList.SCHEDULE_TABLE));
 			
 
 			for (ISimpleGenRes os: ool.getList(IOilObjectList.OS)){ // nesting level
@@ -641,7 +719,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						
 						appl.setProperty(OS_APPLICATION_MEM_SIZE, val[0]);
 					} else if (enableMemoryProtection) {
-						throw new OilCodeWriterException("Required a mem size for OsApplication " + appl_name);
+						appl.setProperty(OS_APPLICATION_MEM_SIZE, "0");
+						//throw new OilCodeWriterException("Required a mem size for OsApplication " + appl_name);
 					}
 				}
 				{
@@ -709,8 +788,8 @@ public class SectionWriterOsApplication extends SectionWriter implements
 					}
 					appl.setObject(ISimpleGenResKeywords.OS_APPL_LIST_REF_RESOURCE, resource);
 				}
-				ArrayList<String> task = new ArrayList<String>();
 				{
+					ArrayList<String> task = new ArrayList<String>();
 					String[] values = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_task));
 					if (values != null) for (String val: values) {
 						if (!map_task.containsKey(val)) {
@@ -722,24 +801,39 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						}
 					}
 					appl.setObject(ISimpleGenResKeywords.OS_APPL_LIST_REF_TASK, task);
+					
+					{
+						String[] val = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_restarttask));
+						String resttask = "EE_NIL";
+						if (val != null && val.length>0 && val[0] != null && val[0].length()>0) {
+							
+							// check if the value is a valid task name
+							if (task.contains(val[0])) {
+								resttask = val[0];
+							} else {
+								throw new OilCodeWriterException("The restartTask " +val[0]+ " is not one of tasks related to the OsApplication " + appl_name);
+							}
+							
+							appl.setProperty(OS_APPLICATION_RESTART_TASK, val[0]);
+						}
+							
+						appl.setProperty(OS_APPLICATION_RESTART_TASK, resttask);
+						
+					}
 				}
 				{
-					String[] val = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_restarttask));
-					String resttask = "EE_NIL";
-					if (val != null && val.length>0 && val[0] != null && val[0].length()>0) {
-						
-						// check if the value is a valid task name
-						if (task.contains(val[0])) {
-							resttask = val[0];
-						} else {
-							throw new OilCodeWriterException("The restartTask " +val[0]+ " is not one of tasks related to the OsApplication " + appl_name);
+					ArrayList<String> schedTable = new ArrayList<String>();
+					String[] values = CommonUtils.getValues(vt, addToAllStrings(appl_paths, path_schedTable));
+					if (values != null) for (String val: values) {
+						if (!map_schedTable.containsKey(val)) {
+							throw new OilCodeWriterException("Cannot resolve a reference from OsApplication " + appl_name + " to the scheduling table " + val);
 						}
-						
-						appl.setProperty(OS_APPLICATION_RESTART_TASK, val[0]);
+						ISimpleGenRes sgr_scTab = map_schedTable.get(val);
+						if (add_appl_ref(sgr_scTab, ISimpleGenResKeywords.SCHEDTABLE_OS_APPLICATION_NAME, appl_name, id)) {
+							schedTable.add(val);
+						}
 					}
-						
-					appl.setProperty(OS_APPLICATION_RESTART_TASK, resttask);
-					
+					appl.setObject(ISimpleGenResKeywords.OS_APPL_LIST_REF_SCHEDTABLE, schedTable);
 				}
 				
 				id++;
@@ -754,6 +848,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				List<String> not_map_isr = new LinkedList<String>();
 				List<String> not_map_resource = new LinkedList<String>();
 				List<String> not_map_task = new LinkedList<String>();
+				List<String> not_map_schedTable = new LinkedList<String>();
 
 				List<ISimpleGenRes> alarms = ool.getList(IOilObjectList.ALARM);
 				for (ISimpleGenRes alarm : alarms) {
@@ -784,6 +879,13 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				for (ISimpleGenRes task : tasks) {
 					if (!task.containsProperty(ISimpleGenResKeywords.OS_APPL_ID)) {
 						not_map_task.add(task.getName());
+					}
+				}
+				
+				List<ISimpleGenRes> scheduleTables = ool.getList(IOilObjectList.SCHEDULE_TABLE);
+				for (ISimpleGenRes schedTab : scheduleTables) {
+					if (!schedTab.containsProperty(ISimpleGenResKeywords.OS_APPL_ID)) {
+						not_map_schedTable.add(schedTab.getName());
 					}
 				}
 				
@@ -819,6 +921,13 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				if (not_map_task.size()>0) {
 					buff.append("Task not assigned to any OsApplication:");
 					for (String s: not_map_task) {
+						buff.append(" " + s );
+					}
+					buff.append("\n");
+				}
+				if (not_map_schedTable.size()>0) {
+					buff.append("Schedule Table not assigned to any OsApplication:");
+					for (String s: not_map_schedTable) {
 						buff.append(" " + s );
 					}
 					buff.append("\n");

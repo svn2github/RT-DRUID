@@ -105,6 +105,11 @@ public final class EEStacks implements IEEWriterKeywords {
 		 * Size dim[0] = user stack dim[1] = system stack
 		 */
 		private int dim[];
+		
+		/**
+		 * number of tasks and isr that uses this kernel stack
+		 */
+		private int kernelSize;
 
 		/**
 		 * If set, this string identifies the memory partition 
@@ -114,10 +119,10 @@ public final class EEStacks implements IEEWriterKeywords {
 		/**
 		 * Makes a new Tasks object without make any check
 		 */
-		public StackDescr(String stackId, int[] stackSize) {
-			this(stackId, stackSize, null);
+		public StackDescr(String stackId, int[] stackSize, int kernelSize) {
+			this(stackId, stackSize, kernelSize, null);
 		}
-		public StackDescr(String stackId, int[] stackSize, String applicationId) {
+		public StackDescr(String stackId, int[] stackSize, int kernelSize, String applicationId) {
 			id = stackId;
 			dim = new int[stackSize.length];
 			System.arraycopy(stackSize, 0, dim, 0, stackSize.length);
@@ -129,6 +134,16 @@ public final class EEStacks implements IEEWriterKeywords {
 			return dim;
 		}
 
+		// get
+		public void incrKernelSize() {
+			kernelSize++;
+		}
+		
+		// get
+		public int getKernelSize() {
+			return kernelSize;
+		}
+		
 		public String getId() {
 			return id;
 		}
@@ -315,7 +330,7 @@ public final class EEStacks implements IEEWriterKeywords {
 			}
 			
 			// store the shared stack
-			stackList.add(new StackDescr(SHARED_STACK, values));
+			stackList.add(new StackDescr(SHARED_STACK, values, 1));
 
 		}
 
@@ -381,7 +396,7 @@ public final class EEStacks implements IEEWriterKeywords {
 				idDummy = new String("A" + autoId);
 				autoId++;
 
-				stackList.add(new StackDescr(idDummy, values));
+				stackList.add(new StackDescr(idDummy, values, 1));
 				
 				
 			} else {
@@ -474,7 +489,7 @@ public final class EEStacks implements IEEWriterKeywords {
 					autoId++;
 	
 					// store size
-					stackList.add(new StackDescr(idSt, new int[]{shared}, currAppl.getName()));
+					stackList.add(new StackDescr(idSt, new int[]{shared}, 1, currAppl.getName()));
 	
 					
 					int index = Collections.binarySearch(taskList, APPLICATION_SHARED_PREFIX + currAppl
@@ -495,8 +510,12 @@ public final class EEStacks implements IEEWriterKeywords {
 					String idSt = new String("A" + autoId);
 					autoId++;
 	
+					/** even if no isr, start counting from 1 */
+					int numOfIsr = currAppl.containsProperty(ISimpleGenResKeywords.OS_APPL_LIST_REF_ISR) ? ((ArrayList) currAppl.getObject(ISimpleGenResKeywords.OS_APPL_LIST_REF_ISR)).size() : 0;
+					if (numOfIsr <1) numOfIsr = 1;
+					
 					// store size
-					stackList.add(new StackDescr(idSt, new int[]{irq}, currAppl.getName()));
+					stackList.add(new StackDescr(idSt, new int[]{irq}, numOfIsr, currAppl.getName()));
 	
 					
 					int index = Collections.binarySearch(taskList, APPLICATION_IRQ_PREFIX + currAppl
@@ -577,6 +596,8 @@ public final class EEStacks implements IEEWriterKeywords {
 						idSt = taskList.get(index).getStackId();
 					}
 				}
+				
+				incrKernelStack(idSt);
 
 			} else if (type.equalsIgnoreCase(currentStackDescription.privateId)) {
 
@@ -615,7 +636,7 @@ public final class EEStacks implements IEEWriterKeywords {
 				}
 
 				// store size
-				stackList.add(new StackDescr(idSt, values, os_appl_id));
+				stackList.add(new StackDescr(idSt, values, 1, os_appl_id));
 
 				// store the "Stack type" into the Task structure
 				currTask.setProperty(ISimpleGenResKeywords.TASK_STACK, ISimpleGenResKeywords.TASK_STACK_PRIVATE);
@@ -729,6 +750,17 @@ public final class EEStacks implements IEEWriterKeywords {
 		
 	}
 	
+	private void incrKernelStack(String idSt) {
+		// search the shared stack and compute the sum
+		for (int i=0; i<stackList.size(); i++) {
+			StackDescr sd = (StackDescr) stackList.get(i);
+			
+			if (idSt.equals(sd.getId())){
+				sd.incrKernelSize();
+			}
+		}
+	}
+	
 	/**
 	 * Set a new rule about dummy stack : 
 	 * if always the first or the last, or if it's always present.
@@ -785,6 +817,36 @@ public final class EEStacks implements IEEWriterKeywords {
 				risp[j][i] = tmp[i];
 			}
 			
+		}
+
+		// then ... finish
+		return risp;
+	}
+	
+	/**
+	 * Returns the size of ( <b>Distinct </b>) kernel stacks used by given task
+	 * lisk.
+	 * 
+	 * @param tNames
+	 *            the task's names
+	 * 
+	 * @return the size of ( <b>Distinct </b>) kernel stacks used by given tasks
+	 * 
+	 * @throws NullPointerException
+	 *             if tNames is null
+	 * @throws RuntimeException
+	 *             if there isn't any task with given name
+	 */
+	public int[] stackSysSize(String[] tNames) {
+
+		ArrayList<StackDescr> stacks = computeStacks(tNames);
+
+		// prepare the list of offset
+		// and calc tot stack sizes:
+		int risp[] = new int[stacks.size()];
+		
+		for (int j = 0; j < stacks.size(); j++) {
+			risp[j] = ((StackDescr) stacks.get(j)).getKernelSize();
 		}
 
 		// then ... finish

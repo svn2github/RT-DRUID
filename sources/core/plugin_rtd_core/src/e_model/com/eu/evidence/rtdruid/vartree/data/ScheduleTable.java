@@ -12,15 +12,15 @@ import com.eu.evidence.rtdruid.vartree.variables.StringVar;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable#getName <em>Name</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.vartree.data.ScheduleTable#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
- * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getSchedulingTable()
+ * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getScheduleTable()
  * @model
  * @generated
  */
-public interface SchedulingTable extends ObjectWithID {
+public interface ScheduleTable extends ObjectWithID {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -31,14 +31,14 @@ public interface SchedulingTable extends ObjectWithID {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(StringVar)
-	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getSchedulingTable_Name()
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getScheduleTable_Name()
 	 * @model id="true" dataType="com.eu.evidence.rtdruid.vartree.data.StringVar"
 	 * @generated
 	 */
 	StringVar getName();
 
 	/**
-	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link com.eu.evidence.rtdruid.vartree.data.ScheduleTable#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -47,4 +47,4 @@ public interface SchedulingTable extends ObjectWithID {
 	 */
 	void setName(StringVar value);
 
-} // SchedulingTable
+} // ScheduleTable

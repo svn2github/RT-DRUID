@@ -14,7 +14,7 @@ import com.eu.evidence.rtdruid.vartree.data.Ecu;
 import com.eu.evidence.rtdruid.vartree.data.Frame;
 import com.eu.evidence.rtdruid.vartree.data.Mutex;
 import com.eu.evidence.rtdruid.vartree.data.Resource;
-import com.eu.evidence.rtdruid.vartree.data.SchedulingTable;
+import com.eu.evidence.rtdruid.vartree.data.ScheduleTable;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
 import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.Task;
@@ -48,7 +48,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getTaskList <em>Task List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getComList <em>Com List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getSpinLockList <em>Spin Lock List</em>}</li>
- *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getSchedulingTableList <em>Scheduling Table List</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ArchitecturalImpl#getScheduleTableList <em>Scheduling Table List</em>}</li>
  * </ul>
  * </p>
  *
@@ -146,14 +146,14 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	protected EList<SpinLock> spinLockList;
 
 	/**
-	 * The cached value of the '{@link #getSchedulingTableList() <em>Scheduling Table List</em>}' containment reference list.
+	 * The cached value of the '{@link #getScheduleTableList() <em>Scheduling Table List</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSchedulingTableList()
+	 * @see #getScheduleTableList()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<SchedulingTable> schedulingTableList;
+	protected EList<ScheduleTable> schedulingTableList;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -287,9 +287,9 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<SchedulingTable> getSchedulingTableList() {
+	public EList<ScheduleTable> getScheduleTableList() {
 		if (schedulingTableList == null) {
-			schedulingTableList = new EObjectContainmentEList<SchedulingTable>(SchedulingTable.class, this, DataPackage.ARCHITECTURAL__SCHEDULING_TABLE_LIST);
+			schedulingTableList = new EObjectContainmentEList<ScheduleTable>(ScheduleTable.class, this, DataPackage.ARCHITECTURAL__SCHEDULE_TABLE_LIST);
 		}
 		return schedulingTableList;
 	}
@@ -320,8 +320,8 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 				return ((InternalEList<?>)getComList()).basicRemove(otherEnd, msgs);
 			case DataPackage.ARCHITECTURAL__SPIN_LOCK_LIST:
 				return ((InternalEList<?>)getSpinLockList()).basicRemove(otherEnd, msgs);
-			case DataPackage.ARCHITECTURAL__SCHEDULING_TABLE_LIST:
-				return ((InternalEList<?>)getSchedulingTableList()).basicRemove(otherEnd, msgs);
+			case DataPackage.ARCHITECTURAL__SCHEDULE_TABLE_LIST:
+				return ((InternalEList<?>)getScheduleTableList()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -352,8 +352,8 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 				return getComList();
 			case DataPackage.ARCHITECTURAL__SPIN_LOCK_LIST:
 				return getSpinLockList();
-			case DataPackage.ARCHITECTURAL__SCHEDULING_TABLE_LIST:
-				return getSchedulingTableList();
+			case DataPackage.ARCHITECTURAL__SCHEDULE_TABLE_LIST:
+				return getScheduleTableList();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -403,9 +403,9 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 				getSpinLockList().clear();
 				getSpinLockList().addAll((Collection<? extends SpinLock>)newValue);
 				return;
-			case DataPackage.ARCHITECTURAL__SCHEDULING_TABLE_LIST:
-				getSchedulingTableList().clear();
-				getSchedulingTableList().addAll((Collection<? extends SchedulingTable>)newValue);
+			case DataPackage.ARCHITECTURAL__SCHEDULE_TABLE_LIST:
+				getScheduleTableList().clear();
+				getScheduleTableList().addAll((Collection<? extends ScheduleTable>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -446,8 +446,8 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 			case DataPackage.ARCHITECTURAL__SPIN_LOCK_LIST:
 				getSpinLockList().clear();
 				return;
-			case DataPackage.ARCHITECTURAL__SCHEDULING_TABLE_LIST:
-				getSchedulingTableList().clear();
+			case DataPackage.ARCHITECTURAL__SCHEDULE_TABLE_LIST:
+				getScheduleTableList().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -479,7 +479,7 @@ public class ArchitecturalImpl extends ObjectWithIDImpl implements Architectural
 				return comList != null && !comList.isEmpty();
 			case DataPackage.ARCHITECTURAL__SPIN_LOCK_LIST:
 				return spinLockList != null && !spinLockList.isEmpty();
-			case DataPackage.ARCHITECTURAL__SCHEDULING_TABLE_LIST:
+			case DataPackage.ARCHITECTURAL__SCHEDULE_TABLE_LIST:
 				return schedulingTableList != null && !schedulingTableList.isEmpty();
 		}
 		return super.eIsSet(featureID);

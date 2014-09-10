@@ -482,7 +482,7 @@ public interface DataFactory extends EFactory {
 	 * @return a new object of class '<em>Scheduling Table</em>'.
 	 * @generated
 	 */
-	SchedulingTable createSchedulingTable();
+	ScheduleTable createScheduleTable();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getTaskList <em>Task List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getComList <em>Com List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSpinLockList <em>Spin Lock List</em>}</li>
- *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSchedulingTableList <em>Scheduling Table List</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getScheduleTableList <em>Scheduling Table List</em>}</li>
  * </ul>
  * </p>
  *
@@ -180,7 +180,7 @@ public interface Architectural extends ObjectWithID {
 
 	/**
 	 * Returns the value of the '<em><b>Scheduling Table List</b></em>' containment reference list.
-	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable}.
+	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.ScheduleTable}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Scheduling Table List</em>' containment reference list isn't clear,
@@ -188,10 +188,10 @@ public interface Architectural extends ObjectWithID {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Scheduling Table List</em>' containment reference list.
-	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_SchedulingTableList()
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_ScheduleTableList()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<SchedulingTable> getSchedulingTableList();
+	EList<ScheduleTable> getScheduleTableList();
 
 } // Architectural

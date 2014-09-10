@@ -40,8 +40,7 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 		IEEWriterKeywords, IRemoteNotificationsConstants,
 		IGetEEOPTExtentions, IExtractObjectsExtentions,
 		IExtractKeywordsExtentions {
-
-	
+	        
 	public final static String EE_OPT_MEMORY_PROTECTION = "__EE_MEMORY_PROTECTION__";
 	protected final static String indent1 = IWritersKeywords.INDENT;
 	protected final static String indent2 = IWritersKeywords.INDENT + IWritersKeywords.INDENT;
@@ -179,7 +178,7 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 	public List<String> getEEOpt(int type, int rtosId) {
 		List<String> answer = new ArrayList<String>();
 		
-		if ((type & EE_OPT_CPU_ONLY) != 0) {
+		if ((type & EE_OPT_CPU_ONLY) != 0 && rtosId>=0) {
 			/*******************************************************************
 			 * AUTOMATIC OPTIONS (CPU DEPENDENT)
 			 ******************************************************************/
@@ -207,6 +206,7 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 
 			final String currentRtosPrefix = parent.computeOilRtosPrefix(rtosPrefix[rtodId]);
 			options.add(new AutoOptions(currentRtosPrefix, "MEMORY_PROTECTION", "TRUE", IWritersKeywords.KERNEL_MEMORY_PROTECTION, false));
+			options.add(new AutoOptions(currentRtosPrefix, "KERNEL_STACKS", "TRUE", IWritersKeywords.KERNEL_KERNEL_STACKS, false));
 
 		}
 		AutoOptions.updateKeywords(options, keywords, vt);

@@ -58,8 +58,10 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	protected final static String[] EE_INTERNAL_IDs = {
 		"thread_not_terminated"
 	};
-
-
+	
+	protected final static String[] EE_OS_ERROR_IDs = {
+		"notify_error_from_us_internal"
+	};
 
 	protected final static String[] EE_ISR2_IDs = {
 		"TerminateISR2"
@@ -105,6 +107,21 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	};			
 	
 	
+	protected final static String[] EE_SCHED_TABLES_IDs = {
+		"StartScheduleTableRel",
+		"StartScheduleTableAbs",
+		"StopScheduleTable",
+		"NextScheduleTable",
+		"GetScheduleTableStatus",
+		"SyncScheduleTable"
+	};			
+	
+	
+	protected final static String[] EE_SPINLOCK_IDs = {
+		"GetSpinlock",
+		"ReleaseSpinlock",
+		"TryToGetSpinlock"
+	};
 	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
@@ -195,6 +212,25 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 			ee_c_buffer.append(indent1+"(EE_FADDR)&EE_"+s+",\n");
 			counter ++;
 		}
+
+		// OS Services
+		{
+			boolean has_os_appl_errorhook = false;
+			for (ISimpleGenRes sgr : os_appls) {
+				if (sgr.containsProperty(IEEWriterKeywords.OS_APPLICATION_HOOK_ERROR) &&
+						"true".equalsIgnoreCase(sgr.getString(IEEWriterKeywords.OS_APPLICATION_HOOK_ERROR))){
+					has_os_appl_errorhook = true;
+					break;
+				}
+			}
+			if (has_os_appl_errorhook || parent.checkKeyword(OsekConstants.DEF__OSEKOS_HAS_ERRORHOOK__)) {
+				for (String s: EE_OS_ERROR_IDs) {
+					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)&EE_oo_"+s+",\n");
+					counter ++;
+				}
+			}
+		}
 		
 		{
 			boolean isr2_enabled = ErikaEnterpriseWriter.getIsr2Number(ool) >0;
@@ -210,16 +246,16 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 			
 		}
 		
-		{
+//		{
 		
-			Integer sections = (Integer) AbstractRtosWriter.getOsObject(ool, OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS);
-			if (sections != null && (sections.intValue() & OsekOrtiConstants.EE_ORTI_OS) != 0) {
-					String s="ORTI_ext_set_service";
-					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_ORTI_set_service,\n");
-					counter ++;
-				}
-			}
+//			Integer sections = (Integer) AbstractRtosWriter.getOsObject(ool, OsekOrtiConstants.OS_CPU_ORTI_ENABLED_SECTIONS);
+//			if (sections != null && (sections.intValue() & OsekOrtiConstants.EE_ORTI_OS) != 0) {
+//					String s="ORTI_ext_set_service";
+//					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+//				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_ORTI_set_service,\n");
+//					counter ++;
+//				}
+//			}
 		
 		// Resources
 		if (ool.getList(IOilObjectList.RESOURCE).size() > 0
@@ -283,6 +319,28 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 				&& parent.checkKeyword(IWritersKeywords.CPU_TRICORE))  {
 
 			for (String s: EE_OSAPPL_IDs) {
+				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+				counter ++;
+			}
+		}
+		
+		// SchedTable
+		if (ool.getList(IOilObjectList.SCHEDULE_TABLE).size() > 0
+				&& parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION))  {
+
+			for (String s: EE_SCHED_TABLES_IDs) {
+				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+				counter ++;
+			}
+		}
+		
+		// Spinlock
+		if (ool.getList(IOilObjectList.SPINLOCK).size() > 0
+				&& parent.getOilObjects().length >1)  {
+
+			for (String s: EE_SPINLOCK_IDs) {
 				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
 				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
 				counter ++;

@@ -46,7 +46,7 @@ import com.eu.evidence.rtdruid.vartree.data.Sample;
 import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
-import com.eu.evidence.rtdruid.vartree.data.SchedulingTable;
+import com.eu.evidence.rtdruid.vartree.data.ScheduleTable;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
 import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.SubSystem;
@@ -337,8 +337,8 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
 				return createSpinLockAdapter();
 			}
 			@Override
-			public Adapter caseSchedulingTable(SchedulingTable object) {
-				return createSchedulingTableAdapter();
+			public Adapter caseScheduleTable(ScheduleTable object) {
+				return createScheduleTableAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -1103,16 +1103,16 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable <em>Scheduling Table</em>}'.
+	 * Creates a new adapter for an object of class '{@link com.eu.evidence.rtdruid.vartree.data.ScheduleTable <em>Scheduling Table</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see com.eu.evidence.rtdruid.vartree.data.SchedulingTable
+	 * @see com.eu.evidence.rtdruid.vartree.data.ScheduleTable
 	 * @generated
 	 */
-	public Adapter createSchedulingTableAdapter() {
+	public Adapter createScheduleTableAdapter() {
 		return null;
 	}
 

@@ -1225,23 +1225,23 @@ public class DataItemProviderAdapterFactory extends DataAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable} instances.
+	 * This keeps track of the one adapter used for all {@link com.eu.evidence.rtdruid.vartree.data.ScheduleTable} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected SchedulingTableItemProvider schedulingTableItemProvider;
+	protected ScheduleTableItemProvider schedulingTableItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable}.
+	 * This creates an adapter for a {@link com.eu.evidence.rtdruid.vartree.data.ScheduleTable}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createSchedulingTableAdapter() {
+	public Adapter createScheduleTableAdapter() {
 		if (schedulingTableItemProvider == null) {
-			schedulingTableItemProvider = new SchedulingTableItemProvider(this);
+			schedulingTableItemProvider = new ScheduleTableItemProvider(this);
 		}
 
 		return schedulingTableItemProvider;

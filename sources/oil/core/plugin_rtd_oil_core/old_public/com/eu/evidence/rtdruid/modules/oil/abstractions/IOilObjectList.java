@@ -60,7 +60,7 @@ public interface IOilObjectList {
 	public static final int SPINLOCK = 14;
 
 	/** Identifies list of Scheduling tables */
-	public static final int SCHEDULING_TABLE = 15;
+	public static final int SCHEDULE_TABLE = 15;
 
 	/** Contains the number of valid objects */
 	public static final int OBJECT_NUMBER = 16;

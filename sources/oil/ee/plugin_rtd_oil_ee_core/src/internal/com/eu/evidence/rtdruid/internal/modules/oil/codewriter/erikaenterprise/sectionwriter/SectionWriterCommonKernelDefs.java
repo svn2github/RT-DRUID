@@ -294,9 +294,9 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 
 			{
 				/*
-				 * ---------------- ALARM ----------------
+				 * ---------------- ALARM & SCHEDULING TABLE ----------------
 				 * 
-				 * Define an Identifier for all Alarm.
+				 * Define an Identifier for all Alarm and scheduling table.
 				 * 
 				 * Define MAX_ALARM as number of Alarm
 				 */
@@ -320,12 +320,33 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 					curr.setProperty(ISimpleGenResKeywords.ALARM_SYS_ID, "" +id);
 				}
 				
+				List<ISimpleGenRes> scTabList = ool.getList(IOilObjectList.SCHEDULE_TABLE);
+
+				buffer.append("\n" + indent + commentWriterH.writerSingleLineComment("SCHEDULING TABLE definition")); //\n");
+				if (!binaryDistr) {
+					buffer.append(indent + "#define EE_MAX_SCHEDULETABLES " + scTabList.size()
+						+ "U\n");
+				} else if (binaryDistrFull) {
+					buffer_c.append(indent + "const unsigned int EE_MAX_SCHEDULETABLES = " + scTabList.size()
+							+ "U;\n");
+				}
+
+				id = 0;
+				for (Iterator<ISimpleGenRes> iter = scTabList.iterator(); iter.hasNext(); id++) {
+					ISimpleGenRes curr = (ISimpleGenRes) iter.next();
+					buffer.append(indent + "#define " + curr.getName() + " "
+							+ id + "U\n");
+					curr.setProperty(ISimpleGenResKeywords.SCHEDULING_SYS_ID, "" +id);
+				}
+				
+				
+				
 
 				buffer.append("\n" + indent + commentWriterH.writerSingleLineComment("COUNTER OBJECTS definition")); //\n");
 				if (!binaryDistr) {
-					buffer.append(indent + "#define EE_MAX_COUNTER_OBJECTS EE_MAX_ALARM /* + EE_MAX_SCHEDULETABLES */\n");
+					buffer.append(indent + "#define EE_MAX_COUNTER_OBJECTS (EE_MAX_ALARM + EE_MAX_SCHEDULETABLES)\n");
 				} else if (binaryDistrFull) {
-					buffer_c.append(indent + "const unsigned int EE_MAX_COUNTER_OBJECTS = " + alarmList.size()
+					buffer_c.append(indent + "const unsigned int EE_MAX_COUNTER_OBJECTS = " + (alarmList.size() + scTabList.size())
 							+ "U;\n");
 				}
 			}

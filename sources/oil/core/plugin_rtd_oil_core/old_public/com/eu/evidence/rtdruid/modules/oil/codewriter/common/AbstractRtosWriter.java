@@ -216,6 +216,79 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			extractSpinlocks = false;
 		}
 		
+		// check if at least one object has an OsApplication access rule
+		if (!checkKeyword(IWritersKeywords.KERNEL_SERVICE_PROTECTION)) {
+			
+			boolean found = false;
+			stop_searching:
+			for (IOilObjectList ool: answer.values()) {
+
+				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.TASK)) {
+					if (sgros.containsProperty(ISimpleGenResKeywords.TASK_ACCESSING_OS_APPL_LIST) &&
+							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.TASK_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+						found = true;
+						break stop_searching;
+					}
+				}
+			
+				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.RESOURCE)) {
+					if (sgros.containsProperty(ISimpleGenResKeywords.RESOURCE_ACCESSING_OS_APPL_LIST) &&
+							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.RESOURCE_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+						found = true;
+						break stop_searching;
+					}
+				}
+			
+				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.ISR)) {
+					if (sgros.containsProperty(ISimpleGenResKeywords.ISR_ACCESSING_OS_APPL_LIST) &&
+							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.ISR_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+						found = true;
+						break stop_searching;
+					}
+				}
+			
+				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.COUNTER)) {
+					if (sgros.containsProperty(ISimpleGenResKeywords.COUNTER_ACCESSING_OS_APPL_LIST) &&
+							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.COUNTER_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+						found = true;
+						break stop_searching;
+					}
+				}
+			
+				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.ALARM)) {
+					if (sgros.containsProperty(ISimpleGenResKeywords.ALARM_ACCESSING_OS_APPL_LIST) &&
+							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.ALARM_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+						found = true;
+						break stop_searching;
+					}
+				}
+			
+				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.SPINLOCK)) {
+					if (sgros.containsProperty(ISimpleGenResKeywords.SPINLOCK_ACCESSING_OS_APPL_LIST) &&
+							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.SPINLOCK_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+						found = true;
+						break stop_searching;
+					}
+				}
+				
+				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.SCHEDULE_TABLE)) {
+					if (sgros.containsProperty(ISimpleGenResKeywords.SCHEDTABLE_ACCESSING_OS_APPL_LIST) &&
+							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.SCHEDTABLE_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+						found = true;
+						break stop_searching;
+					}
+				}
+			}
+			
+			if (found) {
+				// update the keywords
+				String[] tmp = new String[keys.length +1];
+				System.arraycopy(keys, 0, tmp, 0, keys.length);
+				tmp[keys.length] = IWritersKeywords.KERNEL_SERVICE_PROTECTION;
+				keys = tmp;
+			}
+		}
+		
 		return answer.values().toArray(new IOilObjectList[answer.size()]);
 	}
 
@@ -555,7 +628,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			// 2) if found, store them inside the rigth SimpleGenRes
 			for (int i=0; i< answer.length; i++) {
 				// common data
-				String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.TASK, null)).getPath();
+				final String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.TASK, null)).getPath();
 				String[] values;
 				String chType;
 				/*
@@ -618,6 +691,13 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 						answer[i].setObject(SimpleGenResKeywords.TASK_RESOURCE_LIST, Arrays.asList(values));
 					}
 				}*/
+				{ // ----------- Accessing OS Applications ------------
+					values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
+					if (values!= null && values.length > 0) {
+						answer[i].setObject(ISimpleGenResKeywords.TASK_ACCESSING_OS_APPL_LIST, Arrays.asList(values));
+					}
+				}
+				
 			}
 		}
 			break;
@@ -664,6 +744,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 								currentAnswer.setObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST, ttt);
 							}
 						}
+						
 					}
 					
 					answer = tmpAnswer.toArray( new SimpleGenRes[tmpAnswer.size()] );
@@ -724,14 +805,6 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 //						answer[i].setProperty(ISimpleGenResKeywords.ISR_ENTRY, "");
 					}
 				}
-				{	// ----------- PRIORITY ------------
-					values = CommonUtils.getValue(vt, path+"PRIORITY");
-					if (values!= null && values.length >0) {
-						answer[i].setProperty(ISimpleGenResKeywords.ISR_USER_PRIORITY, values[0]);
-//					} else {
-//						answer[i].setProperty(ISimpleGenResKeywords.ISR_PRIORITY, "");
-					}
-				}
 				{	// ----------- HANDLER ------------
 					values = CommonUtils.getValue(vt, path+"HANDLER");
 					if (values!= null && values.length >0) {
@@ -742,6 +815,13 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 				}
 				if (answer[i].containsProperty(ISimpleGenResKeywords.ISR_ENTRY) && answer[i].containsProperty(ISimpleGenResKeywords.ISR_LEVEL)) {
 					Messages.sendWarningNl("ISR " + answer[i].getName() + " contains both ENTRY and LEVEL attributes.");
+				}
+				
+				{ // ----------- Accessing OS Applications ------------
+					values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
+					if (values!= null && values.length > 0) {
+						answer[i].setObject(ISimpleGenResKeywords.ISR_ACCESSING_OS_APPL_LIST, Arrays.asList(values));
+					}
 				}
 			}
 		}
@@ -804,7 +884,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 						};
 						
 						{ // take ALARM ACTION
-							String path = tmpPath
+							final String basePath = tmpPath
 									+ (new OilPath(OilObjectType.get(requiredType), signalNames[i])).getPath()
 									+"ACTION";
 							
@@ -823,11 +903,11 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 							final String str_ALARM_COUNTER_NAME = "COUNTER";
 
 							String[] childName = new String[1];
-							String tmpType = CommonUtils.getFirstChildEnumType(vt, path, childName);
+							String tmpType = CommonUtils.getFirstChildEnumType(vt, basePath, childName);
 							
 							if (str_ACTION_ACTIVATE_TASK.equalsIgnoreCase(tmpType)) { // ACTIVATE TASK
 								final String taskName;
-								path +=CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
+								String path = basePath + CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
 								
 								// TASK
 								String[] val = CommonUtils.getValue(vt, path+str_ACTIVATE_TASK_TASK);
@@ -847,7 +927,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 								final String taskName;
 								final String eventName;
 								
-								path +=CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
+								String path = basePath + CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
 								
 								// TASK
 								String[] val = CommonUtils.getValue(vt, path+str_SET_EVENT_TASK);
@@ -876,7 +956,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 							} else if (str_ACTION_ALARM_CALL_BACK.equalsIgnoreCase(tmpType)) { // ALARM CALL BACK
 								final String callBackName;
 								
-								path +=CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
+								String path = basePath + CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
 								
 								// TASK
 								String[] val = CommonUtils.getValue(vt, path+str_ALARM_CALL_BACK_NAME);
@@ -895,7 +975,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 							} else if (str_ACTION_ALARM_INCR_COUNTER.equalsIgnoreCase(tmpType)) { // INCREMENT COUNTER
 								final String counterName;
 								
-								path +=CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
+								String path = basePath + CommonUtils.VARIANT_ELIST+childName[0]+CommonUtils.PARAMETER_LIST;
 								
 								// Counter
 								String[] val = CommonUtils.getValue(vt, path+str_ALARM_COUNTER_NAME);
@@ -1015,6 +1095,17 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 						}
 
 					}
+					
+					if (type == IOilObjectList.ALARM || type == IOilObjectList.COUNTER) { // ----------- Accessing OS Applications ------------
+						String path = tmpPath
+								+ (new OilPath(OilObjectType.get(requiredType), signalNames[i])).getPath();
+						String[] values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
+						if (values!= null && values.length > 0) {
+							answer[i].setObject(
+									(type == IOilObjectList.ALARM ? ISimpleGenResKeywords.ALARM_ACCESSING_OS_APPL_LIST : ISimpleGenResKeywords.COUNTER_ACCESSING_OS_APPL_LIST )
+									, Arrays.asList(values));
+						}
+					}
 	        	}
 	        }
 	        
@@ -1072,16 +1163,16 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.SPINLOCK, null)).getPath();
 					String[] values;
 
-					{	// ----------- TRAP ------------
+					{	// ----------- NEXT_SPINLOCK ------------
 						values = CommonUtils.getValue(vt, path+"NEXT_SPINLOCK");
 						if (values != null && values.length>0 && values[0] != null) {
 							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_NEXT, values[0]);
 						}
 					}
-					{	// ----------- TRAP ------------
+					{	// ----------- ACCESSING_APPLICATION ------------
 						values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
 						if (values != null) {
-							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_APPLICATION, values);
+							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_ACCESSING_OS_APPL_LIST, values);
 						}
 					}
 
@@ -1092,7 +1183,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 		}
 			break;
 			/* ----------------------  SCHEDULING TABLE  ---------------------- */
-		case IOilObjectList.SCHEDULING_TABLE:
+		case IOilObjectList.SCHEDULE_TABLE:
 		{
 			String resPath = sysName+S+DPKG.getSystem_Architectural().getName()+S
     			+SimpleTransform.SCHED_TABLE_LIST;
@@ -1110,18 +1201,60 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.SCHEDULINGTABLE, null)).getPath();
 					String[] values;
 
-//					{	// ----------- TRAP ------------
-//						values = CommonUtils.getValue(vt, path+"NEXT_SPINLOCK");
-//						if (values != null && values.length>0 && values[0] != null) {
-//							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_NEXT, values[0]);
-//						}
-//					}
-//					{	// ----------- TRAP ------------
-//						values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
-//						if (values != null) {
-//							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_APPLICATION, values);
-//						}
-//					}
+					{	// ----------- DURATION ------------
+						values = CommonUtils.getValue(vt, path+"DURATION");
+						if (values != null && values.length>0 && values[0] != null) {
+							answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_DURATION, values[0]);
+						}
+					}
+					{	// ----------- REPEATING ------------
+						String enumType = CommonUtils.getFirstChildEnumType(vt, path+"REPEATING");
+						answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_REPEATING, "TRUE".equalsIgnoreCase(enumType) ? "TRUE" : "FALSE");
+					}
+					{	// ----------- COUNTER ------------
+						values = CommonUtils.getValue(vt, path+"COUNTER");
+						if (values != null) {
+							answer[i].setObject(ISimpleGenResKeywords.SCHEDULING_COUNTER, values);
+						}
+					}
+					{	// ----------- ACCESSING_APPLICATION ------------
+						values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
+						if (values != null) {
+							answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_ACCESSING_OS_APPL_LIST, values);
+						}
+					}
+					
+					{	// ----------- AUTOSTART ------------
+						String[] chName = new String[1];
+						String localPath = path+"AUTOSTART";
+						String chType = CommonUtils.getFirstChildEnumType(vt, localPath, chName);
+						if ("true".equalsIgnoreCase(chType)) {
+							localPath += CommonUtils.VARIANT_ELIST+chName[0]+CommonUtils.PARAMETER_LIST;
+							
+							values = CommonUtils.getValue(vt, localPath+"APPMODE");
+							
+							if (values!= null && values.length > 0) {
+								answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_APPMODES_LIST, Arrays.asList(values));
+							} else {
+								// store an empty list 
+								answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_APPMODES_LIST, new ArrayList<String>());
+							}
+							
+							values = CommonUtils.getValue(vt, localPath+"START_VALUE");
+							if (values != null && values.length>0 && values[0] != null) {
+								answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_START_VALUE, values[0]);
+							}
+							
+							String enumType = CommonUtils.getFirstChildEnumType(vt, localPath+"TYPE");
+							String tmp = ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_TYPE_ABSOLUTE;
+							if (ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_TYPE_RELATIVE.equalsIgnoreCase(enumType)) tmp = ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_TYPE_RELATIVE;
+							else if (ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_TYPE_SYNCHRON.equalsIgnoreCase(enumType)) tmp = ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_TYPE_SYNCHRON;
+							answer[i].setObject(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_TYPE, tmp);
+
+						} else {
+							// don't store anything
+						}
+					}
 
 		        }
 	        }

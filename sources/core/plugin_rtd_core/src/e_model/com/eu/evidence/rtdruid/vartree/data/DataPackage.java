@@ -571,7 +571,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARCHITECTURAL__SCHEDULING_TABLE_LIST = OBJECT_WITH_ID_FEATURE_COUNT + 9;
+	int ARCHITECTURAL__SCHEDULE_TABLE_LIST = OBJECT_WITH_ID_FEATURE_COUNT + 9;
 
 	/**
 	 * The number of structural features of the '<em>Architectural</em>' class.
@@ -3156,14 +3156,14 @@ public interface DataPackage extends EPackage {
 	int SPIN_LOCK_FEATURE_COUNT = OBJECT_WITH_ID_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.SchedulingTableImpl <em>Scheduling Table</em>}' class.
+	 * The meta object id for the '{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ScheduleTableImpl <em>Scheduling Table</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.SchedulingTableImpl
-	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getSchedulingTable()
+	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.ScheduleTableImpl
+	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getScheduleTable()
 	 * @generated
 	 */
-	int SCHEDULING_TABLE = 53;
+	int SCHEDULE_TABLE = 53;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' attribute.
@@ -3172,7 +3172,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULING_TABLE__PROPERTIES = OBJECT_WITH_ID__PROPERTIES;
+	int SCHEDULE_TABLE__PROPERTIES = OBJECT_WITH_ID__PROPERTIES;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3181,7 +3181,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULING_TABLE__NAME = OBJECT_WITH_ID_FEATURE_COUNT + 0;
+	int SCHEDULE_TABLE__NAME = OBJECT_WITH_ID_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Scheduling Table</em>' class.
@@ -3190,7 +3190,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULING_TABLE_FEATURE_COUNT = OBJECT_WITH_ID_FEATURE_COUNT + 1;
+	int SCHEDULE_TABLE_FEATURE_COUNT = OBJECT_WITH_ID_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '<em>Boolean Var</em>' data type.
@@ -3661,15 +3661,15 @@ public interface DataPackage extends EPackage {
 	EReference getArchitectural_SpinLockList();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSchedulingTableList <em>Scheduling Table List</em>}'.
+	 * Returns the meta object for the containment reference list '{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getScheduleTableList <em>Scheduling Table List</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Scheduling Table List</em>'.
-	 * @see com.eu.evidence.rtdruid.vartree.data.Architectural#getSchedulingTableList()
+	 * @see com.eu.evidence.rtdruid.vartree.data.Architectural#getScheduleTableList()
 	 * @see #getArchitectural()
 	 * @generated
 	 */
-	EReference getArchitectural_SchedulingTableList();
+	EReference getArchitectural_ScheduleTableList();
 
 	/**
 	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.vartree.data.Mapping <em>Mapping</em>}'.
@@ -5739,25 +5739,25 @@ public interface DataPackage extends EPackage {
 	EAttribute getSpinLock_Name();
 
 	/**
-	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable <em>Scheduling Table</em>}'.
+	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.vartree.data.ScheduleTable <em>Scheduling Table</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Scheduling Table</em>'.
-	 * @see com.eu.evidence.rtdruid.vartree.data.SchedulingTable
+	 * @see com.eu.evidence.rtdruid.vartree.data.ScheduleTable
 	 * @generated
 	 */
-	EClass getSchedulingTable();
+	EClass getScheduleTable();
 
 	/**
-	 * Returns the meta object for the attribute '{@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link com.eu.evidence.rtdruid.vartree.data.ScheduleTable#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see com.eu.evidence.rtdruid.vartree.data.SchedulingTable#getName()
-	 * @see #getSchedulingTable()
+	 * @see com.eu.evidence.rtdruid.vartree.data.ScheduleTable#getName()
+	 * @see #getScheduleTable()
 	 * @generated
 	 */
-	EAttribute getSchedulingTable_Name();
+	EAttribute getScheduleTable_Name();
 
 	/**
 	 * Returns the meta object for data type '{@link com.eu.evidence.rtdruid.vartree.variables.BooleanVar <em>Boolean Var</em>}'.
@@ -6182,7 +6182,7 @@ public interface DataPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ARCHITECTURAL__SCHEDULING_TABLE_LIST = eINSTANCE.getArchitectural_SchedulingTableList();
+		EReference ARCHITECTURAL__SCHEDULE_TABLE_LIST = eINSTANCE.getArchitectural_ScheduleTableList();
 
 		/**
 		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.MappingImpl <em>Mapping</em>}' class.
@@ -7811,14 +7811,14 @@ public interface DataPackage extends EPackage {
 		EAttribute SPIN_LOCK__NAME = eINSTANCE.getSpinLock_Name();
 
 		/**
-		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.SchedulingTableImpl <em>Scheduling Table</em>}' class.
+		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.ScheduleTableImpl <em>Scheduling Table</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.SchedulingTableImpl
-		 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getSchedulingTable()
+		 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.ScheduleTableImpl
+		 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getScheduleTable()
 		 * @generated
 		 */
-		EClass SCHEDULING_TABLE = eINSTANCE.getSchedulingTable();
+		EClass SCHEDULE_TABLE = eINSTANCE.getScheduleTable();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -7826,7 +7826,7 @@ public interface DataPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute SCHEDULING_TABLE__NAME = eINSTANCE.getSchedulingTable_Name();
+		EAttribute SCHEDULE_TABLE__NAME = eINSTANCE.getScheduleTable_Name();
 
 		/**
 		 * The meta object literal for the '<em>Boolean Var</em>' data type.

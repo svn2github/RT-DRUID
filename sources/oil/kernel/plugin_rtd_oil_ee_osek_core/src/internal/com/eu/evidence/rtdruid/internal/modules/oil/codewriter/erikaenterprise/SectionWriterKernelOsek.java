@@ -5,6 +5,8 @@
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
@@ -38,6 +40,8 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKe
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IExtractKeywordsExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IGetEEOPTExtentions;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilObjectType;
+import com.eu.evidence.rtdruid.modules.oil.implementation.OilPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
 /**
@@ -1107,10 +1111,20 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				}
 			}
 			
-			StringBuffer counterObjRomBuffer = new StringBuffer();
-			int counterObjRomRows = 0;
-			
 			{
+				LinkedList<String> callback_functions = new LinkedList<String>();
+				StringBuffer counterObjRomBuffer = new StringBuffer();
+				StringBuffer romActionBuffer = new StringBuffer();
+				StringBuffer schedTableBuffer = new StringBuffer();
+
+				int counterObjRomRows = 0;
+				int counterActionRomRows = 0;
+				
+				final boolean withEvents = IWritersKeywords.OSEK_ECC1
+						.equals(kernelType)
+						|| IWritersKeywords.OSEK_ECC2.equals(kernelType);
+				final String NULL_NAME = "(EE_VOID_CALLBACK)NULL";
+
 				/***************************************************************
 				 * ALARMS
 				 **************************************************************/
@@ -1118,9 +1132,6 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				List<ISimpleGenRes> alarmList = ool.getList(IOilObjectList.ALARM);
 		
 				if (alarmList.size() > 0 || requiredOilObjects.contains(new Integer(IOilObjectList.ALARM))) {
-					final String NULL_NAME = "NULL";
-					
-					LinkedList<String> callback_functions = new LinkedList<String>();
 		
 					/*
 					 * EE_alarm_ROM
@@ -1129,13 +1140,6 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							commentWriterC.writerBanner("Alarms")
 							+ indent1+  "const EE_oo_alarm_ROM_type EE_alarm_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_ALARM_ROM", alarmList.size())+"] = {\n"
 					);
-					StringBuffer romActionBuffer = new StringBuffer(
-							commentWriterC.writerBanner("Alarms action") 
-							+indent1+ "const EE_oo_action_ROM_type   EE_oo_action_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_ACTION_ROM", alarmList.size())+"] = {\n");
-
-					boolean withEvents = IWritersKeywords.OSEK_ECC1
-							.equals(kernelType)
-							|| IWritersKeywords.OSEK_ECC2.equals(kernelType);
 		
 					pre2 = "";
 					for (Iterator<ISimpleGenRes> iter = alarmList.iterator(); iter.hasNext();) {
@@ -1305,18 +1309,311 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						romActionBuffer.append(pre2 + indent2 + "{"
 								+ notif_type + ", " + task_al_name
 								+ (withEvents ? ", " + evento : "") + ", "
-								+ (NULL_NAME.equals(callBackName) ? "(EE_VOID_CALLBACK)" : "") + callBackName
+								//+ (NULL_NAME.equals(callBackName) ? "(EE_VOID_CALLBACK)" : "")
+								+ callBackName
 								+ ", " + counter_al_name + " }");
 						
 						counterObjRomBuffer.append(pre2 + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_ALARM }");
-						romAlarmBuffer.append(pre2 + indent2 + "{" + counterObjRomRows + "U" +(hasOsAppl ? ", " + osAppId+"U" : "" ) + "}");
+						romAlarmBuffer.append(pre2 + indent2 + "{" + counterActionRomRows + "U" +(hasOsAppl ? ", " + osAppId+"U" : "" ) + "}");
+						
+						counterObjRomRows++;
+						counterActionRomRows++;
+						pre2 = ",\n";
+					}
+					
+					romAlarmBuffer.append("\n"+indent1 + "};\n");
+					
+					// add ROM
+					buffer.append(romAlarmBuffer.toString());
+
+				}
+
+				/***************************************************************
+				 * SCHEDULE TABLES
+				 **************************************************************/
+		
+				List<ISimpleGenRes> schedTabList = ool.getList(IOilObjectList.SCHEDULE_TABLE);
+				IVarTree vt = parent.getVt();
+		
+				if (schedTabList.size() > 0 || requiredOilObjects.contains(new Integer(IOilObjectList.SCHEDULE_TABLE))) {
+					
+					StringBuffer romExpPointBuffer = new StringBuffer();
+					StringBuffer romScTableBuffer = new StringBuffer();
+					StringBuffer ramScTableBuffer = new StringBuffer();
+					int expPointSize = 0;
+					/*
+					 * EE_alarm_ROM
+					 */
+		
+					pre2 = "";
+					for (Iterator<ISimpleGenRes> iter = schedTabList.iterator(); iter.hasNext();) {
+		
+						ISimpleGenRes curr = iter.next();
+						final String currPath = curr.getPath() +S+ (new OilPath(OilObjectType.SCHEDULINGTABLE, null)).getPath();
+						final int startingExpIndex = expPointSize;
+						BigInteger maxDuration = new BigInteger("0");
+						String precision = "INVALID_SCHEDULETABLE_PRECISION";
+						String syncStrategy = "EE_SCHEDTABLE_SYNC_NONE";
+						String repeated = "0U";
+		
+//						// set all values for each alarm
+						int counter_sys_id = -1;
+						String counter_def = "";
+//						int osAppId = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_ID) ? (curr.getInt(ISimpleGenResKeywords.OS_APPL_ID) +1) : 0; 
+//		
+						// prepare all data
+		
+						{ // ----- GET VALUES -----
+							counter_def = curr.getString(ISimpleGenResKeywords.SCHEDULING_COUNTER); 
+		
+							//search counter
+							List<ISimpleGenRes> counterList = ool
+									.getList(IOilObjectList.COUNTER);
+							for (Iterator<ISimpleGenRes> countIter = counterList.iterator(); countIter
+									.hasNext();) {
+								ISimpleGenRes counter = countIter
+										.next();
+		
+								if (counter_def.equals(counter.getName())) {
+									counter_sys_id = counter
+											.getInt(ISimpleGenResKeywords.COUNTER_SYS_ID);
+									break;
+								}
+							}
+							if (counter_sys_id == -1) {
+								throw new RuntimeException(
+										"Scheduling Table : Wrong counter name for this Scheduling table."
+												+ " (Scheduling Table = " + curr.getName()
+												+ ", counter = " + counter_def
+												+ ")");
+							}
+
+							
+							{
+								String[] syncName = new String[1];
+								String adjType = CommonUtils.getFirstChildEnumType(vt, currPath+S+"LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION", syncName);
+								if ("TRUE".equalsIgnoreCase(adjType)) {
+									String[] tmp;
+									tmp = CommonUtils.getValue(vt, currPath+S+"LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION"+S+syncName[0]+S+"EXPLICIT_PRECISION");
+									if (tmp.length>0) precision = tmp[0];
+
+									String strTmp = CommonUtils.getFirstChildEnumType(vt, currPath+S+"LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION"+S+syncName[0]+S+"SYNC_STRATEGY");
+									if ("EXPLICIT".equalsIgnoreCase(strTmp))      syncStrategy = "EE_SCHEDTABLE_SYNC_EXPLICIT";
+									else if ("IMPLICIT".equalsIgnoreCase(strTmp)) syncStrategy = "EE_SCHEDTABLE_SYNC_IMPLICIT";
+									
+								}
+							}
+							
+							{
+								String[] syncName = new String[1];
+								String adjType = CommonUtils.getFirstChildEnumType(vt, currPath+S+"LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION", syncName);
+								if ("TRUE".equalsIgnoreCase(adjType)) {
+									repeated = "1U";
+								}
+							}
+				
+							
+							String expPre = "\n";
+							ArrayList<String> exPointChildName = new ArrayList<String>();
+							ArrayList<String> exPointType = CommonUtils.getAllChildrenEnumType(vt, currPath+"EXPIRE_POINT", exPointChildName);
+							for (int epIndex=0; epIndex<exPointType.size(); epIndex++) {
+								
+								final String expPath = currPath+"EXPIRE_POINT"+exPointChildName.get(epIndex);
+								
+								String posAdj = "0";
+								String negAdj = "0";
+								String expireValue = "0";
+								final int startingActIndex = counterActionRomRows;
+								{
+									String[] tmp = CommonUtils.getValue(vt, expPath+S+"EXPIRE_VALUE");
+									if (tmp.length==0) {
+										throw new RuntimeException(
+												"Scheduling Table : Misisng an action's expire value for Scheduling Table "
+														+ curr.getName());
+									}
+									expireValue = tmp[0];
+									try {
+										maxDuration = maxDuration.max( new BigInteger(expireValue) );
+									} catch (NumberFormatException e) {
+										throw new RuntimeException(
+												"Scheduling Table : Not valid action's expire value for Scheduling Table "
+														+ curr.getName() + "(value = "+expireValue+")");
+									}
+								}
+								
+								{
+									String[] adjName = new String[1];
+									String adjType = CommonUtils.getFirstChildEnumType(vt, expPath+S+"SYNC_ADJUSTMENT", adjName);
+									if ("TRUE".equalsIgnoreCase(adjType)) {
+										String[] tmp;
+										tmp = CommonUtils.getValue(vt, expPath+S+"SYNC_ADJUSTMENT"+S+adjName[0]+S+"MAX_POSOSITIVE_ADJ");
+										if (tmp.length>0) posAdj = tmp[0];
+
+										tmp = CommonUtils.getValue(vt, expPath+S+"SYNC_ADJUSTMENT"+S+adjName[0]+S+"MAX_NEGATIVE_ADJ");
+										if (tmp.length>0) negAdj = tmp[0];
+									}
+								}
+
+								
+								ArrayList<String> actNames = new ArrayList<String>();
+								ArrayList<String> actTypes = CommonUtils.getAllChildrenEnumType(vt, expPath+S+"ACTION", actNames);
+								for (int actIndex=0; actIndex<actTypes.size(); actIndex++) {
+									final String actPath = expPath+S+"ACTION"+actNames.get(actIndex)+S;
+									final String actType = actTypes.get(actIndex);
+
+									String callBackName = NULL_NAME;
+									//int task_id = 0;
+									String task_al_name = "0"; // default value
+									String counter_al_name = "(EE_TYPECOUNTER)-1"; // default value
+									String evento = "0U";
+									String notif_type = "";
+
+									{ // All action types requires the task name
+										String[] tmp = CommonUtils.getValue(vt, actPath+"TASK");
+										if (tmp.length==0) {
+											throw new RuntimeException(
+													"Scheduling Table : Misisng an action's task name for Scheduling Table "
+															+ curr.getName());
+										}
+										task_al_name = tmp[0];
+										
+										/* Check the task name */
+										boolean notFound = true; 
+										//search task id
+										for (int cpuId = 0; cpuId < oilObjects.length
+												&& notFound; cpuId++) {
+				
+											List<ISimpleGenRes> list = oilObjects[cpuId].getList(IOilObjectList.TASK);
+											for (Iterator<ISimpleGenRes> ii = list.iterator(); ii
+													.hasNext()
+													&& notFound;) {
+												ISimpleGenRes sgr = ii
+														.next();
+				
+												notFound = !task_al_name.equals(sgr.getName());
+											}
+										}
+										if (notFound) {
+											throw new RuntimeException(
+													"Scheduling Table : Wrong task name for Scheduling Table "
+															+ curr.getName()
+															+ " ( task name = "
+															+ task_al_name + ")");
+										}
+
+									}
+									
+									/*
+									 * these are the different types of alarm
+									 * notifications...
+									 * 
+									 * #define EE_ALARM_ACTION_TASK 0
+									 * #define EE_ALARM_ACTION_CALLBACK 1
+									 * #define EE_ALARM_ACTION_EVENT 2
+									 * #define EE_ALARM_ACTION_COUNTER 3
+									 */
+									if (actType.equals(ISimpleGenResKeywords.ALARM_ACTIVATE_TASK)) {
+										notif_type = "EE_ACTION_TASK    ";
+										
+									} else if (actType.equals(ISimpleGenResKeywords.ALARM_SET_EVENT)) {
+										String[] tmp = CommonUtils.getValue(vt, actPath+"EVENT");
+										if (tmp.length==0) {
+											throw new RuntimeException(
+													"Scheduling Table : Misisng an action's event for Scheduling Table "
+															+ curr.getName());
+										}
+										evento = tmp[0];
+										
+										// check for event name
+										boolean found = false;
+										List<ISimpleGenRes> list = ool.getList(IOilObjectList.EVENT);
+										for (Iterator<ISimpleGenRes> ii = list.iterator(); ii
+												.hasNext()
+												&& !found;) {
+											ISimpleGenRes sgr = ii.next();
+				
+											found = evento.equals(sgr.getName());
+										}
+				
+										if (!found)
+											throw new RuntimeException(
+													"Scheduling Table : Not found given event for Scheduling Table "
+															+ curr.getName()
+															+ "(event = " + evento
+															+ ")");
+				
+										notif_type = "EE_ACTION_EVENT   ";
+										
+//									} else if (actType.equals(ISimpleGenResKeywords.ALARM_CALL_BACK)) {
+//										callBackName = ; //curr.getString(ISimpleGenResKeywords.ALARM_CALL_BACK);
+//										
+//										if (!callback_functions.contains(callBackName)) {
+//											callback_functions.add(callBackName);
+//										}
+//										
+//										notif_type = "EE_ACTION_CALLBACK";
+										
+									} else {
+										throw new Error("Unknow type");
+									}
+									
+									// write
+									romActionBuffer.append(pre2 + indent2 + "{"
+											+ notif_type + ", " + task_al_name
+											+ (withEvents ? ", " + evento : "") + ", "
+											//+ (NULL_NAME.equals(callBackName) ? "(EE_VOID_CALLBACK)" : "") 
+											+ callBackName
+											+ ", " + counter_al_name + " }");
+									counterActionRomRows++;
+								}
+								
+								romExpPointBuffer.append(expPre + indent2 + "{ " + expireValue+", "+startingActIndex+"U, "+(counterActionRomRows-1)+"U, "+posAdj+"U, "+negAdj+"U }");
+								expPre = ",\n";
+								expPointSize++;
+							}
+						}
+						
+						counterObjRomBuffer.append(pre2 + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_SCHEDULETABLE }");
+						romScTableBuffer.append(pre2 + indent2 + "{" 
+									+ startingExpIndex + "U, "
+									+ (expPointSize-1) + "U, "
+									+ syncStrategy /*EE_SCHEDTABLE_SYNC_NONE*/ + ", "
+									+ maxDuration.toString() + ", " // "400 /* Chosen by me it could be 300 at least */ ,"
+									+ precision  + ", " //"INVALID_SCHEDULETABLE_PRECISION, "
+									+ repeated //"0U "
+									+ "}");
+						ramScTableBuffer.append(pre2 + indent2 + "{SCHEDULETABLE_STOPPED, INVALID_SCHEDULETABLE_POSITION, 0, INVALID_SCHEDULETABLE}");
 						
 						counterObjRomRows++;
 						pre2 = ",\n";
 					}
-					romActionBuffer.append("\n"+indent1 + "};\n");
-					romAlarmBuffer.append("\n"+indent1 + "};\n");
-		
+
+//					// add ROM
+//					buffer.append(romActionBuffer.toString() + "\n" + romAlarmBuffer.toString());
+					
+					schedTableBuffer.append( 
+							commentWriterC.writerBanner("Scheduling Tables") +
+							indent1+ "const EE_as_Expiry_Point_ROM_type EE_as_Expiry_Point_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_EXPIRY_POINTS_ROM", expPointSize)+"] = {"+
+							romExpPointBuffer.toString()+"\n" +
+							indent1 + "};\n\n" +
+							indent1 + "const EE_as_Schedule_Table_ROM_type EE_as_Schedule_Table_ROM[EE_MAX_SCHEDULETABLE] = {"+
+							romScTableBuffer.toString()+"\n" +
+							indent1 + "};\n\n" +
+							indent1 + "EE_as_Schedule_Table_RAM_type EE_as_Schedule_Table_RAM[EE_MAX_SCHEDULETABLE] = {"+
+							ramScTableBuffer.toString()+"\n" +
+							indent1 + "};\n\n");
+
+				}
+			
+				
+				/***************************************************************
+				 * add everything to the main buffer
+				 **************************************************************/
+	
+				if (counterObjRomRows > 0 || requiredOilObjects.contains(new Integer(IOilObjectList.ALARM)) || requiredOilObjects.contains(new Integer(IOilObjectList.SCHEDULE_TABLE))) {
+					String size_id = ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_COUNTER_OBJECTS_ROM", counterObjRomRows);
+					
+
 					// add functions
 					if (callback_functions.size()>0) {
 						buffer.append(indent1 + "// Functions\n");
@@ -1325,32 +1622,19 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						}
 						buffer.append("\n");
 					}
-					
-					// add ROM
-					buffer.append(romActionBuffer.toString() + "\n" + romAlarmBuffer.toString());
-				}
-			}
-			
-			{
-				
 
-				List<ISimpleGenRes> alarmList = ool.getList(IOilObjectList.ALARM);
-				final int counterObjectSize = alarmList.size();
-		
-				if (alarmList.size() > 0 || requiredOilObjects.contains(new Integer(IOilObjectList.ALARM))) {
-					buffer.append(commentWriterC.writerBanner("Counter Objects"));
-					
-					String size_id = ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_COUNTER_OBJECTS_ROM", counterObjectSize);
-					
-					/*
-					 * EE_alarm_ROM
-					 */
-					buffer.append(indent1
-									+ "const EE_oo_counter_object_ROM_type   EE_oo_counter_object_ROM["+size_id+"] = {\n"
-									+ counterObjRomBuffer.toString() + "\n"
-									+ indent1 + "};\n\n"
-									+ indent1 +"EE_oo_counter_object_RAM_type EE_oo_counter_object_RAM["+size_id+"];\n"
+					buffer.append(commentWriterC.writerBanner("Counter Objects")
+							+ indent1 + "const EE_oo_counter_object_ROM_type   EE_oo_counter_object_ROM["+size_id+"] = {\n"
+							+ counterObjRomBuffer.toString() + "\n"
+							+ indent1 + "};\n\n"
+							+ indent1 +"EE_oo_counter_object_RAM_type EE_oo_counter_object_RAM["+size_id+"];\n"
 					);
+					buffer.append(commentWriterC.writerBanner("Alarms and Scheduling Tables actions") 
+							+ indent1+ "const EE_oo_action_ROM_type   EE_oo_action_ROM["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_ACTION_ROM", counterActionRomRows)+"] = {\n"
+							+ romActionBuffer.toString() +"\n"
+							+ indent1 + "};\n\n"
+					);
+					buffer.append(schedTableBuffer.toString());
 				}
 				
 			}

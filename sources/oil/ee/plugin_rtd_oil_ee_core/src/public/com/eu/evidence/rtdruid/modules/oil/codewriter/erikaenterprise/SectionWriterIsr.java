@@ -310,8 +310,9 @@ public class SectionWriterIsr implements IEEWriterKeywords, IExtractObjectsExten
 	
 	@Override
 	public void updateObjects() {
-		
+		int rtosId = -1;
 		for (IOilObjectList ool : parent.getOilObjects()) {
+			rtosId ++;
 			int max_level = 0;
 			int isr2ResNumber = 0;
 			int isr2Number = 0;

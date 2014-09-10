@@ -4,7 +4,7 @@ package com.eu.evidence.rtdruid.internal.vartree.data.provider;
 
 
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.SchedulingTable;
+import com.eu.evidence.rtdruid.vartree.data.ScheduleTable;
 
 import com.eu.evidence.rtdruid.vartree.variables.StringVar;
 
@@ -25,12 +25,12 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable} object.
+ * This is the item provider adapter for a {@link com.eu.evidence.rtdruid.vartree.data.ScheduleTable} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class SchedulingTableItemProvider
+public class ScheduleTableItemProvider
 	extends ObjectWithIDItemProvider
 	implements
 		IEditingDomainItemProvider,
@@ -44,7 +44,7 @@ public class SchedulingTableItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SchedulingTableItemProvider(AdapterFactory adapterFactory) {
+	public ScheduleTableItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -75,9 +75,9 @@ public class SchedulingTableItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_SchedulingTable_Name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SchedulingTable_Name_feature", "_UI_SchedulingTable_type"),
-				 DataPackage.Literals.SCHEDULING_TABLE__NAME,
+				 getString("_UI_ScheduleTable_Name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ScheduleTable_Name_feature", "_UI_ScheduleTable_type"),
+				 DataPackage.Literals.SCHEDULE_TABLE__NAME,
 				 true,
 				 false,
 				 false,
@@ -87,14 +87,14 @@ public class SchedulingTableItemProvider
 	}
 
 	/**
-	 * This returns SchedulingTable.gif.
+	 * This returns ScheduleTable.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SchedulingTable"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ScheduleTable"));
 	}
 
 	/**
@@ -105,11 +105,11 @@ public class SchedulingTableItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		StringVar labelValue = ((SchedulingTable)object).getName();
+		StringVar labelValue = ((ScheduleTable)object).getName();
 		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
-			getString("_UI_SchedulingTable_type") :
-			getString("_UI_SchedulingTable_type") + " " + label;
+			getString("_UI_ScheduleTable_type") :
+			getString("_UI_ScheduleTable_type") + " " + label;
 	}
 
 	/**
@@ -123,8 +123,8 @@ public class SchedulingTableItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(SchedulingTable.class)) {
-			case DataPackage.SCHEDULING_TABLE__NAME:
+		switch (notification.getFeatureID(ScheduleTable.class)) {
+			case DataPackage.SCHEDULE_TABLE__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

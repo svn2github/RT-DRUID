@@ -77,11 +77,11 @@ public class SimpleTransform implements IOilTransform {
 	/**
 	 * 
 	 */
-	public static final String SCHED_TABLE = "SchedulingTable";
+	public static final String SCHED_TABLE = "ScheduleTable";
 	/**
 	 * 
 	 */
-	public static final String SCHED_TABLE_LIST = "SchedulingTableList";
+	public static final String SCHED_TABLE_LIST = "ScheduleTableList";
 	/**
 	 * 
 	 */
@@ -199,7 +199,7 @@ public class SimpleTransform implements IOilTransform {
 		/* SpinLock */
 		storeSpinLock(systemVtp, application, id);
 		/* Scheduling table */
-		storeSchedulingTable(systemVtp, application, id);
+		storeScheduleTable(systemVtp, application, id);
 		
 		/* OTHER OBJECTS */
 		storeOthers(systemVtp, application, rtosName, id);
@@ -520,7 +520,7 @@ public class SimpleTransform implements IOilTransform {
 	}
 
 	/**
-	 * This method stores all SchedulingTable inside the given IVarTreePointer
+	 * This method stores all ScheduleTable inside the given IVarTreePointer
 	 * 
 	 * @param vtp
 	 *            point to the system
@@ -535,7 +535,7 @@ public class SimpleTransform implements IOilTransform {
 	 * @throws OilTransformException
 	 *             if there are some problems
 	 */
-	protected void storeSchedulingTable(IVarTreePointer vtp, Element parent, IOilImplID id)
+	protected void storeScheduleTable(IVarTreePointer vtp, Element parent, IOilImplID id)
 			throws OilTransformException {
 
 		// prepare where store all data
@@ -2280,7 +2280,7 @@ public class SimpleTransform implements IOilTransform {
 		int order[] = { IOilObjectList.OS, IOilObjectList.OSAPPLICATION, IOilObjectList.TASK, IOilObjectList.COUNTER,
 				IOilObjectList.ALARM, IOilObjectList.RESOURCE, IOilObjectList.EVENT, IOilObjectList.ISR,
 				IOilObjectList.MESSAGE, IOilObjectList.NETWORKMESSAGE, IOilObjectList.COM, IOilObjectList.NM,
-				IOilObjectList.APPMODE, IOilObjectList.IPDU, IOilObjectList.SPINLOCK, IOilObjectList.SCHEDULING_TABLE };
+				IOilObjectList.APPMODE, IOilObjectList.IPDU, IOilObjectList.SPINLOCK, IOilObjectList.SCHEDULE_TABLE };
 
 		for (int oolId = 0; oolId < order.length; oolId++) {
 
@@ -2573,7 +2573,7 @@ public class SimpleTransform implements IOilTransform {
 				}
 			}
 				break;
-			case IOilObjectList.SCHEDULING_TABLE: {
+			case IOilObjectList.SCHEDULE_TABLE: {
 				String prefix = sysName + S + DPKG.getArchitectural().getName() + S
 						+ SCHED_TABLE_LIST + S;
 				String[] names = vt.newTreeInterface().getAllName(prefix, SCHED_TABLE);
@@ -2746,7 +2746,7 @@ public class SimpleTransform implements IOilTransform {
 //		break;
 		case IOilObjectList.SPINLOCK:
 //			break;
-		case IOilObjectList.SCHEDULING_TABLE:
+		case IOilObjectList.SCHEDULE_TABLE:
 //			break;
 		case IOilObjectList.RESOURCE: {
 //			path = DPKG.getMutex_OilVar().getName() + S + IOilXMLLabels.OBJ_RESOURCE + S + oilVarPrefix;

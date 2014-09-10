@@ -75,8 +75,8 @@
         eType="#//Com" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="SpinLockList" upperBound="-1"
         eType="#//SpinLock" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="SchedulingTableList" upperBound="-1"
-        eType="#//SchedulingTable" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ScheduleTableList" upperBound="-1"
+        eType="#//ScheduleTable" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Mapping" eSuperTypes="#//ObjectWithID">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ProcMapList" upperBound="-1"
@@ -395,7 +395,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
         iD="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SchedulingTable" eSuperTypes="#//ObjectWithID">
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleTable" eSuperTypes="#//ObjectWithID">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
         iD="true"/>
   </eClassifiers>

@@ -2,9 +2,13 @@ package com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
 
@@ -64,5 +68,45 @@ public class CpuUtility {
 			return (String[]) os.getObject(CPU_APP_SRC);
 		}
 		return new String[0];
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static String getOsAccessBitMask(ISimpleGenRes object, IOilObjectList ool, StringBuilder description) {
+		if (object == null) return "0x0";
+		
+		BitSet answerBitSet = new BitSet();
+		answerBitSet.set(0);
+		
+		Set<String> validOsApplNames = new HashSet<String>();
+		if (object.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST)) {
+			validOsApplNames.addAll((ArrayList<String>)object.getObject(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST) );
+		}
+		if (object.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME)) {
+			validOsApplNames.add(object.getString(ISimpleGenResKeywords.OS_APPL_NAME) );
+		}
+		
+		
+		List<ISimpleGenRes> osAppls = ool.getList(IOilObjectList.OSAPPLICATION);
+		for (int i=0; i<osAppls.size(); i++) {
+			ISimpleGenRes sgr = osAppls.get(i);
+			if (validOsApplNames.contains(sgr.getName())) {
+				answerBitSet.set(sgr.getInt(ISimpleGenResKeywords.OS_APPL_ID)+1);
+			}
+		}
+		
+		StringBuilder answerText = new StringBuilder();
+		for (int i=0; i<answerBitSet.size(); i+=4) {
+			int val = (answerBitSet.get(i) ? 1 : 0) +
+					(answerBitSet.get(i) ? 2 : 0) +
+					(answerBitSet.get(i) ? 4 : 0) +
+					(answerBitSet.get(i) ? 8 : 0);
+			answerText.append((char)
+					(val<10 ? '0'+val : 'A'+(val-10))
+			);
+		}
+		if (answerText.length()==0) answerText.append("0");
+		answerText.insert(0, "0x");
+				
+		return answerText.toString();
 	}
 }

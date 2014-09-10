@@ -38,9 +38,14 @@ public interface ISimpleGenResKeywords {
 	public final static String OS_APPL_LIST_REF_ISR = "os_application_list_ref_isr";
 	public final static String OS_APPL_LIST_REF_RESOURCE = "os_application_list_ref_resource";
 	public final static String OS_APPL_LIST_REF_TASK = "os_application_list_ref_task";
+	public final static String OS_APPL_LIST_REF_SCHEDTABLE = "os_application_list_ref_schedule_table";
+	public final static String OS_APPL_LIST_REF_SPINLOCK = "os_application_list_ref_spinlock";
 	
 	public final static String OS_APPL_SHARED_STACK_ID = "os_application_shared_stack_id";
 	public final static String OS_APPL_CPU_MAPPED_ID = "os_application_cpu_mapped_id";
+	
+	public final static String OS_APPL_NAME = "object_mapped_an_os_application_name";
+	public final static String GENERIC_ACCESSING_OS_APPL_LIST = "accessing_os_application_list";
 
 	/***************************************************************************
 	 * Task
@@ -64,7 +69,8 @@ public interface ISimpleGenResKeywords {
 	public final static String TASK_STACK_SHARED = "SHARED";
 	public final static String TASK_STACK_PRIVATE = "PRIVATE";
 
-	public final static String TASK_OS_APPLICATION_NAME = /*__*/"task_mapped_to_an_os_application";
+	public final static String TASK_OS_APPLICATION_NAME = OS_APPL_NAME;
+	public final static String TASK_ACCESSING_OS_APPL_LIST = GENERIC_ACCESSING_OS_APPL_LIST;
 
 
 	/** This property say if at least one cpu sends a remote notification to a task */
@@ -89,7 +95,8 @@ public interface ISimpleGenResKeywords {
 	public final static String ISR_GENERATED_PRIOID = "isr___generated_priority_id";
 	public final static String ISR_ID = "isr_id_integer";
 	public final static String ISR_ID_TXT = "isr_id_string";
-	public final static String ISR_OS_APPLICATION_NAME = /*__*/ "isr_mapped_to_an_os_application";
+	public final static String ISR_OS_APPLICATION_NAME = OS_APPL_NAME;
+	public final static String ISR_ACCESSING_OS_APPL_LIST = GENERIC_ACCESSING_OS_APPL_LIST;
 	public final static String ISR_RESOURCE_LIST = TASK_RESOURCE_LIST;
 	public final static String ISR_REQUIRES_RESOURCES = "isr_requires_resources";
 	
@@ -127,7 +134,8 @@ public interface ISimpleGenResKeywords {
 	public final static String COUNTER_SYSTIMER = "counter__hw_system_timer";
 	public final static String COUNTER_TYPE_SW = "SOFTWARE";
 	
-	public final static String COUNTER_OS_APPLICATION_NAME = /*__*/ "counter_mapped_to_an_os_application";
+	public final static String COUNTER_OS_APPLICATION_NAME = OS_APPL_NAME;
+	public final static String COUNTER_ACCESSING_OS_APPL_LIST = GENERIC_ACCESSING_OS_APPL_LIST;
 
 	/***************************************************************************
 	 * Alarm
@@ -153,7 +161,8 @@ public interface ISimpleGenResKeywords {
 	/** contains true if the task name is remote */
 	public final static String ALARM_TASK_IS_REMOTE = "alarm_task_is_remote";
 
-	public final static String ALARM_OS_APPLICATION_NAME = /*__*/ "alarm_mapped_to_an_os_application";
+	public final static String ALARM_OS_APPLICATION_NAME = OS_APPL_NAME;
+	public final static String ALARM_ACCESSING_OS_APPL_LIST = GENERIC_ACCESSING_OS_APPL_LIST;
 
 
 	/***************************************************************************
@@ -185,7 +194,8 @@ public interface ISimpleGenResKeywords {
 	/** Contains all names of resources linked to a root resource (ArrayList) */
 	public static final String RESOURCE_CHAIN_LIST = "resource_chain_list";
 
-	public final static String RESOURCE_OS_APPLICATION_NAME = /*__*/ "resource_mapped_to_an_os_application";
+	public final static String RESOURCE_OS_APPLICATION_NAME = OS_APPL_NAME;
+	public final static String RESOURCE_ACCESSING_OS_APPL_LIST = GENERIC_ACCESSING_OS_APPL_LIST;
 
 	/***************************************************************************
 	 * Event
@@ -314,12 +324,28 @@ public interface ISimpleGenResKeywords {
 
 
 	/***************************************************************************
-	 * OS Application
+	 * Spinlock
 	 **************************************************************************/
 	public static final String SPINLOCK_NEXT = "spinlock_next";
-	public static final String SPINLOCK_APPLICATION  = /*__*/ "spinlock_application";
+	public static final String SPINLOCK_OS_APPLICATION_NAME  = OS_APPL_NAME;
+	public final static String SPINLOCK_ACCESSING_OS_APPL_LIST = GENERIC_ACCESSING_OS_APPL_LIST;
 
 
-	
+	/***************************************************************************
+	 * Scheduling table
+	 **************************************************************************/
+	public static final String SCHEDULING_SYS_ID  = "schedule_table_system_id";
+	public static final String SCHEDTABLE_DURATION = "schedule_table_duration";
+	public static final String SCHEDTABLE_REPEATING = "schedule_table_repeating";
+	public static final String SCHEDTABLE_OS_APPLICATION_NAME  = OS_APPL_NAME;
+	public final static String SCHEDTABLE_ACCESSING_OS_APPL_LIST = GENERIC_ACCESSING_OS_APPL_LIST;
+	public static final String SCHEDULING_COUNTER  = "schedule_table_counter";
+
+	public static final String SCHEDTABLE_AUTOSTART_APPMODES_LIST  = "schedule_table_applmode_list";
+	public static final String SCHEDTABLE_AUTOSTART_START_VALUE = "schedule_table_autosart_start_value";	
+	public static final String SCHEDTABLE_AUTOSTART_TYPE = "schedule_table_autosart_type";	
+	public static final String SCHEDTABLE_AUTOSTART_TYPE_ABSOLUTE = "ABSOLUTE";	
+	public static final String SCHEDTABLE_AUTOSTART_TYPE_RELATIVE = "RELATIVE";	
+	public static final String SCHEDTABLE_AUTOSTART_TYPE_SYNCHRON = "SYNCHRON";	
 }
 
