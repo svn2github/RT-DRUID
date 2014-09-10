@@ -1495,19 +1495,19 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAPPLICATIONAPPLICATIONKeyword_13_0 = (Keyword)cAPPLICATIONEnumLiteralDeclaration_13.eContents().get(0);
 		private final EnumLiteralDeclaration cSPINLOCKEnumLiteralDeclaration_14 = (EnumLiteralDeclaration)cAlternatives.eContents().get(14);
 		private final Keyword cSPINLOCKSPINLOCKKeyword_14_0 = (Keyword)cSPINLOCKEnumLiteralDeclaration_14.eContents().get(0);
-		private final EnumLiteralDeclaration cSCHEDULINGTABLEEnumLiteralDeclaration_15 = (EnumLiteralDeclaration)cAlternatives.eContents().get(15);
-		private final Keyword cSCHEDULINGTABLESCHEDULINGTABLEKeyword_15_0 = (Keyword)cSCHEDULINGTABLEEnumLiteralDeclaration_15.eContents().get(0);
+		private final EnumLiteralDeclaration cSCHEDULETABLEEnumLiteralDeclaration_15 = (EnumLiteralDeclaration)cAlternatives.eContents().get(15);
+		private final Keyword cSCHEDULETABLESCHEDULETABLEKeyword_15_0 = (Keyword)cSCHEDULETABLEEnumLiteralDeclaration_15.eContents().get(0);
 		
 		//enum ObjectType:
 		//
 		//	OS | ALARM | APPMODE | COUNTER | COM | EVENT | IPDU | ISR | MESSAGE | NETWORKMESSAGE | NM | RESOURCE | TASK |
 		//
-		//	APPLICATION | SPINLOCK | SCHEDULINGTABLE;
+		//	APPLICATION | SPINLOCK | SCHEDULETABLE;
 		public EnumRule getRule() { return rule; }
 
 		//OS | ALARM | APPMODE | COUNTER | COM | EVENT | IPDU | ISR | MESSAGE | NETWORKMESSAGE | NM | RESOURCE | TASK |
 		//
-		//APPLICATION | SPINLOCK | SCHEDULINGTABLE
+		//APPLICATION | SPINLOCK | SCHEDULETABLE
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//OS
@@ -1600,11 +1600,11 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"SPINLOCK"
 		public Keyword getSPINLOCKSPINLOCKKeyword_14_0() { return cSPINLOCKSPINLOCKKeyword_14_0; }
 
-		//SCHEDULINGTABLE
-		public EnumLiteralDeclaration getSCHEDULINGTABLEEnumLiteralDeclaration_15() { return cSCHEDULINGTABLEEnumLiteralDeclaration_15; }
+		//SCHEDULETABLE
+		public EnumLiteralDeclaration getSCHEDULETABLEEnumLiteralDeclaration_15() { return cSCHEDULETABLEEnumLiteralDeclaration_15; }
 
-		//"SCHEDULINGTABLE"
-		public Keyword getSCHEDULINGTABLESCHEDULINGTABLEKeyword_15_0() { return cSCHEDULINGTABLESCHEDULINGTABLEKeyword_15_0; }
+		//"SCHEDULETABLE"
+		public Keyword getSCHEDULETABLESCHEDULETABLEKeyword_15_0() { return cSCHEDULETABLESCHEDULETABLEKeyword_15_0; }
 	}
 
 	public class ObjectTypeRefElements extends AbstractEnumRuleElementFinder {
@@ -1640,8 +1640,8 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAPPLICATIONAPPLICATION_TYPEKeyword_13_0 = (Keyword)cAPPLICATIONEnumLiteralDeclaration_13.eContents().get(0);
 		private final EnumLiteralDeclaration cSPINLOCKEnumLiteralDeclaration_14 = (EnumLiteralDeclaration)cAlternatives.eContents().get(14);
 		private final Keyword cSPINLOCKSPINLOCK_TYPEKeyword_14_0 = (Keyword)cSPINLOCKEnumLiteralDeclaration_14.eContents().get(0);
-		private final EnumLiteralDeclaration cSCHEDULINGTABLEEnumLiteralDeclaration_15 = (EnumLiteralDeclaration)cAlternatives.eContents().get(15);
-		private final Keyword cSCHEDULINGTABLESCHEDULINGTABLE_TYPEKeyword_15_0 = (Keyword)cSCHEDULINGTABLEEnumLiteralDeclaration_15.eContents().get(0);
+		private final EnumLiteralDeclaration cSCHEDULETABLEEnumLiteralDeclaration_15 = (EnumLiteralDeclaration)cAlternatives.eContents().get(15);
+		private final Keyword cSCHEDULETABLESCHEDULETABLE_TYPEKeyword_15_0 = (Keyword)cSCHEDULETABLEEnumLiteralDeclaration_15.eContents().get(0);
 		
 		//enum ObjectTypeRef returns ObjectType:
 		//
@@ -1651,7 +1651,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	NETWORKMESSAGE="NETWORKMESSAGE_TYPE" | NM="NM_TYPE" | RESOURCE="RESOURCE_TYPE" | TASK="TASK_TYPE" |
 		//
-		//	APPLICATION="APPLICATION_TYPE" | SPINLOCK="SPINLOCK_TYPE" | SCHEDULINGTABLE="SCHEDULINGTABLE_TYPE";
+		//	APPLICATION="APPLICATION_TYPE" | SPINLOCK="SPINLOCK_TYPE" | SCHEDULETABLE="SCHEDULETABLE_TYPE";
 		public EnumRule getRule() { return rule; }
 
 		//OS="OS_TYPE" | ALARM="ALARM_TYPE" | APPMODE="APPMODE_TYPE" | COUNTER="COUNTER_TYPE" | COM="COM_TYPE" |
@@ -1660,7 +1660,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//| NM="NM_TYPE" | RESOURCE="RESOURCE_TYPE" | TASK="TASK_TYPE" | APPLICATION="APPLICATION_TYPE" |
 		//
-		//SPINLOCK="SPINLOCK_TYPE" | SCHEDULINGTABLE="SCHEDULINGTABLE_TYPE"
+		//SPINLOCK="SPINLOCK_TYPE" | SCHEDULETABLE="SCHEDULETABLE_TYPE"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//OS="OS_TYPE"
@@ -1753,11 +1753,11 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"SPINLOCK_TYPE"
 		public Keyword getSPINLOCKSPINLOCK_TYPEKeyword_14_0() { return cSPINLOCKSPINLOCK_TYPEKeyword_14_0; }
 
-		//SCHEDULINGTABLE="SCHEDULINGTABLE_TYPE"
-		public EnumLiteralDeclaration getSCHEDULINGTABLEEnumLiteralDeclaration_15() { return cSCHEDULINGTABLEEnumLiteralDeclaration_15; }
+		//SCHEDULETABLE="SCHEDULETABLE_TYPE"
+		public EnumLiteralDeclaration getSCHEDULETABLEEnumLiteralDeclaration_15() { return cSCHEDULETABLEEnumLiteralDeclaration_15; }
 
-		//"SCHEDULINGTABLE_TYPE"
-		public Keyword getSCHEDULINGTABLESCHEDULINGTABLE_TYPEKeyword_15_0() { return cSCHEDULINGTABLESCHEDULINGTABLE_TYPEKeyword_15_0; }
+		//"SCHEDULETABLE_TYPE"
+		public Keyword getSCHEDULETABLESCHEDULETABLE_TYPEKeyword_15_0() { return cSCHEDULETABLESCHEDULETABLE_TYPEKeyword_15_0; }
 	}
 	
 	private OilFileElements pOilFile;
@@ -2108,7 +2108,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	OS | ALARM | APPMODE | COUNTER | COM | EVENT | IPDU | ISR | MESSAGE | NETWORKMESSAGE | NM | RESOURCE | TASK |
 	//
-	//	APPLICATION | SPINLOCK | SCHEDULINGTABLE;
+	//	APPLICATION | SPINLOCK | SCHEDULETABLE;
 	public ObjectTypeElements getObjectTypeAccess() {
 		return (unknownRuleObjectType != null) ? unknownRuleObjectType : (unknownRuleObjectType = new ObjectTypeElements());
 	}
@@ -2125,7 +2125,7 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	NETWORKMESSAGE="NETWORKMESSAGE_TYPE" | NM="NM_TYPE" | RESOURCE="RESOURCE_TYPE" | TASK="TASK_TYPE" |
 	//
-	//	APPLICATION="APPLICATION_TYPE" | SPINLOCK="SPINLOCK_TYPE" | SCHEDULINGTABLE="SCHEDULINGTABLE_TYPE";
+	//	APPLICATION="APPLICATION_TYPE" | SPINLOCK="SPINLOCK_TYPE" | SCHEDULETABLE="SCHEDULETABLE_TYPE";
 	public ObjectTypeRefElements getObjectTypeRefAccess() {
 		return (unknownRuleObjectTypeRef != null) ? unknownRuleObjectTypeRef : (unknownRuleObjectTypeRef = new ObjectTypeRefElements());
 	}

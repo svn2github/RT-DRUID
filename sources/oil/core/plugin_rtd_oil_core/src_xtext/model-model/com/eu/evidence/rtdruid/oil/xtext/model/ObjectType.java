@@ -163,14 +163,14 @@ public enum ObjectType implements Enumerator {
 	 * @ordered
 	 */
 	SPINLOCK(14, "SPINLOCK", "SPINLOCK"), /**
-	 * The '<em><b>SCHEDULINGTABLE</b></em>' literal object.
+	 * The '<em><b>SCHEDULETABLE</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #SCHEDULINGTABLE_VALUE
+	 * @see #SCHEDULETABLE_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	SCHEDULINGTABLE(15, "SCHEDULINGTABLE", "SCHEDULINGTABLE");
+	SCHEDULETABLE(15, "SCHEDULETABLE", "SCHEDULETABLE");
 
 	/**
 	 * The '<em><b>OS</b></em>' literal value.
@@ -398,19 +398,19 @@ public enum ObjectType implements Enumerator {
 	public static final int SPINLOCK_VALUE = 14;
 
 	/**
-	 * The '<em><b>SCHEDULINGTABLE</b></em>' literal value.
+	 * The '<em><b>SCHEDULETABLE</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>SCHEDULINGTABLE</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>SCHEDULETABLE</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #SCHEDULINGTABLE
+	 * @see #SCHEDULETABLE
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SCHEDULINGTABLE_VALUE = 15;
+	public static final int SCHEDULETABLE_VALUE = 15;
 
 	/**
 	 * An array of all the '<em><b>Object Type</b></em>' enumerators.
@@ -435,7 +435,7 @@ public enum ObjectType implements Enumerator {
 			TASK,
 			APPLICATION,
 			SPINLOCK,
-			SCHEDULINGTABLE,
+			SCHEDULETABLE,
 		};
 
 	/**
@@ -501,7 +501,7 @@ public enum ObjectType implements Enumerator {
 			case TASK_VALUE: return TASK;
 			case APPLICATION_VALUE: return APPLICATION;
 			case SPINLOCK_VALUE: return SPINLOCK;
-			case SCHEDULINGTABLE_VALUE: return SCHEDULINGTABLE;
+			case SCHEDULETABLE_VALUE: return SCHEDULETABLE;
 		}
 		return null;
 	}

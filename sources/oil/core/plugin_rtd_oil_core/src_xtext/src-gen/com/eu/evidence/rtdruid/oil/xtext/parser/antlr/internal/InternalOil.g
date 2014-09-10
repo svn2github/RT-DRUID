@@ -2252,10 +2252,10 @@ ruleObjectType returns [Enumerator current=null]
         newLeafNode(enumLiteral_14, grammarAccess.getObjectTypeAccess().getSPINLOCKEnumLiteralDeclaration_14()); 
     }
 )
-    |(	enumLiteral_15='SCHEDULINGTABLE' 
+    |(	enumLiteral_15='SCHEDULETABLE' 
 	{
-        $current = grammarAccess.getObjectTypeAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_15, grammarAccess.getObjectTypeAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); 
+        $current = grammarAccess.getObjectTypeAccess().getSCHEDULETABLEEnumLiteralDeclaration_15().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_15, grammarAccess.getObjectTypeAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); 
     }
 ));
 
@@ -2355,10 +2355,10 @@ ruleObjectTypeRef returns [Enumerator current=null]
         newLeafNode(enumLiteral_14, grammarAccess.getObjectTypeRefAccess().getSPINLOCKEnumLiteralDeclaration_14()); 
     }
 )
-    |(	enumLiteral_15='SCHEDULINGTABLE_TYPE' 
+    |(	enumLiteral_15='SCHEDULETABLE_TYPE' 
 	{
-        $current = grammarAccess.getObjectTypeRefAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_15, grammarAccess.getObjectTypeRefAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); 
+        $current = grammarAccess.getObjectTypeRefAccess().getSCHEDULETABLEEnumLiteralDeclaration_15().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_15, grammarAccess.getObjectTypeRefAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); 
     }
 ));
 

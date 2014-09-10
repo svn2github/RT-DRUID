@@ -620,9 +620,9 @@ public class SimpleTransformTest implements Examples {
 		"	APPLICATION another_application;\n" +
 		"\n" +
 		"	COUNTER MainTimer;\n" +
-		"	SCHEDULINGTABLE table1;\n" +
+		"	SCHEDULETABLE table1;\n" +
 		"	SPINLOCK spin1;\n" +
-		"	SCHEDULINGTABLE table2;\n" +
+		"	SCHEDULETABLE table2;\n" +
 
 		"	\n" +
 		"	ALARM MyAlarm {\n" +

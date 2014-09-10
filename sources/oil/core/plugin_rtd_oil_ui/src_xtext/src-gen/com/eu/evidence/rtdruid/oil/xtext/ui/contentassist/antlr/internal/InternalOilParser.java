@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalOilParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_ZERO_INT", "RULE_HEX", "RULE_NON_ZERO_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_INCLUDE", "RULE_WS", "RULE_ANY_OTHER", "'STRING'", "'UINT32'", "'INT32'", "'UINT64'", "'INT64'", "'FLOAT'", "'BOOLEAN'", "'ENUM'", "'OS'", "'ALARM'", "'APPMODE'", "'COUNTER'", "'COM'", "'EVENT'", "'IPDU'", "'ISR'", "'MESSAGE'", "'NETWORKMESSAGE'", "'NM'", "'RESOURCE'", "'TASK'", "'ALARM_TYPE'", "'APPMODE_TYPE'", "'COUNTER_TYPE'", "'COM_TYPE'", "'EVENT_TYPE'", "'IPDU_TYPE'", "'ISR_TYPE'", "'MESSAGE_TYPE'", "'NETWORKMESSAGE_TYPE'", "'NM_TYPE'", "'RESOURCE_TYPE'", "'TASK_TYPE'", "'SPINLOCK_TYPE'", "'+'", "'-'", "'APPLICATION'", "'SPINLOCK'", "'SCHEDULINGTABLE'", "'OS_TYPE'", "'APPLICATION_TYPE'", "'SCHEDULINGTABLE_TYPE'", "'OIL_VERSION'", "'='", "';'", "'IMPLEMENTATION'", "'{'", "'}'", "':'", "'CPU'", "','", "'..'", "'['", "']'", "'.'", "'WITH_AUTO'", "'[]'", "'AUTO'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_ZERO_INT", "RULE_HEX", "RULE_NON_ZERO_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_INCLUDE", "RULE_WS", "RULE_ANY_OTHER", "'STRING'", "'UINT32'", "'INT32'", "'UINT64'", "'INT64'", "'FLOAT'", "'BOOLEAN'", "'ENUM'", "'OS'", "'ALARM'", "'APPMODE'", "'COUNTER'", "'COM'", "'EVENT'", "'IPDU'", "'ISR'", "'MESSAGE'", "'NETWORKMESSAGE'", "'NM'", "'RESOURCE'", "'TASK'", "'ALARM_TYPE'", "'APPMODE_TYPE'", "'COUNTER_TYPE'", "'COM_TYPE'", "'EVENT_TYPE'", "'IPDU_TYPE'", "'ISR_TYPE'", "'MESSAGE_TYPE'", "'NETWORKMESSAGE_TYPE'", "'NM_TYPE'", "'RESOURCE_TYPE'", "'TASK_TYPE'", "'SPINLOCK_TYPE'", "'+'", "'-'", "'APPLICATION'", "'SPINLOCK'", "'SCHEDULETABLE'", "'OS_TYPE'", "'APPLICATION_TYPE'", "'SCHEDULETABLE_TYPE'", "'OIL_VERSION'", "'='", "';'", "'IMPLEMENTATION'", "'{'", "'}'", "':'", "'CPU'", "','", "'..'", "'['", "']'", "'.'", "'WITH_AUTO'", "'[]'", "'AUTO'"
     };
     public static final int T__68=68;
     public static final int T__69=69;
@@ -4722,13 +4722,13 @@ public class InternalOilParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ObjectType__Alternatives"
-    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1423:1: rule__ObjectType__Alternatives : ( ( ( 'OS' ) ) | ( ( 'ALARM' ) ) | ( ( 'APPMODE' ) ) | ( ( 'COUNTER' ) ) | ( ( 'COM' ) ) | ( ( 'EVENT' ) ) | ( ( 'IPDU' ) ) | ( ( 'ISR' ) ) | ( ( 'MESSAGE' ) ) | ( ( 'NETWORKMESSAGE' ) ) | ( ( 'NM' ) ) | ( ( 'RESOURCE' ) ) | ( ( 'TASK' ) ) | ( ( 'APPLICATION' ) ) | ( ( 'SPINLOCK' ) ) | ( ( 'SCHEDULINGTABLE' ) ) );
+    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1423:1: rule__ObjectType__Alternatives : ( ( ( 'OS' ) ) | ( ( 'ALARM' ) ) | ( ( 'APPMODE' ) ) | ( ( 'COUNTER' ) ) | ( ( 'COM' ) ) | ( ( 'EVENT' ) ) | ( ( 'IPDU' ) ) | ( ( 'ISR' ) ) | ( ( 'MESSAGE' ) ) | ( ( 'NETWORKMESSAGE' ) ) | ( ( 'NM' ) ) | ( ( 'RESOURCE' ) ) | ( ( 'TASK' ) ) | ( ( 'APPLICATION' ) ) | ( ( 'SPINLOCK' ) ) | ( ( 'SCHEDULETABLE' ) ) );
     public final void rule__ObjectType__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1427:1: ( ( ( 'OS' ) ) | ( ( 'ALARM' ) ) | ( ( 'APPMODE' ) ) | ( ( 'COUNTER' ) ) | ( ( 'COM' ) ) | ( ( 'EVENT' ) ) | ( ( 'IPDU' ) ) | ( ( 'ISR' ) ) | ( ( 'MESSAGE' ) ) | ( ( 'NETWORKMESSAGE' ) ) | ( ( 'NM' ) ) | ( ( 'RESOURCE' ) ) | ( ( 'TASK' ) ) | ( ( 'APPLICATION' ) ) | ( ( 'SPINLOCK' ) ) | ( ( 'SCHEDULINGTABLE' ) ) )
+            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1427:1: ( ( ( 'OS' ) ) | ( ( 'ALARM' ) ) | ( ( 'APPMODE' ) ) | ( ( 'COUNTER' ) ) | ( ( 'COM' ) ) | ( ( 'EVENT' ) ) | ( ( 'IPDU' ) ) | ( ( 'ISR' ) ) | ( ( 'MESSAGE' ) ) | ( ( 'NETWORKMESSAGE' ) ) | ( ( 'NM' ) ) | ( ( 'RESOURCE' ) ) | ( ( 'TASK' ) ) | ( ( 'APPLICATION' ) ) | ( ( 'SPINLOCK' ) ) | ( ( 'SCHEDULETABLE' ) ) )
             int alt20=16;
             switch ( input.LA(1) ) {
             case 22:
@@ -5196,23 +5196,23 @@ public class InternalOilParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 16 :
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1533:6: ( ( 'SCHEDULINGTABLE' ) )
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1533:6: ( ( 'SCHEDULETABLE' ) )
                     {
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1533:6: ( ( 'SCHEDULINGTABLE' ) )
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1534:1: ( 'SCHEDULINGTABLE' )
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1533:6: ( ( 'SCHEDULETABLE' ) )
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1534:1: ( 'SCHEDULETABLE' )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getObjectTypeAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); 
+                       before(grammarAccess.getObjectTypeAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); 
                     }
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1535:1: ( 'SCHEDULINGTABLE' )
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1535:3: 'SCHEDULINGTABLE'
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1535:1: ( 'SCHEDULETABLE' )
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1535:3: 'SCHEDULETABLE'
                     {
                     match(input,52,FollowSets000.FOLLOW_52_in_rule__ObjectType__Alternatives3479); if (state.failed) return ;
 
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getObjectTypeAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); 
+                       after(grammarAccess.getObjectTypeAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); 
                     }
 
                     }
@@ -5238,13 +5238,13 @@ public class InternalOilParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ObjectTypeRef__Alternatives"
-    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1545:1: rule__ObjectTypeRef__Alternatives : ( ( ( 'OS_TYPE' ) ) | ( ( 'ALARM_TYPE' ) ) | ( ( 'APPMODE_TYPE' ) ) | ( ( 'COUNTER_TYPE' ) ) | ( ( 'COM_TYPE' ) ) | ( ( 'EVENT_TYPE' ) ) | ( ( 'IPDU_TYPE' ) ) | ( ( 'ISR_TYPE' ) ) | ( ( 'MESSAGE_TYPE' ) ) | ( ( 'NETWORKMESSAGE_TYPE' ) ) | ( ( 'NM_TYPE' ) ) | ( ( 'RESOURCE_TYPE' ) ) | ( ( 'TASK_TYPE' ) ) | ( ( 'APPLICATION_TYPE' ) ) | ( ( 'SPINLOCK_TYPE' ) ) | ( ( 'SCHEDULINGTABLE_TYPE' ) ) );
+    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1545:1: rule__ObjectTypeRef__Alternatives : ( ( ( 'OS_TYPE' ) ) | ( ( 'ALARM_TYPE' ) ) | ( ( 'APPMODE_TYPE' ) ) | ( ( 'COUNTER_TYPE' ) ) | ( ( 'COM_TYPE' ) ) | ( ( 'EVENT_TYPE' ) ) | ( ( 'IPDU_TYPE' ) ) | ( ( 'ISR_TYPE' ) ) | ( ( 'MESSAGE_TYPE' ) ) | ( ( 'NETWORKMESSAGE_TYPE' ) ) | ( ( 'NM_TYPE' ) ) | ( ( 'RESOURCE_TYPE' ) ) | ( ( 'TASK_TYPE' ) ) | ( ( 'APPLICATION_TYPE' ) ) | ( ( 'SPINLOCK_TYPE' ) ) | ( ( 'SCHEDULETABLE_TYPE' ) ) );
     public final void rule__ObjectTypeRef__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1549:1: ( ( ( 'OS_TYPE' ) ) | ( ( 'ALARM_TYPE' ) ) | ( ( 'APPMODE_TYPE' ) ) | ( ( 'COUNTER_TYPE' ) ) | ( ( 'COM_TYPE' ) ) | ( ( 'EVENT_TYPE' ) ) | ( ( 'IPDU_TYPE' ) ) | ( ( 'ISR_TYPE' ) ) | ( ( 'MESSAGE_TYPE' ) ) | ( ( 'NETWORKMESSAGE_TYPE' ) ) | ( ( 'NM_TYPE' ) ) | ( ( 'RESOURCE_TYPE' ) ) | ( ( 'TASK_TYPE' ) ) | ( ( 'APPLICATION_TYPE' ) ) | ( ( 'SPINLOCK_TYPE' ) ) | ( ( 'SCHEDULINGTABLE_TYPE' ) ) )
+            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1549:1: ( ( ( 'OS_TYPE' ) ) | ( ( 'ALARM_TYPE' ) ) | ( ( 'APPMODE_TYPE' ) ) | ( ( 'COUNTER_TYPE' ) ) | ( ( 'COM_TYPE' ) ) | ( ( 'EVENT_TYPE' ) ) | ( ( 'IPDU_TYPE' ) ) | ( ( 'ISR_TYPE' ) ) | ( ( 'MESSAGE_TYPE' ) ) | ( ( 'NETWORKMESSAGE_TYPE' ) ) | ( ( 'NM_TYPE' ) ) | ( ( 'RESOURCE_TYPE' ) ) | ( ( 'TASK_TYPE' ) ) | ( ( 'APPLICATION_TYPE' ) ) | ( ( 'SPINLOCK_TYPE' ) ) | ( ( 'SCHEDULETABLE_TYPE' ) ) )
             int alt21=16;
             switch ( input.LA(1) ) {
             case 53:
@@ -5712,23 +5712,23 @@ public class InternalOilParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 16 :
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1655:6: ( ( 'SCHEDULINGTABLE_TYPE' ) )
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1655:6: ( ( 'SCHEDULETABLE_TYPE' ) )
                     {
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1655:6: ( ( 'SCHEDULINGTABLE_TYPE' ) )
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1656:1: ( 'SCHEDULINGTABLE_TYPE' )
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1655:6: ( ( 'SCHEDULETABLE_TYPE' ) )
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1656:1: ( 'SCHEDULETABLE_TYPE' )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getObjectTypeRefAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); 
+                       before(grammarAccess.getObjectTypeRefAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); 
                     }
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1657:1: ( 'SCHEDULINGTABLE_TYPE' )
-                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1657:3: 'SCHEDULINGTABLE_TYPE'
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1657:1: ( 'SCHEDULETABLE_TYPE' )
+                    // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:1657:3: 'SCHEDULETABLE_TYPE'
                     {
                     match(input,55,FollowSets000.FOLLOW_55_in_rule__ObjectTypeRef__Alternatives3830); if (state.failed) return ;
 
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getObjectTypeRefAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); 
+                       after(grammarAccess.getObjectTypeRefAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); 
                     }
 
                     }

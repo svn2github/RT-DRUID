@@ -63,7 +63,7 @@ public interface IOilXMLLabels {
 	public static final String OBJ_SPINLOCK = "SPINLOCK";
 
 	/** Identifies a SCHEDULING TABLE */
-	public static final String OBJ_SCHEDULINGTABLE = "SCHEDULINGTABLE";
+	public static final String OBJ_SCHEDULETABLE = "SCHEDULETABLE";
 
 	/** Identifies a CPU */
 	public static final String OBJ_CPU = "CPU";

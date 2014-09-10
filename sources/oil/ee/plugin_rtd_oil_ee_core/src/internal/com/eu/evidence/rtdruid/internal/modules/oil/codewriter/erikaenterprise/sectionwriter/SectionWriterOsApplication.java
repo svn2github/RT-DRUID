@@ -313,9 +313,10 @@ public class SectionWriterOsApplication extends SectionWriter implements
 						sep = ", ";
 					}
 				}
+				
 				application_rom.append(" }, "+
 							(trusted ? "EE_MEMPROT_TRUST_MODE" : "EE_MEMPROT_USR_MODE") +
-							(needStackMonitoring ? ", "+(stack_id>=0? stack_id+"U" : "((EE_UREG)-1)"): "") +
+							(needStackMonitoring ? ", "+(stack_id.length() == 0 || "-1".equals(stack_id)? "((EE_UREG)-1)": stack_id+"U"): "") +
 							", "+restartTask+"}");
 			}
 

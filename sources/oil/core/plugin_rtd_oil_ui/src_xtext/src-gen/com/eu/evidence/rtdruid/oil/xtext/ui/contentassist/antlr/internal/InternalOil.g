@@ -1531,10 +1531,10 @@ rule__ObjectType__Alternatives
 )
 
     |(
-{ before(grammarAccess.getObjectTypeAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); }
-(	'SCHEDULINGTABLE' 
+{ before(grammarAccess.getObjectTypeAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); }
+(	'SCHEDULETABLE' 
 )
-{ after(grammarAccess.getObjectTypeAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); }
+{ after(grammarAccess.getObjectTypeAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); }
 )
 
 ;
@@ -1653,10 +1653,10 @@ rule__ObjectTypeRef__Alternatives
 )
 
     |(
-{ before(grammarAccess.getObjectTypeRefAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); }
-(	'SCHEDULINGTABLE_TYPE' 
+{ before(grammarAccess.getObjectTypeRefAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); }
+(	'SCHEDULETABLE_TYPE' 
 )
-{ after(grammarAccess.getObjectTypeRefAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); }
+{ after(grammarAccess.getObjectTypeRefAccess().getSCHEDULETABLEEnumLiteralDeclaration_15()); }
 )
 
 ;

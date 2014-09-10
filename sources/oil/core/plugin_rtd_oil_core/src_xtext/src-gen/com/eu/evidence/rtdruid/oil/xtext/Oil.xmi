@@ -584,8 +584,8 @@
         <literal value="SPINLOCK"/>
       </elements>
       <elements xsi:type="xtext:EnumLiteralDeclaration">
-        <enumLiteral href="http://com.eu.evidence.rtdruid.oil.xtext.model#//ObjectType/SCHEDULINGTABLE"/>
-        <literal value="SCHEDULINGTABLE"/>
+        <enumLiteral href="http://com.eu.evidence.rtdruid.oil.xtext.model#//ObjectType/SCHEDULETABLE"/>
+        <literal value="SCHEDULETABLE"/>
       </elements>
     </alternatives>
   </rules>
@@ -655,8 +655,8 @@
         <literal value="SPINLOCK_TYPE"/>
       </elements>
       <elements xsi:type="xtext:EnumLiteralDeclaration">
-        <enumLiteral href="http://com.eu.evidence.rtdruid.oil.xtext.model#//ObjectType/SCHEDULINGTABLE"/>
-        <literal value="SCHEDULINGTABLE_TYPE"/>
+        <enumLiteral href="http://com.eu.evidence.rtdruid.oil.xtext.model#//ObjectType/SCHEDULETABLE"/>
+        <literal value="SCHEDULETABLE_TYPE"/>
       </elements>
     </alternatives>
   </rules>

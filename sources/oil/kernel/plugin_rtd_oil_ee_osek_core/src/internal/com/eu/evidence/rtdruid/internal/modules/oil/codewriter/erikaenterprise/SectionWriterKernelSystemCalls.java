@@ -170,6 +170,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	
 	@SuppressWarnings("unchecked")
 	protected void addSysCalls(IOilObjectList ool, IOilWriterBuffer answer, int rtosId) {
+		IOilObjectList[] ools = parent.getOilObjects();
 		List<Integer> requiredOilObjects = (List<Integer>) AbstractRtosWriter.getOsObject(ool, SGRK__FORCE_ARRAYS_LIST__);
 		List<ISimpleGenRes> os_appls = ool.getList(IOilObjectList.OSAPPLICATION);
 
@@ -257,33 +258,44 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 //				}
 //			}
 		
-		// Resources
-		if (ool.getList(IOilObjectList.RESOURCE).size() > 0
-				|| requiredOilObjects.contains(new Integer(IOilObjectList.RESOURCE)))  {
-
-			for (String s: EE_RESOURCES_IDs) {
-				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_oo_"+s+",\n");
-				counter ++;
+		{ // Resources
+			boolean hasResource = false;
+			for (int i=0; i<ools.length && ! hasResource; i++) {
+				hasResource = ool.getList(IOilObjectList.RESOURCE).size() > 0; 
+			}
+			if ( hasResource || requiredOilObjects.contains(new Integer(IOilObjectList.RESOURCE)))  {
+	
+				for (String s: EE_RESOURCES_IDs) {
+					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)&EE_oo_"+s+",\n");
+					counter ++;
+				}
 			}
 		}
 		
-		// Alarm
-		if ( ool.getList(IOilObjectList.ALARM).size() > 0 
-				|| requiredOilObjects.contains(new Integer(IOilObjectList.ALARM)))  {
-
-			for (String s: EE_ALARMS_IDs) {
-				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_oo_"+s+",\n");
-				counter ++;
+		{ // Alarm
+			boolean hasAlarm = false;
+			for (int i=0; i<ools.length && ! hasAlarm; i++) {
+				hasAlarm = ool.getList(IOilObjectList.ALARM).size() > 0; 
+			}
+			if (  hasAlarm || requiredOilObjects.contains(new Integer(IOilObjectList.ALARM)))  {
+	
+				for (String s: EE_ALARMS_IDs) {
+					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)&EE_oo_"+s+",\n");
+					counter ++;
+				}
 			}
 		}
 		
 		// Events
 		if (parent.checkKeyword(IWritersKeywords.OSEK_ECC1) 
 				|| parent.checkKeyword(IWritersKeywords.OSEK_ECC2))  {
-			if (ool.getList(IOilObjectList.EVENT).size() > 0 
-					|| requiredOilObjects.contains(new Integer(IOilObjectList.EVENT))) { 
+			boolean hasEvent = false;
+			for (int i=0; i<ools.length && ! hasEvent; i++) {
+				hasEvent = ool.getList(IOilObjectList.EVENT).size() > 0; 
+			}
+			if ( hasEvent || requiredOilObjects.contains(new Integer(IOilObjectList.EVENT))) { 
 	
 				for (String s: EE_ECC1_2_IDs) {
 					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");

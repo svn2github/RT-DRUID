@@ -225,7 +225,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 
 				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.TASK)) {
 					if (sgros.containsProperty(ISimpleGenResKeywords.TASK_ACCESSING_OS_APPL_LIST) &&
-							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.TASK_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+							!((List) sgros.getObject(ISimpleGenResKeywords.TASK_ACCESSING_OS_APPL_LIST)).isEmpty()) {
 						found = true;
 						break stop_searching;
 					}
@@ -233,7 +233,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			
 				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.RESOURCE)) {
 					if (sgros.containsProperty(ISimpleGenResKeywords.RESOURCE_ACCESSING_OS_APPL_LIST) &&
-							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.RESOURCE_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+							!((List) sgros.getObject(ISimpleGenResKeywords.RESOURCE_ACCESSING_OS_APPL_LIST)).isEmpty()) {
 						found = true;
 						break stop_searching;
 					}
@@ -241,7 +241,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			
 				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.ISR)) {
 					if (sgros.containsProperty(ISimpleGenResKeywords.ISR_ACCESSING_OS_APPL_LIST) &&
-							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.ISR_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+							!((List) sgros.getObject(ISimpleGenResKeywords.ISR_ACCESSING_OS_APPL_LIST)).isEmpty()) {
 						found = true;
 						break stop_searching;
 					}
@@ -249,7 +249,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			
 				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.COUNTER)) {
 					if (sgros.containsProperty(ISimpleGenResKeywords.COUNTER_ACCESSING_OS_APPL_LIST) &&
-							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.COUNTER_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+							!((List) sgros.getObject(ISimpleGenResKeywords.COUNTER_ACCESSING_OS_APPL_LIST)).isEmpty()) {
 						found = true;
 						break stop_searching;
 					}
@@ -257,7 +257,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			
 				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.ALARM)) {
 					if (sgros.containsProperty(ISimpleGenResKeywords.ALARM_ACCESSING_OS_APPL_LIST) &&
-							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.ALARM_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+							!((List) sgros.getObject(ISimpleGenResKeywords.ALARM_ACCESSING_OS_APPL_LIST)).isEmpty()) {
 						found = true;
 						break stop_searching;
 					}
@@ -265,7 +265,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 			
 				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.SPINLOCK)) {
 					if (sgros.containsProperty(ISimpleGenResKeywords.SPINLOCK_ACCESSING_OS_APPL_LIST) &&
-							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.SPINLOCK_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+							!((List) sgros.getObject(ISimpleGenResKeywords.SPINLOCK_ACCESSING_OS_APPL_LIST)).isEmpty()) {
 						found = true;
 						break stop_searching;
 					}
@@ -273,7 +273,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 				
 				for (ISimpleGenRes sgros: ool.getList(IOilObjectList.SCHEDULE_TABLE)) {
 					if (sgros.containsProperty(ISimpleGenResKeywords.SCHEDTABLE_ACCESSING_OS_APPL_LIST) &&
-							!((ArrayList) sgros.getObject(ISimpleGenResKeywords.SCHEDTABLE_ACCESSING_OS_APPL_LIST)).isEmpty()) {
+							!((List) sgros.getObject(ISimpleGenResKeywords.SCHEDTABLE_ACCESSING_OS_APPL_LIST)).isEmpty()) {
 						found = true;
 						break stop_searching;
 					}
@@ -1198,7 +1198,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					answer[i] = new SimpleGenRes(
 							resNames[i], resPath+S+resNames[i]+S);
 					
-					String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.SCHEDULINGTABLE, null)).getPath();
+					String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.SCHEDULETABLE, null)).getPath();
 					String[] values;
 
 					{	// ----------- DURATION ------------
@@ -1214,7 +1214,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					{	// ----------- COUNTER ------------
 						values = CommonUtils.getValue(vt, path+"COUNTER");
 						if (values != null) {
-							answer[i].setObject(ISimpleGenResKeywords.SCHEDULING_COUNTER, values);
+							answer[i].setObject(ISimpleGenResKeywords.SCHEDULING_COUNTER, values[0]);
 						}
 					}
 					{	// ----------- ACCESSING_APPLICATION ------------

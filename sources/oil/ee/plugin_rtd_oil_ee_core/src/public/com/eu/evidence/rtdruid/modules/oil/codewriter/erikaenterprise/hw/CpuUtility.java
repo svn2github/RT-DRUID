@@ -79,7 +79,7 @@ public class CpuUtility {
 		
 		Set<String> validOsApplNames = new HashSet<String>();
 		if (object.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST)) {
-			validOsApplNames.addAll((ArrayList<String>)object.getObject(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST) );
+			validOsApplNames.addAll((List<String>)object.getObject(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST) );
 		}
 		if (object.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME)) {
 			validOsApplNames.add(object.getString(ISimpleGenResKeywords.OS_APPL_NAME) );
@@ -95,12 +95,12 @@ public class CpuUtility {
 		}
 		
 		StringBuilder answerText = new StringBuilder();
-		for (int i=0; i<answerBitSet.size(); i+=4) {
+		for (int i=0; i<answerBitSet.length(); i+=4) {
 			int val = (answerBitSet.get(i) ? 1 : 0) +
-					(answerBitSet.get(i) ? 2 : 0) +
-					(answerBitSet.get(i) ? 4 : 0) +
-					(answerBitSet.get(i) ? 8 : 0);
-			answerText.append((char)
+					(answerBitSet.get(i+1) ? 2 : 0) +
+					(answerBitSet.get(i+2) ? 4 : 0) +
+					(answerBitSet.get(i+3) ? 8 : 0);
+			answerText.insert(0, (char)
 					(val<10 ? '0'+val : 'A'+(val-10))
 			);
 		}

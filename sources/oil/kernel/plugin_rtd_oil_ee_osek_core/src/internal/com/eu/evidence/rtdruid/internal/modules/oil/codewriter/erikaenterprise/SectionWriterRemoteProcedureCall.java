@@ -296,7 +296,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			if (hasAccessProtection) {
 				sbCommon_c.append(
 						macros.constVectorRom(
-								indent1 + "EE_TYPEACCESSMASK const ", "EE_as_rpc_remote_access_rules","["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_as_rpc_remote_access_rules", access_index[0])+"]", " = {\n" +
+								indent1 + "EE_TYPEACCESSMASK const ", "EE_as_rpc_remote_access_rules","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_remote_access_rules", access_index[0])+"]", " = {\n" +
 								sbCommonRpc_access_mask.toString() + "\n" + indent1 + "};\n") + "\n");
 			}
 			

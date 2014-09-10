@@ -896,10 +896,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__52;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:49:7: ( 'SCHEDULINGTABLE' )
-            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:49:9: 'SCHEDULINGTABLE'
+            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:49:7: ( 'SCHEDULETABLE' )
+            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:49:9: 'SCHEDULETABLE'
             {
-            match("SCHEDULINGTABLE"); 
+            match("SCHEDULETABLE"); 
 
 
             }
@@ -959,10 +959,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__55;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:52:7: ( 'SCHEDULINGTABLE_TYPE' )
-            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:52:9: 'SCHEDULINGTABLE_TYPE'
+            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:52:7: ( 'SCHEDULETABLE_TYPE' )
+            // ../plugin_rtd_oil_ui/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/ui/contentassist/antlr/internal/InternalOil.g:52:9: 'SCHEDULETABLE_TYPE'
             {
-            match("SCHEDULINGTABLE_TYPE"); 
+            match("SCHEDULETABLE_TYPE"); 
 
 
             }

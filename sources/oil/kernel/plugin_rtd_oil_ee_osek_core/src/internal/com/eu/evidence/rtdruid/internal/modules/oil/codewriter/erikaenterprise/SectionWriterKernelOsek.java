@@ -1345,11 +1345,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					 * EE_alarm_ROM
 					 */
 		
-					pre2 = "";
+					pre2 = "\n";
 					for (Iterator<ISimpleGenRes> iter = schedTabList.iterator(); iter.hasNext();) {
 		
 						ISimpleGenRes curr = iter.next();
-						final String currPath = curr.getPath() +S+ (new OilPath(OilObjectType.SCHEDULINGTABLE, null)).getPath();
+						final String currPath = curr.getPath() +S+ (new OilPath(OilObjectType.SCHEDULETABLE, null)).getPath();
 						final int startingExpIndex = expPointSize;
 						BigInteger maxDuration = new BigInteger("0");
 						String precision = "INVALID_SCHEDULETABLE_PRECISION";
@@ -1418,7 +1418,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							ArrayList<String> exPointType = CommonUtils.getAllChildrenEnumType(vt, currPath+"EXPIRE_POINT", exPointChildName);
 							for (int epIndex=0; epIndex<exPointType.size(); epIndex++) {
 								
-								final String expPath = currPath+"EXPIRE_POINT"+exPointChildName.get(epIndex);
+								final String expPath = currPath+"EXPIRE_POINT"+S+exPointChildName.get(epIndex);
 								
 								String posAdj = "0";
 								String negAdj = "0";
@@ -1426,7 +1426,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								final int startingActIndex = counterActionRomRows;
 								{
 									String[] tmp = CommonUtils.getValue(vt, expPath+S+"EXPIRE_VALUE");
-									if (tmp.length==0) {
+									if (tmp == null && tmp.length==0) {
 										throw new RuntimeException(
 												"Scheduling Table : Misisng an action's expire value for Scheduling Table "
 														+ curr.getName());
@@ -1458,7 +1458,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								ArrayList<String> actNames = new ArrayList<String>();
 								ArrayList<String> actTypes = CommonUtils.getAllChildrenEnumType(vt, expPath+S+"ACTION", actNames);
 								for (int actIndex=0; actIndex<actTypes.size(); actIndex++) {
-									final String actPath = expPath+S+"ACTION"+actNames.get(actIndex)+S;
+									final String actPath = expPath+S+"ACTION"+S+actNames.get(actIndex)+S;
 									final String actType = actTypes.get(actIndex);
 
 									String callBackName = NULL_NAME;
@@ -1470,7 +1470,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 
 									{ // All action types requires the task name
 										String[] tmp = CommonUtils.getValue(vt, actPath+"TASK");
-										if (tmp.length==0) {
+										if (tmp == null || tmp.length==0) {
 											throw new RuntimeException(
 													"Scheduling Table : Misisng an action's task name for Scheduling Table "
 															+ curr.getName());
@@ -1512,10 +1512,10 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									 * #define EE_ALARM_ACTION_EVENT 2
 									 * #define EE_ALARM_ACTION_COUNTER 3
 									 */
-									if (actType.equals(ISimpleGenResKeywords.ALARM_ACTIVATE_TASK)) {
+									if ("ACTIVATETASK".equals(actType)) {
 										notif_type = "EE_ACTION_TASK    ";
 										
-									} else if (actType.equals(ISimpleGenResKeywords.ALARM_SET_EVENT)) {
+									} else if ("SETEVENT".equals(actType)) {
 										String[] tmp = CommonUtils.getValue(vt, actPath+"EVENT");
 										if (tmp.length==0) {
 											throw new RuntimeException(
@@ -1554,7 +1554,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 //										notif_type = "EE_ACTION_CALLBACK";
 										
 									} else {
-										throw new Error("Unknow type");
+										throw new Error("Unknow type: " + actType);
 									}
 									
 									// write

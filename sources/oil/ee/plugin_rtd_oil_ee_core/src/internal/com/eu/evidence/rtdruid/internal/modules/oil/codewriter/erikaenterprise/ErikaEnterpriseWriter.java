@@ -2684,4 +2684,19 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		}
 		return number;
 	}
+	
+	public static String addVectorSizeDefine(IOilObjectList[] ools, String vectorName, int size) {
+		String defineName = vectorName.toUpperCase() + "_SIZE";
+		for (IOilObjectList ool : ools) {
+			Map<String, Integer> list = (Map<String, Integer>) getOsObject(ool, SGRK_OS_CPU_VECTOR_SIZE_DEFINES);
+			if (list == null) {
+				list = new HashMap<String, Integer>();
+				ool.getList(IOilObjectList.OS).get(0).setObject(SGRK_OS_CPU_VECTOR_SIZE_DEFINES, list);
+			}
+			if (!list.containsKey(defineName)) {
+				list.put(defineName, new Integer(size));
+			}
+		}
+		return defineName;
+	}
 }

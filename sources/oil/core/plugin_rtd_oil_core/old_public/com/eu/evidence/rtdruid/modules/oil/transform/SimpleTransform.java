@@ -540,7 +540,7 @@ public class SimpleTransform implements IOilTransform {
 
 		// prepare where store all data
 		Element[] schedTableList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT,
-				new String[] { IOilXMLLabels.ATTR_TYPE }, new String[] { IOilXMLLabels.OBJ_SCHEDULINGTABLE });
+				new String[] { IOilXMLLabels.ATTR_TYPE }, new String[] { IOilXMLLabels.OBJ_SCHEDULETABLE });
 
 		// aggregate instances of the same SpinLocks
 		ArrayList<Element> unamedSchedTable = new ArrayList<Element>();
@@ -2581,7 +2581,7 @@ public class SimpleTransform implements IOilTransform {
 				objects = new SimpleGenRes[names.length];
 				for (int i = 0; i < names.length; i++) {
 					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
-					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_SCHEDULINGTABLE);
+					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_SCHEDULETABLE);
 					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
 				}
 			}

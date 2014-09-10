@@ -796,7 +796,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 				sbStack.append(indent + "struct EE_TC_TOS EE_tc_system_tos["
 						+ ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_tc_system_tos", size.length /* - is_irq_stack.cardinality()*/)
 						+ "] = {\n"
-						+ writeSystemTos(commentC, size, descrStack, new String[] {"0", "0",  "EE_STACK_INITP("+STACK_BASE_NAME+size.length+")",  "EE_STACK_ENDP("+STACK_BASE_NAME+size.length+")"}, is_irq_stack, additional_elements, false, kernelStack_enabled));
+						+ writeSystemTos(commentC, size, descrStack, new String[] {
+								(osApplication_enabled ? "(EE_ADDR)EE_E_USTACK" : "0"), "0",  "EE_STACK_INITP("+STACK_BASE_NAME+size.length+")",  "EE_STACK_ENDP("+STACK_BASE_NAME+size.length+")"}, is_irq_stack, additional_elements, false, kernelStack_enabled));
 				    
 				if (osApplication_enabled) {
 					sbStack.append(indent + "struct EE_TC_BOS const EE_tc_system_bos["
