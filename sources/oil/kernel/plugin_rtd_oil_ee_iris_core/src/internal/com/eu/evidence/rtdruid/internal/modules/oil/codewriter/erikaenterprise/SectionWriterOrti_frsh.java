@@ -540,7 +540,8 @@ public class SectionWriterOrti_frsh extends SectionWriter implements
 								
 								(
 										(EE_ORTI_current & FrshOrtiConstants.EE_ORTI_STACK) != 0  && parent.checkKeyword(DEF__MULTI_STACK__) ? 
-										indent1+"STACK        = \""+stack_vector_name+"["+stackID+"]\";\n" : ""
+										indent1+"STACK        = \"("+stackID+")\";\n" : ""
+//										indent1+"STACK        = \""+stack_vector_name+"["+stackID+"]\";\n" : ""
 								) + 
 								indent1+"NACT         = \"EE_th["+id+"].nact\";\n" + 
 								indent1+"RESLOCKED    = \"(EE_th["+id+"].lockedcounter > 0) ? 1 : 0\";\n" + 

@@ -533,8 +533,10 @@ public class SectionWriterOrti_osek extends SectionWriter implements
 								(
 										(EE_ORTI_current & OsekOrtiConstants.EE_ORTI_STACK) != 0  && all_stack_id.length()>0 ? 
 												(parent.checkKeyword(DEF__MULTI_STACK__) ? 
-														indent1+"STACK = \"("+stack_vector_name+"["+stackID+"]"+stack_vector_field+")\";\n" :
-														indent1+"STACK = Stack0;\n"  
+														indent1+"STACK = \"("+stackID+")\";\n" :
+														indent1+"STACK = \"(0)\";\n"  
+//														indent1+"STACK = \"("+stack_vector_name+"["+stackID+"]"+stack_vector_field+")\";\n" :
+//														indent1+"STACK = Stack0;\n"  
 												): "") + 
 								"};\n");		
 					
