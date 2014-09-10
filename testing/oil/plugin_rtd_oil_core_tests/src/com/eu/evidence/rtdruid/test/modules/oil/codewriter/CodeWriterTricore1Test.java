@@ -5497,6 +5497,205 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
-	
-	
+	@Test public void testTc27x_rpc4() {
+		String text = "CPU test_application {\n" +
+				"\n" +
+				"  OS EE {\n" +
+				"    EE_OPT = \"EE_DEBUG\";\n" +
+				"    EE_OPT = \"__ASSERT__\";\n" +
+				"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+				"    //EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+				"    //EE_OPT = \"EE_MM_OPT\";\n" +
+				"    EE_OPT = \"EE_ICACHE_ENABLED\";\n" +
+				"    EE_OPT = \"EE_DCACHE_ENABLED\";\n" +
+				"\n" +
+				"    REMOTENOTIFICATION = USE_RPC;\n" +
+				"\n" +
+				"    //SPINLOCKS = QUEUED;\n" +
+				"\n" +
+				"    MASTER_CPU = \"master\";\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      ID = \"master\";\n" +
+				"      CPU_CLOCK = 200.0;\n" +
+				"      APP_SRC = \"master.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      SYS_STACK_SIZE = 4096;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"      //COMPILER_TYPE = TASKING;\n" +
+				"    };\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      ID = \"slave1\";\n" +
+				"      APP_SRC = \"slave1.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      SYS_STACK_SIZE = 4096;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"      //COMPILER_TYPE = TASKING;\n" +
+				"    };\n" +
+				"\n" +
+				"    CPU_DATA = TRICORE {\n" +
+				"      ID = \"slave2\";\n" +
+				"      APP_SRC = \"slave2.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      SYS_STACK_SIZE = 4096;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"      //COMPILER_TYPE = TASKING;\n" +
+				"    };\n" +
+				"\n" +
+				"    MCU_DATA = TRICORE {\n" +
+				"      MODEL = TC27x;\n" +
+				"    };\n" +
+				"\n" +
+				"    STATUS = EXTENDED;\n" +
+				"    ERRORHOOK = TRUE;\n" +
+				"\n" +
+				"    ORTI_SECTIONS = ALL;\n" +
+				"\n" +
+				"    KERNEL_TYPE = ECC1;\n" +
+				"  };\n" +
+				"\n" +
+				"  TASK TaskMaster {\n" +
+				"    CPU_ID = \"master\";\n" +
+				"    PRIORITY = 1;\n" +
+				"    AUTOSTART = TRUE;\n" +
+				"    STACK = PRIVATE {\n" +
+				"      SYS_SIZE = 256;\n" +
+				"    };\n" +
+				"    ACTIVATION = 1;\n" +
+				"    SCHEDULE = FULL;\n" +
+				"    EVENT = EventMaster;\n" +
+				"  };\n" +
+				"\n" +
+				"  TASK TaskSlave1 {\n" +
+				"    CPU_ID = \"slave1\";\n" +
+				"    PRIORITY = 1;\n" +
+				"    AUTOSTART = FALSE;\n" +
+				"    STACK = PRIVATE {\n" +
+				"      SYS_SIZE = 128;\n" +
+				"    };\n" +
+				"    ACTIVATION = 1;\n" +
+				"    SCHEDULE = FULL;\n" +
+				"    EVENT = EventSlave1;\n" +
+				"  };\n" +
+				"\n" +
+				"  TASK TaskSlave2 {\n" +
+				"    CPU_ID = \"slave2\";\n" +
+				"    PRIORITY = 1;\n" +
+				"    AUTOSTART = FALSE;\n" +
+				"    STACK = SHARED;\n" +
+				"    ACTIVATION = 1;\n" +
+				"    SCHEDULE = FULL;\n" +
+				"  };\n" +
+				"\n" +
+				"  EVENT EventMaster { MASK = AUTO; };\n" +
+				"  EVENT EventSlave1 { MASK = AUTO; };\n" +
+				"\n" +
+				"  COUNTER CounterSlave2 {\n" +
+				"    CPU_ID = \"slave2\";\n" +
+				"    MINCYCLE = 1;\n" +
+				"    MAXALLOWEDVALUE = 1;\n" +
+				"    TICKSPERBASE = 1;\n" +
+				"  };\n" +
+				"\n" +
+				"  ALARM AlarmSlave2 {\n" +
+				"    COUNTER = CounterSlave2;\n" +
+				"    ACTION = SETEVENT { TASK = TaskSlave1; EVENT = EventSlave1; };\n" +
+				"  };\n" +
+				"};\n";
+			commonWriterTest(text, 3);
+		}
+
+	@Test public void testTc27x_event() {
+		String text = "CPU test_application {\n" +
+				"\n" +
+				"    OS EE {\n" +
+				"        EE_OPT = \"EE_DEBUG\";\n" +
+				"        EE_OPT = \"__ASSERT__\";\n" +
+				"\n" +
+				"        EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+				"\n" +
+				"        MCU_DATA = TRICORE {\n" +
+				"            MODEL = TC27x;\n" +
+				"        };\n" +
+				"\n" +
+				"        CPU_DATA = TRICORE {\n" +
+				"            CPU_CLOCK = 200.0;\n" +
+				"            APP_SRC = \"code.c\";\n" +
+				"            COMPILER_TYPE = GNU;\n" +
+				"            MULTI_STACK = TRUE {\n" +
+				"                IRQ_STACK = TRUE {\n" +
+				"                    SYS_SIZE = 256;\n" +
+				"                };\n" +
+				"            };\n" +
+				"        };\n" +
+				"\n" +
+				"        BOARD_DATA = TRIBOARD_TC2X5;\n" +
+				"\n" +
+				"        STATUS = EXTENDED;\n" +
+				"        STARTUPHOOK = TRUE;\n" +
+				"        ERRORHOOK = TRUE;\n" +
+				"        USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"        KERNEL_TYPE = ECC2;\n" +
+				"        ORTI_SECTIONS = ALL;\n" +
+				"    };\n" +
+				"\n" +
+				"    TASK Task1 {\n" +
+				"        PRIORITY = 0x01;\n" +
+				"        ACTIVATION = 1;\n" +
+				"        SCHEDULE = FULL;\n" +
+				"        AUTOSTART = TRUE;\n" +
+				"        STACK = PRIVATE {\n" +
+				"            SYS_SIZE = 256;\n" +
+				"        };\n" +
+				"        EVENT = TimerEvent;\n" +
+				"        EVENT = ButtonEvent;\n" +
+				"    };\n" +
+				"\n" +
+				"    TASK Task2 {\n" +
+				"        PRIORITY = 0x02;\n" +
+				"        ACTIVATION = 1;\n" +
+				"        SCHEDULE = FULL;\n" +
+				"        AUTOSTART = FALSE;\n" +
+				"        STACK = SHARED;\n" +
+				"    };\n" +
+				"\n" +
+				"    EVENT TimerEvent  { MASK = AUTO; };\n" +
+				"    EVENT ButtonEvent { MASK = AUTO; };\n" +
+				"\n" +
+				"    COUNTER system_timer {\n" +
+				"        MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"            DEVICE = \"STM_SR0\";\n" +
+				"            SYSTEM_TIMER = TRUE;\n" +
+				"            PRIORITY = 1;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"    };\n" +
+				"\n" +
+				"    ALARM AlarmTask1 {\n" +
+				"        COUNTER = system_timer;\n" +
+				"        ACTION = SETEVENT { TASK = Task1; EVENT = TimerEvent; };\n" +
+				"        AUTOSTART = TRUE { ALARMTIME = 250; CYCLETIME = 500; };\n" +
+				"    };\n" +
+				"\n" +
+				"    ALARM AlarmTask2 {\n" +
+				"        COUNTER = system_timer;\n" +
+				"        ACTION = ACTIVATETASK { TASK = Task2; };\n" +
+				"        AUTOSTART = FALSE;\n" +
+				"    };\n" +
+				"\n" +
+				"    ISR Button_isr2 {\n" +
+				"        CATEGORY = 2;\n" +
+				"        LEVEL = \"2\";\n" +
+				"        PRIORITY = 2;\n" +
+				"        HANDLER = \"button_handler\"; // IRQ handler \n" +
+				"    };\n" +
+				"};\n";
+			commonWriterTest(text, 1);
+		}
+
 }

@@ -323,7 +323,7 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 
 				buffer.append("\n" + indent + commentWriterH.writerSingleLineComment("COUNTER OBJECTS definition")); //\n");
 				if (!binaryDistr) {
-					buffer.append(indent + "#define EE_MAX_COUNTER_OBJECTS EE_MAX_ALARM\n");
+					buffer.append(indent + "#define EE_MAX_COUNTER_OBJECTS EE_MAX_ALARM /* + EE_MAX_SCHEDULETABLES */\n");
 				} else if (binaryDistrFull) {
 					buffer_c.append(indent + "const unsigned int EE_MAX_COUNTER_OBJECTS = " + alarmList.size()
 							+ "U;\n");
