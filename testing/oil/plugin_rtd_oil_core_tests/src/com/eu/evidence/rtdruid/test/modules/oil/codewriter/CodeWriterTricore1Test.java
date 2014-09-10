@@ -8263,4 +8263,135 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+		
+	@Test public void testSchedTab() {
+		String text = "CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"    EE_OPT = \"EE_DEBUG\";\n" +
+			"    EE_OPT = \"__ASSERT__\";\n" +
+			"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+			"    EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+			"\n" +
+			"    MEMORY_PROTECTION   = TRUE;\n" +
+			"    STACKMONITORING     = TRUE;\n" +
+			"    SERVICE_PROTECTION  = TRUE;\n" +
+			"    PROTECTIONHOOK      = TRUE;\n" +
+			"\n" +
+			"    /* I need to do checks in Idle Loop */\n" +
+			"    EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+			"\n" +
+			"    CPU_DATA = TRICORE {\n" +
+			"      CPU_CLOCK = 200.0;\n" +
+			"      APP_SRC = \"code.c\";\n" +
+			"      MULTI_STACK = TRUE;\n" +
+			"      //SYS_STACK_SIZE = 4096;\n" +
+			"      COMPILER_TYPE = GNU;\n" +
+			"      //COMPILER_TYPE = TASKING;\n" +
+			"    };\n" +
+			"\n" +
+			"    MCU_DATA = TRICORE {\n" +
+			"      MODEL = TC27x;\n" +
+			"    };\n" +
+			"\n" +
+			"    BOARD_DATA = TRIBOARD_TC2X5;\n" +
+			"\n" +
+			"    STATUS        = EXTENDED;\n" +
+			"    SHUTDOWNHOOK  = TRUE;\n" +
+			"    //ORTI_SECTIONS = ALL;\n" +
+			"    KERNEL_TYPE = ECC1;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskPrio1 {\n" +
+			"    PRIORITY = 1;\n" +
+			"    AUTOSTART = TRUE;\n" +
+			"    STACK = PRIVATE {\n" +
+			"      SYS_SIZE = 128;\n" +
+			"    };\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    EVENT = EventTaskPrio1;\n" +
+			"    TIMING_PROTECTION = TRUE {\n" +
+			"      TIMEFRAME               = 3;\n" +
+			"      EXECUTIONBUDGET         = 0.0025;\n" +
+			"      MAXALLINTERRUPTLOCKTIME = 0.0001;\n" +
+			"    };\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskPrio2 {\n" +
+			"    PRIORITY = 2;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = SHARED;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    TIMING_PROTECTION = TRUE {\n" +
+			"      TIMEFRAME               = 2;\n" +
+			"      EXECUTIONBUDGET         = 0.0005;\n" +
+			"      MAXALLINTERRUPTLOCKTIME = 0.0001;\n" +
+			"    };\n" +
+			"  };\n" +
+			"\n" +
+			"  ISR Button_ISR2 {\n" +
+			"    CATEGORY = 2;\n" +
+			"    PRIORITY = 2;\n" +
+			"    HANDLER = \"button_handler\"; // IRQ handler\n" +
+			"    TIMING_PROTECTION = TRUE {\n" +
+			"      TIMEFRAME               = 1;\n" +
+			"      EXECUTIONTIME           = 0.0055;\n" +
+			"      MAXALLINTERRUPTLOCKTIME = 0.0001;\n" +
+			"    };\n" +
+			"  };\n" +
+			"\n" +
+			"  EVENT EventTaskPrio1 { MASK = AUTO; };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"STM_SR0\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = 1;\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"\n" +
+			"  SCHEDULETABLE ScheduleTable1 {\n" +
+			"    COUNTER = system_timer;\n" +
+			"    DURATION = 5;\n" +
+			"    REPEATING = FALSE;\n" +
+			"    AUTOSTART = TRUE {\n" +
+			"      TYPE = ABSOLUTE;\n" +
+			"      START_VALUE = 0;\n" +
+			"    };\n" +
+			"    EXPIRE_POINT = ACTION {\n" +
+			"      EXPIRE_VALUE = 1;\n" +
+			"      ACTION = ACTIVATETASK { TASK = TaskPrio2; };\n" +
+			"      SYNC_ADJUSTMENT = FALSE;\n" +
+			"    };\n" +
+			"    EXPIRE_POINT = ACTION {\n" +
+			"      EXPIRE_VALUE = 3;\n" +
+			"      ACTION = SETEVENT { TASK = TaskPrio1; EVENT=EventTaskPrio1; };\n" +
+			"      SYNC_ADJUSTMENT = FALSE;\n" +
+			"    };\n" +
+			"    EXPIRE_POINT = ACTION {\n" +
+			"      EXPIRE_VALUE = 4;\n" +
+			"      ACTION = SETEVENT { TASK = TaskPrio1; EVENT=EventTaskPrio1; };\n" +
+			"      SYNC_ADJUSTMENT = FALSE;\n" +
+			"    };\n" +
+			"    LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION = FALSE;\n" +
+			"  };\n" +
+			"\n" +
+			"  APPLICATION App1 {\n" +
+			"    TRUSTED           = FALSE;\n" +
+			"    TASK              = TaskPrio1;\n" +
+			"    TASK              = TaskPrio2;\n" +
+			"    ISR               = Button_ISR2;\n" +
+			"    SCHEDULETABLE     = ScheduleTable1;\n" +
+			"    SHARED_STACK_SIZE = 128;\n" +
+			"    IRQ_STACK_SIZE    = 128;\n" +
+			"  };\n" +
+			"};\n";
+		commonWriterTest(text, 1);
+		}
 }

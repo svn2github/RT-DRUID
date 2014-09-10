@@ -1771,6 +1771,18 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						// prepare all data
 		
 						{ // ----- GET VALUES -----
+							
+							if (curr.containsProperty(ISimpleGenResKeywords.SCHEDTABLE_DURATION)) {
+								String v = curr.getString(ISimpleGenResKeywords.SCHEDTABLE_DURATION);
+								try {
+									maxDuration = maxDuration.max( new BigInteger(v) );
+								} catch (NumberFormatException e) {
+									throw new RuntimeException(
+											"Scheduling Table : Not valid duration for Scheduling Table "
+													+ curr.getName() + "(value = "+v+")");
+								}
+							}
+							
 							counter_def = curr.getString(ISimpleGenResKeywords.SCHEDULING_COUNTER); 
 		
 							//search counter
@@ -1937,9 +1949,9 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										
 									} else if ("SETEVENT".equals(actType)) {
 										String[] tmp = CommonUtils.getValue(vt, actPath+"EVENT");
-										if (tmp.length==0) {
+										if (tmp == null || tmp.length==0) {
 											throw new RuntimeException(
-													"Scheduling Table : Misisng an action's event for Scheduling Table "
+													"Scheduling Table : Missing an action's event for Scheduling Table "
 															+ curr.getName());
 										}
 										evento = tmp[0];

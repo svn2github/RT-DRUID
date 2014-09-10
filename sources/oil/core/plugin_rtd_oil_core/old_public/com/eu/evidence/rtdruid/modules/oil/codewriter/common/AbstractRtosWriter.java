@@ -1286,7 +1286,7 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 	        
 		}
 			break;
-			/* ----------------------  SCHEDULING TABLE  ---------------------- */
+			/* ----------------------  SCHEDULE TABLE  ---------------------- */
 		case IOilObjectList.SCHEDULE_TABLE:
 		{
 			String rtosName = getVarAsString(rtosPrefix + S
