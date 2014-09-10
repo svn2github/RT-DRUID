@@ -176,7 +176,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				indent1 + "#define EE_MAX_APP " + (applications.size() +1)+"U\n"); 	
 		for (ISimpleGenRes application : applications) {
 			ee_h_buffer.append(indent1+ "#define " + application.getName() 
-					+ "ID "+ application.getInt(ISimpleGenResKeywords.OS_APPL_ID)+"U\n" );
+					+ " "+ application.getInt(ISimpleGenResKeywords.OS_APPL_ID)+"U\n" );
 		
 		}
 		ee_h_buffer.append("\n");
