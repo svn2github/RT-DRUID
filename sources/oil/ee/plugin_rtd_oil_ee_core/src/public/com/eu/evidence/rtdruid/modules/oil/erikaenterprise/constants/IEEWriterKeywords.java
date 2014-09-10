@@ -166,6 +166,9 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	/** Identifies that is allowed the irq nesting */
 	public final static String DEF__ALLOW_NESTED_IRQ__ = "__ALLOW_NESTED_IRQ__";
 
+	
+	/** Identifies that it is no required time frames reclamation */
+	public final static String DEF__NO_TIME_FRAME_RECLAMATION__ = "EE_NO_RECLAMATION_TIME_FRAMES";
 
 	/**
 	 * Identifies a string added inside the makefile, before include "rules.mk"

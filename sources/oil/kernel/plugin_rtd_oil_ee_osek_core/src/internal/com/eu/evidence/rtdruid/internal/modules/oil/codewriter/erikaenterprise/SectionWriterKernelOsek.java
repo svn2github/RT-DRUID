@@ -645,7 +645,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									indent2 + timeFrame + "\n"+indent1+"};\n");
 							
 							
-							sb_tp_all_RAM.append(indent1+"EE_as_tp_RAM_type tp_"+tname+"_RAM = {\n"+
+							sb_tp_all_RAM.append(indent1+"EE_as_tp_RAM_type EE_KERNEL_IDATA tp_"+tname+"_RAM = {\n"+
 									indent2 + "{ EE_OS_NO_TIME, EE_FALSE },\n"+
 									indent2 + "0U,\n" +
 									indent2 + "INVALID_BUDGET\n"+
@@ -831,7 +831,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								+indent2 + timeFrame + "\n" + indent1+"};\n");
 						
 						
-						sb_tp_all_RAM.append(indent1 + "EE_as_tp_RAM_type tp_"+tname+"_RAM = {\n"+
+						sb_tp_all_RAM.append(indent1 + "EE_as_tp_RAM_type EE_KERNEL_IDATA tp_"+tname+"_RAM = {\n"+
 								indent2 + "{ EE_OS_NO_TIME, EE_FALSE },\n"+
 								indent2 + "0U,\n" +
 								indent2 + "INVALID_BUDGET\n"+
@@ -1053,6 +1053,14 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			 */
 			if (tp_budgets>0) {
 				
+				if (!parent.checkKeyword(DEF__NO_TIME_FRAME_RECLAMATION__)) {
+					sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_RECLAMATION_TIME_FRAMES_BUDGET, (EE_OS_INFINITE_TIME >> 1U) }");
+					sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ (EE_OS_INFINITE_TIME >> 1U), EE_TRUE }");
+					
+					tp_budgets++;
+					pre_all_budgets = ",\n";
+				}
+				
 				String size_id = "EE_MAX_TIMING_BUDGET";
 				buffer_h.append(commentWriterH.writerBanner("Timing protection"));
 				buffer_h.append("#define "+size_id+" "+tp_budgets+"\n");
@@ -1061,7 +1069,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				buffer.append(indent1+"const EE_as_tp_budget_conf_type EE_as_tp_budget_confs["+size_id+"] = {\n" +
 								sb_tp_all_budgets_ROM.toString()+"\n"+
 								indent1+"};\n\n");
-				buffer.append(indent1+"EE_as_tp_budget_data_type EE_as_tp_budget_data["+size_id+"] = {\n" +
+				buffer.append(indent1+"EE_as_tp_budget_data_type EE_KERNEL_IDATA EE_as_tp_budget_data["+size_id+"] = {\n" +
 								sb_tp_all_budgets_RAM.toString()+"\n"+
 								indent1+"};\n\n");
 				buffer.append(sb_tp_all_ResLock.toString() + "\n");
@@ -2608,6 +2616,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			options.add(new AutoOptions(currentRtosPrefix, "USEPARAMETERACCESS", "TRUE", OsekConstants.DEF__OSEKOS_HAS_USEPARAMETERACCESS__, false));
 			
 			options.add(new AutoOptions(currentRtosPrefix, "SERVICE_PROTECTION", "TRUE", IWritersKeywords.KERNEL_SERVICE_PROTECTION, false));
+			
+			options.add(new AutoOptions(currentRtosPrefix, "TIMEFRAMERECLAMATION", "FALSE", DEF__NO_TIME_FRAME_RECLAMATION__, false));
 
 			
 			options.add(new AutoOptions(currentRtosPrefix, "PROTECTIONHOOK", "TRUE", SGR_OS_MEM_PROTECTION_HOOK, false));
@@ -2698,7 +2708,6 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 //						{ DEF__OSEKOS_HAS_USERESSCHEDULER__,
 //								"__OO_HAS_USERESSCHEDULER__" },
 								
-								
 						{ DEF__IRQ_STACK_NEEDED__, "__IRQ_STACK_NEEDED__" },
 
 						{ DEF__MONO_STACK__, "__MONO__" },
@@ -2722,6 +2731,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				    answer.add("__OO_HAS_USERESSCHEDULER__");
 			    }
 
+
 			}
 			
 			// schedule table
@@ -2737,7 +2747,6 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				    answer.add("EE_AS_SCHEDULETABLES__");
 			    }
 			}
-			
 		}
 
 
@@ -2809,6 +2818,10 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			{
 				if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_HAS_TIMING_PPROTECTION))) {
 					answer.add("EE_TIMING_PROTECTION__");
+
+					if (parent.checkKeyword(DEF__NO_TIME_FRAME_RECLAMATION__)) {
+						answer.add("EE_NO_RECLAMATION_TIME_FRAMES");
+					}
 				}
 				
 			}

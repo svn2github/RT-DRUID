@@ -8264,6 +8264,102 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 	}
 
 		
+		@Test public void testTpTask() {
+			String text = "CPU test_application {\n" +
+					"\n" +
+					"  OS EE {\n" +
+					"    EE_OPT = \"EE_DEBUG\";\n" +
+					"    EE_OPT = \"__ASSERT__\";\n" +
+					"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+					"    EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+					"\n" +
+					"    SERVICE_PROTECTION = TRUE;\n" +
+					"    TIMEFRAMERECLAMATION = FALSE;\n" +
+					"\n" +
+					"    CPU_DATA = TRICORE {\n" +
+					"      CPU_CLOCK = 200.0;\n" +
+					"      APP_SRC = \"code.c\";\n" +
+					"      MULTI_STACK = TRUE;\n" +
+					"      COMPILER_TYPE = GNU;\n" +
+					"    };\n" +
+					"\n" +
+					"    MCU_DATA = TRICORE {\n" +
+					"      MODEL = TC26x;\n" +
+					"    };\n" +
+					"\n" +
+					"    STATUS        = EXTENDED;\n" +
+					"    SHUTDOWNHOOK  = TRUE;\n" +
+					"    KERNEL_TYPE = ECC1;\n" +
+					"  };\n" +
+					"\n" +
+					"  TASK TaskPrio2 {\n" +
+					"    PRIORITY = 2;\n" +
+					"    AUTOSTART = FALSE;\n" +
+					"    STACK = SHARED;\n" +
+					"    ACTIVATION = 1;\n" +
+					"    SCHEDULE = FULL;\n" +
+					"    RESOURCE = RES_SCHEDULER;\n" +
+					"  };\n" +
+					"\n" +
+					"  TASK TaskPrio1 {\n" +
+					"    PRIORITY = 1;\n" +
+					"    AUTOSTART = TRUE;\n" +
+					"    STACK = PRIVATE {\n" +
+					"      SYS_SIZE = 256;\n" +
+					"    };\n" +
+					"    ACTIVATION = 1;\n" +
+					"    SCHEDULE = FULL;\n" +
+					"    EVENT = EventTaskPrio1;\n" +
+					"    RESOURCE = RES_SCHEDULER;\n" +
+					"    TIMING_PROTECTION = TRUE {\n" +
+					"      EXECUTIONBUDGET         = 0.0025;\n" +
+					"      MAXALLINTERRUPTLOCKTIME = 0.0001;\n" +
+					"      RESOURCE = RESOURCELOCK {\n" +
+					"        RESOURCELOCKTIME = 0.0002;\n" +
+					"        RESOURCE = RES_SCHEDULER;\n" +
+					"      };\n" +
+					"    };\n" +
+					"  };\n" +
+					"\n" +
+					"  RESOURCE RES_SCHEDULER { RESOURCEPROPERTY = STANDARD; };\n" +
+					"  EVENT EventTaskPrio1 { MASK = AUTO; };\n" +
+					"\n" +
+					"  COUNTER system_timer {\n" +
+					"    MINCYCLE = 1;\n" +
+					"    MAXALLOWEDVALUE = 2147483647;\n" +
+					"    TICKSPERBASE = 1;\n" +
+					"    TYPE = HARDWARE {\n" +
+					"      DEVICE = \"STM_SR0\";\n" +
+					"      SYSTEM_TIMER = TRUE;\n" +
+					"      PRIORITY = 1;\n" +
+					"    };\n" +
+					"    SECONDSPERTICK = 0.001;\n" +
+					"  };\n" +
+					"\n" +
+					"  SCHEDULETABLE ScheduleTable1 {\n" +
+					"    COUNTER = system_timer;\n" +
+					"    DURATION = 1;\n" +
+					"    REPEATING = FALSE;\n" +
+					"    AUTOSTART = TRUE {\n" +
+					"      TYPE = ABSOLUTE;\n" +
+					"      START_VALUE = 0;\n" +
+					"    };\n" +
+					"    EXPIRE_POINT = ACTION {\n" +
+					"      EXPIRE_VALUE = 1;\n" +
+					"      ACTION = ACTIVATETASK { TASK = TaskPrio2; };\n" +
+					"      SYNC_ADJUSTMENT = FALSE;\n" +
+					"    };\n" +
+					"    EXPIRE_POINT = ACTION {\n" +
+					"      EXPIRE_VALUE = 3;\n" +
+					"      ACTION = SETEVENT { TASK = TaskPrio1; EVENT = EventTaskPrio1; };\n" +
+					"      SYNC_ADJUSTMENT = FALSE;\n" +
+					"    };\n" +
+					"    LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION = FALSE;\n" +
+					"  };\n" +
+					"};\n";
+			commonWriterTest(text, 1);
+			}
+		
 	@Test public void testSchedTab() {
 		String text = "CPU test_application {\n" +
 			"\n" +
