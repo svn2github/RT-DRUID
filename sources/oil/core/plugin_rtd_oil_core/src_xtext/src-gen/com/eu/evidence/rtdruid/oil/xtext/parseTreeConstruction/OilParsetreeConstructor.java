@@ -342,8 +342,7 @@ protected class OilFile_ApplicationAssignment_3 extends AssignmentToken  {
 /************ begin Rule OilImplementation ****************
  *
  * // (":" description=STRING)? 
- * 
- * OilImplementation:
+ *  OilImplementation:
  * 
  * 	"IMPLEMENTATION" name=ID "{" OilObjects+=OilObjectImpl* "}" ";";
  *

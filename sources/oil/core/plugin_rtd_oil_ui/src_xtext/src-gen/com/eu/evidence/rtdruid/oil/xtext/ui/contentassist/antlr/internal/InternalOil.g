@@ -1530,6 +1530,13 @@ rule__ObjectType__Alternatives
 { after(grammarAccess.getObjectTypeAccess().getSPINLOCKEnumLiteralDeclaration_14()); }
 )
 
+    |(
+{ before(grammarAccess.getObjectTypeAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); }
+(	'SCHEDULINGTABLE' 
+)
+{ after(grammarAccess.getObjectTypeAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -1643,6 +1650,13 @@ rule__ObjectTypeRef__Alternatives
 (	'SPINLOCK_TYPE' 
 )
 { after(grammarAccess.getObjectTypeRefAccess().getSPINLOCKEnumLiteralDeclaration_14()); }
+)
+
+    |(
+{ before(grammarAccess.getObjectTypeRefAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); }
+(	'SCHEDULINGTABLE_TYPE' 
+)
+{ after(grammarAccess.getObjectTypeRefAccess().getSCHEDULINGTABLEEnumLiteralDeclaration_15()); }
 )
 
 ;

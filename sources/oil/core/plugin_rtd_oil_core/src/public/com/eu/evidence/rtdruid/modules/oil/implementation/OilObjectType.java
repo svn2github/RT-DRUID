@@ -48,6 +48,8 @@ public enum OilObjectType {
 	NM(IOilXMLLabels.OBJ_NM),
 	/** Identifies a SpinLock */
 	SPINLOCK(IOilXMLLabels.OBJ_SPINLOCK),
+	/** Identifies a Scheduling table */
+	SCHEDULINGTABLE(IOilXMLLabels.OBJ_SCHEDULINGTABLE),
 	/** Identifies a CPU */
 	CPU(IOilXMLLabels.OBJ_CPU);
 
@@ -89,6 +91,7 @@ public enum OilObjectType {
 		case IOilObjectList.ALARM: return ALARM;
 		case IOilObjectList.COUNTER: return COUNTER;
 		case IOilObjectList.SPINLOCK: return SPINLOCK;
+		case IOilObjectList.SCHEDULING_TABLE: return SCHEDULINGTABLE;
 		case IOilObjectList.RESOURCE: return RESOURCE;
 		case IOilObjectList.NETWORKMESSAGE: return NETWORKMESSAGE;
 		case IOilObjectList.MESSAGE: return MESSAGE;
