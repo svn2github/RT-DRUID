@@ -2778,7 +2778,7 @@ public class SimpleTransform implements IOilTransform {
 		}
 
 		// add properties
-		writeApplicationObjectProperties(buffer, INDENT + INDENT, object, objType, rtosPath);
+		//writeApplicationObjectProperties(buffer, INDENT + INDENT, object, objType, rtosPath);
 
 		// children
 		if (vtp.go(path)) {

@@ -922,5 +922,51 @@ public class CodeWriterArm7Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	
+	@Test public void testResScheduler() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"		CPU_DATA = ARM7 {\n" +
+				"			MULTI_STACK = TRUE {\n" +
+				"				IRQ_STACK = FALSE;\n" +
+				"				/*DUMMY_STACK = SHARED;\n*/" +
+				"			};\n" +
+				"			\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"	\n" 
+				+ "        STACK_TOP = 0x20004000;\n"
+				+ "        STACK_BOTTOM = 0x20001800;\n"
+				+ "        SYS_SIZE = 0x1000;\n"
+				+ "        IRQ_SIZE = 0x1000;\n"
+				+ "        SVC_SIZE = 0x200;\n"
+				+ "        FIQ_SIZE = 0x200;\n"
+				+ "        ABT_SIZE = 0x200;\n"
+				+ "        UND_SIZE = 0x200;\n"+
+				"	\n" +
+				"		};\n"+ 
+			
+				"		MCU_DATA = SAMSUNG_KS32C50100;\n"+
+				"		KERNEL_TYPE = ECC2;\n" +
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"				RESOURCE = RES_SCHEDULER;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"    };\n" + 
+				"    RESOURCE res1 { RESOURCEPROPERTY = STANDARD; };\n" + 
+//				"    RESOURCE RES_SCHEDULER { RESOURCEPROPERTY = STANDARD; };\n" + 
+//				"    RESOURCE res3 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+
 
 }

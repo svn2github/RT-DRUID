@@ -642,6 +642,10 @@ public class ResourceList {
 
 				// check all values for each resource
 				for (int j = 0; j < tRes.length; j++) {
+					
+					// do not check RES_SCHEDULER
+					if ("RES_SCHEDULER".equals(tRes[j])) continue;
+					
 					// search resource's description
 					int tmppos = Collections.binarySearch(nomiRis, tRes[j]);
 

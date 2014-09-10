@@ -745,7 +745,7 @@ public class Task extends ModeRes {
 										+ S
 										+ Utility.pathToVarTree(DataPath
 												.addSlash(mutexName));
-								if (!ti.exist(tmpPath, "Mutex")) {
+								if (!ti.exist(tmpPath, "Mutex") && !("RES_SCHEDULER".equals(mutexName))) {
 									// no annotation about this method.
 									// Is it a good thing?
 									Messages.sendWarningNl(
@@ -911,7 +911,7 @@ public class Task extends ModeRes {
 							+ S
 							+ Utility.pathToVarTree(DataPath
 									.addSlash(mutexName));
-					if (!ti.exist(tmpPath, "Mutex")) {
+					if (!ti.exist(tmpPath, "Mutex")  && !("RES_SCHEDULER".equals(mutexName))) {
 						// no annotation about this method.
 						// Is it a good thing?
 						Messages.sendWarningNl("Mutex not found: "
