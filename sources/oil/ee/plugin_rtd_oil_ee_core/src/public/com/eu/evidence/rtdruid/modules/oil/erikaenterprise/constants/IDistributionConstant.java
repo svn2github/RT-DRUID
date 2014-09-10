@@ -54,6 +54,7 @@ public interface IDistributionConstant {
 
 	public final static String DEF__BINARY_DISTRIBUTION_FORCE_ALARM_AUTOSTART__ = "bin_distr__force_alarm_autostart";
 	public final static String DEF__BINARY_DISTRIBUTION_FORCE_TASK_AUTOSTART__ = "bin_distr__force_task_autostart";
+	public final static String DEF__BINARY_DISTRIBUTION_FORCE_SCHED_TAB_AUTOSTART__ = "bin_distr__force_sched_tab_autostart";
 
 	/***/
 	public final static String DEF__EE_SIGNATURE_DOCUMENT_ISTREAM__ = "use_this_signature's_document_(inputStream)";

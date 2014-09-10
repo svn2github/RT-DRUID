@@ -1098,10 +1098,11 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		 * Set Task's Priority and Remote attribute.
 		 *  
 		 **********************************************************************/
-		setIsrPriorities();
 		if(!checkKeyword(IWritersKeywords.HR)) { 
+			setIsrPriorities();
 			setTaskPriorityAndRemote();
 		}
+		checkTimingProtection();
 		
 		/***********************************************************************
 		 *
@@ -1688,6 +1689,8 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 			options.containsKey(IDistributionConstant.DEF__BINARY_DISTRIBUTION_FORCE_ALARM_AUTOSTART__);
 		final boolean force_task_autostart = options != null &&
 			options.containsKey(IDistributionConstant.DEF__BINARY_DISTRIBUTION_FORCE_TASK_AUTOSTART__);
+		final boolean force_schedTab_autostart = options != null &&
+				options.containsKey(IDistributionConstant.DEF__BINARY_DISTRIBUTION_FORCE_SCHED_TAB_AUTOSTART__);
 
 		// check all rtos
 		for (int cpuId = 0; cpuId < oilObjects.length; cpuId++) {
@@ -1704,7 +1707,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 			if (!os.containsProperty(ISimpleGenResKeywords.OSEK_TASK_AUTOSTART)) {
 
 				// --------- TASK -----------
-				boolean taskAutostart = force_alarm_autostart;
+				boolean taskAutostart = force_task_autostart;
 				for (Iterator iter = oilObjects[cpuId].getList(
 						IOilObjectList.TASK).iterator(); iter.hasNext()
 						&& !taskAutostart;) {
@@ -1718,6 +1721,22 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 
 				os.setProperty(ISimpleGenResKeywords.OSEK_TASK_AUTOSTART, ""
 						+ taskAutostart);
+				
+				// --------- SCHEDULE TABLE -----------
+				boolean schedTabAutostart = force_schedTab_autostart;
+				for (Iterator iter = oilObjects[cpuId].getList(
+						IOilObjectList.SCHEDULE_TABLE).iterator(); iter.hasNext()
+						&& !schedTabAutostart;) {
+
+					if (((ISimpleGenRes) iter.next())
+							.containsProperty(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_APPMODES_LIST)) {
+						schedTabAutostart = true;
+					}
+				}
+				autostart |= schedTabAutostart;
+
+				os.setProperty(ISimpleGenResKeywords.OSEK_SCHEDULE_TABLE_AUTOSTART, ""
+						+ schedTabAutostart);
 				
 				// --------- ALARM -----------
 				boolean forceAlarm = os.containsProperty(SGRK__FORCE_ARRAYS_LIST__) 
@@ -2165,6 +2184,38 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		}
 	}
 
+	
+	protected void checkTimingProtection() {
+		
+		for (IOilObjectList ool : parent.getOilObjects()) {
+
+			boolean hasTimingProtection = false;
+			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.TASK)) {
+				if (sgr.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION) && "true".equalsIgnoreCase(sgr.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION))) {
+					hasTimingProtection = true;
+					break;
+				}
+			}
+
+			if (!hasTimingProtection) {
+				for (ISimpleGenRes sgr: ool.getList(IOilObjectList.ISR)) {
+					if (sgr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION) && "true".equalsIgnoreCase(sgr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION))) {
+						hasTimingProtection = true;
+						break;
+					}
+				}	
+			}
+			
+			for (ISimpleGenRes os : ool.getList(
+					IOilObjectList.OS)) {
+				
+				os.setProperty(ISimpleGenResKeywords.OS_HAS_TIMING_PPROTECTION, ""
+						+ hasTimingProtection);
+			}
+		}
+	}
+
+	
 	/**
 	 * @param sgr
 	 * @param cpuDescr
@@ -2681,21 +2732,6 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 			list.put(defineName, new Integer(size));
 		}
 		
-		return defineName;
-	}
-
-	public static String addVectorSizeDefine(IOilObjectList[] ools, String vectorName, int size) {
-		String defineName = vectorName.toUpperCase() + "_SIZE";
-		for (IOilObjectList ool : ools) {
-			Map<String, Integer> list = (Map<String, Integer>) getOsObject(ool, SGRK_OS_CPU_VECTOR_SIZE_DEFINES);
-			if (list == null) {
-				list = new HashMap<String, Integer>();
-				ool.getList(IOilObjectList.OS).get(0).setObject(SGRK_OS_CPU_VECTOR_SIZE_DEFINES, list);
-			}
-			if (!list.containsKey(defineName)) {
-				list.put(defineName, new Integer(size));
-			}
-		}
 		return defineName;
 	}
 

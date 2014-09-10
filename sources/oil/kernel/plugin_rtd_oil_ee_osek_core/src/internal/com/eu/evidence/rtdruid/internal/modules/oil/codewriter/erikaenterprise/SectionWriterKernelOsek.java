@@ -33,6 +33,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SWCategoryManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuUtility;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EmptyMacrosForSharedData;
@@ -290,6 +291,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			for (int i = 0; i < autostartList.length; i++) {
 				autostartList[i] = new LinkedList<String>();
 			}
+			// autostart data
+			LinkedList<String> autostartScList[] = new LinkedList[appModes.size() + 1];
+			for (int i = 0; i < autostartScList.length; i++) {
+				autostartScList[i] = new LinkedList<String>();
+			}
 		
 			// ---------------- prepare buffer ----------------
 		
@@ -336,11 +342,29 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			StringBuffer sbDecThread = new StringBuffer();
 			/* Contains task's stubs */
 			StringBuffer sbStub = new StringBuffer();
-		
+			
+			// timeprotection buffers
+			int tp_budgets = 0;
+			String pre_all_budgets = "";
+			StringBuilder sb_tp_all_budgets_ROM = new StringBuilder();
+			StringBuilder sb_tp_all_budgets_RAM = new StringBuilder();
+			StringBuilder sb_tp_all_RAM = new StringBuilder();
+			StringBuilder sb_tp_all_ROM = new StringBuilder();
+			StringBuilder sb_tp_all_ResLock = new StringBuilder();
+			StringBuilder sb_tp_RAM = new StringBuilder();
+			StringBuilder sb_tp_ROM = new StringBuilder();
+			ArrayList<String> sb_tp_arrays = new ArrayList<String>(ool.getList(IOilObjectList.TASK).size());
+			
 			// ------------------ fill buffers ------------------
 		
 			int activaction_TOT = 0;
 			int numTask = 0;
+
+			final List<ISimpleGenRes> resList = ool.getList(IOilObjectList.RESOURCE);
+			final int resListSize = parent.computeMaxResource(resList);
+
+			final boolean hasResources = resList.size() > 0 ||
+					requiredOilObjects.contains(new Integer(IOilObjectList.RESOURCE)); 
 		
 			String pre = "";
 			String post = "";
@@ -348,16 +372,18 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 		
 			{
 		
+
 				// for each task, prepare some buffer with its declaration and address
 				List<ISimpleGenRes> taskList = ool.getList(IOilObjectList.TASK);
-		
+				while (sb_tp_arrays.size() < taskList.size()) sb_tp_arrays.add(null); // add placeholder
+
 				/***************************************************************
 				 * DECLARE TASKs AND GET THEIR DATA
 				 **************************************************************/
 				for (Iterator<ISimpleGenRes> iter = taskList.iterator(); iter.hasNext();) {
 		
 					ISimpleGenRes currTask = iter.next();
-					String tname = currTask.getName();
+					final String tname = currTask.getName();
 		
 					/*
 					 * READY_PRIORITY.
@@ -433,7 +459,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							// no value set means that
 							// auto start is set to all application modes
 							for (int i = 0; i < autostartList.length; i++) {
-								autostartList[i].add(currTask.getName());
+								autostartList[i].add(tname);
 							}
 						} else {
 		
@@ -458,7 +484,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										Messages.sendWarningNl(
 												"Autostart set with the same APPMODE more times ."
 														+ " (task = "
-														+ currTask.getName()
+														+ tname
 														+ ", appMode = "
 														+ currAppMode + ")",
 												null, "sdfsdf;asdj", null);
@@ -476,7 +502,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										throw new RuntimeException(
 												"Autostart set with a not defined APPMODE ."
 														+ " (task = "
-														+ currTask.getName()
+														+ tname
 														+ ", appMode = "
 														+ currAppMode + ")");
 									}
@@ -485,7 +511,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										Messages.sendWarningNl(
 												"Autostart set with the same APPMODE more times ."
 														+ " (task = "
-														+ currTask.getName()
+														+ tname
 														+ ", appMode = "
 														+ currAppMode + ")",
 												null, "kjasdh;asdj", null);
@@ -498,6 +524,137 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								}
 							}
 						}
+					}
+					
+					if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION) && "true".equalsIgnoreCase(currTask.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION))) {
+						
+						int minIndex = tp_budgets;
+
+						String budget_exec_id = "INVALID_BUDGET";
+						if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_BUDGET)) {
+							String value = getBudgetValue(currTask.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_BUDGET), "Invalid budget for task " + tname); 
+							sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_EXECUTION_BUDGET,          EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
+							sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+							
+							budget_exec_id = "" + tp_budgets+ "U";
+							tp_budgets++;
+							pre_all_budgets = ",\n";
+						}
+						
+						String budget_os_isr_id = "INVALID_BUDGET";
+						if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_OS)) {
+							String value = getBudgetValue(currTask.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_OS), "Invalid budget for task " + tname); 
+							sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_OS_INTERRUPT_LOCK_BUDGET,  EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
+							sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+
+							budget_os_isr_id = "" + tp_budgets+ "U";
+							tp_budgets++;
+							pre_all_budgets = ",\n";
+						}
+
+						String budget_all_isr_id = "INVALID_BUDGET";
+						if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_INT)) {
+							String value = getBudgetValue(currTask.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_INT), "Invalid budget for task " + tname); 
+							sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_ALL_INTERRUPT_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
+							sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+
+							budget_all_isr_id = "" + tp_budgets+ "U";
+							tp_budgets++;
+							pre_all_budgets = ",\n";
+						}
+
+						String resArray = "NULL";
+						if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_RESLOCK)) {
+
+							ArrayList<String> taskRes = new ArrayList<String>();
+							if (currTask.containsProperty(ISimpleGenResKeywords.TASK_RESOURCE_LIST)) {
+								taskRes = new ArrayList((List) currTask.getObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST));
+							}
+							Collections.sort(taskRes);
+							
+							ArrayList<String[]> reorderedResLock = new ArrayList<String[]>();
+							while (reorderedResLock.size()<resListSize) reorderedResLock.add(null);
+							
+							boolean hasResLock = false;
+							List<String[]> resourceLocks = (List<String[]>) currTask.getObject(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_RESLOCK);
+							for (String[] resLock : resourceLocks) {
+								String resName = resLock[0];
+								
+								if (resName == null) continue;
+								
+								// check if the task uses the resource
+								if (Collections.binarySearch(taskRes, resName) < 0) {
+									throw new OilCodeWriterException("The task " + tname + " has a resource budget for the resource that it does not declare to use (resource name = " + resName + ")");
+								}
+								
+								int resIndex = -1;
+								// get the resource ID
+								for (ISimpleGenRes iterRes : resList) {
+									if (resName.equals(iterRes.getName()) && iterRes.containsProperty(ISimpleGenResKeywords.RESOURCE_SYS_ID)) {
+										resIndex = iterRes.getInt(ISimpleGenResKeywords.RESOURCE_SYS_ID);
+										break;
+									}
+								}
+								if (resIndex>=0) {
+									hasResLock = true;
+									reorderedResLock.set(resIndex, resLock);
+								}
+							}
+							
+							// print
+							if (hasResLock) {
+								resArray = "&tp_"+tname+"_lock_budgets_indexes";
+								sb_tp_all_ResLock.append(indent1 + "const BudgetType tp_"+tname+"_lock_budgets_indexes[EE_MAX_RESOURCE] = {");
+								String rl_pre = "\n" + indent2;
+								for (String[] resLock : reorderedResLock) {
+									sb_tp_all_ResLock.append(rl_pre);
+									rl_pre = ", ";
+									
+									if (resLock == null) {
+										sb_tp_all_ResLock.append("INVALID_BUDGET");
+										
+									} else {
+										String value = getBudgetValue(resLock[1], "Invalid budget for task's " + tname + " resource lock"); 
+										sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_RESOURCE_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
+										sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+										sb_tp_all_ResLock.append(tp_budgets+"U");
+										
+										tp_budgets++;
+										pre_all_budgets = ",\n";
+									}
+								}
+								
+								sb_tp_all_ResLock.append("\n"+indent1 + "};\n");
+							}
+						}
+						
+						String timeFrame = "EE_OS_NO_TIME";
+						
+						int t_id = currTask
+								.getInt(ISimpleGenResKeywords.TASK_SYS_ID);
+						while (sb_tp_arrays.size()<=t_id) {
+							sb_tp_arrays.add(null);
+						}
+
+						if (minIndex<tp_budgets) {
+							
+							sb_tp_all_ROM.append(indent1+ "const EE_as_tp_ROM_type tp_"+tname+"_ROM = {\n"
+									+ indent2 + minIndex +"U, "+(tp_budgets-1)+"U,\n"
+									+ indent2 + budget_exec_id+", "+budget_os_isr_id+", "+budget_all_isr_id+",\n"+
+									(hasResources ? indent2 + resArray+", \n" : "") +
+									indent2 + timeFrame + "\n"+indent1+"};\n");
+							
+							
+							sb_tp_all_RAM.append(indent1+"EE_as_tp_RAM_type tp_"+tname+"_RAM = {\n"+
+									indent2 + "{ EE_OS_NO_TIME, EE_FALSE },\n"+
+									indent2 + "0U,\n" +
+									indent2 + "INVALID_BUDGET\n"+
+									indent1 + "};\n");
+							
+							
+							sb_tp_arrays.set(t_id, "tp_"+tname);
+						}
+						
 					}
 		
 					/*
@@ -536,6 +693,168 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			EE_th_rnactMaxBuffer.append(post + indent1 + "};\n\n");
 			EE_th_is_extendedBuffer.append("};\n\n");
 			sbStub.append(" " + post);
+			
+			String sb_tp_pre = "";
+			for (String s : sb_tp_arrays) {
+				sb_tp_RAM.append(sb_tp_pre);
+				sb_tp_RAM.append(s == null ? "NULL" : "&" +s+"_RAM");
+				
+				sb_tp_ROM.append(sb_tp_pre);
+				sb_tp_ROM.append(s == null ? "NULL" : "&" +s+"_ROM");
+				
+				sb_tp_pre = ", ";
+			}
+			sb_tp_arrays.clear();
+			
+			List<ISimpleGenRes> isrOrderedList = SectionWriterIsr.getIsrByID(ool);
+			while (sb_tp_arrays.size() < isrOrderedList.size()) sb_tp_arrays.add(null); // add placeholder
+			
+			for (ISimpleGenRes currIsr : isrOrderedList) {
+				if (currIsr == null) continue;
+				
+				if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION) && "true".equalsIgnoreCase(currIsr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION))) {
+					
+					int minIndex = tp_budgets;
+					final String tname = currIsr.getName();
+
+					String budget_exec_id = "INVALID_BUDGET";
+					if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_BUDGET)) {
+						String value = getBudgetValue(currIsr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_BUDGET), "Invalid budget for isr " + tname); 
+						sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_EXECUTION_BUDGET,          EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
+						sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+
+						budget_exec_id = "" + tp_budgets+ "U";
+						tp_budgets++;
+						pre_all_budgets = ",\n";
+					}
+					
+					String budget_os_isr_id = "INVALID_BUDGET";
+					if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_OS)) {
+						String value = getBudgetValue(currIsr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_OS), "Invalid budget for isr " + tname); 
+						sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_OS_INTERRUPT_LOCK_BUDGET,  EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
+						sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+
+						budget_os_isr_id = "" + tp_budgets+ "U";
+						tp_budgets++;
+						pre_all_budgets = ",\n";
+					}
+
+					String budget_all_isr_id = "INVALID_BUDGET";
+					if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_INT)) {
+						String value = getBudgetValue(currIsr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_INT), "Invalid budget for isr " + tname); 
+						sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_ALL_INTERRUPT_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
+						sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+
+						budget_all_isr_id = "" + tp_budgets+ "U";
+						tp_budgets++;
+						pre_all_budgets = ",\n";
+					}
+
+					String resArray = "NULL";
+					if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_RESLOCK)) {
+
+						ArrayList<String> taskRes = new ArrayList<String>();
+						if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_RESOURCE_LIST)) {
+							taskRes = new ArrayList((List) currIsr.getObject(ISimpleGenResKeywords.TASK_RESOURCE_LIST));
+						}
+						Collections.sort(taskRes);
+						
+						ArrayList<String[]> reorderedResLock = new ArrayList<String[]>();
+						while (reorderedResLock.size()<resListSize) reorderedResLock.add(null);
+						
+						boolean hasResLock = false;
+						List<String[]> resourceLocks = (List<String[]>) currIsr.getObject(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_RESLOCK);
+						for (String[] resLock : resourceLocks) {
+							String resName = resLock[0];
+							
+							if (resName == null) continue;
+							
+							// check if the task uses the resource
+							if (Collections.binarySearch(taskRes, resName) < 0) {
+								throw new OilCodeWriterException("The isr " + tname + " has a resource budget for the resource that it does not declare to use (resource name = " + resName + ")");
+							}
+							
+							int resIndex = -1;
+							// get the resource ID
+							for (ISimpleGenRes iterRes : resList) {
+								if (resName.equals(iterRes.getName()) && iterRes.containsProperty(ISimpleGenResKeywords.RESOURCE_SYS_ID)) {
+									resIndex = iterRes.getInt(ISimpleGenResKeywords.RESOURCE_SYS_ID);
+									break;
+								}
+							}
+							if (resIndex>=0) {
+								hasResLock = true;
+								reorderedResLock.set(resIndex, resLock);
+							}
+						}
+						
+						// print
+						if (hasResLock) {
+							resArray = "&tp_"+tname+"_lock_budgets_indexes";
+							sb_tp_all_ResLock.append(indent1 + "const BudgetType tp_"+tname+"_lock_budgets_indexes[EE_MAX_RESOURCE] = {");
+							String rl_pre = "\n" + indent2;
+							for (String[] resLock : reorderedResLock) {
+								sb_tp_all_ResLock.append(rl_pre);
+								rl_pre = ", ";
+								
+								if (resLock == null) {
+									sb_tp_all_ResLock.append("INVALID_BUDGET");
+									
+								} else {
+									String value = getBudgetValue(resLock[1], "Invalid budget for isr's " + tname + " resource lock"); 
+									sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_RESOURCE_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
+									sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+									sb_tp_all_ResLock.append(tp_budgets+"U");
+									
+									tp_budgets++;
+									pre_all_budgets = ",\n";
+								}
+							}
+							
+							sb_tp_all_ResLock.append("\n"+indent1 + "};\n");
+						}
+					}
+					String timeFrame = "EE_OS_NO_TIME";
+					
+					int t_id = currIsr
+							.getInt(ISimpleGenResKeywords.ISR_ID);
+					while (sb_tp_arrays.size()<=t_id) {
+						sb_tp_arrays.add(null);
+					}
+
+					if (minIndex<tp_budgets) {
+						
+						sb_tp_all_ROM.append(indent1+"const EE_as_tp_ROM_type tp_"+tname+"_ROM = {\n"
+								+indent2+ minIndex +"U, "+(tp_budgets-1)+"U,\n"
+								+indent2+budget_exec_id+", "+budget_os_isr_id+", "+budget_all_isr_id+",\n"
+								+(hasResources ? indent2 +  resArray+", \n" : "")
+								+indent2 + timeFrame + "\n" + indent1+"};\n");
+						
+						
+						sb_tp_all_RAM.append(indent1 + "EE_as_tp_RAM_type tp_"+tname+"_RAM = {\n"+
+								indent2 + "{ EE_OS_NO_TIME, EE_FALSE },\n"+
+								indent2 + "0U,\n" +
+								indent2 + "INVALID_BUDGET\n"+
+								indent1+"};\n");
+						
+						
+						sb_tp_arrays.set(t_id, "tp_"+tname);
+					}
+					
+				}
+			}
+			
+			if (sb_tp_pre != "") sb_tp_pre += "\n"+ indent2;
+			for (String s : sb_tp_arrays) {
+				sb_tp_RAM.append(sb_tp_pre);
+				sb_tp_RAM.append(s == null ? "NULL" : "&" +s+"_RAM");
+				
+				sb_tp_ROM.append(sb_tp_pre);
+				sb_tp_ROM.append(s == null ? "NULL" : "&" +s+"_ROM");
+				
+				sb_tp_pre = ", ";
+			}
+			sb_tp_arrays.clear();
 		
 			/*******************************************************************
 			 * WRITE BUFFERS
@@ -727,6 +1046,39 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				pre2 = ",\n";
 			}
 			buffer.append("\n" + indent2 + "};\n" + indent1 + "#endif\n\n");
+			
+			
+			/*
+			 * Print timing protection
+			 */
+			if (tp_budgets>0) {
+				
+				String size_id = "EE_MAX_TIMING_BUDGET";
+				buffer_h.append(commentWriterH.writerBanner("Timing protection"));
+				buffer_h.append("#define "+size_id+" "+tp_budgets+"\n");
+				
+				buffer.append(commentWriterC.writerBanner("Timing protection"));
+				buffer.append(indent1+"const EE_as_tp_budget_conf_type EE_as_tp_budget_confs["+size_id+"] = {\n" +
+								sb_tp_all_budgets_ROM.toString()+"\n"+
+								indent1+"};\n\n");
+				buffer.append(indent1+"EE_as_tp_budget_data_type EE_as_tp_budget_data["+size_id+"] = {\n" +
+								sb_tp_all_budgets_RAM.toString()+"\n"+
+								indent1+"};\n\n");
+				buffer.append(sb_tp_all_ResLock.toString() + "\n");
+				buffer.append(sb_tp_all_ROM.toString()+"\n");
+				buffer.append(sb_tp_all_RAM.toString()+"\n");
+				
+				buffer.append(indent1 + "const EE_as_tp_ROM_const_ref EE_as_tp_ROM_refs[EE_MAX_TASK + EE_MAX_ISR_ID] = {\n"+
+							indent2 + sb_tp_ROM + "\n" + indent1+"};\n");
+				
+
+				buffer.append(indent1 + "const EE_as_tp_RAM_ref EE_as_tp_RAM_refs[EE_MAX_TASK + EE_MAX_ISR_ID] = {\n"+
+							indent2 + sb_tp_RAM + "\n" + indent1+"};\n");
+
+				
+				
+			}
+			
 			
 			/*******************************************************************
 			 * EVENT HANDLING
@@ -1117,6 +1469,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				StringBuffer romActionBuffer = new StringBuffer();
 				StringBuffer schedTableBuffer = new StringBuffer();
 				String pre_shared = "\n";
+				String pre_shared_c = "\n";
 				
 				int counterObjRomRows = 0;
 				int counterActionRomRows = 0;
@@ -1365,13 +1718,14 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								+ callBackName
 								+ ", " + counter_al_name + " }");
 						
-						counterObjRomBuffer.append(pre_shared + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_ALARM }");
+						counterObjRomBuffer.append(pre_shared_c + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_ALARM }");
 						romAlarmBuffer.append(pre2 + indent2 + "{" + counterActionRomRows + "U" +(hasOsAppl ? ", " + osAppId+"U" : "" ) + "}");
 						
 						counterObjRomRows++;
 						counterActionRomRows++;
 						pre2 = ",\n";
 						pre_shared = ",\n";
+						pre_shared_c = ",\n";
 					}
 					
 					romAlarmBuffer.append("\n"+indent1 + "};\n");
@@ -1630,6 +1984,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 											//+ (NULL_NAME.equals(callBackName) ? "(EE_VOID_CALLBACK)" : "") 
 											+ callBackName
 											+ ", " + counter_al_name + " }");
+									pre_shared = ",\n";
 									counterActionRomRows++;
 								}
 								
@@ -1639,7 +1994,100 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							}
 						}
 						
-						counterObjRomBuffer.append(pre_shared + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_SCHEDULETABLE }");
+						
+						/*
+						 * AUTOSTART
+						 * 
+						 * If a task has one or more autostart (for one or more
+						 * differents application modes), add that task to
+						 * autostart's list of specified Application Modes.
+						 * 
+						 * AutoStart is enabled if currentTask contains the property TASK_APPMODES_LIST.
+						 * If that property is an empty List, it means that autostart is enabled for all
+						 * application modes
+						 */
+						if (curr
+								.containsProperty(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_APPMODES_LIST)) {
+							List elenco = (List) curr
+									.getObject(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_APPMODES_LIST);
+							
+							String type = curr.getString(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_TYPE);
+							String val = curr.containsProperty(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_START_VALUE) ? 
+												curr.getString(ISimpleGenResKeywords.SCHEDTABLE_AUTOSTART_START_VALUE) : "0";
+												
+							String txt = "{ " + curr.getName() + ", EE_ST_START_" + type + ", "+ val + "U}";
+			
+							if (elenco.size() == 0) {
+								// no value set means that
+								// auto start is set to all application modes
+								for (int i = 0; i < autostartScList.length; i++) {
+									autostartScList[i].add(txt);
+								}
+							} else {
+			
+								/* search all valid Application modes.
+								 * 
+								 * "enable" contains one bit for all application mode:
+								 * if that bit is set, the task has autostart for the corresponding
+								 * application Mode.
+								 * 
+								 * Ecah application mode could be set only one time. 
+								 */
+								BitSet enabled = new BitSet(autostartScList.length);
+			
+								for (Iterator appIter = elenco.iterator(); appIter
+										.hasNext();) {
+			
+									String currAppMode = (String) appIter.next();
+									if (IWritersKeywords.defaultAppMode
+											.equals(currAppMode)) {
+										// default application mode
+										if (enabled.get(0)) {
+											Messages.sendWarningNl(
+													"Autostart set with the same APPMODE more times ."
+															+ " (schedule table = "
+															+ curr.getName()
+															+ ", appMode = "
+															+ currAppMode + ")",
+													null, "sdfsdf;asdj", null);
+											continue;
+										}
+										enabled.set(0);
+			
+										autostartScList[0].add(txt);
+									} else {
+										// search APP MODE in "appModes" list
+										int pos = Collections.binarySearch(
+												appModes, currAppMode);
+			
+										if (pos < 0) { // not found
+											throw new RuntimeException(
+													"Autostart set with a not defined APPMODE ."
+															+ " (schedule table = "
+															+ curr.getName()
+															+ ", appMode = "
+															+ currAppMode + ")");
+										}
+			
+										if (enabled.get(pos + 1)) {
+											Messages.sendWarningNl(
+													"Autostart set with the same APPMODE more times ."
+															+ " (schedule table = "
+															+ curr.getName()
+															+ ", appMode = "
+															+ currAppMode + ")",
+													null, "kjasdh;asdj", null);
+											continue;
+										}
+										enabled.set(pos + 1);
+			
+										autostartScList[pos + 1].add(txt);
+									}
+								}
+							}
+						}
+						
+						counterObjRomBuffer.append(pre_shared_c + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_SCHEDULETABLE }");
 						romScTableBuffer.append(pre2 + indent2 + "{" 
 									+ startingExpIndex + "U, "
 									+ (expPointSize-1) + "U, "
@@ -1652,7 +2100,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						
 						counterObjRomRows++;
 						pre2 = ",\n";
-						pre_shared = ",\n";
+						pre_shared_c = ",\n";
 					}
 
 //					// add ROM
@@ -1786,6 +2234,75 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					buffer.append("\n"+indent1+"};\n");
 					appModes.remove(0);
 				}
+				
+				// -------- SCHEDULE TABLES --------
+				if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OSEK_SCHEDULE_TABLE_AUTOSTART))) {
+		
+					buffer.append(commentWriterC.writerBanner("Auto Start (SCHEDULE TABLE)"));
+					
+					appModes.add(0, IWritersKeywords.defaultAppMode);
+					
+					Collection<String>[] allArrays = new Collection[appModes.size()];
+		
+					for (int appN = 0; appN < appModes.size(); appN++) {
+						
+						// search if the same array already exist
+						final int arrayId = CommonUtils.searchArray(allArrays,
+								(String[]) autostartScList[appN].toArray(new String[autostartScList[appN].size()] ) ); 
+
+						final boolean disable_define  = autostartScList[appN].size() == 0;
+						StringBuffer tmp_buffer = new StringBuffer();
+
+						if (arrayId == -1) {
+							// store this new array ..
+							allArrays[appN] = autostartScList[appN];
+							
+						
+							// .. and define it in the code
+							tmp_buffer.append(indent1+"static const EE_as_schedule_table_autostart_data EE_as_autostart_schedule_table_mode_" + appModes.get(appN) + "["+
+									ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_as_autostart_schedule_table_mode_"+ appModes.get(appN), autostartScList[appN].size())
+									+ "] = \n"+ indent2+"{ ");
+							pre2 = "";
+							for (int i = 0; i < autostartScList[appN].size(); i++) {
+								tmp_buffer.append(pre2 + autostartScList[appN].get(i));
+								pre2 = ", ";
+							}
+							tmp_buffer.append(" };\n");
+						
+							
+							
+							
+						}  else {
+							// link to a previous defined array
+							
+							tmp_buffer.append("#define EE_as_autostart_schedule_table_mode_"
+									+ appModes.get(appN)+" EE_as_autostart_schedule_table_mode_"+appModes.get(arrayId)+"\n");
+						}
+						
+						
+						buffer.append(disable_define ? 
+									  commentWriterC.writerMultiLineComment(indent1, tmp_buffer.toString())
+									: tmp_buffer.toString());
+					}
+		
+					pre2 = "";
+					buffer
+							.append("\n"+indent1+"const EE_as_schedule_table_autostart_type EE_as_schedule_table_autostart["+MAX_APPMODE+"] = {\n");
+					for (int appN = 0; appN < appModes.size(); appN++) {
+						final boolean disable_define  = autostartScList[appN].size() == 0; // ? ", 0}, //" : ""; 
+						buffer
+								.append(pre2 + indent2+"{ "
+										+ autostartScList[appN].size() + "U"
+//										+ disable_define
+										+ ", " + (disable_define ? "0U" 
+												: "EE_as_autostart_schedule_table_mode_" + appModes.get(appN))
+										+ "}");
+						pre2 = ",\n";
+					}
+					buffer.append("\n"+indent1+"};\n");
+					appModes.remove(0);
+				}
+				
 				
 				// -------- ALARM --------
 				if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OSEK_ALARM_AUTOSTART))) {
@@ -2266,12 +2783,22 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					
 					answer.add("__OO_AUTOSTART_TASK__");
 				}
-
+				if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OSEK_SCHEDULE_TABLE_AUTOSTART))) {
+					
+					answer.add("EE_AS_AUTOSTART_SCHEDULETABLE__");
+				}
 				if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OSEK_ALARM_AUTOSTART))) {
 					
 					answer.add("__OO_AUTOSTART_ALARM__");
 				}
 
+			}
+			
+			{
+				if ("true".equalsIgnoreCase(AbstractRtosWriter.getOsProperty(ool, ISimpleGenResKeywords.OS_HAS_TIMING_PPROTECTION))) {
+					answer.add("EE_TIMING_PROTECTION__");
+				}
+				
 			}
 			
 			// USE RES SCHEDULER
@@ -2298,5 +2825,14 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 
 
 		return answer;
+	}
+	
+	private String getBudgetValue(String val, String msg) throws OilCodeWriterException {
+		try {
+			double d = Double.parseDouble(val); 
+			return "" + ((int)Math.ceil(d * 1000000));
+		} catch (NumberFormatException e) {
+			throw new OilCodeWriterException(msg + " (" + val + ")"); 
+		}
 	}
 }

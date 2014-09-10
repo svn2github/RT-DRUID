@@ -513,8 +513,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		// ee_cfg.h
 		ee_h_buffer.append(
 				commentWriterH.writerBanner("ISR definition") +
-				indent1 + "#define EE_MAX_NESTING_LEVEL   "+(isr2_number<max_level?isr2_number : max_level)+"\n" +
-				indent1 + "#define EE_MAX_ISR_ID          "+orderedIsr.size()+"\n\n"); 				
+				indent1 + "#define EE_MAX_NESTING_LEVEL   "+(isr2_number<max_level?isr2_number : max_level)+"\n\n"); 				
 
 		// ee_cfg.c
 		ee_c_buffer.append(commentWriterC.writerBanner("ISR definition"));

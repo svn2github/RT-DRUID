@@ -49,6 +49,8 @@ public interface ISimpleGenResKeywords {
 	public final static String GENERIC_ACCESSING_OS_APPL_LIST = "accessing_os_application_list";
 	public final static String GENERIC_ACCESSING_ALLOW_ALL = "allow_the_access_to_all_os_applications";
 
+	public final static String OS_HAS_TIMING_PPROTECTION = "os_has_timing_protection";
+	
 	/***************************************************************************
 	 * Task
 	 **************************************************************************/
@@ -74,7 +76,13 @@ public interface ISimpleGenResKeywords {
 	public final static String TASK_OS_APPLICATION_NAME = OS_APPL_NAME;
 	public final static String TASK_ACCESSING_OS_APPL_LIST = GENERIC_ACCESSING_OS_APPL_LIST;
 
-
+	public final static String TASK_TIMING_PROTECTION = "task_timing_protection_enabled";
+	public final static String TASK_TIMING_PROTECTION_MAX_INT = "task_timing_protection_max_all_interrupt_locktime";
+	public final static String TASK_TIMING_PROTECTION_BUDGET  = "task_timing_protection_execution_budget";
+	public final static String TASK_TIMING_PROTECTION_MAX_OS  = "task_timing_protection_max_os_interrupt_locktime";
+	public final static String TASK_TIMING_PROTECTION_FRAME   = "task_timing_protection_time_frame";
+	public final static String TASK_TIMING_PROTECTION_RESLOCK = "task_timing_protection_resource_locks";
+	
 	/** This property say if at least one cpu sends a remote notification to a task */
 	public final static String TASK_REMOTE = "remote";
 	///** This property contains the list of cpu that send a remote notification to a task */
@@ -102,12 +110,20 @@ public interface ISimpleGenResKeywords {
 	public final static String ISR_RESOURCE_LIST = TASK_RESOURCE_LIST;
 	public final static String ISR_REQUIRES_RESOURCES = "isr_requires_resources";
 	
+	public final static String ISR_TIMING_PROTECTION = "task_timing_protection_enabled";
+	public final static String ISR_TIMING_PROTECTION_MAX_INT = "task_timing_protection_max_all_interrupt_locktime";
+	public final static String ISR_TIMING_PROTECTION_BUDGET  = "task_timing_protection_execution_budget";
+	public final static String ISR_TIMING_PROTECTION_MAX_OS  = "task_timing_protection_max_os_interrupt_locktime";
+	public final static String ISR_TIMING_PROTECTION_FRAME   = "task_timing_protection_time_frame";
+	public final static String ISR_TIMING_PROTECTION_RESLOCK = "task_timing_protection_resource_locks";
+	
 	/***************************************************************************
 	 * Autostart
 	 **************************************************************************/
 	/** Identifies the autostart property in an OSEK kernel */
 	public final static String OSEK_AUTOSTART = "OSEK_autostart";
 	public final static String OSEK_TASK_AUTOSTART = "OSEK_task_autostart";
+	public final static String OSEK_SCHEDULE_TABLE_AUTOSTART = "OSEK_sched_tab_autostart";
 	public final static String OSEK_ALARM_AUTOSTART = "OSEK_alarm_autostart";
 	
 	/***************************************************************************

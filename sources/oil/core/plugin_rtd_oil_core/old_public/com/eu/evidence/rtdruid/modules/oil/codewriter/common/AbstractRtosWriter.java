@@ -698,6 +698,58 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					}
 				}
 				
+				{ // ----------- timing protection ------------
+					String[] chName = new String[1]; 
+					chType = CommonUtils.getFirstChildEnumType(vt, path+"TIMING_PROTECTION", chName);
+					if ("true".equalsIgnoreCase(chType)) {
+						String tp_path = path+"TIMING_PROTECTION"+CommonUtils.VARIANT_ELIST+chName[0]+CommonUtils.PARAMETER_LIST;
+						answer[i].setObject(ISimpleGenResKeywords.TASK_TIMING_PROTECTION, "true");
+						
+						values = CommonUtils.getValue(vt, tp_path+"MAXALLINTERRUPTLOCKTIME");
+						if (values!= null && values.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_INT, values[0]);
+						}
+						
+						values = CommonUtils.getValue(vt, tp_path+"EXECUTIONBUDGET");
+						if (values!= null && values.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_BUDGET, values[0]);
+						}
+						
+						values = CommonUtils.getValue(vt, tp_path+"MAXOSINTERRUPTLOCKTIME");
+						if (values!= null && values.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_OS, values[0]);
+						}
+						
+						values = CommonUtils.getValue(vt, tp_path+"TIMEFRAME");
+						if (values!= null && values.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_FRAME, values[0]);
+						}
+						
+						ArrayList<String> resEnums = new ArrayList<String>(); 
+						ArrayList<String> resTypes = CommonUtils.getAllChildrenEnumType(vt, tp_path+"RESOURCE", resEnums);
+						ArrayList<String[]> resourceLocks = new ArrayList<String[]>();
+						for (int ri=0; ri<resTypes.size(); ri++) {
+							if ("RESOURCELOCK".equalsIgnoreCase(resTypes.get(ri))) {
+								String[] resourceLock = new String[2];
+								values = CommonUtils.getValue(vt, tp_path+S+"RESOURCE"+S+resEnums.get(ri)+S+"RESOURCELOCKTIME");
+								if (values!= null && values.length > 0) {
+									resourceLock[1] = values[0];
+								}
+								
+								values = CommonUtils.getValue(vt, tp_path+S+"RESOURCE"+S+resEnums.get(ri)+S+"RESOURCE");
+								if (values!= null && values.length > 0) {
+									resourceLock[0] = values[0];
+								}
+								
+								if (resourceLock[0] != null && resourceLock[0] != "" && resourceLock[1] != null && resourceLock[1] != "") {
+									resourceLocks.add(resourceLock);
+								}
+							}
+						}
+						answer[i].setObject(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_RESLOCK, resourceLocks);
+					}
+				}
+				
 			}
 		}
 			break;
@@ -821,6 +873,58 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 					values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
 					if (values!= null && values.length > 0) {
 						answer[i].setObject(ISimpleGenResKeywords.ISR_ACCESSING_OS_APPL_LIST, Arrays.asList(values));
+					}
+				}
+				
+				{ // ----------- timing protection ------------
+					String[] chName = new String[1]; 
+					String chType = CommonUtils.getFirstChildEnumType(vt, path+"TIMING_PROTECTION", chName);
+					if ("true".equalsIgnoreCase(chType)) {
+						String tp_path = path+"TIMING_PROTECTION"+CommonUtils.VARIANT_ELIST+chName[0]+CommonUtils.PARAMETER_LIST;
+						answer[i].setObject(ISimpleGenResKeywords.ISR_TIMING_PROTECTION, "true");
+						
+						values = CommonUtils.getValue(vt, tp_path+"MAXALLINTERRUPTLOCKTIME");
+						if (values!= null && values.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_INT, values[0]);
+						}
+						
+						values = CommonUtils.getValue(vt, tp_path+"EXECUTIONTIME");
+						if (values!= null && values.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_BUDGET, values[0]);
+						}
+						
+						values = CommonUtils.getValue(vt, tp_path+"MAXOSINTERRUPTLOCKTIME");
+						if (values!= null && values.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_OS, values[0]);
+						}
+						
+						values = CommonUtils.getValue(vt, tp_path+"TIMEFRAME");
+						if (values!= null && values.length > 0) {
+							answer[i].setObject(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_FRAME, values[0]);
+						}
+						
+						ArrayList<String> resEnums = new ArrayList<String>(); 
+						ArrayList<String> resTypes = CommonUtils.getAllChildrenEnumType(vt, tp_path+"RESOURCE", resEnums);
+						ArrayList<String[]> resourceLocks = new ArrayList<String[]>();
+						for (int ri=0; ri<resTypes.size(); ri++) {
+							if ("LOCKINGTIME".equalsIgnoreCase(resTypes.get(ri))) {
+								String[] resourceLock = new String[2];
+								values = CommonUtils.getValue(vt, tp_path+S+"RESOURCE"+S+resEnums.get(ri)+S+"MAXRESOURCELOCKTIME");
+								if (values!= null && values.length > 0) {
+									resourceLock[1] = values[0];
+								}
+								
+								values = CommonUtils.getValue(vt, tp_path+S+"RESOURCE"+S+resEnums.get(ri)+S+"RESOURCE");
+								if (values!= null && values.length > 0) {
+									resourceLock[0] = values[0];
+								}
+								
+								if (resourceLock[0] != null && resourceLock[0] != "" && resourceLock[1] != null && resourceLock[1] != "") {
+									resourceLocks.add(resourceLock);
+								}
+							}
+						}
+						answer[i].setObject(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_RESLOCK, resourceLocks);
 					}
 				}
 			}

@@ -94,6 +94,7 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"        STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
+				"				RESOURCE = res1;\n" + 
 				"		TIMING_PROTECTION = TRUE {\n" +
 				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
 				"			EXECUTIONBUDGET = 2.0;" +
@@ -110,6 +111,9 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"        ACTIVATION = 4;\n" + 
 				"		 STACK = SHARED;\n" + 
 				"        SCHEDULE = FULL;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"				RESOURCE = res2;\n" + 
+				"				RESOURCE = res3;\n" + 
 				"		TIMING_PROTECTION = TRUE {\n" +
 				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
 				"			EXECUTIONBUDGET = 2.0;" +
@@ -234,6 +238,121 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 	
+	@Test public void testIsrTaskTimingProtection() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"    CPU_DATA = TRICORE {\n" +
+				"      CPU_CLOCK = 200.0;\n" +
+				"      APP_SRC = \"code.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"    };\n" +
+				"\n" +
+				"    MCU_DATA = TRICORE {\n" +
+				"      MODEL = TC27x;\n" +
+				"    };\n" +
+				"		KERNEL_TYPE = ECC2;\n" +
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"		TIMING_PROTECTION = TRUE {\n" +
+				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
+				"			EXECUTIONBUDGET = 2.0;" +
+				"			MAXOSINTERRUPTLOCKTIME = 3.0;" +
+				"			TIMEFRAME = 4.0;" +
+				"	       RESOURCE = RESOURCELOCK {\n" + 
+				"				RESOURCELOCKTIME = 5.0;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"			};\n" + 				
+				"		};\n" +
+				"    };\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 3;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		 STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"				RESOURCE = res2;\n" + 
+				"				RESOURCE = res3;\n" + 
+				"		TIMING_PROTECTION = TRUE {\n" +
+				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
+				"			EXECUTIONBUDGET = 2.0;" +
+				"			MAXOSINTERRUPTLOCKTIME = 3.0;" +
+				"			TIMEFRAME = 4.0;" +
+				"	       RESOURCE = RESOURCELOCK {\n" + 
+				"				RESOURCELOCKTIME = 5.0;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"			};\n" + 				
+				"	       RESOURCE = RESOURCELOCK {\n" + 
+				"				RESOURCELOCKTIME = 6.0;\n" + 
+				"				RESOURCE = res2;\n" + 
+				"			};\n" + 				
+				"	       RESOURCE = RESOURCELOCK {\n" + 
+				"				RESOURCELOCKTIME = 7.0;\n" + 
+				"				RESOURCE = res3;\n" + 
+				"			};\n" + 				
+				"		};\n" +
+				"    };\n" + 
+				"	ISR Timer_isr2 {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"4\";\n" +
+				"       PRIORITY = 4;\n" +
+				"		HANDLER = \"isr2\";	// IRQ handler\n" +
+				"				RESOURCE = res1;\n" + 
+				"		TIMING_PROTECTION = TRUE {\n" +
+				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
+				"			EXECUTIONTIME = 2.0;" +
+				"			MAXOSINTERRUPTLOCKTIME = 3.0;" +
+				"			TIMEFRAME = 4.0;" +
+				"	       RESOURCE = LOCKINGTIME {\n" + 
+				"				MAXRESOURCELOCKTIME = 5.0;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"			};\n" + 				
+				"		};\n" +
+				"	};\n" +
+				"	ISR irq5_isr1 {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"5\";\n" +
+				"       PRIORITY = 5;\n" +
+				"		HANDLER = \"isr1\";	// IRQ handler\n" +
+				"				RESOURCE = res1;\n" + 
+				"				RESOURCE = res2;\n" + 
+				"				RESOURCE = res3;\n" + 
+				"		TIMING_PROTECTION = TRUE {\n" +
+				"			MAXALLINTERRUPTLOCKTIME = 1.0;" +
+				"			EXECUTIONTIME = 2.0;" +
+				"			MAXOSINTERRUPTLOCKTIME = 3.0;" +
+				"			TIMEFRAME = 4.0;" +
+				"	       RESOURCE = LOCKINGTIME {\n" + 
+				"				MAXRESOURCELOCKTIME = 5.0;\n" + 
+				"				RESOURCE = res1;\n" + 
+				"			};\n" + 				
+				"	       RESOURCE = LOCKINGTIME {\n" + 
+				"				MAXRESOURCELOCKTIME = 6.0;\n" + 
+				"				RESOURCE = res2;\n" + 
+				"			};\n" + 				
+				"	       RESOURCE = LOCKINGTIME {\n" + 
+				"				MAXRESOURCELOCKTIME = 7.0;\n" + 
+				"				RESOURCE = res3;\n" + 
+				"			};\n" + 				
+				"		};\n" +
+				"	};\n" +
+				"    RESOURCE res1 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"    RESOURCE res2 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"    RESOURCE res3 { RESOURCEPROPERTY = STANDARD; };\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
 	@Test public void testIsrPriority() {
 	    final String text =
 				"CPU mySystem {\n" + 
@@ -300,6 +419,85 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+
+	@Test public void testTc26xIsr() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"		CPU_DATA = TRICORE {\n"+
+				"			APP_SRC = \"slave.c\";\n"+
+				"            CPU_CLOCK = 200.0;\n" +
+				"			APP_SRC = \"master.c\";\n"+
+				"            MULTI_STACK = TRUE {\n" +
+				"                IRQ_STACK = TRUE {\n" +
+				"                    SYS_SIZE = 256;\n" +
+				"                };\n" +
+				"            };\n" +
+				"			SYS_STACK_SIZE = 4096;\n"+
+				"			LINKERSCRIPT = \"slave2_link\";\n"+
+				"		};\n"+
+				"		KERNEL_TYPE = FP;\n" +
+				"		MCU_DATA = TRICORE {\n"+
+				"			MODEL = TC26x;\n"+
+				"			LINKERSCRIPT = \"mcu_link\";\n"+
+				"		};\n"+
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"    TASK Task1 {\n" + 
+				"        PRIORITY = 1;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"		 STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"	ISR Timer_isr2a {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"4\";\n" +
+				"        PRIORITY = 5;\n" +
+				"		HANDLER = \"isr2a\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr2b {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"5\";\n" +
+				"        PRIORITY = 7;\n" +
+				"		HANDLER = \"isr2b\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr2c {\n" +
+				"		CATEGORY = 2;" +
+				"		LEVEL = \"6\";\n" +
+				"        PRIORITY = 9;\n" +
+				"		HANDLER = \"isr2c\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1a {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"1\";\n" +
+				"        PRIORITY = 6;\n" +
+				"		HANDLER = \"isr1a\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1b {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"2\";\n" +
+				"        PRIORITY = 8;\n" +
+				"		HANDLER = \"isr1b\";	// IRQ handler\n" +
+				"	};\n" +
+				"	ISR Timer_isr1c {\n" +
+				"		CATEGORY = 1;" +
+				"		LEVEL = \"3\";\n" +
+				"        PRIORITY = 10;\n" +
+	  			"		HANDLER = \"isr1c\";	// Trap handler\n" +
+				"	};\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
 	@Test public void testIsrPriority2() {
 	    final String text =
 				"CPU mySystem {\n" + 
@@ -7873,7 +8071,196 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 				"    IRQ_STACK_SIZE = 256;\n" +
 				"  };\n" +
 				"};";
-		commonWriterTest(text, 3);
+			commonWriterTest(text, 3);
+		}
+	
+		
+		@Test public void testTc27xTimingProtection() {
+			String text = "CPU test_application {\n" +
+					"\n" +
+					"  OS EE {\n" +
+					"    EE_OPT = \"EE_DEBUG\";\n" +
+					"    EE_OPT = \"__ASSERT__\";\n" +
+					"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+					"    EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+					"\n" +
+					"    SERVICE_PROTECTION = TRUE;\n" +
+					"\n" +
+					"    CPU_DATA = TRICORE {\n" +
+					"      CPU_CLOCK = 200.0;\n" +
+					"      APP_SRC = \"code.c\";\n" +
+					"      MULTI_STACK = TRUE;\n" +
+					"      COMPILER_TYPE = GNU;\n" +
+					"    };\n" +
+					"\n" +
+					"    MCU_DATA = TRICORE {\n" +
+					"      MODEL = TC27x;\n" +
+					"    };\n" +
+					"\n" +
+					"    STATUS        = EXTENDED;\n" +
+					"    SHUTDOWNHOOK  = TRUE;\n" +
+					"    KERNEL_TYPE = ECC1;\n" +
+					"  };\n" +
+					"\n" +
+					"  TASK TaskPrio2 {\n" +
+					"    PRIORITY = 2;\n" +
+					"    AUTOSTART = FALSE;\n" +
+					"    STACK = SHARED;\n" +
+					"    ACTIVATION = 1;\n" +
+					"    SCHEDULE = FULL;\n" +
+			
+					"    TIMING_PROTECTION = TRUE {\n" +
+					"      MAXALLINTERRUPTLOCKTIME = 2;\n" +
+					"      EXECUTIONBUDGET = 3;\n" +
+					"      MAXOSINTERRUPTLOCKTIME = 4;\n" +
+					"      TIMEFRAME = 5;\n" +
+					"    };\n" +
+					"  };\n" +
+					"\n" +
+					"  TASK TaskPrio1 {\n" +
+					"    PRIORITY = 1;\n" +
+					"    AUTOSTART = TRUE;\n" +
+					"    STACK = PRIVATE {\n" +
+					"      SYS_SIZE = 256;\n" +
+					"    };\n" +
+					"    ACTIVATION = 1;\n" +
+					"    SCHEDULE = FULL;\n" +
+					"    EVENT = EventTaskPrio1;\n" +
+					"  };\n" +
+					"\n" +
+					"  EVENT EventTaskPrio1 { MASK = AUTO; };\n" +
+					"\n" +
+					"  COUNTER system_timer {\n" +
+					"    MINCYCLE = 1;\n" +
+					"    MAXALLOWEDVALUE = 2147483647;\n" +
+					"    TICKSPERBASE = 1;\n" +
+					"    TYPE = HARDWARE {\n" +
+					"      DEVICE = \"STM_SR0\";\n" +
+					"      SYSTEM_TIMER = TRUE;\n" +
+					"      PRIORITY = 1;\n" +
+					"    };\n" +
+					"    SECONDSPERTICK = 0.001;\n" +
+					"  };\n" +
+					"\n" +
+					"  SCHEDULETABLE ScheduleTable1 {\n" +
+					"    COUNTER = system_timer;\n" +
+					"    DURATION = 1;\n" +
+					"    REPEATING = FALSE;\n" +
+					"    AUTOSTART = TRUE {\n" +
+					"      TYPE = ABSOLUTE;\n" +
+					"      START_VALUE = 0;\n" +
+					"    };\n" +
+					"    EXPIRE_POINT = ACTION {\n" +
+					"      EXPIRE_VALUE = 1;\n" +
+					"      ACTION = ACTIVATETASK { TASK = TaskPrio2; };\n" +
+					"      SYNC_ADJUSTMENT = FALSE;\n" +
+					"    };\n" +
+					"    EXPIRE_POINT = ACTION {\n" +
+					"      EXPIRE_VALUE = 3;\n" +
+					"      ACTION = SETEVENT { TASK = TaskPrio1; EVENT = EventTaskPrio1; };\n" +
+					"      SYNC_ADJUSTMENT = FALSE;\n" +
+					"    };\n" +
+					"    LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION = FALSE;\n" +
+					"  };\n" +
+					"};\n";
+		commonWriterTest(text, 1);
+	}
+		
+		@Test public void testTc27xTimingProtection2() {
+			String text = "CPU test_application {\n" +
+					"\n" +
+					"  OS EE {\n" +
+					"    EE_OPT = \"EE_DEBUG\";\n" +
+					"    EE_OPT = \"__ASSERT__\";\n" +
+					"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+					"    EE_OPT = \"EE_SAVE_TEMP_FILES\";\n" +
+					"\n" +
+					"    SERVICE_PROTECTION = TRUE;\n" +
+					"\n" +
+					"    CPU_DATA = TRICORE {\n" +
+					"      CPU_CLOCK = 200.0;\n" +
+					"      APP_SRC = \"code.c\";\n" +
+					"      MULTI_STACK = TRUE;\n" +
+					"      COMPILER_TYPE = GNU;\n" +
+					"    };\n" +
+					"\n" +
+					"    MCU_DATA = TRICORE {\n" +
+					"      MODEL = TC27x;\n" +
+					"    };\n" +
+					"\n" +
+					"    STATUS        = EXTENDED;\n" +
+					"    SHUTDOWNHOOK  = TRUE;\n" +
+					"    KERNEL_TYPE = ECC1;\n" +
+					"  };\n" +
+					"\n" +
+					"  TASK TaskPrio2 {\n" +
+					"    PRIORITY = 2;\n" +
+					"    AUTOSTART = FALSE;\n" +
+					"    STACK = SHARED;\n" +
+					"    ACTIVATION = 1;\n" +
+					"    SCHEDULE = FULL;\n" +
+					"  };\n" +
+					"\n" +
+					"  TASK TaskPrio1 {\n" +
+					"    PRIORITY = 1;\n" +
+					"    AUTOSTART = TRUE;\n" +
+					"    STACK = PRIVATE {\n" +
+					"      SYS_SIZE = 256;\n" +
+					"    };\n" +
+					"    ACTIVATION = 1;\n" +
+					"    SCHEDULE = FULL;\n" +
+					"    EVENT = EventTaskPrio1;\n" +
+					"	 RESOURCE = res1;\n" + 
+
+					"    TIMING_PROTECTION = TRUE {\n" +
+					"      MAXALLINTERRUPTLOCKTIME = 0.0001;\n" +
+					"      EXECUTIONBUDGET = 0.0025;\n" +
+					"      TIMEFRAME = 5;\n" +
+					"	   RESOURCE = RESOURCELOCK {\n" + 
+					"			RESOURCELOCKTIME = 0.0002;\n" + 
+					"			RESOURCE = res1;\n" + 
+					"			};\n" + 				
+					"		};\n" +
+					"  };\n" +
+					"    RESOURCE res1 { RESOURCEPROPERTY = STANDARD; };\n" + 
+
+					
+					"  EVENT EventTaskPrio1 { MASK = AUTO; };\n" +
+					"\n" +
+					"  COUNTER system_timer {\n" +
+					"    MINCYCLE = 1;\n" +
+					"    MAXALLOWEDVALUE = 2147483647;\n" +
+					"    TICKSPERBASE = 1;\n" +
+					"    TYPE = HARDWARE {\n" +
+					"      DEVICE = \"STM_SR0\";\n" +
+					"      SYSTEM_TIMER = TRUE;\n" +
+					"      PRIORITY = 1;\n" +
+					"    };\n" +
+					"    SECONDSPERTICK = 0.001;\n" +
+					"  };\n" +
+					"\n" +
+					"  SCHEDULETABLE ScheduleTable1 {\n" +
+					"    COUNTER = system_timer;\n" +
+					"    DURATION = 1;\n" +
+					"    REPEATING = FALSE;\n" +
+					"    AUTOSTART = TRUE {\n" +
+					"      TYPE = ABSOLUTE;\n" +
+					"      START_VALUE = 0;\n" +
+					"    };\n" +
+					"    EXPIRE_POINT = ACTION {\n" +
+					"      EXPIRE_VALUE = 1;\n" +
+					"      ACTION = ACTIVATETASK { TASK = TaskPrio2; };\n" +
+					"      SYNC_ADJUSTMENT = FALSE;\n" +
+					"    };\n" +
+					"    EXPIRE_POINT = ACTION {\n" +
+					"      EXPIRE_VALUE = 3;\n" +
+					"      ACTION = SETEVENT { TASK = TaskPrio1; EVENT = EventTaskPrio1; };\n" +
+					"      SYNC_ADJUSTMENT = FALSE;\n" +
+					"    };\n" +
+					"    LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION = FALSE;\n" +
+					"  };\n" +
+					"};\n";
+		commonWriterTest(text, 1);
 	}
 
 }
