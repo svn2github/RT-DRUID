@@ -1091,7 +1091,44 @@ public abstract class AbstractRtosWriter implements IRtosWriter {
 	        
 		}
 			break;
+			/* ----------------------  SCHEDULING TABLE  ---------------------- */
+		case IOilObjectList.SCHEDULING_TABLE:
+		{
+			String resPath = sysName+S+DPKG.getSystem_Architectural().getName()+S
+    			+SimpleTransform.SCHED_TABLE_LIST;
+			
+			// search all Architectural SpinLocks ...
+	        String[] resNames = vt.newTreeInterface().getAllName(resPath,SimpleTransform.SCHED_TABLE);
+	        if (resNames.length>0) {
+				answer = new SimpleGenRes[resNames.length];
 
+				// ... and store as SimpleGenRes 
+		        for (int i=0; i<resNames.length; i++) {
+					answer[i] = new SimpleGenRes(
+							resNames[i], resPath+S+resNames[i]+S);
+					
+					String path = answer[i].getPath() +S+ (new OilPath(OilObjectType.SCHEDULINGTABLE, null)).getPath();
+					String[] values;
+
+//					{	// ----------- TRAP ------------
+//						values = CommonUtils.getValue(vt, path+"NEXT_SPINLOCK");
+//						if (values != null && values.length>0 && values[0] != null) {
+//							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_NEXT, values[0]);
+//						}
+//					}
+//					{	// ----------- TRAP ------------
+//						values = CommonUtils.getValue(vt, path+"ACCESSING_APPLICATION");
+//						if (values != null) {
+//							answer[i].setObject(ISimpleGenResKeywords.SPINLOCK_APPLICATION, values);
+//						}
+//					}
+
+		        }
+	        }
+	        
+	        
+		}
+			break;
 		/* ----------------------  RESOURCE  ---------------------- */
 		case IOilObjectList.RESOURCE:
 		if (false) {

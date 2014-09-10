@@ -178,4 +178,8 @@ IMPLEMENTATION ee {
     SPINLOCK {
     	SPINLOCK_TYPE NEXT_SPINLOCK;
     };
+    
+    SCHEDULINGTABLE {
+    };
+    
 };

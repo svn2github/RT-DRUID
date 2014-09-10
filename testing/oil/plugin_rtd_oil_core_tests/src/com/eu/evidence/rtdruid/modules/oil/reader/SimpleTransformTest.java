@@ -567,5 +567,131 @@ public class SimpleTransformTest implements Examples {
 				(EObject) ((Resource) vt2.getResourceSet().getResources().get(0)).getContents().get(0)
 		).getMessage(); assertTrue(t, t== null);
 	}
+	
+	@Test
+	public void testOilOsScheduleTable() {
+	    final String text = "CPU test_application {\n" +
+		"\n" +
+		"	OS EE {		\n" +
+		"		EE_OPT = \"__ASSERT__\";\n" +
+		"		CFLAGS = \"-g2\";\n" +
+		"\n" +
+		"		CPU_DATA = LM32 {\n" +
+		"			APP_SRC = \"main.c\";\n" +
+		"			MULTI_STACK = FALSE;\n" +
+		"			USESTANDALONEPRINTF = TRUE; // Optional, default is FALSE\n" +
+		"			USESMALLC = FALSE; // Optional, default is FALSE\n" +
+		"		};\n" +
+		"		\n" +
+		"\n" +
+		"		MCU_DATA = LATTICE_PLATFORM {\n" +
+		"   			MODEL = LIBRARY {\n" +
+		"				PLATFORM_LIB_PATH = \"../onchipramtimer_lib\";\n" +
+		"				PLATFORM_NAME = \"onchipramtimer\";\n" +
+		"				PLATFORM_BLD_CFG = \"Release\"; // Optional, default is \"\"\n" +
+		"   			};\n" +
+		"  		};\n" +
+		"\n" +
+		"		STATUS = EXTENDED;\n" +
+		"		STARTUPHOOK = FALSE;\n" +
+		"		ERRORHOOK = FALSE;\n" +
+		"		SHUTDOWNHOOK = FALSE;\n" +
+		"		PRETASKHOOK = FALSE;\n" +
+		"		POSTTASKHOOK = FALSE;\n" +
+		"		USEGETSERVICEID = FALSE;\n" +
+		"		USEPARAMETERACCESS = FALSE;\n" +
+		"		USERESSCHEDULER = FALSE;\n" +
+		"	};\n" +
+		"\n" +
+		"	/* this is the OIL part for the first task */\n" +
+		"	TASK Task1 {\n" +
+		"		PRIORITY = 0x01;   /* Low priority */\n" +
+		"		AUTOSTART = FALSE;\n" +
+		"		STACK = SHARED;\n" +
+		"		ACTIVATION = 1;    /* only one pending activation */\n" +
+		"	};\n" +
+		"\n" +
+		"	ISR Timer_isr {\n" +
+		"		CATEGORY = 2;		// Only category 2 is supported on Mico32\n" +
+		"		LEVEL = \"TIMER_IRQ\";	// Could be also a number\n" +
+		"		HANDLER = \"timer_interrupt\";	// IRQ handler\n" +
+		"	};\n" +
+		"	APPLICATION myApplication;\n" +
+		"	APPLICATION another_application;\n" +
+		"\n" +
+		"	COUNTER MainTimer;\n" +
+		"	SCHEDULINGTABLE table1;\n" +
+		"	SPINLOCK spin1;\n" +
+		"	SCHEDULINGTABLE table2;\n" +
+
+		"	\n" +
+		"	ALARM MyAlarm {\n" +
+		"		COUNTER = \"MainTimer\";\n" +
+		"		ACTION = ACTIVATETASK {\n" +
+		"			TASK = \"Task1\";\n" +
+		"		};\n" +
+		"		/* Autstart is not supported on FP kernel! */\n" +
+		"		AUTOSTART = FALSE;\n" +
+		"	};\n" +
+		"\n" +
+		"	OS EE { KERNEL_TYPE = FP; }; 	\n" +
+		"};";
+		
+		
+		IVarTree vt = VarTreeUtil.newVarTree();
+		OilTransformFactory otf = OilTransformFactory.INSTANCE;
+		(new OilReader()).load(new ByteArrayInputStream(text.getBytes()),
+				vt, null, null);
+		
+		String[] prefix = CommonUtils.getAllRtos(vt.newTreeInterface());
+
+		IOilImplID id = otf.getOilId("ee");
+
+		String answer = otf.getTransform("ee").write(vt, id, prefix[0]);
+		
+		assertNotNull(answer);
+		System.out.println(answer);
+		
+		// --------------------
+		IVarTree vt2 = VarTreeUtil.newVarTree();
+		//(new OilReader()).load(new ByteArrayInputStream(OIL_TEST_WITH_RESOURCE.getBytes()),
+		//		vt2);
+
+		vt2 = VarTreeUtil.newVarTree();
+		(new OilReader()).load(new ByteArrayInputStream(answer.getBytes()),
+				vt2, null, null);
+		
+		String s1, s2;
+		System.out.print(s1 = Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(vt)));
+		System.out.print(s2 = Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.varTreeToStringErtd(vt2)));
+		
+		final char S = DataPath.SEPARATOR;
+		final DataPackage DPKG = DataPackage.eINSTANCE;
+
+		final String[] rtosPaths = Search.allRtos(vt.newTreeInterface());
+		assertTrue(rtosPaths.length == 1);
+		String[] split = DataPath.splitPath(rtosPaths[0]);
+		System.out.println("Rtos Path : " + Arrays.asList(split));
+		assertTrue(split.length == 7);
+		ITreeInterface ti = vt.newTreeInterface();
+		String[] names = ti.getAllName(
+				split[0] //sysName
+				+S+ DPKG.getArchitectural().getName()
+				+S+ SimpleTransform.SCHED_TABLE_LIST
+				, SimpleTransform.SCHED_TABLE);
+		
+		assertTrue(names.length == 2);
+		
+		System.out.println("Schedule table names : " + Arrays.asList(names));
+		String[] expNames = new String[] {"table1", "table2"}; 
+		assertArrayEquals(expNames, names);
+		assertEquals(s1, s2);
+		
+		
+		String t = VarTreeUtil.compare(
+				(EObject) ((Resource) vt.getResourceSet().getResources().get(0)).getContents().get(0),
+				(EObject) ((Resource) vt2.getResourceSet().getResources().get(0)).getContents().get(0)
+		).getMessage(); assertTrue(t, t== null);
+	}
 
 }

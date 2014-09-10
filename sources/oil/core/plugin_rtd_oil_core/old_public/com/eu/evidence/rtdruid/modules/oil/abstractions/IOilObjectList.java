@@ -56,11 +56,14 @@ public interface IOilObjectList {
 	/** Identifies list of Network Managment SubSystem */
 	public static final int NM = 13;
 
-	/** Identifies list of Network Managment SubSystem */
+	/** Identifies list of Spinlocks */
 	public static final int SPINLOCK = 14;
 
+	/** Identifies list of Scheduling tables */
+	public static final int SCHEDULING_TABLE = 15;
+
 	/** Contains the number of valid objects */
-	public static final int OBJECT_NUMBER = 15;
+	public static final int OBJECT_NUMBER = 16;
 
 	/** Is the Oil Cpu Object. Is not valid in this list */
 	public static final int CPU = OBJECT_NUMBER;

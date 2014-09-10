@@ -77,6 +77,14 @@ public class SimpleTransform implements IOilTransform {
 	/**
 	 * 
 	 */
+	public static final String SCHED_TABLE = "SchedulingTable";
+	/**
+	 * 
+	 */
+	public static final String SCHED_TABLE_LIST = "SchedulingTableList";
+	/**
+	 * 
+	 */
 	public static final String MESSAGE_TYPE = "MessageType";
 	public static final String COM_LIST = "ComList";
 	public static final String COM_TYPE = "Com";
@@ -190,6 +198,8 @@ public class SimpleTransform implements IOilTransform {
 		storeCom(systemVtp, application, id);
 		/* SpinLock */
 		storeSpinLock(systemVtp, application, id);
+		/* Scheduling table */
+		storeSchedulingTable(systemVtp, application, id);
 		
 		/* OTHER OBJECTS */
 		storeOthers(systemVtp, application, rtosName, id);
@@ -476,7 +486,6 @@ public class SimpleTransform implements IOilTransform {
 		}
 
 	}
-	
 
 	/**
 	 * This method stores a task inside the given IVarTreePointer
@@ -504,6 +513,101 @@ public class SimpleTransform implements IOilTransform {
 		IVarTreePointer curr = vtp.clone().makePath(SpinLockNamePath, spinLockTypePath);
 
 		// store all instance of this SPIN LOCK object inside the VarTree
+		for (int i = 0; i < ar.size(); i++) {
+
+			storeInsideAOilVar(curr, ar.get(i), id);
+		}
+	}
+
+	/**
+	 * This method stores all SchedulingTable inside the given IVarTreePointer
+	 * 
+	 * @param vtp
+	 *            point to the system
+	 * @param parent
+	 *            the parent node
+	 * @param id
+	 *            contains the hw and rtos id of this data
+	 * @param rtos
+	 *            the name of RT-OS. Required for the mapping between Tasks and
+	 *            RT-OS.
+	 * 
+	 * @throws OilTransformException
+	 *             if there are some problems
+	 */
+	protected void storeSchedulingTable(IVarTreePointer vtp, Element parent, IOilImplID id)
+			throws OilTransformException {
+
+		// prepare where store all data
+		Element[] schedTableList = getAllSameElements(parent, IOilXMLLabels.ELEM_OBJECT,
+				new String[] { IOilXMLLabels.ATTR_TYPE }, new String[] { IOilXMLLabels.OBJ_SCHEDULINGTABLE });
+
+		// aggregate instances of the same SpinLocks
+		ArrayList<Element> unamedSchedTable = new ArrayList<Element>();
+		ArrayList<ArrayList<Element>> namedSchedTable = new ArrayList<ArrayList<Element>>();
+		{
+			// namedSpinLocks is used to group together all objects with the
+			// same name
+			HashMap<String, ArrayList<Element>> namedSchedTableKeys = new HashMap<String, ArrayList<Element>>();
+			for (int i = 0; i < schedTableList.length; i++) {
+				String tmp = getAttribute(schedTableList[i], IOilXMLLabels.ATTR_NAME);
+
+				if (tmp == null) {
+					unamedSchedTable.add(schedTableList[i]);
+				} else {
+					if (namedSchedTableKeys.containsKey(tmp)) {
+						namedSchedTableKeys.get(tmp).add(schedTableList[i]);
+					} else {
+						ArrayList<Element> ar = new ArrayList<Element>();
+						ar.add(schedTableList[i]);
+						namedSchedTableKeys.put(tmp, ar);
+						namedSchedTable.add(ar);
+					}
+				}
+			}
+		}
+
+		// first the task without a name (set id to null)
+		// it isn't possible in a oil file !!
+		if (unamedSchedTable.size() > 0) {
+			storeASchedTable((IVarTreePointer) vtp.clone(), unamedSchedTable, id);
+		}
+
+		// parse all tasks. If there're more than one instance for the same
+		// task, that task is parsed more than one time
+		for (ArrayList<Element> iter : namedSchedTable) {
+			storeASchedTable((IVarTreePointer) vtp.clone(), iter, id);
+		}
+
+	}
+	
+
+	/**
+	 * This method stores a task inside the given IVarTreePointer
+	 * 
+	 * @param vtp
+	 *            point to the system
+	 * @param id
+	 *            contains the hw and rtos id of this data
+	 * 
+	 * @throws OilTransformException
+	 *             if there are some problems
+	 */
+	protected void storeASchedTable(IVarTreePointer vtp, ArrayList<Element> ar, IOilImplID id) {
+		final String[] schedTableNamePath = { DPKG.getSystem_Architectural().getName(),
+				SCHED_TABLE_LIST, //
+				null // scheduling table name ... from oil
+				};
+		final String[] schedTableTypePath = { DPKG.getSystem_Architectural().getName(),
+				SCHED_TABLE_LIST, SCHED_TABLE};
+
+		// the name of a scheduling table (also a null value is valid)
+		final String schedTableName = getAttribute(ar.get(0), IOilXMLLabels.ATTR_NAME);
+
+		schedTableNamePath[2] = schedTableName;
+		IVarTreePointer curr = vtp.clone().makePath(schedTableNamePath, schedTableTypePath);
+
+		// store all instance of this scheduling table object inside the VarTree
 		for (int i = 0; i < ar.size(); i++) {
 
 			storeInsideAOilVar(curr, ar.get(i), id);
@@ -2176,7 +2280,7 @@ public class SimpleTransform implements IOilTransform {
 		int order[] = { IOilObjectList.OS, IOilObjectList.OSAPPLICATION, IOilObjectList.TASK, IOilObjectList.COUNTER,
 				IOilObjectList.ALARM, IOilObjectList.RESOURCE, IOilObjectList.EVENT, IOilObjectList.ISR,
 				IOilObjectList.MESSAGE, IOilObjectList.NETWORKMESSAGE, IOilObjectList.COM, IOilObjectList.NM,
-				IOilObjectList.APPMODE, IOilObjectList.IPDU, IOilObjectList.SPINLOCK };
+				IOilObjectList.APPMODE, IOilObjectList.IPDU, IOilObjectList.SPINLOCK, IOilObjectList.SCHEDULING_TABLE };
 
 		for (int oolId = 0; oolId < order.length; oolId++) {
 
@@ -2469,6 +2573,19 @@ public class SimpleTransform implements IOilTransform {
 				}
 			}
 				break;
+			case IOilObjectList.SCHEDULING_TABLE: {
+				String prefix = sysName + S + DPKG.getArchitectural().getName() + S
+						+ SCHED_TABLE_LIST + S;
+				String[] names = vt.newTreeInterface().getAllName(prefix, SCHED_TABLE);
+
+				objects = new SimpleGenRes[names.length];
+				for (int i = 0; i < names.length; i++) {
+					objects[i] = new SimpleGenRes(names[i], prefix + names[i]);
+					objects[i].setProperty(IOilXMLLabels.ATTR_TYPE, IOilXMLLabels.OBJ_SCHEDULINGTABLE);
+					objects[i].setProperty(ISimpleGenResKeywords.RTOS_PATH, rtos[0]);
+				}
+			}
+				break;
 			case IOilObjectList.RESOURCE: {
 				String prefix = sysName + S + DPKG.getArchitectural().getName() + S
 						+ DPKG.getArchitectural_MutexList().getName() + S;
@@ -2628,7 +2745,9 @@ public class SimpleTransform implements IOilTransform {
 		}
 //		break;
 		case IOilObjectList.SPINLOCK:
-//		break;
+//			break;
+		case IOilObjectList.SCHEDULING_TABLE:
+//			break;
 		case IOilObjectList.RESOURCE: {
 //			path = DPKG.getMutex_OilVar().getName() + S + IOilXMLLabels.OBJ_RESOURCE + S + oilVarPrefix;
 		}
