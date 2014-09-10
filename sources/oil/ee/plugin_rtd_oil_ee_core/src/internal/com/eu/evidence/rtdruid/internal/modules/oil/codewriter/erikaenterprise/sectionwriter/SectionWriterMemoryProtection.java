@@ -155,7 +155,7 @@ public class SectionWriterMemoryProtection extends SectionWriter implements
 	
 					ee_c_buffer.append("," + end +
 							indent2 + "EE_MEMPROT_USER_ENTRY("+
-							(appl.getInt(ISimpleGenResKeywords.OS_APPL_ID)+1) + "U, " +
+							(appl.getInt(ISimpleGenResKeywords.OS_APPL_ID)) + "U, " +
 							"0x" + Long.toHexString(appl.getLong(SectionWriterOsApplication.OS_APPLICATION_MEM_BASE)) + "U, " +
 							"0x" + Long.toHexString(size) + "U, " +
 							log_size + "U, " + 

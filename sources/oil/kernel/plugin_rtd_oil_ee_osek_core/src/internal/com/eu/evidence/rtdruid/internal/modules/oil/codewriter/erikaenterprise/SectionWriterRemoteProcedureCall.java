@@ -260,7 +260,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			}
 			for (ISimpleGenRes osAppl : ool.getList(IOilObjectList.OSAPPLICATION)) {
 				final String name = osAppl.getName();
-				final String osApplId = osAppl.getString(ISimpleGenResKeywords.OS_APPL_ID);
+				final String osApplId = "" +(osAppl.getInt(ISimpleGenResKeywords.OS_APPL_ID));
 
 				for (int i=0; i< rtosNumber; i++) {
 					if (i != rtosId) {
@@ -383,28 +383,29 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 			} else {
 				sbTable.append("0U, ");
 			}
-			
-			if (sbCommonRpc_OsAppls.length()>0) {
-				sbTable.append("&EE_as_rpc_osAppls[0], ");
-				
-				sbCommon_c.append(
-						macros.constVectorRom(
-								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_osAppls","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_osAppls", globalOsApplIndex)+"]", " = {\n" +
-										sbCommonRpc_OsAppls.toString() + "\n" + indent1 + "};\n") + "\n");
-			} else {
-				sbTable.append("0U, ");
-			}
-			
+
 			if (sbCommonRpc_SchedTabs.length()>0) {
-				sbTable.append("&EE_as_rpc_schedTabs[0]");
+				sbTable.append("&EE_as_rpc_schedTabs[0], ");
 				
 				sbCommon_c.append(
 						macros.constVectorRom(
 								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_schedTabs","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_schedTabs", globalSchedTablIndex)+"]", " = {\n" +
 										sbCommonRpc_SchedTabs.toString() + "\n" + indent1 + "};\n") + "\n");
 			} else {
+				sbTable.append("0U, ");
+			}
+			
+			if (sbCommonRpc_OsAppls.length()>0) {
+				sbTable.append("&EE_as_rpc_osAppls[0]");
+				
+				sbCommon_c.append(
+						macros.constVectorRom(
+								indent1 + "EE_TYPEASREMOTEID const ", "EE_as_rpc_osAppls","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_osAppls", globalOsApplIndex)+"]", " = {\n" +
+										sbCommonRpc_OsAppls.toString() + "\n" + indent1 + "};\n") + "\n");
+			} else {
 				sbTable.append("0U");
 			}
+			
 
 			
 			sbCommon_c.append(

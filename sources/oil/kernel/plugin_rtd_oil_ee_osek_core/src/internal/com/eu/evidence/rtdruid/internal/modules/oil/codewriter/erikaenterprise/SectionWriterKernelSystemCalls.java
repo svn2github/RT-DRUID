@@ -107,13 +107,16 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 	};			
 	
 	
-	protected final static String[] EE_SCHED_TABLES_IDs = {
+	protected final static String[] EE_SCHED_TABLES_LOCAL_IDs = {
+		"NextScheduleTable",
+		"SyncScheduleTable"
+	};			
+	
+	protected final static String[] EE_SCHED_TABLES_REMOTE_IDs = {
 		"StartScheduleTableRel",
 		"StartScheduleTableAbs",
 		"StopScheduleTable",
-		"NextScheduleTable",
-		"GetScheduleTableStatus",
-		"SyncScheduleTable"
+		"GetScheduleTableStatus"
 	};			
 	
 	
@@ -261,7 +264,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		{ // Resources
 			boolean hasResource = false;
 			for (int i=0; i<ools.length && ! hasResource; i++) {
-				hasResource = ool.getList(IOilObjectList.RESOURCE).size() > 0; 
+				hasResource = ools[i].getList(IOilObjectList.RESOURCE).size() > 0; 
 			}
 			if ( hasResource || requiredOilObjects.contains(new Integer(IOilObjectList.RESOURCE)))  {
 	
@@ -276,7 +279,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		{ // Alarm
 			boolean hasAlarm = false;
 			for (int i=0; i<ools.length && ! hasAlarm; i++) {
-				hasAlarm = ool.getList(IOilObjectList.ALARM).size() > 0; 
+				hasAlarm = ools[i].getList(IOilObjectList.ALARM).size() > 0; 
 			}
 			if (  hasAlarm || requiredOilObjects.contains(new Integer(IOilObjectList.ALARM)))  {
 	
@@ -293,7 +296,7 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 				|| parent.checkKeyword(IWritersKeywords.OSEK_ECC2))  {
 			boolean hasEvent = false;
 			for (int i=0; i<ools.length && ! hasEvent; i++) {
-				hasEvent = ool.getList(IOilObjectList.EVENT).size() > 0; 
+				hasEvent = ools[i].getList(IOilObjectList.EVENT).size() > 0; 
 			}
 			if ( hasEvent || requiredOilObjects.contains(new Integer(IOilObjectList.EVENT))) { 
 	
@@ -326,28 +329,51 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 			}
 		}
 		
-		// Resources
-		if (os_appls.size() > 0
-				&& parent.checkKeyword(IWritersKeywords.CPU_TRICORE))  {
+		{ // OsApplications
+			boolean hasOsAppl = false;
+			for (int i=0; i<ools.length && ! hasOsAppl; i++) {
+				hasOsAppl = ools[i].getList(IOilObjectList.OSAPPLICATION).size() > 0; 
+			}
+			if ( hasOsAppl /* && parent.checkKeyword(IWritersKeywords.CPU_TRICORE)*/)  {
 
-			for (String s: EE_OSAPPL_IDs) {
-				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
-				counter ++;
+				for (String s: EE_OSAPPL_IDs) {
+					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+					counter ++;
+				}
 			}
 		}
-		
-		// SchedTable
-		if (ool.getList(IOilObjectList.SCHEDULE_TABLE).size() > 0
-				&& parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION))  {
 
-			for (String s: EE_SCHED_TABLES_IDs) {
-				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
-				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
-				counter ++;
+		if (parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION)) { // SchedTable
+			
+			if (ool.getList(IOilObjectList.SCHEDULE_TABLE).size() > 0)  {
+	
+				for (String s: EE_SCHED_TABLES_REMOTE_IDs) {
+					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+					counter ++;
+				}
+				for (String s: EE_SCHED_TABLES_LOCAL_IDs) {
+					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+					counter ++;
+				}
+			} else {
+				boolean hasSchedTab = false;
+				for (int i=0; i<ools.length && ! hasSchedTab; i++) {
+					hasSchedTab = ools[i].getList(IOilObjectList.SCHEDULE_TABLE).size() > 0; 
+				}
+				if ( hasSchedTab )  {
+	
+					for (String s: EE_SCHED_TABLES_REMOTE_IDs) {
+						ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+						ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+						counter ++;
+					}
+				}
 			}
 		}
-		
+				
 		// Spinlock
 		if (ool.getList(IOilObjectList.SPINLOCK).size() > 0
 				&& parent.getOilObjects().length >1)  {

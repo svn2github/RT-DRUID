@@ -90,7 +90,7 @@ public class CpuUtility {
 		for (int i=0; i<osAppls.size(); i++) {
 			ISimpleGenRes sgr = osAppls.get(i);
 			if (allowAll || validOsApplNames.contains(sgr.getName())) {
-				answerBitSet.set(sgr.getInt(ISimpleGenResKeywords.OS_APPL_ID)+1);
+				answerBitSet.set(sgr.getInt(ISimpleGenResKeywords.OS_APPL_ID));
 			}
 		}
 		
@@ -108,5 +108,18 @@ public class CpuUtility {
 		answerText.insert(0, "0x");
 				
 		return answerText.toString();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static boolean checkOsAccessRules(ISimpleGenRes object, ISimpleGenRes objectToAccess) {
+		// check osApplication access
+		String osAppName = object.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) ? object.getString(ISimpleGenResKeywords.OS_APPL_NAME) : ISimpleGenResKeywords.OS_APPL_KERNEL_NAME ;
+		
+		boolean access = objectToAccess.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL) && "true".equalsIgnoreCase(objectToAccess.getString(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL));
+		access |=  osAppName.equalsIgnoreCase(objectToAccess.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) ? objectToAccess.getString(ISimpleGenResKeywords.OS_APPL_NAME) : ISimpleGenResKeywords.OS_APPL_KERNEL_NAME); 
+		access |= (objectToAccess.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST) && ((List<String>)objectToAccess.getObject(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST)).contains(osAppName));
+		
+		return access;
+		
 	}
 }

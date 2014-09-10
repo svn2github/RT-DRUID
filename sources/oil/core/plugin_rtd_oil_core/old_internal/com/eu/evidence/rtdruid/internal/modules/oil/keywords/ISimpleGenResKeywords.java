@@ -44,6 +44,7 @@ public interface ISimpleGenResKeywords {
 	public final static String OS_APPL_SHARED_STACK_ID = "os_application_shared_stack_id";
 	public final static String OS_APPL_CPU_MAPPED_ID = "os_application_cpu_mapped_id";
 	
+	public final static String OS_APPL_KERNEL_NAME = "";
 	public final static String OS_APPL_NAME = "object_mapped_an_os_application_name";
 	public final static String GENERIC_ACCESSING_OS_APPL_LIST = "accessing_os_application_list";
 	public final static String GENERIC_ACCESSING_ALLOW_ALL = "allow_the_access_to_all_os_applications";

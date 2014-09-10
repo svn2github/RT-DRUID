@@ -4284,6 +4284,261 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 	    		"};\n";
 		commonWriterTest(text, 3);
 	}
+	
+	@Test public void testTc27xOsApplMultiCore_accessMask_sysTimer() {
+	    final String text = "CPU test_application {\n" +
+	    		"\n" +
+	    		"  OS EE {\n" +
+	    		"    EE_OPT = \"EE_DEBUG\";\n" +
+	    		"    EE_OPT = \"__ASSERT__\";\n" +
+	    		"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+	    		"\n" +
+	    		"    REMOTENOTIFICATION = USE_RPC;\n" +
+	    		"    SERVICE_PROTECTION = TRUE;\n" +
+	    		"\n" +
+	    		"    MASTER_CPU = \"master\";\n" +
+	    		"\n" +
+	    		"    CPU_DATA = TRICORE {\n" +
+	    		"      ID = \"master\";\n" +
+	    		"      CPU_CLOCK = 200.0;\n" +
+	    		"      APP_SRC = \"custom_cstart.c\";\n" +
+	    		"      APP_SRC = \"master.c\";\n" +
+	    		"      MULTI_STACK = TRUE;\n" +
+	    		"      SYS_STACK_SIZE = 4096;\n" +
+	    		"      COMPILER_TYPE = GNU;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    CPU_DATA = TRICORE {\n" +
+	    		"      ID = \"slave1\";\n" +
+	    		"      APP_SRC = \"custom_cstart.c\";\n" +
+	    		"      APP_SRC = \"slave1.c\";\n" +
+	    		"      MULTI_STACK = TRUE;\n" +
+	    		"      SYS_STACK_SIZE = 4096;\n" +
+	    		"      COMPILER_TYPE = GNU;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    CPU_DATA = TRICORE {\n" +
+	    		"      ID = \"slave2\";\n" +
+	    		"      APP_SRC = \"custom_cstart.c\";\n" +
+	    		"      APP_SRC = \"slave2.c\";\n" +
+	    		"      MULTI_STACK = TRUE;\n" +
+	    		"      SYS_STACK_SIZE = 4096;\n" +
+	    		"      COMPILER_TYPE = GNU;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    MCU_DATA = TRICORE {\n" +
+	    		"      MODEL = TC27x;\n" +
+	    		"    };\n" +
+	    		"\n" +
+	    		"    STATUS = STANDARD;\n" +
+	    		"    KERNEL_TYPE = BCC1;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  TASK TaskMaster {\n" +
+	    		"    CPU_ID = \"master\";\n" +
+	    		"    PRIORITY = 1;\n" +
+	    		"    AUTOSTART = TRUE;\n" +
+	    		"    STACK = SHARED;\n" +
+	    		"    ACTIVATION = 1;\n" +
+	    		"    SCHEDULE = FULL;\n" +
+	    		"	 ACCESSING_APPLICATION = MasterApplication_b;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  TASK TaskMaster_b {\n" +
+	    		"    CPU_ID = \"master\";\n" +
+	    		"    PRIORITY = 1;\n" +
+	    		"    AUTOSTART = TRUE;\n" +
+	    		"    STACK = SHARED;\n" +
+	    		"    ACTIVATION = 1;\n" +
+	    		"    SCHEDULE = FULL;\n" +
+	    		"	 ACCESSING_APPLICATION = MasterApplication;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  TASK TaskSlave1 {\n" +
+	    		"    CPU_ID = \"slave1\";\n" +
+	    		"    PRIORITY = 1;\n" +
+	    		"    AUTOSTART = FALSE;\n" +
+	    		"    STACK = SHARED;\n" +
+	    		"    ACTIVATION = 1;\n" +
+	    		"    SCHEDULE = FULL;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  TASK TaskSlave2a {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    PRIORITY = 1;\n" +
+	    		"    AUTOSTART = FALSE;\n" +
+	    		"    STACK = SHARED;\n" +
+	    		"    ACTIVATION = 1;\n" +
+	    		"    SCHEDULE = FULL;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  TASK TaskSlave2b {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    PRIORITY = 1;\n" +
+	    		"    AUTOSTART = FALSE;\n" +
+	    		"    STACK = SHARED;\n" +
+	    		"    ACTIVATION = 1;\n" +
+	    		"    SCHEDULE = FULL;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  ISR STM0_isr2_core0 {\n" +
+	    		"    CPU_ID = \"master\";\n" +
+	    		"    CATEGORY = 2;\n" +
+	    		"    PRIORITY = 2;\n" +
+	    		"    HANDLER = \"STM0_isr2\"; // IRQ handler \n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  ISR STM0_isr2_core1 {\n" +
+	    		"    CPU_ID = \"slave1\";\n" +
+	    		"    CATEGORY = 2;\n" +
+	    		"    PRIORITY = 2;\n" +
+	    		"    HANDLER = \"STM0_isr2\"; // IRQ handler \n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  ISR STM0_isr2_core2 {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    CATEGORY = 2;\n" +
+	    		"    PRIORITY = 2;\n" +
+	    		"    HANDLER = \"STM0_isr2\"; // IRQ handler \n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		
+				"    EVENT TimerEvent  { MASK = AUTO; };\n" +
+				"    EVENT ButtonEvent { MASK = AUTO; };\n" +
+				"\n" +
+				"    COUNTER system_timer {\n" +
+	    		"        CPU_ID = \"master\";\n" +
+				"        MINCYCLE = 1;\n" +
+				"        MAXALLOWEDVALUE = 2147483647;\n" +
+				"        TICKSPERBASE = 1;\n" +
+				"        TYPE = HARDWARE {\n" +
+				"            DEVICE = \"STM_SR0\";\n" +
+				"            SYSTEM_TIMER = TRUE;\n" +
+				"            PRIORITY = 1;\n" +
+				"        };\n" +
+				"        SECONDSPERTICK = 0.001;\n" +
+				"    };\n" +
+				"\n" +
+				"    SCHEDULETABLE SchedTab1 {\n" +
+	    		"        CPU_ID = \"master\";\n" +
+				"        DURATION = 10;\n" +
+				"        REPEATING = TRUE;\n" +
+				"        COUNTER = system_timer;\n" +
+				"        EXPIRE_POINT = ACTION {\n" +
+				"        		EXPIRE_VALUE = 3;\n" +
+				"        		ACTION = SETEVENT     { TASK = TaskMaster; EVENT = TimerEvent; };\n" +
+				"        		ACTION = ACTIVATETASK { TASK = TaskMaster_b; };\n" +
+				"    	 };\n" +
+				"        EXPIRE_POINT = ACTION {\n" +
+				"        		EXPIRE_VALUE = 6;\n" +
+				"        		ACTION = SETEVENT     { TASK = TaskMaster_b; EVENT = TimerEvent; };\n" +
+				"        		ACTION = ACTIVATETASK { TASK = TaskSlave2a; };\n" +
+				"        		SYNC_ADJUSTMENT = TRUE { MAX_POSOSITIVE_ADJ = 1; MAX_NEGATIVE_ADJ = 2; };\n" +
+				"    	 };\n" +
+				"        AUTOSTART = TRUE { START_VALUE = 25; TYPE = ABSOLUTE; };\n" +
+				"    };\n" +
+				"\n" +
+				"    SCHEDULETABLE SchedTab2 {\n" +
+	    		"        CPU_ID = \"master\";\n" +
+				"        DURATION = 20;\n" +
+				"        REPEATING = TRUE;\n" +
+				"        COUNTER = system_timer;\n" +
+				"        EXPIRE_POINT = ACTION {\n" +
+				"        		EXPIRE_VALUE = 4;\n" +
+				"        		ACTION = SETEVENT     { TASK = TaskMaster; EVENT = TimerEvent; };\n" +
+				"    	 };\n" +
+				"        EXPIRE_POINT = ACTION {\n" +
+				"        		EXPIRE_VALUE = 7;\n" +
+				"        		ACTION = ACTIVATETASK { TASK = TaskMaster; };\n" +
+				"        		SYNC_ADJUSTMENT = TRUE { MAX_POSOSITIVE_ADJ = 1; MAX_NEGATIVE_ADJ = 2; };\n" +
+				"    	 };\n" +
+				"        EXPIRE_POINT = ACTION {\n" +
+				"        		EXPIRE_VALUE = 12;\n" +
+				"        		ACTION = SETEVENT     { TASK = TaskMaster; EVENT = TimerEvent; };\n" +
+				"        		ACTION = ACTIVATETASK { TASK = TaskMaster_b; };\n" +
+				"    	 };\n" +
+				"        EXPIRE_POINT = ACTION {\n" +
+				"        		EXPIRE_VALUE = 16;\n" +
+				"        		ACTION = ACTIVATETASK { TASK = TaskMaster; };\n" +
+				"        		SYNC_ADJUSTMENT = TRUE { MAX_POSOSITIVE_ADJ = 1; MAX_NEGATIVE_ADJ = 2; };\n" +
+				"    	 };\n" +
+				"        AUTOSTART = TRUE { START_VALUE = 125; TYPE = SYNCHRON; };\n" +
+				"        LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION = TRUE { EXPLICIT_PRECISION = 125; SYNC_STRATEGY = EXPLICIT; };\n" +
+				"    };\n" +
+				"\n" +
+				"    ALARM AlarmTask1 {\n" +
+				"        COUNTER = system_timer;\n" +
+				"        ACTION = SETEVENT { TASK = TaskSlave2a; EVENT = TimerEvent; };\n" +
+				"        AUTOSTART = TRUE { ALARMTIME = 250; CYCLETIME = 500; };\n" +
+				"    };\n" +
+				"\n" +
+				"    ALARM AlarmTask2 {\n" +
+				"        COUNTER = system_timer;\n" +
+				"        ACTION = ACTIVATETASK { TASK = TaskMaster_b; };\n" +
+				"        AUTOSTART = FALSE;\n" +
+				"    };\n" +
+	    		
+				
+	    		"  APPLICATION MasterApplication {\n" +
+	    		"    CPU_ID = \"master\";\n" +
+	    		"    TRUSTED = TRUE;\n" +
+	    		"    ISR = STM0_isr2_core0;\n" +
+	    		"    TASK = TaskMaster;\n" +
+	    		"    SCHEDULETABLE = SchedTab1;\n" +
+	    		"    ALARM = AlarmTask1;\n" +
+	    		"    ALARM = AlarmTask2;\n" +
+	    		"//  MEMORY_BASE = 0x70030000;\n" +
+	    		"//  MEMORY_SIZE = 0x00010000;\n" +
+	    		"    SHARED_STACK_SIZE = 512;\n" +
+	    		"    IRQ_STACK_SIZE = 512;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  APPLICATION MasterApplication_b {\n" +
+	    		"    CPU_ID = \"master\";\n" +
+	    		"    TRUSTED = TRUE;\n" +
+	    		"    TASK = TaskMaster_b;\n" +
+	    		"    SCHEDULETABLE = SchedTab2;\n" +
+	    		"//  MEMORY_BASE = 0x70030000;\n" +
+	    		"//  MEMORY_SIZE = 0x00010000;\n" +
+	    		"    SHARED_STACK_SIZE = 512;\n" +
+	    		"    IRQ_STACK_SIZE = 512;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  APPLICATION Slave1Application {\n" +
+	    		"    CPU_ID = \"slave1\";\n" +
+	    		"    TRUSTED = TRUE;\n" +
+	    		"    ISR = STM0_isr2_core1;\n" +
+	    		"    TASK = TaskSlave1;\n" +
+	    		"//  MEMORY_BASE = 0x60030000;\n" +
+	    		"//  MEMORY_SIZE = 0x00010000;\n" +
+	    		"    SHARED_STACK_SIZE = 512;\n" +
+	    		"    IRQ_STACK_SIZE = 512;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  APPLICATION Slave2aApplication {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    TRUSTED = TRUE;\n" +
+	    		"    ISR = STM0_isr2_core2;\n" +
+	    		"    TASK = TaskSlave2a;\n" +
+	    		"//  MEMORY_BASE = 0x50030000;\n" +
+	    		"//  MEMORY_SIZE = 0x00010000;\n" +
+	    		"    SHARED_STACK_SIZE = 512;\n" +
+	    		"    IRQ_STACK_SIZE = 512;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"  APPLICATION Slave2bApplication {\n" +
+	    		"    CPU_ID = \"slave2\";\n" +
+	    		"    TRUSTED = TRUE;\n" +
+	    		"    TASK = TaskSlave2b;\n" +
+	    		"//  MEMORY_BASE = 0x50030000;\n" +
+	    		"//  MEMORY_SIZE = 0x00010000;\n" +
+	    		"    SHARED_STACK_SIZE = 512;\n" +
+	    		"    IRQ_STACK_SIZE = 512;\n" +
+	    		"  };\n" +
+	    		"\n" +
+	    		"};\n";
+		commonWriterTest(text, 3);
+	}
 
 	
 	@Test public void testTc27xMulticoreRpc() {

@@ -293,6 +293,8 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 						}
 						
 						sysTimer.setProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL, Boolean.TRUE.toString());
+						sysTimer.setObject(ISimpleGenResKeywords.OS_APPL_NAME, ISimpleGenResKeywords.OS_APPL_KERNEL_NAME);
+						sysTimer.setObject(ISimpleGenResKeywords.OS_APPL_ID, new Integer(0));
 						
 					} else  { // handler
 						String handler = "EE_" + sgr.getName() + "_handler";

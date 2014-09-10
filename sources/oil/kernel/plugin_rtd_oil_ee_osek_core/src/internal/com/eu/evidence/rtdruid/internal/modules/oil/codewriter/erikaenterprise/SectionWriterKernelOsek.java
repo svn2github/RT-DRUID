@@ -1063,7 +1063,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						String ticks = curr.getString(ISimpleGenResKeywords.COUNTER_TICKS)+"U";
 						String minCycle = curr.getString(ISimpleGenResKeywords.COUNTER_MIN_CYCLE)+"U";
 						
-						int osAppId = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_ID) ? (curr.getInt(ISimpleGenResKeywords.OS_APPL_ID) +1) : 0; 
+						int osAppId = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_ID) ? curr.getInt(ISimpleGenResKeywords.OS_APPL_ID) : 0; 
 		
 						// ------ WRITE BUFFER -----
 		
@@ -1116,7 +1116,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				StringBuffer counterObjRomBuffer = new StringBuffer();
 				StringBuffer romActionBuffer = new StringBuffer();
 				StringBuffer schedTableBuffer = new StringBuffer();
-
+				String pre_shared = "\n";
+				
 				int counterObjRomRows = 0;
 				int counterActionRomRows = 0;
 				
@@ -1155,7 +1156,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						String counter_al_name = "(EE_TYPECOUNTER)-1"; // default value
 						String evento = "0U";
 						String notif_type = "";
-						int osAppId = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_ID) ? (curr.getInt(ISimpleGenResKeywords.OS_APPL_ID) +1) : 0; 
+						int osAppId = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_ID) ? curr.getInt(ISimpleGenResKeywords.OS_APPL_ID) : 0; 
 		
 						// prepare all data
 		
@@ -1173,6 +1174,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								if (counter_def.equals(counter.getName())) {
 									counter_sys_id = counter
 											.getInt(ISimpleGenResKeywords.COUNTER_SYS_ID);
+									
+									if (!CpuUtility.checkOsAccessRules(curr, counter)) {
+										throw new OilCodeWriterException("The alarm " + curr.getName() + " cannot access to the counter " + counter_def);
+									}
+									
 									break;
 								}
 							}
@@ -1211,7 +1217,13 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										ISimpleGenRes sgr = ii
 												.next();
 		
-										notFound = !task_al_name.equals(sgr.getName());
+										if (task_al_name.equals(sgr.getName())) {
+											notFound = false;
+											
+											if (cpuId == rtosId && !CpuUtility.checkOsAccessRules(curr, sgr)) {
+												throw new OilCodeWriterException("The alarm " + curr.getName() + " cannot access to the task " + task_al_name);
+											}
+										}
 									}
 								}
 								if (notFound) {
@@ -1235,6 +1247,37 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								task_al_name = tmp[0];
 								evento = tmp[1];
 		
+								{
+									/* Check the task name */
+									boolean notFound = true; 
+									//search task id
+									for (int cpuId = 0; cpuId < oilObjects.length
+											&& notFound; cpuId++) {
+			
+										List<ISimpleGenRes> list = oilObjects[cpuId].getList(IOilObjectList.TASK);
+										for (Iterator<ISimpleGenRes> ii = list.iterator(); ii
+												.hasNext()
+												&& notFound;) {
+											ISimpleGenRes sgr = ii
+													.next();
+			
+											if (task_al_name.equals(sgr.getName())) {
+												notFound = false;
+												
+												if (cpuId == rtosId && !CpuUtility.checkOsAccessRules(curr, sgr)) {
+													throw new OilCodeWriterException("The alarm " + curr.getName() + " cannot access to the task " + task_al_name);
+												}
+											}
+										}
+									}
+									if (notFound) {
+										throw new RuntimeException(
+												"Alarm : Wrong task name for Alarm "
+														+ curr.getName()
+														+ " ( task name = "
+														+ task_al_name + ")");
+									}
+								}
 								// check for event name
 								boolean found = false;
 								List<ISimpleGenRes> list = ool.getList(IOilObjectList.EVENT);
@@ -1281,7 +1324,16 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										ISimpleGenRes sgr = ii
 												.next();
 		
-										notFound = !counter_al_name.equals(sgr.getName());
+										if (counter_al_name.equals(sgr.getName())) {
+											notFound = false;
+											
+											if (!CpuUtility.checkOsAccessRules(curr, sgr)) {
+												throw new OilCodeWriterException("The alarm " + curr.getName() + " cannot access to the counter " + counter_al_name);
+											}
+											
+											break;
+										}
+										
 									}
 								}
 								if (notFound) {
@@ -1306,19 +1358,20 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						}
 		
 						// write
-						romActionBuffer.append(pre2 + indent2 + "{"
+						romActionBuffer.append(pre_shared + indent2 + "{"
 								+ notif_type + ", " + task_al_name
 								+ (withEvents ? ", " + evento : "") + ", "
 								//+ (NULL_NAME.equals(callBackName) ? "(EE_VOID_CALLBACK)" : "")
 								+ callBackName
 								+ ", " + counter_al_name + " }");
 						
-						counterObjRomBuffer.append(pre2 + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_ALARM }");
+						counterObjRomBuffer.append(pre_shared + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_ALARM }");
 						romAlarmBuffer.append(pre2 + indent2 + "{" + counterActionRomRows + "U" +(hasOsAppl ? ", " + osAppId+"U" : "" ) + "}");
 						
 						counterObjRomRows++;
 						counterActionRomRows++;
 						pre2 = ",\n";
+						pre_shared = ",\n";
 					}
 					
 					romAlarmBuffer.append("\n"+indent1 + "};\n");
@@ -1377,6 +1430,11 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								if (counter_def.equals(counter.getName())) {
 									counter_sys_id = counter
 											.getInt(ISimpleGenResKeywords.COUNTER_SYS_ID);
+									
+									if (!CpuUtility.checkOsAccessRules(curr, counter)) {
+										throw new OilCodeWriterException("The schedule table " + curr.getName() + " cannot access to the counter " + counter_def);
+									}
+
 									break;
 								}
 							}
@@ -1406,7 +1464,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							
 							{
 								String[] syncName = new String[1];
-								String adjType = CommonUtils.getFirstChildEnumType(vt, currPath+S+"LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION", syncName);
+								String adjType = CommonUtils.getFirstChildEnumType(vt, currPath+S+"REPEATING", syncName);
 								if ("TRUE".equalsIgnoreCase(adjType)) {
 									repeated = "1U";
 								}
@@ -1490,7 +1548,15 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 												ISimpleGenRes sgr = ii
 														.next();
 				
-												notFound = !task_al_name.equals(sgr.getName());
+												if (task_al_name.equals(sgr.getName())) {
+													notFound = false;
+													
+													// check access rules
+													if (cpuId==rtosId && !CpuUtility.checkOsAccessRules(curr, sgr)) {
+														throw new OilCodeWriterException("The schedule table " + curr.getName() + " cannot access to the task " + task_al_name);
+													}
+
+												}
 											}
 										}
 										if (notFound) {
@@ -1558,7 +1624,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									}
 									
 									// write
-									romActionBuffer.append(pre2 + indent2 + "{"
+									romActionBuffer.append(pre_shared + indent2 + "{"
 											+ notif_type + ", " + task_al_name
 											+ (withEvents ? ", " + evento : "") + ", "
 											//+ (NULL_NAME.equals(callBackName) ? "(EE_VOID_CALLBACK)" : "") 
@@ -1573,7 +1639,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 							}
 						}
 						
-						counterObjRomBuffer.append(pre2 + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_SCHEDULETABLE }");
+						counterObjRomBuffer.append(pre_shared + indent2 + "{" + counter_def + ", " + curr.getName() + ", EE_SCHEDULETABLE }");
 						romScTableBuffer.append(pre2 + indent2 + "{" 
 									+ startingExpIndex + "U, "
 									+ (expPointSize-1) + "U, "
@@ -1586,6 +1652,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						
 						counterObjRomRows++;
 						pre2 = ",\n";
+						pre_shared = ",\n";
 					}
 
 //					// add ROM
@@ -2126,6 +2193,20 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 				    answer.add("__OO_HAS_USERESSCHEDULER__");
 			    }
 
+			}
+			
+			// schedule table
+			{
+				boolean hasSchedTables = false;
+				for (IOilObjectList tmp : parent.getOilObjects()) {
+					if (tmp.getList(IOilObjectList.SCHEDULE_TABLE).size()>0) {
+						hasSchedTables = true;
+						break;
+					}
+				}
+				if (hasSchedTables) {
+				    answer.add("EE_AS_SCHEDULETABLES__");
+			    }
 			}
 			
 		}

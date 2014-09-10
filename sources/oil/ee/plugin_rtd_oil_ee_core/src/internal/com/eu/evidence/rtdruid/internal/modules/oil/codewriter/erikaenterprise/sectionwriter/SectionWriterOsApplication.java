@@ -164,72 +164,6 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		
 		List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
 		
-		
-
-		
-		{
-			// checks:
-			// for each alarm, check if the counter allow the acces from the alarm's osApplication
-			// for each schedule table, check if the counter allow the acces from the schedule table's osApplication
-			
-			for (ISimpleGenRes curr: ool.getList(IOilObjectList.ALARM) ) {
-				String counter_def = curr.getString(ISimpleGenResKeywords.ALARM_COUNTER); 
-				
-				//search counter
-				ISimpleGenRes counter = null;
-				for (ISimpleGenRes countIter : ool.getList(IOilObjectList.COUNTER)) {
-					if (counter_def.equals(countIter.getName())) {
-						counter = countIter;
-						break;
-					}
-				}
-				if (counter == null) {
-					throw new OilCodeWriterException("Missing the counter " + counter_def + " required by alarm " + curr.getName());
-				}
-				
-				// check osApplication access
-				String osAppName = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) ? curr.getString(ISimpleGenResKeywords.OS_APPL_NAME) : "";
-				
-				boolean access = counter.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL) && "true".equalsIgnoreCase(counter.getString(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL));
-				access |= (counter.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) && osAppName.equalsIgnoreCase(counter.getString(ISimpleGenResKeywords.OS_APPL_NAME))); 
-				access |= (counter.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST) && ((List<String>)counter.getObject(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST)).contains(access));
-				
-				if (!access) {
-					throw new OilCodeWriterException("The alarm " + curr.getName() + " cannot access to the counter " + counter_def);
-				}
-			}
-			
-			for (ISimpleGenRes curr: ool.getList(IOilObjectList.SCHEDULE_TABLE) ) {
-				String counter_def = curr.getString(ISimpleGenResKeywords.SCHEDULING_COUNTER); 
-				
-				//search counter
-				ISimpleGenRes counter = null;
-				for (ISimpleGenRes countIter : ool.getList(IOilObjectList.COUNTER)) {
-					if (counter_def.equals(countIter.getName())) {
-						counter = countIter;
-						break;
-					}
-				}
-				if (counter == null) {
-					throw new OilCodeWriterException("Missing the counter " + counter_def + " required by schedule table " + curr.getName());
-				}
-				
-				// check osApplication access
-				String osAppName = curr.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) ? curr.getString(ISimpleGenResKeywords.OS_APPL_NAME) : "";
-				
-				boolean access = counter.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL) && "true".equalsIgnoreCase(counter.getString(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL));
-				access |= (counter.containsProperty(ISimpleGenResKeywords.OS_APPL_NAME) && osAppName.equalsIgnoreCase(counter.getString(ISimpleGenResKeywords.OS_APPL_NAME))); 
-				access |= (counter.containsProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST) && ((List<String>)counter.getObject(ISimpleGenResKeywords.GENERIC_ACCESSING_OS_APPL_LIST)).contains(access));
-				
-				if (!access) {
-					throw new OilCodeWriterException("The schedule table " + curr.getName() + " cannot access to the counter " + counter_def);
-				}
-			}
-			
-		}
-		
-		
-
 		StringBuffer ee_h_buffer = answer.get(FILE_EE_CFG_H);
 		final ICommentWriter commentWriterH = getCommentWriter(ool, FileTypes.H);
 
@@ -242,7 +176,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				indent1 + "#define EE_MAX_APP " + (applications.size() +1)+"U\n"); 	
 		for (ISimpleGenRes application : applications) {
 			ee_h_buffer.append(indent1+ "#define " + application.getName() 
-					+ "ID "+ (application.getInt(ISimpleGenResKeywords.OS_APPL_ID)+1)+"U\n" );
+					+ "ID "+ application.getInt(ISimpleGenResKeywords.OS_APPL_ID)+"U\n" );
 		
 		}
 		ee_h_buffer.append("\n");
@@ -437,7 +371,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				throw new OilCodeWriterException("The task " + task.getName() + " is not related to any OsApplication.");
 			}
 			ee_c_buffer.append("," + end +
-					indent2 + (task.getInt(ISimpleGenResKeywords.OS_APPL_ID) +1) );
+					indent2 + task.getInt(ISimpleGenResKeywords.OS_APPL_ID) );
 			end = "\t"+commentWriterC.writerSingleLineComment(task.getName());
 		}
 		
@@ -469,13 +403,15 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			}
 			ee_c_buffer.append(pre + indent1 + "};\n\n");
 			
-			pre = "";
-			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_isr_access_rules[EE_MAX_ISR_ID] =\n"+indent1+"{\n");
-			for (ISimpleGenRes isr : SectionWriterIsr.getIsrByID(ool)) {
-				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(isr, ool, null));
-				pre = ",\n";
+			if (ErikaEnterpriseWriter.getIsr2Number(ool) >0) {
+				pre = "";
+				ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_isr_access_rules[EE_MAX_ISR_ID] =\n"+indent1+"{\n");
+				for (ISimpleGenRes isr : SectionWriterIsr.getIsrByID(ool)) {
+					ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(isr, ool, null));
+					pre = ",\n";
+				}
+				ee_c_buffer.append(pre + indent1 + "};\n\n");
 			}
-			ee_c_buffer.append(pre + indent1 + "};\n\n");
 
 			pre = "";
 			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_resource_access_rules["+MAX_RESOURCE+"] =\n"+indent1+"{\n");
@@ -704,7 +640,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			}
 			
 			// OS applications
-			int id = 0;
+			int id = 1;
 			List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
 			for (ISimpleGenRes appl : applications) {
 				
@@ -1017,12 +953,18 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			return false;
 		}
 		if (sgr.containsProperty(pName)) {
+			// ignore if an object is already set as kernel object (like system timer)
+			if (ISimpleGenResKeywords.OS_APPL_KERNEL_NAME.equalsIgnoreCase(sgr.getString(pName))) {
+				return true;
+			}
+			
 			if (!os_appl_name.equals(sgr.getObject(pName))) {
 				throw new OilCodeWriterException(sgr.getName() + " is assigned to two distinct os applications ("
 							+ os_appl_name + " and " + sgr.getObject(pName) +")");
 			}
 			return false;
 		}
+		
 		sgr.setProperty(pName, os_appl_name);
 		sgr.setProperty(ISimpleGenResKeywords.OS_APPL_ID, "" +id);
 
