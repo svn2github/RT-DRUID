@@ -557,6 +557,12 @@ public class ResourceList {
 					}
 				}
 				
+				if (IWritersKeywords.RES_SCHEDULER.equals(sgr.getName())) {
+					sgr.setProperty(ISimpleGenResKeywords.GENERIC_ACCESSING_ALLOW_ALL, Boolean.TRUE.toString());
+					sgr.setObject(ISimpleGenResKeywords.OS_APPL_NAME, ISimpleGenResKeywords.OS_APPL_KERNEL_NAME);
+					sgr.setObject(ISimpleGenResKeywords.OS_APPL_ID, new Integer(0));
+				}
+				
 //System.err.println(">>" + sgr + "<<\n\n");
 				// clone a copy inside all list of resources (they can have differt ceiling and position/id)
 				for (int i=0; i<info.cpu.length() && i<tmpList.length; i++) {

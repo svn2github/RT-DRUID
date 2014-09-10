@@ -126,6 +126,15 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 		"TryToGetSpinlock"
 	};
 	
+
+	protected final static String[] EE_RPC_IDs = {
+		"rpc"
+	};
+	
+	protected final static String[] EE_MULTICORE_IDs = {
+		"ShutdownAllCores"
+	};
+	
 	/** The Erika Enterprise Writer that call this section writer */
 	protected final ErikaEnterpriseWriter parent;
 	
@@ -374,19 +383,37 @@ public class SectionWriterKernelSystemCalls extends SectionWriter
 			}
 		}
 				
-		// Spinlock
-		if (ool.getList(IOilObjectList.SPINLOCK).size() > 0
-				&& parent.getOilObjects().length >1)  {
+		{ // Spinlock
+			boolean hasSpinlock = false;
+			for (int i=0; i<ools.length && ! hasSpinlock; i++) {
+				hasSpinlock = ools[i].getList(IOilObjectList.SPINLOCK).size() > 0; 
+			}
+			if (hasSpinlock && parent.getOilObjects().length >1)  {
+	
+				for (String s: EE_SPINLOCK_IDs) {
+					ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+					ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+					counter ++;
+				}
+			}
+		}
+		
+		if (parent.checkKeyword(SectionWriterRemoteProcedureCall.DEF__USE_RPC__))  {
 
-			for (String s: EE_SPINLOCK_IDs) {
+			for (String s: EE_RPC_IDs) {
+				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
+				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
+				counter ++;
+			}
+			
+			for (String s: EE_MULTICORE_IDs) {
 				ids.append("#define EE_ID_"+s+ (s.length()<40 ? white_spaces.substring(0,40-s.length()) :"") + (counter <10 ? " " : "") + counter +"\n");
 				ee_c_buffer.append(indent1+"(EE_FADDR)&EE_as_"+s+",\n");
 				counter ++;
 			}
 		}
-		
+				
 		{
-			
 			boolean hasTrustedFunctions = false;
 			for (ISimpleGenRes appl: os_appls) {
 				if (appl.containsProperty(IEEWriterKeywords.OS_APPLICATION_TRUSTED) 

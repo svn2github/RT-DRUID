@@ -161,6 +161,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 
 		final StringBuilder sbCommonRpc_access_mask = new StringBuilder();
 		int access_index[] = {0};
+		String access_descr = "";
 
 		final StringBuilder sbCommonRpc_spins = new StringBuilder();
 		final StringBuilder sbCommonRpc_ram = new StringBuilder();
@@ -193,6 +194,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 
 			// all objects for current os
 			IOilObjectList ool = oilObjects[rtosId];
+			final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
 
 			String cpuId = "OS_CORE_ID_" + rtosId;
 
@@ -214,8 +216,9 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				sbCommonRpc_tasks.append(
 						( sbCommonRpc_tasks.length() == 0 ? "" : ",\n") 
 						+ indent2 + "{ "+cpuId+", " + taskId + "U"
-						+ (hasAccessProtection ? addAccessMask(task, oilObjects, sbCommonRpc_access_mask, access_index) : "")
+						+ (hasAccessProtection ? addAccessMask(task, oilObjects, sbCommonRpc_access_mask, access_index, access_descr) : "")
 						+ "}");
+				access_descr = commentWriterC.writerSingleLineComment(cpuId + " - " + name);
 
 				// increase the task index number
 				globalTaskIndex++;
@@ -233,8 +236,9 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				sbCommonRpc_alarms.append(
 						( sbCommonRpc_alarms.length() == 0 ? "" : ",\n") 
 						+ indent2 + "{ "+cpuId+", " + alarmId + "U"
-						+ (hasAccessProtection ? addAccessMask(alarm, oilObjects, sbCommonRpc_access_mask, access_index) : "")
+						+ (hasAccessProtection ? addAccessMask(alarm, oilObjects, sbCommonRpc_access_mask, access_index, access_descr) : "")
 						+ "}");
+				access_descr = commentWriterC.writerSingleLineComment(cpuId + " - " + name);
 				
 				// increase the task index number
 				globalAlarmIndex++;
@@ -252,8 +256,9 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				sbCommonRpc_counters.append(
 						( sbCommonRpc_counters.length() == 0 ? "" : ",\n") 
 						+ indent2 + "{ "+cpuId+", " + counterId + "U"
-						+ (hasAccessProtection ? addAccessMask(counter, oilObjects, sbCommonRpc_access_mask, access_index) : "")
+						+ (hasAccessProtection ? addAccessMask(counter, oilObjects, sbCommonRpc_access_mask, access_index, access_descr) : "")
 						+ "}");
+				access_descr = commentWriterC.writerSingleLineComment(cpuId + " - " + name);
 				
 				// increase the task index number
 				globalCounterIndex++;
@@ -271,9 +276,10 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				sbCommonRpc_OsAppls.append(
 						( sbCommonRpc_OsAppls.length() == 0 ? "" : ",\n") 
 						+ indent2 + "{ "+cpuId+", " + osApplId + "U"
-						+ (hasAccessProtection ? addAccessMask(osAppl, oilObjects, sbCommonRpc_access_mask, access_index) : "")
+						+ (hasAccessProtection ? addAccessMask(osAppl, oilObjects, sbCommonRpc_access_mask, access_index, access_descr) : "")
 						+ "}");
-				
+				access_descr = commentWriterC.writerSingleLineComment(cpuId + " - " + name);
+
 				// increase the task index number
 				globalOsApplIndex++;
 			}
@@ -290,13 +296,18 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 				sbCommonRpc_SchedTabs.append(
 						( sbCommonRpc_SchedTabs.length() == 0 ? "" : ",\n") 
 						+ indent2 + "{ "+cpuId+", " + schedTabId + "U"
-						+ (hasAccessProtection ? addAccessMask(schedTab, oilObjects, sbCommonRpc_access_mask, access_index) : "")
+						+ (hasAccessProtection ? addAccessMask(schedTab, oilObjects, sbCommonRpc_access_mask, access_index, access_descr) : "")
 						+ "}");
-				
+				access_descr = commentWriterC.writerSingleLineComment(cpuId + " - " + name);
+
 				// increase the task index number
 				globalSchedTablIndex++;
 			}
 		}
+		if (access_index[0]>0) {
+			sbCommonRpc_access_mask.append("  " + access_descr);
+		}
+		
 	
 	
 		// ee_cfg.h
@@ -344,7 +355,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 							indent1 + "EE_TYPESPIN const ", "EE_as_core_spinlocks","["+MAX_CPU+"]", " = {\n" + indent2 +
 							sbCommonRpc_spins.toString() + "\n"+indent1+ "};\n") + "\n");
 			
-			if (hasAccessProtection) {
+			if (hasAccessProtection && access_index[0]>0) {
 				sbCommon_c.append(
 						macros.constVectorRom(
 								indent1 + "EE_TYPEACCESSMASK const ", "EE_as_rpc_remote_access_rules","["+ErikaEnterpriseWriter.addVectorSizeDefine(oilObjects, "EE_as_rpc_remote_access_rules", access_index[0])+"]", " = {\n" +
@@ -419,14 +430,16 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		return answer;
 	}
 	
-	protected String addAccessMask(ISimpleGenRes sgr, IOilObjectList[] oilObjects, StringBuilder accessBuffer, int[] index) {
+	protected String addAccessMask(ISimpleGenRes sgr, IOilObjectList[] oilObjects, StringBuilder accessBuffer, int[] index, String access_descr) {
 		if (sgr == null) sgr = new SimpleGenRes("", "");
+		
+		if (accessBuffer.length()>0) accessBuffer.append(", " + access_descr);
+		accessBuffer.append(indent2);
 		for (int i=0; i<oilObjects.length; i++) {
-			if (accessBuffer.length()>0) accessBuffer.append(",");
-			
-			accessBuffer.append("\n" + indent2 + CpuUtility.getOsAccessBitMask(sgr, oilObjects[i], null));
+			if (i>0) accessBuffer.append(", ");
+			accessBuffer.append(CpuUtility.getOsAccessBitMask(sgr, oilObjects[i], null));
 		}
-		String answer = ", " + index[0]+", " + (index[0]+oilObjects.length);
+		String answer = ", " + index[0]+", " + (index[0]+oilObjects.length-1);
 		index[0]+=oilObjects.length;
 		return answer;
 	}

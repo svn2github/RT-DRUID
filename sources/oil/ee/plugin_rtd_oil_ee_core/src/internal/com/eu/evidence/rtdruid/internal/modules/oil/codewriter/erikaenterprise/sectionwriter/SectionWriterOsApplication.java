@@ -390,18 +390,21 @@ public class SectionWriterOsApplication extends SectionWriter implements
 			final String MAX_COUNTER = (binaryDistr ? "RTD_" : "EE_") + "MAX_COUNTER";
 			final String MAX_TASK = (binaryDistr ? "RTD_" : "EE_") + "MAX_TASK";
 			final String MAX_RESOURCE = (binaryDistr ? "RTD_" : "EE_") + "MAX_RESOURCE";
-			final String MAX_SCHED_TAB = (binaryDistr ? "RTD_" : "EE_") + "MAX_SCHEDULETABLES";
+			final String MAX_SCHED_TAB = (binaryDistr ? "RTD_" : "EE_") + "MAX_SCHEDULETABLE";
+			final String MAX_SPINLOCK = (binaryDistr ? "RTD_" : "EE_") + "MAX_SPINLOCK";
 			String pre = "";
 			
 			ee_c_buffer.append(
 					commentWriterC.writerBanner("OS APPLICATIONS ACCESS"));
 			
-			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_task_access_rules["+MAX_TASK+"] =\n"+indent1+"{\n");
-			for (ISimpleGenRes task : ool.getList(IOilObjectList.TASK)) {
-				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(task, ool, null));
-				pre = ",\n";
+			if (!ool.getList(IOilObjectList.TASK).isEmpty()) {
+				ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_task_access_rules["+MAX_TASK+"] =\n"+indent1+"{\n");
+				for (ISimpleGenRes task : ool.getList(IOilObjectList.TASK)) {
+					ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(task, ool, null));
+					pre = ",\n";
+				}
+				ee_c_buffer.append(pre + indent1 + "};\n\n");
 			}
-			ee_c_buffer.append(pre + indent1 + "};\n\n");
 			
 			if (ErikaEnterpriseWriter.getIsr2Number(ool) >0) {
 				pre = "";
@@ -413,45 +416,55 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				ee_c_buffer.append(pre + indent1 + "};\n\n");
 			}
 
-			pre = "";
-			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_resource_access_rules["+MAX_RESOURCE+"] =\n"+indent1+"{\n");
-			for (ISimpleGenRes resource : ool.getList(IOilObjectList.RESOURCE)) {
-				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(resource, ool, null));
-				pre = ",\n";
+			if (!ool.getList(IOilObjectList.RESOURCE).isEmpty()) {
+				pre = "";
+				ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_resource_access_rules["+MAX_RESOURCE+"] =\n"+indent1+"{\n");
+				for (ISimpleGenRes resource : ool.getList(IOilObjectList.RESOURCE)) {
+					ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(resource, ool, null));
+					pre = ",\n";
+				}
+				ee_c_buffer.append(pre + indent1 + "};\n\n");
 			}
-			ee_c_buffer.append(pre + indent1 + "};\n\n");
 
-			pre = "";
-			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_alarm_access_rules["+MAX_ALARM+"] =\n"+indent1+"{\n");
-			for (ISimpleGenRes alarm : ool.getList(IOilObjectList.ALARM)) {
-				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(alarm, ool, null));
-				pre = ",\n";
+			if (!ool.getList(IOilObjectList.ALARM).isEmpty()) {
+				pre = "";
+				ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_alarm_access_rules["+MAX_ALARM+"] =\n"+indent1+"{\n");
+				for (ISimpleGenRes alarm : ool.getList(IOilObjectList.ALARM)) {
+					ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(alarm, ool, null));
+					pre = ",\n";
+				}
+				ee_c_buffer.append(pre + indent1 + "};\n\n");
 			}
-			ee_c_buffer.append(pre + indent1 + "};\n\n");
 
-			pre = "";
-			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_counter_access_rules["+MAX_COUNTER+"] =\n"+indent1+"{\n");
-			for (ISimpleGenRes counter : ool.getList(IOilObjectList.COUNTER)) {
-				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(counter, ool, null));
-				pre = ",\n";
+			if (!ool.getList(IOilObjectList.COUNTER).isEmpty()) {
+				pre = "";
+				ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_counter_access_rules["+MAX_COUNTER+"] =\n"+indent1+"{\n");
+				for (ISimpleGenRes counter : ool.getList(IOilObjectList.COUNTER)) {
+					ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(counter, ool, null));
+					pre = ",\n";
+				}
+				ee_c_buffer.append(pre + indent1 + "};\n\n");
 			}
-			ee_c_buffer.append(pre + indent1 + "};\n\n");
 
-			pre = "";
-			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_scheduletable_access_rules["+MAX_SCHED_TAB+"] =\n"+indent1+"{\n");
-			for (ISimpleGenRes schedTab : ool.getList(IOilObjectList.SCHEDULE_TABLE)) {
-				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(schedTab, ool, null));
-				pre = ",\n";
+			if (!ool.getList(IOilObjectList.SCHEDULE_TABLE).isEmpty()) {
+				pre = "";
+				ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_scheduletable_access_rules["+MAX_SCHED_TAB+"] =\n"+indent1+"{\n");
+				for (ISimpleGenRes schedTab : ool.getList(IOilObjectList.SCHEDULE_TABLE)) {
+					ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(schedTab, ool, null));
+					pre = ",\n";
+				}
+				ee_c_buffer.append(pre + indent1 + "};\n\n");
 			}
-			ee_c_buffer.append(pre + indent1 + "};\n\n");
 
-//			pre = "";
-//			ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_spinlock_access_rules["+MAX_SPINLOCK+"] =\n"+indent1+"{\n");
-//			for (ISimpleGenRes spinlock : ool.getList(IOilObjectList.SPINLOCK)) {
-//				ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(spinlock, ool, null));
-//				pre = ",\n";
-//			}
-//			ee_c_buffer.append(pre + indent1 + "};\n\n");
+			if (!ool.getList(IOilObjectList.SPINLOCK).isEmpty()) {
+				pre = "";
+				ee_c_buffer.append(indent1 + "EE_TYPEACCESSMASK const EE_as_spinlock_access_rules["+MAX_SPINLOCK+"] =\n"+indent1+"{\n");
+				for (ISimpleGenRes spinlock : ool.getList(IOilObjectList.SPINLOCK)) {
+					ee_c_buffer.append(pre + indent2 + CpuUtility.getOsAccessBitMask(spinlock, ool, null));
+					pre = ",\n";
+				}
+				ee_c_buffer.append(pre + indent1 + "};\n\n");
+			}
 		}
 		
 	}
@@ -639,6 +652,12 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				}
 			}
 			
+
+			for (ISimpleGenRes sgr: ool.getList(IOilObjectList.SPINLOCK)){
+				sgr.setObject(ISimpleGenResKeywords.OS_APPL_NAME, ISimpleGenResKeywords.OS_APPL_KERNEL_NAME);
+				sgr.setObject(ISimpleGenResKeywords.OS_APPL_ID, new Integer(0));
+			}
+			
 			// OS applications
 			int id = 1;
 			List<ISimpleGenRes> applications = ool.getList(IOilObjectList.OSAPPLICATION);
@@ -650,6 +669,7 @@ public class SectionWriterOsApplication extends SectionWriter implements
 				
 				
 				appl.setProperty(ISimpleGenResKeywords.OS_APPL_ID, "" +id);
+				appl.setObject(ISimpleGenResKeywords.OS_APPL_NAME, appl_name);
 				
 				String[] trusted_child = new String[1];
 				String type = CommonUtils.getFirstChildEnumType(vt, addToAllStrings(appl_paths, path_trusted), trusted_child);

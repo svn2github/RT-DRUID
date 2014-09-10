@@ -7411,6 +7411,150 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 	    		"    IRQ_STACK_SIZE = 256;\n" +
 	    		"  };\n" +
 	    		"};\n";
+	    commonWriterTest(text, 3);
+	}
+	
+	@Test public void testTc27xOsApplMultiCore_accessMask3() {
+		final String text = "CPU test_application {\n" +
+			"  OS EE {\n" +
+			"    EE_OPT = \"EE_DEBUG\";\n" +
+			"    EE_OPT = \"__ASSERT__\";\n" +
+			"    EE_OPT = \"EE_ICACHE_ENABLED\";\n" +
+			"    EE_OPT = \"EE_DCACHE_ENABLED\";\n" +
+			"\n" +
+			"    //SPINLOCKS = QUEUED;\n" +
+			"    MEMORY_PROTECTION   = TRUE;\n" +
+			"    STACKMONITORING     = TRUE;\n" +
+			"    REMOTENOTIFICATION  = USE_RPC;\n" +
+			"\n" +
+			"    MASTER_CPU = \"master\";\n" +
+			"\n" +
+			"    CPU_DATA = TRICORE {\n" +
+			"      ID = \"master\";\n" +
+			"      CPU_CLOCK = 200.0;\n" +
+			"      APP_SRC = \"master.c\";\n" +
+			"      MULTI_STACK = TRUE;\n" +
+			"      SYS_STACK_SIZE = 4096;\n" +
+			"      COMPILER_TYPE = GNU;\n" +
+			"    };\n" +
+			"\n" +
+			"    CPU_DATA = TRICORE {\n" +
+			"      ID = \"slave1\";\n" +
+			"      APP_SRC = \"slave1.c\";\n" +
+			"      MULTI_STACK = TRUE;\n" +
+			"      SYS_STACK_SIZE = 4096;\n" +
+			"      COMPILER_TYPE = GNU;\n" +
+			"    };\n" +
+			"\n" +
+			"    CPU_DATA = TRICORE {\n" +
+			"      ID = \"slave2\";\n" +
+			"      APP_SRC = \"slave2.c\";\n" +
+			"      MULTI_STACK = TRUE;\n" +
+			"      SYS_STACK_SIZE = 4096;\n" +
+			"      COMPILER_TYPE = GNU;\n" +
+			"    };\n" +
+			"\n" +
+			"    MCU_DATA = TRICORE {\n" +
+			"      MODEL = TC27x;\n" +
+			"    };\n" +
+			"\n" +
+			"    STATUS = EXTENDED;\n" +
+			"    STARTUPHOOK   = TRUE;\n" +
+			"    ERRORHOOK     = TRUE;\n" +
+			"    SHUTDOWNHOOK     = TRUE;\n" +
+			"\n" +
+			"    USEREMOTETASK = ALWAYS;\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"\n" +
+			"    KERNEL_TYPE = ECC1;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskMaster {\n" +
+			"    CPU_ID = \"master\";\n" +
+			"    PRIORITY = 1;\n" +
+			"    AUTOSTART = TRUE;\n" +
+			"    STACK = PRIVATE {\n" +
+			"      SYS_SIZE = 512;\n" +
+			"    };\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    EVENT = Event1;\n" +
+			"    EVENT = Event2;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskMaster2 {\n" +
+			"    CPU_ID = \"master\";\n" +
+			"    PRIORITY = 2;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = PRIVATE {\n" +
+			"      SYS_SIZE = 512;\n" +
+			"    };\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    EVENT = Event1;\n" +
+			"    EVENT = Event2;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskSlave1 {\n" +
+			"    CPU_ID = \"slave1\";\n" +
+			"    PRIORITY = 1;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = SHARED;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    ACCESSING_APPLICATION = MasterApp;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK TaskSlave2 {\n" +
+			"    CPU_ID = \"slave2\";\n" +
+			"    PRIORITY = 1;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = SHARED;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    ACCESSING_APPLICATION = MasterApp;\n" +
+			"  };\n" +
+			"\n" +
+			"  ISR isr_spin {\n" +
+			"    CPU_ID = \"master\";\n" +
+			"    CATEGORY = 2;\n" +
+			"    PRIORITY = 2;\n" +
+			"  };\n" +
+			"\n" +
+			"  SPINLOCK spinlock_1 { NEXT_SPINLOCK=spinlock_2; };\n" +
+			"  SPINLOCK spinlock_2 { NEXT_SPINLOCK=spinlock_3; };\n" +
+			"  SPINLOCK spinlock_3 {  };\n" +
+			"\n" +
+			"  EVENT Event1 { MASK = AUTO; };\n" +
+			"  EVENT Event2 { MASK = AUTO; };\n" +
+			"\n" +
+			"  APPLICATION MasterApp {\n" +
+			"    CPU_ID  = \"master\";\n" +
+			"    TRUSTED = TRUE;\n" +
+			"    TASK    = TaskMaster;\n" +
+			"    TASK    = TaskMaster2;\n" +
+			"    ISR     = isr_spin;\n" +
+			"    //MEMORY_SIZE = 0x1000;\n" +
+			"    SHARED_STACK_SIZE = 256;\n" +
+			"    IRQ_STACK_SIZE = 256;\n" +
+			"  };\n" +
+			"\n" +
+			"  APPLICATION Slave1App {\n" +
+			"    CPU_ID  = \"slave1\";\n" +
+			"    TRUSTED = FALSE;\n" +
+			"    TASK    = TaskSlave1;\n" +
+			"    SHARED_STACK_SIZE = 256;\n" +
+			"    IRQ_STACK_SIZE = 256;\n" +
+			"  };\n" +
+			"\n" +
+			"  APPLICATION Slave2App {\n" +
+			"    CPU_ID  = \"slave2\";\n" +
+			"    TRUSTED = FALSE;\n" +
+			"    TASK    = TaskSlave2;\n" +
+			"    SHARED_STACK_SIZE = 256;\n" +
+			"    IRQ_STACK_SIZE = 256;\n" +
+			"  };\n" +
+			"};";
 		commonWriterTest(text, 3);
 	}
 

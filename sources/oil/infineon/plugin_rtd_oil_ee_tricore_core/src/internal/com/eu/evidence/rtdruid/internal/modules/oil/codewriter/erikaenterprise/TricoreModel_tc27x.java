@@ -18,6 +18,7 @@ import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes;
+import com.eu.evidence.rtdruid.modules.oil.abstractions.SimpleGenRes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.AbstractRtosWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.CommonUtils;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
@@ -191,6 +192,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 	@Override
 	public void updateObjects(ErikaEnterpriseWriter parent, int currentRtosId) throws OilCodeWriterException {
 		super.updateObjects(parent, currentRtosId);
+		final IOilObjectList[] oilObjects = parent.getOilObjects();
 
 		if (isrWriter == null) {
 			isrWriter = new SectionWriterIsr(parent, EE_TRICORE_HANDLER_BASEID);
@@ -212,7 +214,6 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			counterHwWriter.updateObjects();
 		}
 		
-		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		
 		/***********************************************************************
 		 * 
