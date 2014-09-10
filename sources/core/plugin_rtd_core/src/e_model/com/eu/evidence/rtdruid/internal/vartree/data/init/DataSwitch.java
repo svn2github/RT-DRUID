@@ -46,6 +46,7 @@ import com.eu.evidence.rtdruid.vartree.data.Sample;
 import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
+import com.eu.evidence.rtdruid.vartree.data.SchedulingTable;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
 import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.SubSystem;
@@ -497,6 +498,13 @@ public class DataSwitch<T> extends Switch<T> {
 				SpinLock spinLock = (SpinLock)theEObject;
 				T result = caseSpinLock(spinLock);
 				if (result == null) result = caseObjectWithID(spinLock);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DataPackage.SCHEDULING_TABLE: {
+				SchedulingTable schedulingTable = (SchedulingTable)theEObject;
+				T result = caseSchedulingTable(schedulingTable);
+				if (result == null) result = caseObjectWithID(schedulingTable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1296,6 +1304,21 @@ public class DataSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseSpinLock(SpinLock object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Scheduling Table</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Scheduling Table</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSchedulingTable(SchedulingTable object) {
 		return null;
 	}
 

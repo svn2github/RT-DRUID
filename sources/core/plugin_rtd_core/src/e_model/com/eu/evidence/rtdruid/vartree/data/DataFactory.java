@@ -476,6 +476,15 @@ public interface DataFactory extends EFactory {
 	SpinLock createSpinLock();
 
 	/**
+	 * Returns a new object of class '<em>Scheduling Table</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Scheduling Table</em>'.
+	 * @generated
+	 */
+	SchedulingTable createSchedulingTable();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

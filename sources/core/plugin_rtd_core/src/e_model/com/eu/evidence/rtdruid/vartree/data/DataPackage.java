@@ -556,7 +556,7 @@ public interface DataPackage extends EPackage {
 	int ARCHITECTURAL__COM_LIST = OBJECT_WITH_ID_FEATURE_COUNT + 7;
 
 	/**
-	 * The feature id for the '<em><b>Spin Lock List</b></em>' reference list.
+	 * The feature id for the '<em><b>Spin Lock List</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -565,13 +565,22 @@ public interface DataPackage extends EPackage {
 	int ARCHITECTURAL__SPIN_LOCK_LIST = OBJECT_WITH_ID_FEATURE_COUNT + 8;
 
 	/**
+	 * The feature id for the '<em><b>Scheduling Table List</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARCHITECTURAL__SCHEDULING_TABLE_LIST = OBJECT_WITH_ID_FEATURE_COUNT + 9;
+
+	/**
 	 * The number of structural features of the '<em>Architectural</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ARCHITECTURAL_FEATURE_COUNT = OBJECT_WITH_ID_FEATURE_COUNT + 9;
+	int ARCHITECTURAL_FEATURE_COUNT = OBJECT_WITH_ID_FEATURE_COUNT + 10;
 
 	/**
 	 * The meta object id for the '{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.MappingImpl <em>Mapping</em>}' class.
@@ -3147,6 +3156,43 @@ public interface DataPackage extends EPackage {
 	int SPIN_LOCK_FEATURE_COUNT = OBJECT_WITH_ID_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.SchedulingTableImpl <em>Scheduling Table</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.SchedulingTableImpl
+	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getSchedulingTable()
+	 * @generated
+	 */
+	int SCHEDULING_TABLE = 53;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULING_TABLE__PROPERTIES = OBJECT_WITH_ID__PROPERTIES;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULING_TABLE__NAME = OBJECT_WITH_ID_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Scheduling Table</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULING_TABLE_FEATURE_COUNT = OBJECT_WITH_ID_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '<em>Boolean Var</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3154,7 +3200,7 @@ public interface DataPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getBooleanVar()
 	 * @generated
 	 */
-	int BOOLEAN_VAR = 53;
+	int BOOLEAN_VAR = 54;
 
 	/**
 	 * The meta object id for the '<em>Double Var</em>' data type.
@@ -3164,7 +3210,7 @@ public interface DataPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getDoubleVar()
 	 * @generated
 	 */
-	int DOUBLE_VAR = 54;
+	int DOUBLE_VAR = 55;
 
 	/**
 	 * The meta object id for the '<em>Float Var</em>' data type.
@@ -3174,7 +3220,7 @@ public interface DataPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getFloatVar()
 	 * @generated
 	 */
-	int FLOAT_VAR = 55;
+	int FLOAT_VAR = 56;
 
 	/**
 	 * The meta object id for the '<em>Integer Var</em>' data type.
@@ -3184,7 +3230,7 @@ public interface DataPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getIntegerVar()
 	 * @generated
 	 */
-	int INTEGER_VAR = 56;
+	int INTEGER_VAR = 57;
 
 	/**
 	 * The meta object id for the '<em>Long Var</em>' data type.
@@ -3194,7 +3240,7 @@ public interface DataPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getLongVar()
 	 * @generated
 	 */
-	int LONG_VAR = 57;
+	int LONG_VAR = 58;
 
 	/**
 	 * The meta object id for the '<em>Oil Var</em>' data type.
@@ -3204,7 +3250,7 @@ public interface DataPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getOilVar()
 	 * @generated
 	 */
-	int OIL_VAR = 58;
+	int OIL_VAR = 59;
 
 	/**
 	 * The meta object id for the '<em>String Var</em>' data type.
@@ -3214,7 +3260,7 @@ public interface DataPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getStringVar()
 	 * @generated
 	 */
-	int STRING_VAR = 59;
+	int STRING_VAR = 60;
 
 	/**
 	 * The meta object id for the '<em>Time Var</em>' data type.
@@ -3224,7 +3270,7 @@ public interface DataPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getTimeVar()
 	 * @generated
 	 */
-	int TIME_VAR = 60;
+	int TIME_VAR = 61;
 
 	/**
 	 * The meta object id for the '<em>Property Var</em>' data type.
@@ -3234,7 +3280,7 @@ public interface DataPackage extends EPackage {
 	 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getPropertyVar()
 	 * @generated
 	 */
-	int PROPERTY_VAR = 61;
+	int PROPERTY_VAR = 62;
 
 
 	/**
@@ -3604,15 +3650,26 @@ public interface DataPackage extends EPackage {
 	EReference getArchitectural_ComList();
 
 	/**
-	 * Returns the meta object for the reference list '{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSpinLockList <em>Spin Lock List</em>}'.
+	 * Returns the meta object for the containment reference list '{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSpinLockList <em>Spin Lock List</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Spin Lock List</em>'.
+	 * @return the meta object for the containment reference list '<em>Spin Lock List</em>'.
 	 * @see com.eu.evidence.rtdruid.vartree.data.Architectural#getSpinLockList()
 	 * @see #getArchitectural()
 	 * @generated
 	 */
 	EReference getArchitectural_SpinLockList();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSchedulingTableList <em>Scheduling Table List</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Scheduling Table List</em>'.
+	 * @see com.eu.evidence.rtdruid.vartree.data.Architectural#getSchedulingTableList()
+	 * @see #getArchitectural()
+	 * @generated
+	 */
+	EReference getArchitectural_SchedulingTableList();
 
 	/**
 	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.vartree.data.Mapping <em>Mapping</em>}'.
@@ -5682,6 +5739,27 @@ public interface DataPackage extends EPackage {
 	EAttribute getSpinLock_Name();
 
 	/**
+	 * Returns the meta object for class '{@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable <em>Scheduling Table</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Scheduling Table</em>'.
+	 * @see com.eu.evidence.rtdruid.vartree.data.SchedulingTable
+	 * @generated
+	 */
+	EClass getSchedulingTable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see com.eu.evidence.rtdruid.vartree.data.SchedulingTable#getName()
+	 * @see #getSchedulingTable()
+	 * @generated
+	 */
+	EAttribute getSchedulingTable_Name();
+
+	/**
 	 * Returns the meta object for data type '{@link com.eu.evidence.rtdruid.vartree.variables.BooleanVar <em>Boolean Var</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6091,12 +6169,20 @@ public interface DataPackage extends EPackage {
 		EReference ARCHITECTURAL__COM_LIST = eINSTANCE.getArchitectural_ComList();
 
 		/**
-		 * The meta object literal for the '<em><b>Spin Lock List</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Spin Lock List</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference ARCHITECTURAL__SPIN_LOCK_LIST = eINSTANCE.getArchitectural_SpinLockList();
+
+		/**
+		 * The meta object literal for the '<em><b>Scheduling Table List</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ARCHITECTURAL__SCHEDULING_TABLE_LIST = eINSTANCE.getArchitectural_SchedulingTableList();
 
 		/**
 		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.MappingImpl <em>Mapping</em>}' class.
@@ -7723,6 +7809,24 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SPIN_LOCK__NAME = eINSTANCE.getSpinLock_Name();
+
+		/**
+		 * The meta object literal for the '{@link com.eu.evidence.rtdruid.internal.vartree.data.impl.SchedulingTableImpl <em>Scheduling Table</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.SchedulingTableImpl
+		 * @see com.eu.evidence.rtdruid.internal.vartree.data.impl.DataPackageImpl#getSchedulingTable()
+		 * @generated
+		 */
+		EClass SCHEDULING_TABLE = eINSTANCE.getSchedulingTable();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULING_TABLE__NAME = eINSTANCE.getSchedulingTable_Name();
 
 		/**
 		 * The meta object literal for the '<em>Boolean Var</em>' data type.

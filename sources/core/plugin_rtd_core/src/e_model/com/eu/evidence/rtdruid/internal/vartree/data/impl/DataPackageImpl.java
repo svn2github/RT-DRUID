@@ -47,6 +47,7 @@ import com.eu.evidence.rtdruid.vartree.data.Sample;
 import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
+import com.eu.evidence.rtdruid.vartree.data.SchedulingTable;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
 import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.SubSystem;
@@ -457,6 +458,13 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * @generated
 	 */
 	private EClass spinLockEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass schedulingTableEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -895,6 +903,15 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 */
 	public EReference getArchitectural_SpinLockList() {
 		return (EReference)architecturalEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getArchitectural_SchedulingTableList() {
+		return (EReference)architecturalEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -2630,6 +2647,24 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSchedulingTable() {
+		return schedulingTableEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSchedulingTable_Name() {
+		return (EAttribute)schedulingTableEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getBooleanVar() {
 		return booleanVarEDataType;
 	}
@@ -2776,6 +2811,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEReference(architecturalEClass, ARCHITECTURAL__TASK_LIST);
 		createEReference(architecturalEClass, ARCHITECTURAL__COM_LIST);
 		createEReference(architecturalEClass, ARCHITECTURAL__SPIN_LOCK_LIST);
+		createEReference(architecturalEClass, ARCHITECTURAL__SCHEDULING_TABLE_LIST);
 
 		mappingEClass = createEClass(MAPPING);
 		createEReference(mappingEClass, MAPPING__PROC_MAP_LIST);
@@ -3014,6 +3050,9 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		spinLockEClass = createEClass(SPIN_LOCK);
 		createEAttribute(spinLockEClass, SPIN_LOCK__NAME);
 
+		schedulingTableEClass = createEClass(SCHEDULING_TABLE);
+		createEAttribute(schedulingTableEClass, SCHEDULING_TABLE__NAME);
+
 		// Create data types
 		booleanVarEDataType = createEDataType(BOOLEAN_VAR);
 		doubleVarEDataType = createEDataType(DOUBLE_VAR);
@@ -3106,6 +3145,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		osApplicationEClass.getESuperTypes().add(this.getObjectWithID());
 		comEClass.getESuperTypes().add(this.getObjectWithID());
 		spinLockEClass.getESuperTypes().add(this.getObjectWithID());
+		schedulingTableEClass.getESuperTypes().add(this.getObjectWithID());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(systemEClass, com.eu.evidence.rtdruid.vartree.data.System.class, "System", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3157,7 +3197,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEReference(getArchitectural_SignalList(), this.getSignal(), null, "SignalList", null, 0, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getArchitectural_TaskList(), this.getTask(), null, "TaskList", null, 1, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getArchitectural_ComList(), this.getCom(), null, "ComList", null, 0, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getArchitectural_SpinLockList(), this.getSpinLock(), null, "SpinLockList", null, 0, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getArchitectural_SpinLockList(), this.getSpinLock(), null, "SpinLockList", null, 0, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getArchitectural_SchedulingTableList(), this.getSchedulingTable(), null, "SchedulingTableList", null, 0, -1, Architectural.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mappingEClass, Mapping.class, "Mapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMapping_ProcMapList(), this.getProcMap(), null, "ProcMapList", null, 0, -1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3395,6 +3436,9 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
 		initEClass(spinLockEClass, SpinLock.class, "SpinLock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSpinLock_Name(), this.getStringVar(), "Name", null, 0, 1, SpinLock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(schedulingTableEClass, SchedulingTable.class, "SchedulingTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSchedulingTable_Name(), this.getStringVar(), "Name", null, 0, 1, SchedulingTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(booleanVarEDataType, BooleanVar.class, "BooleanVar", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

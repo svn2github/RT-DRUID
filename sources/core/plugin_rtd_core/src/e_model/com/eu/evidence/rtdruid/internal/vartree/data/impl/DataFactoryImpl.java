@@ -52,6 +52,7 @@ import com.eu.evidence.rtdruid.vartree.data.Sample;
 import com.eu.evidence.rtdruid.vartree.data.Schedulability;
 import com.eu.evidence.rtdruid.vartree.data.Scheduling;
 import com.eu.evidence.rtdruid.vartree.data.SchedulingScenario;
+import com.eu.evidence.rtdruid.vartree.data.SchedulingTable;
 import com.eu.evidence.rtdruid.vartree.data.Signal;
 import com.eu.evidence.rtdruid.vartree.data.SpinLock;
 import com.eu.evidence.rtdruid.vartree.data.SubSystem;
@@ -168,6 +169,7 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 			case DataPackage.OS_APPLICATION: return createOsApplication();
 			case DataPackage.COM: return createCom();
 			case DataPackage.SPIN_LOCK: return createSpinLock();
+			case DataPackage.SCHEDULING_TABLE: return createSchedulingTable();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -737,6 +739,16 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 	public SpinLock createSpinLock() {
 		SpinLockImpl spinLock = new SpinLockImpl();
 		return spinLock;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SchedulingTable createSchedulingTable() {
+		SchedulingTableImpl schedulingTable = new SchedulingTableImpl();
+		return schedulingTable;
 	}
 
 	/**

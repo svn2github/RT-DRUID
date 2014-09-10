@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getTaskList <em>Task List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getComList <em>Com List</em>}</li>
  *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSpinLockList <em>Spin Lock List</em>}</li>
+ *   <li>{@link com.eu.evidence.rtdruid.vartree.data.Architectural#getSchedulingTableList <em>Scheduling Table List</em>}</li>
  * </ul>
  * </p>
  *
@@ -162,7 +163,7 @@ public interface Architectural extends ObjectWithID {
 	EList<Com> getComList();
 
 	/**
-	 * Returns the value of the '<em><b>Spin Lock List</b></em>' reference list.
+	 * Returns the value of the '<em><b>Spin Lock List</b></em>' containment reference list.
 	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.SpinLock}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -170,11 +171,27 @@ public interface Architectural extends ObjectWithID {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Spin Lock List</em>' reference list.
+	 * @return the value of the '<em>Spin Lock List</em>' containment reference list.
 	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_SpinLockList()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<SpinLock> getSpinLockList();
+
+	/**
+	 * Returns the value of the '<em><b>Scheduling Table List</b></em>' containment reference list.
+	 * The list contents are of type {@link com.eu.evidence.rtdruid.vartree.data.SchedulingTable}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Scheduling Table List</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Scheduling Table List</em>' containment reference list.
+	 * @see com.eu.evidence.rtdruid.vartree.data.DataPackage#getArchitectural_SchedulingTableList()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<SchedulingTable> getSchedulingTableList();
 
 } // Architectural
