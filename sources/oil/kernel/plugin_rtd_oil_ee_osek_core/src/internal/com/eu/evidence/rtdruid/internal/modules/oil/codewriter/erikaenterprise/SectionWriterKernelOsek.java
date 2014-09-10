@@ -531,8 +531,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						String budget_exec_id = "INVALID_BUDGET";
 						if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_BUDGET)) {
 							String value = getBudgetValue(currTask.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_BUDGET), "Invalid budget for task " + tname); 
-							sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_EXECUTION_BUDGET,          EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
-							sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+							sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_EXECUTION_BUDGET,          EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME) }");
+							sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME), EE_FALSE }");
 							
 							budget_exec_id = "" + tp_budgets+ "U";
 							tp_budgets++;
@@ -542,8 +542,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						String budget_os_isr_id = "INVALID_BUDGET";
 						if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_OS)) {
 							String value = getBudgetValue(currTask.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_OS), "Invalid budget for task " + tname); 
-							sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_OS_INTERRUPT_LOCK_BUDGET,  EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
-							sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+							sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_OS_INTERRUPT_LOCK_BUDGET,  EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME) }");
+							sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME), EE_FALSE }");
 
 							budget_os_isr_id = "" + tp_budgets+ "U";
 							tp_budgets++;
@@ -553,8 +553,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						String budget_all_isr_id = "INVALID_BUDGET";
 						if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_INT)) {
 							String value = getBudgetValue(currTask.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_MAX_INT), "Invalid budget for task " + tname); 
-							sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_ALL_INTERRUPT_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
-							sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+							sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_ALL_INTERRUPT_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME) }");
+							sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME), EE_FALSE }");
 
 							budget_all_isr_id = "" + tp_budgets+ "U";
 							tp_budgets++;
@@ -613,8 +613,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										
 									} else {
 										String value = getBudgetValue(resLock[1], "Invalid budget for task's " + tname + " resource lock"); 
-										sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_RESOURCE_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
-										sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+										sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_RESOURCE_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME) }");
+										sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME), EE_FALSE }");
 										sb_tp_all_ResLock.append(tp_budgets+"U");
 										
 										tp_budgets++;
@@ -630,7 +630,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						if (currTask.containsProperty(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_FRAME)) {
 							timeFrame = "EE_AS_TP_MICRO_TO_TICKS_SATURATED("+
 										getBudgetValue(currTask.getString(ISimpleGenResKeywords.TASK_TIMING_PROTECTION_FRAME), "Invalid time frame for task " + tname)
-										+")";
+										+", (EE_AS_TP_MAX_TIME >> 1U))";
 						}
 
 						int t_id = currTask
@@ -723,8 +723,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					String budget_exec_id = "INVALID_BUDGET";
 					if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_BUDGET)) {
 						String value = getBudgetValue(currIsr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_BUDGET), "Invalid budget for isr " + tname); 
-						sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_EXECUTION_BUDGET,          EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
-						sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+						sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_EXECUTION_BUDGET,          EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME) }");
+						sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME), EE_FALSE }");
 
 						budget_exec_id = "" + tp_budgets+ "U";
 						tp_budgets++;
@@ -734,8 +734,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					String budget_os_isr_id = "INVALID_BUDGET";
 					if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_OS)) {
 						String value = getBudgetValue(currIsr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_OS), "Invalid budget for isr " + tname); 
-						sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_OS_INTERRUPT_LOCK_BUDGET,  EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
-						sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+						sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_OS_INTERRUPT_LOCK_BUDGET,  EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME) }");
+						sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME), EE_FALSE }");
 
 						budget_os_isr_id = "" + tp_budgets+ "U";
 						tp_budgets++;
@@ -745,8 +745,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					String budget_all_isr_id = "INVALID_BUDGET";
 					if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_INT)) {
 						String value = getBudgetValue(currIsr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_MAX_INT), "Invalid budget for isr " + tname); 
-						sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_ALL_INTERRUPT_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
-						sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+						sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_ALL_INTERRUPT_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME) }");
+						sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME), EE_FALSE }");
 
 						budget_all_isr_id = "" + tp_budgets+ "U";
 						tp_budgets++;
@@ -805,8 +805,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									
 								} else {
 									String value = getBudgetValue(resLock[1], "Invalid budget for isr's " + tname + " resource lock"); 
-									sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_RESOURCE_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+") }");
-									sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+"), EE_FALSE }");
+									sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_RESOURCE_LOCK_BUDGET, EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME) }");
+									sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ EE_AS_TP_MICRO_TO_TICKS_SATURATED("+value+", EE_AS_TP_MAX_TIME), EE_FALSE }");
 									sb_tp_all_ResLock.append(tp_budgets+"U");
 									
 									tp_budgets++;
@@ -821,7 +821,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					if (currIsr.containsProperty(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_FRAME)) {
 						timeFrame = "EE_AS_TP_MICRO_TO_TICKS_SATURATED("+
 									getBudgetValue(currIsr.getString(ISimpleGenResKeywords.ISR_TIMING_PROTECTION_FRAME), "Invalid time frame for isr " + tname)
-									+")";
+									+", (EE_AS_TP_MAX_TIME >> 1U))";
 					}
 					
 					int t_id = currIsr
@@ -1062,8 +1062,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			if (tp_budgets>0) {
 				
 				if (!parent.checkKeyword(DEF__NO_TIME_FRAME_RECLAMATION__)) {
-					sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_RECLAMATION_TIME_FRAMES_BUDGET, (EE_OS_INFINITE_TIME >> 1U) }");
-					sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ (EE_OS_INFINITE_TIME >> 1U), EE_TRUE }");
+					sb_tp_all_budgets_ROM.append(pre_all_budgets + indent2+"{ EE_RECLAMATION_TIME_FRAMES_BUDGET, (EE_AS_TP_MAX_TIME >> 2U) }");
+					sb_tp_all_budgets_RAM.append(pre_all_budgets + indent2+"{ (EE_AS_TP_MAX_TIME >> 2U), EE_TRUE }");
 					
 					tp_budgets++;
 					pre_all_budgets = ",\n";
