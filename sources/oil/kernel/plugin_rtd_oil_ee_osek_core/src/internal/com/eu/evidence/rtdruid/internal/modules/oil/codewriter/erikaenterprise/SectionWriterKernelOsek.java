@@ -2921,7 +2921,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 
 			final boolean hasStackMonitoring = parent.checkKeyword(ISimpleGenResKeywords.OS_STACK_MONITORING);
 
-			if (parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION) || hasStackMonitoring) {
+			//if (parent.checkKeyword(IWritersKeywords.KERNEL_MEMORY_PROTECTION) || hasStackMonitoring)
+			{
 				if (parent.checkKeyword(SGR_OS_MEM_PROTECTION_HOOK)) {
 					answer.add(EE_OPT_MEMORY_PROTECTION_HOOK);
 				}

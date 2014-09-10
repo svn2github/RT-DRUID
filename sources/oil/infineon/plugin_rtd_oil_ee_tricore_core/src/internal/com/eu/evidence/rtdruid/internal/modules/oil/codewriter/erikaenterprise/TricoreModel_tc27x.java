@@ -540,7 +540,7 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			
 			ITreeInterface ti = vt.newTreeInterface();
 	
-			if (osApplication_enabled) {
+			if (osApplication_enabled || needStackMonitoring) {
 				sbInithal_c.append(commentWriterC.writerSingleLineComment("User Stack Base.")+
 						indent + "extern EE_STACK_T EE_B_USTACK[];\n"+
 						commentWriterC.writerSingleLineComment("User Stack end.")+
