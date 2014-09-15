@@ -78,6 +78,12 @@ IMPLEMENTATION ee {
                 	E200Z7
                 ] MODEL; 
                 
+                ENUM [
+                	DIAB,
+                	GNU,
+                	CODEWARRIOR
+                ] COMPILER_TYPE;
+                
                 BOOLEAN VLE;
                 STRING LINKERSCRIPT : "A custom linker-script that is used for the current cpu. This option override the mcu-level custom linker-script, if defined.";
             }

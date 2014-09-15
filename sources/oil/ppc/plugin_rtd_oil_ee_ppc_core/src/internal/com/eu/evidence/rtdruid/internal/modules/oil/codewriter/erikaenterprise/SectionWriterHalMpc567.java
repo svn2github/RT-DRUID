@@ -41,8 +41,6 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWr
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr.ShareType;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterKernelCounterHw;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription;
-import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EECpuDescriptionManager;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
@@ -98,8 +96,16 @@ public class SectionWriterHalMpc567 extends SectionWriter
 
 	static final String STACK_BASE_NAME = "EE_stack_";
 	private static final long DEFAULT_SYS_STACK_SIZE = 4096;
+
+	public static final String SGR_OS_CPU_USER_COMPILER = "sgr__os_cpu_user_compiler";
+	public static final String EEOPT_CODEWARRIOR = "__CODEWARRIOR__";
+	public static final String EEOPT_DIAB = "__DIAB__";
+	public static final String EEOPT_GNU = "EE_GNU__";
 	
-	public static final String _EE_OPT_CODEWARRIOR_COMPILER = "__CODEWARRIOR__";
+	enum CompilerType {
+		diab, gnu, codewarrior
+	};
+	
 	
 	private final SectionWriterIsr isrWriter;
 	private final SectionWriterKernelCounterHw counterHwWriter;
@@ -260,10 +266,50 @@ public class SectionWriterHalMpc567 extends SectionWriter
 						throw new OilCodeWriterException("VLE should be enabled for ppc E200Z0.");
 					}
 	
-			
 		//	        tmp.add("__MPC5674F__");
 		//	        tmp.add("__PPCE200Z7__");
-			        tmp_eeopts.add("__DIAB__");
+//			        tmp_eeopts.add(EEOPT_DIAB);
+					
+					/***********************************************************************
+					 * 
+					 * Compiler
+					 *  
+					 **********************************************************************/
+			        {
+			        	
+			        	String tmpCompiler = null;
+			        	String tmp1 = null;
+			        	String gnuExpFile = null;
+			        	String[] childName = new String[1];
+			    		for (String currentCpuPrefix: AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX)) {
+			    			String lPath = currentCpuPrefix + S + "COMPILER_TYPE";
+			    			tmp1 = CommonUtils.getFirstChildEnumType(vt, lPath, childName);
+			    			if (tmp1 != null &&
+			    					("DIAB".equals(tmp1) || "GNU".equals(tmp1) || "CODEWARRIOR".equals(tmp1))
+			    			) {
+			    					if (tmpCompiler == null) {
+					    				tmpCompiler = tmp1;
+			    					} else {
+			    						if (!tmpCompiler.equals(tmp1))
+				    						Messages.sendErrorNl("Only one CompilerType is allowed. Found: " + tmpCompiler + " and " + tmp1 , null, "mpc_writer_model", null);
+			    					}
+			    			}
+			    		}
+			        	
+						if (tmpCompiler == null) {
+							tmp_eeopts.add(EEOPT_DIAB);
+						} else if ("DIAB".equals(tmpCompiler)) {
+							tmp_eeopts.add(EEOPT_DIAB);
+						} else if ("GNU".equals(tmpCompiler)) {
+							tmp_eeopts.add(EEOPT_GNU);
+						} else if ("CODEWARRIOR".equals(tmpCompiler)) {
+							tmp_eeopts.add(EEOPT_DIAB);
+							tmp_eeopts.add(EEOPT_CODEWARRIOR);
+						}
+
+						sgrCpu.setObject(SGR_OS_CPU_USER_COMPILER, tmpCompiler);
+			        }
+					
 			        
 					
 		//			{ STILL NOT IMPLEMENTED IN EE 
@@ -1062,24 +1108,55 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			        );
 			    }
 	        	{
-			        boolean found_codewarrior = usingCodewarriorCompiler(currentRtosId);
+	        		CompilerType type = CompilerType.diab;
+	        		String userComp = getOsProperty(ool, SGR_OS_CPU_USER_COMPILER);
+	        		
+	        		if (userComp == null) {
+	        			if (usingCodewarriorCompiler(currentRtosId))
+	        				type = CompilerType.codewarrior;
+	        		} else if ("CODEWARRIOR".equals(userComp)) {
+	        			type = CompilerType.codewarrior;
+	        		} else if ("GNU".equals(userComp)) {
+	        			type = CompilerType.gnu;
+	        		}
+			        
 					String compiler_define = "";
 			        
 			        String gcc = "";
 	
-			    	if (found_codewarrior) {
-			    		gcc = PpcConstants.DEFAULT_PPC_CODEWARRIOR_CONF_CC;
-				    	if (options.containsKey(PpcConstants.PREF_PPC_CODEWARRIOR_PATH) ) {
-							String tmp = (String) options.get(PpcConstants.PREF_PPC_CODEWARRIOR_PATH);
-							if (tmp.length()>0) gcc = tmp;
-						}
-			    		compiler_define = CommonUtils.compilerMakefileDefines(gcc, "PPC_CW_BASEDIR", wrapper);
-			    	} else {
-				    	if (options.containsKey(PpcConstants.PREF_PPC_DIAB_PATH) ) {
-							gcc = (String) options.get(PpcConstants.PREF_PPC_DIAB_PATH);
-						}
-				    	compiler_define = CommonUtils.compilerMakefileDefines(gcc, "PPC_DIAB_BASEDIR", wrapper);
-			    	}
+			        switch (type) {
+			        case codewarrior:
+					        {
+					    		gcc = PpcConstants.DEFAULT_PPC_CODEWARRIOR_CONF_CC;
+						    	if (options.containsKey(PpcConstants.PREF_PPC_CODEWARRIOR_PATH) ) {
+									String tmp = (String) options.get(PpcConstants.PREF_PPC_CODEWARRIOR_PATH);
+									if (tmp.length()>0) gcc = tmp;
+								}
+					    		compiler_define = CommonUtils.compilerMakefileDefines(gcc, "PPC_CW_BASEDIR", wrapper);
+					    	}
+					        break;
+					        
+				    case gnu:
+					        {
+					    		gcc = PpcConstants.DEFAULT_PPC_GNU_CONF_GCC;
+						    	if (options.containsKey(PpcConstants.PREF_PPC_GNU_PATH) ) {
+									String tmp = (String) options.get(PpcConstants.PREF_PPC_GNU_PATH);
+									if (tmp.length()>0) gcc = tmp;
+								}
+					    		compiler_define = CommonUtils.compilerMakefileDefines(gcc, "PPC_GNU_BASEDIR", wrapper);
+					    	}
+					        break;
+			        
+			        default:
+			        case diab:
+					        {
+					        	if (options.containsKey(PpcConstants.PREF_PPC_DIAB_PATH) ) {
+									gcc = (String) options.get(PpcConstants.PREF_PPC_DIAB_PATH);
+								}
+						    	compiler_define = CommonUtils.compilerMakefileDefines(gcc, "PPC_DIAB_BASEDIR", wrapper);
+					    	}
+					        break;
+			        }
 			        
 			    	sbMakefile.append(compiler_define);
 	        	}		        
@@ -1128,7 +1205,7 @@ public class SectionWriterHalMpc567 extends SectionWriter
 	private boolean usingCodewarriorCompiler(final int rtosId) {
 		boolean found_codewarrior = false;
 		for (String s : parent.extractEE_Opts(EE_OPT_USER_ONLY, rtosId)) {
-			if (_EE_OPT_CODEWARRIOR_COMPILER.equals(s)) {
+			if (EEOPT_CODEWARRIOR.equals(s)) {
 				found_codewarrior = true;
 				break;
 			}
