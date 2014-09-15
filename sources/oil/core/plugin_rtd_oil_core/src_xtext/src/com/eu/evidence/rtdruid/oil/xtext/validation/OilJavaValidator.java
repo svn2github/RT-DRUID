@@ -540,8 +540,10 @@ public class OilJavaValidator extends AbstractOilJavaValidator {
 	
 	private Map<ObjectType, Map<String, List<OilObject>>> groupOilObjects(OilFile file) {
 		Map<ObjectType, Map<String, List<OilObject>>> answer = new HashMap<ObjectType, Map<String,List<OilObject>>>();
-		for (OilObject obj : file.getApplication().getOilObjects()) {
-			addToMapList(getMapToMapList(answer, obj.getType()), obj, obj.getName());
+		if (file.getApplication() != null) {
+			for (OilObject obj : file.getApplication().getOilObjects()) {
+				addToMapList(getMapToMapList(answer, obj.getType()), obj, obj.getName());
+			}
 		}
 		
 		return answer;

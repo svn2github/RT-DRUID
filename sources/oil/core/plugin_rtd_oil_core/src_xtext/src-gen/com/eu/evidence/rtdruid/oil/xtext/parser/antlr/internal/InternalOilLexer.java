@@ -869,10 +869,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__51;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:48:7: ( 'OS_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:48:9: 'OS_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:48:7: ( 'SCHEDULETABLE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:48:9: 'SCHEDULETABLE'
             {
-            match("OS_TYPE"); 
+            match("SCHEDULETABLE"); 
 
 
             }
@@ -890,10 +890,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__52;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:49:7: ( 'ALARM_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:49:9: 'ALARM_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:49:7: ( 'OS_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:49:9: 'OS_TYPE'
             {
-            match("ALARM_TYPE"); 
+            match("OS_TYPE"); 
 
 
             }
@@ -911,10 +911,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__53;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:50:7: ( 'APPMODE_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:50:9: 'APPMODE_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:50:7: ( 'ALARM_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:50:9: 'ALARM_TYPE'
             {
-            match("APPMODE_TYPE"); 
+            match("ALARM_TYPE"); 
 
 
             }
@@ -932,10 +932,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__54;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:51:7: ( 'COUNTER_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:51:9: 'COUNTER_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:51:7: ( 'APPMODE_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:51:9: 'APPMODE_TYPE'
             {
-            match("COUNTER_TYPE"); 
+            match("APPMODE_TYPE"); 
 
 
             }
@@ -953,10 +953,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__55;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:52:7: ( 'COM_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:52:9: 'COM_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:52:7: ( 'COUNTER_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:52:9: 'COUNTER_TYPE'
             {
-            match("COM_TYPE"); 
+            match("COUNTER_TYPE"); 
 
 
             }
@@ -974,10 +974,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__56;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:53:7: ( 'EVENT_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:53:9: 'EVENT_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:53:7: ( 'COM_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:53:9: 'COM_TYPE'
             {
-            match("EVENT_TYPE"); 
+            match("COM_TYPE"); 
 
 
             }
@@ -995,10 +995,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__57;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:54:7: ( 'IPDU_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:54:9: 'IPDU_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:54:7: ( 'EVENT_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:54:9: 'EVENT_TYPE'
             {
-            match("IPDU_TYPE"); 
+            match("EVENT_TYPE"); 
 
 
             }
@@ -1016,10 +1016,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__58;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:55:7: ( 'ISR_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:55:9: 'ISR_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:55:7: ( 'IPDU_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:55:9: 'IPDU_TYPE'
             {
-            match("ISR_TYPE"); 
+            match("IPDU_TYPE"); 
 
 
             }
@@ -1037,10 +1037,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__59;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:56:7: ( 'MESSAGE_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:56:9: 'MESSAGE_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:56:7: ( 'ISR_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:56:9: 'ISR_TYPE'
             {
-            match("MESSAGE_TYPE"); 
+            match("ISR_TYPE"); 
 
 
             }
@@ -1058,10 +1058,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__60;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:57:7: ( 'NETWORKMESSAGE_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:57:9: 'NETWORKMESSAGE_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:57:7: ( 'MESSAGE_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:57:9: 'MESSAGE_TYPE'
             {
-            match("NETWORKMESSAGE_TYPE"); 
+            match("MESSAGE_TYPE"); 
 
 
             }
@@ -1079,10 +1079,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__61;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:58:7: ( 'NM_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:58:9: 'NM_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:58:7: ( 'NETWORKMESSAGE_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:58:9: 'NETWORKMESSAGE_TYPE'
             {
-            match("NM_TYPE"); 
+            match("NETWORKMESSAGE_TYPE"); 
 
 
             }
@@ -1100,10 +1100,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__62;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:59:7: ( 'RESOURCE_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:59:9: 'RESOURCE_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:59:7: ( 'NM_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:59:9: 'NM_TYPE'
             {
-            match("RESOURCE_TYPE"); 
+            match("NM_TYPE"); 
 
 
             }
@@ -1121,10 +1121,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__63;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:60:7: ( 'TASK_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:60:9: 'TASK_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:60:7: ( 'RESOURCE_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:60:9: 'RESOURCE_TYPE'
             {
-            match("TASK_TYPE"); 
+            match("RESOURCE_TYPE"); 
 
 
             }
@@ -1142,10 +1142,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__64;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:61:7: ( 'SPINLOCK_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:61:9: 'SPINLOCK_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:61:7: ( 'TASK_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:61:9: 'TASK_TYPE'
             {
-            match("SPINLOCK_TYPE"); 
+            match("TASK_TYPE"); 
 
 
             }
@@ -1163,10 +1163,11 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__65;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:62:7: ( '+' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:62:9: '+'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:62:7: ( 'SPINLOCK_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:62:9: 'SPINLOCK_TYPE'
             {
-            match('+'); 
+            match("SPINLOCK_TYPE"); 
+
 
             }
 
@@ -1183,10 +1184,11 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__66;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:63:7: ( '-' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:63:9: '-'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:63:7: ( 'SCHEDULETABLE_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:63:9: 'SCHEDULETABLE_TYPE'
             {
-            match('-'); 
+            match("SCHEDULETABLE_TYPE"); 
+
 
             }
 
@@ -1203,10 +1205,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__67;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:64:7: ( '.' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:64:9: '.'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:64:7: ( '+' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:64:9: '+'
             {
-            match('.'); 
+            match('+'); 
 
             }
 
@@ -1223,11 +1225,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__68;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:65:7: ( 'APPLICATION' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:65:9: 'APPLICATION'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:65:7: ( '-' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:65:9: '-'
             {
-            match("APPLICATION"); 
-
+            match('-'); 
 
             }
 
@@ -1244,11 +1245,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__69;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:66:7: ( 'SCHEDULETABLE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:66:9: 'SCHEDULETABLE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:66:7: ( '.' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:66:9: '.'
             {
-            match("SCHEDULETABLE"); 
-
+            match('.'); 
 
             }
 
@@ -1265,10 +1265,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__70;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:67:7: ( 'APPLICATION_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:67:9: 'APPLICATION_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:67:7: ( 'APPLICATION' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:67:9: 'APPLICATION'
             {
-            match("APPLICATION_TYPE"); 
+            match("APPLICATION"); 
 
 
             }
@@ -1286,10 +1286,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = T__71;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:68:7: ( 'SCHEDULETABLE_TYPE' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:68:9: 'SCHEDULETABLE_TYPE'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:68:7: ( 'APPLICATION_TYPE' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:68:9: 'APPLICATION_TYPE'
             {
-            match("SCHEDULETABLE_TYPE"); 
+            match("APPLICATION_TYPE"); 
 
 
             }
@@ -1307,8 +1307,8 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2367:9: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2367:11: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2382:9: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2382:11: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1319,7 +1319,7 @@ public class InternalOilLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2367:35: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2382:35: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop1:
             do {
                 int alt1=2;
@@ -1368,12 +1368,12 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_HEX;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2369:10: ( '0x' ( RULE_ZERO_INT | RULE_NON_ZERO_INT | 'A' .. 'F' | 'a' .. 'f' )+ )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2369:12: '0x' ( RULE_ZERO_INT | RULE_NON_ZERO_INT | 'A' .. 'F' | 'a' .. 'f' )+
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2384:10: ( '0x' ( RULE_ZERO_INT | RULE_NON_ZERO_INT | 'A' .. 'F' | 'a' .. 'f' )+ )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2384:12: '0x' ( RULE_ZERO_INT | RULE_NON_ZERO_INT | 'A' .. 'F' | 'a' .. 'f' )+
             {
             match("0x"); 
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2369:17: ( RULE_ZERO_INT | RULE_NON_ZERO_INT | 'A' .. 'F' | 'a' .. 'f' )+
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2384:17: ( RULE_ZERO_INT | RULE_NON_ZERO_INT | 'A' .. 'F' | 'a' .. 'f' )+
             int cnt2=0;
             loop2:
             do {
@@ -1427,8 +1427,8 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_NON_ZERO_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2371:19: ( '1' .. '9' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2371:21: '1' .. '9'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2386:19: ( '1' .. '9' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2386:21: '1' .. '9'
             {
             matchRange('1','9'); 
 
@@ -1447,8 +1447,8 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_ZERO_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2373:15: ( '0' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2373:17: '0'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2388:15: ( '0' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2388:17: '0'
             {
             match('0'); 
 
@@ -1467,10 +1467,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -1488,10 +1488,10 @@ public class InternalOilLexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop3:
                     do {
                         int alt3=3;
@@ -1507,7 +1507,7 @@ public class InternalOilLexer extends Lexer {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1523,7 +1523,7 @@ public class InternalOilLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1548,10 +1548,10 @@ public class InternalOilLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -1567,7 +1567,7 @@ public class InternalOilLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1583,7 +1583,7 @@ public class InternalOilLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2375:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2390:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1626,12 +1626,12 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2377:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2377:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2392:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2392:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2377:24: ( options {greedy=false; } : . )*
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2392:24: ( options {greedy=false; } : . )*
             loop6:
             do {
                 int alt6=2;
@@ -1656,7 +1656,7 @@ public class InternalOilLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2377:52: .
+            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2392:52: .
             	    {
             	    matchAny(); 
 
@@ -1686,12 +1686,12 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2379:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2379:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2394:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2394:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2379:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2394:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -1704,7 +1704,7 @@ public class InternalOilLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2379:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2394:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1724,7 +1724,7 @@ public class InternalOilLexer extends Lexer {
                 }
             } while (true);
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2379:40: ( ( '\\r' )? '\\n' )?
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2394:40: ( ( '\\r' )? '\\n' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -1733,9 +1733,9 @@ public class InternalOilLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2379:41: ( '\\r' )? '\\n'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2394:41: ( '\\r' )? '\\n'
                     {
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2379:41: ( '\\r' )?
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2394:41: ( '\\r' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -1744,7 +1744,7 @@ public class InternalOilLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2379:41: '\\r'
+                            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2394:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1776,12 +1776,12 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_INCLUDE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:14: ( '#include' ( ' ' | '\\t' )* ( '<' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '>' | '\"' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '\"' ) )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:16: '#include' ( ' ' | '\\t' )* ( '<' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '>' | '\"' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '\"' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:14: ( '#include' ( ' ' | '\\t' )* ( '<' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '>' | '\"' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '\"' ) )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:16: '#include' ( ' ' | '\\t' )* ( '<' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '>' | '\"' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '\"' )
             {
             match("#include"); 
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:27: ( ' ' | '\\t' )*
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:27: ( ' ' | '\\t' )*
             loop10:
             do {
                 int alt10=2;
@@ -1814,7 +1814,7 @@ public class InternalOilLexer extends Lexer {
                 }
             } while (true);
 
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:39: ( '<' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '>' | '\"' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '\"' )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:39: ( '<' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '>' | '\"' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '\"' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -1832,10 +1832,10 @@ public class InternalOilLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:40: '<' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '>'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:40: '<' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '>'
                     {
                     match('<'); 
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:44: ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )*
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:44: ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )*
                     loop11:
                     do {
                         int alt11=3;
@@ -1851,7 +1851,7 @@ public class InternalOilLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:45: '\\\\' ( '\"' | '\\\\' )
+                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:45: '\\\\' ( '\"' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\\' ) {
@@ -1867,7 +1867,7 @@ public class InternalOilLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:61: ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) )
+                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:61: ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<=';')||input.LA(1)=='='||(input.LA(1)>='?' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1892,10 +1892,10 @@ public class InternalOilLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:99: '\"' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '\"'
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:99: '\"' ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:103: ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )*
+                    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:103: ( '\\\\' ( '\"' | '\\\\' ) | ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) ) )*
                     loop12:
                     do {
                         int alt12=3;
@@ -1911,7 +1911,7 @@ public class InternalOilLexer extends Lexer {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:104: '\\\\' ( '\"' | '\\\\' )
+                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:104: '\\\\' ( '\"' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\\' ) {
@@ -1927,7 +1927,7 @@ public class InternalOilLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2381:120: ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) )
+                    	    // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2396:120: ~ ( ( '\\\\' | '\"' | '\\n' | '\\r' | '<' | '>' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<=';')||input.LA(1)=='='||(input.LA(1)>='?' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1970,10 +1970,10 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2383:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2383:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2398:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2398:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2383:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2398:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt14=0;
             loop14:
             do {
@@ -2027,8 +2027,8 @@ public class InternalOilLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2385:16: ( . )
-            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2385:18: .
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2400:16: ( . )
+            // ../plugin_rtd_oil_core/src_xtext/src-gen/com/eu/evidence/rtdruid/oil/xtext/parser/antlr/internal/InternalOil.g:2400:18: .
             {
             matchAny(); 
 
@@ -2546,11 +2546,11 @@ public class InternalOilLexer extends Lexer {
         "\5\45\1\uffff\1\u0115\2\45\1\uffff\1\45\1\uffff\1\u0119\4\45\1\u011e"+
         "\3\45\1\uffff\1\u0122\2\45\1\uffff\1\45\1\u0127\2\45\1\uffff\3\45"+
         "\1\uffff\1\45\1\u012e\1\u012f\1\45\1\uffff\2\45\1\u0133\3\45\2\uffff"+
-        "\1\45\1\u0138\1\45\1\uffff\1\45\1\u013b\1\u013c\1\45\1\uffff\1\45"+
-        "\1\u0140\2\uffff\1\45\1\u0143\1\45\1\uffff\1\u0145\1\45\1\uffff"+
-        "\1\45\1\uffff\5\45\1\u014d\1\u014e\2\uffff";
+        "\1\45\1\u0138\1\u013a\1\uffff\1\45\1\u013c\1\u013d\1\45\1\uffff"+
+        "\1\45\1\uffff\1\u0141\2\uffff\3\45\1\uffff\1\u0145\2\45\1\uffff"+
+        "\2\45\1\u014a\1\45\1\uffff\1\u014c\1\uffff";
     static final String DFA15_eofS =
-        "\u014f\uffff";
+        "\u014d\uffff";
     static final String DFA15_minS =
         "\1\0\1\111\2\uffff\1\115\3\uffff\1\117\1\uffff\1\56\1\111\1\135"+
         "\1\uffff\1\114\1\103\1\111\1\114\1\117\1\116\3\105\1\101\3\uffff"+
@@ -2568,18 +2568,19 @@ public class InternalOilLexer extends Lexer {
         "\124\1\uffff\1\122\2\105\2\uffff\1\131\1\120\1\122\1\120\1\125\1"+
         "\124\1\uffff\1\105\1\101\1\60\1\103\1\114\2\60\1\uffff\1\116\1\124"+
         "\1\uffff\1\105\1\113\1\105\1\103\1\131\1\123\1\60\1\116\1\120\1"+
-        "\105\1\60\1\105\1\124\1\131\1\60\1\124\1\uffff\1\113\1\111\2\uffff"+
+        "\105\1\60\1\105\1\124\1\131\1\60\1\124\1\uffff\1\113\1\105\2\uffff"+
         "\1\60\1\131\1\60\1\115\1\60\1\105\1\120\1\111\1\uffff\1\124\1\105"+
         "\1\60\1\124\1\uffff\1\60\1\117\1\120\1\124\1\uffff\1\111\1\60\1"+
-        "\116\1\uffff\1\120\1\124\1\uffff\1\105\1\uffff\1\60\1\105\1\117"+
+        "\124\1\uffff\1\120\1\124\1\uffff\1\105\1\uffff\1\60\1\105\1\117"+
         "\1\101\1\60\1\uffff\1\131\1\uffff\1\60\1\105\1\131\1\117\1\124\1"+
-        "\uffff\1\107\1\105\1\131\1\123\1\124\1\uffff\1\60\1\116\1\124\1"+
-        "\uffff\1\120\1\uffff\1\60\1\120\1\116\1\131\1\124\1\60\1\120\1\123"+
-        "\1\131\1\uffff\1\60\1\111\1\105\1\uffff\1\105\1\60\1\120\1\101\1"+
-        "\uffff\1\105\1\101\1\120\1\uffff\1\117\2\60\1\124\1\uffff\1\105"+
-        "\1\102\1\60\1\107\1\105\1\116\2\uffff\1\131\1\60\1\114\1\uffff\1"+
-        "\105\2\60\1\120\1\uffff\1\105\1\60\2\uffff\1\105\1\60\1\124\1\uffff"+
-        "\1\60\1\124\1\uffff\1\131\1\uffff\1\131\2\120\2\105\2\60\2\uffff";
+        "\uffff\1\101\1\105\1\131\1\123\1\124\1\uffff\1\60\1\116\1\124\1"+
+        "\uffff\1\120\1\uffff\1\60\1\120\1\116\1\131\1\102\1\60\1\120\1\123"+
+        "\1\131\1\uffff\1\60\1\111\1\105\1\uffff\1\105\1\60\1\120\1\114\1"+
+        "\uffff\1\105\1\101\1\120\1\uffff\1\117\2\60\1\124\1\uffff\2\105"+
+        "\1\60\1\107\1\105\1\116\2\uffff\1\131\2\60\1\uffff\1\105\2\60\1"+
+        "\120\1\uffff\1\124\1\uffff\1\60\2\uffff\1\105\1\131\1\124\1\uffff"+
+        "\1\60\1\120\1\131\1\uffff\1\105\1\120\1\60\1\105\1\uffff\1\60\1"+
+        "\uffff";
     static final String DFA15_maxS =
         "\1\uffff\1\123\2\uffff\1\123\3\uffff\1\120\1\uffff\1\56\1\111\1"+
         "\135\1\uffff\1\125\1\124\1\111\1\114\1\117\1\126\1\105\1\115\1\105"+
@@ -2598,34 +2599,34 @@ public class InternalOilLexer extends Lexer {
         "\1\120\1\122\1\120\1\125\1\124\1\uffff\1\105\1\101\1\172\1\103\1"+
         "\114\2\172\1\uffff\1\116\1\124\1\uffff\1\105\1\113\1\105\1\103\1"+
         "\131\1\123\1\172\1\116\1\120\1\105\1\172\1\105\1\124\1\131\1\172"+
-        "\1\124\1\uffff\1\113\1\111\2\uffff\1\172\1\131\1\172\1\115\1\172"+
+        "\1\124\1\uffff\1\113\1\105\2\uffff\1\172\1\131\1\172\1\115\1\172"+
         "\1\105\1\120\1\111\1\uffff\1\124\1\105\1\172\1\124\1\uffff\1\172"+
-        "\1\117\1\120\1\124\1\uffff\1\111\1\172\1\116\1\uffff\1\120\1\124"+
+        "\1\117\1\120\1\124\1\uffff\1\111\1\172\1\124\1\uffff\1\120\1\124"+
         "\1\uffff\1\105\1\uffff\1\172\1\105\1\117\1\101\1\172\1\uffff\1\131"+
-        "\1\uffff\1\172\1\105\1\131\1\117\1\124\1\uffff\1\107\1\105\1\131"+
+        "\1\uffff\1\172\1\105\1\131\1\117\1\124\1\uffff\1\101\1\105\1\131"+
         "\1\123\1\124\1\uffff\1\172\1\116\1\124\1\uffff\1\120\1\uffff\1\172"+
-        "\1\120\1\116\1\131\1\124\1\172\1\120\1\123\1\131\1\uffff\1\172\1"+
-        "\111\1\105\1\uffff\1\105\1\172\1\120\1\101\1\uffff\1\105\1\101\1"+
-        "\120\1\uffff\1\117\2\172\1\124\1\uffff\1\105\1\102\1\172\1\107\1"+
-        "\105\1\116\2\uffff\1\131\1\172\1\114\1\uffff\1\105\2\172\1\120\1"+
-        "\uffff\1\105\1\172\2\uffff\1\105\1\172\1\124\1\uffff\1\172\1\124"+
-        "\1\uffff\1\131\1\uffff\1\131\2\120\2\105\2\172\2\uffff";
+        "\1\120\1\116\1\131\1\102\1\172\1\120\1\123\1\131\1\uffff\1\172\1"+
+        "\111\1\105\1\uffff\1\105\1\172\1\120\1\114\1\uffff\1\105\1\101\1"+
+        "\120\1\uffff\1\117\2\172\1\124\1\uffff\2\105\1\172\1\107\1\105\1"+
+        "\116\2\uffff\1\131\2\172\1\uffff\1\105\2\172\1\120\1\uffff\1\124"+
+        "\1\uffff\1\172\2\uffff\1\105\1\131\1\124\1\uffff\1\172\1\120\1\131"+
+        "\1\uffff\1\105\1\120\1\172\1\105\1\uffff\1\172\1\uffff";
     static final String DFA15_acceptS =
         "\2\uffff\1\2\1\3\1\uffff\1\5\1\6\1\7\1\uffff\1\11\3\uffff\1\15"+
-        "\12\uffff\1\64\1\65\1\73\1\uffff\1\75\4\uffff\1\103\1\104\2\uffff"+
-        "\1\73\1\2\1\3\4\uffff\1\5\1\6\1\7\2\uffff\1\11\1\12\1\66\1\uffff"+
-        "\1\16\1\14\1\15\20\uffff\1\64\1\65\1\74\1\76\1\75\1\77\1\100\1\101"+
+        "\12\uffff\1\66\1\67\1\73\1\uffff\1\75\4\uffff\1\103\1\104\2\uffff"+
+        "\1\73\1\2\1\3\4\uffff\1\5\1\6\1\7\2\uffff\1\11\1\12\1\70\1\uffff"+
+        "\1\16\1\14\1\15\20\uffff\1\66\1\67\1\74\1\76\1\75\1\77\1\100\1\101"+
         "\1\102\1\103\2\uffff\1\30\26\uffff\1\42\11\uffff\1\37\1\10\2\uffff"+
         "\1\34\30\uffff\1\36\4\uffff\1\17\12\uffff\1\27\6\uffff\1\44\3\uffff"+
         "\1\22\1\24\6\uffff\1\31\7\uffff\1\25\2\uffff\1\35\20\uffff\1\20"+
-        "\2\uffff\1\21\1\23\10\uffff\1\46\4\uffff\1\33\4\uffff\1\32\3\uffff"+
-        "\1\26\2\uffff\1\40\1\uffff\1\60\5\uffff\1\55\1\uffff\1\52\5\uffff"+
-        "\1\45\5\uffff\1\43\3\uffff\1\54\1\uffff\1\13\11\uffff\1\62\3\uffff"+
-        "\1\47\4\uffff\1\53\3\uffff\1\1\4\uffff\1\67\6\uffff\1\51\1\50\3"+
-        "\uffff\1\56\4\uffff\1\63\2\uffff\1\61\1\4\3\uffff\1\41\2\uffff\1"+
-        "\70\1\uffff\1\71\7\uffff\1\57\1\72";
+        "\2\uffff\1\21\1\23\10\uffff\1\47\4\uffff\1\33\4\uffff\1\32\3\uffff"+
+        "\1\26\2\uffff\1\40\1\uffff\1\61\5\uffff\1\56\1\uffff\1\53\5\uffff"+
+        "\1\45\5\uffff\1\43\3\uffff\1\55\1\uffff\1\13\11\uffff\1\63\3\uffff"+
+        "\1\50\4\uffff\1\54\3\uffff\1\1\4\uffff\1\71\6\uffff\1\52\1\51\3"+
+        "\uffff\1\57\4\uffff\1\64\1\uffff\1\46\1\uffff\1\62\1\4\3\uffff\1"+
+        "\41\3\uffff\1\72\4\uffff\1\65\1\uffff\1\60";
     static final String DFA15_specialS =
-        "\1\0\34\uffff\1\1\1\2\u0130\uffff}>";
+        "\1\2\34\uffff\1\0\1\1\u012e\uffff}>";
     static final String[] DFA15_transitionS = {
             "\11\42\2\41\2\42\1\41\22\42\1\41\1\42\1\35\1\40\3\42\1\36\3"+
             "\42\1\30\1\11\1\31\1\12\1\37\1\33\11\34\1\7\1\3\1\42\1\2\3\42"+
@@ -2937,34 +2938,32 @@ public class InternalOilLexer extends Lexer {
             "",
             "\1\u0137",
             "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
-            "\1\u0139",
+            "\12\45\7\uffff\32\45\4\uffff\1\u0139\1\uffff\32\45",
             "",
-            "\1\u013a",
+            "\1\u013b",
             "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
             "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
-            "\1\u013d",
-            "",
             "\1\u013e",
-            "\12\45\7\uffff\32\45\4\uffff\1\u013f\1\uffff\32\45",
+            "",
+            "\1\u013f",
+            "",
+            "\12\45\7\uffff\32\45\4\uffff\1\u0140\1\uffff\32\45",
             "",
             "",
-            "\1\u0141",
-            "\12\45\7\uffff\32\45\4\uffff\1\u0142\1\uffff\32\45",
+            "\1\u0142",
+            "\1\u0143",
             "\1\u0144",
             "",
             "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
             "\1\u0146",
-            "",
             "\1\u0147",
             "",
             "\1\u0148",
             "\1\u0149",
-            "\1\u014a",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
             "\1\u014b",
-            "\1\u014c",
-            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
-            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
             "",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
             ""
     };
 
@@ -3005,6 +3004,26 @@ public class InternalOilLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
+                        int LA15_29 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA15_29>='\u0000' && LA15_29<='\uFFFF')) ) {s = 77;}
+
+                        else s = 34;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA15_30 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA15_30>='\u0000' && LA15_30<='\uFFFF')) ) {s = 77;}
+
+                        else s = 34;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
                         int LA15_0 = input.LA(1);
 
                         s = -1;
@@ -3075,26 +3094,6 @@ public class InternalOilLexer extends Lexer {
                         else if ( ((LA15_0>='\t' && LA15_0<='\n')||LA15_0=='\r'||LA15_0==' ') ) {s = 33;}
 
                         else if ( ((LA15_0>='\u0000' && LA15_0<='\b')||(LA15_0>='\u000B' && LA15_0<='\f')||(LA15_0>='\u000E' && LA15_0<='\u001F')||LA15_0=='!'||(LA15_0>='$' && LA15_0<='&')||(LA15_0>='(' && LA15_0<='*')||LA15_0=='<'||(LA15_0>='>' && LA15_0<='@')||LA15_0=='\\'||LA15_0=='^'||LA15_0=='`'||LA15_0=='|'||(LA15_0>='~' && LA15_0<='\uFFFF')) ) {s = 34;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA15_29 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA15_29>='\u0000' && LA15_29<='\uFFFF')) ) {s = 77;}
-
-                        else s = 34;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA15_30 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA15_30>='\u0000' && LA15_30<='\uFFFF')) ) {s = 77;}
-
-                        else s = 34;
 
                         if ( s>=0 ) return s;
                         break;

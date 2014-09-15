@@ -1012,113 +1012,139 @@ rule__SpecialId__Alternatives
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getGroup_22()); }
-(rule__SpecialId__Group_22__0)
-{ after(grammarAccess.getSpecialIdAccess().getGroup_22()); }
+{ before(grammarAccess.getSpecialIdAccess().getSPINLOCKKeyword_22()); }
+
+	'SPINLOCK' 
+
+{ after(grammarAccess.getSpecialIdAccess().getSPINLOCKKeyword_22()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getALARM_TYPEKeyword_23()); }
+{ before(grammarAccess.getSpecialIdAccess().getSCHEDULETABLEKeyword_23()); }
+
+	'SCHEDULETABLE' 
+
+{ after(grammarAccess.getSpecialIdAccess().getSCHEDULETABLEKeyword_23()); }
+)
+
+    |(
+{ before(grammarAccess.getSpecialIdAccess().getOS_TYPEKeyword_24()); }
+
+	'OS_TYPE' 
+
+{ after(grammarAccess.getSpecialIdAccess().getOS_TYPEKeyword_24()); }
+)
+
+    |(
+{ before(grammarAccess.getSpecialIdAccess().getALARM_TYPEKeyword_25()); }
 
 	'ALARM_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getALARM_TYPEKeyword_23()); }
+{ after(grammarAccess.getSpecialIdAccess().getALARM_TYPEKeyword_25()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getAPPMODE_TYPEKeyword_24()); }
+{ before(grammarAccess.getSpecialIdAccess().getAPPMODE_TYPEKeyword_26()); }
 
 	'APPMODE_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getAPPMODE_TYPEKeyword_24()); }
+{ after(grammarAccess.getSpecialIdAccess().getAPPMODE_TYPEKeyword_26()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getCOUNTER_TYPEKeyword_25()); }
+{ before(grammarAccess.getSpecialIdAccess().getCOUNTER_TYPEKeyword_27()); }
 
 	'COUNTER_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getCOUNTER_TYPEKeyword_25()); }
+{ after(grammarAccess.getSpecialIdAccess().getCOUNTER_TYPEKeyword_27()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getCOM_TYPEKeyword_26()); }
+{ before(grammarAccess.getSpecialIdAccess().getCOM_TYPEKeyword_28()); }
 
 	'COM_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getCOM_TYPEKeyword_26()); }
+{ after(grammarAccess.getSpecialIdAccess().getCOM_TYPEKeyword_28()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getEVENT_TYPEKeyword_27()); }
+{ before(grammarAccess.getSpecialIdAccess().getEVENT_TYPEKeyword_29()); }
 
 	'EVENT_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getEVENT_TYPEKeyword_27()); }
+{ after(grammarAccess.getSpecialIdAccess().getEVENT_TYPEKeyword_29()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getIPDU_TYPEKeyword_28()); }
+{ before(grammarAccess.getSpecialIdAccess().getIPDU_TYPEKeyword_30()); }
 
 	'IPDU_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getIPDU_TYPEKeyword_28()); }
+{ after(grammarAccess.getSpecialIdAccess().getIPDU_TYPEKeyword_30()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getISR_TYPEKeyword_29()); }
+{ before(grammarAccess.getSpecialIdAccess().getISR_TYPEKeyword_31()); }
 
 	'ISR_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getISR_TYPEKeyword_29()); }
+{ after(grammarAccess.getSpecialIdAccess().getISR_TYPEKeyword_31()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getMESSAGE_TYPEKeyword_30()); }
+{ before(grammarAccess.getSpecialIdAccess().getMESSAGE_TYPEKeyword_32()); }
 
 	'MESSAGE_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getMESSAGE_TYPEKeyword_30()); }
+{ after(grammarAccess.getSpecialIdAccess().getMESSAGE_TYPEKeyword_32()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getNETWORKMESSAGE_TYPEKeyword_31()); }
+{ before(grammarAccess.getSpecialIdAccess().getNETWORKMESSAGE_TYPEKeyword_33()); }
 
 	'NETWORKMESSAGE_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getNETWORKMESSAGE_TYPEKeyword_31()); }
+{ after(grammarAccess.getSpecialIdAccess().getNETWORKMESSAGE_TYPEKeyword_33()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getNM_TYPEKeyword_32()); }
+{ before(grammarAccess.getSpecialIdAccess().getNM_TYPEKeyword_34()); }
 
 	'NM_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getNM_TYPEKeyword_32()); }
+{ after(grammarAccess.getSpecialIdAccess().getNM_TYPEKeyword_34()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getRESOURCE_TYPEKeyword_33()); }
+{ before(grammarAccess.getSpecialIdAccess().getRESOURCE_TYPEKeyword_35()); }
 
 	'RESOURCE_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getRESOURCE_TYPEKeyword_33()); }
+{ after(grammarAccess.getSpecialIdAccess().getRESOURCE_TYPEKeyword_35()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getTASK_TYPEKeyword_34()); }
+{ before(grammarAccess.getSpecialIdAccess().getTASK_TYPEKeyword_36()); }
 
 	'TASK_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getTASK_TYPEKeyword_34()); }
+{ after(grammarAccess.getSpecialIdAccess().getTASK_TYPEKeyword_36()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdAccess().getSPINLOCK_TYPEKeyword_35()); }
+{ before(grammarAccess.getSpecialIdAccess().getSPINLOCK_TYPEKeyword_37()); }
 
 	'SPINLOCK_TYPE' 
 
-{ after(grammarAccess.getSpecialIdAccess().getSPINLOCK_TYPEKeyword_35()); }
+{ after(grammarAccess.getSpecialIdAccess().getSPINLOCK_TYPEKeyword_37()); }
+)
+
+    |(
+{ before(grammarAccess.getSpecialIdAccess().getSCHEDULETABLE_TYPEKeyword_38()); }
+
+	'SCHEDULETABLE_TYPE' 
+
+{ after(grammarAccess.getSpecialIdAccess().getSCHEDULETABLE_TYPEKeyword_38()); }
 )
 
 ;
@@ -5384,71 +5410,6 @@ rule__Parameter__Group_5__1__Impl
 { before(grammarAccess.getParameterAccess().getDescriptionAssignment_5_1()); }
 (rule__Parameter__DescriptionAssignment_5_1)
 { after(grammarAccess.getParameterAccess().getDescriptionAssignment_5_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-rule__SpecialId__Group_22__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__SpecialId__Group_22__0__Impl
-	rule__SpecialId__Group_22__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__SpecialId__Group_22__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getSpecialIdAccess().getSPINLOCKKeyword_22_0()); }
-
-	'SPINLOCK' 
-
-{ after(grammarAccess.getSpecialIdAccess().getSPINLOCKKeyword_22_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__SpecialId__Group_22__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__SpecialId__Group_22__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__SpecialId__Group_22__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getSpecialIdAccess().getOS_TYPEKeyword_22_1()); }
-
-	'OS_TYPE' 
-
-{ after(grammarAccess.getSpecialIdAccess().getOS_TYPEKeyword_22_1()); }
 )
 
 ;

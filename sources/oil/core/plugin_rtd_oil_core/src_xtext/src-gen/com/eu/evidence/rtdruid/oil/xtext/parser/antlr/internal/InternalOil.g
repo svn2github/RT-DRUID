@@ -1731,108 +1731,123 @@ ruleSpecialId returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
         newLeafNode(kw, grammarAccess.getSpecialIdAccess().getTASKKeyword_21()); 
     }
 
-    |(
+    |
 	kw='SPINLOCK' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getSPINLOCKKeyword_22_0()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getSPINLOCKKeyword_22()); 
     }
 
+    |
+	kw='SCHEDULETABLE' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getSCHEDULETABLEKeyword_23()); 
+    }
+
+    |
 	kw='OS_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getOS_TYPEKeyword_22_1()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getOS_TYPEKeyword_24()); 
     }
-)
+
     |
 	kw='ALARM_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getALARM_TYPEKeyword_23()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getALARM_TYPEKeyword_25()); 
     }
 
     |
 	kw='APPMODE_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getAPPMODE_TYPEKeyword_24()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getAPPMODE_TYPEKeyword_26()); 
     }
 
     |
 	kw='COUNTER_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getCOUNTER_TYPEKeyword_25()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getCOUNTER_TYPEKeyword_27()); 
     }
 
     |
 	kw='COM_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getCOM_TYPEKeyword_26()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getCOM_TYPEKeyword_28()); 
     }
 
     |
 	kw='EVENT_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getEVENT_TYPEKeyword_27()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getEVENT_TYPEKeyword_29()); 
     }
 
     |
 	kw='IPDU_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getIPDU_TYPEKeyword_28()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getIPDU_TYPEKeyword_30()); 
     }
 
     |
 	kw='ISR_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getISR_TYPEKeyword_29()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getISR_TYPEKeyword_31()); 
     }
 
     |
 	kw='MESSAGE_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getMESSAGE_TYPEKeyword_30()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getMESSAGE_TYPEKeyword_32()); 
     }
 
     |
 	kw='NETWORKMESSAGE_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getNETWORKMESSAGE_TYPEKeyword_31()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getNETWORKMESSAGE_TYPEKeyword_33()); 
     }
 
     |
 	kw='NM_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getNM_TYPEKeyword_32()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getNM_TYPEKeyword_34()); 
     }
 
     |
 	kw='RESOURCE_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getRESOURCE_TYPEKeyword_33()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getRESOURCE_TYPEKeyword_35()); 
     }
 
     |
 	kw='TASK_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getTASK_TYPEKeyword_34()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getTASK_TYPEKeyword_36()); 
     }
 
     |
 	kw='SPINLOCK_TYPE' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getSPINLOCK_TYPEKeyword_35()); 
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getSPINLOCK_TYPEKeyword_37()); 
+    }
+
+    |
+	kw='SCHEDULETABLE_TYPE' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getSpecialIdAccess().getSCHEDULETABLE_TYPEKeyword_38()); 
     }
 )
     ;

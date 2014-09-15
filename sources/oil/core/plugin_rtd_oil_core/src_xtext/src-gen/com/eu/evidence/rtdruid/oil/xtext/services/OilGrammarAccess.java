@@ -990,22 +990,23 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cNMKeyword_19 = (Keyword)cAlternatives.eContents().get(19);
 		private final Keyword cRESOURCEKeyword_20 = (Keyword)cAlternatives.eContents().get(20);
 		private final Keyword cTASKKeyword_21 = (Keyword)cAlternatives.eContents().get(21);
-		private final Group cGroup_22 = (Group)cAlternatives.eContents().get(22);
-		private final Keyword cSPINLOCKKeyword_22_0 = (Keyword)cGroup_22.eContents().get(0);
-		private final Keyword cOS_TYPEKeyword_22_1 = (Keyword)cGroup_22.eContents().get(1);
-		private final Keyword cALARM_TYPEKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
-		private final Keyword cAPPMODE_TYPEKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
-		private final Keyword cCOUNTER_TYPEKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
-		private final Keyword cCOM_TYPEKeyword_26 = (Keyword)cAlternatives.eContents().get(26);
-		private final Keyword cEVENT_TYPEKeyword_27 = (Keyword)cAlternatives.eContents().get(27);
-		private final Keyword cIPDU_TYPEKeyword_28 = (Keyword)cAlternatives.eContents().get(28);
-		private final Keyword cISR_TYPEKeyword_29 = (Keyword)cAlternatives.eContents().get(29);
-		private final Keyword cMESSAGE_TYPEKeyword_30 = (Keyword)cAlternatives.eContents().get(30);
-		private final Keyword cNETWORKMESSAGE_TYPEKeyword_31 = (Keyword)cAlternatives.eContents().get(31);
-		private final Keyword cNM_TYPEKeyword_32 = (Keyword)cAlternatives.eContents().get(32);
-		private final Keyword cRESOURCE_TYPEKeyword_33 = (Keyword)cAlternatives.eContents().get(33);
-		private final Keyword cTASK_TYPEKeyword_34 = (Keyword)cAlternatives.eContents().get(34);
-		private final Keyword cSPINLOCK_TYPEKeyword_35 = (Keyword)cAlternatives.eContents().get(35);
+		private final Keyword cSPINLOCKKeyword_22 = (Keyword)cAlternatives.eContents().get(22);
+		private final Keyword cSCHEDULETABLEKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
+		private final Keyword cOS_TYPEKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
+		private final Keyword cALARM_TYPEKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
+		private final Keyword cAPPMODE_TYPEKeyword_26 = (Keyword)cAlternatives.eContents().get(26);
+		private final Keyword cCOUNTER_TYPEKeyword_27 = (Keyword)cAlternatives.eContents().get(27);
+		private final Keyword cCOM_TYPEKeyword_28 = (Keyword)cAlternatives.eContents().get(28);
+		private final Keyword cEVENT_TYPEKeyword_29 = (Keyword)cAlternatives.eContents().get(29);
+		private final Keyword cIPDU_TYPEKeyword_30 = (Keyword)cAlternatives.eContents().get(30);
+		private final Keyword cISR_TYPEKeyword_31 = (Keyword)cAlternatives.eContents().get(31);
+		private final Keyword cMESSAGE_TYPEKeyword_32 = (Keyword)cAlternatives.eContents().get(32);
+		private final Keyword cNETWORKMESSAGE_TYPEKeyword_33 = (Keyword)cAlternatives.eContents().get(33);
+		private final Keyword cNM_TYPEKeyword_34 = (Keyword)cAlternatives.eContents().get(34);
+		private final Keyword cRESOURCE_TYPEKeyword_35 = (Keyword)cAlternatives.eContents().get(35);
+		private final Keyword cTASK_TYPEKeyword_36 = (Keyword)cAlternatives.eContents().get(36);
+		private final Keyword cSPINLOCK_TYPEKeyword_37 = (Keyword)cAlternatives.eContents().get(37);
+		private final Keyword cSCHEDULETABLE_TYPEKeyword_38 = (Keyword)cAlternatives.eContents().get(38);
 		
 		////	Value | Reference; // | Enumerator | Auto;
 		// //
@@ -1069,18 +1070,22 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	"COUNTER" | "COM" | "EVENT" | "IPDU" | "ISR" | "MESSAGE" | "NETWORKMESSAGE" | "NM" | "RESOURCE" | "TASK" | "SPINLOCK"
 		//
-		//	"OS_TYPE" | "ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" | "IPDU_TYPE" | "ISR_TYPE" |
+		//	| "SCHEDULETABLE" | "OS_TYPE" | "ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" |
 		//
-		//	"MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE" | "SPINLOCK_TYPE";
+		//	"IPDU_TYPE" | "ISR_TYPE" | "MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE" |
+		//
+		//	"SPINLOCK_TYPE" | "SCHEDULETABLE_TYPE";
 		public ParserRule getRule() { return rule; }
 
 		//ID | "STRING" | "UINT32" | "INT32" | "UINT64" | "INT64" | "FLOAT" | "BOOLEAN" | "ENUM" | "OS" | "ALARM" | "APPMODE" |
 		//
 		//"COUNTER" | "COM" | "EVENT" | "IPDU" | "ISR" | "MESSAGE" | "NETWORKMESSAGE" | "NM" | "RESOURCE" | "TASK" | "SPINLOCK"
 		//
-		//"OS_TYPE" | "ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" | "IPDU_TYPE" | "ISR_TYPE" |
+		//| "SCHEDULETABLE" | "OS_TYPE" | "ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" |
 		//
-		//"MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE" | "SPINLOCK_TYPE"
+		//"IPDU_TYPE" | "ISR_TYPE" | "MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE" |
+		//
+		//"SPINLOCK_TYPE" | "SCHEDULETABLE_TYPE"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ID
@@ -1149,53 +1154,56 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 		//"TASK"
 		public Keyword getTASKKeyword_21() { return cTASKKeyword_21; }
 
-		//"SPINLOCK" "OS_TYPE"
-		public Group getGroup_22() { return cGroup_22; }
-
 		//"SPINLOCK"
-		public Keyword getSPINLOCKKeyword_22_0() { return cSPINLOCKKeyword_22_0; }
+		public Keyword getSPINLOCKKeyword_22() { return cSPINLOCKKeyword_22; }
+
+		//"SCHEDULETABLE"
+		public Keyword getSCHEDULETABLEKeyword_23() { return cSCHEDULETABLEKeyword_23; }
 
 		//"OS_TYPE"
-		public Keyword getOS_TYPEKeyword_22_1() { return cOS_TYPEKeyword_22_1; }
+		public Keyword getOS_TYPEKeyword_24() { return cOS_TYPEKeyword_24; }
 
 		//"ALARM_TYPE"
-		public Keyword getALARM_TYPEKeyword_23() { return cALARM_TYPEKeyword_23; }
+		public Keyword getALARM_TYPEKeyword_25() { return cALARM_TYPEKeyword_25; }
 
 		//"APPMODE_TYPE"
-		public Keyword getAPPMODE_TYPEKeyword_24() { return cAPPMODE_TYPEKeyword_24; }
+		public Keyword getAPPMODE_TYPEKeyword_26() { return cAPPMODE_TYPEKeyword_26; }
 
 		//"COUNTER_TYPE"
-		public Keyword getCOUNTER_TYPEKeyword_25() { return cCOUNTER_TYPEKeyword_25; }
+		public Keyword getCOUNTER_TYPEKeyword_27() { return cCOUNTER_TYPEKeyword_27; }
 
 		//"COM_TYPE"
-		public Keyword getCOM_TYPEKeyword_26() { return cCOM_TYPEKeyword_26; }
+		public Keyword getCOM_TYPEKeyword_28() { return cCOM_TYPEKeyword_28; }
 
 		//"EVENT_TYPE"
-		public Keyword getEVENT_TYPEKeyword_27() { return cEVENT_TYPEKeyword_27; }
+		public Keyword getEVENT_TYPEKeyword_29() { return cEVENT_TYPEKeyword_29; }
 
 		//"IPDU_TYPE"
-		public Keyword getIPDU_TYPEKeyword_28() { return cIPDU_TYPEKeyword_28; }
+		public Keyword getIPDU_TYPEKeyword_30() { return cIPDU_TYPEKeyword_30; }
 
 		//"ISR_TYPE"
-		public Keyword getISR_TYPEKeyword_29() { return cISR_TYPEKeyword_29; }
+		public Keyword getISR_TYPEKeyword_31() { return cISR_TYPEKeyword_31; }
 
 		//"MESSAGE_TYPE"
-		public Keyword getMESSAGE_TYPEKeyword_30() { return cMESSAGE_TYPEKeyword_30; }
+		public Keyword getMESSAGE_TYPEKeyword_32() { return cMESSAGE_TYPEKeyword_32; }
 
 		//"NETWORKMESSAGE_TYPE"
-		public Keyword getNETWORKMESSAGE_TYPEKeyword_31() { return cNETWORKMESSAGE_TYPEKeyword_31; }
+		public Keyword getNETWORKMESSAGE_TYPEKeyword_33() { return cNETWORKMESSAGE_TYPEKeyword_33; }
 
 		//"NM_TYPE"
-		public Keyword getNM_TYPEKeyword_32() { return cNM_TYPEKeyword_32; }
+		public Keyword getNM_TYPEKeyword_34() { return cNM_TYPEKeyword_34; }
 
 		//"RESOURCE_TYPE"
-		public Keyword getRESOURCE_TYPEKeyword_33() { return cRESOURCE_TYPEKeyword_33; }
+		public Keyword getRESOURCE_TYPEKeyword_35() { return cRESOURCE_TYPEKeyword_35; }
 
 		//"TASK_TYPE"
-		public Keyword getTASK_TYPEKeyword_34() { return cTASK_TYPEKeyword_34; }
+		public Keyword getTASK_TYPEKeyword_36() { return cTASK_TYPEKeyword_36; }
 
 		//"SPINLOCK_TYPE"
-		public Keyword getSPINLOCK_TYPEKeyword_35() { return cSPINLOCK_TYPEKeyword_35; }
+		public Keyword getSPINLOCK_TYPEKeyword_37() { return cSPINLOCK_TYPEKeyword_37; }
+
+		//"SCHEDULETABLE_TYPE"
+		public Keyword getSCHEDULETABLE_TYPEKeyword_38() { return cSCHEDULETABLE_TYPEKeyword_38; }
 	}
 
 	public class GenericValueElements extends AbstractParserRuleElementFinder {
@@ -2049,9 +2057,11 @@ public class OilGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	"COUNTER" | "COM" | "EVENT" | "IPDU" | "ISR" | "MESSAGE" | "NETWORKMESSAGE" | "NM" | "RESOURCE" | "TASK" | "SPINLOCK"
 	//
-	//	"OS_TYPE" | "ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" | "IPDU_TYPE" | "ISR_TYPE" |
+	//	| "SCHEDULETABLE" | "OS_TYPE" | "ALARM_TYPE" | "APPMODE_TYPE" | "COUNTER_TYPE" | "COM_TYPE" | "EVENT_TYPE" |
 	//
-	//	"MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE" | "SPINLOCK_TYPE";
+	//	"IPDU_TYPE" | "ISR_TYPE" | "MESSAGE_TYPE" | "NETWORKMESSAGE_TYPE" | "NM_TYPE" | "RESOURCE_TYPE" | "TASK_TYPE" |
+	//
+	//	"SPINLOCK_TYPE" | "SCHEDULETABLE_TYPE";
 	public SpecialIdElements getSpecialIdAccess() {
 		return (pSpecialId != null) ? pSpecialId : (pSpecialId = new SpecialIdElements());
 	}
