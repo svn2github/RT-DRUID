@@ -153,7 +153,7 @@ public class MacrosForSharedData implements IMacrosForSharedData {
 	
 	@Override
 	public String vectorRamUnitialized(String type, String vectorName, String array, String body) {
-		return vectorRam(type, vectorName, array, body);
+		return type + "EE_SHARED_UDATA "+vectorName+array + body;
 	}
 	
 	@Override
@@ -178,7 +178,7 @@ public class MacrosForSharedData implements IMacrosForSharedData {
 
 	@Override
 	public String valueRamUnitialized(String type, String valueName, String body) {
-		return valueRam(type, valueName, body);
+		return type + "EE_SHARED_UDATA "+valueName + body;
 	}
 	
 	@Override
