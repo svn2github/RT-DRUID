@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid i386 support plugin (Core)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.x86.core;singleton:=true
-Bundle-Version: 1.0.0.Nqualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.eu.evidence.modules.oil.x86.Activator
 Require-Bundle: org.eclipse.core.runtime,
  com.eu.evidence.rtdruid.core,

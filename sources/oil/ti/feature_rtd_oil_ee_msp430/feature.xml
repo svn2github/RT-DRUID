@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.msp430"
       label="RT-Druid Oil support of TI msp430 for Erika Enterprise feature"
-      version="1.1.0.Nqualifier"
+      version="1.1.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.msp430.core">
 

@@ -5,7 +5,7 @@ Require-Bundle: org.eclipse.core.runtime,com.eu.evidence.rtdruid.core,
  com.eu.evidence.rtdruid.oil.core
 Bundle-Vendor: Evidence S.r.l.
 Bundle-ActivationPolicy: lazy
-Bundle-Version: 1.1.0.Nqualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-Name: MSP430 support for Erika Enterprise
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.msp430.core;singleton:=true

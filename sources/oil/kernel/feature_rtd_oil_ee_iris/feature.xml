@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.frsh"
       label="RT-Druid Oil for Frescor kernel for Erika Enterprise feature"
-      version="2.4.0.Nqualifier"
+      version="2.4.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.frsh.core">
 

@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.jscan"
       label="RT-Druid schedulability analysis support"
-      version="2.4.0.Nqualifier"
+      version="2.4.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.jscan.core">
 
