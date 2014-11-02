@@ -479,7 +479,23 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 								DEFAULT_SYS_STACK_SIZE))
 					+ "\n\n");
 		}
-		
+
+		// used by ORTI
+		final String stackSymbol;
+		switch (currentCompiler) {
+		case TASKING : stackSymbol =  Tasking_systemStackSymbols[currentRtosId];
+						break;
+		case GNU:
+		case DIAB:
+				stackSymbol =  Gcc_Diab_systemStackSymbols[currentRtosId];
+				break;
+		default: stackSymbol = ""; break;
+		}
+		EEStackData sys_stack = new EEStackData(0,
+				new long[] { Long.decode(ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE), "" + DEFAULT_SYS_STACK_SIZE))},
+				new long[] {0},
+				new String[] {" (int)(&"+stackSymbol+")"}, true);
+
 		if (DEF__MULTI_STACK__.equals(parent.getStackType())) {
 			ICommentWriter commentC = SectionWriter.getCommentWriter(ool, FileTypes.C);
 			final boolean needStackMonitoring = parent.checkKeyword(ISimpleGenResKeywords.OS_STACK_MONITORING);
@@ -505,22 +521,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			final StringBuffer sbStackDecl = new StringBuffer();
 			final StringBuffer sbStackDeclSize = new StringBuffer();
 			
-			// used by ORTI
-			String stackSymbol;
-			switch (currentCompiler) {
-			case TASKING : stackSymbol =  Tasking_systemStackSymbols[currentRtosId];
-							break;
-			case GNU:
-			case DIAB:
-					stackSymbol =  Gcc_Diab_systemStackSymbols[currentRtosId];
-					break;
-			default: stackSymbol = ""; break;
-			}
+			
 			ArrayList<EEStackData> stackTmp = new ArrayList<EEStackData>();
-			EEStackData sys_stack = new EEStackData(0,
-					new long[] { Long.decode(ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE), "" + DEFAULT_SYS_STACK_SIZE))},
-					new long[] {0},
-					new String[] {" (int)(&"+stackSymbol+")"}, true);
 	
 			// ------------- Buffers --------------------
 			
@@ -851,6 +853,8 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 			        sbStack);
 		} else {
 			
+			ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
+			sgrCpu.setObject(SGRK_OS_STACK_LIST, new EEStackData[] {sys_stack});
 		}
 	}
 
