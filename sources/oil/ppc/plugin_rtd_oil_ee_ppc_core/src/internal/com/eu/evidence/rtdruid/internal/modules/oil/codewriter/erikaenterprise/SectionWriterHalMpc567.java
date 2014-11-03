@@ -1082,7 +1082,8 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		    {	// PATHs
 	        	HashMap<String, ?> options = parent.getOptions();
 
-	        	{ 
+	        	sbMakefile.append(CommonUtils.addMakefileDefinesInclude());
+	        	if (!multicore) { 
 			        String outputDir = "Debug";
 			        String appBase = "..";
 			        
@@ -1102,7 +1103,6 @@ public class SectionWriterHalMpc567 extends SectionWriter
 			    	
 			    	
 			        sbMakefile.append(
-			        		CommonUtils.addMakefileDefinesInclude() +
 			                "APPBASE := " + appBase + "\n" +
 			                "OUTBASE := " + outputDir + "\n\n"
 			        );
@@ -1165,35 +1165,35 @@ public class SectionWriterHalMpc567 extends SectionWriter
 		    }
 
 			ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
+	
+			{ // linker script
+				String link = null;
+				if (sgrCpu.containsProperty(SGR_OS_CPU_LINKERSCRIPT)) {
+					link = sgrCpu.getString(SGR_OS_CPU_LINKERSCRIPT);
+				}
+				if (link == null && sgrCpu.containsProperty(SGR_OS_MCU_LINKERSCRIPT)) {
+					link = sgrCpu.getString(SGR_OS_MCU_LINKERSCRIPT);
+				}
+				
+				if (link != null) {
+					sbVariables.append("EE_LINKERSCRIPT := " + link+ "\n");
+				}
+				
+			}
 
-		{ // linker script
-			String link = null;
-			if (sgrCpu.containsProperty(SGR_OS_CPU_LINKERSCRIPT)) {
-				link = sgrCpu.getString(SGR_OS_CPU_LINKERSCRIPT);
+			if (multicore) {
+				if (sgrCpu.containsProperty(SGRK__MAKEFILE_CPU_EXT_VARS__)) {
+					sbMakefile.append(sgrCpu.getString(SGRK__MAKEFILE_CPU_EXT_VARS__));
+				}
+				sbMakefile.append("\n");
+				sgrCpu.setProperty(SGRK__MAKEFILE_CPU_EXT_VARS__, sbMakefile.toString());
+			} else {
+				
+				if (sgrCpu.containsProperty(SGRK__MAKEFILE_EXTENTIONS__)) {
+					sbMakefile.append(sgrCpu.getString(SGRK__MAKEFILE_EXTENTIONS__));
+				}
+				sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile.toString());
 			}
-			if (link == null && sgrCpu.containsProperty(SGR_OS_MCU_LINKERSCRIPT)) {
-				link = sgrCpu.getString(SGR_OS_MCU_LINKERSCRIPT);
-			}
-			
-			if (link != null) {
-				sbVariables.append("EE_LINKERSCRIPT := " + link+ "\n");
-			}
-			
-		}
-
-//			if (multicore) {
-//				if (sgrCpu.containsProperty(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__)) {
-//					sbMakefile.append(sgrCpu.getString(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__));
-//				}
-//				sgrCpu.setProperty(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__, sbCommon.toString());
-//			} else {
-//				sbVariables.append(sbCommon.toString());
-//			}
-			
-			if (sgrCpu.containsProperty(SGRK__MAKEFILE_EXTENTIONS__)) {
-				sbMakefile.append(sgrCpu.getString(SGRK__MAKEFILE_EXTENTIONS__));
-			}
-			sgrCpu.setProperty(SGRK__MAKEFILE_EXTENTIONS__, sbMakefile.toString());
 
 			if (sgrCpu.containsProperty(SGRK__MAKEFILE_CPU_EXT_VARS__)) {
 				sbVariables.append(sgrCpu.getString(SGRK__MAKEFILE_CPU_EXT_VARS__));

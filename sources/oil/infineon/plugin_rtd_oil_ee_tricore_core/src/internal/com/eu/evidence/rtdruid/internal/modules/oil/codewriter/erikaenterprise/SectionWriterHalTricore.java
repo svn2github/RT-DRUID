@@ -677,7 +677,7 @@ public class SectionWriterHalTricore extends SectionWriter
 		
 		if (multicore) {
 			if (sgrCpu.containsProperty(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__)) {
-				sbMakefile.append(sgrCpu.getString(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__));
+				sbCommon.append(sgrCpu.getString(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__));
 			}
 			sgrCpu.setProperty(SGRK__COMMON_MAKEFILE_MP_EXT_VARS__, sbCommon.toString());
 		} else {
