@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Templates for Erika Enterprise for ARM Cortex
 Bundle-SymbolicName: com.eu.evidence.ee.templates.cortex;singleton:=true
-Bundle-Version: 2.4.0.qualifier
+Bundle-Version: 2.5.0.Nqualifier
 Require-Bundle: com.eu.evidence.templates.core
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

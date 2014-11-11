@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid nios2 plugin (Core)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.nios2.core;singleton:=true
-Bundle-Version: 2.4.0.qualifier
+Bundle-Version: 2.5.0.Nqualifier
 Bundle-Activator: com.eu.evidence.modules.oil.nios2.Activator
 Require-Bundle: org.eclipse.core.runtime,
  com.eu.evidence.rtdruid.core,

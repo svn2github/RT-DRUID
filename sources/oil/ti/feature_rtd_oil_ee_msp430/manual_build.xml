@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="com.eu.evidence.rtdruid.oil.ee.msp430" default="build.update.jar" basedir=".">
 
-	<property name="frtd_oil_ee_msp430_v"         value="1.1.0"/>
-	<property name="rtd_oil_ee_msp430_core_v"     value="1.1.0"/>
+	<property name="frtd_oil_ee_msp430_v"         value="1.2.0"/>
+	<property name="rtd_oil_ee_msp430_core_v"     value="1.2.0"/>
 
 
 	<!--

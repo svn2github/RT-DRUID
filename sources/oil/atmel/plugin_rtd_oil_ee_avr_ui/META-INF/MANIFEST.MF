@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Avr UI Plug-in
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.avr.ui;singleton:=true
-Bundle-Version: 2.4.0.qualifier
+Bundle-Version: 2.5.0.Nqualifier
 Bundle-Activator: com.eu.evidence.rtdruid.modules.oi.avr.ui.Activator
 Bundle-Vendor: Evidence S.r.l.
 Require-Bundle: org.eclipse.ui,
@@ -13,6 +13,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.cdt.ui,
  com.eu.evidence.rtdruid.oil.core,
  com.eu.evidence.rtdruid.oil.avr.core,
- com.eu.evidence.rtdruid.oil.ee.ui;bundle-version="2.4.0"
+ com.eu.evidence.rtdruid.oil.ee.ui;bundle-version="2.5.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

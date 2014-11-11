@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.ee"
       label="Erika Enterprise source Feature"
-      version="2.4.0.qualifier"
+      version="2.5.0.Nqualifier"
       provider-name="Evidence SRL">
 
    <description url="http://www.evidence.eu.com">
@@ -107,8 +107,8 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="com.eu.evidence.templates.core" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="com.eu.evidence.rtdruid.oil.ee.core" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="com.eu.evidence.templates.core" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="com.eu.evidence.rtdruid.oil.ee.core" version="1.1.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
