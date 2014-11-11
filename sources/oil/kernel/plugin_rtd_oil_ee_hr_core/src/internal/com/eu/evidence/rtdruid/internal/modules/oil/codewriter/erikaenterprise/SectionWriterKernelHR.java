@@ -844,13 +844,14 @@ public class SectionWriterKernelHR extends SectionWriter implements
 			/*******************************************************************
 			 * WRITE BUFFERS
 			 ******************************************************************/
-		
+			String retroCompabilityDefine = "#ifndef EE_THREAD_PTR\n#define EE_THREAD_PTR EE_ADDR\n#endif\n";
 			// declare task and theirs address
 			buffer.append(indent1 + commentWriterC.writerSingleLineComment("Definition of task's body") //\n"
 				+ sbDecThread + "\n\n"
 				+ contractsBuffer // Contracts
 				+ commentWriterC.writerBanner("Tasks")
 				+ ee_th
+				+ retroCompabilityDefine
 				+ indent1 + "const EE_THREAD_PTR EE_hal_thread_body["+MAX_TASK+"] = {\n"
 				+ sbStub
 				+ indent1 + "};\n\n");
@@ -1002,7 +1003,7 @@ public class SectionWriterKernelHR extends SectionWriter implements
 					}
 					//Write the define for the resource identifier
 					String resIdString = "0x"+Long.toHexString(resId);
-					buffer_ee_h.append("#define "+entry.getKey()+" "+resIdString+";\n");
+					buffer_ee_h.append("#define "+entry.getKey()+" "+resIdString+"\n");
 					
 				}
 				if(true){
