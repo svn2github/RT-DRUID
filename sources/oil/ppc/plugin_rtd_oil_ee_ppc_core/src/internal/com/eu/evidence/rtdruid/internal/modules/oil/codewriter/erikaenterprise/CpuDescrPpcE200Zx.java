@@ -55,7 +55,7 @@ public class CpuDescrPpcE200Zx extends CpuHwDescription implements CpuHwDescript
 	 * @see com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.IRequiresUpdates#update(com.eu.evidence.rtdruid.vartree.IVarTree, com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList[])
 	 */
 	@Override
-	public void update(IVarTree vt, IOilObjectList[] objects, final int currentCpuId) {
+	public void update(ErikaEnterpriseWriter parent, IVarTree vt, IOilObjectList[] objects, final int currentCpuId) {
 		
 		{
 		/***********************************************************************

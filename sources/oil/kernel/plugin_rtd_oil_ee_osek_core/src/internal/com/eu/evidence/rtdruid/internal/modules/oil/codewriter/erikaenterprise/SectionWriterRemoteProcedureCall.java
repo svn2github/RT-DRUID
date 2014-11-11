@@ -46,7 +46,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		IEEWriterKeywords, IRemoteNotificationsConstants,
 		IExtractObjectsExtentions, IExtractKeywordsExtentions, IGetEEOPTExtentions {
 	
-	public final static String DEF__USE_RPC__ = "use new Remote Procedure Call feature";
+	public final static String DEF__USE_RPC__ = IEEWriterKeywords.DEF__USE_RPC__;
 	private final String indent1 = IWritersKeywords.INDENT;
 	private final String indent2 = indent1 + IWritersKeywords.INDENT;
 	private final String indent3 = indent2 + IWritersKeywords.INDENT;
@@ -127,7 +127,6 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		final String MAX_CPU = (binaryDistr ? "RTD_" : "EE_") + "MAX_CPU";
 		final boolean hasAccessProtection = parent.checkKeyword(IWritersKeywords.KERNEL_SERVICE_PROTECTION);
 
-		
 		
 		
 		IMacrosForSharedData macros = new EmptyMacrosForSharedData();
@@ -426,6 +425,7 @@ public class SectionWriterRemoteProcedureCall extends SectionWriter implements
 		}
 		
 		
+
 		return answer;
 	}
 	

@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
+import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilWriterBuffer;
@@ -311,6 +312,7 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
          **********************************************************************/
 	    for (int rtosId=0; rtosId<oilObjects.length; rtosId++) {
 	        final IOilObjectList ool = oilObjects[rtosId];
+
             final String cpuName = ErikaEnterpriseWriter.getOSName(ool);
 			final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 
@@ -450,20 +452,21 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
         int portNumber = 10000;
         for (int i=0; i<oilObjects.length; i++) {
 	        final IOilObjectList ool = oilObjects[i];
+
             final String cpuName = ErikaEnterpriseWriter.getOSName(ool);
             
             if (i==0) {
             	sbMakefile.append(commentWriter.writerBanner("Master CPU") +
 						"export CPU_MASTER_NAME := "+cpuName+"\n" +
 						"export CPU_MASTER_PORT := "+portNumber+"\n" +
-						"export CPU_MASTER_ID   := "+(i)+"\n" +
+						"export CPU_MASTER_ID   := "+i+"\n" +
 						"export CPU_MASTER_ELF  := $(PROJECT)_"+cpuName+".elf\n" +
 						"export CPU_MASTER_DIR  := "+cpuName+"\n\n");
             } else {
                 sbSlavesList.append(commentWriter.writerSingleLineComment("Slave cpu " + cpuName) +
 						"export CPU"+i+"_NAME := "+cpuName+"\n" +
 						"export CPU"+i+"_PORT := "+portNumber+"\n" +
-						"export CPU"+i+"_ID   := "+(i)+"\n" +
+						"export CPU"+i+"_ID   := "+i+"\n" +
 						"export CPU"+i+"_ELF  := $(PROJECT)_"+cpuName+".elf\n" +
 						"export CPU"+i+"_DIR  := "+cpuName+"\n\n");
             	sbSlavesDirs.append(" $(CPU"+i+"_DIR)");

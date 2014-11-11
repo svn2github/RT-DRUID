@@ -19,6 +19,7 @@ public interface CortexConstants {
 	public static final String SGRK__CORTEX_CPU_MODEL__ = "sgrk_os__cortex_cpu_model";
 	public static final String SGRK__CORTEX_M0__ = "M0";
 	public static final String SGRK__CORTEX_M4__ = "M4";
+	public static final String SGRK__CORTEX_A9__ = "A9";
 
 	public static final String SGRK__CORTEX_JLINK__ = "sgrk_os__cortex_jlink";
 //	public static final String SGRK__CORTEX_IAR__ = "sgrk_os__iar_compiler";
@@ -51,5 +52,21 @@ public interface CortexConstants {
 	public static final String DEFAULT_CORTEXMX_CONF_CCS_CC = "C:\\Programmi\\Texas Instruments\\ccsv4";
 	public static final String DEFAULT_CORTEXMX_CONF_KEIL_CC = "C:\\Keil\\ARM";
 	public static final String DEFAULT_CORTEXMX_CONF_GNU_CC = "C:\\gnu\\ARM";
+
+
+	/***************************************************************************
+	 *
+	 * CORTEX Ax preferences
+	 *
+	 **************************************************************************/
+	public final static String PREF_CORTEXAx_GNU_CC_PATH = "preference_cortex_ax__path_for_gnu_compiler";
+
+
+	/***************************************************************************
+	 *
+	 * Default values CORTEX Ax
+	 *
+	 **************************************************************************/
+	public static final String DEFAULT_CORTEXAx_CONF_GNU_CC = "C:\\gnu\\ARM";
 
 }

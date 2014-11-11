@@ -131,6 +131,7 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 	 */
 	public final static String SGRK__FORCE_ARRAYS_LIST__ = "__LIST_OF_REQUIRED_OBJECT_TYPES__";
 
+
 	/** Identifies the multi stack option */
 	public final static String DEF__MULTI_STACK__ = "__MULTI__";
 
@@ -286,5 +287,7 @@ public interface IEEWriterKeywords extends IDistributionConstant, IEEoptConstant
 
 	public final static String SIMPLE_SPINLOCK = "enable simple spinlock handling";
 	public final static String QUEUED_SPINLOCK = "enable queued spinlock handling";
+
+	public static final String DEF__USE_RPC__ = "use new Remote Procedure Call feature";
 
 }

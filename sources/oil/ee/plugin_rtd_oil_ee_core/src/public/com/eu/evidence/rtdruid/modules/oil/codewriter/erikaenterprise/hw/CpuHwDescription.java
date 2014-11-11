@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter;
 import com.eu.evidence.rtdruid.modules.oil.abstractions.IOilObjectList;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.CommentsManager;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.interfaces.IMacrosForSharedData;
@@ -112,7 +113,7 @@ public class CpuHwDescription {
 	}
 	
 	public interface IRequiresUpdates {
-		public void update(IVarTree vt, IOilObjectList[] objects, int currentCpuId);
+		public void update(ErikaEnterpriseWriter parent, IVarTree vt, IOilObjectList[] objects, int currentCpuId);
 	}
 	
 	
@@ -197,6 +198,8 @@ public class CpuHwDescription {
 	 * The maximum number of nested interrupts 
 	 */
 	protected int maxNestedInts = DEFAULT_MAX_NESTING_LEVEL;
+
+	protected int startingIsrPriority = 0;
 
 	protected Map<String, McuCounterDevice> mcuCounterDevices = new HashMap<String, CpuHwDescription.McuCounterDevice>();
 
@@ -305,5 +308,13 @@ public class CpuHwDescription {
 	 */
 	public boolean hasMMU() {
 		return mmuAvailable;
+	}
+
+	/**
+	 *
+	 * @return the lowest available priority. The default is 0, when there is no low priority reserved
+	 */
+	public int getStartingIsrPriorities() {
+		return startingIsrPriority;
 	}
 }

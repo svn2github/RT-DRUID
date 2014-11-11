@@ -60,7 +60,7 @@ public class CpuDescrTricore extends CpuHwDescription implements IRequiresUpdate
 	 * @see com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.CpuHwDescription.IRequiresUpdates#update(com.eu.evidence.rtdruid.modules.oil.abstractions.ISimpleGenRes)
 	 */
 	@Override
-	public void update(IVarTree vt, IOilObjectList[] oilObjects, int currentCpuId) {
+	public void update(ErikaEnterpriseWriter parent, IVarTree vt, IOilObjectList[] oilObjects, int currentCpuId) {
 		
         String model = null;
 		for (IOilObjectList ool : oilObjects) {

@@ -15,7 +15,7 @@ import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKe
 import com.eu.evidence.rtdruid.vartree.DataPath;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 
-class MakefileUtils {
+public class MakefileUtils {
 	
 	public static LinkedHashSet<String> getSources(IOilObjectList ool, IVarTree vt) {
 		
