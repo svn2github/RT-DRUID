@@ -508,7 +508,14 @@ public class SectionWriterCommonKernelDefs extends SectionWriter
 					String[] options = parent.extractEE_Opts(EE_OPT_COMMON_AUTO_ONLY | EE_OPT_CPU_ONLY, rtosId);
 					for (int i=0; i<options.length; i++) {
 						if (!not_valid_defines.contains(options[i])) {
-							buffer_ee_opt.append("#define " + options[i] + "\n");
+							if ("__NIOS2__".equals(options[i])) {
+								buffer.append( "#ifndef " + options[i] + "\n" +
+										indent + "#define " + options[i] + "\n" +
+										"#endif\n");
+							} else {
+								buffer_ee_opt.append("#define " + options[i] + "\n");
+							}
+							
 						}
 					}
 				}

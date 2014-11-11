@@ -108,7 +108,7 @@ public class SectionWriterHalNios2 extends SectionWriter
 		
 		ArrayList<IOilWriterBuffer> answer = new ArrayList<IOilWriterBuffer>();
 		ErikaEnterpriseWriter.appendBuffers(answer, writeEE_NIOSII_CPU());
-		ErikaEnterpriseWriter.appendBuffers(answer, parent.writeEEOptAsDefine());
+//		ErikaEnterpriseWriter.appendBuffers(answer, parent.writeEEOptAsDefine());
 
 		// prepare the answer
 		return (IOilWriterBuffer[]) answer.toArray(new OilWriterBuffer[answer.size()]);
