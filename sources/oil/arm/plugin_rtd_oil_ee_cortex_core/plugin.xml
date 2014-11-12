@@ -6,17 +6,26 @@
       <implementation_file
             path="oil_files/cortex_mx.oil">
       </implementation_file>
+      <implementation_file
+            path="oil_files/cortex_ax_xenpv.oil">
+      </implementation_file>
    </extension>
    <extension
          point="com.eu.evidence.rtdruid.oil.ee.core.eeCpuDescription">
       <cpu
             class="com.eu.evidence.rtdruid.internal.modules.oil.cortex.CpuDescrCortexMx">
       </cpu>
+      <cpu
+            class="com.eu.evidence.rtdruid.internal.modules.oil.cortex.CpuDescrCortexAxXenPV">
+      </cpu>
    </extension>
    <extension
          point="com.eu.evidence.rtdruid.oil.ee.core.eeSectionWriter">
       <writer
             class="com.eu.evidence.rtdruid.internal.modules.oil.cortex.SectionWriterHalCortexMx">
+      </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.cortex.SectionWriterHalCortexAxXenPV">
       </writer>
   </extension>
 

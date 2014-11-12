@@ -57,9 +57,10 @@ public interface CortexConstants {
 	/***************************************************************************
 	 *
 	 * CORTEX Ax preferences
-	 *
+	 *  
 	 **************************************************************************/
 	public final static String PREF_CORTEXAx_GNU_CC_PATH = "preference_cortex_ax__path_for_gnu_compiler";
+	public final static String PREF_CORTEXAxXenPV_GNU_CC_PATH = "preference_cortex_ax_xenpv__path_for_gnu_compiler";
 
 
 	/***************************************************************************

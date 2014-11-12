@@ -1,0 +1,54 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+            CORTEX_AX_XENPV {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                BOOLEAN [
+                    TRUE {
+                        BOOLEAN [
+                            TRUE {
+                                UINT32 SYS_SIZE;
+                            },
+                            FALSE
+                        ] IRQ_STACK;
+                    },
+                    FALSE
+                ] MULTI_STACK = FALSE;
+
+                ENUM [
+			GNU
+                ] COMPILER_TYPE;
+
+                ENUM [
+			A7
+                ] MODEL;
+                FLOAT CPU_CLOCK;
+
+                UINT32 SYS_STACK_SIZE;
+            }
+
+        ] CPU_DATA[];
+
+        ENUM [
+		ALLWINNER {
+                ENUM [
+                    CUSTOM {
+                        STRING MODEL;
+						STRING LINKERSCRIPT;
+						STRING INCLUDE_C;
+						STRING INCLUDE_S;
+						STRING STARTUP;
+                    },
+                    A20
+		] MODEL;
+		}
+	] MCU_DATA[];
+
+	ENUM [
+			CUBIEBOARD2
+		] BOARD_DATA = NO_BOARD;
+   };
+};

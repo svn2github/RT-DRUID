@@ -71,7 +71,10 @@ public interface IWritersKeywords {
 
 	/** Identifies a generic Cortex Mx architecture (one or more cpu?) */
 	public final static String CPU_CORTEX_MX = "CORTEX_MX";
-	
+
+	/** Identifies a generic Cortex Ax (XEN) architecture (one or more cpu?) */
+	public final static String CPU_CORTEX_AX_XENPV = "CORTEX_AX_XENPV";
+
 	/** Identifies a PIC 30 architecture (one or more cpu?) */
 	public final static String CPU_PIC_30 = "PIC30";
 
