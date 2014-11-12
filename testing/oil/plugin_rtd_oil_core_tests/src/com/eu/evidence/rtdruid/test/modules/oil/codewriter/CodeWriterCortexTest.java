@@ -1179,5 +1179,47 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
-	
+	@Test public void testCortexAxXenPV() {
+	    final String text =
+				"CPU mySystem {\n" +
+				"  OS myOs {\n" +
+				"    EE_OPT = \"EE_DEBUG\";\n" +
+				"    EE_OPT = \"__ASSERT__\";\n" +
+				"    EE_OPT = \"EE_EXECUTE_FROM_RAM\";\n" +
+				"\n" +
+				"    STATUS = EXTENDED;\n" +
+				"    USERESSCHEDULER = FALSE;\n" +
+				"\n" +
+				"    MCU_DATA = ALLWINNER {\n" +
+				"      MODEL = A20;\n" +
+				"    };\n" +
+				"\n" +
+				"    BOARD_DATA = CUBIEBOARD2;\n" +
+				"\n" +
+				"    MASTER_CPU = \"master\";\n" +
+				"      CPU_DATA = CORTEX_AX_XENPV {\n" +
+				"      CPU_CLOCK = 660.0;\n" +
+				"      APP_SRC = \"main.c\";\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"      MODEL = A7;\n" +
+				"      ID = \"master\";\n" +
+				"    };\n" +
+				"\n" +
+				"    EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+				"    KERNEL_TYPE = BCC1;\n" +
+				"\n" +
+				"    ORTI_SECTIONS = ALL;\n" +
+				"  };\n" +
+				"\n" +
+				"  TASK Hello_world_task {\n" +
+				"    CPU_ID = \"master\";\n" +
+				"    PRIORITY = 2;\n" +
+				"    ACTIVATION = 1;\n" +
+				"    STACK = SHARED;\n" +
+				"    SCHEDULE = FULL;\n" +
+				"  };\n" +
+				"\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
 }
