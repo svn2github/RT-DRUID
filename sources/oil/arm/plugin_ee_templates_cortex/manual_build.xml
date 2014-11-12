@@ -15,6 +15,7 @@
 
 		<fileset dir="${ee.base.location}" id="ee_examples">
 			<include name="examples/cortex_mx/**/*"/>
+			<include name="examples/cortex_ax/**/*"/>
 		</fileset>
 
 
