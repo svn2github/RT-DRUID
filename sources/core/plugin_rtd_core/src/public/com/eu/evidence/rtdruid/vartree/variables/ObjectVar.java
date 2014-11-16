@@ -59,6 +59,11 @@ public abstract class ObjectVar implements IVariable {
 		return value == null ? "null" : value.toString();
 	}
 	
+	@Override
+	public int hashCode() {
+		return value == null ? 0 : value.hashCode();
+	}
+	
 	public boolean equals(Object o) {
 		if (o instanceof ObjectVar) {
 			return this.value == null ? 
