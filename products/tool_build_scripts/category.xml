@@ -81,6 +81,9 @@
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.cortex_2.5.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.cortex" version="2.5.0.Nqualifier">
       <category name="RT_Druid_for_ee"/>
    </feature>
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.cortex_rx_1.0.0.Nqualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.cortex_rx" version="1.0.0.Nqualifier">
+      <category name="RT_Druid_for_ee"/>
+   </feature>
    <feature url="features/com.eu.evidence.ee.templates.cortex_2.5.0.Nqualifier.jar" id="com.eu.evidence.ee.templates.cortex" version="2.5.0.Nqualifier">
       <category name="EE_templates"/>
    </feature>
