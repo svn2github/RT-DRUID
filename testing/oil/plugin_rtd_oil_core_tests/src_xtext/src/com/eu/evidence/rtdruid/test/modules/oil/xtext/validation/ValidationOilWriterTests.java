@@ -10,6 +10,7 @@ import junit.framework.Assert;
 
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper;
 import org.eclipselabs.xtext.utils.unittesting.FluentIssueCollection;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -185,6 +186,13 @@ public class ValidationOilWriterTests {
 	}
 
 	public static class ValidationOilInputNiosIITest extends CodeWriterNiosIITest {
+		
+		@Override
+		@Test
+		public void testHR_2() {
+			
+		}
+		
 		@Override
 		public DefaultTestResult commonWriterTest(String oil_text, int expected_cpu) {
 			ValidationOilWriterTests.validateTest(oil_text);
