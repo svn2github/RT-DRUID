@@ -1222,4 +1222,98 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 				"};\n";
 		commonWriterTest(text, 1);
 	}
+	
+	
+
+	@Test public void testCortexRx0() {
+	    final String text =
+				"CPU test_application {\n" +
+				"	OS EE {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"		\n" +
+				"		CPU_DATA = CORTEX_RX {\n" +
+				"			MODEL = R4;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			COMPILER_TYPE = CCS;\n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"		MCU_DATA = TI {\n" +
+				"			MODEL = TMS570;\n" +
+				"		};\n" +
+				"		EE_OPT = \"__TI_DRIVER_LIB__\";\n" +
+				"		EE_OPT = \"__USE_USER_LED__\";\n" +
+				"		STATUS 				= EXTENDED;\n" +
+				"		STARTUPHOOK 		= FALSE;\n" +
+				"		ERRORHOOK 			= FALSE;\n" +
+				"		SHUTDOWNHOOK 		= FALSE;\n" +
+				"		PRETASKHOOK 		= FALSE;\n" +
+				"		POSTTASKHOOK 		= FALSE;\n" +
+				"		USEGETSERVICEID 	= FALSE;\n" +
+				"		USEPARAMETERACCESS 	= FALSE;\n" +
+				"		USERESSCHEDULER 	= FALSE;\n" +
+				"		KERNEL_TYPE = FP;\n" +
+				"	};\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		ACTIVATION = 1;\n" +
+				"		STACK = SHARED;\n" +
+				"	};\n" +
+				"  TASK Task2 {\n" +
+				"    PRIORITY = 0x02;\n" +
+				"    AUTOSTART = FALSE;\n" +
+				"    ACTIVATION = 1;\n" +
+				"    STACK = SHARED;\n" +
+				"  };\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	@Test public void testCortexRx1() {
+	    final String text =
+				"CPU mySystem {\n" +
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"		CPU_DATA = CORTEX_RX {\n" +
+				"			MODEL = R4;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			COMPILER_TYPE = CCS; \n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"		MCU_DATA = TI {\n" +
+				"			MODEL = TMS570;\n" +
+				"		};\n" +
+				"		EE_OPT = \"__USE_USER_LED__\";\n" +
+				"		EE_OPT = \"__TI_DRIVER_LIB__\";\n" +
+				"		EE_OPT = \"__ALLOW_NESTED_IRQ__\";\n" +
+				"		KERNEL_TYPE = BCC1;\n" +
+				"		EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"	};\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		ACTIVATION = 1;\n" +
+				"	};\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
 }
