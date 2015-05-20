@@ -28,7 +28,17 @@ public class OilModelLoader {
 	static {
 		OilStandaloneSetup.doSetup();
 	}
-	
+
+	public OilFile load(URI path, HashMap<?, ?> options) throws IOException {
+		ResourceSet resourceSet = new ResourceSetImpl();
+//		Resource resource = Resource.Factory.Registry.INSTANCE.getFactory(path, "oil").createResource(path);
+
+		Resource resource = resourceSet.createResource(path);
+		resourceSet.getResources().add(resource);
+		resource.load(options);
+		return (OilFile) (resource.getContents().isEmpty() ? null : resource.getContents().get(0));
+	}
+
 
 	public OilFile load(URI path, InputStream in, HashMap<?, ?> options) throws IOException {
 		if (path == null) {
