@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.osek"
       label="RT-Druid Oil for OSEK for Erika Enterprise feature"
-      version="2.5.0.Nqualifier"
+      version="2.5.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.osek.core">
 

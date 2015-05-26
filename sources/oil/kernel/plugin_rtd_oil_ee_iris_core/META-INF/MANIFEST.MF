@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Frescor kernel support plugin (Core)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.frsh.core;singleton:=true
-Bundle-Version: 2.5.0.Nqualifier
+Bundle-Version: 2.5.0.qualifier
 Bundle-Activator: com.eu.evidence.modules.oil.frsh.Activator
 Require-Bundle: org.eclipse.core.runtime,
  com.eu.evidence.rtdruid.core,
