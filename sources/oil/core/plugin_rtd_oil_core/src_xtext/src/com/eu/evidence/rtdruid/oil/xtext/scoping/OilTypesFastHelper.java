@@ -118,7 +118,7 @@ public class OilTypesFastHelper implements IOilTypesHelper {
 					}
 				}
 				
-				{	// search if something is already computed
+				if (!handledPath.isEmpty()) {	// search if something is already computed
 					remaningPath.addFirst(handledPath.removeLast());
 					while (values == null && !handledPath.isEmpty()) {
 						final String key = toPathString(handledPath);
