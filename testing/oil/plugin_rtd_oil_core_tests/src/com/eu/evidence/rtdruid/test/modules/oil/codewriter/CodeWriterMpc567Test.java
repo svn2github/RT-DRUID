@@ -2668,4 +2668,381 @@ public class CodeWriterMpc567Test extends AbstractCodeWriterTest {
 			"};\n";
 		commonWriterTest(text, 2);
 	}
+	
+	
+
+	@Test public void test32Priorities_BCC1() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"\n"+
+			"		KERNEL_TYPE = BCC1;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK Task01 { PRIORITY = 1; };\n"+
+			"	TASK Task02 { PRIORITY = 2; };\n"+
+			"	TASK Task03 { PRIORITY = 3; };\n"+
+			"	TASK Task04 { PRIORITY = 4; };\n"+
+			"	TASK Task05 { PRIORITY = 5; };\n"+
+			"	TASK Task06 { PRIORITY = 6; };\n"+
+			"	TASK Task07 { PRIORITY = 7; };\n"+
+			"	TASK Task08 { PRIORITY = 8; };\n"+
+			"	TASK Task09 { PRIORITY = 9; };\n"+
+			"	TASK Task10 { PRIORITY = 10; };\n"+
+			"	TASK Task11 { PRIORITY = 11; };\n"+
+			"	TASK Task12 { PRIORITY = 12; };\n"+
+			"	TASK Task13 { PRIORITY = 13; };\n"+
+			"	TASK Task14 { PRIORITY = 14; };\n"+
+			"	TASK Task15 { PRIORITY = 15; };\n"+
+			"	TASK Task16 { PRIORITY = 16; };\n"+
+			"	TASK Task17 { PRIORITY = 17; };\n"+
+			"	TASK Task18 { PRIORITY = 18; };\n"+
+			"	TASK Task19 { PRIORITY = 19; };\n"+
+			"	TASK Task20 { PRIORITY = 20; };\n"+
+			"	TASK Task21 { PRIORITY = 21; };\n"+
+			"	TASK Task22 { PRIORITY = 22; };\n"+
+			"	TASK Task23 { PRIORITY = 23; };\n"+
+			"	TASK Task24 { PRIORITY = 24; };\n"+
+			"	TASK Task25 { PRIORITY = 25; };\n"+
+			"	TASK Task26 { PRIORITY = 26; };\n"+
+			"	TASK Task27 { PRIORITY = 27; };\n"+
+			"	TASK Task28 { PRIORITY = 28; };\n"+
+			"	TASK Task29 { PRIORITY = 29; };\n"+
+			"	TASK Task30 { PRIORITY = 30; };\n"+
+			"	TASK Task31 { PRIORITY = 31; };\n"+
+			"	TASK Task32 { PRIORITY = 32; };\n"+
+			"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void test32Priorities_BCC2() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"\n"+
+			"		KERNEL_TYPE = BCC2;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK Task01 { PRIORITY = 1; };\n"+
+			"	TASK Task02 { PRIORITY = 2; };\n"+
+			"	TASK Task03 { PRIORITY = 3; };\n"+
+			"	TASK Task04 { PRIORITY = 4; };\n"+
+			"	TASK Task05 { PRIORITY = 5; };\n"+
+			"	TASK Task06 { PRIORITY = 6; };\n"+
+			"	TASK Task07 { PRIORITY = 7; };\n"+
+			"	TASK Task08 { PRIORITY = 8; };\n"+
+			"};\n";
+	    commonWriterTest(text, 1);
+	}
+
+	@Test public void test9Priorities_BCC2() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"\n"+
+			"		KERNEL_TYPE = BCC2;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK Task01 { PRIORITY = 1; };\n"+
+			"	TASK Task02 { PRIORITY = 2; };\n"+
+			"	TASK Task03 { PRIORITY = 3; };\n"+
+			"	TASK Task04 { PRIORITY = 4; };\n"+
+			"	TASK Task05 { PRIORITY = 5; };\n"+
+			"	TASK Task06 { PRIORITY = 6; };\n"+
+			"	TASK Task07 { PRIORITY = 7; };\n"+
+			"	TASK Task08 { PRIORITY = 8; };\n"+
+			"	TASK Task09 { PRIORITY = 9; };\n"+
+			"};\n";
+	    boolean ok = false;
+	    try {
+	    	commonWriterTest(text, 1);
+	    } catch (RuntimeException e) {
+	    	ok = true;
+	    }
+	    assertTrue(ok);
+	}
+	
+	@Test public void test32PrioritiesECC1() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"\n"+
+			"		KERNEL_TYPE = ECC1;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK Task01 { PRIORITY = 1; };\n"+
+			"	TASK Task02 { PRIORITY = 2; };\n"+
+			"	TASK Task03 { PRIORITY = 3; };\n"+
+			"	TASK Task04 { PRIORITY = 4; };\n"+
+			"	TASK Task05 { PRIORITY = 5; };\n"+
+			"	TASK Task06 { PRIORITY = 6; };\n"+
+			"	TASK Task07 { PRIORITY = 7; };\n"+
+			"	TASK Task08 { PRIORITY = 8; };\n"+
+			"	TASK Task09 { PRIORITY = 9; };\n"+
+			"	TASK Task10 { PRIORITY = 10; };\n"+
+			"	TASK Task11 { PRIORITY = 11; };\n"+
+			"	TASK Task12 { PRIORITY = 12; };\n"+
+			"	TASK Task13 { PRIORITY = 13; };\n"+
+			"	TASK Task14 { PRIORITY = 14; };\n"+
+			"	TASK Task15 { PRIORITY = 15; };\n"+
+			"	TASK Task16 { PRIORITY = 16; };\n"+
+			"	TASK Task17 { PRIORITY = 17; };\n"+
+			"	TASK Task18 { PRIORITY = 18; };\n"+
+			"	TASK Task19 { PRIORITY = 19; };\n"+
+			"	TASK Task20 { PRIORITY = 20; };\n"+
+			"	TASK Task21 { PRIORITY = 21; };\n"+
+			"	TASK Task22 { PRIORITY = 22; };\n"+
+			"	TASK Task23 { PRIORITY = 23; };\n"+
+			"	TASK Task24 { PRIORITY = 24; };\n"+
+			"	TASK Task25 { PRIORITY = 25; };\n"+
+			"	TASK Task26 { PRIORITY = 26; };\n"+
+			"	TASK Task27 { PRIORITY = 27; };\n"+
+			"	TASK Task28 { PRIORITY = 28; };\n"+
+			"	TASK Task29 { PRIORITY = 29; };\n"+
+			"	TASK Task30 { PRIORITY = 30; };\n"+
+			"	TASK Task31 { PRIORITY = 31; };\n"+
+			"	TASK Task32 { PRIORITY = 32; };\n"+
+			"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void test16PrioritiesECC2() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"\n"+
+			"		KERNEL_TYPE = ECC2;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK Task01 { PRIORITY = 1; };\n"+
+			"	TASK Task02 { PRIORITY = 2; };\n"+
+			"	TASK Task03 { PRIORITY = 3; };\n"+
+			"	TASK Task04 { PRIORITY = 4; };\n"+
+			"	TASK Task05 { PRIORITY = 5; };\n"+
+			"	TASK Task06 { PRIORITY = 6; };\n"+
+			"	TASK Task07 { PRIORITY = 7; };\n"+
+			"	TASK Task08 { PRIORITY = 8; };\n"+
+			"	TASK Task09 { PRIORITY = 9; };\n"+
+			"	TASK Task10 { PRIORITY = 10; };\n"+
+			"	TASK Task11 { PRIORITY = 11; };\n"+
+			"	TASK Task12 { PRIORITY = 12; };\n"+
+			"	TASK Task13 { PRIORITY = 13; };\n"+
+			"	TASK Task14 { PRIORITY = 14; };\n"+
+			"	TASK Task15 { PRIORITY = 15; };\n"+
+			"	TASK Task16 { PRIORITY = 16; };\n"+
+			"};\n";
+    	commonWriterTest(text, 1);
+	}
+	@Test public void test17PrioritiesECC2() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"\n"+
+			"		KERNEL_TYPE = ECC2;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK Task01 { PRIORITY = 1; };\n"+
+			"	TASK Task02 { PRIORITY = 2; };\n"+
+			"	TASK Task03 { PRIORITY = 3; };\n"+
+			"	TASK Task04 { PRIORITY = 4; };\n"+
+			"	TASK Task05 { PRIORITY = 5; };\n"+
+			"	TASK Task06 { PRIORITY = 6; };\n"+
+			"	TASK Task07 { PRIORITY = 7; };\n"+
+			"	TASK Task08 { PRIORITY = 8; };\n"+
+			"	TASK Task09 { PRIORITY = 9; };\n"+
+			"	TASK Task10 { PRIORITY = 10; };\n"+
+			"	TASK Task11 { PRIORITY = 11; };\n"+
+			"	TASK Task12 { PRIORITY = 12; };\n"+
+			"	TASK Task13 { PRIORITY = 13; };\n"+
+			"	TASK Task14 { PRIORITY = 14; };\n"+
+			"	TASK Task15 { PRIORITY = 15; };\n"+
+			"	TASK Task16 { PRIORITY = 16; };\n"+
+			"	TASK Task17 { PRIORITY = 17; };\n"+
+			"};\n";
+	    boolean ok = false;
+	    try {
+	    	commonWriterTest(text, 1);
+	    } catch (RuntimeException e) {
+	    	ok = true;
+	    }
+	    assertTrue(ok);
+	}
+
+	@Test public void test32PrioritiesFP() {
+	    final String text = "CPU test_application {\n"+
+			"\n"+
+			"	OS EE {\n"+
+			"		EE_OPT = \"__ASSERT__\";\n"+
+			"		CFLAGS = \"-g2\";\n"+
+			"		ASFLAGS = \"\";\n"+
+			"		LDFLAGS = \"\";\n"+
+			"\n"+
+			"\n"+
+			"		CPU_DATA = PPCE200ZX {\n"+
+			"			MODEL = E200Z4;\n"+
+			"			APP_SRC = \"slave.c\";\n"+
+			"			MULTI_STACK = FALSE;\n"+
+			"			VLE = TRUE;\n"+
+			"			SYS_STACK_SIZE = 4096;\n"+
+			"		};\n"+
+			"\n"+
+			"		MCU_DATA = PPCE200ZX {\n"+
+			"			MODEL = MPC5643L;\n"+
+			"		};\n"+
+			"\n"+
+			"		STATUS = EXTENDED;\n"+
+			"\n"+
+			"		KERNEL_TYPE = FP;\n"+
+			"	};\n"+
+			"\n"+
+			"	TASK Task01 { PRIORITY = 1; };\n"+
+			"	TASK Task02 { PRIORITY = 2; };\n"+
+			"	TASK Task03 { PRIORITY = 3; };\n"+
+			"	TASK Task04 { PRIORITY = 4; };\n"+
+			"	TASK Task05 { PRIORITY = 5; };\n"+
+			"	TASK Task06 { PRIORITY = 6; };\n"+
+			"	TASK Task07 { PRIORITY = 7; };\n"+
+			"	TASK Task08 { PRIORITY = 8; };\n"+
+			"	TASK Task09 { PRIORITY = 9; };\n"+
+			"	TASK Task10 { PRIORITY = 10; };\n"+
+			"	TASK Task11 { PRIORITY = 11; };\n"+
+			"	TASK Task12 { PRIORITY = 12; };\n"+
+			"	TASK Task13 { PRIORITY = 13; };\n"+
+			"	TASK Task14 { PRIORITY = 14; };\n"+
+			"	TASK Task15 { PRIORITY = 15; };\n"+
+			"	TASK Task16 { PRIORITY = 16; };\n"+
+			"	TASK Task17 { PRIORITY = 17; };\n"+
+			"	TASK Task18 { PRIORITY = 18; };\n"+
+			"	TASK Task19 { PRIORITY = 19; };\n"+
+			"	TASK Task20 { PRIORITY = 20; };\n"+
+			"	TASK Task21 { PRIORITY = 21; };\n"+
+			"	TASK Task22 { PRIORITY = 22; };\n"+
+			"	TASK Task23 { PRIORITY = 23; };\n"+
+			"	TASK Task24 { PRIORITY = 24; };\n"+
+			"	TASK Task25 { PRIORITY = 25; };\n"+
+			"	TASK Task26 { PRIORITY = 26; };\n"+
+			"	TASK Task27 { PRIORITY = 27; };\n"+
+			"	TASK Task28 { PRIORITY = 28; };\n"+
+			"	TASK Task29 { PRIORITY = 29; };\n"+
+			"	TASK Task30 { PRIORITY = 30; };\n"+
+			"	TASK Task31 { PRIORITY = 31; };\n"+
+			"	TASK Task32 { PRIORITY = 32; };\n"+
+			"};\n";
+		commonWriterTest(text, 1);
+	}
+
 }

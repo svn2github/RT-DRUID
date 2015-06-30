@@ -31,7 +31,7 @@ public class CpuDescrPpcE200Zx extends CpuHwDescription implements CpuHwDescript
 	 */
 	public CpuDescrPpcE200Zx() {
 		super(IWritersKeywords.CPU_PPCE200ZX, "PRIVATE",
-				new String[] { "SYS_SIZE" }, new String[] {}, 16, 4, 4, 32, true);
+				new String[] { "SYS_SIZE" }, new String[] {}, 32, 4, 4, 32, true);
 		handlesEmpyVector = false;
 		supportOrtiISR2 = true;
 		

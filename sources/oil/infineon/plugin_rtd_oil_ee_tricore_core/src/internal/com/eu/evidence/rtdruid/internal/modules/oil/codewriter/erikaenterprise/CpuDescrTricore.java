@@ -27,7 +27,7 @@ public class CpuDescrTricore extends CpuHwDescription implements IRequiresUpdate
 	 */
 	public CpuDescrTricore() {
 		super(IWritersKeywords.CPU_TRICORE, "PRIVATE",
-				new String[] { "SYS_SIZE" }, new String[] {}, 16, 2, 4, 32);
+				new String[] { "SYS_SIZE" }, new String[] {}, 32, 2, 4, 32);
 	}
 	
 	/**

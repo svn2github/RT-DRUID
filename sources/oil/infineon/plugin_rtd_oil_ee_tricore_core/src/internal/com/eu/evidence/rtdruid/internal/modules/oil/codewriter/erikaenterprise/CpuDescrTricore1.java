@@ -16,6 +16,6 @@ public class CpuDescrTricore1 extends CpuHwDescription {
 	 */
 	public CpuDescrTricore1() {
 		super(IWritersKeywords.CPU_TRICORE1, "PRIVATE",
-				new String[] { "SYS_SIZE" }, new String[] {}, 16, 2, 4, 32);
+				new String[] { "SYS_SIZE" }, new String[] {}, 32, 2, 4, 32);
 	}
 }
