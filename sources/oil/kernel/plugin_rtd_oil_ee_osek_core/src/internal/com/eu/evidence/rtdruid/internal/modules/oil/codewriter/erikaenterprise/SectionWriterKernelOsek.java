@@ -2495,19 +2495,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 			for (int rtosId = 0; rtosId < oilObjects.length; rtosId++) {
 				IOilObjectList ool = oilObjects[rtosId];
 				final ICommentWriter commentWriterC = getCommentWriter(ool, FileTypes.C);
-				StringBuffer bufferC = buffers[rtosId].get(FILE_EE_CFG_C);
-	
-				
-				bufferC.append(commentWriterC.writerBanner("Spinlock") +
-						indent1 + "TaskType EE_as_spinlocks_locker_task_or_isr2[EE_MAX_TASK + EE_MAX_ISR2] = {\n");
 				String pre = indent2;
-				Object o = AbstractRtosWriter.getOsObject(ool, ISimpleGenResKeywords.OS_CPU__ISR2_NUMBER);
-				int lockerSize = ool.getList(IOilObjectList.TASK).size() + (o == null ? 0 : ((Integer) o).intValue()) ; 
-				for (int i=0; i<lockerSize; i++ ) {
-					bufferC.append(pre + "EE_NIL");
-					pre = ", ";
-				};
-				bufferC.append("\n" + indent1 + "};\n\n");
 				
 				if (rtosId == 0) {
 					IMacrosForSharedData macros = new EmptyMacrosForSharedData();
@@ -2542,6 +2530,14 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						pre = ",\n";
 					};
 					body_stack.append("\n"+indent1+"};\n");
+					
+					StringBuffer body_locker_task_isr = new StringBuffer(" = {\n");
+					pre = "";
+					for (int i=0; i<size; i++ ) {
+						body_locker_task_isr.append(pre + indent2 + "EE_NIL");
+						pre = ",\n";
+					};
+					body_locker_task_isr.append("\n"+indent1+"};\n");
 	
 					StringBuffer bufferCommon = buffers[rtosId].get(FILE_EE_COMMON_C);
 					bufferCommon.append(
@@ -2560,7 +2556,12 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 									IWritersKeywords.INDENT + "SpinlockIdType volatile ",
 				    				"EE_as_spinlocks_stack",
 				    				"[EE_MAX_SPINLOCK_USER]",
-				    				body_stack.toString()) + "\n");
+				    				body_stack.toString()) +
+							macros.vectorRam(
+									IWritersKeywords.INDENT + "TaskType volatile ",
+				    				"EE_as_spinlocks_locker_task_or_isr2",
+				    				"[EE_MAX_SPINLOCK_USER]",
+				    				body_locker_task_isr.toString())+ "\n");
 				}
 			}
 		}
