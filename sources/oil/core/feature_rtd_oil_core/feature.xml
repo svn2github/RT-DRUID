@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.core"
       label="RT-Druid oil feature"
-      version="2.5.0.qualifier"
+      version="2.6.0.qualifier"
       provider-name="Evidence S.r.l.">
 
    <description url="http://www.evidence.eu.com">

@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.tricore"
       label="RT-Druid Oil for TriCore for Erika Enterprise feature"
-      version="2.5.0.qualifier"
+      version="2.6.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.tricore.core">
 
@@ -106,9 +106,9 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="com.eu.evidence.rtdruid.core" version="2.5.0" match="greaterOrEqual"/>
-      <import plugin="com.eu.evidence.rtdruid.oil.core" version="2.5.0" match="greaterOrEqual"/>
-      <import plugin="com.eu.evidence.rtdruid.oil.ee.core" version="2.5.0" match="greaterOrEqual"/>
+      <import plugin="com.eu.evidence.rtdruid.core" version="2.6.0" match="greaterOrEqual"/>
+      <import plugin="com.eu.evidence.rtdruid.oil.core" version="2.6.0" match="greaterOrEqual"/>
+      <import plugin="com.eu.evidence.rtdruid.oil.ee.core" version="2.6.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
