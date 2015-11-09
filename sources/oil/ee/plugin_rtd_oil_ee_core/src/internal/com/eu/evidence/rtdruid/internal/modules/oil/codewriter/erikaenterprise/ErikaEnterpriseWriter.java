@@ -2607,7 +2607,7 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 	 * @return
 	 */
 	public static String getIncludeDefine(String id) {
-		return "RTDH_" + id.replace('.', '_').replace(' ', '_').toUpperCase();
+		return id.replace('.', '_').replace(' ', '_').toUpperCase();
 	}
 
 	public String getEE_location() {

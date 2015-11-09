@@ -330,7 +330,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					+ "const EE_TYPENACT EE_th_rnact_max["+MAX_TASK+"] = {\n");
 			// for each task, contains if it's extended or not
 			StringBuffer EE_th_is_extendedBuffer = new StringBuffer(indent1
-					+ "const EE_TYPEPRIO EE_th_is_extended["+MAX_TASK+"] =\n"
+					+ "const EE_TYPEBOOL EE_th_is_extended["+MAX_TASK+"] =\n"
 					+ indent2 + "{");
 		
 		
@@ -433,9 +433,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					 * 
 					 * sched is true if the task is extended (has one or more events)
 					 */
-					int sched = ("true".equalsIgnoreCase(currTask
-							.getString(ISimpleGenResKeywords.TASK_EXTENDED)) ? 1
-							: 0);
+					String sched = ("true".equalsIgnoreCase(currTask.getString(ISimpleGenResKeywords.TASK_EXTENDED))
+							? "EE_TRUE" : "EE_FALSE");
 		
 					/*
 					 * AUTOSTART
@@ -671,7 +670,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 					EE_rq_linkBuffer.append(pre + " " + priorityLevel + "U");
 					EE_th_rnactBuffer.append(pre + post + indent2 + act + "U");
 					EE_th_rnactMaxBuffer.append(pre + post + indent2 + act + "U");
-					EE_th_is_extendedBuffer.append(pre + " " + sched + "U");
+					EE_th_is_extendedBuffer.append(pre + " " + sched);
 		
 					sbDecThread.append(pre2 + indent1 + "DeclareTask(" + tname + ");");
 					sbThread.append(pre + pre2 + indent2 + "&Func"
@@ -1141,7 +1140,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 						+ indent2 + "{ ");
 				pre2 = "";
 				for (int i = 0; i < numTask; i++) {
-					buffer.append(pre2 + "0U");
+					buffer.append(pre2 + "EE_FALSE");
 					pre2 = ", ";
 				}
 				buffer.append("};\n\n");
@@ -1239,7 +1238,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 											+ indent2 + "{ ");
 							pre2 = "";
 							for (int i = 0; i < maxMutex; i++) {
-								buffer.append(pre2 + "0U");
+								buffer.append(pre2 + "EE_FALSE");
 								pre2 = ", ";
 							}
 							buffer.append("};\n\n");
@@ -2258,7 +2257,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										+ autostartList[appN].size() + "U"
 //										+ disable_define
 										+ ", " + (disable_define ? "0U" 
-												: "EE_oo_autostart_task_mode_" + appModes.get(appN))
+												: "&EE_oo_autostart_task_mode_" + appModes.get(appN))
 										+ "}");
 						pre2 = ",\n";
 					}
@@ -2419,7 +2418,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								.append(pre2 + indent2+"{ "
 										+ arraySize[appN]+"U"
 										+ ", " + (disable_define ? "0U" 
-												:"EE_oo_autostart_alarm_mode_"+ appModes.get(appN))
+												:"&EE_oo_autostart_alarm_mode_"+ appModes.get(appN))
 										+ "}");
 						pre2 = ",\n";
 					}
