@@ -2257,7 +2257,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 										+ autostartList[appN].size() + "U"
 //										+ disable_define
 										+ ", " + (disable_define ? "0U" 
-												: "&EE_oo_autostart_task_mode_" + appModes.get(appN))
+												// cast esplicito richiesto per aggirare problemi di compilazione con il CODEWARRIOR su e200zx
+												: "(const EE_TID (*)[])&EE_oo_autostart_task_mode_" + appModes.get(appN))
 										+ "}");
 						pre2 = ",\n";
 					}
@@ -2418,7 +2419,8 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 								.append(pre2 + indent2+"{ "
 										+ arraySize[appN]+"U"
 										+ ", " + (disable_define ? "0U" 
-												:"&EE_oo_autostart_alarm_mode_"+ appModes.get(appN))
+												// cast esplicito richiesto per aggirare problemi di compilazione con il CODEWARRIOR su e200zx
+												:"(const EE_TYPEALARM (*)[])&EE_oo_autostart_alarm_mode_"+ appModes.get(appN))
 										+ "}");
 						pre2 = ",\n";
 					}
