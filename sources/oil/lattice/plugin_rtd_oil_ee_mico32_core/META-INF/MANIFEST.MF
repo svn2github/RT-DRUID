@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid mico32 plugin (Core)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.mico32.core;singleton:=true
-Bundle-Version: 2.6.0.qualifier
+Bundle-Version: 2.7.0.qualifier
 Bundle-Activator: com.eu.evidence.modules.oil.mico32.Activator
 Require-Bundle: org.eclipse.core.runtime,
  com.eu.evidence.rtdruid.core,

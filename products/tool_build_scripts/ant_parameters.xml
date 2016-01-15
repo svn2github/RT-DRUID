@@ -23,75 +23,75 @@
 	VERSIONS
 *******************************
 -->
-	<property name="rtd_feature_version" value="2.6.0"/>
+	<property name="rtd_feature_version" value="2.7.0"/>
 	
-	<property name="frtd_core_v"           value="2.6.0"/>
-	<property name="rtd_core_v"            value="2.6.0"/>
-	<property name="rtd_core_ui_v"         value="2.6.0"/>
+	<property name="frtd_core_v"           value="2.7.0"/>
+	<property name="rtd_core_v"            value="2.7.0"/>
+	<property name="rtd_core_ui_v"         value="2.7.0"/>
 	
-	<property name="frtd_oil_core_v"       value="2.6.0"/>
-	<property name="rtd_oil_core_v"        value="2.6.0"/>
-	<property name="rtd_oil_ui_v"          value="2.6.0"/>
+	<property name="frtd_oil_core_v"       value="2.7.0"/>
+	<property name="rtd_oil_core_v"        value="2.7.0"/>
+	<property name="rtd_oil_ui_v"          value="2.7.0"/>
 	
-	<property name="frtd_oil_cdt_v"        value="2.6.0"/>
-	<property name="rtd_oil_cdt_v"         value="2.6.0"/>
+	<property name="frtd_oil_cdt_v"        value="2.7.0"/>
+	<property name="rtd_oil_cdt_v"         value="2.7.0"/>
 	
-	<property name="frtd_oil_ee_v"         value="2.6.0"/>
-	<property name="rtd_oil_ee_core_v"     value="2.6.0"/>
-	<property name="rtd_oil_ee_ui_v"       value="2.6.0"/>
+	<property name="frtd_oil_ee_v"         value="2.7.0"/>
+	<property name="rtd_oil_ee_core_v"     value="2.7.0"/>
+	<property name="rtd_oil_ee_ui_v"       value="2.7.0"/>
 	
-		<property name="frtd_oil_ee_arm_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_arm_core_v"     value="2.6.0"/>
-		<property name="rtd_oil_ee_arm_ui_v"       value="2.6.0"/>
+		<property name="frtd_oil_ee_arm_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_arm_core_v"     value="2.7.0"/>
+		<property name="rtd_oil_ee_arm_ui_v"       value="2.7.0"/>
 		
-		<property name="frtd_oil_ee_avr_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_avr_core_v"     value="2.6.0"/>
-		<property name="rtd_oil_ee_avr_ui_v"       value="2.6.0"/>
+		<property name="frtd_oil_ee_avr_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_avr_core_v"     value="2.7.0"/>
+		<property name="rtd_oil_ee_avr_ui_v"       value="2.7.0"/>
 		
-		<property name="frtd_oil_ee_dspic_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_dspic_core_v"     value="2.6.0"/>
-		<property name="rtd_oil_ee_dspic_ui_v"       value="2.6.0"/>
+		<property name="frtd_oil_ee_dspic_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_dspic_core_v"     value="2.7.0"/>
+		<property name="rtd_oil_ee_dspic_ui_v"       value="2.7.0"/>
 
-		<property name="frtd_oil_ee_cortex_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_cortex_core_v"     value="2.6.0"/>
-		<property name="rtd_oil_ee_cortex_ui_v"     value="2.6.0"/>
+		<property name="frtd_oil_ee_cortex_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_cortex_core_v"     value="2.7.0"/>
+		<property name="rtd_oil_ee_cortex_ui_v"     value="2.7.0"/>
 
 		<property name="frtd_oil_ee_cortex_rx_v"         value="1.0.0"/>
 		<property name="rtd_oil_ee_cortex_rx_core_v"     value="1.0.0"/>
 
-		<property name="frtd_oil_ee_fp_edf_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_fp_edf_core_v"     value="2.6.0"/>
+		<property name="frtd_oil_ee_fp_edf_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_fp_edf_core_v"     value="2.7.0"/>
 
-		<property name="frtd_oil_ee_frsh_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_frsh_core_v"     value="2.6.0"/>
+		<property name="frtd_oil_ee_frsh_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_frsh_core_v"     value="2.7.0"/>
 
 		<property name="frtd_oil_ee_hr_v"         value="1.2.0"/>
 		<property name="rtd_oil_ee_hr_core_v"     value="1.2.0"/>
 
-		<property name="frtd_oil_ee_nios2_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_nios2_core_v"     value="2.6.0"/>
+		<property name="frtd_oil_ee_nios2_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_nios2_core_v"     value="2.7.0"/>
 
-		<property name="frtd_oil_ee_tricore_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_tricore_core_v"     value="2.6.0"/>
-		<property name="rtd_oil_ee_tricore_ui_v"     value="2.6.0"/>
+		<property name="frtd_oil_ee_tricore_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_tricore_core_v"     value="2.7.0"/>
+		<property name="rtd_oil_ee_tricore_ui_v"     value="2.7.0"/>
 
-		<property name="frtd_oil_ee_osek_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_osek_core_v"     value="2.6.0"/>
+		<property name="frtd_oil_ee_osek_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_osek_core_v"     value="2.7.0"/>
 
-		<property name="frtd_oil_ee_ppc_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_ppc_core_v"     value="2.6.0"/>
-		<property name="rtd_oil_ee_ppc_ui_v"       value="2.6.0"/>
+		<property name="frtd_oil_ee_ppc_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_ppc_core_v"     value="2.7.0"/>
+		<property name="rtd_oil_ee_ppc_ui_v"       value="2.7.0"/>
 
-		<property name="frtd_oil_ee_s12_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_s12_core_v"     value="2.6.0"/>
-		<property name="rtd_oil_ee_s12_ui_v"       value="2.6.0"/>
+		<property name="frtd_oil_ee_s12_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_s12_core_v"     value="2.7.0"/>
+		<property name="rtd_oil_ee_s12_ui_v"       value="2.7.0"/>
 
-		<property name="frtd_oil_ee_lmico32_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_lmico32_core_v"     value="2.6.0"/>
+		<property name="frtd_oil_ee_lmico32_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_lmico32_core_v"     value="2.7.0"/>
 
-		<property name="frtd_oil_ee_renesas_v"         value="2.6.0"/>
-		<property name="rtd_oil_ee_renesas_core_v"     value="2.6.0"/>
-		<property name="rtd_oil_ee_renesas_ui_v"       value="2.6.0"/>
+		<property name="frtd_oil_ee_renesas_v"         value="2.7.0"/>
+		<property name="rtd_oil_ee_renesas_core_v"     value="2.7.0"/>
+		<property name="rtd_oil_ee_renesas_ui_v"       value="2.7.0"/>
 
 		<property name="frtd_oil_contrib_st_v"         value="1.2.0"/>
 		<property name="rtd_oil_contrib_st_v"     value="1.2.0"/>
@@ -99,54 +99,54 @@
 		<property name="frtd_oil_ee_x86_v"         value="1.1.0"/>
 		<property name="rtd_oil_ee_x86_core_v"     value="1.1.0"/>
 
-	<property name="fee_code_v"            value="2.6.0"/>
-	<property name="ee_code_v"            value="2.6.0"/>
+	<property name="fee_code_v"            value="2.7.0"/>
+	<property name="ee_code_v"            value="2.7.0"/>
 		
 
-	<property name="rtd_templates_v"        value="2.6.0"/>
+	<property name="rtd_templates_v"        value="2.7.0"/>
 	
-		<property name="ftemplates_ee_avr_v"   value="2.6.0"/>
-		<property name="templates_ee_avr_v"    value="2.6.0"/>
+		<property name="ftemplates_ee_avr_v"   value="2.7.0"/>
+		<property name="templates_ee_avr_v"    value="2.7.0"/>
 		
-		<property name="ftemplates_ee_dspic_v"   value="2.6.0"/>
-		<property name="templates_ee_dspic_v"    value="2.6.0"/>
+		<property name="ftemplates_ee_dspic_v"   value="2.7.0"/>
+		<property name="templates_ee_dspic_v"    value="2.7.0"/>
 
-		<property name="ftemplates_ee_s12_v"   value="2.6.0"/>
-		<property name="templates_ee_s12_v"    value="2.6.0"/>
+		<property name="ftemplates_ee_s12_v"   value="2.7.0"/>
+		<property name="templates_ee_s12_v"    value="2.7.0"/>
 	
-		<property name="ftemplates_ee_tricore_v"   value="2.6.0"/>
-		<property name="templates_ee_tricore_v"    value="2.6.0"/>
+		<property name="ftemplates_ee_tricore_v"   value="2.7.0"/>
+		<property name="templates_ee_tricore_v"    value="2.7.0"/>
 		
-		<property name="ftemplates_ee_ppc_v"   value="2.6.0"/>
-		<property name="templates_ee_ppc_v"    value="2.6.0"/>
+		<property name="ftemplates_ee_ppc_v"   value="2.7.0"/>
+		<property name="templates_ee_ppc_v"    value="2.7.0"/>
 	
-		<property name="ftemplates_ee_mico32_v"   value="2.6.0"/>
-		<property name="templates_ee_mico32_v"    value="2.6.0"/>
+		<property name="ftemplates_ee_mico32_v"   value="2.7.0"/>
+		<property name="templates_ee_mico32_v"    value="2.7.0"/>
 
-		<property name="ftemplates_ee_cortex_v"   value="2.6.0"/>
-		<property name="templates_ee_cortex_v"    value="2.6.0"/>
+		<property name="ftemplates_ee_cortex_v"   value="2.7.0"/>
+		<property name="templates_ee_cortex_v"    value="2.7.0"/>
 
 	
-	<property name="frtd_jscan_core_v"     value="2.6.0"/>
-	<property name="rtd_jscan_core_v"      value="2.6.0"/>
-	<property name="rtd_jscan_ui_v"        value="2.6.0"/>
+	<property name="frtd_jscan_core_v"     value="2.7.0"/>
+	<property name="rtd_jscan_core_v"      value="2.7.0"/>
+	<property name="rtd_jscan_ui_v"        value="2.7.0"/>
 
-	<property name="rtd_simulink_core_v"   value="2.6.0"/>
-	<property name="rtd_simulink_ui_v"     value="2.6.0"/>
+	<property name="rtd_simulink_core_v"   value="2.7.0"/>
+	<property name="rtd_simulink_ui_v"     value="2.7.0"/>
 
-	<property name="frtd_xtc_core_v"       value="2.6.0"/>
-	<property name="rtd_xtc_core_v"        value="2.6.0"/>
-	<property name="rtd_xtc_ui_v"          value="2.6.0"/>
+	<property name="frtd_xtc_core_v"       value="2.7.0"/>
+	<property name="rtd_xtc_core_v"        value="2.7.0"/>
+	<property name="rtd_xtc_ui_v"          value="2.7.0"/>
 
-	<property name="rtd_fibex_core_v"        value="2.6.0"/>
-	<property name="rtd_fibex_ui_v"          value="2.6.0"/>
+	<property name="rtd_fibex_core_v"        value="2.7.0"/>
+	<property name="rtd_fibex_ui_v"          value="2.7.0"/>
 	
-	<property name="frtd_autosar_core_v"     value="2.6.0"/>
-	<property name="rtd_autosar_core_v"      value="2.6.0"/>
-	<property name="rtd_autosar_ui_v"        value="2.6.0"/>
+	<property name="frtd_autosar_core_v"     value="2.7.0"/>
+	<property name="rtd_autosar_core_v"      value="2.7.0"/>
+	<property name="rtd_autosar_ui_v"        value="2.7.0"/>
 
-	<property name="frtd_tests_v"		    value="2.6.0"/>
-	<property name="rtd_tests_v"      		value="2.6.0"/>
+	<property name="frtd_tests_v"		    value="2.7.0"/>
+	<property name="rtd_tests_v"      		value="2.7.0"/>
 	
 
 <!--

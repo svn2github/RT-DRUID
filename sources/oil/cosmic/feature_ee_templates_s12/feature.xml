@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.ee.templates.s12"
       label="Templates for Erika Enterprise for Freescale S12"
-      version="2.6.0.qualifier"
+      version="2.7.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.ee.templates.s12">
 
@@ -11,7 +11,7 @@
    </description>
 
    <copyright url="http://www.evidence.eu.com">
-      Copyright (c) 2004, 2013 Evidence S.r.l.
+      Copyright (c) 2004, 2016 Evidence S.r.l.
 All rights reserved.
    </copyright>
 
