@@ -548,7 +548,16 @@ public class SectionWriterOsApplication extends SectionWriter implements
 		for (ISimpleGenRes isr : orderedIsr) {
 			if (isr != null) {
 				String name = isr.getName();
-				String orti_handler = needOrtiHandler ? ", " + isr.getString(ISimpleGenResKeywords.ISR_GENERATED_HANDLER) : "";
+				String orti_handler = "";
+				if (needOrtiHandler) {
+					String handlerName = "";
+					if (isr.containsProperty(ISimpleGenResKeywords.ISR_GENERATED_HANDLER)) {
+						handlerName = isr.getString(ISimpleGenResKeywords.ISR_GENERATED_HANDLER);
+					} else if (isr.containsProperty(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER)) {
+						handlerName = isr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_HANDLER);
+					}
+					orti_handler = ", " + handlerName;
+				}
 				
 				int aid = 0;
 				if (isr.containsProperty(ISimpleGenResKeywords.ISR_OS_APPLICATION_NAME)) {
