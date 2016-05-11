@@ -336,6 +336,9 @@ System.out.flush();
 		try {
 			HashMap<String, Object> options = new HashMap<String, Object>();
 			options.put(IWritersKeywords.ERIKA_ENTERPRISE_LOCATION, "ee");
+			if (System.getenv("EE_DISABLE_RULES") != null) {
+				options.put(IWritersKeywords.WRITER_DISABLE_EE_RULES, "true".equalsIgnoreCase(System.getenv("EE_DISABLE_RULES")));
+			}
 			DefaultTestResult answer = null;
 			for (OsType os: testList) {
 				HostOsUtils.common.setTarget(os);

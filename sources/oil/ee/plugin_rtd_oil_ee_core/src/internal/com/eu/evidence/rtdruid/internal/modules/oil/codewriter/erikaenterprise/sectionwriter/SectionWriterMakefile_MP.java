@@ -429,6 +429,9 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
         final String projectName = vtProperties.containsKey(IWritersKeywords.VTProperty_OilProjectName) ?
         		(String) vtProperties.get(IWritersKeywords.VTProperty_OilProjectName) : "myProject";
         		
+		final boolean enableRules = !(parent.getOptions().containsKey(IWritersKeywords.WRITER_DISABLE_EE_RULES) 
+				&& "true".equalsIgnoreCase("" +parent.getOptions().get(IWritersKeywords.WRITER_DISABLE_EE_RULES)));
+        		
         /*
          * Variables
          */
@@ -504,7 +507,7 @@ public class SectionWriterMakefile_MP extends SectionWriter implements IEEWriter
         			ERIKA_INNER_MAKEFILE_DEFINE+":=yes\n"+
         			"export " + ERIKA_INNER_MAKEFILE_DEFINE +"\n" +
         			"__BASE_MAKEFILE__ = yes\n" + 
-        			"include $(EEBASE)/pkg/cfg/rules.mk\n\n");
+        			( enableRules ? "include $(EEBASE)/pkg/cfg/rules.mk\n\n" : ""));
 
         {
 			/***********************************************************************
