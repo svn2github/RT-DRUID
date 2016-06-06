@@ -313,7 +313,7 @@ TOKEN:
 
 TOKEN:
 {
-	<String : "\"" (~["\""])* "\"" >
+	<String : "\"" (~["\"","\\"] | "\\" ["n","t","b","r","f","\\","\'","\""])* "\"">
 }
 
 //< implementation_definition, enumerator, default_name,
