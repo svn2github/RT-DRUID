@@ -1100,7 +1100,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 				"		CFLAGS = \"-Wall\";\n" +
 				"		ASFLAGS = \"-g\";\n" +
 				"		LDFLAGS = \"-Wl,-Map -Wl,project.map\";\n" +
-				"		LDDEPS = \"\\\";\n" +
+				"		LDDEPS = \"\\\\\";\n" +
 				"		LIBS = \"-lm\";\n" +
 				"		NIOS2_SYS_CONFIG = \"Debug\";\n" +
 				"		NIOS2_APP_CONFIG = \"Debug\";\n" +

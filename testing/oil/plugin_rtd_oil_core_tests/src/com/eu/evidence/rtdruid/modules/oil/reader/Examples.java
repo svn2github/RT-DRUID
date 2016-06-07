@@ -730,7 +730,7 @@ interface Examples {
 		+ "        CFLAGS = \"-DALT_DEBUG -G0 -O0 -g\";\n"
 		+ "        CFLAGS = \"-Wall -Wl,-Map -Wl,project.map\";\n"
 		+ "        ASFLAGS = \"-g\";\n"
-		+ "        LDDEPS = \"\\\";\n"
+		+ "        LDDEPS = \"\\\\\";\n"
 		+ "        LIBS = \"-lm\";\n"
 		+ "        NIOS2_SYS_CONFIG = \"DEBUG\";\n"
 		+ "        NIOS2_APP_CONFIG = \"DEBUG\";\n"
