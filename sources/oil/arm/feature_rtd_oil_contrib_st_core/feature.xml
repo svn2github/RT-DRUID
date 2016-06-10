@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.contrib.st.core"
       label="RT-Druid Oil STM32F4XX support for Erika Enterprise"
-      version="1.2.0.Nqualifier"
+      version="1.2.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.contrib.st.core">
 

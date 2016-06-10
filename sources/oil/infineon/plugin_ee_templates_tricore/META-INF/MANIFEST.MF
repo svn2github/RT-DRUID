@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Templates for Erika Enterprise for Tricore
 Bundle-SymbolicName: com.eu.evidence.ee.templates.tricore;singleton:=true
-Bundle-Version: 1.2.0.Nqualifier
+Bundle-Version: 1.2.0.qualifier
 Require-Bundle: com.eu.evidence.templates.core
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

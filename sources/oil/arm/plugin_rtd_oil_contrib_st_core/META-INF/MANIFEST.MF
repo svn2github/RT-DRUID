@@ -5,7 +5,7 @@ Require-Bundle: org.eclipse.core.runtime,com.eu.evidence.rtdruid.core,
  com.eu.evidence.rtdruid.oil.core
 Bundle-Vendor: Evidence S.r.l.
 Bundle-ActivationPolicy: lazy
-Bundle-Version: 1.2.0.Nqualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-Name: STM32F4XX support for Erika Enterprise
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.contrib.st.core;singleton

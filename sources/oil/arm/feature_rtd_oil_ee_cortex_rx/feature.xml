@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.cortex_rx"
       label="RT-Druid Oil for Cortex for Erika Enterprise feature"
-      version="1.0.0.Nqualifier"
+      version="1.0.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.cortex_rx.core">
 

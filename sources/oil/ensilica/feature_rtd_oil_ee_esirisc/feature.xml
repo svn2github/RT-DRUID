@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.esirisc"
       label="RT-Druid Oil support of enSilica eSi-RISC for Erika Enterprise feature"
-      version="1.2.0.Nqualifier"
+      version="1.2.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.esirisc.core">
 
