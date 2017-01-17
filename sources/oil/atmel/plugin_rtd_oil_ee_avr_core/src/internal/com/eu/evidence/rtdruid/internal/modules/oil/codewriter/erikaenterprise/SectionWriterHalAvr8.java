@@ -600,12 +600,12 @@ public class SectionWriterHalAvr8 extends SectionWriter
 		}
 		
 		{
-			EEBoard attiny = new EEBoard();
-			mcus.put("ATTINY", attiny);
+			EEBoard tiny = new EEBoard();
+			mcus.put("TINY", tiny);
 
-			attiny.eeopt = "ATTINY";
+			tiny.eeopt = "__ATTINY__";
 			
-			attiny.model.add( new EEEntry("MODEL", "TINY_1634")
+			tiny.model.add( new EEEntry("MODEL", "TINY_1634")
 					.add("TINY_1634",   "attiny1634")
 					.add("CUSTOM",  ""));
 		}

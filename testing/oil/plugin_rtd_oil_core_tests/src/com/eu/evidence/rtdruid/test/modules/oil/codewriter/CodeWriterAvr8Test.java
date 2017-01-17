@@ -914,7 +914,7 @@ public class CodeWriterAvr8Test extends AbstractCodeWriterTest {
 	    				"			APP_SRC = \"code.c\";\n" +
 	    				"			MULTI_STACK = TRUE;\n" +
 	    				"		};\n" +
-	    				"		MCU_DATA = ATTINY;\n" +
+	    				"		MCU_DATA = TINY;\n" +
 	    				"		KERNEL_TYPE = FP;\n" +
 	    				"	};\n" +
 	    				"	\n" +
@@ -946,7 +946,7 @@ public class CodeWriterAvr8Test extends AbstractCodeWriterTest {
 	    				"			APP_SRC = \"code.c\";\n" +
 	    				"			MULTI_STACK = TRUE;\n" +
 	    				"		};\n" +
-	    				"		MCU_DATA = ATTINY {\n" +
+	    				"		MCU_DATA = TINY {\n" +
 	    				"			MODEL = TINY_1634;\n" +
 	    				"		};\n" +
 	    				"		KERNEL_TYPE = FP;\n" +
@@ -980,7 +980,7 @@ public class CodeWriterAvr8Test extends AbstractCodeWriterTest {
 	    				"			APP_SRC = \"code.c\";\n" +
 	    				"			MULTI_STACK = TRUE;\n" +
 	    				"		};\n" +
-	    				"		MCU_DATA = ATTINY {\n" +
+	    				"		MCU_DATA = TINY {\n" +
 	    				"			MODEL = CUSTOM { MODEL = \"abc\"; };\n" +
 	    				"		};\n" +
 	    				"		KERNEL_TYPE = FP;\n" +
