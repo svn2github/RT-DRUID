@@ -903,4 +903,105 @@ public class CodeWriterAvr8Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+
+	@Test public void testAVR8_mcu_TINY_default() {
+	    final String text =
+	    		"CPU mySystem {\n" +
+	    				"	OS myOs {\n" +
+	    				"		EE_OPT = \"DEBUG\";\n" +
+	    				"		EE_OPT = \"__ASSERT__\";\n" +
+	    				"		CPU_DATA = AVR8 {\n" +
+	    				"			APP_SRC = \"code.c\";\n" +
+	    				"			MULTI_STACK = TRUE;\n" +
+	    				"		};\n" +
+	    				"		MCU_DATA = ATTINY;\n" +
+	    				"		KERNEL_TYPE = FP;\n" +
+	    				"	};\n" +
+	    				"	\n" +
+	    				"	TASK Task1 {\n" +
+	    				"		PRIORITY = 0x01;\n" +
+	    				"		AUTOSTART = FALSE;\n" +
+	    				"		ACTIVATION = 1;	\n" +
+	    				"		STACK = SHARED;\n" +
+	    				"		SCHEDULE = FULL;\n" +
+	    				"	};\n" +
+	    				"	TASK Task2 {\n" +
+	    				"		PRIORITY = 0x02;\n" +
+	    				"		SCHEDULE = FULL;\n" +
+	    				"		AUTOSTART = FALSE;	\n" +
+	    				"		STACK = SHARED;\n" +
+	    				"		ACTIVATION = 1;	\n" +
+	    				"	};\n" +
+	    				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void testAVR8_mcu_TINY() {
+	    final String text =
+	    		"CPU mySystem {\n" +
+	    				"	OS myOs {\n" +
+	    				"		EE_OPT = \"DEBUG\";\n" +
+	    				"		EE_OPT = \"__ASSERT__\";\n" +
+	    				"		CPU_DATA = AVR8 {\n" +
+	    				"			APP_SRC = \"code.c\";\n" +
+	    				"			MULTI_STACK = TRUE;\n" +
+	    				"		};\n" +
+	    				"		MCU_DATA = ATTINY {\n" +
+	    				"			MODEL = TINY_1634;\n" +
+	    				"		};\n" +
+	    				"		KERNEL_TYPE = FP;\n" +
+	    				"	};\n" +
+	    				"	\n" +
+	    				"	TASK Task1 {\n" +
+	    				"		PRIORITY = 0x01;\n" +
+	    				"		AUTOSTART = FALSE;\n" +
+	    				"		ACTIVATION = 1;	\n" +
+	    				"		STACK = SHARED;\n" +
+	    				"		SCHEDULE = FULL;\n" +
+	    				"	};\n" +
+	    				"	TASK Task2 {\n" +
+	    				"		PRIORITY = 0x02;\n" +
+	    				"		SCHEDULE = FULL;\n" +
+	    				"		AUTOSTART = FALSE;	\n" +
+	    				"		STACK = SHARED;\n" +
+	    				"		ACTIVATION = 1;	\n" +
+	    				"	};\n" +
+	    				"};\n";
+		commonWriterTest(text, 1);
+	}
+
+	@Test public void testAVR8_TINY_CUSTOM() {
+	    final String text =
+	    		"CPU mySystem {\n" +
+	    				"	OS myOs {\n" +
+	    				"		EE_OPT = \"DEBUG\";\n" +
+	    				"		EE_OPT = \"__ASSERT__\";\n" +
+	    				"		CPU_DATA = AVR8 {\n" +
+	    				"			APP_SRC = \"code.c\";\n" +
+	    				"			MULTI_STACK = TRUE;\n" +
+	    				"		};\n" +
+	    				"		MCU_DATA = ATTINY {\n" +
+	    				"			MODEL = CUSTOM { MODEL = \"abc\"; };\n" +
+	    				"		};\n" +
+	    				"		KERNEL_TYPE = FP;\n" +
+	    				"	};\n" +
+	    				"	\n" +
+	    				"	TASK Task1 {\n" +
+	    				"		PRIORITY = 0x01;\n" +
+	    				"		AUTOSTART = FALSE;\n" +
+	    				"		ACTIVATION = 1;	\n" +
+	    				"		STACK = SHARED;\n" +
+	    				"		SCHEDULE = FULL;\n" +
+	    				"	};\n" +
+	    				"	TASK Task2 {\n" +
+	    				"		PRIORITY = 0x02;\n" +
+	    				"		SCHEDULE = FULL;\n" +
+	    				"		AUTOSTART = FALSE;	\n" +
+	    				"		STACK = SHARED;\n" +
+	    				"		ACTIVATION = 1;	\n" +
+	    				"	};\n" +
+	    				"};\n";
+		commonWriterTest(text, 1);
+	}
+
 }
