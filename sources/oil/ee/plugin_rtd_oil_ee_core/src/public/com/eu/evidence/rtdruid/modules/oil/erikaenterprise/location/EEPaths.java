@@ -203,7 +203,7 @@ buffer.append("_____cntr" + " = " + contribs +"\n");
 					String srcBase = null;
 					if (srcAttr != null) {
 						if (FileLocator.find(bundle, new Path(srcAttr),
-								new HashMap<Object, Object>()) == null) {
+								new HashMap()) == null) {
 buffer.append("_____Bundle not found" +"\n");
 							continue;
 						}
@@ -218,7 +218,7 @@ buffer.append("_____Src path = "+srcBase +"\n");
 					String contrBase = null;
 					if (contribs != null) {
 						if (FileLocator.find(bundle, new Path(contribs),
-								new HashMap<Object, Object>()) == null) {
+								new HashMap()) == null) {
 buffer.append("_____Bundle not found" +"\n");
 							continue;
 						}
