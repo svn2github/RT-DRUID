@@ -1,5 +1,5 @@
 /*
- * Created on 2012/03/27
+ * Created on 2017/02/1
  *
  */
 package com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise;
@@ -46,21 +46,23 @@ import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.IVariable;
 
 /**
- * This writer build files for a Renesas Rx200 
+ * This writer build files for a Renesas RL 78 
  * 
  * @author Nicola Serreli
  */
-public class SectionWriterHalRx200 extends SectionWriter 
+public class SectionWriterHalRl78 extends SectionWriter 
 	implements IEEWriterKeywords,
 			IExtractObjectsExtentions,
 			IExtractKeywordsExtentions {
 
-	private static final String EEOPT__MCU_R5F5210X = "__R5F5210x__";
-	private static final String EEOPT__RX200_CPU = "__RX200__";
+	private static final String EEOPT__MCU_R5F510XXX = "EE_R5F10XXX__";
+	private static final String EEOPT__MCU_R5F5104XX = "EE_R5F104XX__";
+	private static final String EEOPT__MCU_R5F5104LE = "EE_R5F104LE__";
+	private static final String EEOPT__RL78_CPU = "EE_RL78__";
 	final String indent1 = IWritersKeywords.INDENT;
 	final String indent2 = indent1 + IWritersKeywords.INDENT;
 
-	public final static String EEOPT__CCRX_COMPILER__ = "__CCRX__";
+	public final static String EEOPT__CCRL_COMPILER__ = "EE_CCRL__";
 	
 	
 	/** The Erika Enterprise Writer that call this section writer */
@@ -69,8 +71,8 @@ public class SectionWriterHalRx200 extends SectionWriter
 	/** All data */
 	protected final IVarTree vt;
 
-	private static final String RENESAS_MCU = "RENESAS";
-	private static final String ERR_CPU_TYPE = "Rx200";
+	private static final String R5F10_MCU = "R5F10XXX";
+	private static final String ERR_CPU_TYPE = "RL78";
 	private static final String SGR_OS_APPL_SHARED_STACK_ID = "sgr__os_application__shared_stack_id__integer";
 	private static final String SGR_OS_CPU_SYS_STACK_SIZE = "sgr__os_cpu_system_stack_size";
 	
@@ -86,15 +88,15 @@ public class SectionWriterHalRx200 extends SectionWriter
 	/**
 	 * 
 	 */
-	public SectionWriterHalRx200() {
+	public SectionWriterHalRl78() {
 		this(null);
 	}
 	
 	/**
 	 * 
 	 */
-	public SectionWriterHalRx200(ErikaEnterpriseWriter parent) {
-		super(IWritersKeywords.CPU_RX200,
+	public SectionWriterHalRl78(ErikaEnterpriseWriter parent) {
+		super(IWritersKeywords.CPU_RL78,
 				new String[] {}, //
 				new String[] { //
 					IWritersKeywords.CPU_NIOSII,//
@@ -102,15 +104,16 @@ public class SectionWriterHalRx200 extends SectionWriter
 					IWritersKeywords.CPU_MPC5xx,//
 					IWritersKeywords.CPU_NIOSII, //
 					IWritersKeywords.CPU_AVR5,
-					IWritersKeywords.CPU_PIC_30
+					IWritersKeywords.CPU_PIC_30,
+					IWritersKeywords.CPU_RX200
 					},
 					SWCategoryManager.defaultInstance.newCategory(SWCategoryManager.TYPE_CPU));
 		
 		this.parent = parent;
 		this.vt = parent == null ? null : parent.getVt();
 		
-		isrWriter = new SectionWriterIsr(parent, IWritersKeywords.CPU_RX200);
-//		counterHwWriter = new SectionWriterKernelCounterHw(parent, IWritersKeywords.CPU_RX200, EE_E200ZX_SYSTEM_TIMER_HANDLER);
+		isrWriter = new SectionWriterIsr(parent, IWritersKeywords.CPU_RL78);
+//		counterHwWriter = new SectionWriterKernelCounterHw(parent, IWritersKeywords.CPU_RL78, EE_E200ZX_SYSTEM_TIMER_HANDLER);
 	}
 
 	/**
@@ -131,7 +134,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 			throws OilCodeWriterException {
 		parent.check(vt);
 
-		return writeEE_rx200_CPU();
+		return writeEE_rl78_CPU();
 	}
 	
 	/**
@@ -172,17 +175,39 @@ public class SectionWriterHalRx200 extends SectionWriter
 		        	tmp_eeopts.addAll(Arrays.asList(old));
 		        }
 				
-				tmp_eeopts.add(EEOPT__RX200_CPU);
+				tmp_eeopts.add(EEOPT__RL78_CPU);
 				
 				{ // Compiler
-		        	List<String> all = parent.getCpuDataEnum(ool, "COMPILER_TYPE");
+					boolean useE2Studio = false;
+					ArrayList<String> paths = new ArrayList<String>();
+		        	List<String> all = parent.getCpuDataEnum(ool, "COMPILER_TYPE", paths);
 					String tmp1 = all.size() == 0? null : all.get(0);
 					if (tmp1 == null) {
-						tmp1 = RenesasConstants.SGRK__CCRX_COMPILER__;
+						tmp1 = RenesasConstants.SGRK__CCRL_COMPILER__;
+					} else {
+						String compilerPath = paths.get(0);
+						String e2studio = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "E2STUDIO");
+						if ("TRUE".equalsIgnoreCase(e2studio)) {
+							tmp_eeopts.add("EE_E2STUDIO__");
+							useE2Studio = true;
+						}
+						
+						String memoryModel = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "E2MEMORY_MODEL");
+						if ("SMALL".equalsIgnoreCase(memoryModel)) {
+							tmp_eeopts.add("EE_RL78_SMALL__");
+						} else {
+							tmp_eeopts.add("EE_RL78_MEDIUM__");
+						}
+						String farData = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "FAR_DATA");
+						if ("TRUE".equalsIgnoreCase(farData)) {
+							tmp_eeopts.add("EE_RL78_FAR__");
+						}
 					}
+					
 						
 					sgrCpu.setProperty(RenesasConstants.SGRK__RENESAS_COMPILER_TYPE__, tmp1);
-		            tmp_eeopts.add(EEOPT__CCRX_COMPILER__);
+					sgrCpu.setProperty(RenesasConstants.SGRK__RENESAS_USE_E2STUDIO__, "" +useE2Studio);
+		            tmp_eeopts.add(EEOPT__CCRL_COMPILER__);
 				}
 
 			
@@ -238,14 +263,14 @@ public class SectionWriterHalRx200 extends SectionWriter
 	}
 	
 	/**
-	 * Write configuration's files for Renesas RX200
+	 * Write configuration's files for Renesas RL78
 	 * 
-	 * @return buffers with configuration for Renesas RX200
+	 * @return buffers with configuration for Renesas RL78
 	 * 
 	 * @throws OilCodeWriterException
 	 *             if there are some problems
 	 */
-	protected IOilWriterBuffer[] writeEE_rx200_CPU()
+	protected IOilWriterBuffer[] writeEE_rl78_CPU()
 			throws OilCodeWriterException {
 
 		final IOilObjectList[] oilObjects = parent.getOilObjects();		
@@ -265,7 +290,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 	
 			// ------------- Requirement --------------------
 			StringBuffer sbInithal_c = cpuBuffs.get(FILE_EE_CFG_C);
-			StringBuffer sbInithal_h = cpuBuffs.get(FILE_EE_CFG_H);
+//			StringBuffer sbInithal_h = cpuBuffs.get(FILE_EE_CFG_H);
 			
 			final IOilObjectList ool = oilObjects[currentRtosId];
 	
@@ -274,14 +299,14 @@ public class SectionWriterHalRx200 extends SectionWriter
 	
 			sbInithal_c.append("\n#include \"ee.h\"\n");
 	
-			/***********************************************************************
-			 * SYSTEM STACK SIZE
-			 **********************************************************************/
-			sbInithal_h.append(indent1 + getCommentWriter(ool, FileTypes.H).writerSingleLineComment("System stack size") + 
-						indent1 + "#define EE_ISTACK_SIZE     " + 
-							( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
-									DEFAULT_SYS_STACK_SIZE))
-						+ "\n\n");
+//			/***********************************************************************
+//			 * SYSTEM STACK SIZE
+//			 **********************************************************************/
+//			sbInithal_h.append(indent1 + getCommentWriter(ool, FileTypes.H).writerSingleLineComment("System stack size") + 
+//						indent1 + "#define EE_ISTACK_SIZE     " + 
+//							( ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE),
+//									DEFAULT_SYS_STACK_SIZE))
+//						+ "\n\n");
 			
 			
 			/***********************************************************************
@@ -320,7 +345,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 		List<ISimpleGenRes> osApplications = ool.getList(IOilObjectList.OSAPPLICATION);
 		boolean binaryDistr = parent.checkKeyword(IEEWriterKeywords.DEF__EE_USE_BINARY_DISTRIBUTION__);
 		
-		final String cpu_type = checkOrDefault(getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE), RENESAS_MCU);
+		final String cpu_type = checkOrDefault(getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE), IWritersKeywords.CPU_RL78);
 		final String mcu_type;
 		{
 			String tmp = getOsProperty(ool, SGR_OS_MCU_MODEL);
@@ -340,7 +365,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 		EEStackData sys_stack = new EEStackData(0,
 				new long[] { Long.decode(checkOrDefault(getOsProperty(ool, SGR_OS_CPU_SYS_STACK_SIZE), "" + DEFAULT_SYS_STACK_SIZE))},
 				new long[] {0},
-				new String[] {" (int)&EE_rx200_sys_stack "}, true);
+				new String[] {" (int)&EE_rl78_sys_stack "}, true);
 
 		
 		/***********************************************************************
@@ -445,13 +470,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 			ArrayList<String> tListN = new ArrayList<String>();
 
 			// use a macro to ensure alignment
-//			final int STACK_UNIT;
-//			if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR)) {
-//				CpuHwDescription currentStackDescription = (CpuHwDescription) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_DESCRIPTOR);
-//				STACK_UNIT = currentStackDescription.stackSize;
-//			} else {
-//				STACK_UNIT = 4;
-//			}
+			final int STACK_UNIT = 2;
 			
 			 
 			{
@@ -574,7 +593,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 				for (int j = 1; j < size.length; j++) {
 				    long value = size[j][0];
 			    	final String memId = memoryId[j];
-//				    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
+				    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // 
 					sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+" " + commentWriterC.writerSingleLineComment("size = "+size[j][0]+" bytes"));
 			    	
 					final String decl = "static int " +
@@ -599,7 +618,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 				
 				// open system tos
 				sbStack.append(indent
-						+ "struct EE_TOS EE_rx200_system_tos["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_rx200_system_tos", tos_size)
+						+ "struct EE_TOS EE_rl78_system_tos["+ErikaEnterpriseWriter.addVectorSizeDefine(ool, "EE_rl78_system_tos", tos_size)
 						+ "] = {\n");
 
 				/*
@@ -608,7 +627,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 				 */
 				for (int j = 0; j < tos_size; j++) {
 				    
-			        String value = j == 0 ? "{0}" : "{(EE_ADDR)(&"+STACK_BASE_NAME+j+"[STACK_"+j+"_SIZE] - RX200_INIT_TOS_OFFSET)}"; // DELTA
+			        String value = j == 0 ? "{NULL}" : "{(EE_ADDR)(&"+STACK_BASE_NAME+j+"[STACK_"+j+"_SIZE])}"; // DELTA
 
 					sbStack.append(pre
 							+ post
@@ -623,14 +642,14 @@ public class SectionWriterHalRx200 extends SectionWriter
 
 				// complete the stack's buffer
 				sbStack.append(" " + post + indent + "};\n\n" + indent
-						+ "EE_UREG EE_rx200_active_tos = 0U; /* dummy */\n\n");
+						+ "EE_UREG EE_rl78_active_tos = 0U; /* dummy */\n\n");
 
 				{ // if required, init also the irq stack
 					if (irqSize != null) {
 						int j = size.length;
 					    long value = irqSize[0];
 					    
-//					    value  = (value + (value%STACK_UNIT)) / STACK_UNIT; // arrottondo a 2
+					    value  = (value + (value%STACK_UNIT)) / STACK_UNIT;
 						sbStackDeclSize.append(indent1 + "#define STACK_"+j+"_SIZE "+value+ " " + commentWriterC.writerSingleLineComment("size = "+irqSize[0]+" bytes"));
 						
 						final String decl = "static int "+
@@ -644,7 +663,8 @@ public class SectionWriterHalRx200 extends SectionWriter
 
 						sbStack
 								.append(indent+"/* stack used only by IRQ handlers */\n"
-										+ indent+"struct EE_TOS EE_rx200_IRQ_tos = {\n"
+										+ indent+"struct EE_TOS EE_rl78_IRQ_tos;	/* MIRSA-2012 Rule 8.4 */\n"
+										+ indent+"struct EE_TOS EE_rl78_IRQ_tos = {\n"
 										+ indent+indent+"(EE_ADDR)(&"+STACK_BASE_NAME+j+"[STACK_"+j+"_SIZE])\n" // DELTA
 										+ indent+"};\n\n");
 						
@@ -668,7 +688,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 					}
 					ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 					sgrCpu.setObject(SGRK_OS_STACK_LIST, stackTmp.toArray(new EEStackData[0]));
-					sgrCpu.setObject(SGRK_OS_STACK_VECTOR_NAME, "EE_rx200_system_tos");
+					sgrCpu.setObject(SGRK_OS_STACK_VECTOR_NAME, "EE_rl78_system_tos");
 				}
 
 			}		
@@ -719,7 +739,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 					if (mcu_model == null) {
 						String mcu_type = childFound.get(index);
 						
-						if (RENESAS_MCU.equals(mcu_type)) {
+						if (R5F10_MCU.equals(mcu_type)) {
 							// ... and compete it 
 							String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "MODEL";
 			
@@ -731,16 +751,20 @@ public class SectionWriterHalRx200 extends SectionWriter
 			}
 		}
 		
-		String mcu_ee_opt = null;
-		if ("R5F5210x".equals(mcu_model)) {
+		ArrayList<String> mcu_ee_opt = null;
+		if ("R5F5104LE".equals(mcu_model)) {
 			
-			mcu_ee_opt = EEOPT__MCU_R5F5210X;
+			mcu_ee_opt = new ArrayList<String>();
+			mcu_ee_opt.add(EEOPT__MCU_R5F510XXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F5104XX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F5104LE);
+			mcu_ee_opt.add("EE_RL78_S3__");
 		} else {
 			Messages.sendWarningNl("Unsupported MCU");
 		}
 		
 		if (mcu_ee_opt != null) {
-			tmp_common_eeopts.add(mcu_ee_opt);				
+			tmp_common_eeopts.addAll(mcu_ee_opt);				
 		}
 
 			
@@ -756,7 +780,7 @@ public class SectionWriterHalRx200 extends SectionWriter
 		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
 		
 		
-		final String cpu_type = checkOrDefault(getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE), RENESAS_MCU);
+		final String cpu_type = checkOrDefault(getOsProperty(ool, ISimpleGenResKeywords.OS_CPU_TYPE), IWritersKeywords.CPU_RL78);
 		final String mcu_type;
 		{
 			String tmp = getOsProperty(ool, SGR_OS_MCU_MODEL);
@@ -801,14 +825,26 @@ public class SectionWriterHalRx200 extends SectionWriter
 		        );
 		        
 		        String compiler_type = AbstractRtosWriter.getOsProperty(ool, RenesasConstants.SGRK__RENESAS_COMPILER_TYPE__);
-		        if (RenesasConstants.SGRK__CCRX_COMPILER__.equalsIgnoreCase(compiler_type)) {
-			        String gcc = RenesasConstants.DEFAULT_RX200_CONF_CCRX_CC;
-			    	if (options.containsKey(RenesasConstants.PREF_RX200_CCRX_CC_PATH)) {
-						String tmp = (String) options.get(RenesasConstants.PREF_RX200_CCRX_CC_PATH);
+		        if (RenesasConstants.SGRK__CCRL_COMPILER__.equalsIgnoreCase(compiler_type)) {
+			        String gcc = RenesasConstants.DEFAULT_RL78_CONF_CCRL_CC;
+			    	if (options.containsKey(RenesasConstants.PREF_RL78_CCRL_CC_PATH)) {
+						String tmp = (String) options.get(RenesasConstants.PREF_RL78_CCRL_CC_PATH);
 						if (tmp.length()>0) gcc = tmp;
 					} 
-		    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(gcc, "CCRX_ROOT", wrapper) );
+		    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(gcc, "CCRL_ROOT", wrapper) );
 		        } 
+		        
+		        {
+			        String enableE2Studio = AbstractRtosWriter.getOsProperty(ool, RenesasConstants.SGRK__RENESAS_USE_E2STUDIO__);
+			        if ( Boolean.parseBoolean(enableE2Studio)) {
+				        String e2StudioPath = "";
+				    	if (options.containsKey(RenesasConstants.PREF_RL78_E2STUDIO_PATH)) {
+							String tmp = (String) options.get(RenesasConstants.PREF_RL78_E2STUDIO_PATH);
+							if (tmp.length()>0) e2StudioPath = tmp;
+						} 
+			    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(e2StudioPath, "E2STUDIO_ROOT", wrapper) );
+			        } 
+		        }
 
 		    }
 

@@ -6,11 +6,17 @@
       <writer
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterHalRx200">
       </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterHalRl78">
+      </writer>
    </extension>
    <extension
          point="com.eu.evidence.rtdruid.oil.ee.core.eeCpuDescription">
       <cpu
             class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrRx200">
+      </cpu>
+      <cpu
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.CpuDescrRl78">
       </cpu>
    </extension>
 	<extension

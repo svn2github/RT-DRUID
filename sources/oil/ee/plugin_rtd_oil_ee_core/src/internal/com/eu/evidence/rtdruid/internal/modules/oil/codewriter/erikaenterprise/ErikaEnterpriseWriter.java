@@ -2704,6 +2704,22 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 		return answer;
 	}
 	
+	public List<String> getCpuDataEnum(IOilObjectList ool, String key, ArrayList<String> paths) {
+		ArrayList<String> answer = new ArrayList<String>();
+		for (String currentCpuPrefix: AbstractRtosWriter.getOsProperties(ool, SGRK_OS_CPU_DATA_PREFIX)) {
+			String[] child = new String[1];
+			String path = currentCpuPrefix + S + key;
+			String tmp = CommonUtils.getFirstChildEnumType(vt, path, child);
+			if (tmp != null) {
+				answer.add(tmp);
+				if (paths != null) {
+					paths.add(path + S + child[0]);
+				}
+			}
+		}
+		return answer;
+	}
+	
 	
 	private void getOsCpuData(String currentRtosPrefix, ArrayList<String> hw_types, ArrayList<String> paths) {
 		hw_types.clear();

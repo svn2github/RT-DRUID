@@ -40,6 +40,10 @@ public interface IWritersKeywords {
 	/** Identifies a Renesas RX200 architecture */
 	public final static String CPU_RX200 = "RX200";
 	
+	/** Identifies a Renesas RL78 architecture */
+	public final static String CPU_RL78 = "RL78";
+	
+	
 	/** Identifies a PPC architecture (without protection) */
 	public final static String CPU_MPC5xx = "MPC5";
 
