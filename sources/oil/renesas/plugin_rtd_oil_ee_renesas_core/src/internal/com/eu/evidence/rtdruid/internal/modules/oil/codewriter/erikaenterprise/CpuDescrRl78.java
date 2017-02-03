@@ -23,5 +23,6 @@ public class CpuDescrRl78 extends CpuHwDescription {
 				new String[] {  }, 32, 2, 4, 32);
 		handlesEmpyVector = false;
 		supportOrtiISR2 = true;
+		maxIsrPriority = 4;
 	}
 }

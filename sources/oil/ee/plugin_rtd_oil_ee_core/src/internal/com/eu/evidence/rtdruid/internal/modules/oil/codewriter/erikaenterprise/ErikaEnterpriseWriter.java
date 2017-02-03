@@ -2060,13 +2060,15 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 
 	}
 	
-	protected void setIsrPriorities() {
+	protected void setIsrPriorities() throws OilCodeWriterException {
 		
 		for (IOilObjectList ool : parent.getOilObjects()) {
 			
 			CpuHwDescription cpuDescr = ErikaEnterpriseWriter.getCpuHwDescription(ool);
 			final boolean packPriorities = cpuDescr == null ? true : cpuDescr.isPackIsrPriorities();
 			final int startingPriority   = cpuDescr == null ? 0 : cpuDescr.getStartingIsrPriorities();
+			final int maxPriority   = cpuDescr == null ? -1 : cpuDescr.getMaxIsrPriority();
+			
 			
 			ArrayList<Integer> isr1PrioPres = new ArrayList<Integer>();
 			ArrayList<Integer> isr2PrioPres = new ArrayList<Integer>();
@@ -2129,6 +2131,9 @@ public class ErikaEnterpriseWriter extends DefaultRtosWriter implements IEEWrite
 				if (min_isr1_prio<=max_isr2_prio) {
 					Messages.sendWarningNl("All isr1 priorities should be bigger than isr2 priorities.");
 				}
+			}
+			if (maxPriority>0 && isr2PrioPres.size()>maxPriority) {
+				throw new OilCodeWriterException("Too many distinct isr2 priorities. At most can exist " + maxPriority + " distinct values.");
 			}
 			
 			

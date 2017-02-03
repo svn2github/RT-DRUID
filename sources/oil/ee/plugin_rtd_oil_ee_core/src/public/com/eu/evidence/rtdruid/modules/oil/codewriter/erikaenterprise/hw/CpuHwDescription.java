@@ -207,6 +207,13 @@ public class CpuHwDescription {
 	 * Pack isr priorities
 	 */
 	protected boolean packIsrPriorities = true;
+	
+	/**
+	 * Maximum isr priority. 
+	 * If the value is grater than 0, it means the maximum valid isr priority value.
+	 * 0 and negative values are handled as undifined maximum isr priority.
+	 */
+	protected int maxIsrPriority = -1;
 
 	/**
 	 * Build a new Cpu HW Description
@@ -284,6 +291,10 @@ public class CpuHwDescription {
 	 */
 	public boolean isPackIsrPriorities() {
 		return packIsrPriorities;
+	}
+	
+	public int getMaxIsrPriority() {
+		return maxIsrPriority;
 	}
 	
 	public McuCounterDevice getMcuDevice(String deviceId) {

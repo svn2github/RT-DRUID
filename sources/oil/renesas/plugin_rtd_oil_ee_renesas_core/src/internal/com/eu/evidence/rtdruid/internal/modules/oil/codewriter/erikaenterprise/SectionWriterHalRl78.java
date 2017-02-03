@@ -35,6 +35,7 @@ import com.eu.evidence.rtdruid.modules.oil.codewriter.common.SectionWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.FileTypes;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.common.comments.ICommentWriter;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterIsr;
+import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.SectionWriterKernelCounterHw;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStackData;
 import com.eu.evidence.rtdruid.modules.oil.codewriter.erikaenterprise.hw.EEStacks;
 import com.eu.evidence.rtdruid.modules.oil.erikaenterprise.constants.IEEWriterKeywords;
@@ -82,8 +83,10 @@ public class SectionWriterHalRl78 extends SectionWriter
 	private static final String STACK_BASE_NAME = "EE_stack_";
 	private static final long DEFAULT_SYS_STACK_SIZE = 4096;
 	
+	private static final String EE_RL78_SYSTEM_TIMER_HANDLER = "EE_rl78_system_timer_handler";
+	
 	private final SectionWriterIsr isrWriter;
-//	private final SectionWriterKernelCounterHw counterHwWriter;
+	private final SectionWriterKernelCounterHw counterHwWriter;
 	
 	/**
 	 * 
@@ -113,7 +116,8 @@ public class SectionWriterHalRl78 extends SectionWriter
 		this.vt = parent == null ? null : parent.getVt();
 		
 		isrWriter = new SectionWriterIsr(parent, IWritersKeywords.CPU_RL78);
-//		counterHwWriter = new SectionWriterKernelCounterHw(parent, IWritersKeywords.CPU_RL78, EE_E200ZX_SYSTEM_TIMER_HANDLER);
+		counterHwWriter = new SectionWriterKernelCounterHw(parent, IWritersKeywords.CPU_RL78, EE_RL78_SYSTEM_TIMER_HANDLER);
+		counterHwWriter.setAllowSystemTimerPriority(true);
 	}
 
 	/**
@@ -152,7 +156,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 		
 		{
 			isrWriter.updateObjects();
-//			counterHwWriter.updateObjects();
+			counterHwWriter.updateObjects();
 		}
 
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
@@ -321,7 +325,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 			
 			// isr
 			isrWriter.writeIsr(currentRtosId, ool, cpuBuffs);
-//			counterHwWriter.writeCounterHw(currentRtosId, ool, cpuBuffs);
+			counterHwWriter.writeCounterHw(currentRtosId, ool, cpuBuffs);
 			
 			// makefile
 			prepareMakeFile(ool);

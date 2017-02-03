@@ -71,7 +71,8 @@ IMPLEMENTATION ee {
 
                 UINT32 STACK_BOTTOM;
 				UINT32 SYS_STACK_SIZE;
-                
+				
+                FLOAT CPU_CLOCK;                
             }
             
         ] CPU_DATA;

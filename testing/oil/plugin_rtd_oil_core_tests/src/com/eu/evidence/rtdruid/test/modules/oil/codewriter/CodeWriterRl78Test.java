@@ -5,7 +5,8 @@ import org.junit.Test;
 
 
 public class CodeWriterRl78Test extends AbstractCodeWriterTest {
-	
+
+
 	@Test
 	public void testPortingMulti6_far() {
 	    final String text = "CPU mySystem {\n" +
@@ -74,6 +75,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 				"};";
 		commonWriterTest(text, 1);
 	}
+	
 	@Test
 	public void testPortingMulti6_near() {
 	    final String text = "CPU mySystem {\n" +
@@ -140,6 +142,109 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 				"		SCHEDULE = FULL;\n" +
 				"	};\n" +
 				"};";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test
+	public void testMultIsr() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"    EE_OPT = \"__ASSERT__\";\n" +
+			"    EE_OPT = \"DEBUG\";\n" +
+			"\n" +
+			"    STATUS = EXTENDED;\n" +
+			"    STARTUPHOOK = FALSE;\n" +
+			"    ERRORHOOK = FALSE;\n" +
+			"    SHUTDOWNHOOK = FALSE;\n" +
+			"    PRETASKHOOK = FALSE;\n" +
+			"    POSTTASKHOOK = FALSE;\n" +
+			"    USEGETSERVICEID = FALSE;\n" +
+			"    USEPARAMETERACCESS = FALSE;\n" +
+			"    USERESSCHEDULER = FALSE;\n" +
+			"\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			APP_SRC = \"code.c\";\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			COMPILER_TYPE = CCRL {\n" +
+			"				E2STUDIO = TRUE;\n" +
+			"			};\n" +
+			"			MULTI_STACK = TRUE {\n" +
+			"        			IRQ_STACK = TRUE {\n" +
+			"          				SYS_SIZE = 512;\n" +
+			"        			};\n" +
+			"      			};\n" +
+			"			SYS_STACK_SIZE = 4096;\n" +
+			"		};\n" +
+			"		\n" +
+			"\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F5104LE;\n" +
+			"		};\n" +
+			"\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  TASK time_slow {\n" +
+			"    PRIORITY = 10;\n" +
+			"    ACTIVATION = 1;\n" +
+			"    SCHEDULE = FULL;\n" +
+			"    AUTOSTART = FALSE;\n" +
+			"    STACK = SHARED;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"DECREMENTER\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+//			"    CPU_ID = \"default_cpu\";\n" +
+			"  };\n" +
+			"  ALARM OSAlarm_2400ms {\n" +
+			"      COUNTER = system_timer;\n" +
+			"      ACTION = ACTIVATETASK {\n" +
+			"          TASK = time_slow;\n" +
+			"      };\n" +
+			"      AUTOSTART = TRUE {\n" +
+			"          ALARMTIME = 2400;\n" +
+			"          CYCLETIME = 2400;\n" +
+			"      };\n" +
+			"  };\n" +
+			"\n" +
+			"  ISR isr1 {\n" +
+			"      CATEGORY = 2;\n" +
+			"      ENTRY = \"INT_01\";\n" +
+			"      PRIORITY = \"1\";\n" +
+			"  };\n" +
+			"  ISR isr2 {\n" +
+			"      CATEGORY = 2;\n" +
+			"      ENTRY = \"INT_02\";\n" +
+			"      PRIORITY = \"1\";\n" +
+			"  };\n" +
+			"  ISR isr3 {\n" +
+			"      CATEGORY = 2;\n" +
+			"      ENTRY = \"INT_03\";\n" +
+			"      PRIORITY = \"120\";\n" +
+			"  };\n" +
+			"  ISR isr4 {\n" +
+			"      CATEGORY = 2;\n" +
+			"      ENTRY = \"INT_04\";\n" +
+			"      PRIORITY = \"10\";\n" +
+			"  };\n" +
+			"  ISR isr5 {\n" +
+			"      CATEGORY = 2;\n" +
+			"      ENTRY = \"INT_05\";\n" +
+			"      PRIORITY = \"102\";\n" +
+			"  };\n" +			
+			"};";
 		commonWriterTest(text, 1);
 	}
 }
