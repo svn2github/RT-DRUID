@@ -27,6 +27,7 @@ public class CpuHwDescription {
 		protected final int prio;
 		protected final String entry;
 		protected final String handler;
+		protected final String isrDefine;
 		
 		
 		public McuCounterDevice(final String id, final String mcu_id, final int prio, final String entry, final String handler) {
@@ -35,7 +36,18 @@ public class CpuHwDescription {
 			this.prio = prio;
 			this.entry = entry;
 			this.handler = handler;
+			this.isrDefine = null;
 		}
+		
+		public McuCounterDevice(final String id, final String mcu_id, final int prio, final String entry, final String handler, final String isrDefine) {
+			this.id = id;
+			this.mcu_id = mcu_id;
+			this.prio = prio;
+			this.entry = entry;
+			this.handler = handler;
+			this.isrDefine = isrDefine;
+		}
+		
 		/**
 		 * @return the id
 		 */
@@ -65,6 +77,10 @@ public class CpuHwDescription {
 		 */
 		public String getHandler() {
 			return handler;
+		}
+		
+		public String getIsrDefine() {
+			return isrDefine;
 		}
 	}
 

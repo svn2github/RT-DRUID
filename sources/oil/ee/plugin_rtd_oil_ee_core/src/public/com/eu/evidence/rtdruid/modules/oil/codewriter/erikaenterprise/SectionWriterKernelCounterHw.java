@@ -197,11 +197,14 @@ public class SectionWriterKernelCounterHw implements IEEWriterKeywords, IExtract
 
 						String deviceId = sgr.containsProperty(ISimpleGenResKeywords.COUNTER_DEVICE) ? sgr.getString(ISimpleGenResKeywords.COUNTER_DEVICE) : null;
 						CpuHwDescription.McuCounterDevice device = cpuDescr == null ? null : cpuDescr.getMcuDevice(deviceId);
-						final String entry_id = "EE_" + 
-								(device == null ? hw_id : device.getMcu_id()) // CPU - MCU id
-								+ "_"+
-								(computeIsrEntryFromPriority ? sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE) : deviceId)+"_ISR";
-						final String prio_id = (device == null ?
+						String mcuIsrId = ( device == null ? null : device.getIsrDefine());
+						final String entry_id = ( mcuIsrId == null ? 
+									"EE_" + 
+									(device == null ? hw_id : device.getMcu_id()) // CPU - MCU id
+									+ "_"+
+									(computeIsrEntryFromPriority ? sgr.getString(ISimpleGenResKeywords.COUNTER_GENERATED_PRIORITY_VALUE) : deviceId)+"_ISR"
+								: mcuIsrId);
+						final String prio_id = ( device == null || mcuIsrId != null ?
 								entry_id :
 								"EE_" + hw_id +"_"+device.getEntry()
 								)+"_PRI";

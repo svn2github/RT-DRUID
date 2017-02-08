@@ -247,4 +247,266 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"};";
 		commonWriterTest(text, 1);
 	}
+	
+	@Test
+	public void testSystemTimer1() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"		};\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F5104LE;\n" +
+			"		};\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"TRJMR0_FCK\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test
+	public void testSystemTimer2() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"		};\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F5104LE;\n" +
+			"		};\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"TRJMR0_FCK8\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test
+	public void testSystemTimer3() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"		};\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F5104LE;\n" +
+			"		};\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"TRJMR0_FCK2\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test
+	public void testSystemTimer4() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"		};\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F5104LE;\n" +
+			"		};\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"TRJMR0_FIL\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test
+	public void testSystemTimer5() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"		};\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F5104LE;\n" +
+			"		};\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"TRJMR0_FSUB\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test
+	public void testSystemTimer6a() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"		};\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F5104LE;\n" +
+			"		};\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"TRJMR0_FSL\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+	@Test
+	public void testSystemTimer6b() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"		};\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F510BMG;\n" +
+			"		};\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"TRJMR0_FSL\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
+	@Test
+	public void testSystemTimer6c() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"		};\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F510PPJ;\n" +
+			"		};\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"TRJMR0_FSL\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
 }

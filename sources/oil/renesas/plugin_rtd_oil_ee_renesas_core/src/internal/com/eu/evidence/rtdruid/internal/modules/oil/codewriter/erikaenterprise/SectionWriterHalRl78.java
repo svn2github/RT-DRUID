@@ -56,9 +56,17 @@ public class SectionWriterHalRl78 extends SectionWriter
 			IExtractObjectsExtentions,
 			IExtractKeywordsExtentions {
 
+	public static final String MCU_R5F510PPJ = "R5F510PPJ";
+	public static final String MCU_R5F510BMG = "R5F510BMG";
+	public static final String MCU_R5F5104LE = "R5F5104LE";
+	private static final String EEOPT__EE_RL78_S3 = "EE_RL78_S3__";
 	private static final String EEOPT__MCU_R5F510XXX = "EE_R5F10XXX__";
 	private static final String EEOPT__MCU_R5F5104XX = "EE_R5F104XX__";
 	private static final String EEOPT__MCU_R5F5104LE = "EE_R5F104LE__";
+	private static final String EEOPT__MCU_R5F510PXX = "EE_R5F10PXX__";
+	private static final String EEOPT__MCU_R5F510PPJ = "EE_R5F10PPJ__";
+	private static final String EEOPT__MCU_R5F510BXX = "EE_R5F10BXX__";
+	private static final String EEOPT__MCU_R5F510BMG = "EE_R5F10BMG__";
 	private static final String EEOPT__RL78_CPU = "EE_RL78__";
 	final String indent1 = IWritersKeywords.INDENT;
 	final String indent2 = indent1 + IWritersKeywords.INDENT;
@@ -116,8 +124,10 @@ public class SectionWriterHalRl78 extends SectionWriter
 		this.vt = parent == null ? null : parent.getVt();
 		
 		isrWriter = new SectionWriterIsr(parent, IWritersKeywords.CPU_RL78);
+		isrWriter.setGenerateDefineCategory(true);
 		counterHwWriter = new SectionWriterKernelCounterHw(parent, IWritersKeywords.CPU_RL78, EE_RL78_SYSTEM_TIMER_HANDLER);
 		counterHwWriter.setAllowSystemTimerPriority(true);
+		counterHwWriter.setGenerateIsr2Defines(isrWriter);
 	}
 
 	/**
@@ -728,41 +738,29 @@ public class SectionWriterHalRl78 extends SectionWriter
 		
 		final IOilObjectList[] oilObjects = parent.getOilObjects();
 		
-		String mcu_model = null;
-		
-		for (IOilObjectList ool : oilObjects) {
-
-			if (mcu_model == null) {
-				/***********************************************************************
-				 * get values
-				 **********************************************************************/
-				ArrayList<String> childPaths = new ArrayList<String>();
-				List<String> childFound = parent.getRtosCommonChildType(ool, "MCU_DATA", childPaths);
-
-				for (int index = 0; index<childFound.size(); index++) {
-					if (mcu_model == null) {
-						String mcu_type = childFound.get(index);
-						
-						if (R5F10_MCU.equals(mcu_type)) {
-							// ... and compete it 
-							String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "MODEL";
-			
-							mcu_model = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, null);
-						}
-						
-					}
-				}
-			}
-		}
+		String mcu_model = getMcuType(parent.getVt(), oilObjects);
 		
 		ArrayList<String> mcu_ee_opt = null;
-		if ("R5F5104LE".equals(mcu_model)) {
-			
+		if (MCU_R5F5104LE.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
 			mcu_ee_opt.add(EEOPT__MCU_R5F510XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F5104XX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F5104LE);
-			mcu_ee_opt.add("EE_RL78_S3__");
+			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			
+		} else if (MCU_R5F510BMG.equals(mcu_model)) {
+			mcu_ee_opt = new ArrayList<String>();
+			mcu_ee_opt.add(EEOPT__MCU_R5F510XXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F510BXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F510BMG);
+			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			
+		} else if (MCU_R5F510PPJ.equals(mcu_model)) {
+			mcu_ee_opt = new ArrayList<String>();
+			mcu_ee_opt.add(EEOPT__MCU_R5F510XXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F510PXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F510PPJ);
+			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
 		} else {
 			Messages.sendWarningNl("Unsupported MCU");
 		}
@@ -779,6 +777,42 @@ public class SectionWriterHalRl78 extends SectionWriter
 			}
 		}
 	}
+	
+	/**
+	 * @param mcu_model
+	 * @param ool
+	 * @return
+	 */
+	public static String getMcuType(IVarTree vt, IOilObjectList[] oilObjects) {
+		String mcu_model = null;
+		
+		for (IOilObjectList ool : oilObjects) {
+
+			if (mcu_model == null) {
+				/***********************************************************************
+				 * get values
+				 **********************************************************************/
+				ArrayList<String> childPaths = new ArrayList<String>();
+				List<String> childFound = ErikaEnterpriseWriter.getRtosCommonChildType(vt, ool, "MCU_DATA", childPaths);
+
+				for (int index = 0; index<childFound.size(); index++) {
+					if (mcu_model == null) {
+						String mcu_type = childFound.get(index);
+						
+						if (R5F10_MCU.equals(mcu_type)) {
+							// ... and compete it 
+							String currentMcuPrefix = childPaths.get(index) + PARAMETER_LIST + "MODEL";
+			
+							mcu_model = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, null);
+						}
+						
+					}
+				}
+			}
+		}
+		return mcu_model;
+	}
+	
 	
 	void prepareMakeFile(IOilObjectList ool) {
 		final ICommentWriter commentWriterMf = getCommentWriter(ool, FileTypes.MAKEFILE);
