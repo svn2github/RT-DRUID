@@ -59,6 +59,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 	public static final String MCU_R5F510PPJ = "R5F510PPJ";
 	public static final String MCU_R5F510BMG = "R5F510BMG";
 	public static final String MCU_R5F5104LE = "R5F5104LE";
+	private static final String EEOPT__EE_RL78_S2 = "EE_RL78_S2__";
 	private static final String EEOPT__EE_RL78_S3 = "EE_RL78_S3__";
 	private static final String EEOPT__MCU_R5F510XXX = "EE_R5F10XXX__";
 	private static final String EEOPT__MCU_R5F5104XX = "EE_R5F104XX__";
@@ -760,7 +761,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 			mcu_ee_opt.add(EEOPT__MCU_R5F510XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F510PXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F510PPJ);
-			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			mcu_ee_opt.add(EEOPT__EE_RL78_S2);
 		} else {
 			Messages.sendWarningNl("Unsupported MCU");
 		}
