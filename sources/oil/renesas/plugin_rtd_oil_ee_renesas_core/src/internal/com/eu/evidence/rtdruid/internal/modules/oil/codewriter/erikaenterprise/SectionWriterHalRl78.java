@@ -761,7 +761,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 			mcu_ee_opt.add(EEOPT__MCU_R5F510XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F510PXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F510PPJ);
-			mcu_ee_opt.add(EEOPT__EE_RL78_S2);
+			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
 		} else {
 			Messages.sendWarningNl("Unsupported MCU");
 		}
