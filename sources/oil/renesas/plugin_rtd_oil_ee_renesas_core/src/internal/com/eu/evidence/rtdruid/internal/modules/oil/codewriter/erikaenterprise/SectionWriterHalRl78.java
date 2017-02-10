@@ -56,18 +56,18 @@ public class SectionWriterHalRl78 extends SectionWriter
 			IExtractObjectsExtentions,
 			IExtractKeywordsExtentions {
 
-	public static final String MCU_R5F510PPJ = "R5F510PPJ";
-	public static final String MCU_R5F510BMG = "R5F510BMG";
-	public static final String MCU_R5F5104LE = "R5F5104LE";
-	private static final String EEOPT__EE_RL78_S2 = "EE_RL78_S2__";
+	public static final String MCU_R5F10PPJ = "R5F10PPJ";
+	public static final String MCU_R5F10BMG = "R5F10BMG";
+	public static final String MCU_R5F104LE = "R5F104LE";
+//	private static final String EEOPT__EE_RL78_S2 = "EE_RL78_S2__";
 	private static final String EEOPT__EE_RL78_S3 = "EE_RL78_S3__";
-	private static final String EEOPT__MCU_R5F510XXX = "EE_R5F10XXX__";
-	private static final String EEOPT__MCU_R5F5104XX = "EE_R5F104XX__";
-	private static final String EEOPT__MCU_R5F5104LE = "EE_R5F104LE__";
-	private static final String EEOPT__MCU_R5F510PXX = "EE_R5F10PXX__";
-	private static final String EEOPT__MCU_R5F510PPJ = "EE_R5F10PPJ__";
-	private static final String EEOPT__MCU_R5F510BXX = "EE_R5F10BXX__";
-	private static final String EEOPT__MCU_R5F510BMG = "EE_R5F10BMG__";
+	private static final String EEOPT__MCU_R5F10XXX = "EE_R5F10XXX__";
+	private static final String EEOPT__MCU_R5F104XX = "EE_R5F104XX__";
+	private static final String EEOPT__MCU_R5F104LE = "EE_R5F104LE__";
+	private static final String EEOPT__MCU_R5F10PXX = "EE_R5F10PXX__";
+	private static final String EEOPT__MCU_R5F10PPJ = "EE_R5F10PPJ__";
+	private static final String EEOPT__MCU_R5F10BXX = "EE_R5F10BXX__";
+	private static final String EEOPT__MCU_R5F10BMG = "EE_R5F10BMG__";
 	private static final String EEOPT__RL78_CPU = "EE_RL78__";
 	final String indent1 = IWritersKeywords.INDENT;
 	final String indent2 = indent1 + IWritersKeywords.INDENT;
@@ -742,25 +742,25 @@ public class SectionWriterHalRl78 extends SectionWriter
 		String mcu_model = getMcuType(parent.getVt(), oilObjects);
 		
 		ArrayList<String> mcu_ee_opt = null;
-		if (MCU_R5F5104LE.equals(mcu_model)) {
+		if (MCU_R5F104LE.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
-			mcu_ee_opt.add(EEOPT__MCU_R5F510XXX);
-			mcu_ee_opt.add(EEOPT__MCU_R5F5104XX);
-			mcu_ee_opt.add(EEOPT__MCU_R5F5104LE);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F104XX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F104LE);
 			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
 			
-		} else if (MCU_R5F510BMG.equals(mcu_model)) {
+		} else if (MCU_R5F10BMG.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
-			mcu_ee_opt.add(EEOPT__MCU_R5F510XXX);
-			mcu_ee_opt.add(EEOPT__MCU_R5F510BXX);
-			mcu_ee_opt.add(EEOPT__MCU_R5F510BMG);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10BXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10BMG);
 			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
 			
-		} else if (MCU_R5F510PPJ.equals(mcu_model)) {
+		} else if (MCU_R5F10PPJ.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
-			mcu_ee_opt.add(EEOPT__MCU_R5F510XXX);
-			mcu_ee_opt.add(EEOPT__MCU_R5F510PXX);
-			mcu_ee_opt.add(EEOPT__MCU_R5F510PPJ);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10PXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10PPJ);
 			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
 		} else {
 			Messages.sendWarningNl("Unsupported MCU");

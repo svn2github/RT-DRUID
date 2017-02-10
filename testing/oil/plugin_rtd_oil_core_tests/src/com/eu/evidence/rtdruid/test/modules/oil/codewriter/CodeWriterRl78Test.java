@@ -42,7 +42,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 				"		};\n" +
 				"\n" +
 				"		MCU_DATA = R5F10XXX {\n" +
-				"			MODEL = R5F5104LE;\n" +
+				"			MODEL = R5F104LE;\n" +
 				"		};\n" +
 				"\n" +
 				"		KERNEL_TYPE = FP {\n" +
@@ -111,7 +111,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 				"		};\n" +
 				"\n" +
 				"		MCU_DATA = R5F10XXX {\n" +
-				"			MODEL = R5F5104LE;\n" +
+				"			MODEL = R5F104LE;\n" +
 				"		};\n" +
 				"\n" +
 				"		KERNEL_TYPE = FP {\n" +
@@ -180,7 +180,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"		\n" +
 			"\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F5104LE;\n" +
+			"			MODEL = R5F104LE;\n" +
 			"		};\n" +
 			"\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
@@ -259,7 +259,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"			MULTI_STACK = FALSE;\n" +
 			"		};\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F5104LE;\n" +
+			"			MODEL = R5F104LE;\n" +
 			"		};\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
 			"\n" +
@@ -292,7 +292,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"			MULTI_STACK = FALSE;\n" +
 			"		};\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F5104LE;\n" +
+			"			MODEL = R5F104LE;\n" +
 			"		};\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
 			"\n" +
@@ -325,7 +325,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"			MULTI_STACK = FALSE;\n" +
 			"		};\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F5104LE;\n" +
+			"			MODEL = R5F104LE;\n" +
 			"		};\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
 			"\n" +
@@ -358,7 +358,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"			MULTI_STACK = FALSE;\n" +
 			"		};\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F5104LE;\n" +
+			"			MODEL = R5F104LE;\n" +
 			"		};\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
 			"\n" +
@@ -391,7 +391,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"			MULTI_STACK = FALSE;\n" +
 			"		};\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F5104LE;\n" +
+			"			MODEL = R5F104LE;\n" +
 			"		};\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
 			"\n" +
@@ -424,7 +424,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"			MULTI_STACK = FALSE;\n" +
 			"		};\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F5104LE;\n" +
+			"			MODEL = R5F104LE;\n" +
 			"		};\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
 			"\n" +
@@ -456,7 +456,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"			MULTI_STACK = FALSE;\n" +
 			"		};\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F510BMG;\n" +
+			"			MODEL = R5F10BMG;\n" +
 			"		};\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
 			"\n" +
@@ -488,7 +488,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"			MULTI_STACK = FALSE;\n" +
 			"		};\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F510PPJ;\n" +
+			"			MODEL = R5F10PPJ;\n" +
 			"		};\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
 			"\n" +
