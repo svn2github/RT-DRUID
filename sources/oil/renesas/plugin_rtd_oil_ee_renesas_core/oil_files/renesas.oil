@@ -86,8 +86,10 @@ IMPLEMENTATION ee {
 			R5F10XXX {
 				ENUM [
 					R5F104LE,
-					R5F10PPJ,
-					R5F10BMG
+					R5F10AFG,
+					R5F10BMG,
+					R5F10PLG,
+					R5F10PPJ
 				] MODEL;
 			}
 		] MCU_DATA;
