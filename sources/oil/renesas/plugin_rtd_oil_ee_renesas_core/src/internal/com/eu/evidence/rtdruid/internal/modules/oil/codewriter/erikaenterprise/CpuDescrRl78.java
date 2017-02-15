@@ -36,36 +36,15 @@ public class CpuDescrRl78 extends CpuHwDescription implements CpuHwDescription.I
 	 */
 	@Override
 	public void update(ErikaEnterpriseWriter parent, IVarTree vt, IOilObjectList[] objects, final int currentCpuId) {
-		
-		String mcuModel = SectionWriterHalRl78.getMcuType(vt, objects);
 
-		if (SectionWriterHalRl78.MCU_R5F104LE.equals(mcuModel) ||
-				SectionWriterHalRl78.MCU_R5F10BMG.equals(mcuModel) ||
-				SectionWriterHalRl78.MCU_R5F10PPJ.equals(mcuModel)
-			)
-		{
-			addMcuDevices(Arrays.asList(new McuCounterDevice[] {
-					new McuCounterDevice("TRJMR0_FCK",  "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR"),
-					new McuCounterDevice("TRJMR0_FCK8", "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR"),
-					new McuCounterDevice("TRJMR0_FCK2", "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR"),
-					new McuCounterDevice("TRJMR0_FIL",  "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR")
-			}));
-		}
-
-		if (SectionWriterHalRl78.MCU_R5F104LE.equals(mcuModel)) {
-			addMcuDevices(Arrays.asList(new McuCounterDevice[] {
-					new McuCounterDevice("TRJMR0_FSUB",  "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR")
-			}));
-		}
-
-		if (SectionWriterHalRl78.MCU_R5F10BMG.equals(mcuModel) ||
-				SectionWriterHalRl78.MCU_R5F10PPJ.equals(mcuModel)
-			)
-		{
-			addMcuDevices(Arrays.asList(new McuCounterDevice[] {
-					new McuCounterDevice("TRJMR0_FSL",  "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR")
-			}));
-		}
+		addMcuDevices(Arrays.asList(new McuCounterDevice[] {
+				new McuCounterDevice("TRJMR0_FCK",  "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR"),
+				new McuCounterDevice("TRJMR0_FCK8", "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR"),
+				new McuCounterDevice("TRJMR0_FCK2", "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR"),
+				new McuCounterDevice("TRJMR0_FIL",  "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR"),
+				new McuCounterDevice("TRJMR0_FSUB", "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR"),
+				new McuCounterDevice("TRJMR0_FSL",  "R5F10XXX", 0, "INTTRJ0", "EE_rl78_system_timer_handler", "EE_RL78_INTTRJ0_ISR")
+		}));
 
 	}
 }
