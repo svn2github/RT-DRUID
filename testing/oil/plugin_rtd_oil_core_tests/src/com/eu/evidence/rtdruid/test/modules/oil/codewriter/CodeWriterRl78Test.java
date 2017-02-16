@@ -554,7 +554,7 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"			MULTI_STACK = FALSE;\n" +
 			"		};\n" +
 			"		MCU_DATA = R5F10XXX {\n" +
-			"			MODEL = R5F10AFG;\n" +
+			"			MODEL = R5F10AGF;\n" +
 			"		};\n" +
 			"    KERNEL_TYPE = BCC1;\n" +
 			"\n" +

@@ -59,7 +59,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 	public static final String MCU_R5F10PPJ = "R5F10PPJ";
 	public static final String MCU_R5F10BMG = "R5F10BMG";
 	public static final String MCU_R5F104LE = "R5F104LE";
-	public static final String MCU_R5F10AFG = "R5F10AFG";
+	public static final String MCU_R5F10AGF = "R5F10AGF";
 	public static final String MCU_R5F10PLG = "R5F10PLG";
 //	private static final String EEOPT__EE_RL78_S2 = "EE_RL78_S2__";
 	private static final String EEOPT__EE_RL78_S3 = "EE_RL78_S3__";
@@ -70,7 +70,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 	private static final String EEOPT__MCU_R5F10PLG = "EE_R5F10PLG__";
 	private static final String EEOPT__MCU_R5F10PPJ = "EE_R5F10PPJ__";
 	private static final String EEOPT__MCU_R5F10AXX = "EE_R5F10AXX__";
-	private static final String EEOPT__MCU_R5F10AFG = "EE_R5F10AFG__";
+	private static final String EEOPT__MCU_R5F10AGF = "EE_R5F10AGF__";
 	private static final String EEOPT__MCU_R5F10BXX = "EE_R5F10BXX__";
 	private static final String EEOPT__MCU_R5F10BMG = "EE_R5F10BMG__";
 	private static final String EEOPT__RL78_CPU = "EE_RL78__";
@@ -768,11 +768,11 @@ public class SectionWriterHalRl78 extends SectionWriter
 			mcu_ee_opt.add(EEOPT__MCU_R5F10PPJ);
 			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
 			
-		} else if (MCU_R5F10AFG.equals(mcu_model)) {
+		} else if (MCU_R5F10AGF.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
 			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10AXX);
-			mcu_ee_opt.add(EEOPT__MCU_R5F10AFG);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10AGF);
 			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
 			
 		} else if (MCU_R5F10PLG.equals(mcu_model)) {
