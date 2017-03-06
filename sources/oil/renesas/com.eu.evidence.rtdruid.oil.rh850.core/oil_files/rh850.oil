@@ -1,0 +1,94 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        
+        ENUM [
+            RH850 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                BOOLEAN [
+                    TRUE {
+                        BOOLEAN [
+                            TRUE {
+                                UINT32 SYS_SIZE;
+                            },
+                            FALSE
+                        ] IRQ_STACK;
+                    },
+                    FALSE
+                ] MULTI_STACK = FALSE;
+                ENUM [
+                    IAR,
+                    GHS
+                ] COMPILER_TYPE;
+								UINT32 CRYSTAL;
+                STRING COMPILER_PATH[];
+                ENUM [
+                    G3M,
+                    G3K
+                ] MODEL;
+            }
+        ] CPU_DATA[];
+
+
+        ENUM [
+            F1H {
+                ENUM [
+                    R7F701503
+                ] MODEL;
+               BOOLEAN [
+                       TRUE {
+                       STRING STARTUP_SRCS[];
+                       },
+                       FALSE
+                   ] CUSTOM_STARTUP;
+               BOOLEAN [
+                       TRUE {
+                       STRING LINKERFILE[]; 
+                       },
+                       FALSE
+                   ] CUSTOM_LINKER;  
+               
+               BOOLEAN USE_TIMER_INT;
+               BOOLEAN USE_CLOCK_INIT;
+            },
+            F1L {
+                ENUM [
+                    R7F701057
+               ] MODEL;
+               BOOLEAN [
+                       TRUE {
+                       STRING STARTUP_SRCS[];
+                       },
+                       FALSE
+                   ] CUSTOM_STARTUP;
+               BOOLEAN [
+                       TRUE {
+                       STRING LINKERFILE[]; 
+                       },
+                       FALSE
+                   ] CUSTOM_LINKER;
+                   
+               BOOLEAN USE_TIMER_INT;
+               BOOLEAN USE_CLOCK_INIT;
+            }
+        ] MCU_DATA[];
+        
+        
+        ENUM [
+        Y_ASK_RH850F1X_V2 {
+        	BOOLEAN USE_LEDS;
+        	}
+        ] BOARD_DATA[];
+        
+        
+        STRING EE_OPT[];
+        STRING CFLAGS[];
+        STRING ASFLAGS[];
+        STRING LDFLAGS[];
+        STRING LDDEPS[];
+        STRING LIBS[];
+        
+   };
+};

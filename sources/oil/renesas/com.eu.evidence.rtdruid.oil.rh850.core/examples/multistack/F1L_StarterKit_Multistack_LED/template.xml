@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<evidence_example version="1" ID="rh850f1l_starter_multi_led">
+
+ <category>RH850/multistack</category>
+ <title>F1L StarterKit LED Demo</title>
+   
+ <small_descr>
+ F1L StarterKit LED Demo
+ </small_descr>
+
+ <long_descr>
+ F1L StarterKit Demo using timer and alarms to periodically start two Tasks 
+ running on a multistack that toggle the board LEDs. 
+ Initialization is done in a StartupHook.
+ </long_descr>
+
+ <file_section>
+  <file     name="code.c"/> 
+  <file     name="conf.oil"/>
+ </file_section>
+
+</evidence_example>

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.1
+Created-By: Nils Scharnke
+Require-Bundle: com.eu.evidence.rtdruid.core,com.eu.evidence.rtdruid.o
+ il.core,com.eu.evidence.templates.core
+Bundle-Vendor: Evidence S.r.l.
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 1.0.0
+Bundle-Name: Renesas RH850 support for Erika Enterprise
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.rh850.core;single
+ ton:=true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
