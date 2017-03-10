@@ -67,7 +67,7 @@ EEOPT += __RTD_CYGWIN__
     <!-- ============================================================================================================ -->
     <!--                              CPU         (makefile, add a define)                                             -->
     <!-- ============================================================================================================ -->
-<xsl:template match="object[@Type='OS']/parameter[@Name='CPU_DATA']/enumerator" mode="build_makefile">
+<xsl:template match="object[@Type='OS']/parameter[@Name='CPU_DATA']/enumerator[@Name='RH850']" mode="build_makefile">
 ## CPU OPTIONS ##
 # CPU Family
 EEOPT += __<xsl:value-of select="@Name"/>__
@@ -85,7 +85,25 @@ EEOPT += __CRYSTAL<xsl:value-of select="parameter[@Name='CRYSTAL']/@CurrValue"/>
     <!-- ============================================================================================================ -->
     <!--                              MCU         (makefile, add a define)                                            -->
     <!-- ============================================================================================================ -->
-<xsl:template match="object[@Type='OS']/parameter[@Name='MCU_DATA']/enumerator" mode="build_makefile">
+<xsl:template match="object[@Type='OS']/parameter[@Name='MCU_DATA']/enumerator[@Name='F1H']" mode="build_makefile">
+## MCU OPTIONS ## 
+EEOPT += __<xsl:value-of select="parameter[@Name='MODEL']/@CurrValue"/>__
+<xsl:if test="parameter[@Name='CUSTOM_STARTUP']/enumerator[@Name='TRUE']/parameter[@Name='STARTUP_SRCS']">
+STARTUP_SRCS += <xsl:value-of select="parameter[@Name='CUSTOM_STARTUP']/enumerator[@Name='TRUE']/parameter[@Name='STARTUP_SRCS']/@CurrValue"/>
+</xsl:if>
+<xsl:if test="parameter[@Name='CUSTOM_LINKER']/enumerator[@Name='TRUE']/parameter[@Name='LINKERFILE']">
+MCU_LINKERSCRIPT = <xsl:value-of select="parameter[@Name='CUSTOM_LINKER']/enumerator[@Name='TRUE']/parameter[@Name='LINKERFILE']/@CurrValue"/>
+</xsl:if>
+<xsl:if test="parameter[@Name='USE_CLOCK_INIT']/enumerator[@Name='TRUE']">
+EEOPT += __USE_CLOCK_INIT__
+</xsl:if>
+<xsl:if test="parameter[@Name='USE_TIMER_INT']/enumerator[@Name='TRUE']">
+EEOPT += __USE_TIMER_INT__
+</xsl:if>
+#################
+</xsl:template>
+
+<xsl:template match="object[@Type='OS']/parameter[@Name='MCU_DATA']/enumerator[@Name='F1L']" mode="build_makefile">
 ## MCU OPTIONS ## 
 EEOPT += __<xsl:value-of select="parameter[@Name='MODEL']/@CurrValue"/>__
 <xsl:if test="parameter[@Name='CUSTOM_STARTUP']/enumerator[@Name='TRUE']/parameter[@Name='STARTUP_SRCS']">
@@ -106,7 +124,7 @@ EEOPT += __USE_TIMER_INT__
     <!-- ============================================================================================================ -->
     <!--                              BOARD      (makefile, add a define)                                             -->
     <!-- ============================================================================================================ -->
-<xsl:template match="object[@Type='OS']/parameter[@Name='BOARD_DATA']/enumerator" mode="build_makefile">
+<xsl:template match="object[@Type='OS']/parameter[@Name='BOARD_DATA']/enumerator[@Name='Y_ASK_RH850F1X_V2']" mode="build_makefile">
 ## BOARD OPTIONS ##
 # Board Model
 EEOPT += __<xsl:value-of select="@Name"/>__
