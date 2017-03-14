@@ -1026,7 +1026,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 1024;\n" +
 				"		};\n" +
 				"		RESOURCE = myRes;\n" +
-				"		RESOURCE = myRes2;\n" +
+//				"		RESOURCE = myRes2;\n" +
 				"		MAX_SYSTEM_LOCK_TIME =  \"5000ns\";\n" +
 				"    };\n" +
 				"\n" +
@@ -1064,11 +1064,11 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 				"		STACK = PRIVATE {\n" +
 				"			SYS_SIZE = 1024;\n" +
 				"		};\n" +
-				"		RESOURCE = myRes2;\n" +
+//				"		RESOURCE = myRes2;\n" +
 				"    };\n" +
 				"    \n" +
 				"    RESOURCE myRes { RESOURCEPROPERTY = STANDARD; };\n" +
-				"    RESOURCE myRes2 { RESOURCEPROPERTY = STANDARD; };\n" +
+//				"    RESOURCE myRes2 { RESOURCEPROPERTY = STANDARD; };\n" +
 				"\n" +
 				"    COUNTER Counter1;\n" +
 				"\n" +
@@ -1207,7 +1207,7 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 				"			SYS_SIZE = 1024;\n" +
 				"		};\n" +
 				"		RESOURCE = myRes;\n" +
-				"		RESOURCE = myRes2;\n" +
+//				"		RESOURCE = myRes2;\n" +
 				"		MAX_SYSTEM_LOCK_TIME =  \"5000ns\";\n" +
 				"    };\n" +
 				"\n" +
@@ -1245,11 +1245,11 @@ public class CodeWriterNiosIITest extends AbstractCodeWriterTest {
 				"		STACK = PRIVATE {\n" +
 				"			SYS_SIZE = 1024;\n" +
 				"		};\n" +
-				"		RESOURCE =  myRes2 ;\n" +
+//				"		RESOURCE =  myRes2 ;\n" +
 				"    };\n" +
 				"    \n" +
 				"    RESOURCE myRes { RESOURCEPROPERTY = STANDARD; };\n" +
-				"    RESOURCE myRes2 { RESOURCEPROPERTY = STANDARD; };\n" +
+//				"    RESOURCE myRes2 { RESOURCEPROPERTY = STANDARD; };\n" +
 				"\n" +
 				"    COUNTER Counter1;\n" +
 				"\n" +
