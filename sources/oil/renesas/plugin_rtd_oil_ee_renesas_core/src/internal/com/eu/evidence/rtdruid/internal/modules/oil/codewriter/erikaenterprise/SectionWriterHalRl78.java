@@ -212,7 +212,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 							useE2Studio = true;
 						}
 						
-						String memoryModel = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "E2MEMORY_MODEL");
+						String memoryModel = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "MEMORY_MODEL");
 						if ("SMALL".equalsIgnoreCase(memoryModel)) {
 							tmp_eeopts.add("EE_RL78_SMALL__");
 						} else {
