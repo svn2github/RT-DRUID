@@ -107,41 +107,41 @@ public class SectionWriterCom extends SectionWriter
 	/*
 	 * 
 	 */
-	private static final Map<String, String> VALID_CDATATYPES;
+//	private static final Map<String, String> VALID_CDATATYPES;
 	private static final Map<String, String> COM_EEOPTS;
 	
 	static {
-		VALID_CDATATYPES = new LinkedHashMap<String, String>();
-		
-		// 8
-		VALID_CDATATYPES.put("BYTE", "8");
-		VALID_CDATATYPES.put("INT8", "8");
-		VALID_CDATATYPES.put("UINT8", "8");
-		VALID_CDATATYPES.put("EE_INT8", "8");
-		VALID_CDATATYPES.put("EE_UINT8", "8");
-
-		// 16
-		VALID_CDATATYPES.put("SHORT", "16");
-		VALID_CDATATYPES.put("INT16", "16");
-		VALID_CDATATYPES.put("UINT16", "16");
-		VALID_CDATATYPES.put("EE_INT16", "16");
-		VALID_CDATATYPES.put("EE_UINT16", "16");
-
-		// 32
-		VALID_CDATATYPES.put("INT", "32");
-		VALID_CDATATYPES.put("UINT", "32");
-		VALID_CDATATYPES.put("FLOAT", "32");
-		VALID_CDATATYPES.put("INT32", "32");
-		VALID_CDATATYPES.put("UINT32", "32");
-		VALID_CDATATYPES.put("EE_INT32", "32");
-		VALID_CDATATYPES.put("EE_UINT32", "32");
-		VALID_CDATATYPES.put("EE_FLOAT", "32");
-
-		// 64
-		VALID_CDATATYPES.put("LONG", "64");
-		VALID_CDATATYPES.put("DOUBLE", "64");
-		VALID_CDATATYPES.put("EE_LONG", "64");
-		VALID_CDATATYPES.put("EE_DOUBLE", "64");
+//		VALID_CDATATYPES = new LinkedHashMap<String, String>();
+//		
+//		// 8
+//		VALID_CDATATYPES.put("BYTE", "8");
+//		VALID_CDATATYPES.put("INT8", "8");
+//		VALID_CDATATYPES.put("UINT8", "8");
+//		VALID_CDATATYPES.put("EE_INT8", "8");
+//		VALID_CDATATYPES.put("EE_UINT8", "8");
+//
+//		// 16
+//		VALID_CDATATYPES.put("SHORT", "16");
+//		VALID_CDATATYPES.put("INT16", "16");
+//		VALID_CDATATYPES.put("UINT16", "16");
+//		VALID_CDATATYPES.put("EE_INT16", "16");
+//		VALID_CDATATYPES.put("EE_UINT16", "16");
+//
+//		// 32
+//		VALID_CDATATYPES.put("INT", "32");
+//		VALID_CDATATYPES.put("UINT", "32");
+//		VALID_CDATATYPES.put("FLOAT", "32");
+//		VALID_CDATATYPES.put("INT32", "32");
+//		VALID_CDATATYPES.put("UINT32", "32");
+//		VALID_CDATATYPES.put("EE_INT32", "32");
+//		VALID_CDATATYPES.put("EE_UINT32", "32");
+//		VALID_CDATATYPES.put("EE_FLOAT", "32");
+//
+//		// 64
+//		VALID_CDATATYPES.put("LONG", "64");
+//		VALID_CDATATYPES.put("DOUBLE", "64");
+//		VALID_CDATATYPES.put("EE_LONG", "64");
+//		VALID_CDATATYPES.put("EE_DOUBLE", "64");
 
 		
 		
@@ -311,11 +311,11 @@ public class SectionWriterCom extends SectionWriter
 						
 						String[] value = CommonUtils.getValue(vt, tPath);
 						if (value != null && value.length>0) {
-							String length = getLength(value[0]);
-							if (length == null) {
+							String length = null; //getLength(value[0]);
+//							if (length == null) {
 //								Messages.sendWarningNl("Found an unknown value for CDATATYPE in message " + sgr.getName());
-								length = "8U*sizeof("+value[0]+")";
-							}
+								length = "CHAR_BIT*sizeof("+value[0]+")";
+//							}
 							
 							sgr.setProperty(SGRK_MESSAGE_SEND_INTERNAL_DATATYPE, value[0]);
 							sgr.setProperty(SGRK_MESSAGE_SEND_INTERNAL_DATASIZE, length);
@@ -542,17 +542,17 @@ public class SectionWriterCom extends SectionWriter
 		}
 		return null;
 	}
-
-	private String getLength(String key) {
-		
-		if (key != null) {
-			key = key.toUpperCase();
-			if (VALID_CDATATYPES.containsKey(key)) {
-				return VALID_CDATATYPES.get(key);
-			}
-		}
-		return null;
-	}
+//
+//	private String getLength(String key) {
+//		
+//		if (key != null) {
+//			key = key.toUpperCase();
+//			if (VALID_CDATATYPES.containsKey(key)) {
+//				return VALID_CDATATYPES.get(key);
+//			}
+//		}
+//		return null;
+//	}
 	
 	private boolean enableCom(IOilObjectList[] ools) {
 		boolean answer = false;
@@ -642,9 +642,9 @@ public class SectionWriterCom extends SectionWriter
 				int message_id = 0;
 				
 				StringBuffer messages_ram = new StringBuffer(commentWriter.writerSingleLineComment("Messages (RAM)")+
-						"struct EE_com_msg_RAM_TYPE * EE_com_msg_RAM[EE_COM_N_MSG] = {");
+						"struct EE_com_msg_RAM_TYPE * const EE_com_msg_RAM[EE_COM_N_MSG] = {");
 				StringBuffer messages_rom = new StringBuffer(commentWriter.writerSingleLineComment("Messages (ROM)")+
-						"const struct EE_com_msg_ROM_TYPE * EE_com_msg_ROM[EE_COM_N_MSG] = {");
+						"const struct EE_com_msg_ROM_TYPE * const EE_com_msg_ROM[EE_COM_N_MSG] = {");
 				StringBuffer messages_init_rom = new StringBuffer(commentWriter.writerSingleLineComment("Messages initial Value (ROM)")+
 						"const EE_UINT64 EE_com_msg_init_val[EE_COM_N_MSG] = {");
 				
@@ -654,7 +654,8 @@ public class SectionWriterCom extends SectionWriter
 				Set<String> taskIds = new HashSet<String>();
 				// buffers
 				StringBuffer callBackDecls = new StringBuffer();
-				StringBuffer flagDecls = new StringBuffer();
+				StringBuffer flagDecls_comC = new StringBuffer();
+				StringBuffer flagDecls_eecfgH = new StringBuffer();
 				StringBuffer taskDecls = new StringBuffer();
 				TaskEventMap taskEventMap = new TaskEventMap();
 				LinkedHashMap<String, String> sendDecls = new LinkedHashMap<String, String>();
@@ -698,7 +699,8 @@ public class SectionWriterCom extends SectionWriter
 						} else if (NOTIFICATION__FLAG.equals(sgr.getString(SGRK_MESSAGE_NOTIFICATION_TYPE))) {
 							String id = sgr.getString(SGRK_MESSAGE_NOTIFICATION_FLAG__NAME);
 							if (!flagIds.contains(id)) {
-								flagDecls.append("EE_COM_DEFINE_FLAG(" + id + ");\n");
+								flagDecls_comC.append("EE_COM_DEFINE_FLAG(" + id + ");\n");
+								flagDecls_eecfgH.append("EE_COM_DECLARE_FLAG(" + id + ");\n");
 								flagIds.add(id);
 							}
 						} else if (NOTIFICATION__SETEVENT.equals(sgr.getString(SGRK_MESSAGE_NOTIFICATION_TYPE))) {
@@ -707,7 +709,7 @@ public class SectionWriterCom extends SectionWriter
 						} else if (NOTIFICATION__ACTIVATETASK.equals(sgr.getString(SGRK_MESSAGE_NOTIFICATION_TYPE))) {
 							String id = sgr.getString(SGRK_MESSAGE_NOTIFICATION_TASK_TASKNAME);
 							if (!taskIds.contains(id)) {
-								taskDecls.append("EE_TID task_to_call__" + id + " = " + id + ";\n");
+								taskDecls.append("const EE_TID task_to_call__" + id + " = " + id + ";\n");
 								taskIds.add(id);
 							}
 						}
@@ -815,6 +817,12 @@ public class SectionWriterCom extends SectionWriter
 				}
 				
 				buff_h.append(messages_define.toString());
+				if (flagDecls_eecfgH.length()>0) {
+					// add call backs
+					buff_h.append("\n" +
+							commentWriter.writerSingleLineComment("Flags") +
+							flagDecls_eecfgH + "\n");
+				}
 				
 				if (taskDecls.length()>0) {
 					// add call backs
@@ -828,11 +836,11 @@ public class SectionWriterCom extends SectionWriter
 							commentWriter.writerSingleLineComment("Callbacks") +
 							callBackDecls + "\n");
 				}
-				if (flagDecls.length()>0) {
+				if (flagDecls_comC.length()>0) {
 					// add call backs
 					buff_c.append("\n" +
 							commentWriter.writerSingleLineComment("Flags") +
-							flagDecls + "\n");
+							flagDecls_comC + "\n");
 				}
 				if (taskEventMap.size()>0) {
 					// add SetEvents
