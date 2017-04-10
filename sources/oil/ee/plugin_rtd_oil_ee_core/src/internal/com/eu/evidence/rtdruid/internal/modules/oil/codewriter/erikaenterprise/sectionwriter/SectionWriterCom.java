@@ -817,12 +817,12 @@ public class SectionWriterCom extends SectionWriter
 				}
 				
 				buff_h.append(messages_define.toString());
-				if (flagDecls_eecfgH.length()>0) {
-					// add call backs
-					buff_h.append("\n" +
-							commentWriter.writerSingleLineComment("Flags") +
-							flagDecls_eecfgH + "\n");
-				}
+//				if (flagDecls_eecfgH.length()>0) {
+//					// add call backs
+//					buff_h.append("\n" +
+//							commentWriter.writerSingleLineComment("Flags") +
+//							flagDecls_eecfgH + "\n");
+//				}
 				
 				if (taskDecls.length()>0) {
 					// add call backs
