@@ -22,7 +22,9 @@ IMPLEMENTATION ee {
                 ENUM [
                 	IAR,
                 	CCS,
-                	GNU,
+                	GNU {
+                		BOOLEAN GECKO_SDK;
+                	},
                 	KEIL
                 ] COMPILER_TYPE;
                 
@@ -30,6 +32,7 @@ IMPLEMENTATION ee {
                 	M0,
                 	// M1,
                 	// M2,
+                	M3,
                 	M4
                 ] MODEL; 
                 FLOAT CPU_CLOCK;
@@ -74,6 +77,19 @@ IMPLEMENTATION ee {
 						STRING STARTUP;
                     },
                     STM32F4xx
+             	] MODEL;
+       		},
+       		EFM32 {
+                ENUM [
+                    CUSTOM {
+                        STRING MODEL;
+						STRING LINKERSCRIPT;
+						STRING INCLUDE_C;
+						STRING INCLUDE_S;
+						STRING STARTUP;
+                    },
+                    EFM32G232F128,
+                    EFM32TG110F32
              	] MODEL;
        		}
        		

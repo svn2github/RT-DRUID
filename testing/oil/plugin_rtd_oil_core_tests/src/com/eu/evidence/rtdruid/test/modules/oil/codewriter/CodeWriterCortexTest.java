@@ -2020,4 +2020,192 @@ public class CodeWriterCortexTest extends AbstractCodeWriterTest {
 			"};\n";
 		commonWriterTest(text, 1);
 	}
+	
+	@Test public void testCortexM3_EFM32G232F128() {
+	    final String text =
+				"CPU mySystem {\n" +
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"		CPU_DATA = CORTEX_MX {\n" +
+				"			MODEL = M3;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			COMPILER_TYPE = GNU; \n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"		MCU_DATA = EFM32 {\n" +
+				"			MODEL = EFM32G232F128;\n" +
+				"		};\n" +
+				"		EE_OPT = \"__USE_USER_LED__\";\n" +
+				"		EE_OPT = \"__TI_DRIVER_LIB__\";\n" +
+				"		EE_OPT = \"__ALLOW_NESTED_IRQ__\";\n" +
+				"		KERNEL_TYPE = BCC1;\n" +
+				"		EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"	};\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		ACTIVATION = 1;\n" +
+				"	};\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void testCortexM3_EFM32G232F128_gecko_true() {
+	    final String text =
+				"CPU mySystem {\n" +
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"		CPU_DATA = CORTEX_MX {\n" +
+				"			MODEL = M3;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			COMPILER_TYPE = GNU { GECKO_SDK = TRUE; }; \n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"		MCU_DATA = EFM32 {\n" +
+				"			MODEL = EFM32G232F128;\n" +
+				"		};\n" +
+				"		EE_OPT = \"__USE_USER_LED__\";\n" +
+				"		EE_OPT = \"__TI_DRIVER_LIB__\";\n" +
+				"		EE_OPT = \"__ALLOW_NESTED_IRQ__\";\n" +
+				"		KERNEL_TYPE = BCC1;\n" +
+				"		EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"	};\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		ACTIVATION = 1;\n" +
+				"	};\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void testCortexM3_EFM32G232F128_gecko_false() {
+	    final String text =
+				"CPU mySystem {\n" +
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"		CPU_DATA = CORTEX_MX {\n" +
+				"			MODEL = M3;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			COMPILER_TYPE = GNU { GECKO_SDK = FALSE; }; \n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"		MCU_DATA = EFM32 {\n" +
+				"			MODEL = EFM32G232F128;\n" +
+				"		};\n" +
+				"		EE_OPT = \"__USE_USER_LED__\";\n" +
+				"		EE_OPT = \"__TI_DRIVER_LIB__\";\n" +
+				"		EE_OPT = \"__ALLOW_NESTED_IRQ__\";\n" +
+				"		KERNEL_TYPE = BCC1;\n" +
+				"		EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"	};\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		ACTIVATION = 1;\n" +
+				"	};\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void testCortexM3_EFM32TG110F32() {
+	    final String text =
+				"CPU mySystem {\n" +
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";\n" +
+				"		EE_OPT = \"__ASSERT__\";\n" +
+				"		CPU_DATA = CORTEX_MX {\n" +
+				"			MODEL = M3;\n" +
+				"			APP_SRC = \"code.c\";\n" +
+				"			MULTI_STACK = FALSE;\n" +
+				"		};\n" +
+				"		MCU_DATA = EFM32 {\n" +
+				"			MODEL = EFM32TG110F32;\n" +
+				"		};\n" +
+				"		EE_OPT = \"__USE_USER_LED__\";\n" +
+				"		EE_OPT = \"__TI_DRIVER_LIB__\";\n" +
+				"		EE_OPT = \"__ALLOW_NESTED_IRQ__\";\n" +
+				"		KERNEL_TYPE = BCC1;\n" +
+				"		EE_OPT = \"__OO_STARTOS_OLD__\";\n" +
+				"		STATUS = EXTENDED;\n" +
+				"		STARTUPHOOK = FALSE;\n" +
+				"		ERRORHOOK = FALSE;\n" +
+				"		SHUTDOWNHOOK = FALSE;\n" +
+				"		PRETASKHOOK = FALSE;\n" +
+				"		POSTTASKHOOK = FALSE;\n" +
+				"		USEGETSERVICEID = FALSE;\n" +
+				"		USEPARAMETERACCESS = FALSE;\n" +
+				"		USERESSCHEDULER = FALSE;\n" +
+				"	};\n" +
+				"	TASK Task1 {\n" +
+				"		PRIORITY = 0x01;\n" +
+				"		AUTOSTART = FALSE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"		ACTIVATION = 1;\n" +
+				"	};\n" +
+				"	TASK Task2 {\n" +
+				"		PRIORITY = 0x02;\n" +
+				"		AUTOSTART = TRUE;\n" +
+				"		STACK = SHARED;\n" +
+				"		SCHEDULE = FULL;\n" +
+				"	};\n" +
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
 }

@@ -18,6 +18,7 @@ public interface CortexConstants {
 	 **************************************************************************/
 	public static final String SGRK__CORTEX_CPU_MODEL__ = "sgrk_os__cortex_cpu_model";
 	public static final String SGRK__CORTEX_M0__ = "M0";
+	public static final String SGRK__CORTEX_M3__ = "M3";
 	public static final String SGRK__CORTEX_M4__ = "M4";
 	public static final String SGRK__CORTEX_A9__ = "A9";
 

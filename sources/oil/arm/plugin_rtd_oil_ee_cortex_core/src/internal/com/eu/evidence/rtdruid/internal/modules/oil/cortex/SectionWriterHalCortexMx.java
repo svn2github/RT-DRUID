@@ -69,6 +69,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 	public final static String EEOPT__CORTEX_M0_JLINK__ = "__C_M0_IAR_J_LINK__";
 
 	public final static String EEOPT__CORTEX_MODEL_M0__ = "__CORTEX_M0__";
+	public final static String EEOPT__CORTEX_MODEL_M3__ = "__CORTEX_M3__";
 	public final static String EEOPT__CORTEX_MODEL_M4__ = "__CORTEX_M4__";
 
 	private static final String EE_CORTEX_SYSTEM_TIMER_HANDLER = "EE_cortex_system_timer_handler";
@@ -79,14 +80,16 @@ public class SectionWriterHalCortexMx extends SectionWriter
 	final protected static HashMap<String, Mcu_Model> LPCX_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
 	final protected static HashMap<String, Mcu_Model> STELLARIS_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
 	final protected static HashMap<String, Mcu_Model> STM32_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
+	final protected static HashMap<String, Mcu_Model> EFM32_MCU_PROPERTIES = new HashMap<String, Mcu_Model>();
 	final protected static LinkedHashSet<String> ISR_LIST_stm32 = loadIsr("isr_stm32.txt");
 	final protected static LinkedHashSet<String> ISR_LIST_stellaris = loadIsr("isr_stellaris.txt");
 	private static final String LPCX_MCU = "LPCXPRESSO";
 	private static final String STELLARIS_MCU = "STELLARIS";
 	private static final String STM32_MCU = "STM32";
+	private static final String EFM32_MCU = "EFM32";
 	
 	private enum McuType {
-		LPCXPRESSO(null), STELLARIS(ISR_LIST_stellaris), STM32(ISR_LIST_stm32);
+		LPCXPRESSO(null), STELLARIS(ISR_LIST_stellaris), STM32(ISR_LIST_stm32), EFM32(null);
 		
 		private LinkedHashSet<String> isrList;
 		
@@ -224,6 +227,9 @@ public class SectionWriterHalCortexMx extends SectionWriter
 					if (CortexConstants.SGRK__CORTEX_M0__.equalsIgnoreCase(cpu_model)) {
 			            sgrCpu.setProperty(CortexConstants.SGRK__CORTEX_CPU_MODEL__, CortexConstants.SGRK__CORTEX_M0__);
 			            tmp.add(EEOPT__CORTEX_MODEL_M0__);
+			        } else if (CortexConstants.SGRK__CORTEX_M3__.equalsIgnoreCase(cpu_model)) {
+			            sgrCpu.setProperty(CortexConstants.SGRK__CORTEX_CPU_MODEL__, CortexConstants.SGRK__CORTEX_M3__);
+			            tmp.add(EEOPT__CORTEX_MODEL_M3__);
 			        } else if (CortexConstants.SGRK__CORTEX_M4__.equalsIgnoreCase(cpu_model)) {
 			            sgrCpu.setProperty(CortexConstants.SGRK__CORTEX_CPU_MODEL__, CortexConstants.SGRK__CORTEX_M4__);
 			            tmp.add(EEOPT__CORTEX_MODEL_M4__);
@@ -247,11 +253,14 @@ public class SectionWriterHalCortexMx extends SectionWriter
 				}
 	
 				{
-		        	List<String> all = parent.getCpuDataEnum(ool, "COMPILER_TYPE");
+					ArrayList<String> paths = new ArrayList<String>();
+		        	List<String> all = parent.getCpuDataEnum(ool, "COMPILER_TYPE", paths);
 					String tmp1 = all.size() == 0? null : all.get(0);
 					if (tmp1 == null) {
 						if (CortexConstants.SGRK__CORTEX_M0__.equalsIgnoreCase(cpu_model)) {
 							tmp1 = CortexConstants.SGRK__IAR_COMPILER__;
+				        } else if (CortexConstants.SGRK__CORTEX_M3__.equalsIgnoreCase(cpu_model)) {
+							tmp1 = CortexConstants.SGRK__GNU_COMPILER__;
 				        } else if (CortexConstants.SGRK__CORTEX_M4__.equalsIgnoreCase(cpu_model)) {
 							tmp1 = CortexConstants.SGRK__CCS_COMPILER__;
 				        }
@@ -275,6 +284,15 @@ public class SectionWriterHalCortexMx extends SectionWriter
 			            tmp.add(EEOPT__KEIL_COMPILER__);
 				    } else 	if (CortexConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(tmp1)) {
 			            tmp.add(EEOPT__GNU_COMPILER__);
+			            
+			            if (paths.size()>0) {
+			            	String gecko_path = paths.get(0) + S + "GECKO_SDK";
+			    			String gecko_val = CommonUtils.getFirstChildEnumType(vt, gecko_path);
+			    			if ("TRUE".equalsIgnoreCase(gecko_val)) {
+			    				tmp.add("__GECKO_SDK__");
+			    			}
+			            	
+			            }
 				    }
 
 				}
@@ -831,6 +849,40 @@ public class SectionWriterHalCortexMx extends SectionWriter
 								mcu_model = model_type;
 							}
 						}
+					} else if (EFM32_MCU.equals(mcu_type)) {
+						prefix = "EFM32_";
+						// ... and compete it 
+		
+						String[] child = new String[1];
+						String model_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+						
+						/* CUSTOM */
+						if (CUSTOM_MCU.equals(model_type)) {
+							// read also LINKERSCRIPT, DEV_LIB, INCLUDE_C, INCLUDE_S
+							currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+							String[] model = CommonUtils.getValue(vt, currentMcuPrefix+"MODEL");
+							String[] linker = CommonUtils.getValue(vt, currentMcuPrefix+"LINKERSCRIPT");
+							String[] inc_c  = CommonUtils.getValue(vt, currentMcuPrefix+"INCLUDE_C");
+							String[] inc_s  = CommonUtils.getValue(vt, currentMcuPrefix+"INCLUDE_S");
+							String[] startup  = CommonUtils.getValue(vt, currentMcuPrefix+"STARTUP");
+	
+							mcu_properties = new Mcu_Model(
+									CUSTOM_MCU,
+									clean(model),
+									"__"+clean(model)+"__",
+									clean(linker),
+									clean(inc_c),
+									clean(inc_s),
+									clean(startup)
+							);
+							mcu_model = CUSTOM_MCU;
+						} else {
+								/* STANDARD MCU */
+							mcu_properties = EFM32_MCU_PROPERTIES.get(model_type);
+							if (mcu_properties != null) {
+								mcu_model = model_type;
+							}
+						}
 					}
 				}
 			}
@@ -1020,6 +1072,48 @@ public class SectionWriterHalCortexMx extends SectionWriter
 								}
 							}
 						}
+					} else if (EFM32_MCU.equals(mcu_type)) {
+						answer = McuType.EFM32;
+						{
+							String t = "__EFM32__";
+							if (!ee_opts.contains(t)) {
+								ee_opts.add(t);
+							}
+						}
+		
+						String[] child = new String[1];
+						String model_type = CommonUtils.getFirstChildEnumType(vt, currentMcuPrefix, child);
+						
+						/* CUSTOM */
+						if (CUSTOM_MCU.equals(model_type)) {
+							
+							// read only MODEL
+							currentMcuPrefix += VARIANT_ELIST + child[0] + PARAMETER_LIST;
+							String model = clean(CommonUtils.getValue(vt, currentMcuPrefix+"MODEL"));
+							if (model != null) {
+								if (!ee_opts.contains("__"+model+"__")) {
+									ee_opts.add("__"+model+"__");
+								}
+								
+								String linkscript = clean(CommonUtils.getValue(vt, currentMcuPrefix+"LINKERSCRIPT"));
+								if (linkscript != null && !ee_opts.contains("__USE_CUSTOM_LINKER_SCRIPT__")) {
+									ee_opts.add("__USE_CUSTOM_LINKER_SCRIPT__");
+								}
+							}
+		
+						} else {
+								/* STANDARD MCU */
+							mcu_properties = EFM32_MCU_PROPERTIES.get(model_type);
+							if (mcu_properties != null) {
+								
+								String[] splitted = mcu_properties.ee_opt == null ? new String[0] : mcu_properties.ee_opt.split(" ");
+								for (String t : splitted) {
+									if (!ee_opts.contains(t)) {
+										ee_opts.add(t);
+									}
+								}
+							}
+						}
 					}
 				}
 				
@@ -1054,6 +1148,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 		final String LPCX_MCU_filename = com.eu.evidence.rtdruid.modules.oil.cortex.Activator.TEMPLATES_PATH + "/cortex_lpcx_id.csv";
 		final String STELLARIS_MCU_filename = com.eu.evidence.rtdruid.modules.oil.cortex.Activator.TEMPLATES_PATH + "/cortex_stellaris_id.csv";
 		final String STM32_MCU_filename = com.eu.evidence.rtdruid.modules.oil.cortex.Activator.TEMPLATES_PATH + "/cortex_stm32_id.csv";
+		final String EFM32_MCU_filename = com.eu.evidence.rtdruid.modules.oil.cortex.Activator.TEMPLATES_PATH + "/cortex_efm32_id.csv";
 		
 		class PropertyMaker {
 			final char COMMENT = '#';
@@ -1116,6 +1211,7 @@ public class SectionWriterHalCortexMx extends SectionWriter
 		(new PropertyMaker(LPCX_MCU_PROPERTIES)).loadFile(LPCX_MCU_filename);
 		(new PropertyMaker(STELLARIS_MCU_PROPERTIES)).loadFile(STELLARIS_MCU_filename);
 		(new PropertyMaker(STM32_MCU_PROPERTIES)).loadFile(STM32_MCU_filename);
+		(new PropertyMaker(EFM32_MCU_PROPERTIES)).loadFile(EFM32_MCU_filename);
 	}
 	
 	/**
