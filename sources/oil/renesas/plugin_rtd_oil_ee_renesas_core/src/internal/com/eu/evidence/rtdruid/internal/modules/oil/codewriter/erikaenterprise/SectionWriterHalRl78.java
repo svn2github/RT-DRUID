@@ -61,6 +61,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 	public static final String MCU_R5F104LE = "R5F104LE";
 	public static final String MCU_R5F10AGF = "R5F10AGF";
 	public static final String MCU_R5F10PLG = "R5F10PLG";
+	public static final String MCU_R5F10PLJ = "R5F10PLJ";
 //	private static final String EEOPT__EE_RL78_S2 = "EE_RL78_S2__";
 	private static final String EEOPT__EE_RL78_S3 = "EE_RL78_S3__";
 	private static final String EEOPT__MCU_R5F10XXX = "EE_R5F10XXX__";
@@ -68,6 +69,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 	private static final String EEOPT__MCU_R5F104LE = "EE_R5F104LE__";
 	private static final String EEOPT__MCU_R5F10PXX = "EE_R5F10PXX__";
 	private static final String EEOPT__MCU_R5F10PLG = "EE_R5F10PLG__";
+	private static final String EEOPT__MCU_R5F10PLJ = "EE_R5F10PLJ__";
 	private static final String EEOPT__MCU_R5F10PPJ = "EE_R5F10PPJ__";
 	private static final String EEOPT__MCU_R5F10AXX = "EE_R5F10AXX__";
 	private static final String EEOPT__MCU_R5F10AGF = "EE_R5F10AGF__";
@@ -780,6 +782,13 @@ public class SectionWriterHalRl78 extends SectionWriter
 			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10PXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10PLG);
+			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			
+		} else if (MCU_R5F10PLJ.equals(mcu_model)) {
+			mcu_ee_opt = new ArrayList<String>();
+			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10PXX);
+			mcu_ee_opt.add(EEOPT__MCU_R5F10PLJ);
 			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
 		} else {
 			Messages.sendWarningNl("Unsupported MCU");

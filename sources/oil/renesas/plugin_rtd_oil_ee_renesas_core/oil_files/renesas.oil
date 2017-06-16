@@ -89,6 +89,7 @@ IMPLEMENTATION ee {
 					R5F10AGF,
 					R5F10BMG,
 					R5F10PLG,
+					R5F10PLJ,
 					R5F10PPJ
 				] MODEL;
 			}

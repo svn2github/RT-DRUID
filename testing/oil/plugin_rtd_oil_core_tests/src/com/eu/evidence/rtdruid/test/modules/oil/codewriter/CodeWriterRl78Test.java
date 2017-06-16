@@ -716,4 +716,38 @@ public class CodeWriterRl78Test extends AbstractCodeWriterTest {
 			"};";
 		commonWriterTest(text, 1);
 	}
+	
+
+	@Test
+	public void testSystemTimer6f() {
+	    final String text = 
+			"CPU test_application {\n" +
+			"\n" +
+			"  OS EE {\n" +
+			"		CPU_DATA = RL78 {\n" +
+			"			CPU_CLOCK = 98.5;\n" +
+			"			MULTI_STACK = FALSE;\n" +
+			"		};\n" +
+			"		MCU_DATA = R5F10XXX {\n" +
+			"			MODEL = R5F10PLJ;\n" +
+			"		};\n" +
+			"    KERNEL_TYPE = BCC1;\n" +
+			"\n" +
+			"    ORTI_SECTIONS = ALL;\n" +
+			"  };\n" +
+			"\n" +
+			"  COUNTER system_timer {\n" +
+			"    MINCYCLE = 1;\n" +
+			"    MAXALLOWEDVALUE = 2147483647;\n" +
+			"    TICKSPERBASE = 1;\n" +
+			"    TYPE = HARDWARE {\n" +
+			"      DEVICE = \"TRJMR0_FSL\";\n" +
+			"      SYSTEM_TIMER = TRUE;\n" +
+			"      PRIORITY = \"10\";\n" +
+			"    };\n" +
+			"    SECONDSPERTICK = 0.001;\n" +
+			"  };\n" +
+			"};";
+		commonWriterTest(text, 1);
+	}
 }
