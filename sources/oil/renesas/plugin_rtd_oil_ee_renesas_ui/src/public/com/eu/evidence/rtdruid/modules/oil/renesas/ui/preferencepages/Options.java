@@ -25,7 +25,9 @@ public class Options extends UiOilBuilderOptions {
 	/** A String that identifies the GCC Path */
 	public static final String RENESAS_CONF_CCRL= RENESAS_CONF_PREFIX+"ccrl_path";
 	public static final String RENESAS_CONF_CCRX= RENESAS_CONF_PREFIX+"ccrx_path";
+	public static final String RENESAS_CONF_CA78K0R= RENESAS_CONF_PREFIX+"ca78k0r_path";
 	public static final String RENESAS_CONF_E2STUDIO= RENESAS_CONF_PREFIX+"e2studio_path";
+	public static final String RENESAS_CONF_CSPLUS= RENESAS_CONF_PREFIX+"csplus_path";
 
 	public static Options INSTANCE = new Options();
 
@@ -40,9 +42,17 @@ public class Options extends UiOilBuilderOptions {
 				RenesasConstants.PREF_RX200_CCRX_CC_PATH,
 				RenesasConstants.DEFAULT_RX200_CONF_CCRX_CC));
 		answer.add(new OptionElement(
+				RENESAS_CONF_CA78K0R,
+				RenesasConstants.PREF_RL78_CA78K0R_CC_PATH,
+				RenesasConstants.DEFAULT_RL78_CONF_CA78K0R_CC));
+		answer.add(new OptionElement(
 				RENESAS_CONF_E2STUDIO,
 				RenesasConstants.PREF_RL78_E2STUDIO_PATH,
-				RenesasConstants.DEFAULT_RL78_CONF_E2STUDIO));		
+				RenesasConstants.DEFAULT_RL78_CONF_E2STUDIO));
+		answer.add(new OptionElement(
+				RENESAS_CONF_CSPLUS,
+				RenesasConstants.PREF_RL78_CSPLUS_PATH,
+				RenesasConstants.DEFAULT_RL78_CONF_CSPLUS));
 		return answer;
 	}
 	/**

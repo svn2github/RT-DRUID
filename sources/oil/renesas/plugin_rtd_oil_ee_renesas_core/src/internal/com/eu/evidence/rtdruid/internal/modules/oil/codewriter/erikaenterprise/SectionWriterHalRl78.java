@@ -80,6 +80,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 	final String indent2 = indent1 + IWritersKeywords.INDENT;
 
 	public final static String EEOPT__CCRL_COMPILER__ = "EE_CCRL__";
+	public final static String EEOPT__CA78K0R_COMPILER__ = "EE_CA78K0R__";
 	
 	
 	/** The Erika Enterprise Writer that call this section writer */
@@ -201,35 +202,56 @@ public class SectionWriterHalRl78 extends SectionWriter
 				
 				{ // Compiler
 					boolean useE2Studio = false;
+					boolean useCSplus = false;
 					ArrayList<String> paths = new ArrayList<String>();
 		        	List<String> all = parent.getCpuDataEnum(ool, "COMPILER_TYPE", paths);
 					String tmp1 = all.size() == 0? null : all.get(0);
 					if (tmp1 == null) {
 						tmp1 = RenesasConstants.SGRK__CCRL_COMPILER__;
+			            tmp_eeopts.add(EEOPT__CCRL_COMPILER__);
 					} else {
 						String compilerPath = paths.get(0);
-						String e2studio = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "E2STUDIO");
-						if ("TRUE".equalsIgnoreCase(e2studio)) {
-							tmp_eeopts.add("EE_E2STUDIO__");
-							useE2Studio = true;
+						
+						boolean needMemoryFar = false;
+						if (RenesasConstants.SGRK__CCRL_COMPILER__.equals(tmp1)) {
+							needMemoryFar = true;
+				            tmp_eeopts.add(EEOPT__CCRL_COMPILER__);
+				            
+							String e2studio = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "E2STUDIO");
+							if ("TRUE".equalsIgnoreCase(e2studio)) {
+								tmp_eeopts.add("EE_E2STUDIO__");
+								useE2Studio = true;
+							}
+							
+						} else if (RenesasConstants.SGRK__CA78K0R_COMPILER__.equals(tmp1)) {
+							needMemoryFar = true;
+				            tmp_eeopts.add(EEOPT__CA78K0R_COMPILER__);
+							
+							String csplus = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "CSPLUS");
+							if ("TRUE".equalsIgnoreCase(csplus)) {
+								tmp_eeopts.add("EE_CSPLUS__");
+								useCSplus = true;
+							}
 						}
 						
-						String memoryModel = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "MEMORY_MODEL");
-						if ("SMALL".equalsIgnoreCase(memoryModel)) {
-							tmp_eeopts.add("EE_RL78_SMALL__");
-						} else {
-							tmp_eeopts.add("EE_RL78_MEDIUM__");
-						}
-						String farData = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "FAR_DATA");
-						if ("TRUE".equalsIgnoreCase(farData)) {
-							tmp_eeopts.add("EE_RL78_FAR__");
+						if (needMemoryFar) {
+							String memoryModel = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "MEMORY_MODEL");
+							if ("SMALL".equalsIgnoreCase(memoryModel)) {
+								tmp_eeopts.add("EE_RL78_SMALL__");
+							} else {
+								tmp_eeopts.add("EE_RL78_MEDIUM__");
+							}
+							String farData = CommonUtils.getFirstChildEnumType(vt, compilerPath + S + "FAR_DATA");
+							if ("TRUE".equalsIgnoreCase(farData)) {
+								tmp_eeopts.add("EE_RL78_FAR__");
+							}
 						}
 					}
 					
 						
 					sgrCpu.setProperty(RenesasConstants.SGRK__RENESAS_COMPILER_TYPE__, tmp1);
 					sgrCpu.setProperty(RenesasConstants.SGRK__RENESAS_USE_E2STUDIO__, "" +useE2Studio);
-		            tmp_eeopts.add(EEOPT__CCRL_COMPILER__);
+					sgrCpu.setProperty(RenesasConstants.SGRK__RENESAS_USE_CSPLUS__, "" +useCSplus);
 				}
 
 			
@@ -379,6 +401,8 @@ public class SectionWriterHalRl78 extends SectionWriter
 		 * Binary distribution uses the suffix RTD_. 
 		 */
 		final String MAX_TASK = (binaryDistr ? "RTD_" : "EE_") + "MAX_TASK";
+		final boolean isFp = parent.checkKeyword(IWritersKeywords.FP);
+		final String stack_offset = isFp ? "" : " - RL78_INIT_TOS_OFFSET";
 
 		String pre = "";
 		String post = "";
@@ -649,7 +673,7 @@ public class SectionWriterHalRl78 extends SectionWriter
 				 */
 				for (int j = 0; j < tos_size; j++) {
 				    
-			        String value = j == 0 ? "{NULL}" : "{(EE_ADDR)(&"+STACK_BASE_NAME+j+"[STACK_"+j+"_SIZE])}"; // DELTA
+			        String value = j == 0 ? "{NULL}" : "{(EE_ADDR)(&"+STACK_BASE_NAME+j+"[STACK_"+j+"_SIZE"+stack_offset+"])}"; // DELTA
 
 					sbStack.append(pre
 							+ post
@@ -899,8 +923,15 @@ public class SectionWriterHalRl78 extends SectionWriter
 						if (tmp.length()>0) gcc = tmp;
 					} 
 		    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(gcc, "CCRL_ROOT", wrapper) );
-		        } 
-		        
+		    		
+		        } else if (RenesasConstants.SGRK__CA78K0R_COMPILER__.equalsIgnoreCase(compiler_type)) {
+			        String gcc = RenesasConstants.DEFAULT_RL78_CONF_CA78K0R_CC;
+			    	if (options.containsKey(RenesasConstants.PREF_RL78_CA78K0R_CC_PATH)) {
+						String tmp = (String) options.get(RenesasConstants.PREF_RL78_CA78K0R_CC_PATH);
+						if (tmp.length()>0) gcc = tmp;
+					} 
+		    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(gcc, "CA78K0R_ROOT", wrapper) );
+		        } 		        
 		        {
 			        String enableE2Studio = AbstractRtosWriter.getOsProperty(ool, RenesasConstants.SGRK__RENESAS_USE_E2STUDIO__);
 			        if ( Boolean.parseBoolean(enableE2Studio)) {
@@ -912,7 +943,18 @@ public class SectionWriterHalRl78 extends SectionWriter
 			    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(e2StudioPath, "E2STUDIO_ROOT", wrapper) );
 			        } 
 		        }
-
+		        
+		        {
+			        String enableCsPlus = AbstractRtosWriter.getOsProperty(ool, RenesasConstants.SGRK__RENESAS_USE_CSPLUS__);
+			        if ( Boolean.parseBoolean(enableCsPlus)) {
+				        String csPlusPath = "";
+				    	if (options.containsKey(RenesasConstants.PREF_RL78_CSPLUS_PATH)) {
+							String tmp = (String) options.get(RenesasConstants.PREF_RL78_CSPLUS_PATH);
+							if (tmp.length()>0) csPlusPath = tmp;
+						} 
+			    		sbMakefile_variables.append( CommonUtils.compilerMakefileDefines(csPlusPath, "CSPLUS_ROOT", wrapper) );
+			        } 
+		        }
 		    }
 
 			ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);

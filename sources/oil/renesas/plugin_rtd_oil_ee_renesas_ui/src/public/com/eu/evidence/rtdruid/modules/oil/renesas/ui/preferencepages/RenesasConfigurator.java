@@ -35,7 +35,9 @@ public class RenesasConfigurator extends AbstractPage {
 
 	private Text paramCCrx = null;
 	private Text paramCCrl = null;
+	private Text paramCA78K0R = null;
 	private Text paramE2Studio = null;
+	private Text paramCSPlus = null;
     
 	/**
 	 * (non-Javadoc) Method declared on PreferencePage
@@ -76,6 +78,21 @@ public class RenesasConfigurator extends AbstractPage {
 				}
 			}
 		});
+		
+		createLabel(composite_tab, "CA78K0R path", 1); //$NON-NLS-1$
+		paramCA78K0R = createTextField(composite_tab); //$NON-NLS-1$
+		Button ca78k0rButton = createPushButton(composite_tab, "Browse"); //$NON-NLS-1$
+		ca78k0rButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {	work(e);	}
+			public void widgetDefaultSelected(SelectionEvent e) {	work(e);	}
+			protected void work(SelectionEvent e) {
+				DirectoryDialog dia = new DirectoryDialog(getShell());
+				String path = dia.open();
+				if (path!=null) {
+					paramCA78K0R.setText(path);
+				}
+			}
+		});
 
 		createLabel(composite_tab, "E2Studio path", 1); //$NON-NLS-1$
 		paramE2Studio = createTextField(composite_tab); //$NON-NLS-1$
@@ -88,6 +105,21 @@ public class RenesasConfigurator extends AbstractPage {
 				String path = dia.open();
 				if (path!=null) {
 					paramE2Studio.setText(path);
+				}
+			}
+		});
+
+		createLabel(composite_tab, "CS+ path", 1); //$NON-NLS-1$
+		paramCSPlus = createTextField(composite_tab); //$NON-NLS-1$
+		Button csplusButton = createPushButton(composite_tab, "Browse"); //$NON-NLS-1$
+		csplusButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {	work(e);	}
+			public void widgetDefaultSelected(SelectionEvent e) {	work(e);	}
+			protected void work(SelectionEvent e) {
+				DirectoryDialog dia = new DirectoryDialog(getShell());
+				String path = dia.open();
+				if (path!=null) {
+					paramCSPlus.setText(path);
 				}
 			}
 		});
@@ -129,7 +161,9 @@ public class RenesasConfigurator extends AbstractPage {
 	private void initializeDefaults() {
 		paramCCrl.setText(Options.INSTANCE.getUiDeafultValue(Options.RENESAS_CONF_CCRL));
 		paramCCrx.setText(Options.INSTANCE.getUiDeafultValue(Options.RENESAS_CONF_CCRX));
+		paramCA78K0R.setText(Options.INSTANCE.getUiDeafultValue(Options.RENESAS_CONF_CA78K0R));
 		paramE2Studio.setText(Options.INSTANCE.getUiDeafultValue(Options.RENESAS_CONF_E2STUDIO));
+		paramCSPlus.setText(Options.INSTANCE.getUiDeafultValue(Options.RENESAS_CONF_CSPLUS));
 		
 		enableOk();
 	}
@@ -149,10 +183,21 @@ public class RenesasConfigurator extends AbstractPage {
 				: RenesasConstants.DEFAULT_RL78_CONF_CCRL_CC;
 		paramCCrl.setText(ccrl);
 
+
+		String ca78 = values.containsKey(Options.RENESAS_CONF_CA78K0R) ?
+				values.get(Options.RENESAS_CONF_CA78K0R) 
+				: RenesasConstants.DEFAULT_RL78_CONF_CA78K0R_CC;
+		paramCA78K0R.setText(ca78);
+		
 		String e2s = values.containsKey(Options.RENESAS_CONF_E2STUDIO) ?
 				values.get(Options.RENESAS_CONF_E2STUDIO) 
 				: RenesasConstants.DEFAULT_RL78_CONF_E2STUDIO;
 		paramE2Studio.setText(e2s);
+		
+		String csp = values.containsKey(Options.RENESAS_CONF_CSPLUS) ?
+				values.get(Options.RENESAS_CONF_CSPLUS) 
+				: RenesasConstants.DEFAULT_RL78_CONF_CSPLUS;
+		paramCSPlus.setText(csp);
 		
 		enableOk();
 	}
@@ -185,7 +230,9 @@ public class RenesasConfigurator extends AbstractPage {
 
 		store.setValue(Options.RENESAS_CONF_CCRL, paramCCrl.getText());
 		store.setValue(Options.RENESAS_CONF_CCRX, paramCCrx.getText());
+		store.setValue(Options.RENESAS_CONF_CA78K0R, paramCA78K0R.getText());
 		store.setValue(Options.RENESAS_CONF_E2STUDIO, paramE2Studio.getText());
+		store.setValue(Options.RENESAS_CONF_CSPLUS, paramCSPlus.getText());
 	}
 
 }
