@@ -51,13 +51,17 @@ public class SectionWriterHalTricore extends SectionWriter
 
 	enum TcModels {
 		tc1796("tc1796", new TricoreModelProvider_tc1796(), TricoreCompiler.GNU),
-		tc26x("tc26x", new TricoreModelProvider_tc27x("tc26x"), TricoreCompiler.TASKING),
-		tc27x("tc27x", new TricoreModelProvider_tc27x("tc27x"), TricoreCompiler.TASKING);
+		tc26x("tc26x",  new TricoreModelProvider_tc27x("tc26x"),  TricoreCompiler.TASKING),
+		tc27x("tc27x",  new TricoreModelProvider_tc27x("tc27x"),  TricoreCompiler.TASKING),
+		tc27a("tc27xa", new TricoreModelProvider_tc27x("tc27xa"), TricoreCompiler.TASKING, new String[] {"EE_TC27X__", "EE_TC27XA__"}),
+		tc27b("tc27xb", new TricoreModelProvider_tc27x("tc27xb"), TricoreCompiler.TASKING, new String[] {"EE_TC27X__", "EE_TC27XB__"}),
+		tc27c("tc27xc", new TricoreModelProvider_tc27x("tc27xc"), TricoreCompiler.TASKING, new String[] {"EE_TC27X__", "EE_TC27XC__"});
 		
 		public final String name;
 		public final String default_compiler_txt;
 		public final TricoreCompiler default_compiler;
 		public final ITricoreModelProvider provider;
+		public final String[] eeopts;
 		/**
 		 * 
 		 */
@@ -66,6 +70,15 @@ public class SectionWriterHalTricore extends SectionWriter
 			this.default_compiler = default_compiler;
 			this.default_compiler_txt = default_compiler == null ? null : default_compiler.getName();
 			this.provider = provider;
+			this.eeopts = new String[0];
+		}
+		
+		private TcModels(String name, ITricoreModelProvider provider, TricoreCompiler default_compiler, String[] opts) {
+			this.name = name;
+			this.default_compiler = default_compiler;
+			this.default_compiler_txt = default_compiler == null ? null : default_compiler.getName();
+			this.provider = provider;
+			this.eeopts = opts;
 		}
 		
 		public static TcModels get(String model) {

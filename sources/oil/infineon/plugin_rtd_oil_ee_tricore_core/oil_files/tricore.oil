@@ -73,7 +73,10 @@ IMPLEMENTATION ee {
 				ENUM [
 					TC1796,
 					TC26x,
-					TC27x
+					TC27x,
+					TC27xA,
+					TC27xB,
+					TC27xC
 				] MODEL;
 
 				STRING LINKERSCRIPT : "A custom linker-script that is used for each cpu, unless a cpu-specific linker-script is defined.";

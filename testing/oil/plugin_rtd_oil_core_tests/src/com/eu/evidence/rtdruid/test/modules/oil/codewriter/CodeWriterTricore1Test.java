@@ -9488,4 +9488,96 @@ public class CodeWriterTricore1Test extends AbstractCodeWriterTest {
 		commonWriterTest(text, 1);
 	}
 
+	
+
+	@Test public void testTc27A() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"    CPU_DATA = TRICORE {\n" +
+				"      CPU_CLOCK = 200.0;\n" +
+				"      APP_SRC = \"code.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"    };\n" +
+				"\n" +
+				"    MCU_DATA = TRICORE {\n" +
+				"      MODEL = TC27xA;\n" +
+				"    };\n" +
+				"		KERNEL_TYPE = ECC2;\n" +
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+	
+	@Test public void testTc27B() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"    CPU_DATA = TRICORE {\n" +
+				"      CPU_CLOCK = 200.0;\n" +
+				"      APP_SRC = \"code.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"    };\n" +
+				"\n" +
+				"    MCU_DATA = TRICORE {\n" +
+				"      MODEL = TC27xB;\n" +
+				"    };\n" +
+				"		KERNEL_TYPE = ECC2;\n" +
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+
+	@Test public void testTc27C() {
+	    final String text =
+				"CPU mySystem {\n" + 
+				"	OS myOs {\n" +
+				"		EE_OPT = \"DEBUG\";" + 
+				"		EE_OPT = \"VERBOSE\";" + 
+				"       STATUS = EXTENDED;\n" + 
+				"       USERESSCHEDULER = FALSE;\n" + 
+				"    CPU_DATA = TRICORE {\n" +
+				"      CPU_CLOCK = 200.0;\n" +
+				"      APP_SRC = \"code.c\";\n" +
+				"      MULTI_STACK = TRUE;\n" +
+				"      COMPILER_TYPE = GNU;\n" +
+				"    };\n" +
+				"\n" +
+				"    MCU_DATA = TRICORE {\n" +
+				"      MODEL = TC27xC;\n" +
+				"    };\n" +
+				"		KERNEL_TYPE = ECC2;\n" +
+				"	};\n" + 
+				"    TASK Task0 {\n" + 
+				"        PRIORITY = 2;\n" + 
+				"        ACTIVATION = 4;\n" + 
+				"        STACK = SHARED;\n" + 
+				"        SCHEDULE = FULL;\n" + 
+				"    };\n" + 
+				"};\n";
+		commonWriterTest(text, 1);
+	}
+
 }

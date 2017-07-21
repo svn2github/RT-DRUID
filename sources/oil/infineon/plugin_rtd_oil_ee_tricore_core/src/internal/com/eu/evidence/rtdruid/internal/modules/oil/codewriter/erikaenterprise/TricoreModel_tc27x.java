@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.eu.evidence.modules.oil.tricore.constants.TricoreConstants;
 import com.eu.evidence.rtdruid.desk.Messages;
+import com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.SectionWriterHalTricore.TcModels;
 import com.eu.evidence.rtdruid.internal.modules.oil.exceptions.OilCodeWriterException;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.ISimpleGenResKeywords;
 import com.eu.evidence.rtdruid.internal.modules.oil.keywords.IWritersKeywords;
@@ -127,7 +128,15 @@ public class TricoreModel_tc27x extends TricoreAbstractModel implements IEEWrite
 		
 		if (currentRtosId == -1) {
 			tmp.add(SectionWriterHalTricore.EEOPT_HAL_TRICORE);
-			tmp.add("EE_" + modelName.toUpperCase()+"__");
+			
+			TcModels tcmodel = TcModels.get(this.modelName);
+			if (tcmodel != null && tcmodel.eeopts.length>0) {
+				for (int i=0; i<tcmodel.eeopts.length; i++) {
+					tmp.add(tcmodel.eeopts[i]);
+				}
+			} else {
+				tmp.add("EE_" + modelName.toUpperCase()+"__");
+			}
 			
 			boolean hasExportFile = false;
 			for (IOilObjectList objs : parent.getOilObjects()) {
