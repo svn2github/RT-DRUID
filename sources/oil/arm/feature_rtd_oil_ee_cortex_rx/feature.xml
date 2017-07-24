@@ -2,16 +2,16 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.cortex_rx"
       label="RT-Druid Oil for Cortex for Erika Enterprise feature"
-      version="1.0.0.qualifier"
+      version="2.8.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.cortex_rx.core">
 
    <description url="http://www.evidence.eu.com">
-   Evidence RT-Druid support for the generation of configuration code for Erika Enterprise for Cortex R4.
+      Evidence RT-Druid support for the generation of configuration code for Erika Enterprise for Cortex R4.
    </description>
 
    <copyright url="http://www.evidence.eu.com">
-   The Erika Enterprise and RT-Druid support for Cortex R4 was implemented by Chris Kreuzberger.
+      The Erika Enterprise and RT-Druid support for Cortex R4 was implemented by Chris Kreuzberger.
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
@@ -114,7 +114,6 @@ This Agreement is governed by the laws of the State of New York and the intellec
          id="com.eu.evidence.rtdruid.oil.cortex_rx.core"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="true"/>
+         version="0.0.0"/>
 
 </feature>

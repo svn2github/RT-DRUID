@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.core"
       label="RT-Druid core feature"
-      version="2.8.0N.qualifier"
+      version="2.8.0.qualifier"
       provider-name="Evidence S.r.l.">
 
    <description url="http://www.evidence.eu.com">

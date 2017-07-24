@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid Oil Plug-in for c/c++ support (UI)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.cdt.ui;singleton:=true
-Bundle-Version: 2.8.0N.qualifier
+Bundle-Version: 2.8.0.qualifier
 Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.cdt.ui.Rtd_oil_cdt_Plugin
 Require-Bundle: com.eu.evidence.rtdruid.core,
  com.eu.evidence.rtdruid.core.ui,

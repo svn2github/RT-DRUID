@@ -2,7 +2,7 @@
 <feature
       id="com.eu.evidence.rtdruid.oil.ee.s12"
       label="RT-Druid Oil for Freescale S12 for Erika Enterprise feature"
-      version="2.8.0N.qualifier"
+      version="2.8.0.qualifier"
       provider-name="Evidence S.r.l."
       plugin="com.eu.evidence.rtdruid.oil.s12.core">
 
