@@ -3,73 +3,73 @@
    <description url="d:\rtd_open_website">
       RT-Druid main web site to update Eclipse Plugins
    </description>
-   <feature url="features/com.eu.evidence.rtdruid.core_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.core" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.core_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.core" version="2.8.0N.qualifier">
       <category name="RT-Druid Core"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.cdt_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.cdt" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.cdt_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.cdt" version="2.8.0N.qualifier">
       <category name="RT-Druid Core"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.core_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.core" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.core_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.core" version="2.8.0N.qualifier">
       <category name="RT-Druid Core"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee_2.7.0.qualifier.jar" id="com.eu.evidence.ee" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.ee_2.8.0N.qualifier.jar" id="com.eu.evidence.ee" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.avr_2.7.0.qualifier.jar" id="com.eu.evidence.ee.templates.avr" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.ee.templates.avr_2.8.0N.qualifier.jar" id="com.eu.evidence.ee.templates.avr" version="2.8.0N.qualifier">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.dspic_2.7.0.qualifier.jar" id="com.eu.evidence.ee.templates.dspic" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.ee.templates.dspic_2.8.0N.qualifier.jar" id="com.eu.evidence.ee.templates.dspic" version="2.8.0N.qualifier">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.ppc_2.7.0.qualifier.jar" id="com.eu.evidence.ee.templates.ppc" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.ee.templates.ppc_2.8.0N.qualifier.jar" id="com.eu.evidence.ee.templates.ppc" version="2.8.0N.qualifier">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.s12_2.7.0.qualifier.jar" id="com.eu.evidence.ee.templates.s12" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.ee.templates.s12_2.8.0N.qualifier.jar" id="com.eu.evidence.ee.templates.s12" version="2.8.0N.qualifier">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.arm_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.arm" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.arm_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.arm" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.avr_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.avr" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.avr_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.avr" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.x86_1.1.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.x86" version="1.1.0.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.dspic_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.dspic" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.dspic_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.dspic" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.fp_edf_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.fp_edf" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.fp_edf_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.fp_edf" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.frsh_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.frsh" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.frsh_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.frsh" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.mico32_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.mico32" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.mico32_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.mico32" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.nios2_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.nios2" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.nios2_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.nios2" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.osek_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.osek" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.osek_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.osek" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.ppc_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.ppc" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.ppc_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.ppc" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.s12_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.s12" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.s12_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.s12" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.tricore_2.7.0.qualifier.jar" id="com.eu.evidence.ee.templates.tricore" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.ee.templates.tricore_2.8.0N.qualifier.jar" id="com.eu.evidence.ee.templates.tricore" version="2.8.0N.qualifier">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.tricore_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.tricore" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.tricore_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.tricore" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.jscan_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.jscan" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.jscan_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.jscan" version="2.8.0N.qualifier">
       <category name="RT_Druid_analysis"/>
    </feature>
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.esirisc_1.2.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.esirisc" version="1.2.0.qualifier">
@@ -78,19 +78,19 @@
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.msp430_1.2.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.msp430" version="1.2.0.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.tests_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.tests" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.tests_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.tests" version="2.8.0N.qualifier">
       <category name="RT-Druid_tests"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.cortex_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.cortex" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.cortex_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.cortex" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.cortex_rx_1.0.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.cortex_rx" version="1.0.0.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.cortex_2.7.0.qualifier.jar" id="com.eu.evidence.ee.templates.cortex" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.ee.templates.cortex_2.8.0N.qualifier.jar" id="com.eu.evidence.ee.templates.cortex" version="2.8.0N.qualifier">
       <category name="Templates for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.ee.templates.mico32_2.7.0.qualifier.jar" id="com.eu.evidence.ee.templates.mico32" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.ee.templates.mico32_2.8.0N.qualifier.jar" id="com.eu.evidence.ee.templates.mico32" version="2.8.0N.qualifier">
       <category name="Templates for Erika Enterprise"/>
    </feature>
    <feature url="features/com.eu.evidence.rtdruid.oil.contrib.st.core_1.2.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.contrib.st.core" version="1.2.0.qualifier">
@@ -99,7 +99,7 @@
    <feature url="features/com.eu.evidence.rtdruid.oil.ee.hr_1.2.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.hr" version="1.2.0.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
-   <feature url="features/com.eu.evidence.rtdruid.oil.ee.renesas_2.7.0.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.renesas" version="2.7.0.qualifier">
+   <feature url="features/com.eu.evidence.rtdruid.oil.ee.renesas_2.8.0N.qualifier.jar" id="com.eu.evidence.rtdruid.oil.ee.renesas" version="2.8.0N.qualifier">
       <category name="RT-Druid Oil for Erika Enterprise"/>
    </feature>
    <category-def name="RT-Druid Core" label="Base Plugins">

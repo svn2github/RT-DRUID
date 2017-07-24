@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RT-Druid erika enterprise main plugin (Core)
 Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.ee.core;singleton:=true
-Bundle-Version: 2.7.0.qualifier
+Bundle-Version: 2.8.0N.qualifier
 Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.erikaenterprise.Activator
 Require-Bundle: org.eclipse.core.runtime,
  com.eu.evidence.rtdruid.core,
