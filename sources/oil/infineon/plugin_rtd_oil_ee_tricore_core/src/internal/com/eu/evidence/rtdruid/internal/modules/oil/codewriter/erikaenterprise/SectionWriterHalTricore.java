@@ -53,11 +53,12 @@ public class SectionWriterHalTricore extends SectionWriter
 		tc1796("tc1796", new TricoreModelProvider_tc1796(), TricoreCompiler.GNU),
 		tc26x("tc26x",  new TricoreModelProvider_tc27x("tc26x"),  TricoreCompiler.TASKING),
 		tc27x("tc27x",  new TricoreModelProvider_tc27x("tc27x"),  TricoreCompiler.TASKING),
-		tc27a("tc27xa", new TricoreModelProvider_tc27x("tc27xa"), TricoreCompiler.TASKING, new String[] {"EE_TC27X__", "EE_TC27XA__"}),
-		tc27b("tc27xb", new TricoreModelProvider_tc27x("tc27xb"), TricoreCompiler.TASKING, new String[] {"EE_TC27X__", "EE_TC27XB__"}),
-		tc27c("tc27xc", new TricoreModelProvider_tc27x("tc27xc"), TricoreCompiler.TASKING, new String[] {"EE_TC27X__", "EE_TC27XC__"});
+		tc27a("tc27xa", new TricoreModelProvider_tc27x("tc27xa"), TricoreCompiler.TASKING, "tc27x", new String[] {"EE_TC27X__", "EE_TC27XA__"}),
+		tc27b("tc27xb", new TricoreModelProvider_tc27x("tc27xb"), TricoreCompiler.TASKING, "tc27x", new String[] {"EE_TC27X__", "EE_TC27XB__"}),
+		tc27c("tc27xc", new TricoreModelProvider_tc27x("tc27xc"), TricoreCompiler.TASKING, "tc27x", new String[] {"EE_TC27X__", "EE_TC27XC__"});
 		
-		public final String name;
+		public final String oil_name;
+		public final String ee_id;
 		public final String default_compiler_txt;
 		public final TricoreCompiler default_compiler;
 		public final ITricoreModelProvider provider;
@@ -66,15 +67,17 @@ public class SectionWriterHalTricore extends SectionWriter
 		 * 
 		 */
 		private TcModels(String name, ITricoreModelProvider provider, TricoreCompiler default_compiler) {
-			this.name = name;
+			this.oil_name = name;
+			this.ee_id = name;
 			this.default_compiler = default_compiler;
 			this.default_compiler_txt = default_compiler == null ? null : default_compiler.getName();
 			this.provider = provider;
 			this.eeopts = new String[0];
 		}
 		
-		private TcModels(String name, ITricoreModelProvider provider, TricoreCompiler default_compiler, String[] opts) {
-			this.name = name;
+		private TcModels(String name, ITricoreModelProvider provider, TricoreCompiler default_compiler, String ee_id, String[] opts) {
+			this.oil_name = name;
+			this.ee_id = ee_id;
 			this.default_compiler = default_compiler;
 			this.default_compiler_txt = default_compiler == null ? null : default_compiler.getName();
 			this.provider = provider;
@@ -83,7 +86,7 @@ public class SectionWriterHalTricore extends SectionWriter
 		
 		public static TcModels get(String model) {
 			for (TcModels current : TcModels.values()) {
-				if (current.name.equalsIgnoreCase(model)) {
+				if (current.oil_name.equalsIgnoreCase(model)) {
 					return current;
 				}
 			}
@@ -404,7 +407,7 @@ public class SectionWriterHalTricore extends SectionWriter
 					for (String s: modelInfo.getEEopts(currentRtosId, ool)) {
 						tmp.add(s);
 					}
-					sgrCpu.setProperty(TricoreConstants.SGRK__TRICORE_MODEL__, tcModel.name);
+					sgrCpu.setProperty(TricoreConstants.SGRK__TRICORE_MODEL__, tcModel.oil_name);
 				}
 		
 						
@@ -489,12 +492,12 @@ public class SectionWriterHalTricore extends SectionWriter
 		        { // select compiler
 					sgrCpu.setProperty(TricoreConstants.SGRK__Tricore_COMPILER_TYPE__, default_compiler);
 					if (TricoreConstants.SGRK__GNU_COMPILER__.equalsIgnoreCase(default_compiler)) {
-						if (!TcModels.tc1796.name.equalsIgnoreCase(model)) {
+						if (!TcModels.tc1796.oil_name.equalsIgnoreCase(model)) {
 							Messages.sendWarningNl("GNU compiler tested only with tc1796");
 				        }
-						tmp.add(TcModels.tc1796.name.equalsIgnoreCase(model) ? EEOPT_TRICORE_GNU : EEOPT_GNU);
+						tmp.add(TcModels.tc1796.oil_name.equalsIgnoreCase(model) ? EEOPT_TRICORE_GNU : EEOPT_GNU);
 				    } else 	if (TricoreConstants.SGRK__TASKING_COMPILER__.equalsIgnoreCase(default_compiler)) {
-						if (!TcModels.tc27x.name.equalsIgnoreCase(model)) {
+						if (!TcModels.tc27x.oil_name.equalsIgnoreCase(model)) {
 							Messages.sendWarningNl("TASKING compiler tested only with tc27x");
 				        }
 			            tmp.add(EEOPT_TASKING);
@@ -601,7 +604,7 @@ public class SectionWriterHalTricore extends SectionWriter
 			}
 			
 			String model = ErikaEnterpriseWriter.checkOrDefault(AbstractRtosWriter.getOsProperty(ool, TricoreConstants.SGRK__TRICORE_MODEL__), "");
-			final String baseID = TcModels.tc1796.name.equals(model) ? "TRICORE1" : "TRICORE";
+			final String baseID = TcModels.tc1796.oil_name.equals(model) ? "TRICORE1" : "TRICORE";
 			// compiler
 			String compiler_define = "";
 			{
@@ -639,7 +642,7 @@ public class SectionWriterHalTricore extends SectionWriter
 		        	compiler_define = "$(warning No compiler set)\n";
 		        }
 			}
-			String model_txt = TcModels.get(model) == null ? model : TcModels.get(model).name ;
+			String model_txt = TcModels.get(model) == null ? model : TcModels.get(model).ee_id ;
 			
 			sbMakefile.append(platformStr
 							+ "APPBASE := " + appBase + "\n"
