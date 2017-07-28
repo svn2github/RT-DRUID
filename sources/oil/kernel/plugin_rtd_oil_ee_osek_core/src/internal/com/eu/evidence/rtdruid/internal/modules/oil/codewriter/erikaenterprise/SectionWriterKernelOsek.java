@@ -2258,7 +2258,7 @@ public class SectionWriterKernelOsek extends SectionWriter implements
 //										+ disable_define
 										+ ", " + (disable_define ? "0U" 
 												// cast esplicito richiesto per aggirare problemi di compilazione con il CODEWARRIOR su e200zx
-												: "(const EE_TID (*)[])&EE_oo_autostart_task_mode_" + appModes.get(appN))
+												: "(const EE_TID (*const)[])&EE_oo_autostart_task_mode_" + appModes.get(appN))
 										+ "}");
 						pre2 = ",\n";
 					}
