@@ -887,7 +887,7 @@ public class SectionWriterKernelFRSH extends SectionWriter implements
 		
 					// add functions
 					if (callback_functions.size()>0) {
-						buffer.append(indent1 + "// Functions\n");
+						buffer.append(indent1 + "/* Functions */\n");
 						for (Iterator<String> iter = callback_functions.iterator(); iter.hasNext(); ) {
 							buffer.append(indent1 + "void " + iter.next()+ "(void);\n");
 						}
