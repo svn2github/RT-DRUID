@@ -772,48 +772,56 @@ public class SectionWriterHalRl78 extends SectionWriter
 		
 		String mcu_model = getMcuType(parent.getVt(), oilObjects);
 		
+		boolean s3option = false;
+		
 		ArrayList<String> mcu_ee_opt = null;
 		if (MCU_R5F104LE.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
 			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F104XX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F104LE);
-			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			s3option = true;
+//			mcu_ee_opt.add(EEOPT__EE_RL78_S3); -> only for CCRL
 			
 		} else if (MCU_R5F10BMG.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
 			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10BXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10BMG);
-			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			s3option = true;
+//			mcu_ee_opt.add(EEOPT__EE_RL78_S3); -> only for CCRL
 			
 		} else if (MCU_R5F10PPJ.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
 			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10PXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10PPJ);
-			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			s3option = true;
+//			mcu_ee_opt.add(EEOPT__EE_RL78_S3); -> only for CCRL
 			
 		} else if (MCU_R5F10AGF.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
 			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10AXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10AGF);
-			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			s3option = true;
+//			mcu_ee_opt.add(EEOPT__EE_RL78_S3); -> only for CCRL
 			
 		} else if (MCU_R5F10PLG.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
 			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10PXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10PLG);
-			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			s3option = true;
+//			mcu_ee_opt.add(EEOPT__EE_RL78_S3); -> only for CCRL
 			
 		} else if (MCU_R5F10PLJ.equals(mcu_model)) {
 			mcu_ee_opt = new ArrayList<String>();
 			mcu_ee_opt.add(EEOPT__MCU_R5F10XXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10PXX);
 			mcu_ee_opt.add(EEOPT__MCU_R5F10PLJ);
-			mcu_ee_opt.add(EEOPT__EE_RL78_S3);
+			s3option = true;
+//			mcu_ee_opt.add(EEOPT__EE_RL78_S3); -> only for CCRL
 		} else {
 			Messages.sendWarningNl("Unsupported MCU");
 		}
@@ -827,6 +835,20 @@ public class SectionWriterHalRl78 extends SectionWriter
 			for (IOilObjectList ool: oilObjects) { 
 				ISimpleGenRes sgrCpu = ool.getList(IOilObjectList.OS).get(0);
 				sgrCpu.setProperty(SGR_OS_MCU_MODEL, mcu_model);
+				
+				if (s3option) {
+					String compiler_type = AbstractRtosWriter.getOsProperty(ool, RenesasConstants.SGRK__RENESAS_COMPILER_TYPE__);
+			        if (RenesasConstants.SGRK__CCRL_COMPILER__.equalsIgnoreCase(compiler_type)) {
+			        	ArrayList<String> tmp_eeopts = new ArrayList<String>();
+				        if (sgrCpu.containsProperty(ISimpleGenResKeywords.OS_CPU_EE_OPTS)) {
+				        	String[] old = (String[]) sgrCpu.getObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS);
+				        	tmp_eeopts.addAll(Arrays.asList(old));
+				        }
+				        tmp_eeopts.add(EEOPT__EE_RL78_S3);
+						// store ee_opts
+						sgrCpu.setObject(ISimpleGenResKeywords.OS_CPU_EE_OPTS, tmp_eeopts.toArray(new String[tmp_eeopts.size()]));
+			        }
+				}
 			}
 		}
 	}
