@@ -66,7 +66,6 @@ import com.eu.evidence.rtdruid.vartree.ITreeInterface;
 import com.eu.evidence.rtdruid.vartree.IVarTree;
 import com.eu.evidence.rtdruid.vartree.VarTreeUtil;
 import com.eu.evidence.rtdruid.vartree.data.DataPackage;
-import com.eu.evidence.rtdruid.vartree.data.ObjectWithID;
 import com.eu.evidence.rtdruid.vartree.tools.Mapping;
 import com.eu.evidence.rtdruid.vartree.tools.Search;
 
@@ -1204,7 +1203,7 @@ class ProjectBuilder implements IProjectBuilder {
 			objList.add(root);
 		} else {
 			// merge old and new root
-			VarTreeUtil.merge(((ObjectWithID) objList.get(0)), root, null, false);
+			VarTreeUtil.merge(objList.get(0), root, null, false);
 		}
 //		System.out.println("\t------------ERTD------------\n\n");
 //		System.out.println(Vt2StringUtilities.explodeOilVar(Vt2StringUtilities.writeString(vt, "ertd")));
